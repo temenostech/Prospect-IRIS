@@ -1,0 +1,1065 @@
+# UTF-8
+/* Core Service Architecture */
+Domain EB_Service
+	@t24:i (module=EB)
+	@java:Package (value=com.temenos.t24.datamodel.eb.eb_service)
+namespace "http://www.temenos.com/t24/EB_Service"
+metamodelVersion 4.3.0.20110527
+Classes {
+	BATCH
+		@t24:i (t24Name=BATCH, level=I, type=H, additionalInfo="NOD GAC", allowedFunctions="A C D E H I L P Q R S", localRefAllowed=false)
+	{
+		BATCH_PROCESS -> EB_Service:BATCH PK required
+			@t24:i (align=L, inputBehaviour=I, maxLength=50, sysNumber=0.0, core=true, businessType=A, t24Name="BATCH PROCESS")
+		BATCH_STAGE : mml:string
+			@i18n:Label (en="Batch Stage", fr="Niveau de lot", es="Escenario de Lote")
+			@i18n:Tooltip (fr="Niveau de lot")
+			@t24:i (align=L, inputBehaviour=I, maxLength=4, sysNumber=1.0, core=true, businessType=A, t24Name=BATCH.STAGE)
+		DEFAULT_PRINTER : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=2.0, core=true, businessType=A, t24Name=DEFAULT.PRINTER)
+		PROCESS_STATUS : mml:string
+			@i18n:Label (en="Process Status", fr="Statut de processus", es="Estado de Proceso")
+			@i18n:Tooltip (fr="Statut de processus")
+			@t24:i (align=L, inputBehaviour=N, maxLength=2, sysNumber=3.0, core=true, businessType=A, t24Name=PROCESS.STATUS)
+		BATCH_ENVIRONMENT : EB_Service:BATCH__BATCH_ENVIRONMENT required
+			@t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=4.0, core=true, t24Name=BATCH.ENVIRONMENT)
+		DEPARTMENT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Department Code", fr="Code de Département", es="Código Departamento")
+			@i18n:Tooltip (fr="Code de Département")
+			@t24:i (align=L, inputBehaviour=I, maxLength=4, sysNumber=5.0, core=true, businessType=A, t24Name=DEPARTMENT.CODE)
+		JOB_NAME -> byValue EB_Service:BATCH__JOB_NAME *
+		CLEAR_STATIC_CACHE : EB_Service:BATCH__CLEAR_STATIC_CACHE
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=17.0, core=true, t24Name=CLEAR.STATIC.CACHE)
+		RESERVED_9 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=18.0, core=true, businessType=A, t24Name=RESERVED.9)
+		RESERVED_8 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=19.0, core=true, businessType=A, t24Name=RESERVED.8)
+		RESERVED_7 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=20.0, core=true, businessType=A, t24Name=RESERVED.7)
+		RESERVED_6 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=21.0, core=true, businessType=A, t24Name=RESERVED.6)
+		RESERVED_5 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=22.0, core=true, businessType=A, t24Name=RESERVED.5)
+		RESERVED_4 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=23.0, core=true, businessType=A, t24Name=RESERVED.4)
+		RESERVED_3 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=24.0, core=true, businessType=A, t24Name=RESERVED.3)
+		RESERVED_2 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=25.0, core=true, businessType=A, t24Name=RESERVED.2)
+		RESERVED_1 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=26.0, core=true, businessType=A, t24Name=RESERVED.1)
+		RECORD_STATUS : mml:string
+			@i18n:Label (en="Record Status", fr=Statut, es=Estado)
+			@i18n:Tooltip (fr="Statut de l\'enregistrement")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=27.0, core=true, businessType=STAT, t24Name=RECORD.STATUS)
+		CURR_NO : mml:Integer
+			@i18n:Label (en="Curr No", fr="N° version", es="No. Actual")
+			@i18n:Tooltip (fr="Numéro de version")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=28.0, core=true, t24Name=CURR.NO)
+		INPUTTER -> byValue EB_Service:BATCH__INPUTTER *
+		DATE_TIME -> byValue EB_Service:BATCH__DATE_TIME *
+		AUTHORISER : mml:string
+			@i18n:Label (en=Authoriser, fr="Validé par", es=Autorizador)
+			@i18n:Tooltip (en="Indicates the User who Authorises the record", fr="Utilisateur de validation", es="El usuario que autorizó el registro")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=31.0, core=true, businessType=A, t24Name=AUTHORISER)
+		CO_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company, fr=Entité, es="Compañía")
+			@i18n:Tooltip (fr="Code établissement ou agence")
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=32.0, core=true, businessType=A, t24Name=CO.CODE)
+		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Dept Code", fr=Service, es=Departamento)
+			@i18n:Tooltip (fr="Code du service")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=33.0, core=true, t24Name=DEPT.CODE)
+		AUDITOR_CODE : mml:string
+			@i18n:Label (en="Auditor Code", fr="Audité par", es="Código de Auditor")
+			@i18n:Tooltip (en="Auditor Code", fr="Utilisateur d\'audit", es="Nombre del auditor")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=34.0, core=true, businessType=A, t24Name=AUDITOR.CODE)
+		AUDIT_DATE_TIME : mml:dateTime
+			@i18n:Label (en="Audit Date Time", fr="Audité le", es="Fecha/Hora de Audit.")
+			@i18n:Tooltip (en="Date and time when record was audited", fr="Date et heure d\'audit", es="Fecha y Hora de Auditoría ")
+			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=35.0, core=true, businessType=RELTIME, t24Name=AUDIT.DATE.TIME)
+	}
+	BATCH__JOB_NAME
+	{
+		JOB_NAME -> EB_SystemTables:PGM_FILE required
+			@t24:i (align=L, inputBehaviour=I, maxLength=32, sysNumber=6.0, core=true, businessType=PG, t24Name=JOB.NAME)
+		VERIFICATION -> byValue EB_Service:BATCH__JOB_NAME__VERIFICATION *
+		FREQUENCY : mml:string required
+			@t24:i (align=L, inputBehaviour=I, maxLength=12, sysNumber=8.0, core=true, businessType=A, t24Name=FREQUENCY)
+		NEXT_RUN_DATE : mml:date
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=9.0, core=true, businessType=D, t24Name=NEXT.RUN.DATE)
+		PRINTER_NAME -> EB_Reports:PRINTER_ID
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=10.0, core=true, businessType=A, t24Name=PRINTER.NAME)
+		DATA -> byValue EB_Service:BATCH__JOB_NAME__DATA *
+		JOB_STATUS : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=2, sysNumber=12.0, core=true, businessType=A, t24Name=JOB.STATUS)
+		LAST_RUN_DATE : mml:date
+			@t24:i (align=R, inputBehaviour=N, maxLength=20, sysNumber=13.0, core=true, businessType=D, t24Name=LAST.RUN.DATE)
+		JOB_MESSAGE : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=32, sysNumber=14.0, core=true, businessType=A, t24Name=JOB.MESSAGE)
+		USER -> EB_Security:USER
+			@t24:i (align=L, inputBehaviour=I, maxLength=32, sysNumber=15.0, core=true, businessType=A, t24Name=USER)
+		SELECT_AHEAD : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=4, sysNumber=16.0, core=true, businessType=A, t24Name=SELECT.AHEAD)
+	}
+	BATCH__JOB_NAME__VERIFICATION
+	{
+		VERIFICATION -> EB_SystemTables:PGM_FILE
+			@t24:i (align=L, inputBehaviour=I, maxLength=32, sysNumber=7.0, core=true, businessType=A, t24Name=VERIFICATION)
+	}
+	BATCH__JOB_NAME__DATA
+	{
+		DATA : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=45, sysNumber=11.0, core=true, businessType=A, t24Name=DATA)
+	}
+	BATCH__INPUTTER
+	{
+		INPUTTER : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=29.0, core=true, businessType=A, t24Name=INPUTTER)
+	}
+	BATCH__DATE_TIME
+	{
+		DATE_TIME : mml:dateTime
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=30.0, core=true, businessType=RELTIME, t24Name=DATE.TIME)
+	}
+	BATCH_BACKUP_PARAMETER
+		@t24:i (t24Name=BATCH.BACKUP.PARAMETER, level=I, type=H, allowedFunctions="A C D E H I L P Q R S", localRefAllowed=true)
+	{
+		ID -> EB_Service:BATCH_BACKUP_PARAMETER PK required
+			@i18n:Label (en="Transaction Ref", fr=Code, es="Ref. de Transacción")
+			@i18n:Tooltip (en="Transaction Reference", fr=Identifiant)
+			@t24:i (align=L, inputBehaviour=I, maxLength=6, sysNumber=0.0, core=true, t24Name=ID)
+		DESCRIPTION -> byValue EB_Service:BATCH_BACKUP_PARAMETER__DESCRIPTION *
+		BEF_OFF_RTN -> byValue EB_Service:BATCH_BACKUP_PARAMETER__BEF_OFF_RTN *
+		AFT_OFF_RTN -> byValue EB_Service:BATCH_BACKUP_PARAMETER__AFT_OFF_RTN *
+		RESERVED_10 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=10, sysNumber=4.0, core=true, businessType=ANY, t24Name=RESERVED.10)
+		RESERVED_9 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=10, sysNumber=5.0, core=true, businessType=ANY, t24Name=RESERVED.9)
+		RESERVED_8 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=10, sysNumber=6.0, core=true, businessType=ANY, t24Name=RESERVED.8)
+		RESERVED_7 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=10, sysNumber=7.0, core=true, businessType=ANY, t24Name=RESERVED.7)
+		RESERVED_6 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=10, sysNumber=8.0, core=true, businessType=ANY, t24Name=RESERVED.6)
+		RESERVED_5 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=10, sysNumber=9.0, core=true, businessType=ANY, t24Name=RESERVED.5)
+		RESERVED_4 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=10, sysNumber=10.0, core=true, businessType=ANY, t24Name=RESERVED.4)
+		RESERVED_3 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=10, sysNumber=11.0, core=true, businessType=ANY, t24Name=RESERVED.3)
+		RESERVED_2 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=10, sysNumber=12.0, core=true, businessType=ANY, t24Name=RESERVED.2)
+		RESERVED_1 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=10, sysNumber=13.0, core=true, businessType=ANY, t24Name=RESERVED.1)
+		RECORD_STATUS : mml:string
+			@i18n:Label (en="Record Status", fr=Statut, es=Estado)
+			@i18n:Tooltip (fr="Statut de l\'enregistrement")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=15.0, core=true, businessType=STAT, t24Name=RECORD.STATUS)
+		CURR_NO : mml:Integer
+			@i18n:Label (en="Curr No", fr="N° version", es="No. Actual")
+			@i18n:Tooltip (fr="Numéro de version")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=16.0, core=true, t24Name=CURR.NO)
+		INPUTTER -> byValue EB_Service:BATCH_BACKUP_PARAMETER__INPUTTER *
+		DATE_TIME -> byValue EB_Service:BATCH_BACKUP_PARAMETER__DATE_TIME *
+		AUTHORISER : mml:string
+			@i18n:Label (en=Authoriser, fr="Validé par", es=Autorizador)
+			@i18n:Tooltip (en="Indicates the User who Authorises the record", fr="Utilisateur de validation", es="El usuario que autorizó el registro")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=19.0, core=true, businessType=A, t24Name=AUTHORISER)
+		CO_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company, fr=Entité, es="Compañía")
+			@i18n:Tooltip (fr="Code établissement ou agence")
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=20.0, core=true, businessType=A, t24Name=CO.CODE)
+		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Dept Code", fr=Service, es=Departamento)
+			@i18n:Tooltip (fr="Code du service")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=21.0, core=true, t24Name=DEPT.CODE)
+		AUDITOR_CODE : mml:string
+			@i18n:Label (en="Auditor Code", fr="Audité par", es="Código de Auditor")
+			@i18n:Tooltip (en="Auditor Code", fr="Utilisateur d\'audit", es="Nombre del auditor")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=22.0, core=true, businessType=A, t24Name=AUDITOR.CODE)
+		AUDIT_DATE_TIME : mml:dateTime
+			@i18n:Label (en="Audit Date Time", fr="Audité le", es="Fecha/Hora de Audit.")
+			@i18n:Tooltip (en="Date and time when record was audited", fr="Date et heure d\'audit", es="Fecha y Hora de Auditoría ")
+			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=23.0, core=true, businessType=RELTIME, t24Name=AUDIT.DATE.TIME)
+	}
+	BATCH_BACKUP_PARAMETER__DESCRIPTION
+	{
+		DESCRIPTION : mml:string required
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, multiLanguage=true, sysNumber=1.0, core=true, businessType=A, t24Name=DESCRIPTION)
+	}
+	BATCH_BACKUP_PARAMETER__BEF_OFF_RTN
+	{
+		BEF_OFF_RTN -> EB_SystemTables:PGM_FILE
+			@t24:i (align=L, inputBehaviour=I, maxLength=50, sysNumber=2.0, core=true, businessType=PG, t24Name=BEF.OFF.RTN)
+	}
+	BATCH_BACKUP_PARAMETER__AFT_OFF_RTN
+	{
+		AFT_OFF_RTN -> EB_SystemTables:PGM_FILE
+			@t24:i (align=L, inputBehaviour=I, maxLength=50, sysNumber=3.0, core=true, businessType=PG, t24Name=AFT.OFF.RTN)
+	}
+	BATCH_BACKUP_PARAMETER__INPUTTER
+	{
+		INPUTTER : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=17.0, core=true, businessType=A, t24Name=INPUTTER)
+	}
+	BATCH_BACKUP_PARAMETER__DATE_TIME
+	{
+		DATE_TIME : mml:dateTime
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=18.0, core=true, businessType=RELTIME, t24Name=DATE.TIME)
+	}
+	BATCH_NEW_COMPANY
+		@t24:i (t24Name=BATCH.NEW.COMPANY, level=I, type=U, allowedFunctions="A C D E I L P Q R S", localRefAllowed=false)
+	{
+		BATCH_PROCESS -> EB_Service:BATCH_NEW_COMPANY PK required
+			@t24:i (align=L, inputBehaviour=I, maxLength=46, sysNumber=0.0, core=true, businessType=A, t24Name="BATCH PROCESS")
+		LEVEL : EB_Service:BATCH_NEW_COMPANY__LEVEL required
+			@i18n:Label (en=Level, fr=Niveau, es=Nivel)
+			@i18n:Tooltip (fr=Niveau)
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=1.0, core=true, t24Name=LEVEL)
+		PRODUCT : mml:string required
+			@i18n:Label (en=Product, fr=Produit, es=Productos)
+			@i18n:Tooltip (fr="Code du produit")
+			@t24:i (align=L, inputBehaviour=I, maxLength=6, sysNumber=2.0, core=true, businessType=A, t24Name=PRODUCT)
+		RECORD_STATUS : mml:string
+			@i18n:Label (en="Record Status", fr=Statut, es=Estado)
+			@i18n:Tooltip (fr="Statut de l\'enregistrement")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=3.0, core=true, businessType=STAT, t24Name=RECORD.STATUS)
+		CURR_NO : mml:Integer
+			@i18n:Label (en="Curr No", fr="N° version", es="No. Actual")
+			@i18n:Tooltip (fr="Numéro de version")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=4.0, core=true, t24Name=CURR.NO)
+		INPUTTER -> byValue EB_Service:BATCH_NEW_COMPANY__INPUTTER *
+		DATE_TIME -> byValue EB_Service:BATCH_NEW_COMPANY__DATE_TIME *
+		AUTHORISER : mml:string
+			@i18n:Label (en=Authoriser, fr="Validé par", es=Autorizador)
+			@i18n:Tooltip (en="Indicates the User who Authorises the record", fr="Utilisateur de validation", es="El usuario que autorizó el registro")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=7.0, core=true, businessType=A, t24Name=AUTHORISER)
+		CO_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company, fr=Entité, es="Compañía")
+			@i18n:Tooltip (fr="Code établissement ou agence")
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=8.0, core=true, businessType=A, t24Name=CO.CODE)
+		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Dept Code", fr=Service, es=Departamento)
+			@i18n:Tooltip (fr="Code du service")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=9.0, core=true, t24Name=DEPT.CODE)
+		AUDITOR_CODE : mml:string
+			@i18n:Label (en="Auditor Code", fr="Audité par", es="Código de Auditor")
+			@i18n:Tooltip (en="Auditor Code", fr="Utilisateur d\'audit", es="Nombre del auditor")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=10.0, core=true, businessType=A, t24Name=AUDITOR.CODE)
+		AUDIT_DATE_TIME : mml:dateTime
+			@i18n:Label (en="Audit Date Time", fr="Audité le", es="Fecha/Hora de Audit.")
+			@i18n:Tooltip (en="Date and time when record was audited", fr="Date et heure d\'audit", es="Fecha y Hora de Auditoría ")
+			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=11.0, core=true, businessType=RELTIME, t24Name=AUDIT.DATE.TIME)
+	}
+	BATCH_NEW_COMPANY__INPUTTER
+	{
+		INPUTTER : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=5.0, core=true, businessType=A, t24Name=INPUTTER)
+	}
+	BATCH_NEW_COMPANY__DATE_TIME
+	{
+		DATE_TIME : mml:dateTime
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=6.0, core=true, businessType=RELTIME, t24Name=DATE.TIME)
+	}
+	EB_LDAP_PARAMETER
+		@t24:i (t24Name=EB.LDAP.PARAMETER, level=I, type=H, allowedFunctions="A C D E H I L P Q R S", localRefAllowed=true)
+	{
+		LDAP_ID -> EB_Service:EB_LDAP_PARAMETER PK required
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=0.0, core=true, businessType=A, t24Name=LDAP.ID)
+		DESCRIPTION -> byValue EB_Service:EB_LDAP_PARAMETER__DESCRIPTION *
+		PROTOCOL : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=2.0, core=true, businessType=A, t24Name=PROTOCOL)
+		HOSTNAME : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=3.0, core=true, businessType=A, t24Name=HOSTNAME)
+		PORT : mml:Integer
+			@i18n:Label (en=Portfolio, fr=Portefeuille, es=Portafolio)
+			@i18n:Tooltip (fr=Portefeuille)
+			@t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=4.0, core=true, t24Name=PORT)
+		ROOT_DN : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=80, sysNumber=5.0, core=true, businessType=A, t24Name=ROOT.DN)
+		USER_DN : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=80, sysNumber=6.0, core=true, businessType=A, t24Name=USER.DN)
+		PASSWORD : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=7.0, core=true, businessType=A, t24Name=PASSWORD)
+		FILTER : mml:string
+			@i18n:Label (fr=Filtre)
+			@i18n:Tooltip (fr=Filtre)
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=8.0, core=true, businessType=A, t24Name=FILTER)
+		API_GETSYSDNLIST : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=9.0, core=true, businessType=A, t24Name=API.GETSYSDNLIST)
+		API_ADDT24USER : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=10.0, core=true, businessType=A, t24Name=API.ADDT24USER)
+		API_UPDATET24USER : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=11.0, core=true, businessType=A, t24Name=API.UPDATET24USER)
+		API_DELETET24USER : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=12.0, core=true, businessType=A, t24Name=API.DELETET24USER)
+		API_SETT24PASSWD : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=13.0, core=true, businessType=A, t24Name=API.SETT24PASSWD)
+		CHECK_PASSWD : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=2, sysNumber=14.0, core=true, businessType=A, t24Name=CHECK.PASSWD)
+		RESET_PASSWD : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=2, sysNumber=15.0, core=true, businessType=A, t24Name=RESET.PASSWD)
+		ENCRYPTED_PASSWD : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=2, sysNumber=16.0, core=true, businessType=A, t24Name=ENCRYPTED.PASSWD)
+		RESERVED5 : mml:Integer
+			@i18n:Label (fr="Propriété saisie avec activité paimt")
+			@i18n:Tooltip (fr="Propriété saisie avec activité paimt ")
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=17.0, core=true, t24Name=RESERVED5)
+		RESERVED4 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=18.0, core=true, t24Name=RESERVED4)
+		RESERVED3 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=19.0, core=true, t24Name=RESERVED3)
+		RESERVED2 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=20.0, core=true, t24Name=RESERVED2)
+		RESERVED1 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=21.0, core=true, t24Name=RESERVED1)
+		RECORD_STATUS : mml:string
+			@i18n:Label (en="Record Status", fr=Statut, es=Estado)
+			@i18n:Tooltip (fr="Statut de l\'enregistrement")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=23.0, core=true, businessType=STAT, t24Name=RECORD.STATUS)
+		CURR_NO : mml:Integer
+			@i18n:Label (en="Curr No", fr="N° version", es="No. Actual")
+			@i18n:Tooltip (fr="Numéro de version")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=24.0, core=true, t24Name=CURR.NO)
+		INPUTTER -> byValue EB_Service:EB_LDAP_PARAMETER__INPUTTER *
+		DATE_TIME -> byValue EB_Service:EB_LDAP_PARAMETER__DATE_TIME *
+		AUTHORISER : mml:string
+			@i18n:Label (en=Authoriser, fr="Validé par", es=Autorizador)
+			@i18n:Tooltip (en="Indicates the User who Authorises the record", fr="Utilisateur de validation", es="El usuario que autorizó el registro")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=27.0, core=true, businessType=A, t24Name=AUTHORISER)
+		CO_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company, fr=Entité, es="Compañía")
+			@i18n:Tooltip (fr="Code établissement ou agence")
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=28.0, core=true, businessType=A, t24Name=CO.CODE)
+		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Dept Code", fr=Service, es=Departamento)
+			@i18n:Tooltip (fr="Code du service")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=29.0, core=true, t24Name=DEPT.CODE)
+		AUDITOR_CODE : mml:string
+			@i18n:Label (en="Auditor Code", fr="Audité par", es="Código de Auditor")
+			@i18n:Tooltip (en="Auditor Code", fr="Utilisateur d\'audit", es="Nombre del auditor")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=30.0, core=true, businessType=A, t24Name=AUDITOR.CODE)
+		AUDIT_DATE_TIME : mml:dateTime
+			@i18n:Label (en="Audit Date Time", fr="Audité le", es="Fecha/Hora de Audit.")
+			@i18n:Tooltip (en="Date and time when record was audited", fr="Date et heure d\'audit", es="Fecha y Hora de Auditoría ")
+			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=31.0, core=true, businessType=RELTIME, t24Name=AUDIT.DATE.TIME)
+	}
+	EB_LDAP_PARAMETER__DESCRIPTION
+	{
+		DESCRIPTION : mml:string required
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, multiLanguage=true, sysNumber=1.0, core=true, businessType=A, t24Name=DESCRIPTION)
+	}
+	EB_LDAP_PARAMETER__INPUTTER
+	{
+		INPUTTER : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=25.0, core=true, businessType=A, t24Name=INPUTTER)
+	}
+	EB_LDAP_PARAMETER__DATE_TIME
+	{
+		DATE_TIME : mml:dateTime
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=26.0, core=true, businessType=RELTIME, t24Name=DATE.TIME)
+	}
+	EB_PHANTOM
+		@t24:i (t24Name=EB.PHANTOM, level=I, type=W, additionalInfo=BDA, allowedFunctions="C I L P Q R S V", localRefAllowed=false)
+	{
+		EB_PHANT_ID -> EB_Service:EB_PHANTOM PK required
+			@t24:i (align=L, inputBehaviour=I, maxLength=30, sysNumber=0.0, core=true, businessType=A, t24Name=EB.PHANT.ID)
+		DESCRIPTION -> byValue EB_Service:EB_PHANTOM__DESCRIPTION *
+		STATUS : mml:Integer
+			@i18n:Label (en=Status, fr=Statut, es=Estado)
+			@i18n:Tooltip (fr=Statut)
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=2.0, core=true, t24Name=STATUS)
+		RUN_MODE : EB_Service:EB_PHANTOM__RUN_MODE required
+			@t24:i (align=L, inputBehaviour=I, maxLength=11, sysNumber=3.0, core=true, t24Name=RUN.MODE)
+		PHANT_STOP_REQ : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=4, sysNumber=4.0, core=true, businessType=A, t24Name=PHANT.STOP.REQ)
+		SLEEP_SECS : mml:Integer required
+			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=5.0, core=true, t24Name=SLEEP.SECS)
+		TIMEOUT_SECS : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=6.0, core=true, t24Name=TIMEOUT.SECS)
+		GLOBUS_IN_DIR : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=43, sysNumber=7.0, core=true, businessType=A, t24Name=GLOBUS.IN.DIR)
+		GLOBUS_OUT_DIR : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=43, sysNumber=8.0, core=true, businessType=A, t24Name=GLOBUS.OUT.DIR)
+		GLOBUS_IN_PIPE : mml:string required
+			@t24:i (align=L, inputBehaviour=I, maxLength=43, sysNumber=9.0, core=true, businessType=A, t24Name=GLOBUS.IN.PIPE)
+		GLOBUS_OUT_PIPE : mml:string required
+			@t24:i (align=L, inputBehaviour=I, maxLength=43, sysNumber=10.0, core=true, businessType=A, t24Name=GLOBUS.OUT.PIPE)
+		GTS_USER_ID -> EB_Security:USER required
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=11.0, core=true, businessType=A, t24Name=GTS.USER.ID)
+		PHANTOM_PID : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=12.0, core=true, t24Name=PHANTOM.PID)
+		OFS_SOURCE -> EB_Interface:OFS_SOURCE
+			@i18n:Label (en="OFS Source", fr="Source OFS", es="Fuente OFS")
+			@i18n:Tooltip (en="The OFS Source record ID", fr="Source OFS")
+			@t24:i (align=L, inputBehaviour=I, maxLength=20, sysNumber=13.0, core=true, businessType=A, t24Name=OFS.SOURCE)
+		AUTO_SHUTDOWN : EB_Service:EB_PHANTOM__AUTO_SHUTDOWN
+			@t24:i (align=L, inputBehaviour=I, maxLength=1, sysNumber=14.0, core=true, t24Name=AUTO.SHUTDOWN)
+		AUTO_STARTUP : EB_Service:EB_PHANTOM__AUTO_STARTUP
+			@t24:i (align=L, inputBehaviour=I, maxLength=1, sysNumber=15.0, core=true, t24Name=AUTO.STARTUP)
+		RESERVED_3 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=16.0, core=true, t24Name=RESERVED.3)
+		RESERVED_2 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=17.0, core=true, t24Name=RESERVED.2)
+		RESERVED_1 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=18.0, core=true, t24Name=RESERVED.1)
+		RUN_ROUTINE -> EB_SystemTables:PGM_FILE required
+			@t24:i (align=L, inputBehaviour=I, maxLength=30, sysNumber=19.0, core=true, businessType=A, t24Name=RUN.ROUTINE)
+		RUN_STATUS -> byValue EB_Service:EB_PHANTOM__RUN_STATUS *
+		RUN_PARAM -> byValue EB_Service:EB_PHANTOM__RUN_PARAM *
+		RECORD_STATUS : mml:string
+			@i18n:Label (en="Record Status", fr=Statut, es=Estado)
+			@i18n:Tooltip (fr="Statut de l\'enregistrement")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=25.0, core=true, businessType=STAT, t24Name=RECORD.STATUS)
+		CURR_NO : mml:Integer
+			@i18n:Label (en="Curr No", fr="N° version", es="No. Actual")
+			@i18n:Tooltip (fr="Numéro de version")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=26.0, core=true, t24Name=CURR.NO)
+		INPUTTER -> byValue EB_Service:EB_PHANTOM__INPUTTER *
+		DATE_TIME -> byValue EB_Service:EB_PHANTOM__DATE_TIME *
+		AUTHORISER : mml:string
+			@i18n:Label (en=Authoriser, fr="Validé par", es=Autorizador)
+			@i18n:Tooltip (en="Indicates the User who Authorises the record", fr="Utilisateur de validation", es="El usuario que autorizó el registro")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=29.0, core=true, businessType=A, t24Name=AUTHORISER)
+		CO_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company, fr=Entité, es="Compañía")
+			@i18n:Tooltip (fr="Code établissement ou agence")
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=30.0, core=true, businessType=A, t24Name=CO.CODE)
+		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Dept Code", fr=Service, es=Departamento)
+			@i18n:Tooltip (fr="Code du service")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=31.0, core=true, t24Name=DEPT.CODE)
+		AUDITOR_CODE : mml:string
+			@i18n:Label (en="Auditor Code", fr="Audité par", es="Código de Auditor")
+			@i18n:Tooltip (en="Auditor Code", fr="Utilisateur d\'audit", es="Nombre del auditor")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=32.0, core=true, businessType=A, t24Name=AUDITOR.CODE)
+		AUDIT_DATE_TIME : mml:dateTime
+			@i18n:Label (en="Audit Date Time", fr="Audité le", es="Fecha/Hora de Audit.")
+			@i18n:Tooltip (en="Date and time when record was audited", fr="Date et heure d\'audit", es="Fecha y Hora de Auditoría ")
+			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=33.0, core=true, businessType=RELTIME, t24Name=AUDIT.DATE.TIME)
+	}
+	EB_PHANTOM__DESCRIPTION
+	{
+		DESCRIPTION : mml:string required
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, multiLanguage=true, sysNumber=1.0, core=true, businessType=A, t24Name=DESCRIPTION)
+	}
+	EB_PHANTOM__RUN_STATUS
+	{
+		RUN_STATUS : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=20.0, core=true, t24Name=RUN.STATUS)
+	}
+	EB_PHANTOM__RUN_PARAM
+	{
+		RUN_PARAM : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=30, sysNumber=21.0, core=true, businessType=A, t24Name=RUN.PARAM)
+		RUN_VALUE : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=30, sysNumber=22.0, core=true, businessType=A, t24Name=RUN.VALUE)
+		RUN_RES2 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=23.0, core=true, t24Name=RUN.RES2)
+		RUN_RES1 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=24.0, core=true, t24Name=RUN.RES1)
+	}
+	EB_PHANTOM__INPUTTER
+	{
+		INPUTTER : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=27.0, core=true, businessType=A, t24Name=INPUTTER)
+	}
+	EB_PHANTOM__DATE_TIME
+	{
+		DATE_TIME : mml:dateTime
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=28.0, core=true, businessType=RELTIME, t24Name=DATE.TIME)
+	}
+	EB_PURGE_DEL_FILE_PARAM
+		@t24:i (t24Name=EB.PURGE.DEL.FILE.PARAM, level=I, type=H, allowedFunctions="A C D E H I L P Q R S", localRefAllowed=false)
+	{
+		DELETE_FILE_ID -> EB_Service:EB_PURGE_DEL_FILE_PARAM PK required
+			@t24:i (align=L, inputBehaviour=I, maxLength=6, sysNumber=0.0, core=true, t24Name=DELETE.FILE.ID)
+		APPLICATION_NAME -> byValue EB_Service:EB_PURGE_DEL_FILE_PARAM__APPLICATION_NAME *
+		PURGE_DATE : mml:date required
+			@i18n:Label (en="Purge Date", fr="Date de purge", es="Fecha de Purga")
+			@i18n:Tooltip (fr="Date de purge")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=2.0, core=true, businessType=D, t24Name=PURGE.DATE)
+		RESERVED_10 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=3.0, core=true, t24Name=RESERVED.10)
+		RESERVED_9 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=4.0, core=true, t24Name=RESERVED.9)
+		RESERVED_8 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=5.0, core=true, t24Name=RESERVED.8)
+		RESERVED_7 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=6.0, core=true, t24Name=RESERVED.7)
+		RESERVED_6 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=7.0, core=true, t24Name=RESERVED.6)
+		RESERVED_5 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=8.0, core=true, t24Name=RESERVED.5)
+		RESERVED_4 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=9.0, core=true, t24Name=RESERVED.4)
+		RESERVED_3 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=10.0, core=true, t24Name=RESERVED.3)
+		RESERVED_2 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=11.0, core=true, t24Name=RESERVED.2)
+		RESERVED_1 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=12.0, core=true, t24Name=RESERVED.1)
+		RECORD_STATUS : mml:string
+			@i18n:Label (en="Record Status", fr=Statut, es=Estado)
+			@i18n:Tooltip (fr="Statut de l\'enregistrement")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=13.0, core=true, businessType=STAT, t24Name=RECORD.STATUS)
+		CURR_NO : mml:Integer
+			@i18n:Label (en="Curr No", fr="N° version", es="No. Actual")
+			@i18n:Tooltip (fr="Numéro de version")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=14.0, core=true, t24Name=CURR.NO)
+		INPUTTER -> byValue EB_Service:EB_PURGE_DEL_FILE_PARAM__INPUTTER *
+		DATE_TIME -> byValue EB_Service:EB_PURGE_DEL_FILE_PARAM__DATE_TIME *
+		AUTHORISER : mml:string
+			@i18n:Label (en=Authoriser, fr="Validé par", es=Autorizador)
+			@i18n:Tooltip (en="Indicates the User who Authorises the record", fr="Utilisateur de validation", es="El usuario que autorizó el registro")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=17.0, core=true, businessType=A, t24Name=AUTHORISER)
+		CO_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company, fr=Entité, es="Compañía")
+			@i18n:Tooltip (fr="Code établissement ou agence")
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=18.0, core=true, businessType=A, t24Name=CO.CODE)
+		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Dept Code", fr=Service, es=Departamento)
+			@i18n:Tooltip (fr="Code du service")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=19.0, core=true, t24Name=DEPT.CODE)
+		AUDITOR_CODE : mml:string
+			@i18n:Label (en="Auditor Code", fr="Audité par", es="Código de Auditor")
+			@i18n:Tooltip (en="Auditor Code", fr="Utilisateur d\'audit", es="Nombre del auditor")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=20.0, core=true, businessType=A, t24Name=AUDITOR.CODE)
+		AUDIT_DATE_TIME : mml:dateTime
+			@i18n:Label (en="Audit Date Time", fr="Audité le", es="Fecha/Hora de Audit.")
+			@i18n:Tooltip (en="Date and time when record was audited", fr="Date et heure d\'audit", es="Fecha y Hora de Auditoría ")
+			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=21.0, core=true, businessType=RELTIME, t24Name=AUDIT.DATE.TIME)
+	}
+	EB_PURGE_DEL_FILE_PARAM__APPLICATION_NAME
+	{
+		APPLICATION_NAME : mml:string required
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=1.0, core=true, businessType=A, t24Name=APPLICATION.NAME)
+	}
+	EB_PURGE_DEL_FILE_PARAM__INPUTTER
+	{
+		INPUTTER : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=15.0, core=true, businessType=A, t24Name=INPUTTER)
+	}
+	EB_PURGE_DEL_FILE_PARAM__DATE_TIME
+	{
+		DATE_TIME : mml:dateTime
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=16.0, core=true, businessType=RELTIME, t24Name=DATE.TIME)
+	}
+	JOB_TIMES
+		@t24:i (t24Name=JOB.TIMES, level=I, type=L, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		PROCESS_JOB -> EB_Service:JOB_TIMES PK required
+			@i18n:Label (en=Job, fr=Procès, es=Trabajo)
+			@i18n:Tooltip (fr=Procès)
+			@t24:i (align=L, inputBehaviour=I, maxLength=70, sysNumber=0.0, core=true, businessType=ANY, t24Name=PROCESS.JOB)
+		JOB : mml:string required
+			@t24:i (align=L, inputBehaviour=I, maxLength=32, sysNumber=1.0, core=true, businessType=A, t24Name=JOB)
+		PROGRAM : mml:string required
+			@t24:i (align=L, inputBehaviour=I, maxLength=32, sysNumber=2.0, core=true, businessType=A, t24Name=PROGRAM)
+		BATCH_DATE -> byValue EB_Service:JOB_TIMES__BATCH_DATE *
+		SERVICE_NAME : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=50, sysNumber=27.0, core=true, businessType=A, t24Name=SERVICE.NAME)
+	}
+	JOB_TIMES__BATCH_DATE
+	{
+		BATCH_DATE : mml:date
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=3.0, core=true, businessType=D, t24Name=BATCH.DATE)
+		START_TIME : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=7, sysNumber=4.0, core=true, t24Name=START.TIME)
+		END_TIME : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=7, sysNumber=5.0, core=true, t24Name=END.TIME)
+		ELAPSED_TIME : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=7, sysNumber=6.0, core=true, t24Name=ELAPSED.TIME)
+		RESERVED1 : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=12, sysNumber=7.0, core=true, t24Name=RESERVED1)
+		THROUGHPUT : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=7, sysNumber=8.0, core=true, t24Name=THROUGHPUT)
+		RESERVED2 : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=12, sysNumber=9.0, core=true, t24Name=RESERVED2)
+		FASTEST : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=7, sysNumber=10.0, core=true, t24Name=FASTEST)
+		AGENTS : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=22, sysNumber=11.0, core=true, businessType=ANY, t24Name=AGENTS)
+		RESERVED3 : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=7, sysNumber=12.0, core=true, t24Name=RESERVED3)
+		SELECT_START : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=7, sysNumber=13.0, core=true, t24Name=SELECT.START)
+		HIGHEST_RESPONSE : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=7, sysNumber=14.0, core=true, t24Name=HIGHEST.RESPONSE)
+		CONTROL_LIST -> byValue EB_Service:JOB_TIMES__BATCH_DATE__CONTROL_LIST *
+		TXN_MANAGEMENT : mml:Character
+			@t24:i (align=L, inputBehaviour=I, maxLength=1, sysNumber=22.0, core=true, businessType=A, t24Name=TXN.MANAGEMENT)
+		READ_WRITE_CACHE : mml:Character
+			@t24:i (align=L, inputBehaviour=I, maxLength=1, sysNumber=23.0, core=true, businessType=A, t24Name=READ.WRITE.CACHE)
+		LOCK_COLLISION : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=24.0, core=true, t24Name=LOCK.COLLISION)
+		TOTAL_WRITE : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=25.0, core=true, t24Name=TOTAL.WRITE)
+		REC_VERIFY : mml:Character
+			@t24:i (align=L, inputBehaviour=I, maxLength=1, sysNumber=26.0, core=true, businessType=A, t24Name=REC.VERIFY)
+	}
+	JOB_TIMES__BATCH_DATE__CONTROL_LIST
+	{
+		CONTROL_LIST : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=15.0, core=true, businessType=A, t24Name=CONTROL.LIST)
+		BULK_NUMBER : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=16.0, core=true, t24Name=BULK.NUMBER)
+		TYPE_OF_SEL : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=12, sysNumber=17.0, core=true, businessType=A, t24Name=TYPE.OF.SEL)
+		SEL_STATEMENT : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=65, sysNumber=18.0, core=true, businessType=A, t24Name=SEL.STATEMENT)
+		SELECT_TIME : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=7, sysNumber=19.0, core=true, t24Name=SELECT.TIME)
+		PROCESSED : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=12, sysNumber=20.0, core=true, t24Name=PROCESSED)
+		COMPLETED : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=12, sysNumber=21.0, core=true, t24Name=COMPLETED)
+	}
+	JOB_TIMES_HISTORY
+		@t24:i (t24Name=JOB.TIMES.HISTORY, level=I, type=L, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		PROCESS_JOB -> EB_Service:JOB_TIMES_HISTORY PK required
+			@i18n:Label (en=Job, fr=Procès, es=Trabajo)
+			@i18n:Tooltip (fr=Procès)
+			@t24:i (align=L, inputBehaviour=I, maxLength=70, sysNumber=0.0, core=true, businessType=ANY, t24Name=PROCESS.JOB)
+		JOB : mml:string required
+			@t24:i (align=L, inputBehaviour=I, maxLength=32, sysNumber=1.0, core=true, businessType=A, t24Name=JOB)
+		PROGRAM : mml:string required
+			@t24:i (align=L, inputBehaviour=I, maxLength=32, sysNumber=2.0, core=true, businessType=A, t24Name=PROGRAM)
+		BATCH_DATE -> byValue EB_Service:JOB_TIMES_HISTORY__BATCH_DATE *
+		SERVICE_NAME : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=50, sysNumber=27.0, core=true, businessType=A, t24Name=SERVICE.NAME)
+	}
+	JOB_TIMES_HISTORY__BATCH_DATE
+	{
+		BATCH_DATE : mml:date
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=3.0, core=true, businessType=D, t24Name=BATCH.DATE)
+		START_TIME : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=7, sysNumber=4.0, core=true, t24Name=START.TIME)
+		END_TIME : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=7, sysNumber=5.0, core=true, t24Name=END.TIME)
+		ELAPSED_TIME : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=7, sysNumber=6.0, core=true, t24Name=ELAPSED.TIME)
+		RESERVED1 : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=12, sysNumber=7.0, core=true, t24Name=RESERVED1)
+		THROUGHPUT : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=7, sysNumber=8.0, core=true, t24Name=THROUGHPUT)
+		RESERVED2 : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=12, sysNumber=9.0, core=true, t24Name=RESERVED2)
+		FASTEST : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=7, sysNumber=10.0, core=true, t24Name=FASTEST)
+		AGENTS : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=22, sysNumber=11.0, core=true, businessType=ANY, t24Name=AGENTS)
+		RESERVED3 : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=7, sysNumber=12.0, core=true, t24Name=RESERVED3)
+		SELECT_START : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=7, sysNumber=13.0, core=true, t24Name=SELECT.START)
+		HIGHEST_RESPONSE : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=7, sysNumber=14.0, core=true, t24Name=HIGHEST.RESPONSE)
+		CONTROL_LIST -> byValue EB_Service:JOB_TIMES_HISTORY__BATCH_DATE__CONTROL_LIST *
+		TXN_MANAGEMENT : mml:Character
+			@t24:i (align=L, inputBehaviour=I, maxLength=1, sysNumber=22.0, core=true, businessType=A, t24Name=TXN.MANAGEMENT)
+		READ_WRITE_CACHE : mml:Character
+			@t24:i (align=L, inputBehaviour=I, maxLength=1, sysNumber=23.0, core=true, businessType=A, t24Name=READ.WRITE.CACHE)
+		LOCK_COLLISION : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=24.0, core=true, t24Name=LOCK.COLLISION)
+		TOTAL_WRITE : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=25.0, core=true, t24Name=TOTAL.WRITE)
+		REC_VERIFY : mml:Character
+			@t24:i (align=L, inputBehaviour=I, maxLength=1, sysNumber=26.0, core=true, businessType=A, t24Name=REC.VERIFY)
+	}
+	JOB_TIMES_HISTORY__BATCH_DATE__CONTROL_LIST
+	{
+		CONTROL_LIST : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=15.0, core=true, businessType=A, t24Name=CONTROL.LIST)
+		BULK_NUMBER : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=16.0, core=true, t24Name=BULK.NUMBER)
+		TYPE_OF_SEL : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=12, sysNumber=17.0, core=true, businessType=A, t24Name=TYPE.OF.SEL)
+		SEL_STATEMENT : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=65, sysNumber=18.0, core=true, businessType=A, t24Name=SEL.STATEMENT)
+		SELECT_TIME : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=7, sysNumber=19.0, core=true, t24Name=SELECT.TIME)
+		PROCESSED : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=12, sysNumber=20.0, core=true, t24Name=PROCESSED)
+		COMPLETED : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=12, sysNumber=21.0, core=true, t24Name=COMPLETED)
+	}
+	REPORT_TIMES
+		@t24:i (t24Name=REPORT.TIMES, level=I, type=L, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		PROCESS_REPORT -> EB_Service:REPORT_TIMES PK required
+			@t24:i (align=L, inputBehaviour=I, maxLength=70, sysNumber=0.0, core=true, businessType=ANY, t24Name=PROCESS.REPORT)
+		BATCH_DATE -> byValue EB_Service:REPORT_TIMES__BATCH_DATE *
+	}
+	REPORT_TIMES__BATCH_DATE
+	{
+		BATCH_DATE : mml:date
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=1.0, core=true, businessType=D, t24Name=BATCH.DATE)
+		START_TIME : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=7, sysNumber=2.0, core=true, t24Name=START.TIME)
+		END_TIME : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=7, sysNumber=3.0, core=true, t24Name=END.TIME)
+		ELAPSED_TIME : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=7, sysNumber=4.0, core=true, t24Name=ELAPSED.TIME)
+		SESSION_NO : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=5.0, core=true, t24Name=SESSION.NO)
+	}
+	TSA_PARAMETER
+		@t24:i (t24Name=TSA.PARAMETER, level=I, type=H, additionalInfo=NOD, allowedFunctions="A C D E H I L P Q R S", localRefAllowed=true)
+	{
+		ID -> EB_Service:TSA_PARAMETER PK required
+			@i18n:Label (en="Transaction Ref", fr=Code, es="Ref. de Transacción")
+			@i18n:Tooltip (en="Transaction Reference", fr=Identifiant)
+			@t24:i (align=L, inputBehaviour=I, maxLength=30, sysNumber=0.0, core=true, t24Name=ID)
+		REVIEW_TIME : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=1.0, core=true, t24Name=REVIEW.TIME)
+		DEATH_WATCH : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=2.0, core=true, t24Name=DEATH.WATCH)
+		HIGHEST_AGENT : mml:Integer
+			@t24:i (align=R, inputBehaviour=E, maxLength=10, sysNumber=3.0, core=true, t24Name=HIGHEST.AGENT)
+		STOPPAGE_TIME : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=4.0, core=true, t24Name=STOPPAGE.TIME)
+		STOP_COUNT : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=5.0, core=true, t24Name=STOP.COUNT)
+		SELECT_DEATH_WATCH : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=6.0, core=true, t24Name=SELECT.DEATH.WATCH)
+		RESERVED_5 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=10, sysNumber=7.0, core=true, businessType=ANY, t24Name=RESERVED.5)
+		RESERVED_4 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=10, sysNumber=8.0, core=true, businessType=ANY, t24Name=RESERVED.4)
+		RESERVED_3 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=10, sysNumber=9.0, core=true, businessType=ANY, t24Name=RESERVED.3)
+		RESERVED_2 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=10, sysNumber=10.0, core=true, businessType=ANY, t24Name=RESERVED.2)
+		RESERVED_1 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=10, sysNumber=11.0, core=true, businessType=ANY, t24Name=RESERVED.1)
+		RECORD_STATUS : mml:string
+			@i18n:Label (en="Record Status", fr=Statut, es=Estado)
+			@i18n:Tooltip (fr="Statut de l\'enregistrement")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=13.0, core=true, businessType=STAT, t24Name=RECORD.STATUS)
+		CURR_NO : mml:Integer
+			@i18n:Label (en="Curr No", fr="N° version", es="No. Actual")
+			@i18n:Tooltip (fr="Numéro de version")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=14.0, core=true, t24Name=CURR.NO)
+		INPUTTER -> byValue EB_Service:TSA_PARAMETER__INPUTTER *
+		DATE_TIME -> byValue EB_Service:TSA_PARAMETER__DATE_TIME *
+		AUTHORISER : mml:string
+			@i18n:Label (en=Authoriser, fr="Validé par", es=Autorizador)
+			@i18n:Tooltip (en="Indicates the User who Authorises the record", fr="Utilisateur de validation", es="El usuario que autorizó el registro")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=17.0, core=true, businessType=A, t24Name=AUTHORISER)
+		CO_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company, fr=Entité, es="Compañía")
+			@i18n:Tooltip (fr="Code établissement ou agence")
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=18.0, core=true, businessType=A, t24Name=CO.CODE)
+		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Dept Code", fr=Service, es=Departamento)
+			@i18n:Tooltip (fr="Code du service")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=19.0, core=true, t24Name=DEPT.CODE)
+		AUDITOR_CODE : mml:string
+			@i18n:Label (en="Auditor Code", fr="Audité par", es="Código de Auditor")
+			@i18n:Tooltip (en="Auditor Code", fr="Utilisateur d\'audit", es="Nombre del auditor")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=20.0, core=true, businessType=A, t24Name=AUDITOR.CODE)
+		AUDIT_DATE_TIME : mml:dateTime
+			@i18n:Label (en="Audit Date Time", fr="Audité le", es="Fecha/Hora de Audit.")
+			@i18n:Tooltip (en="Date and time when record was audited", fr="Date et heure d\'audit", es="Fecha y Hora de Auditoría ")
+			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=21.0, core=true, businessType=RELTIME, t24Name=AUDIT.DATE.TIME)
+	}
+	TSA_PARAMETER__INPUTTER
+	{
+		INPUTTER : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=15.0, core=true, businessType=A, t24Name=INPUTTER)
+	}
+	TSA_PARAMETER__DATE_TIME
+	{
+		DATE_TIME : mml:dateTime
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=16.0, core=true, businessType=RELTIME, t24Name=DATE.TIME)
+	}
+	TSA_SERVICE
+		@t24:i (t24Name=TSA.SERVICE, level=I, type=H, additionalInfo=NOD, allowedFunctions="A C D E H I L P Q R S", localRefAllowed=true)
+	{
+		SERVICE -> EB_Service:TSA_SERVICE PK required
+			@i18n:Label (en=Service, fr=Service, es=Servicio)
+			@i18n:Tooltip (fr=Service)
+			@t24:i (align=L, inputBehaviour=I, maxLength=50, sysNumber=0.0, core=true, businessType=ANY, t24Name=SERVICE)
+		DESCRIPTION -> byValue EB_Service:TSA_SERVICE__DESCRIPTION *
+		SERVER_NAME -> byValue EB_Service:TSA_SERVICE__SERVER_NAME *
+		USER -> EB_Security:USER required
+			@i18n:Label (en=User, fr=Utilisateur, es=Usuario)
+			@i18n:Tooltip (fr=Utilisateur)
+			@t24:i (align=L, inputBehaviour=I, maxLength=25, sysNumber=5.0, core=true, businessType=ANY, t24Name=USER)
+		SERVICE_CONTROL : EB_Service:TSA_SERVICE__SERVICE_CONTROL
+			@i18n:Label (en="Service Control", fr="Contrôle", es="Control de Servicio")
+			@i18n:Tooltip (fr="Contrôle")
+			@t24:i (align=L, inputBehaviour=I, maxLength=10, sysNumber=6.0, core=true, t24Name=SERVICE.CONTROL)
+		REVIEW_TIME : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=7.0, core=true, t24Name=REVIEW.TIME)
+		TIME_OUT : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=8.0, core=true, t24Name=TIME.OUT)
+		ATTRIBUTE_TYPE -> byValue EB_Service:TSA_SERVICE__ATTRIBUTE_TYPE *
+		FREQUENCY : mml:string
+			@i18n:Label (en=Frequency, fr=Fréquence, es=Frecuencia)
+			@i18n:Tooltip (en=Frequency, fr=Fréquence)
+			@t24:i (align=L, inputBehaviour=I, maxLength=30, sysNumber=11.0, core=true, businessType=ANY, t24Name=FREQUENCY)
+		RESERVED_8 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=10, sysNumber=12.0, core=true, businessType=ANY, t24Name=RESERVED.8)
+		RESERVED_7 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=10, sysNumber=13.0, core=true, businessType=ANY, t24Name=RESERVED.7)
+		DATE -> byValue EB_Service:TSA_SERVICE__DATE *
+		STOPPAGE_TIME : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=20.0, core=true, t24Name=STOPPAGE.TIME)
+		STOP_COUNT : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=21.0, core=true, t24Name=STOP.COUNT)
+		RESERVED_4 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=10, sysNumber=22.0, core=true, businessType=ANY, t24Name=RESERVED.4)
+		RESERVED_3 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=10, sysNumber=23.0, core=true, businessType=ANY, t24Name=RESERVED.3)
+		RESERVED_2 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=10, sysNumber=24.0, core=true, businessType=ANY, t24Name=RESERVED.2)
+		RESERVED_1 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=10, sysNumber=25.0, core=true, businessType=ANY, t24Name=RESERVED.1)
+		RECORD_STATUS : mml:string
+			@i18n:Label (en="Record Status", fr=Statut, es=Estado)
+			@i18n:Tooltip (fr="Statut de l\'enregistrement")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=26.0, core=true, businessType=STAT, t24Name=RECORD.STATUS)
+		CURR_NO : mml:Integer
+			@i18n:Label (en="Curr No", fr="N° version", es="No. Actual")
+			@i18n:Tooltip (fr="Numéro de version")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=27.0, core=true, t24Name=CURR.NO)
+		INPUTTER -> byValue EB_Service:TSA_SERVICE__INPUTTER *
+		DATE_TIME -> byValue EB_Service:TSA_SERVICE__DATE_TIME *
+		AUTHORISER : mml:string
+			@i18n:Label (en=Authoriser, fr="Validé par", es=Autorizador)
+			@i18n:Tooltip (en="Indicates the User who Authorises the record", fr="Utilisateur de validation", es="El usuario que autorizó el registro")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=30.0, core=true, businessType=A, t24Name=AUTHORISER)
+		CO_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company, fr=Entité, es="Compañía")
+			@i18n:Tooltip (fr="Code établissement ou agence")
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=31.0, core=true, businessType=A, t24Name=CO.CODE)
+		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Dept Code", fr=Service, es=Departamento)
+			@i18n:Tooltip (fr="Code du service")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=32.0, core=true, t24Name=DEPT.CODE)
+		AUDITOR_CODE : mml:string
+			@i18n:Label (en="Auditor Code", fr="Audité par", es="Código de Auditor")
+			@i18n:Tooltip (en="Auditor Code", fr="Utilisateur d\'audit", es="Nombre del auditor")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=33.0, core=true, businessType=A, t24Name=AUDITOR.CODE)
+		AUDIT_DATE_TIME : mml:dateTime
+			@i18n:Label (en="Audit Date Time", fr="Audité le", es="Fecha/Hora de Audit.")
+			@i18n:Tooltip (en="Date and time when record was audited", fr="Date et heure d\'audit", es="Fecha y Hora de Auditoría ")
+			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=34.0, core=true, businessType=RELTIME, t24Name=AUDIT.DATE.TIME)
+	}
+	TSA_SERVICE__DESCRIPTION
+	{
+		DESCRIPTION : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=45, sysNumber=1.0, core=true, businessType=ANY, t24Name=DESCRIPTION)
+	}
+	TSA_SERVICE__SERVER_NAME
+	{
+		SERVER_NAME : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=30, sysNumber=2.0, core=true, businessType=ANY, t24Name=SERVER.NAME)
+		WORK_PROFILE -> EB_Service:TSA_WORKLOAD_PROFILE
+			@t24:i (align=L, inputBehaviour=I, maxLength=30, sysNumber=3.0, core=true, businessType=ANY, t24Name=WORK.PROFILE)
+		SERVER_STATUS : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=8, sysNumber=4.0, core=true, businessType=A, t24Name=SERVER.STATUS)
+	}
+	TSA_SERVICE__ATTRIBUTE_TYPE
+	{
+		ATTRIBUTE_TYPE : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=30, sysNumber=9.0, core=true, businessType=ANY, t24Name=ATTRIBUTE.TYPE)
+		ATTRIBUTE_VALUE : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=30, sysNumber=10.0, core=true, businessType=ANY, t24Name=ATTRIBUTE.VALUE)
+	}
+	TSA_SERVICE__DATE
+	{
+		DATE : mml:date
+			@t24:i (align=R, inputBehaviour=N, maxLength=8, sysNumber=15.0, core=true, businessType=D, t24Name=DATE)
+		STARTED : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=8, sysNumber=16.0, core=true, businessType=ANY, t24Name=STARTED)
+		STOPPED : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=8, sysNumber=17.0, core=true, businessType=ANY, t24Name=STOPPED)
+		ELAPSED : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=8, sysNumber=18.0, core=true, businessType=ANY, t24Name=ELAPSED)
+		TRANSACTIONS : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=19.0, core=true, t24Name=TRANSACTIONS)
+	}
+	TSA_SERVICE__INPUTTER
+	{
+		INPUTTER : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=28.0, core=true, businessType=A, t24Name=INPUTTER)
+	}
+	TSA_SERVICE__DATE_TIME
+	{
+		DATE_TIME : mml:dateTime
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=29.0, core=true, businessType=RELTIME, t24Name=DATE.TIME)
+	}
+	TSA_STATUS
+		@t24:i (t24Name=TSA.STATUS, level=I, type=L, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		AGENT -> EB_Service:TSA_STATUS PK required
+			@i18n:Label (en=Agent, fr=Agent, es=Agente)
+			@i18n:Tooltip (en="Agent through whom the order is being placed", fr=Agent, es="Agente a través de quien la Orden es realizada")
+			@t24:i (align=L, inputBehaviour=I, maxLength=10, sysNumber=0.0, core=true, businessType=A, t24Name=AGENT)
+		SERVER : mml:string
+			@i18n:Label (en="Server Name", fr="Nom du serveur", es="Nombre de Servidor")
+			@i18n:Tooltip (fr="Nom du serveur")
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=1.0, core=true, businessType=ANY, t24Name=SERVER)
+		AGENT_STATUS : mml:string
+			@i18n:Label (en=Status, fr="Statut d\'impayé", es=Estado)
+			@i18n:Tooltip (fr="Statut d\'impayé")
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=2.0, core=true, businessType=ANY, t24Name=AGENT.STATUS)
+		LAST_CONTACT : mml:string
+			@i18n:Label (en="Last Contact", fr="Contact dernier", es="Último Contacto")
+			@i18n:Tooltip (fr="Contact dernier")
+			@t24:i (align=L, inputBehaviour=I, maxLength=12, sysNumber=3.0, core=true, businessType=ANY, t24Name=LAST.CONTACT)
+		PROCESS_ID : mml:string
+			@i18n:Label (en="Process Id", fr="Id de processus", es="ID del Proceso")
+			@i18n:Tooltip (fr="Identifiant de processus")
+			@t24:i (align=L, inputBehaviour=I, maxLength=12, sysNumber=4.0, core=true, businessType=ANY, t24Name=PROCESS.ID)
+		CURRENT_SERVICE : mml:string
+			@i18n:Label (en="Current Service", fr="Service courant", es="Servicio Actual")
+			@i18n:Tooltip (fr="Service courant")
+			@t24:i (align=L, inputBehaviour=I, maxLength=30, sysNumber=5.0, core=true, businessType=ANY, t24Name=CURRENT.SERVICE)
+		NEXT_SERVICE : mml:string
+			@i18n:Label (en="Next Service", fr="Service suivant", es="Próximo Servicio")
+			@i18n:Tooltip (fr="Service suivant")
+			@t24:i (align=L, inputBehaviour=I, maxLength=30, sysNumber=6.0, core=true, businessType=ANY, t24Name=NEXT.SERVICE)
+		LAST_MESSAGE : mml:string
+			@i18n:Label (en="Last Message", fr="Dernier message", es="Último Mensaje")
+			@i18n:Tooltip (fr="Dernier message")
+			@t24:i (align=L, inputBehaviour=I, maxLength=40, sysNumber=7.0, core=true, businessType=ANY, t24Name=LAST.MESSAGE)
+		COMO_NAME : mml:string
+			@i18n:Label (en=Como, fr=Commun, es="Común")
+			@i18n:Tooltip (fr=Commun)
+			@t24:i (align=L, inputBehaviour=I, maxLength=30, sysNumber=8.0, core=true, businessType=ANY, t24Name=COMO.NAME)
+		JOB_PROGRESS : mml:Integer
+			@i18n:Label (en="Job Progress", fr="Progrès de procès", es="Progreso de Trabajo")
+			@i18n:Tooltip (fr="Progrès de procès")
+			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=9.0, core=true, t24Name=JOB.PROGRESS)
+		PORT_ID : mml:string
+			@i18n:Label (en="Portfolio No", fr="Code de portefeuille", es="ID de Cartera")
+			@i18n:Tooltip (fr="Code de portefeuille")
+			@t24:i (align=L, inputBehaviour=I, maxLength=12, sysNumber=10.0, core=true, businessType=ANY, t24Name=PORT.ID)
+		OPENS : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=15, sysNumber=11.0, core=true, businessType=ANY, t24Name=OPENS)
+		READS : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=15, sysNumber=12.0, core=true, businessType=ANY, t24Name=READS)
+		WRITES : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=15, sysNumber=13.0, core=true, businessType=ANY, t24Name=WRITES)
+		INPUTS : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=15, sysNumber=14.0, core=true, businessType=ANY, t24Name=INPUTS)
+		EXECUTES : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=15, sysNumber=15.0, core=true, businessType=ANY, t24Name=EXECUTES)
+		DELETES : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=15, sysNumber=16.0, core=true, businessType=ANY, t24Name=DELETES)
+		CLEARFILES : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=15, sysNumber=17.0, core=true, businessType=ANY, t24Name=CLEARFILES)
+		MEMORY : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=15, sysNumber=18.0, core=true, businessType=ANY, t24Name=MEMORY)
+		T24_SESSION_NO : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=4, sysNumber=19.0, core=true, businessType=ANY, t24Name=T24.SESSION.NO)
+	}
+	TSA_WORKLOAD_PROFILE
+		@t24:i (t24Name=TSA.WORKLOAD.PROFILE, level=I, type=H, additionalInfo=NOD, allowedFunctions="A C D E H I L P Q R S", localRefAllowed=true)
+	{
+		WORKLOAD_PROFILE -> EB_Service:TSA_WORKLOAD_PROFILE PK required
+			@t24:i (align=L, inputBehaviour=I, maxLength=30, sysNumber=0.0, core=true, businessType=ANY, t24Name=WORKLOAD.PROFILE)
+		DESCRIPTION : mml:string
+			@i18n:Label (en=Description, fr=Libellé, es="Descripción")
+			@i18n:Tooltip (en=Description, fr=Libellé)
+			@t24:i (align=L, inputBehaviour=I, maxLength=45, sysNumber=1.0, core=true, businessType=ANY, t24Name=DESCRIPTION)
+		TIME -> byValue EB_Service:TSA_WORKLOAD_PROFILE__TIME *
+		RESERVED_9 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=10, sysNumber=4.0, core=true, businessType=ANY, t24Name=RESERVED.9)
+		RESERVED_8 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=10, sysNumber=5.0, core=true, businessType=ANY, t24Name=RESERVED.8)
+		RESERVED_7 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=10, sysNumber=6.0, core=true, businessType=ANY, t24Name=RESERVED.7)
+		RESERVED_6 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=10, sysNumber=7.0, core=true, businessType=ANY, t24Name=RESERVED.6)
+		RESERVED_5 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=10, sysNumber=8.0, core=true, businessType=ANY, t24Name=RESERVED.5)
+		RESERVED_4 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=10, sysNumber=9.0, core=true, businessType=ANY, t24Name=RESERVED.4)
+		RESERVED_3 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=10, sysNumber=10.0, core=true, businessType=ANY, t24Name=RESERVED.3)
+		RESERVED_2 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=10, sysNumber=11.0, core=true, businessType=ANY, t24Name=RESERVED.2)
+		RESERVED_1 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=10, sysNumber=12.0, core=true, businessType=ANY, t24Name=RESERVED.1)
+		RECORD_STATUS : mml:string
+			@i18n:Label (en="Record Status", fr=Statut, es=Estado)
+			@i18n:Tooltip (fr="Statut de l\'enregistrement")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=14.0, core=true, businessType=STAT, t24Name=RECORD.STATUS)
+		CURR_NO : mml:Integer
+			@i18n:Label (en="Curr No", fr="N° version", es="No. Actual")
+			@i18n:Tooltip (fr="Numéro de version")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=15.0, core=true, t24Name=CURR.NO)
+		INPUTTER -> byValue EB_Service:TSA_WORKLOAD_PROFILE__INPUTTER *
+		DATE_TIME -> byValue EB_Service:TSA_WORKLOAD_PROFILE__DATE_TIME *
+		AUTHORISER : mml:string
+			@i18n:Label (en=Authoriser, fr="Validé par", es=Autorizador)
+			@i18n:Tooltip (en="Indicates the User who Authorises the record", fr="Utilisateur de validation", es="El usuario que autorizó el registro")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=18.0, core=true, businessType=A, t24Name=AUTHORISER)
+		CO_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company, fr=Entité, es="Compañía")
+			@i18n:Tooltip (fr="Code établissement ou agence")
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=19.0, core=true, businessType=A, t24Name=CO.CODE)
+		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Dept Code", fr=Service, es=Departamento)
+			@i18n:Tooltip (fr="Code du service")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=20.0, core=true, t24Name=DEPT.CODE)
+		AUDITOR_CODE : mml:string
+			@i18n:Label (en="Auditor Code", fr="Audité par", es="Código de Auditor")
+			@i18n:Tooltip (en="Auditor Code", fr="Utilisateur d\'audit", es="Nombre del auditor")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=21.0, core=true, businessType=A, t24Name=AUDITOR.CODE)
+		AUDIT_DATE_TIME : mml:dateTime
+			@i18n:Label (en="Audit Date Time", fr="Audité le", es="Fecha/Hora de Audit.")
+			@i18n:Tooltip (en="Date and time when record was audited", fr="Date et heure d\'audit", es="Fecha y Hora de Auditoría ")
+			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=22.0, core=true, businessType=RELTIME, t24Name=AUDIT.DATE.TIME)
+	}
+	TSA_WORKLOAD_PROFILE__TIME
+	{
+		TIME : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=5, sysNumber=2.0, core=true, businessType=ANY, t24Name=TIME)
+		AGENTS_REQUIRED : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=4, sysNumber=3.0, core=true, t24Name=AGENTS.REQUIRED)
+	}
+	TSA_WORKLOAD_PROFILE__INPUTTER
+	{
+		INPUTTER : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=16.0, core=true, businessType=A, t24Name=INPUTTER)
+	}
+	TSA_WORKLOAD_PROFILE__DATE_TIME
+	{
+		DATE_TIME : mml:dateTime
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=17.0, core=true, businessType=RELTIME, t24Name=DATE.TIME)
+	}
+}
+Enumerations {
+	BATCH__BATCH_ENVIRONMENT : mml:string
+		F=F
+		B=B
+	BATCH__CLEAR_STATIC_CACHE : mml:string
+		YES=YES
+		NO=NO
+	BATCH_NEW_COMPANY__LEVEL : mml:string
+		FIN=FIN
+		FRP=FRP
+		CUS=CUS
+		INT=INT
+		NOS=NOS
+		CCY=CCY
+	EB_PHANTOM__RUN_MODE : mml:string
+		INTERACTIVE=INTERACTIVE
+		PHANTOM=PHANTOM
+	EB_PHANTOM__AUTO_SHUTDOWN : mml:string
+		Y=Y
+	EB_PHANTOM__AUTO_STARTUP : mml:string
+		Y=Y
+	TSA_SERVICE__SERVICE_CONTROL : mml:string
+		STOP=STOP
+		START=START
+		AUTO=AUTO
+}

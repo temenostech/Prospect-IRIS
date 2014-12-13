@@ -1,0 +1,341 @@
+# UTF-8
+/* Fee Calculation for Syndicated Loans */
+Domain SL_Fees
+	@t24:i (module=SL)
+	@java:Package (value=com.temenos.t24.datamodel.sl.sl_fees)
+namespace "http://www.temenos.com/t24/SL_Fees"
+metamodelVersion 4.3.0.20110527
+Classes {
+	SL_CHARGE
+		@t24:i (t24Name=SL.CHARGE, level=F, type=H, additionalInfo="UNP OEU", allowedFunctions="A C D E H I L P Q R S", localRefAllowed=true)
+	{
+		CONTRACT_ID -> SL_Fees:SL_CHARGE PK required
+			@i18n:Label (en="Contract Id", fr="N° de contrat", es="ID de Transacción")
+			@i18n:Tooltip (en="Contract Id", fr="Numéro de contrat")
+			@t24:i (align=L, inputBehaviour=I, maxLength=50, sysNumber=0.0, core=true, businessType=A, t24Name=CONTRACT.ID)
+		CUSTOMER -> ST_Customer:CUSTOMER
+			@i18n:Label (en="Nom client", fr=Client, es=Cliente)
+			@i18n:Tooltip (en="Nom du client", fr="Code du client", es="Pasivo de Cliente")
+			@t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=1.0, core=true, businessType=CUS, t24Name=CUSTOMER)
+		CHG_ACTIVITY -> SL_Fees:SL_CHARGE_ACTIVITY required
+			@i18n:Label (en="Chg Activity", fr="Code activité", es="Actividad de Cargo")
+			@i18n:Tooltip (fr="Code activité")
+			@t24:i (align=L, inputBehaviour=F, maxLength=10, sysNumber=2.0, core=true, businessType=A, t24Name=CHG.ACTIVITY)
+		CHG_CODE -> byValue SL_Fees:SL_CHARGE__CHG_CODE *
+		DELIVERY_CUST -> byValue SL_Fees:SL_CHARGE__DELIVERY_CUST *
+		DELIVERY_REF -> byValue SL_Fees:SL_CHARGE__DELIVERY_REF *
+		ROUNDING_RULE -> EB_SystemTables:EB_ROUNDING_RULE
+			@i18n:Label (en="Rounding Rule", fr="Règle d\'arrondi", es="Regla de Redondeo")
+			@i18n:Tooltip (en="Indicates the rounding rule", fr="Règle d\'arrondi")
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=40.0, core=true, businessType=A, t24Name=ROUNDING.RULE)
+		RESERVED_9 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=41.0, core=true, t24Name=RESERVED.9)
+		RESERVED_8 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=42.0, core=true, t24Name=RESERVED.8)
+		RESERVED_7 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=43.0, core=true, t24Name=RESERVED.7)
+		RESERVED_6 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=44.0, core=true, t24Name=RESERVED.6)
+		RESERVED_5 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=45.0, core=true, t24Name=RESERVED.5)
+		RESERVED_4 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=46.0, core=true, t24Name=RESERVED.4)
+		RESERVED_3 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=47.0, core=true, t24Name=RESERVED.3)
+		RESERVED_2 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=48.0, core=true, t24Name=RESERVED.2)
+		STMT_NO -> byValue SL_Fees:SL_CHARGE__STMT_NO *
+		OVERRIDE -> byValue SL_Fees:SL_CHARGE__OVERRIDE *
+		RECORD_STATUS : mml:string
+			@i18n:Label (en="Record Status", fr=Statut, es=Estado)
+			@i18n:Tooltip (fr="Statut de l\'enregistrement")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=52.0, core=true, businessType=STAT, t24Name=RECORD.STATUS)
+		CURR_NO : mml:Integer
+			@i18n:Label (en="Curr No", fr="N° version", es="No. Actual")
+			@i18n:Tooltip (fr="Numéro de version")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=53.0, core=true, t24Name=CURR.NO)
+		INPUTTER -> byValue SL_Fees:SL_CHARGE__INPUTTER *
+		DATE_TIME -> byValue SL_Fees:SL_CHARGE__DATE_TIME *
+		AUTHORISER : mml:string
+			@i18n:Label (en=Authoriser, fr="Validé par", es=Autorizador)
+			@i18n:Tooltip (en="Indicates the User who Authorises the record", fr="Utilisateur de validation", es="El usuario que autorizó el registro")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=56.0, core=true, businessType=A, t24Name=AUTHORISER)
+		CO_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company, fr=Entité, es="Compañía")
+			@i18n:Tooltip (fr="Code établissement ou agence")
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=57.0, core=true, businessType=A, t24Name=CO.CODE)
+		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Dept Code", fr=Service, es=Departamento)
+			@i18n:Tooltip (fr="Code du service")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=58.0, core=true, t24Name=DEPT.CODE)
+		AUDITOR_CODE : mml:string
+			@i18n:Label (en="Auditor Code", fr="Audité par", es="Código de Auditor")
+			@i18n:Tooltip (en="Auditor Code", fr="Utilisateur d\'audit", es="Nombre del auditor")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=59.0, core=true, businessType=A, t24Name=AUDITOR.CODE)
+		AUDIT_DATE_TIME : mml:dateTime
+			@i18n:Label (en="Audit Date Time", fr="Audité le", es="Fecha/Hora de Audit.")
+			@i18n:Tooltip (en="Date and time when record was audited", fr="Date et heure d\'audit", es="Fecha y Hora de Auditoría ")
+			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=60.0, core=true, businessType=RELTIME, t24Name=AUDIT.DATE.TIME)
+	}
+	SL_CHARGE__CHG_CODE
+	{
+		CHG_CODE : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=11, sysNumber=3.0, core=true, businessType=A, t24Name=CHG.CODE)
+		APPLY_TO_ALL : SL_Fees:SL_CHARGE__CHG_CODE__APPLY_TO_ALL
+			@t24:i (align=L, inputBehaviour=F, maxLength=3, sysNumber=4.0, core=true, t24Name=APPLY.TO.ALL)
+		CHG_CALC_BASIS : SL_Fees:SL_CHARGE__CHG_CODE__CHG_CALC_BASIS required
+			@t24:i (align=L, inputBehaviour=I, maxLength=15, sysNumber=5.0, core=true, t24Name=CHG.CALC.BASIS)
+		CHG_BASE_AMT : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=15, sysNumber=6.0, core=true, businessType=AMT, t24Name=CHG.BASE.AMT)
+		CHG_CURRENCY -> FIN_CurrencyConfig:CURRENCY
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=7.0, core=true, businessType=CCY, t24Name=CHG.CURRENCY)
+		CHG_AMOUNT : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=8.0, core=true, businessType=AMT, t24Name=CHG.AMOUNT)
+		CHG_ACCOUNT -> ACM_AccountOpening:ACCOUNT
+			@t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=9.0, core=true, businessType=ANT, t24Name=CHG.ACCOUNT)
+		CHG_XCHANGE : mml:string
+			@t24:i (align=R, inputBehaviour=N, maxLength=16, sysNumber=10.0, core=true, businessType=R, t24Name=CHG.XCHANGE)
+		CHG_STRT_DTE : mml:date
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=11.0, core=true, businessType=D, t24Name=CHG.STRT.DTE)
+		CHG_FQY : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=19, sysNumber=12.0, core=true, businessType=FQF, t24Name=CHG.FQY)
+		CHG_END_DATE : mml:date
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=13.0, core=true, businessType=D, t24Name=CHG.END.DATE)
+		NXT_CHG_DTE : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=19, sysNumber=14.0, core=true, businessType=FQU, t24Name=NXT.CHG.DTE)
+		AMORT_CHARGE : SL_Fees:SL_CHARGE__CHG_CODE__AMORT_CHARGE
+			@t24:i (align=L, inputBehaviour=F, maxLength=3, sysNumber=15.0, core=true, t24Name=AMORT.CHARGE)
+		AMORT_PERIOD : mml:string
+			@t24:i (align=L, inputBehaviour=F, maxLength=4, sysNumber=16.0, core=true, businessType=A, t24Name=AMORT.PERIOD)
+		AMORT_FREQ : mml:string
+			@t24:i (align=L, inputBehaviour=F, maxLength=19, sysNumber=17.0, core=true, businessType=FQF, t24Name=AMORT.FREQ)
+		CHG_LCY_AMT : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=18.0, core=true, businessType=AMT, t24Name=CHG.LCY.AMT)
+		CHG_ACC_AMT : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=19.0, core=true, businessType=AMT, t24Name=CHG.ACC.AMT)
+		TAX_CODE : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=2, sysNumber=20.0, core=true, businessType=TAX, t24Name=TAX.CODE)
+		TAX_CCY : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=21.0, core=true, businessType=CCY, t24Name=TAX.CCY)
+		TAX_AMT : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=22.0, core=true, businessType=AMT, t24Name=TAX.AMT)
+		TAX_ACC_AMT : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=23.0, core=true, businessType=AMT, t24Name=TAX.ACC.AMT)
+		TAX_LCY_AMT : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=24.0, core=true, businessType=AMT, t24Name=TAX.LCY.AMT)
+		PART_ID -> byValue SL_Fees:SL_CHARGE__CHG_CODE__PART_ID *
+		MANUAL : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=29.0, core=true, businessType=A, t24Name=MANUAL)
+	}
+	SL_CHARGE__CHG_CODE__PART_ID
+	{
+		PART_ID -> ST_Customer:CUSTOMER
+			@t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=25.0, core=true, businessType=CUS, t24Name=PART.ID)
+		PART_SHARE : mml:string
+			@t24:i (align=R, inputBehaviour=I, maxLength=13, sysNumber=26.0, core=true, businessType=R, t24Name=PART.SHARE)
+		PART_CHG_AMT : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=27.0, core=true, businessType=AMT, t24Name=PART.CHG.AMT)
+		PART_TAX_AMT : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=28.0, core=true, businessType=AMT, t24Name=PART.TAX.AMT)
+	}
+	SL_CHARGE__DELIVERY_CUST
+	{
+		DELIVERY_CUST -> ST_Customer:CUSTOMER
+			@t24:i (align=R, inputBehaviour=N, maxLength=10, sysNumber=30.0, core=true, businessType=CUS, t24Name=DELIVERY.CUST)
+		ACTIVITY_CODE -> EB_Delivery:EB_ACTIVITY
+			@t24:i (align=L, inputBehaviour=N, maxLength=7, sysNumber=31.0, core=true, businessType=A, t24Name=ACTIVITY.CODE)
+		ACTIVITY_DATE : mml:date
+			@t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=32.0, core=true, businessType=D, t24Name=ACTIVITY.DATE)
+		PRIOR_DAYS : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=3, sysNumber=33.0, core=true, t24Name=PRIOR.DAYS)
+		MSG_TYPE -> byValue SL_Fees:SL_CHARGE__DELIVERY_CUST__MSG_TYPE *
+	}
+	SL_CHARGE__DELIVERY_CUST__MSG_TYPE
+	{
+		MSG_TYPE -> DE_Config:DE_MESSAGE
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=34.0, core=true, businessType=A, t24Name=MSG.TYPE)
+		MSG_CLASS -> EB_Delivery:EB_MESSAGE_CLASS
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=35.0, core=true, businessType=A, t24Name=MSG.CLASS)
+		OVR_CARRIER -> DE_Config:DE_CARRIER
+			@t24:i (align=L, inputBehaviour=N, maxLength=8, sysNumber=36.0, core=true, businessType=A, t24Name=OVR.CARRIER)
+		SEND_MSG : SL_Fees:SL_CHARGE__DELIVERY_CUST__MSG_TYPE__SEND_MSG
+			@t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=37.0, core=true, t24Name=SEND.MSG)
+		MSG_DATE : mml:date
+			@t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=38.0, core=true, businessType=D, t24Name=MSG.DATE)
+	}
+	SL_CHARGE__DELIVERY_REF
+	{
+		DELIVERY_REF : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=46, sysNumber=39.0, core=true, businessType=A, t24Name=DELIVERY.REF)
+	}
+	SL_CHARGE__STMT_NO
+	{
+		STMT_NO : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=29, sysNumber=50.0, core=true, businessType=A, t24Name=STMT.NO)
+	}
+	SL_CHARGE__OVERRIDE
+	{
+		OVERRIDE : mml:string
+			@t24:i (align=L, inputBehaviour=E, maxLength=35, sysNumber=51.0, core=true, businessType=A, t24Name=OVERRIDE)
+	}
+	SL_CHARGE__INPUTTER
+	{
+		INPUTTER : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=54.0, core=true, businessType=A, t24Name=INPUTTER)
+	}
+	SL_CHARGE__DATE_TIME
+	{
+		DATE_TIME : mml:dateTime
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=55.0, core=true, businessType=RELTIME, t24Name=DATE.TIME)
+	}
+	SL_CHARGE_ACTIVITY
+		@t24:i (t24Name=SL.CHARGE.ACTIVITY, level=I, type=H, allowedFunctions="A C D E H I L P Q R S", localRefAllowed=false)
+	{
+		CHRG_ACTIVITY -> SL_Fees:SL_CHARGE_ACTIVITY PK required
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=0.0, core=true, businessType=A, t24Name=CHRG.ACTIVITY)
+		DESCRIPTION -> byValue SL_Fees:SL_CHARGE_ACTIVITY__DESCRIPTION *
+		SHORT_DESCR -> byValue SL_Fees:SL_CHARGE_ACTIVITY__SHORT_DESCR *
+		CHG_TYPE -> byValue SL_Fees:SL_CHARGE_ACTIVITY__CHG_TYPE *
+		RECORD_STATUS : mml:string
+			@i18n:Label (en="Record Status", fr=Statut, es=Estado)
+			@i18n:Tooltip (fr="Statut de l\'enregistrement")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=9.0, core=true, businessType=STAT, t24Name=RECORD.STATUS)
+		CURR_NO : mml:Integer
+			@i18n:Label (en="Curr No", fr="N° version", es="No. Actual")
+			@i18n:Tooltip (fr="Numéro de version")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=10.0, core=true, t24Name=CURR.NO)
+		INPUTTER -> byValue SL_Fees:SL_CHARGE_ACTIVITY__INPUTTER *
+		DATE_TIME -> byValue SL_Fees:SL_CHARGE_ACTIVITY__DATE_TIME *
+		AUTHORISER : mml:string
+			@i18n:Label (en=Authoriser, fr="Validé par", es=Autorizador)
+			@i18n:Tooltip (en="Indicates the User who Authorises the record", fr="Utilisateur de validation", es="El usuario que autorizó el registro")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=13.0, core=true, businessType=A, t24Name=AUTHORISER)
+		CO_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company, fr=Entité, es="Compañía")
+			@i18n:Tooltip (fr="Code établissement ou agence")
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=14.0, core=true, businessType=A, t24Name=CO.CODE)
+		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Dept Code", fr=Service, es=Departamento)
+			@i18n:Tooltip (fr="Code du service")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=15.0, core=true, t24Name=DEPT.CODE)
+		AUDITOR_CODE : mml:string
+			@i18n:Label (en="Auditor Code", fr="Audité par", es="Código de Auditor")
+			@i18n:Tooltip (en="Auditor Code", fr="Utilisateur d\'audit", es="Nombre del auditor")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=16.0, core=true, businessType=A, t24Name=AUDITOR.CODE)
+		AUDIT_DATE_TIME : mml:dateTime
+			@i18n:Label (en="Audit Date Time", fr="Audité le", es="Fecha/Hora de Audit.")
+			@i18n:Tooltip (en="Date and time when record was audited", fr="Date et heure d\'audit", es="Fecha y Hora de Auditoría ")
+			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=17.0, core=true, businessType=RELTIME, t24Name=AUDIT.DATE.TIME)
+	}
+	SL_CHARGE_ACTIVITY__DESCRIPTION
+	{
+		DESCRIPTION : mml:string required
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, multiLanguage=true, sysNumber=1.0, core=true, businessType=A, t24Name=DESCRIPTION)
+	}
+	SL_CHARGE_ACTIVITY__SHORT_DESCR
+	{
+		SHORT_DESCR : mml:string required
+			@t24:i (align=L, inputBehaviour=I, maxLength=15, multiLanguage=true, sysNumber=2.0, core=true, businessType=A, t24Name=SHORT.DESCR)
+	}
+	SL_CHARGE_ACTIVITY__CHG_TYPE
+	{
+		CHG_TYPE : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=11, sysNumber=3.0, core=true, businessType=A, t24Name=CHG.TYPE)
+		CHARGE_FREQ : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=19, sysNumber=4.0, core=true, businessType=FQF, t24Name=CHARGE.FREQ)
+		AMORT_CHARGE : SL_Fees:SL_CHARGE_ACTIVITY__CHG_TYPE__AMORT_CHARGE
+			@t24:i (align=L, inputBehaviour=F, maxLength=3, sysNumber=5.0, core=true, t24Name=AMORT.CHARGE)
+		AMORT_PERIOD : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=4, sysNumber=6.0, core=true, businessType=A, t24Name=AMORT.PERIOD)
+		AMORT_FREQ : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=19, sysNumber=7.0, core=true, businessType=FQF, t24Name=AMORT.FREQ)
+		APPLY_TO_ALL : SL_Fees:SL_CHARGE_ACTIVITY__CHG_TYPE__APPLY_TO_ALL
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=8.0, core=true, t24Name=APPLY.TO.ALL)
+	}
+	SL_CHARGE_ACTIVITY__INPUTTER
+	{
+		INPUTTER : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=11.0, core=true, businessType=A, t24Name=INPUTTER)
+	}
+	SL_CHARGE_ACTIVITY__DATE_TIME
+	{
+		DATE_TIME : mml:dateTime
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=12.0, core=true, businessType=RELTIME, t24Name=DATE.TIME)
+	}
+	SL_CHARGE_BALANCES
+		@t24:i (t24Name=SL.CHARGE.BALANCES, level=F, type=L, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		CONT_BAL_ID -> SL_Fees:SL_CHARGE_BALANCES PK required
+			@t24:i (align=L, inputBehaviour=I, maxLength=45, sysNumber=0.0, core=true, businessType=A, t24Name=CONT.BAL.ID)
+		CHG_CODE -> byValue SL_Fees:SL_CHARGE_BALANCES__CHG_CODE *
+	}
+	SL_CHARGE_BALANCES__CHG_CODE
+	{
+		CHG_CODE : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=11, sysNumber=1.0, core=true, businessType=A, t24Name=CHG.CODE)
+		CHG_CURRENCY : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=2.0, core=true, businessType=CCY, t24Name=CHG.CURRENCY)
+		TOT_CHRG_AMT : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=3.0, core=true, businessType=AMT, t24Name=TOT.CHRG.AMT)
+		TAX_CODE : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=11, sysNumber=4.0, core=true, businessType=A, t24Name=TAX.CODE)
+		TAX_CURRENCY : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=5.0, core=true, businessType=CCY, t24Name=TAX.CURRENCY)
+		TAX_AMT : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=6.0, core=true, businessType=AMT, t24Name=TAX.AMT)
+		PART_ID -> byValue SL_Fees:SL_CHARGE_BALANCES__CHG_CODE__PART_ID *
+	}
+	SL_CHARGE_BALANCES__CHG_CODE__PART_ID
+	{
+		PART_ID : mml:string
+			@t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=7.0, core=true, businessType=CUS, t24Name=PART.ID)
+		PART_CHG_AMT : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=8.0, core=true, businessType=AMT, t24Name=PART.CHG.AMT)
+		PART_TAX_AMT : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=9.0, core=true, businessType=AMT, t24Name=PART.TAX.AMT)
+		CATEG_CODE : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=5, sysNumber=10.0, core=true, businessType=CAT, t24Name=CATEG.CODE)
+		TOT_AMRT_PRD : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=4, sysNumber=11.0, core=true, t24Name=TOT.AMRT.PRD)
+		TOT_AMRT_AMT : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=12.0, core=true, businessType=AMT, t24Name=TOT.AMRT.AMT)
+		MTH_AMRT_AMT : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=13.0, core=true, businessType=AMT, t24Name=MTH.AMRT.AMT)
+		BAL_AMRT_PRD : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=4, sysNumber=14.0, core=true, t24Name=BAL.AMRT.PRD)
+		BAL_AMRT_AMT : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=15.0, core=true, businessType=AMT, t24Name=BAL.AMRT.AMT)
+		NXT_AMRT_DTE : mml:date
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=16.0, core=true, businessType=D, t24Name=NXT.AMRT.DTE)
+		END_AMRT_DTE : mml:date
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=17.0, core=true, businessType=D, t24Name=END.AMRT.DTE)
+	}
+	SL_CHARGE_BALANCES_HIST
+		@t24:i (t24Name=SL.CHARGE.BALANCES.HIST, level=F, type=L, allowedFunctions="L P S", localRefAllowed=false)
+	{
+	}
+}
+Enumerations {
+	SL_CHARGE__CHG_CODE__APPLY_TO_ALL : mml:string
+		YES=YES
+		NO=NO
+	SL_CHARGE__CHG_CODE__CHG_CALC_BASIS : mml:string
+		FACILITY_ORIG=FACILITY.ORIG
+		FACILITY_OS=FACILITY.OS
+		LOAN_ORIG=LOAN.ORIG
+		LOAN_OS=LOAN.OS
+		PART_SHARE=PART.SHARE
+		ADHOC=ADHOC
+	SL_CHARGE__CHG_CODE__AMORT_CHARGE : mml:string
+		YES=YES
+		NO=NO
+	SL_CHARGE__DELIVERY_CUST__MSG_TYPE__SEND_MSG : mml:string
+		NO=NO
+		NULL=NULL
+	SL_CHARGE_ACTIVITY__CHG_TYPE__AMORT_CHARGE : mml:string
+		YES=YES
+		NO=NO
+	SL_CHARGE_ACTIVITY__CHG_TYPE__APPLY_TO_ALL : mml:string
+		YES=YES
+		NO=NO
+}

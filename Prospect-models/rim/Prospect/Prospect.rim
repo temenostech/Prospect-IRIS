@@ -1,0 +1,47 @@
+domain Prospect {
+	use common.HTTPEvents.*
+	use common.CoreCommands.*
+	use common.ODataCommands.*
+	use common.T24Events.*
+	use common.T24Commands.*
+	use T24.*
+	rim Prospect {
+		basepath: "/{companyid}"
+
+		// Define the $metadata resource for OData 
+		// (note, this is an out of band resource meaning there are no links to the metadata from our service
+		resource ODataMetadata {
+			type: item
+			entity: Metadata
+			view: GETMetadata
+			path: "/$metadata"
+		}
+		
+		initial resource ServiceDocument {
+			type: item
+			entity: ServiceDocument
+			view: GETServiceDocument
+			path: "/"
+			GET -> T24.enqAcctBalToday.enqAcctBalTodays
+			GET -> T24.enqCustomerInfo.enqCustomerInfos
+			GET -> T24.enqStmtEntBook.enqStmtEntBooks
+			GET -> T24.enqImageList.enqImageLists
+			GET -> T24.verCustomer_Create.verCustomer_Creates
+			GET -> Errors
+		}
+
+		exception resource InteractionException {
+			type: item
+			entity: InteractionException
+			view: GETException
+		}
+
+		resource Errors {
+			type: collection
+			entity: Errors
+			view: NoopGET
+		}
+
+	}
+
+}

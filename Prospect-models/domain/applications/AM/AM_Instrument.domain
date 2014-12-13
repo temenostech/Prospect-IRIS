@@ -1,0 +1,932 @@
+# UTF-8
+/* Instrument Performance in Asset Management */
+Domain AM_Instrument
+	@t24:i (module=AM)
+	@java:Package (value=com.temenos.t24.datamodel.am.am_instrument)
+namespace "http://www.temenos.com/t24/AM_Instrument"
+metamodelVersion 4.3.0.20110527
+Classes {
+	AM_AIV_ACTIVITY
+		@t24:i (t24Name=AM.AIV.ACTIVITY, level=F, type=L, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		AIV_ID -> AM_Instrument:AM_AIV_ACTIVITY PK required
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=0.0, core=true, businessType=A, t24Name=AIV.ID)
+		PROCESS_DATE : mml:date
+			@i18n:Label (en="Process Date", fr="Date de processus", es="Fecha de Proceso")
+			@i18n:Tooltip (fr="Date de processus")
+			@t24:i (align=R, inputBehaviour=I, maxLength=12, sysNumber=1.0, core=true, businessType=D, t24Name=PROCESS.DATE)
+		RESERVED5 : mml:Integer
+			@i18n:Label (fr="Propriété saisie avec activité paimt")
+			@i18n:Tooltip (fr="Propriété saisie avec activité paimt ")
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=2.0, core=true, t24Name=RESERVED5)
+		RESERVED4 : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=3.0, core=true, t24Name=RESERVED4)
+		RESERVED3 : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=4.0, core=true, t24Name=RESERVED3)
+		RESERVED2 : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=5.0, core=true, t24Name=RESERVED2)
+	}
+	AM_BREAKDOWN_SELECT
+		@t24:i (t24Name=AM.BREAKDOWN.SELECT, level=I, type=H, allowedFunctions="C E I L P Q S", localRefAllowed=false)
+	{
+		ID -> AM_Instrument:AM_BREAKDOWN_SELECT PK required
+			@i18n:Label (en="Transaction Ref", fr=Code, es="Ref. de Transacción")
+			@i18n:Tooltip (en="Transaction Reference", fr=Code)
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=0.0, core=true, businessType=COM, t24Name="@ID")
+		BREAK_SELECT : AM_Instrument:AM_BREAKDOWN_SELECT__BREAK_SELECT required
+			@i18n:Label (en="Break Select", fr="Sélectionner Pause", es="Seleccionar Descanso")
+			@i18n:Tooltip (en="Break Select", fr="Sélectionner Pause", es="Seleccionar Descanso")
+			@t24:i (align=L, inputBehaviour=I, maxLength=15, sysNumber=1.0, core=true, t24Name=BREAK.SELECT)
+		SELECT_FIELD -> byValue AM_Instrument:AM_BREAKDOWN_SELECT__SELECT_FIELD *
+		SEL_PORTFOLIO -> byValue AM_Instrument:AM_BREAKDOWN_SELECT__SEL_PORTFOLIO *
+		RESERVED05 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=7.0, core=true, t24Name=RESERVED05)
+		RESERVED04 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=8.0, core=true, t24Name=RESERVED04)
+		RESERVED03 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=9.0, core=true, t24Name=RESERVED03)
+		RESERVED02 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=10.0, core=true, t24Name=RESERVED02)
+		RESERVED01 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=11.0, core=true, t24Name=RESERVED01)
+		OVERRIDE -> byValue AM_Instrument:AM_BREAKDOWN_SELECT__OVERRIDE *
+		RECORD_STATUS : mml:string
+			@i18n:Label (en="Record Status", fr=Statut, es=Estado)
+			@i18n:Tooltip (fr="Statut de l\'enregistrement")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=13.0, core=true, businessType=STAT, t24Name=RECORD.STATUS)
+		CURR_NO : mml:Integer
+			@i18n:Label (en="Curr No", fr="N° version", es="No. Actual")
+			@i18n:Tooltip (fr="Numéro de version")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=14.0, core=true, t24Name=CURR.NO)
+		INPUTTER -> byValue AM_Instrument:AM_BREAKDOWN_SELECT__INPUTTER *
+		DATE_TIME -> byValue AM_Instrument:AM_BREAKDOWN_SELECT__DATE_TIME *
+		AUTHORISER : mml:string
+			@i18n:Label (en=Authoriser, fr="Validé par", es=Autorizador)
+			@i18n:Tooltip (en="Indicates the User who Authorises the record", fr="Utilisateur de validation", es="El usuario que autorizó el registro")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=17.0, core=true, businessType=A, t24Name=AUTHORISER)
+		CO_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company, fr=Entité, es="Compañía")
+			@i18n:Tooltip (fr="Code établissement ou agence")
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=18.0, core=true, businessType=A, t24Name=CO.CODE)
+		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Dept Code", fr=Service, es=Departamento)
+			@i18n:Tooltip (fr="Code du service")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=19.0, core=true, t24Name=DEPT.CODE)
+		AUDITOR_CODE : mml:string
+			@i18n:Label (en="Auditor Code", fr="Audité par", es="Código de Auditor")
+			@i18n:Tooltip (en="Auditor Code", fr="Utilisateur d\'audit", es="Nombre del auditor")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=20.0, core=true, businessType=A, t24Name=AUDITOR.CODE)
+		AUDIT_DATE_TIME : mml:dateTime
+			@i18n:Label (en="Audit Date Time", fr="Audité le", es="Fecha/Hora de Audit.")
+			@i18n:Tooltip (en="Date and time when record was audited", fr="Date et heure d\'audit", es="Fecha y Hora de Auditoría ")
+			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=21.0, core=true, businessType=RELTIME, t24Name=AUDIT.DATE.TIME)
+	}
+	AM_BREAKDOWN_SELECT__SELECT_FIELD
+	{
+		SELECT_FIELD : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=20, sysNumber=2.0, core=true, businessType=A, t24Name=SELECT.FIELD)
+		SELECT_OPERAND : AM_Instrument:AM_BREAKDOWN_SELECT__SELECT_FIELD__SELECT_OPERAND
+			@t24:i (align=L, inputBehaviour=I, maxLength=6, sysNumber=3.0, core=true, t24Name=SELECT.OPERAND)
+		SELECT_VALUE : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=20, sysNumber=4.0, core=true, businessType=A, t24Name=SELECT.VALUE)
+		SELECT_JOIN : AM_Instrument:AM_BREAKDOWN_SELECT__SELECT_FIELD__SELECT_JOIN
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=5.0, core=true, t24Name=SELECT.JOIN)
+	}
+	AM_BREAKDOWN_SELECT__SEL_PORTFOLIO
+	{
+		SEL_PORTFOLIO -> SCO_PortfolioMaintenance:SEC_ACC_MASTER
+			@t24:i (align=L, inputBehaviour=I, maxLength=10, sysNumber=6.0, core=true, businessType=SAM, t24Name=SEL.PORTFOLIO)
+	}
+	AM_BREAKDOWN_SELECT__OVERRIDE
+	{
+		OVERRIDE : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=12.0, core=true, businessType=A, t24Name=OVERRIDE)
+	}
+	AM_BREAKDOWN_SELECT__INPUTTER
+	{
+		INPUTTER : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=15.0, core=true, businessType=A, t24Name=INPUTTER)
+	}
+	AM_BREAKDOWN_SELECT__DATE_TIME
+	{
+		DATE_TIME : mml:dateTime
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=16.0, core=true, businessType=RELTIME, t24Name=DATE.TIME)
+	}
+	AM_BRK_INST_DEFINITION
+		@t24:i (t24Name=AM.BRK.INST.DEFINITION, level=F, type=H, allowedFunctions="C E I L P Q S", localRefAllowed=false)
+	{
+		INST_ID -> AM_Instrument:AM_BRK_INST_DEFINITION PK required
+			@i18n:Label (en="Instrument Id", fr="Id d\'instrument", es="ID de Instrumento")
+			@i18n:Tooltip (fr="Identifiant d\'instrument")
+			@t24:i (align=L, inputBehaviour=I, maxLength=15, sysNumber=0.0, core=true, businessType=A, t24Name=INST.ID)
+		BRKDWN_HOLD : AM_Instrument:AM_BRK_INST_DEFINITION__BRKDWN_HOLD
+			@t24:i (align=L, inputBehaviour=I, maxLength=5, sysNumber=1.0, core=true, t24Name=BRKDWN.HOLD)
+		PORTFOLIO_NO -> byValue AM_Instrument:AM_BRK_INST_DEFINITION__PORTFOLIO_NO *
+		RESERVED04 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=3.0, core=true, t24Name=RESERVED04)
+		RESERVED03 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=4.0, core=true, t24Name=RESERVED03)
+		RESERVED02 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=5.0, core=true, t24Name=RESERVED02)
+		RESERVED01 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=6.0, core=true, t24Name=RESERVED01)
+		RECORD_STATUS : mml:string
+			@i18n:Label (en="Record Status", fr=Statut, es=Estado)
+			@i18n:Tooltip (fr="Statut de l\'enregistrement")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=7.0, core=true, businessType=STAT, t24Name=RECORD.STATUS)
+		CURR_NO : mml:Integer
+			@i18n:Label (en="Curr No", fr="N° version", es="No. Actual")
+			@i18n:Tooltip (fr="Numéro de version")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=8.0, core=true, t24Name=CURR.NO)
+		INPUTTER -> byValue AM_Instrument:AM_BRK_INST_DEFINITION__INPUTTER *
+		DATE_TIME -> byValue AM_Instrument:AM_BRK_INST_DEFINITION__DATE_TIME *
+		AUTHORISER : mml:string
+			@i18n:Label (en=Authoriser, fr="Validé par", es=Autorizador)
+			@i18n:Tooltip (en="Indicates the User who Authorises the record", fr="Utilisateur de validation", es="El usuario que autorizó el registro")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=11.0, core=true, businessType=A, t24Name=AUTHORISER)
+		CO_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company, fr=Entité, es="Compañía")
+			@i18n:Tooltip (fr="Code établissement ou agence")
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=12.0, core=true, businessType=A, t24Name=CO.CODE)
+		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Dept Code", fr=Service, es=Departamento)
+			@i18n:Tooltip (fr="Code du service")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=13.0, core=true, t24Name=DEPT.CODE)
+		AUDITOR_CODE : mml:string
+			@i18n:Label (en="Auditor Code", fr="Audité par", es="Código de Auditor")
+			@i18n:Tooltip (en="Auditor Code", fr="Utilisateur d\'audit", es="Nombre del auditor")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=14.0, core=true, businessType=A, t24Name=AUDITOR.CODE)
+		AUDIT_DATE_TIME : mml:dateTime
+			@i18n:Label (en="Audit Date Time", fr="Audité le", es="Fecha/Hora de Audit.")
+			@i18n:Tooltip (en="Date and time when record was audited", fr="Date et heure d\'audit", es="Fecha y Hora de Auditoría ")
+			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=15.0, core=true, businessType=RELTIME, t24Name=AUDIT.DATE.TIME)
+	}
+	AM_BRK_INST_DEFINITION__PORTFOLIO_NO
+	{
+		PORTFOLIO_NO : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=20, sysNumber=2.0, core=true, businessType=A, t24Name=PORTFOLIO.NO)
+	}
+	AM_BRK_INST_DEFINITION__INPUTTER
+	{
+		INPUTTER : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=9.0, core=true, businessType=A, t24Name=INPUTTER)
+	}
+	AM_BRK_INST_DEFINITION__DATE_TIME
+	{
+		DATE_TIME : mml:dateTime
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=10.0, core=true, businessType=RELTIME, t24Name=DATE.TIME)
+	}
+	AM_EXCEPTION
+		@t24:i (t24Name=AM.EXCEPTION, level=F, type=H, allowedFunctions="A C D E H I L P Q R S", localRefAllowed=false)
+	{
+		ID -> AM_Instrument:AM_EXCEPTION PK required
+			@i18n:Label (en="Transaction Ref", fr=Code, es="Ref. de Transacción")
+			@i18n:Tooltip (en="Transaction Reference", fr=Code)
+			@t24:i (align=L, inputBehaviour=I, maxLength=10, sysNumber=0.0, core=true, t24Name="@ID")
+		TXN_CODE -> byValue AM_Instrument:AM_EXCEPTION__TXN_CODE *
+		RECORD_STATUS : mml:string
+			@i18n:Label (en="Record Status", fr=Statut, es=Estado)
+			@i18n:Tooltip (fr="Statut de l\'enregistrement")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=3.0, core=true, businessType=STAT, t24Name=RECORD.STATUS)
+		CURR_NO : mml:Integer
+			@i18n:Label (en="Curr No", fr="N° version", es="No. Actual")
+			@i18n:Tooltip (fr="Numéro de version")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=4.0, core=true, t24Name=CURR.NO)
+		INPUTTER -> byValue AM_Instrument:AM_EXCEPTION__INPUTTER *
+		DATE_TIME -> byValue AM_Instrument:AM_EXCEPTION__DATE_TIME *
+		AUTHORISER : mml:string
+			@i18n:Label (en=Authoriser, fr="Validé par", es=Autorizador)
+			@i18n:Tooltip (en="Indicates the User who Authorises the record", fr="Utilisateur de validation", es="El usuario que autorizó el registro")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=7.0, core=true, businessType=A, t24Name=AUTHORISER)
+		CO_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company, fr=Entité, es="Compañía")
+			@i18n:Tooltip (fr="Code établissement ou agence")
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=8.0, core=true, businessType=A, t24Name=CO.CODE)
+		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Dept Code", fr=Service, es=Departamento)
+			@i18n:Tooltip (fr="Code du service")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=9.0, core=true, t24Name=DEPT.CODE)
+		AUDITOR_CODE : mml:string
+			@i18n:Label (en="Auditor Code", fr="Audité par", es="Código de Auditor")
+			@i18n:Tooltip (en="Auditor Code", fr="Utilisateur d\'audit", es="Nombre del auditor")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=10.0, core=true, businessType=A, t24Name=AUDITOR.CODE)
+		AUDIT_DATE_TIME : mml:dateTime
+			@i18n:Label (en="Audit Date Time", fr="Audité le", es="Fecha/Hora de Audit.")
+			@i18n:Tooltip (en="Date and time when record was audited", fr="Date et heure d\'audit", es="Fecha y Hora de Auditoría ")
+			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=11.0, core=true, businessType=RELTIME, t24Name=AUDIT.DATE.TIME)
+	}
+	AM_EXCEPTION__TXN_CODE
+	{
+		TXN_CODE -> byValue AM_Instrument:AM_EXCEPTION__TXN_CODE__TXN_CODE *
+		PL_CATEG : AM_Instrument:AM_EXCEPTION__TXN_CODE__PL_CATEG required
+			@t24:i (align=L, inputBehaviour=I, maxLength=10, sysNumber=2.0, core=true, t24Name=PL.CATEG)
+	}
+	AM_EXCEPTION__TXN_CODE__TXN_CODE
+	{
+		TXN_CODE : mml:string required
+			@t24:i (align=L, inputBehaviour=I, maxLength=4, sysNumber=1.0, core=true, businessType=A, t24Name=TXN.CODE)
+	}
+	AM_EXCEPTION__INPUTTER
+	{
+		INPUTTER : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=5.0, core=true, businessType=A, t24Name=INPUTTER)
+	}
+	AM_EXCEPTION__DATE_TIME
+	{
+		DATE_TIME : mml:dateTime
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=6.0, core=true, businessType=RELTIME, t24Name=DATE.TIME)
+	}
+	AM_INST_PERF_DETAIL
+		@t24:i (t24Name=AM.INST.PERF.DETAIL, level=F, type=L, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		INST_PERF_ID -> AM_Instrument:AM_INST_PERF_DETAIL PK required
+			@i18n:Label (en="Inst Perf Id", fr="Id de Perf d\'Inst", es="ID Rendim. Instrum.")
+			@i18n:Tooltip (fr="Identifiant de Perf d\'Inst")
+			@t24:i (align=L, inputBehaviour=I, maxLength=60, sysNumber=0.0, core=true, businessType=A, t24Name=INST.PERF.ID)
+		PERF_DATE -> byValue AM_Instrument:AM_INST_PERF_DETAIL__PERF_DATE *
+		PORTFOLIO : mml:Integer
+			@i18n:Label (en=Portfolio, fr=Portefeuille, es="No. de Cartera")
+			@i18n:Tooltip (fr=Portefeuille)
+			@t24:i (align=L, inputBehaviour=I, maxLength=10, core=false, t24Name=PORTFOLIO, genOperation="FIELD(@ID,\'.\',1)")
+		INSTRUMENT : mml:Integer
+			@t24:i (align=L, inputBehaviour=I, maxLength=8, core=false, t24Name=INSTRUMENT, genOperation="FIELD(@ID,\'.\',2)")
+		MONTH : mml:Integer
+			@i18n:Label (en=Month, fr=Mois, es=Mes)
+			@i18n:Tooltip (fr=Mois)
+			@t24:i (align=L, inputBehaviour=I, maxLength=8, core=false, t24Name=MONTH, genOperation="FIELD(@ID,\'.\',3)")
+		STATUS_MV : mml:Integer
+			@t24:i (align=L, inputBehaviour=I, maxLength=12, core=false, t24Name=STATUS.MV, genOperation="SUBR(\"E.GET.STATUS.MV\",@ID)")
+	}
+	AM_INST_PERF_DETAIL__PERF_DATE
+	{
+		PERF_DATE : mml:date
+			@t24:i (align=R, inputBehaviour=I, maxLength=12, sysNumber=1.0, core=true, businessType=D, t24Name=PERF.DATE)
+		MV_RC_SOD : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=2.0, core=true, businessType=AMT, t24Name=MV.RC.SOD)
+		MV_RC_INFLOW : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=3.0, core=true, businessType=AMT, t24Name=MV.RC.INFLOW)
+		MV_RC_OUTFLOW : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=4.0, core=true, businessType=AMT, t24Name=MV.RC.OUTFLOW)
+		MV_RC_AICINFLOW : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=5.0, core=true, businessType=AMT, t24Name=MV.RC.AICINFLOW)
+		MV_RC_AICOFLOW : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=6.0, core=true, businessType=AMT, t24Name=MV.RC.AICOFLOW)
+		MV_RC_EOD : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=7.0, core=true, businessType=AMT, t24Name=MV.RC.EOD)
+		CAPITAL_PL_RC : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=8.0, core=true, businessType=AMT, t24Name=CAPITAL.PL.RC)
+		INCOME_PL_RC : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=9.0, core=true, businessType=AMT, t24Name=INCOME.PL.RC)
+		FOREX_PL_RC : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=10.0, core=true, businessType=AMT, t24Name=FOREX.PL.RC)
+		FEES_PL_RC : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=11.0, core=true, businessType=AMT, t24Name=FEES.PL.RC)
+		TOTAL_PL_RC : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=12.0, core=true, businessType=AMT, t24Name=TOTAL.PL.RC)
+		TOT_INDEX : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=13.0, core=true, businessType=AMT, t24Name=TOT.INDEX)
+		STATUS : mml:Character
+			@t24:i (align=L, inputBehaviour=I, maxLength=1, sysNumber=14.0, core=true, businessType=A, t24Name=STATUS)
+		RESERVED4 : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=15.0, core=true, businessType=AMT, t24Name=RESERVED4)
+		RESERVED3 : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=16.0, core=true, businessType=AMT, t24Name=RESERVED3)
+		RESERVED2 : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=17.0, core=true, businessType=AMT, t24Name=RESERVED2)
+		RESERVED1 : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=18.0, core=true, businessType=AMT, t24Name=RESERVED1)
+	}
+	AM_INST_PERF_DETAIL_MAN
+		@t24:i (t24Name=AM.INST.PERF.DETAIL.MAN, level=F, type=H, allowedFunctions="A C D E H I L P Q R S", localRefAllowed=false)
+	{
+		INST_PERF_MAN_ID -> AM_Instrument:AM_INST_PERF_DETAIL_MAN PK required
+			@t24:i (align=L, inputBehaviour=I, maxLength=60, sysNumber=0.0, core=true, businessType=A, t24Name=INST.PERF.MAN.ID)
+		PERF_DATE -> byValue AM_Instrument:AM_INST_PERF_DETAIL_MAN__PERF_DATE *
+		RECORD_STATUS : mml:string
+			@i18n:Label (en="Record Status", fr=Statut, es=Estado)
+			@i18n:Tooltip (fr="Statut de l\'enregistrement")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=19.0, core=true, businessType=STAT, t24Name=RECORD.STATUS)
+		CURR_NO : mml:Integer
+			@i18n:Label (en="Curr No", fr="N° version", es="No. Actual")
+			@i18n:Tooltip (fr="Numéro de version")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=20.0, core=true, t24Name=CURR.NO)
+		INPUTTER -> byValue AM_Instrument:AM_INST_PERF_DETAIL_MAN__INPUTTER *
+		DATE_TIME -> byValue AM_Instrument:AM_INST_PERF_DETAIL_MAN__DATE_TIME *
+		AUTHORISER : mml:string
+			@i18n:Label (en=Authoriser, fr="Validé par", es=Autorizador)
+			@i18n:Tooltip (en="Indicates the User who Authorises the record", fr="Utilisateur de validation", es="El usuario que autorizó el registro")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=23.0, core=true, businessType=A, t24Name=AUTHORISER)
+		CO_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company, fr=Entité, es="Compañía")
+			@i18n:Tooltip (fr="Code établissement ou agence")
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=24.0, core=true, businessType=A, t24Name=CO.CODE)
+		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Dept Code", fr=Service, es=Departamento)
+			@i18n:Tooltip (fr="Code du service")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=25.0, core=true, t24Name=DEPT.CODE)
+		AUDITOR_CODE : mml:string
+			@i18n:Label (en="Auditor Code", fr="Audité par", es="Código de Auditor")
+			@i18n:Tooltip (en="Auditor Code", fr="Utilisateur d\'audit", es="Nombre del auditor")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=26.0, core=true, businessType=A, t24Name=AUDITOR.CODE)
+		AUDIT_DATE_TIME : mml:dateTime
+			@i18n:Label (en="Audit Date Time", fr="Audité le", es="Fecha/Hora de Audit.")
+			@i18n:Tooltip (en="Date and time when record was audited", fr="Date et heure d\'audit", es="Fecha y Hora de Auditoría ")
+			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=27.0, core=true, businessType=RELTIME, t24Name=AUDIT.DATE.TIME)
+	}
+	AM_INST_PERF_DETAIL_MAN__PERF_DATE
+	{
+		PERF_DATE : mml:date
+			@t24:i (align=R, inputBehaviour=N, maxLength=12, sysNumber=1.0, core=true, businessType=D, t24Name=PERF.DATE)
+		MV_RC_SOD : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=2.0, core=true, businessType=AMT, t24Name=MV.RC.SOD)
+		MV_RC_INFLOW : mml:Double required
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=3.0, core=true, businessType=AMT, t24Name=MV.RC.INFLOW)
+		MV_RC_OUTFLOW : mml:Double required
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=4.0, core=true, businessType=AMT, t24Name=MV.RC.OUTFLOW)
+		MV_RC_AICINFLOW : mml:Double required
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=5.0, core=true, businessType=AMT, t24Name=MV.RC.AICINFLOW)
+		MV_RC_AICOFLOW : mml:Double required
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=6.0, core=true, businessType=AMT, t24Name=MV.RC.AICOFLOW)
+		MV_RC_EOD : mml:Double required
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=7.0, core=true, businessType=AMT, t24Name=MV.RC.EOD)
+		CAPITAL_PL_RC : mml:Double required
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=8.0, core=true, businessType=AMT, t24Name=CAPITAL.PL.RC)
+		INCOME_PL_RC : mml:Double required
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=9.0, core=true, businessType=AMT, t24Name=INCOME.PL.RC)
+		FEES_PL_RC : mml:Double required
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=10.0, core=true, businessType=AMT, t24Name=FEES.PL.RC)
+		FOREX_PL_RC : mml:Double required
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=11.0, core=true, businessType=AMT, t24Name=FOREX.PL.RC)
+		TOTAL_PL_RC : mml:Double required
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=12.0, core=true, businessType=AMT, t24Name=TOTAL.PL.RC)
+		TOT_INDEX : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=13.0, core=true, businessType=AMT, t24Name=TOT.INDEX)
+		STATUS : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=19, sysNumber=14.0, core=true, businessType=AAA, t24Name=STATUS)
+		RESERVED4 : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=15.0, core=true, businessType=AMT, t24Name=RESERVED4)
+		RESERVED3 : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=16.0, core=true, businessType=AMT, t24Name=RESERVED3)
+		RESERVED2 : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=17.0, core=true, businessType=AMT, t24Name=RESERVED2)
+		RESERVED1 : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=18.0, core=true, businessType=AMT, t24Name=RESERVED1)
+	}
+	AM_INST_PERF_DETAIL_MAN__INPUTTER
+	{
+		INPUTTER : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=21.0, core=true, businessType=A, t24Name=INPUTTER)
+	}
+	AM_INST_PERF_DETAIL_MAN__DATE_TIME
+	{
+		DATE_TIME : mml:dateTime
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=22.0, core=true, businessType=RELTIME, t24Name=DATE.TIME)
+	}
+	AM_INST_VEH
+		@t24:i (t24Name=AM.INST.VEH, level=F, type=L, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		INST_VEH_ID -> AM_Instrument:AM_INST_VEH PK required
+			@t24:i (align=L, inputBehaviour=I, maxLength=60, sysNumber=0.0, core=true, businessType=A, t24Name=INST.VEH.ID)
+		SHORT_DESCR : mml:string
+			@i18n:Label (en="Short Descr", fr="Libellé court", es="Descripción Corta")
+			@i18n:Tooltip (fr="Libellé court")
+			@t24:i (align=L, inputBehaviour=I, maxLength=40, sysNumber=1.0, core=true, businessType=A, t24Name=SHORT.DESCR)
+		PORT_REF_CCY : mml:string
+			@i18n:Label (en="Port Ref Ccy", fr="Dev. Réf. porteflle", es="Moneda Ref. Cartera")
+			@i18n:Tooltip (fr="Devise Référence porteflle")
+			@t24:i (align=L, inputBehaviour=I, maxLength=5, sysNumber=2.0, core=true, businessType=CCY, t24Name=PORT.REF.CCY)
+		INSTR_CCY : mml:string
+			@i18n:Label (en="Instr Ccy", fr="Dev d\'Instr", es="Moneda Instrumento")
+			@i18n:Tooltip (fr="Devise d\'Instr")
+			@t24:i (align=L, inputBehaviour=I, maxLength=5, sysNumber=3.0, core=true, businessType=CCY, t24Name=INSTR.CCY)
+		TRANS_REF -> byValue AM_Instrument:AM_INST_VEH__TRANS_REF *
+		REVENUE_ACCR : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=33.0, core=true, businessType=AMT, t24Name=REVENUE.ACCR)
+		NB_COST_SEC : mml:Double
+			@i18n:Label (en="Nb Cost Sec", fr="Titre de coût NB", es="Título de Costo NB")
+			@i18n:Tooltip (fr="Titre de coût NB")
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=34.0, core=true, businessType=AMT, t24Name=NB.COST.SEC)
+		NB_ESTIMATION_SEC : mml:Double
+			@i18n:Label (en="Nb Estimation Sec", fr="Titre d\'estimn NB", es="Tít. de Estimado NB")
+			@i18n:Tooltip (fr="Titre d\'estimn NB")
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=35.0, core=true, businessType=AMT, t24Name=NB.ESTIMATION.SEC)
+		NB_ESTIMATION_REF : mml:Double
+			@i18n:Label (en="Nb Estimation Ref", fr="Réf. d\'estimation NB", es="Ref. de Estimado NB")
+			@i18n:Tooltip (fr="Référence d\'estimation NB")
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=36.0, core=true, businessType=AMT, t24Name=NB.ESTIMATION.REF)
+		NB_EXRATE : mml:Double
+			@i18n:Label (en="Nb Exrate", fr="Tx de change NB", es="Tipo de Cambio NB")
+			@i18n:Tooltip (fr="Tx de change NB")
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=37.0, core=true, businessType=AMT, t24Name=NB.EXRATE)
+		NB_ACCR_INT_SEC : mml:Double
+			@i18n:Label (en="Nb Accr Int Sec", fr="Titre Intts courus NB", es="Tít.Int.Deven. NB")
+			@i18n:Tooltip (fr="Titre Intérêtss courus NB")
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=38.0, core=true, businessType=AMT, t24Name=NB.ACCR.INT.SEC)
+		NB_ACCR_INT_REF : mml:Double
+			@i18n:Label (en="Nb Accr Int Ref", fr="Réf.Intts courus NB", es="Ref.Int.Deven. NB")
+			@i18n:Tooltip (fr="RéférenceIntérêtss courus NB")
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=39.0, core=true, businessType=AMT, t24Name=NB.ACCR.INT.REF)
+		NB_TXN_COST_SEC : mml:Double
+			@i18n:Label (en="Nb Txn Cost Sec", fr="Titre coût TransNB", es="Tít.Costo de Trs. NB")
+			@i18n:Tooltip (fr="Titre coût TransNB")
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=40.0, core=true, businessType=AMT, t24Name=NB.TXN.COST.SEC)
+		NB_NET_VAL_SEC : mml:Double
+			@i18n:Label (en="Nb Net Val Sec", fr="Titre valeur nette NB", es="Tít. Valor Neto NB")
+			@i18n:Tooltip (fr="Titre valeur nette NB")
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=41.0, core=true, businessType=AMT, t24Name=NB.NET.VAL.SEC)
+		NB_NET_VAL_REF : mml:Double
+			@i18n:Label (en="Nb Net Val Ref", fr="Réf. valeur nette NB", es="Ref. Valor Neto NB")
+			@i18n:Tooltip (fr="Référence valeur nette NB")
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=42.0, core=true, businessType=AMT, t24Name=NB.NET.VAL.REF)
+		VEH_COST_SEC : mml:Double
+			@i18n:Label (en="Veh Cost Sec", fr="Titre de coût Veh", es="Título Costo")
+			@i18n:Tooltip (fr="Titre de coût Veh")
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=43.0, core=true, businessType=AMT, t24Name=VEH.COST.SEC)
+		VEH_ESTIMATION_SEC : mml:Double
+			@i18n:Label (en="Veh Estimation Sec", fr="Titre d\'estimn Veh", es="Título Estimado")
+			@i18n:Tooltip (fr="Titre d\'estimn Veh")
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=44.0, core=true, businessType=AMT, t24Name=VEH.ESTIMATION.SEC)
+		VEH_EXRATE : mml:Double
+			@i18n:Label (en="Veh Exrate", fr="Taux de change Veh", es="Tipo de Cambio")
+			@i18n:Tooltip (fr="Taux de change Veh")
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=45.0, core=true, businessType=AMT, t24Name=VEH.EXRATE)
+		VEH_ESTIMATION_REF : mml:Double
+			@i18n:Label (en="Veh Estimation Ref", fr="Réf. Estimation Veh", es="Ref. Estimado")
+			@i18n:Tooltip (fr="Référence Estimation Veh")
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=46.0, core=true, businessType=AMT, t24Name=VEH.ESTIMATION.REF)
+		VEH_ACCR_INT_SEC : mml:Double
+			@i18n:Label (en="Veh Accr Int Sec", fr="Titre Intt courus Veh", es="Tít. Int. Devengado")
+			@i18n:Tooltip (fr="Titre Intérêts courus Veh")
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=47.0, core=true, businessType=AMT, t24Name=VEH.ACCR.INT.SEC)
+		VEH_ACCR_INT_REF : mml:Double
+			@i18n:Label (en="Veh Accr Int Ref", fr="Réf. Intt courus Veh", es="Ref. Int. Devengado")
+			@i18n:Tooltip (fr="Référence Intérêts courus Veh")
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=48.0, core=true, businessType=AMT, t24Name=VEH.ACCR.INT.REF)
+		VEH_TXN_COST_SEC : mml:Double
+			@i18n:Label (en="Veh Txn Cost Sec", fr="Titre coût Trans Veh", es="Título Costo Trs.")
+			@i18n:Tooltip (fr="Titre coût Trans Veh")
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=49.0, core=true, businessType=AMT, t24Name=VEH.TXN.COST.SEC)
+		VEH_NET_VAL_SEC : mml:Double
+			@i18n:Label (en="Veh Net Val Sec", fr="Titre val nette Veh", es="Título Valor Neto")
+			@i18n:Tooltip (fr="Titre val nette Veh")
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=50.0, core=true, businessType=AMT, t24Name=VEH.NET.VAL.SEC)
+		VEH_NET_VAL_REF : mml:Double
+			@i18n:Label (en="Veh Net Val Ref", fr="Réf Valeur nette Veh", es="Ref. Valor Neto")
+			@i18n:Tooltip (fr="RéférenceValeur nette Veh")
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=51.0, core=true, businessType=AMT, t24Name=VEH.NET.VAL.REF)
+		INFLOW_REF : mml:Double
+			@i18n:Label (en="Inflow Ref", fr="Réf. de flux", es="Ref. de Flujo")
+			@i18n:Tooltip (fr="Référence de flux")
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=52.0, core=true, businessType=AMT, t24Name=INFLOW.REF)
+		OUTFLOW_REF : mml:Double
+			@i18n:Label (en="Outflow Ref", fr="Réf. de flux sortant", es="Ref. Flujo de Salida")
+			@i18n:Tooltip (fr="Référence de flux sortant")
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=53.0, core=true, businessType=AMT, t24Name=OUTFLOW.REF)
+		AIC_INFLOW_ADJUST : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=54.0, core=true, businessType=AMT, t24Name=AIC.INFLOW.ADJUST)
+		AIC_OUTFLOW_ADJUST : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=55.0, core=true, businessType=AMT, t24Name=AIC.OUTFLOW.ADJUST)
+		PL_CAPITAL_SEC : mml:Double
+			@i18n:Label (en="Pl Capital Sec", fr="Titre de Cap de PL", es="Tít. Capital P/G")
+			@i18n:Tooltip (fr="Titre de Cap de PL")
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=56.0, core=true, businessType=AMT, t24Name=PL.CAPITAL.SEC)
+		PL_INCOME_SEC : mml:Double
+			@i18n:Label (en="Pl Income Sec", fr="Titre de revenu PL", es="Título Ingresos P/G")
+			@i18n:Tooltip (fr="Titre de revenu PL")
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=57.0, core=true, businessType=AMT, t24Name=PL.INCOME.SEC)
+		PL_FOREX_SEC : mml:Double
+			@i18n:Label (en="Pl Forex Sec", fr="Titre de FX de PL", es="Título Forex P/G")
+			@i18n:Tooltip (fr="Titre de FX de PL")
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=58.0, core=true, businessType=AMT, t24Name=PL.FOREX.SEC)
+		PL_FEES_SEC : mml:Double
+			@i18n:Label (en="Pl Fees Sec", fr="Titre de frais de PL", es="Título Comisión P/G")
+			@i18n:Tooltip (fr="Titre de frais de PL")
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=59.0, core=true, businessType=AMT, t24Name=PL.FEES.SEC)
+		PL_TOTAL_SEC : mml:Double
+			@i18n:Label (en="Pl Total Sec", fr="Titre Total de PL", es="Título Total P/G")
+			@i18n:Tooltip (fr="Titre Total de PL")
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=60.0, core=true, businessType=AMT, t24Name=PL.TOTAL.SEC)
+		PL_CAPITAL_REF : mml:Double
+			@i18n:Label (en="Pl Capital Ref", fr="Réf. de Cap de PL", es="Ref. Capital P/G")
+			@i18n:Tooltip (fr="Référence de Cap de PL")
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=61.0, core=true, businessType=AMT, t24Name=PL.CAPITAL.REF)
+		PL_INCOME_REF : mml:Double
+			@i18n:Label (en="Pl Income Ref", fr="Réf. de revenu de PL", es="Ref. Ingresos P/G")
+			@i18n:Tooltip (fr="Référence de revenu de PL")
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=62.0, core=true, businessType=AMT, t24Name=PL.INCOME.REF)
+		PL_FOREX_REF : mml:Double
+			@i18n:Label (en="Pl Forex Ref", fr="Réf. de FX de PL", es="Ref. Forex P/G")
+			@i18n:Tooltip (fr="Référence de FX de PL")
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=63.0, core=true, businessType=AMT, t24Name=PL.FOREX.REF)
+		PL_FEES_REF : mml:Double
+			@i18n:Label (en="Pl Fees Ref", fr="Réf. de frais de PL", es="Ref. Comisión P/G")
+			@i18n:Tooltip (fr="Référence de frais de PL")
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=64.0, core=true, businessType=AMT, t24Name=PL.FEES.REF)
+		PL_TOTAL_REF : mml:Double
+			@i18n:Label (en="Pl Total Ref", fr="Réf. Totale de PL", es="Ref. Total P/G")
+			@i18n:Tooltip (fr="Référence Totale de PL")
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=65.0, core=true, businessType=AMT, t24Name=PL.TOTAL.REF)
+		BACKVALUE_DATE -> byValue AM_Instrument:AM_INST_VEH__BACKVALUE_DATE *
+	}
+	AM_INST_VEH__TRANS_REF
+	{
+		TRANS_REF : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=15, sysNumber=4.0, core=true, businessType=A, t24Name=TRANS.REF)
+		STMT_ID : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=19, sysNumber=5.0, core=true, businessType=A, t24Name=STMT.ID)
+		TXN_CODE : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=19, sysNumber=6.0, core=true, businessType=A, t24Name=TXN.CODE)
+		TRADE_DATE : mml:date
+			@t24:i (align=R, inputBehaviour=I, maxLength=12, sysNumber=7.0, core=true, businessType=D, t24Name=TRADE.DATE)
+		VALUE_DATE : mml:date
+			@t24:i (align=R, inputBehaviour=I, maxLength=12, sysNumber=8.0, core=true, businessType=D, t24Name=VALUE.DATE)
+		MARKET_PRICE : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=9.0, core=true, businessType=AMT, t24Name=MARKET.PRICE)
+		QUANTITY : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=19, sysNumber=10.0, core=true, businessType=A, t24Name=QUANTITY)
+		TRADE_CCY : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=5, sysNumber=11.0, core=true, businessType=CCY, t24Name=TRADE.CCY)
+		TXN_COST_SEC : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=12.0, core=true, businessType=AMT, t24Name=TXN.COST.SEC)
+		ACCR_INT_SEC : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=13.0, core=true, businessType=AMT, t24Name=ACCR.INT.SEC)
+		NET_AMT_SEC_CCY : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=14.0, core=true, businessType=AMT, t24Name=NET.AMT.SEC.CCY)
+		NET_EXRATE : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=15.0, core=true, businessType=AMT, t24Name=NET.EXRATE)
+		NET_AMT_REF_CCY : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=16.0, core=true, businessType=AMT, t24Name=NET.AMT.REF.CCY)
+		CASH_FLOW : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=17.0, core=true, businessType=A, t24Name=CASH.FLOW)
+		REC_WITH_TAX : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=18.0, core=true, businessType=AMT, t24Name=REC.WITH.TAX)
+		REV_DATE : mml:date
+			@t24:i (align=R, inputBehaviour=I, maxLength=12, sysNumber=19.0, core=true, businessType=D, t24Name=REV.DATE)
+		FREE_RECEIPT : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=5, sysNumber=20.0, core=true, businessType=A, t24Name=FREE.RECEIPT)
+		EOD_RATE : mml:Character
+			@t24:i (align=L, inputBehaviour=I, maxLength=1, sysNumber=21.0, core=true, businessType=A, t24Name=EOD.RATE)
+		REVENUE_AMT : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=35, sysNumber=22.0, core=true, businessType=AMT, t24Name=REVENUE.AMT)
+		FEE_FLOW : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=23.0, core=true, t24Name=FEE.FLOW)
+		INC_FLOW : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=24.0, core=true, t24Name=INC.FLOW)
+		REVENUE : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=25.0, core=true, t24Name=REVENUE)
+		STATUS : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=5, sysNumber=26.0, core=true, businessType=AAA, t24Name=STATUS)
+		CONTRA_FLOW : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=27.0, core=true, businessType=A, t24Name=CONTRA.FLOW)
+		RESERVED_05 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=28.0, core=true, t24Name=RESERVED.05)
+		RESERVED_04 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=29.0, core=true, t24Name=RESERVED.04)
+		RESERVED_03 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=30.0, core=true, t24Name=RESERVED.03)
+		RESERVED_02 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=31.0, core=true, t24Name=RESERVED.02)
+		RESERVED_01 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=32.0, core=true, t24Name=RESERVED.01)
+	}
+	AM_INST_VEH__BACKVALUE_DATE
+	{
+		BACKVALUE_DATE : mml:date
+			@t24:i (align=R, inputBehaviour=I, maxLength=12, sysNumber=66.0, core=true, businessType=D, t24Name=BACKVALUE.DATE)
+	}
+	AM_INST_VEH_MAN
+		@t24:i (t24Name=AM.INST.VEH.MAN, level=F, type=H, allowedFunctions="A C D E H I L P Q R S", localRefAllowed=false)
+	{
+		INST_VEH_ID -> AM_Instrument:AM_INST_VEH_MAN PK required
+			@t24:i (align=L, inputBehaviour=I, maxLength=60, sysNumber=0.0, core=true, businessType=A, t24Name=INST.VEH.ID)
+		SHORT_DESCR : mml:string
+			@i18n:Label (en="Short Descr", fr="Libellé court", es="Descripción Corta")
+			@i18n:Tooltip (fr="Libellé court")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=1.0, core=true, businessType=A, t24Name=SHORT.DESCR)
+		PORT_REF_CCY : mml:string
+			@i18n:Label (en="Port Ref Ccy", fr="Dev. Réf. porteflle", es="Moneda Ref. Cartera")
+			@i18n:Tooltip (fr="Devise Référence porteflle")
+			@t24:i (align=L, inputBehaviour=N, maxLength=5, sysNumber=2.0, core=true, businessType=CCY, t24Name=PORT.REF.CCY)
+		INSTR_CCY : mml:string
+			@i18n:Label (en="Instr Ccy", fr="Dev d\'Instr", es="Moneda Instrumento")
+			@i18n:Tooltip (fr="Devise d\'Instr")
+			@t24:i (align=L, inputBehaviour=N, maxLength=5, sysNumber=3.0, core=true, businessType=CCY, t24Name=INSTR.CCY)
+		TRANS_REF -> byValue AM_Instrument:AM_INST_VEH_MAN__TRANS_REF *
+		REVENUE_ACCR : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=33.0, core=true, businessType=AMT, t24Name=REVENUE.ACCR)
+		NB_COST_SEC : mml:Double
+			@i18n:Label (en="Nb Cost Sec", fr="Titre de coût NB", es="Título de Costo NB")
+			@i18n:Tooltip (fr="Titre de coût NB")
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=34.0, core=true, businessType=AMT, t24Name=NB.COST.SEC)
+		NB_ESTIMATION_SEC : mml:Double
+			@i18n:Label (en="Nb Estimation Sec", fr="Titre d\'estimn NB", es="Tít. de Estimado NB")
+			@i18n:Tooltip (fr="Titre d\'estimn NB")
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=35.0, core=true, businessType=AMT, t24Name=NB.ESTIMATION.SEC)
+		NB_ESTIMATION_REF : mml:Double
+			@i18n:Label (en="Nb Estimation Ref", fr="Réf. d\'estimation NB", es="Ref. de Estimado NB")
+			@i18n:Tooltip (fr="Référence d\'estimation NB")
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=36.0, core=true, businessType=AMT, t24Name=NB.ESTIMATION.REF)
+		NB_EXRATE : mml:Double
+			@i18n:Label (en="Nb Exrate", fr="Tx de change NB", es="Tipo de Cambio NB")
+			@i18n:Tooltip (fr="Tx de change NB")
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=37.0, core=true, businessType=AMT, t24Name=NB.EXRATE)
+		NB_ACCR_INT_SEC : mml:Double
+			@i18n:Label (en="Nb Accr Int Sec", fr="Titre Intts courus NB", es="Tít.Int.Deven. NB")
+			@i18n:Tooltip (fr="Titre Intérêtss courus NB")
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=38.0, core=true, businessType=AMT, t24Name=NB.ACCR.INT.SEC)
+		NB_ACCR_INT_REF : mml:Double
+			@i18n:Label (en="Nb Accr Int Ref", fr="Réf.Intts courus NB", es="Ref.Int.Deven. NB")
+			@i18n:Tooltip (fr="RéférenceIntérêtss courus NB")
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=39.0, core=true, businessType=AMT, t24Name=NB.ACCR.INT.REF)
+		NB_TXN_COST_SEC : mml:Double
+			@i18n:Label (en="Nb Txn Cost Sec", fr="Titre coût TransNB", es="Tít.Costo de Trs. NB")
+			@i18n:Tooltip (fr="Titre coût TransNB")
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=40.0, core=true, businessType=AMT, t24Name=NB.TXN.COST.SEC)
+		NB_NET_VAL_SEC : mml:Double
+			@i18n:Label (en="Nb Net Val Sec", fr="Titre valeur nette NB", es="Tít. Valor Neto NB")
+			@i18n:Tooltip (fr="Titre valeur nette NB")
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=41.0, core=true, businessType=AMT, t24Name=NB.NET.VAL.SEC)
+		NB_NET_VAL_REF : mml:Double
+			@i18n:Label (en="Nb Net Val Ref", fr="Réf. valeur nette NB", es="Ref. Valor Neto NB")
+			@i18n:Tooltip (fr="Référence valeur nette NB")
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=42.0, core=true, businessType=AMT, t24Name=NB.NET.VAL.REF)
+		VEH_COST_SEC : mml:Double
+			@i18n:Label (en="Veh Cost Sec", fr="Titre de coût Veh", es="Título Costo")
+			@i18n:Tooltip (fr="Titre de coût Veh")
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=43.0, core=true, businessType=AMT, t24Name=VEH.COST.SEC)
+		VEH_ESTIMATION_SEC : mml:Double
+			@i18n:Label (en="Veh Estimation Sec", fr="Titre d\'estimn Veh", es="Título Estimado")
+			@i18n:Tooltip (fr="Titre d\'estimn Veh")
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=44.0, core=true, businessType=AMT, t24Name=VEH.ESTIMATION.SEC)
+		VEH_EXRATE : mml:Double
+			@i18n:Label (en="Veh Exrate", fr="Taux de change Veh", es="Tipo de Cambio")
+			@i18n:Tooltip (fr="Taux de change Veh")
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=45.0, core=true, businessType=AMT, t24Name=VEH.EXRATE)
+		VEH_ESTIMATION_REF : mml:Double
+			@i18n:Label (en="Veh Estimation Ref", fr="Réf. Estimation Veh", es="Ref. Estimado")
+			@i18n:Tooltip (fr="Référence Estimation Veh")
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=46.0, core=true, businessType=AMT, t24Name=VEH.ESTIMATION.REF)
+		VEH_ACCR_INT_SEC : mml:Double
+			@i18n:Label (en="Veh Accr Int Sec", fr="Titre Intt courus Veh", es="Tít. Int. Devengado")
+			@i18n:Tooltip (fr="Titre Intérêts courus Veh")
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=47.0, core=true, businessType=AMT, t24Name=VEH.ACCR.INT.SEC)
+		VEH_ACCR_INT_REF : mml:Double
+			@i18n:Label (en="Veh Accr Int Ref", fr="Réf. Intt courus Veh", es="Ref. Int. Devengado")
+			@i18n:Tooltip (fr="Référence Intérêts courus Veh")
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=48.0, core=true, businessType=AMT, t24Name=VEH.ACCR.INT.REF)
+		VEH_TXN_COST_SEC : mml:Double
+			@i18n:Label (en="Veh Txn Cost Sec", fr="Titre coût Trans Veh", es="Título Costo Trs.")
+			@i18n:Tooltip (fr="Titre coût Trans Veh")
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=49.0, core=true, businessType=AMT, t24Name=VEH.TXN.COST.SEC)
+		VEH_NET_VAL_SEC : mml:Double
+			@i18n:Label (en="Veh Net Val Sec", fr="Titre val nette Veh", es="Título Valor Neto")
+			@i18n:Tooltip (fr="Titre val nette Veh")
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=50.0, core=true, businessType=AMT, t24Name=VEH.NET.VAL.SEC)
+		VEH_NET_VAL_REF : mml:Double
+			@i18n:Label (en="Veh Net Val Ref", fr="Réf Valeur nette Veh", es="Ref. Valor Neto")
+			@i18n:Tooltip (fr="RéférenceValeur nette Veh")
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=51.0, core=true, businessType=AMT, t24Name=VEH.NET.VAL.REF)
+		INFLOW_REF : mml:Double
+			@i18n:Label (en="Inflow Ref", fr="Réf. de flux", es="Ref. de Flujo")
+			@i18n:Tooltip (fr="Référence de flux")
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=52.0, core=true, businessType=AMT, t24Name=INFLOW.REF)
+		OUTFLOW_REF : mml:Double
+			@i18n:Label (en="Outflow Ref", fr="Réf. de flux sortant", es="Ref. Flujo de Salida")
+			@i18n:Tooltip (fr="Référence de flux sortant")
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=53.0, core=true, businessType=AMT, t24Name=OUTFLOW.REF)
+		AIC_INFLOW_ADJUST : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=54.0, core=true, businessType=AMT, t24Name=AIC.INFLOW.ADJUST)
+		AIC_OUTFLOW_ADJUST : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=55.0, core=true, businessType=AMT, t24Name=AIC.OUTFLOW.ADJUST)
+		PL_CAPITAL_SEC : mml:Double
+			@i18n:Label (en="Pl Capital Sec", fr="Titre de Cap de PL", es="Tít. Capital P/G")
+			@i18n:Tooltip (fr="Titre de Cap de PL")
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=56.0, core=true, businessType=AMT, t24Name=PL.CAPITAL.SEC)
+		PL_INCOME_SEC : mml:Double
+			@i18n:Label (en="Pl Income Sec", fr="Titre de revenu PL", es="Título Ingresos P/G")
+			@i18n:Tooltip (fr="Titre de revenu PL")
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=57.0, core=true, businessType=AMT, t24Name=PL.INCOME.SEC)
+		PL_FOREX_SEC : mml:Double
+			@i18n:Label (en="Pl Forex Sec", fr="Titre de FX de PL", es="Título Forex P/G")
+			@i18n:Tooltip (fr="Titre de FX de PL")
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=58.0, core=true, businessType=AMT, t24Name=PL.FOREX.SEC)
+		PL_FEES_SEC : mml:Double
+			@i18n:Label (en="Pl Fees Sec", fr="Titre de frais de PL", es="Título Comisión P/G")
+			@i18n:Tooltip (fr="Titre de frais de PL")
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=59.0, core=true, businessType=AMT, t24Name=PL.FEES.SEC)
+		PL_TOTAL_SEC : mml:Double
+			@i18n:Label (en="Pl Total Sec", fr="Titre Total de PL", es="Título Total P/G")
+			@i18n:Tooltip (fr="Titre Total de PL")
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=60.0, core=true, businessType=AMT, t24Name=PL.TOTAL.SEC)
+		PL_CAPITAL_REF : mml:Double
+			@i18n:Label (en="Pl Capital Ref", fr="Réf. de Cap de PL", es="Ref. Capital P/G")
+			@i18n:Tooltip (fr="Référence de Cap de PL")
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=61.0, core=true, businessType=AMT, t24Name=PL.CAPITAL.REF)
+		PL_INCOME_REF : mml:Double
+			@i18n:Label (en="Pl Income Ref", fr="Réf. de revenu de PL", es="Ref. Ingresos P/G")
+			@i18n:Tooltip (fr="Référence de revenu de PL")
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=62.0, core=true, businessType=AMT, t24Name=PL.INCOME.REF)
+		PL_FOREX_REF : mml:Double
+			@i18n:Label (en="Pl Forex Ref", fr="Réf. de FX de PL", es="Ref. Forex P/G")
+			@i18n:Tooltip (fr="Référence de FX de PL")
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=63.0, core=true, businessType=AMT, t24Name=PL.FOREX.REF)
+		PL_FEES_REF : mml:Double
+			@i18n:Label (en="Pl Fees Ref", fr="Réf. de frais de PL", es="Ref. Comisión P/G")
+			@i18n:Tooltip (fr="Référence de frais de PL")
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=64.0, core=true, businessType=AMT, t24Name=PL.FEES.REF)
+		PL_TOTAL_REF : mml:Double
+			@i18n:Label (en="Pl Total Ref", fr="Réf. Totale de PL", es="Ref. Total P/G")
+			@i18n:Tooltip (fr="Référence Totale de PL")
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=65.0, core=true, businessType=AMT, t24Name=PL.TOTAL.REF)
+		BACKVALUE_DATE -> byValue AM_Instrument:AM_INST_VEH_MAN__BACKVALUE_DATE *
+		RECORD_STATUS : mml:string
+			@i18n:Label (en="Record Status", fr=Statut, es=Estado)
+			@i18n:Tooltip (fr="Statut de l\'enregistrement")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=67.0, core=true, businessType=STAT, t24Name=RECORD.STATUS)
+		CURR_NO : mml:Integer
+			@i18n:Label (en="Curr No", fr="N° version", es="No. Actual")
+			@i18n:Tooltip (fr="Numéro de version")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=68.0, core=true, t24Name=CURR.NO)
+		INPUTTER -> byValue AM_Instrument:AM_INST_VEH_MAN__INPUTTER *
+		DATE_TIME -> byValue AM_Instrument:AM_INST_VEH_MAN__DATE_TIME *
+		AUTHORISER : mml:string
+			@i18n:Label (en=Authoriser, fr="Validé par", es=Autorizador)
+			@i18n:Tooltip (en="Indicates the User who Authorises the record", fr="Utilisateur de validation", es="El usuario que autorizó el registro")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=71.0, core=true, businessType=A, t24Name=AUTHORISER)
+		CO_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company, fr=Entité, es="Compañía")
+			@i18n:Tooltip (fr="Code établissement ou agence")
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=72.0, core=true, businessType=A, t24Name=CO.CODE)
+		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Dept Code", fr=Service, es=Departamento)
+			@i18n:Tooltip (fr="Code du service")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=73.0, core=true, t24Name=DEPT.CODE)
+		AUDITOR_CODE : mml:string
+			@i18n:Label (en="Auditor Code", fr="Audité par", es="Código de Auditor")
+			@i18n:Tooltip (en="Auditor Code", fr="Utilisateur d\'audit", es="Nombre del auditor")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=74.0, core=true, businessType=A, t24Name=AUDITOR.CODE)
+		AUDIT_DATE_TIME : mml:dateTime
+			@i18n:Label (en="Audit Date Time", fr="Audité le", es="Fecha/Hora de Audit.")
+			@i18n:Tooltip (en="Date and time when record was audited", fr="Date et heure d\'audit", es="Fecha y Hora de Auditoría ")
+			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=75.0, core=true, businessType=RELTIME, t24Name=AUDIT.DATE.TIME)
+	}
+	AM_INST_VEH_MAN__TRANS_REF
+	{
+		TRANS_REF : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=4.0, core=true, businessType=A, t24Name=TRANS.REF)
+		STMT_ID : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=19, sysNumber=5.0, core=true, businessType=A, t24Name=STMT.ID)
+		TXN_CODE : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=19, sysNumber=6.0, core=true, businessType=A, t24Name=TXN.CODE)
+		TRADE_DATE : mml:date
+			@t24:i (align=R, inputBehaviour=N, maxLength=12, sysNumber=7.0, core=true, businessType=D, t24Name=TRADE.DATE)
+		VALUE_DATE : mml:date
+			@t24:i (align=R, inputBehaviour=N, maxLength=12, sysNumber=8.0, core=true, businessType=D, t24Name=VALUE.DATE)
+		MARKET_PRICE : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=9.0, core=true, businessType=AMT, t24Name=MARKET.PRICE)
+		QUANTITY : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=19, sysNumber=10.0, core=true, businessType=A, t24Name=QUANTITY)
+		TRADE_CCY : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=5, sysNumber=11.0, core=true, businessType=CCY, t24Name=TRADE.CCY)
+		TXN_COST_SEC : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=12.0, core=true, businessType=AMT, t24Name=TXN.COST.SEC)
+		ACCR_INT_SEC : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=13.0, core=true, businessType=AMT, t24Name=ACCR.INT.SEC)
+		NET_AMT_SEC_CCY : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=14.0, core=true, businessType=AMT, t24Name=NET.AMT.SEC.CCY)
+		NET_EXRATE : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=15.0, core=true, businessType=AMT, t24Name=NET.EXRATE)
+		NET_AMT_REF_CCY : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=16.0, core=true, businessType=AMT, t24Name=NET.AMT.REF.CCY)
+		CASH_FLOW : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=17.0, core=true, businessType=A, t24Name=CASH.FLOW)
+		REC_WITH_TAX : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=18.0, core=true, businessType=AMT, t24Name=REC.WITH.TAX)
+		REV_DATE : mml:date
+			@t24:i (align=R, inputBehaviour=N, maxLength=12, sysNumber=19.0, core=true, businessType=D, t24Name=REV.DATE)
+		FREE_RECEIPT : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=5, sysNumber=20.0, core=true, businessType=A, t24Name=FREE.RECEIPT)
+		EOD_RATE : mml:Character
+			@t24:i (align=L, inputBehaviour=I, maxLength=1, sysNumber=21.0, core=true, businessType=A, t24Name=EOD.RATE)
+		REVENUE_AMT : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=35, sysNumber=22.0, core=true, businessType=AMT, t24Name=REVENUE.AMT)
+		FEE_FLOW : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=23.0, core=true, businessType=A, t24Name=FEE.FLOW)
+		INC_FLOW : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=24.0, core=true, businessType=A, t24Name=INC.FLOW)
+		REVENUE : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=25.0, core=true, businessType=A, t24Name=REVENUE)
+		STATUS : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=5, sysNumber=26.0, core=true, businessType=A, t24Name=STATUS)
+		CONTRA_FLOW : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=27.0, core=true, businessType=A, t24Name=CONTRA.FLOW)
+		RESERVED_05 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=28.0, core=true, t24Name=RESERVED.05)
+		RESERVED_04 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=29.0, core=true, t24Name=RESERVED.04)
+		RESERVED_03 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=30.0, core=true, t24Name=RESERVED.03)
+		RESERVED_02 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=31.0, core=true, t24Name=RESERVED.02)
+		RESERVED_01 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=32.0, core=true, t24Name=RESERVED.01)
+	}
+	AM_INST_VEH_MAN__BACKVALUE_DATE
+	{
+		BACKVALUE_DATE : mml:date
+			@t24:i (align=R, inputBehaviour=N, maxLength=12, sysNumber=66.0, core=true, businessType=D, t24Name=BACKVALUE.DATE)
+	}
+	AM_INST_VEH_MAN__INPUTTER
+	{
+		INPUTTER : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=69.0, core=true, businessType=A, t24Name=INPUTTER)
+	}
+	AM_INST_VEH_MAN__DATE_TIME
+	{
+		DATE_TIME : mml:dateTime
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=70.0, core=true, businessType=RELTIME, t24Name=DATE.TIME)
+	}
+	RUN_INST_PERF_TAKE_ON
+		@t24:i (t24Name=RUN.INST.PERF.TAKE.ON, level=I, type=W, allowedFunctions="C I L P Q R S V", localRefAllowed=false)
+	{
+		COMPANY -> AM_Instrument:RUN_INST_PERF_TAKE_ON PK required
+			@i18n:Label (en=Company, fr=Entité, es="Código de Compañía")
+			@i18n:Tooltip (fr=Entité)
+			@t24:i (align=L, inputBehaviour=I, maxLength=12, sysNumber=0.0, core=true, businessType=COM, t24Name=COMPANY)
+		TAKE_ON_DATA : AM_Instrument:RUN_INST_PERF_TAKE_ON__TAKE_ON_DATA required
+			@t24:i (align=L, inputBehaviour=I, maxLength=5, sysNumber=1.0, core=true, t24Name=TAKE.ON.DATA)
+		MESSAGE -> byValue AM_Instrument:RUN_INST_PERF_TAKE_ON__MESSAGE *
+		RECORD_STATUS : mml:string
+			@i18n:Label (en="Record Status", fr=Statut, es=Estado)
+			@i18n:Tooltip (fr="Statut de l\'enregistrement")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=3.0, core=true, businessType=STAT, t24Name=RECORD.STATUS)
+		CURR_NO : mml:Integer
+			@i18n:Label (en="Curr No", fr="N° version", es="No. Actual")
+			@i18n:Tooltip (fr="Numéro de version")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=4.0, core=true, t24Name=CURR.NO)
+		INPUTTER -> byValue AM_Instrument:RUN_INST_PERF_TAKE_ON__INPUTTER *
+		DATE_TIME -> byValue AM_Instrument:RUN_INST_PERF_TAKE_ON__DATE_TIME *
+		AUTHORISER : mml:string
+			@i18n:Label (en=Authoriser, fr="Validé par", es=Autorizador)
+			@i18n:Tooltip (en="Indicates the User who Authorises the record", fr="Utilisateur de validation", es="El usuario que autorizó el registro")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=7.0, core=true, businessType=A, t24Name=AUTHORISER)
+		CO_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company, fr=Entité, es="Compañía")
+			@i18n:Tooltip (fr="Code établissement ou agence")
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=8.0, core=true, businessType=A, t24Name=CO.CODE)
+		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Dept Code", fr=Service, es=Departamento)
+			@i18n:Tooltip (fr="Code du service")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=9.0, core=true, t24Name=DEPT.CODE)
+		AUDITOR_CODE : mml:string
+			@i18n:Label (en="Auditor Code", fr="Audité par", es="Código de Auditor")
+			@i18n:Tooltip (en="Auditor Code", fr="Utilisateur d\'audit", es="Nombre del auditor")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=10.0, core=true, businessType=A, t24Name=AUDITOR.CODE)
+		AUDIT_DATE_TIME : mml:dateTime
+			@i18n:Label (en="Audit Date Time", fr="Audité le", es="Fecha/Hora de Audit.")
+			@i18n:Tooltip (en="Date and time when record was audited", fr="Date et heure d\'audit", es="Fecha y Hora de Auditoría ")
+			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=11.0, core=true, businessType=RELTIME, t24Name=AUDIT.DATE.TIME)
+	}
+	RUN_INST_PERF_TAKE_ON__MESSAGE
+	{
+		MESSAGE : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=2.0, core=true, businessType=A, t24Name=MESSAGE)
+	}
+	RUN_INST_PERF_TAKE_ON__INPUTTER
+	{
+		INPUTTER : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=5.0, core=true, businessType=A, t24Name=INPUTTER)
+	}
+	RUN_INST_PERF_TAKE_ON__DATE_TIME
+	{
+		DATE_TIME : mml:dateTime
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=6.0, core=true, businessType=RELTIME, t24Name=DATE.TIME)
+	}
+}
+Enumerations {
+	AM_BREAKDOWN_SELECT__BREAK_SELECT : mml:string
+		ALL=ALL
+		SELECTED=SELECTED
+		SELECT_LIST="SELECT LIST"
+	AM_BREAKDOWN_SELECT__SELECT_FIELD__SELECT_OPERAND : mml:string
+		EQ=EQ
+		NE=NE
+		LT=LT
+		GT=GT
+		LE=LE
+		GE=GE
+		LIKE=LIKE
+		UNLIKE=UNLIKE
+	AM_BREAKDOWN_SELECT__SELECT_FIELD__SELECT_JOIN : mml:string
+		AND=AND
+		OR=OR
+	AM_BRK_INST_DEFINITION__BRKDWN_HOLD : mml:string
+		YES=YES
+		NO=NO
+	AM_EXCEPTION__TXN_CODE__PL_CATEG : mml:string
+		INCOME=INCOME
+		FEES=FEES
+	RUN_INST_PERF_TAKE_ON__TAKE_ON_DATA : mml:string
+		Y=Y
+		N=N
+}

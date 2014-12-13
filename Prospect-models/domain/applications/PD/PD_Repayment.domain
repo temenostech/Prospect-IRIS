@@ -1,0 +1,123 @@
+# UTF-8
+/* Repayment Processing for Payment Due */
+Domain PD_Repayment
+	@t24:i (module=PD)
+	@java:Package (value=com.temenos.t24.datamodel.pd.pd_repayment)
+namespace "http://www.temenos.com/t24/PD_Repayment"
+metamodelVersion 4.3.0.20110527
+Classes {
+	PD_ONLINE_PAYMENT
+		@t24:i (t24Name=PD.ONLINE.PAYMENT, level=F, type=L, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		PD_KEY -> PD_Repayment:PD_ONLINE_PAYMENT PK required
+			@i18n:Label (en="Pd Key")
+			@t24:i (align=L, inputBehaviour=I, maxLength=18, sysNumber=0.0, core=true, businessType=A, t24Name=PD.KEY)
+		TXN_REF -> byValue PD_Repayment:PD_ONLINE_PAYMENT__TXN_REF *
+		RESERVED_2 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=11.0, core=true, t24Name=RESERVED.2)
+		RESERVED_1 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=12.0, core=true, t24Name=RESERVED.1)
+	}
+	PD_ONLINE_PAYMENT__TXN_REF
+	{
+		TXN_REF : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=25, sysNumber=1.0, core=true, businessType=A, t24Name=TXN.REF)
+		ENTRY_ID : mml:string required
+			@t24:i (align=L, inputBehaviour=I, maxLength=30, sysNumber=2.0, core=true, businessType=A, t24Name=ENTRY.ID)
+		VALUE_DATE : mml:date
+			@t24:i (align=R, inputBehaviour=I, maxLength=8, sysNumber=3.0, core=true, businessType=D, t24Name=VALUE.DATE)
+		ACCOUNT_NUMBER : mml:string
+			@t24:i (align=R, inputBehaviour=I, maxLength=16, sysNumber=4.0, core=true, businessType=ACC, t24Name=ACCOUNT.NUMBER)
+		AMOUNT : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=5.0, core=true, businessType=AMT, t24Name=AMOUNT)
+		CCY : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=6.0, core=true, businessType=CCY, t24Name=CCY)
+		THEIR_REFERENCE : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=7.0, core=true, businessType=A, t24Name=THEIR.REFERENCE)
+		TXN_CODE_DR -> ST_Config:TRANSACTION
+			@t24:i (align=R, inputBehaviour=I, maxLength=55, sysNumber=8.0, core=true, t24Name=TXN.CODE.DR)
+		TXN_CODE_CR -> ST_Config:TRANSACTION
+			@t24:i (align=R, inputBehaviour=I, maxLength=55, sysNumber=9.0, core=true, t24Name=TXN.CODE.CR)
+		ORIG_ACCT_NO : mml:string
+			@t24:i (align=R, inputBehaviour=I, maxLength=55, sysNumber=10.0, core=true, businessType=ACC, t24Name=ORIG.ACCT.NO)
+	}
+	PD_REPAYMENT
+		@t24:i (t24Name=PD.REPAYMENT, level=F, type=L, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		ID -> PD_Repayment:PD_REPAYMENT PK required
+			@i18n:Label (en="Transaction Ref", fr=Code, es="Ref. de Transacción")
+			@i18n:Tooltip (en="Transaction Reference", fr=Identifiant)
+			@t24:i (align=L, inputBehaviour=I, maxLength=33, sysNumber=0.0, core=true, businessType=A, t24Name=ID)
+		CURRENCY -> FIN_CurrencyConfig:CURRENCY
+			@i18n:Label (en=Currency, fr=Devise, es=Moneda)
+			@i18n:Tooltip (fr="Code devise ISO")
+			@t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=1.0, core=true, businessType=CCY, t24Name=CURRENCY)
+		REPAYMENT_REF -> byValue PD_Repayment:PD_REPAYMENT__REPAYMENT_REF *
+		REPAYMENT_ACCT -> ACM_AccountOpening:ACCOUNT
+			@i18n:Label (en="Repayment Account", fr="Compte à débiter", es="Cuenta de Reembolso")
+			@i18n:Tooltip (fr="Compte à débiter")
+			@t24:i (align=L, inputBehaviour=N, maxLength=16, sysNumber=3.0, core=true, businessType=ANT, t24Name=REPAYMENT.ACCT)
+		TOT_REPAY_AMT : mml:Double
+			@i18n:Label (en="Total Amount For Repayment", fr="Montant remboursé", es="Monto Amortización")
+			@i18n:Tooltip (fr="Montant remboursé")
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=4.0, core=true, businessType=AMT, t24Name=TOT.REPAY.AMT)
+		TOT_AFTER_DEDUCT : mml:Double
+			@i18n:Label (en="Total Amount After Dedcution")
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=5.0, core=true, businessType=AMT, t24Name=TOT.AFTER.DEDUCT)
+		CHARGE_TYPE -> byValue PD_Repayment:PD_REPAYMENT__CHARGE_TYPE *
+		CHARGE_TAX_CODE -> byValue PD_Repayment:PD_REPAYMENT__CHARGE_TAX_CODE *
+		REPAY_TYPE -> byValue PD_Repayment:PD_REPAYMENT__REPAY_TYPE *
+	}
+	PD_REPAYMENT__REPAYMENT_REF
+	{
+		REPAYMENT_REF : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=2.0, core=true, businessType=A, t24Name=REPAYMENT.REF)
+	}
+	PD_REPAYMENT__CHARGE_TYPE
+	{
+		CHARGE_TYPE : mml:string
+			@t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=6.0, core=true, businessType=CHG, t24Name=CHARGE.TYPE)
+		CHARGE_AMT : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=7.0, core=true, businessType=AMT, t24Name=CHARGE.AMT)
+	}
+	PD_REPAYMENT__CHARGE_TAX_CODE
+	{
+		CHARGE_TAX_CODE -> ST_ChargeConfig:TAX
+			@t24:i (align=R, inputBehaviour=N, maxLength=2, sysNumber=8.0, core=true, t24Name=CHARGE.TAX.CODE)
+		CHARGE_TAX_AMT : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=9.0, core=true, businessType=AMT, t24Name=CHARGE.TAX.AMT)
+		CHARGE_TAX_LCY : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=10.0, core=true, businessType=AMT, t24Name=CHARGE.TAX.LCY)
+		CHARGE_TAX_XRTE : mml:string
+			@t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=11.0, core=true, businessType=R, t24Name=CHARGE.TAX.XRTE)
+	}
+	PD_REPAYMENT__REPAY_TYPE
+	{
+		REPAY_TYPE -> PD_Config:PD_AMOUNT_TYPE
+			@t24:i (align=L, inputBehaviour=N, maxLength=12, sysNumber=12.0, core=true, businessType=A, t24Name=REPAY.TYPE)
+		REPAY_AMT : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=13.0, core=true, businessType=AMT, t24Name=REPAY.AMT)
+		REPAY_DEFAULT : mml:Character
+			@t24:i (align=L, inputBehaviour=N, maxLength=1, sysNumber=14.0, core=true, businessType=A, t24Name=REPAY.DEFAULT)
+		REPAY_TAX_CODE -> ST_ChargeConfig:TAX
+			@t24:i (align=R, inputBehaviour=N, maxLength=2, sysNumber=15.0, core=true, t24Name=REPAY.TAX.CODE)
+		REPAY_TAX_AMT : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=16.0, core=true, businessType=AMT, t24Name=REPAY.TAX.AMT)
+		REPAY_TAX_LCY : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=17.0, core=true, businessType=AMT, t24Name=REPAY.TAX.LCY)
+		REPAY_TAX_XRATE : mml:string
+			@t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=18.0, core=true, businessType=R, t24Name=REPAY.TAX.XRATE)
+		REPAY_DATE -> byValue PD_Repayment:PD_REPAYMENT__REPAY_TYPE__REPAY_DATE *
+	}
+	PD_REPAYMENT__REPAY_TYPE__REPAY_DATE
+	{
+		REPAY_DATE : mml:date
+			@t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=19.0, core=true, businessType=D, t24Name=REPAY.DATE)
+		RD_AMT : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=20.0, core=true, businessType=AMT, t24Name=RD.AMT)
+		RD_TAX : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=21.0, core=true, businessType=AMT, t24Name=RD.TAX)
+		RD_TAX_LCY : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=22.0, core=true, businessType=AMT, t24Name=RD.TAX.LCY)
+	}
+}

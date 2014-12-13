@@ -1,0 +1,158 @@
+# UTF-8
+/* Overdue Settlement for Syndicated Loans */
+Domain SL_ODSettlement
+	@t24:i (module=SL)
+	@java:Package (value=com.temenos.t24.datamodel.sl.sl_odsettlement)
+namespace "http://www.temenos.com/t24/SL_ODSettlement"
+metamodelVersion 4.3.0.20110527
+Classes {
+	SL_OD_SETTLE
+		@t24:i (t24Name=SL.OD.SETTLE, level=F, type=H, additionalInfo="UNP OEU", allowedFunctions="A C D E H I L P Q R S", localRefAllowed=true)
+	{
+		SL_OD_SETTLE_ID -> SL_ODSettlement:SL_OD_SETTLE PK required
+			@i18n:Label (en="SL.OD.Settle Id")
+			@i18n:Tooltip (en="SL.OD.Setle Id")
+			@t24:i (align=L, inputBehaviour=I, maxLength=30, sysNumber=0.0, core=true, businessType=A, t24Name=SL.OD.SETTLE.ID)
+		TOT_DUES : mml:Double
+			@i18n:Label (en="Total Dues under Type", fr="Total dettes", es="Total Debido")
+			@i18n:Tooltip (en="Total amount under Each Type", fr="Total dettes", es="Monto vencido contra la facilidad/Préstamo SL ")
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=1.0, core=true, businessType=AMT, t24Name=TOT.DUES)
+		PAY_ACCOUNT -> ACM_AccountOpening:ACCOUNT required
+			@i18n:Label (en="Pay Account", fr="Cpte de paiement", es="Cuenta de Pago")
+			@i18n:Tooltip (fr="Cpte de paiement")
+			@t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=2.0, core=true, businessType=ANT, t24Name=PAY.ACCOUNT)
+		TOT_PAY_AMT : mml:Double
+			@i18n:Label (en="Tot Pay Amt", fr="Total payé", es="Monto Total de Pago")
+			@i18n:Tooltip (fr="Total payé")
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=3.0, core=true, businessType=AMT, t24Name=TOT.PAY.AMT)
+		DUE_TYPE -> byValue SL_ODSettlement:SL_OD_SETTLE__DUE_TYPE *
+		DELIVERY_CUST -> byValue SL_ODSettlement:SL_OD_SETTLE__DELIVERY_CUST *
+		DELIVERY_REF -> byValue SL_ODSettlement:SL_OD_SETTLE__DELIVERY_REF *
+		DUE_CURRENCY -> FIN_CurrencyConfig:CURRENCY
+			@i18n:Label (en="Due Currency", fr=Devise, es="Moneda Debida")
+			@i18n:Tooltip (fr=Devise)
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=20.0, core=true, businessType=CCY, t24Name=DUE.CURRENCY)
+		RESERVED_8 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=22.0, core=true, businessType=A, t24Name=RESERVED.8)
+		RESERVED_7 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=23.0, core=true, businessType=A, t24Name=RESERVED.7)
+		RESERVED_6 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=24.0, core=true, businessType=A, t24Name=RESERVED.6)
+		RESERVED_5 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=25.0, core=true, businessType=A, t24Name=RESERVED.5)
+		RESERVED_4 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=26.0, core=true, businessType=A, t24Name=RESERVED.4)
+		RESERVED_3 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=27.0, core=true, businessType=A, t24Name=RESERVED.3)
+		RESERVED_2 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=28.0, core=true, businessType=A, t24Name=RESERVED.2)
+		RESERVED_1 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=29.0, core=true, businessType=A, t24Name=RESERVED.1)
+		STMT_NO -> byValue SL_ODSettlement:SL_OD_SETTLE__STMT_NO *
+		OVERRIDE -> byValue SL_ODSettlement:SL_OD_SETTLE__OVERRIDE *
+		RECORD_STATUS : mml:string
+			@i18n:Label (en="Record Status", fr=Statut, es=Estado)
+			@i18n:Tooltip (fr="Statut de l\'enregistrement")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=32.0, core=true, businessType=STAT, t24Name=RECORD.STATUS)
+		CURR_NO : mml:Integer
+			@i18n:Label (en="Curr No", fr="N° version", es="No. Actual")
+			@i18n:Tooltip (fr="Numéro de version")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=33.0, core=true, t24Name=CURR.NO)
+		INPUTTER -> byValue SL_ODSettlement:SL_OD_SETTLE__INPUTTER *
+		DATE_TIME -> byValue SL_ODSettlement:SL_OD_SETTLE__DATE_TIME *
+		AUTHORISER : mml:string
+			@i18n:Label (en=Authoriser, fr="Validé par", es=Autorizador)
+			@i18n:Tooltip (en="Indicates the User who Authorises the record", fr="Utilisateur de validation", es="El usuario que autorizó el registro")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=36.0, core=true, businessType=A, t24Name=AUTHORISER)
+		CO_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company, fr=Entité, es="Compañía")
+			@i18n:Tooltip (fr="Code établissement ou agence")
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=37.0, core=true, businessType=A, t24Name=CO.CODE)
+		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Dept Code", fr=Service, es=Departamento)
+			@i18n:Tooltip (fr="Code du service")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=38.0, core=true, t24Name=DEPT.CODE)
+		AUDITOR_CODE : mml:string
+			@i18n:Label (en="Auditor Code", fr="Audité par", es="Código de Auditor")
+			@i18n:Tooltip (en="Auditor Code", fr="Utilisateur d\'audit", es="Nombre del auditor")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=39.0, core=true, businessType=A, t24Name=AUDITOR.CODE)
+		AUDIT_DATE_TIME : mml:dateTime
+			@i18n:Label (en="Audit Date Time", fr="Audité le", es="Fecha/Hora de Audit.")
+			@i18n:Tooltip (en="Date and time when record was audited", fr="Date et heure d\'audit", es="Fecha y Hora de Auditoría ")
+			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=40.0, core=true, businessType=RELTIME, t24Name=AUDIT.DATE.TIME)
+	}
+	SL_OD_SETTLE__DUE_TYPE
+	{
+		DUE_TYPE : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=20, sysNumber=4.0, core=true, businessType=A, t24Name=DUE.TYPE)
+		TOT_TYPE_DUE : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=19, sysNumber=5.0, core=true, businessType=A, t24Name=TOT.TYPE.DUE)
+		DUE_PAY_AMT : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=6.0, core=true, businessType=AMT, t24Name=DUE.PAY.AMT)
+		PAY_PART_ID -> byValue SL_ODSettlement:SL_OD_SETTLE__DUE_TYPE__PAY_PART_ID *
+	}
+	SL_OD_SETTLE__DUE_TYPE__PAY_PART_ID
+	{
+		PAY_PART_ID : mml:string
+			@t24:i (align=R, inputBehaviour=N, maxLength=10, sysNumber=7.0, core=true, businessType=CUS, t24Name=PAY.PART.ID)
+		PART_DUE : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=10, sysNumber=8.0, core=true, businessType=A, t24Name=PART.DUE)
+		PAY_PART_AMT : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=9.0, core=true, businessType=AMT, t24Name=PAY.PART.AMT)
+	}
+	SL_OD_SETTLE__DELIVERY_CUST
+	{
+		DELIVERY_CUST -> ST_Customer:CUSTOMER
+			@t24:i (align=R, inputBehaviour=N, maxLength=10, sysNumber=10.0, core=true, businessType=CUS, t24Name=DELIVERY.CUST)
+		ACTIVITY_CODE -> EB_Delivery:EB_ACTIVITY
+			@t24:i (align=L, inputBehaviour=N, maxLength=7, sysNumber=11.0, core=true, businessType=A, t24Name=ACTIVITY.CODE)
+		ACTIVITY_DATE : mml:date
+			@t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=12.0, core=true, businessType=D, t24Name=ACTIVITY.DATE)
+		PRIOR_DAYS : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=3, sysNumber=13.0, core=true, t24Name=PRIOR.DAYS)
+		MSG_TYPE -> byValue SL_ODSettlement:SL_OD_SETTLE__DELIVERY_CUST__MSG_TYPE *
+	}
+	SL_OD_SETTLE__DELIVERY_CUST__MSG_TYPE
+	{
+		MSG_TYPE -> DE_Config:DE_MESSAGE
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=14.0, core=true, businessType=A, t24Name=MSG.TYPE)
+		MSG_CLASS -> EB_Delivery:EB_MESSAGE_CLASS
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=15.0, core=true, businessType=A, t24Name=MSG.CLASS)
+		OVR_CARRIER -> DE_Config:DE_CARRIER
+			@t24:i (align=L, inputBehaviour=N, maxLength=8, sysNumber=16.0, core=true, businessType=A, t24Name=OVR.CARRIER)
+		SEND_MSG : SL_ODSettlement:SL_OD_SETTLE__DELIVERY_CUST__MSG_TYPE__SEND_MSG
+			@t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=17.0, core=true, t24Name=SEND.MSG)
+		MSG_DATE : mml:date
+			@t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=18.0, core=true, businessType=D, t24Name=MSG.DATE)
+	}
+	SL_OD_SETTLE__DELIVERY_REF
+	{
+		DELIVERY_REF : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=46, sysNumber=19.0, core=true, businessType=A, t24Name=DELIVERY.REF)
+	}
+	SL_OD_SETTLE__STMT_NO
+	{
+		STMT_NO : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=29, sysNumber=30.0, core=true, businessType=A, t24Name=STMT.NO)
+	}
+	SL_OD_SETTLE__OVERRIDE
+	{
+		OVERRIDE : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=31.0, core=true, businessType=A, t24Name=OVERRIDE)
+	}
+	SL_OD_SETTLE__INPUTTER
+	{
+		INPUTTER : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=34.0, core=true, businessType=A, t24Name=INPUTTER)
+	}
+	SL_OD_SETTLE__DATE_TIME
+	{
+		DATE_TIME : mml:dateTime
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=35.0, core=true, businessType=RELTIME, t24Name=DATE.TIME)
+	}
+}
+Enumerations {
+	SL_OD_SETTLE__DELIVERY_CUST__MSG_TYPE__SEND_MSG : mml:string
+		NO=NO
+		NULL=NULL
+}

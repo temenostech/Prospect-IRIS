@@ -1,0 +1,170 @@
+# UTF-8
+/* Reports of Derivatives */
+Domain DX_Reports
+	@t24:i (module=DX)
+	@java:Package (value=com.temenos.t24.datamodel.dx.dx_reports)
+namespace "http://www.temenos.com/t24/DX_Reports"
+metamodelVersion 4.3.0.20110527
+Classes {
+	DX_TXN_ACT_CUST
+		@t24:i (t24Name=DX.TXN.ACT.CUST, level=F, type=L, additionalInfo="Link to DX Transaction Activity File", allowedFunctions="L P S", localRefAllowed=false)
+	{
+		TXN_ACT_CUST -> DX_Reports:DX_TXN_ACT_CUST PK required
+			@t24:i (align=L, inputBehaviour=I, maxLength=20, sysNumber=0.0, core=true, businessType=A, t24Name=TXN.ACT.CUST)
+		TXN_ACTIVITY : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=68, sysNumber=1.0, core=true, businessType=A, t24Name=TXN.ACTIVITY)
+	}
+	DX_TXN_ACTIVITY
+		@t24:i (t24Name=DX.TXN.ACTIVITY, level=F, type=L, additionalInfo="DX Transaction Activity File", allowedFunctions="L P S", localRefAllowed=false)
+	{
+		DX_TXN_ACTIVITY -> DX_Reports:DX_TXN_ACTIVITY PK required
+			@t24:i (align=L, inputBehaviour=I, maxLength=71, sysNumber=0.0, core=true, businessType=A, t24Name=DX.TXN.ACTIVITY)
+		REP_POS_ACT -> DX_Position:DX_REP_POS_ACTIVITY
+			@i18n:Label (en="Rep Pos Act", fr="Rprt activité posn", es="Cta. Posic. Amortiz.")
+			@i18n:Tooltip (fr="Rprt activité posn")
+			@t24:i (align=L, inputBehaviour=I, maxLength=68, sysNumber=1.0, core=true, businessType=A, t24Name=REP.POS.ACT)
+		REP_POS_ACT_HIST -> DX_Position:DX_REP_POS_ACT_HIST
+			@i18n:Label (en="Rep Pos Act Hist", fr="Histq rprt d\'act pos", es=Hist.Cta.Pos.Amort.)
+			@i18n:Tooltip (fr="Histq rprt d\'act pos")
+			@t24:i (align=L, inputBehaviour=I, maxLength=68, sysNumber=2.0, core=true, businessType=A, t24Name=REP.POS.ACT.HIST)
+		CUSTOMER -> DX_Customer:DX_CUSTOMER
+			@i18n:Label (en="Nom client", fr=Client, es=Cliente)
+			@i18n:Tooltip (en="Nom du client", fr="Code du client", es="Pasivo de Cliente")
+			@t24:i (align=L, inputBehaviour=I, maxLength=12, sysNumber=3.0, core=true, businessType=A, t24Name=CUSTOMER)
+		PORTFOLIO -> SCO_PortfolioMaintenance:SEC_ACC_MASTER
+			@i18n:Label (en=Portfolio, fr=Portefeuille, es="No. de Cartera")
+			@i18n:Tooltip (fr=Portefeuille)
+			@t24:i (align=L, inputBehaviour=I, maxLength=18, sysNumber=4.0, core=true, businessType=A, t24Name=PORTFOLIO)
+		PORT_CUST_ID -> DX_Reports:DX_TXN_ACT_CUST
+			@i18n:Label (en=Customer/Portfolio, fr="No. du Portefeuille", es=Cliente/Cartera)
+			@i18n:Tooltip (fr="Numéro du Portefeuille")
+			@t24:i (align=R, inputBehaviour=I, maxLength=20, sysNumber=5.0, core=true, t24Name=PORT.CUST.ID)
+		CONTRACT_CODE -> DX_Configuration:DX_CONTRACT_MASTER
+			@i18n:Label (en=Contract, fr=Contrat, es=Contrato)
+			@i18n:Tooltip (en="Identifies the contract code of the transaction", fr=Contrat, es="Identifica el código de contrato de la transacción")
+			@t24:i (align=L, inputBehaviour=I, maxLength=12, sysNumber=6.0, core=true, businessType=A, t24Name=CONTRACT.CODE)
+		MATURITY_DATE : mml:string
+			@i18n:Label (en="Maturity Date", fr="Date d\'échéance", es="Fecha de Vencimiento")
+			@i18n:Tooltip (en="Indicates the Maturity Date of the Transaction", fr="Date d\'échéance", es="Indica la Fecha de Vencimiento de la Transacción")
+			@t24:i (align=L, inputBehaviour=I, maxLength=11, sysNumber=7.0, core=true, businessType=DXMATDT, t24Name=MATURITY.DATE)
+		INT_STRIKE : mml:Integer
+			@i18n:Label (fr="Prix d\'exercice interne")
+			@i18n:Tooltip (fr="Prix d\'exercice interne")
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=8.0, core=true, t24Name=INT.STRIKE)
+		CALL_PUT : mml:string
+			@i18n:Label (en=Call/Put, fr=Call/Put, es="Compra Venta")
+			@i18n:Tooltip (fr="Call ou Put")
+			@t24:i (align=L, inputBehaviour=I, maxLength=4, sysNumber=9.0, core=true, businessType=A, t24Name=CALL.PUT)
+		STRIKE : mml:Integer
+			@i18n:Label (en=Strike, fr="Prix d\'exercice", es="Ejecutación")
+			@i18n:Tooltip (fr="Prix d\'exercice")
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=10.0, core=true, t24Name=STRIKE)
+		EVENT -> DX_Configuration:DX_EVENT_TYPE
+			@i18n:Label (en=Event, fr=Evénement, es="ID del Evento")
+			@i18n:Tooltip (fr=Evénement)
+			@t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=11.0, core=true, t24Name=EVENT)
+		REP_DATE : mml:date
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=12.0, core=true, businessType=D, t24Name=REP.DATE)
+		REP_TIME : mml:string
+			@i18n:Label (en="Rep Time", fr="Heure de reportage", es="Hora de Amortización")
+			@i18n:Tooltip (fr="Heure de reportage")
+			@t24:i (align=L, inputBehaviour=I, maxLength=10, sysNumber=13.0, core=true, businessType=TIME, t24Name=REP.TIME)
+		INACTIVE : DX_Reports:DX_TXN_ACTIVITY__INACTIVE
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=14.0, core=true, t24Name=INACTIVE)
+		REPORTING_FLAG : DX_Reports:DX_TXN_ACTIVITY__REPORTING_FLAG
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=15.0, core=true, t24Name=REPORTING.FLAG)
+		BOOKING_DATE : mml:date
+			@i18n:Label (en="Booking Date", fr="Date comptable", es="Fecha de Registro")
+			@i18n:Tooltip (en="Booking Date", fr="Date de comptabilisation")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=16.0, core=true, businessType=D, t24Name=BOOKING.DATE)
+		TRADE_DATE : mml:date
+			@i18n:Label (en="Trade Date", fr="Date transaction", es="Fecha de Transacción")
+			@i18n:Tooltip (fr="Date de la transaction")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=17.0, core=true, businessType=D, t24Name=TRADE.DATE)
+		PREM_VAL_DATE : mml:date
+			@i18n:Label (en="Prem Val Date", fr="Date de valeur prime", es="Fecha Valor Prem.")
+			@i18n:Tooltip (fr="Date de valeur prime")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=18.0, core=true, businessType=D, t24Name=PREM.VAL.DATE)
+		RESERVED11 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=2, sysNumber=19.0, core=true, t24Name=RESERVED11)
+		RESERVED10 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=2, sysNumber=20.0, core=true, t24Name=RESERVED10)
+		TRADE -> DX_Trade:DX_TRADE
+			@i18n:Label (en=Trade, fr=Commerce)
+			@i18n:Tooltip (fr=Commerce)
+			@t24:i (align=R, inputBehaviour=I, maxLength=30, sysNumber=21.0, core=true, t24Name=TRADE)
+		TRANSACTION -> DX_Trade:DX_TRANSACTION
+			@i18n:Label (en=Transaction, fr=Opération, es="Transacción")
+			@i18n:Tooltip (en="The reference number of the Transaction", fr=Opération)
+			@t24:i (align=R, inputBehaviour=I, maxLength=30, sysNumber=22.0, core=true, t24Name=TRANSACTION)
+		ORDER_ID -> DX_Order:DX_ORDER
+			@i18n:Label (en="Order ID", fr="Id ordre", es="ID de la Orden")
+			@i18n:Tooltip (fr="Identifiant ordre")
+			@t24:i (align=R, inputBehaviour=I, maxLength=30, sysNumber=23.0, core=true, t24Name=ORDER.ID)
+		ORD_TXN -> DX_Trade:DX_TRANSACTION
+			@i18n:Label (en="Ord Txn", fr="Trans d\'ordre", es="Transacción de Orden")
+			@i18n:Tooltip (fr="Trans d\'ordre")
+			@t24:i (align=R, inputBehaviour=I, maxLength=30, sysNumber=24.0, core=true, t24Name=ORD.TXN)
+		CLOSEOUT -> DX_Closeout:DX_CLOSEOUT
+			@i18n:Label (en=Closeout, fr="Vente de fermeture", es=Cierre)
+			@i18n:Tooltip (fr="Vente de fermeture")
+			@t24:i (align=R, inputBehaviour=I, maxLength=30, sysNumber=25.0, core=true, t24Name=CLOSEOUT)
+		CO_TXN -> DX_Trade:DX_TRANSACTION
+			@i18n:Label (en="Co Txn", fr="Trans de garantie", es="Transacción Compañía")
+			@i18n:Tooltip (fr="Trans de garantie")
+			@t24:i (align=R, inputBehaviour=I, maxLength=30, sysNumber=26.0, core=true, t24Name=CO.TXN)
+		END_OF_EXCH -> DX_Configuration:DX_EXCHANGE_MASTER
+			@i18n:Label (en="End Of Exch", fr="Fin de l\'échange", es="Fin de Intercambio")
+			@i18n:Tooltip (fr="Fin de l\'échange")
+			@t24:i (align=R, inputBehaviour=I, maxLength=30, sysNumber=27.0, core=true, t24Name=END.OF.EXCH)
+		EOE_TXN -> DX_Trade:DX_TRANSACTION
+			@i18n:Label (en="Eoe Txn", fr="Fin Trans de change", es="Trs. Fin Intercambio")
+			@i18n:Tooltip (fr="Fin Trans de change")
+			@t24:i (align=R, inputBehaviour=I, maxLength=30, sysNumber=28.0, core=true, t24Name=EOE.TXN)
+		DIARY -> DX_CorporateActions:DX_DIARY
+			@i18n:Label (en=Diary, fr="Id OST", es=Diario)
+			@i18n:Tooltip (fr="Identifiant OST")
+			@t24:i (align=R, inputBehaviour=I, maxLength=30, sysNumber=29.0, core=true, t24Name=DIARY)
+		ENTITLEMENT -> DX_CorporateActions:DX_ENTITLEMENT
+			@i18n:Label (en=Entitlement, fr=Droit, es="Titulación")
+			@i18n:Tooltip (fr=Droit)
+			@t24:i (align=R, inputBehaviour=I, maxLength=30, sysNumber=30.0, core=true, t24Name=ENTITLEMENT)
+		UNQ_ENTRY : mml:string
+			@i18n:Label (en="Unq Entry", fr="Saisie unique", es="Entrada Única")
+			@i18n:Tooltip (fr="Saisie unique")
+			@t24:i (align=L, inputBehaviour=I, maxLength=68, sysNumber=31.0, core=true, businessType=A, t24Name=UNQ.ENTRY)
+		USR_FLD_NAME -> byValue DX_Reports:DX_TXN_ACTIVITY__USR_FLD_NAME *
+		RESERVED05 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=2, sysNumber=36.0, core=true, t24Name=RESERVED05)
+		RESERVED04 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=2, sysNumber=37.0, core=true, t24Name=RESERVED04)
+		RESERVED03 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=2, sysNumber=38.0, core=true, t24Name=RESERVED03)
+		RESERVED02 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=2, sysNumber=39.0, core=true, t24Name=RESERVED02)
+		RESERVED01 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=2, sysNumber=40.0, core=true, t24Name=RESERVED01)
+	}
+	DX_TXN_ACTIVITY__USR_FLD_NAME
+	{
+		USR_FLD_NAME : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=32.0, core=true, businessType=A, t24Name=USR.FLD.NAME)
+		USR_FLD_VAL : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=33.0, core=true, businessType=A, t24Name=USR.FLD.VAL)
+		USR_FLD_TEXT : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=34.0, core=true, businessType=A, t24Name=USR.FLD.TEXT)
+		USR_FLD_PRICE : DX_Reports:DX_TXN_ACTIVITY__USR_FLD_NAME__USR_FLD_PRICE
+			@t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=35.0, core=true, businessType=A, t24Name=USR.FLD.PRICE)
+	}
+}
+Enumerations {
+	DX_TXN_ACTIVITY__INACTIVE : mml:string
+		YES=YES
+		NO=NO
+	DX_TXN_ACTIVITY__REPORTING_FLAG : mml:string
+		YES=YES
+		NO=NO
+	DX_TXN_ACTIVITY__USR_FLD_NAME__USR_FLD_PRICE : mml:string
+		YES=YES
+		NO=NO
+}

@@ -1,0 +1,37 @@
+domain T24 {
+	use common.CoreCommands.*
+	use common.HTTPEvents.*
+	use common.ODataCommands.*
+	use common.T24Commands.*
+	use common.T24Events.*
+	rim enqStmtEntBook {
+		command GETEntities
+		command GETEntity
+		basepath: "/{companyid}"
+	
+		resource enqStmtEntBooks {
+			type: collection
+			entity: enqStmtEntBook
+			view: GETEntities {
+				properties [ filter = "{filter}" ]
+			}
+			path: "/enqStmtEntBooks()"
+			GET *-> enqStmtEntBook {
+				parameters [ id = "{PrimaryKey}" ]
+			}
+			GET *-> locator locatorEnqStmtEntBook("{DrillDown}") {
+				parameters [ id = "{Id}" ]
+				title: "Transaction Detail"
+			}
+		}
+	
+		resource enqStmtEntBook {
+			type: item
+			entity: enqStmtEntBook
+			view: GETEntity
+			path: "/enqStmtEntBooks('{id}')"
+		}
+	
+	}
+	
+}

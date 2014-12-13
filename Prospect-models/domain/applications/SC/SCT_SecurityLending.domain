@@ -1,0 +1,224 @@
+# UTF-8
+/* Lending Process of Bond and Shares */
+Domain SCT_SecurityLending
+	@t24:i (module=SC)
+	@java:Package (value=com.temenos.t24.datamodel.sc.sct_securitylending)
+namespace "http://www.temenos.com/t24/SCT_SecurityLending"
+metamodelVersion 4.3.0.20110527
+Classes {
+	BOND_LENT_MASTER
+		@t24:i (t24Name=BOND.LENT.MASTER, level=F, type=H, additionalInfo="NOH UNP OEU", allowedFunctions="A C D E H I L P Q R S", localRefAllowed=true)
+	{
+		LENDING_KEY -> SCT_SecurityLending:BOND_LENT_MASTER PK required
+			@t24:i (align=L, inputBehaviour=I, maxLength=39, sysNumber=0.0, core=true, businessType=S, t24Name=LENDING.KEY)
+		LENDING_TYPE : SCT_SecurityLending:BOND_LENT_MASTER__LENDING_TYPE
+			@t24:i (align=L, inputBehaviour=F, maxLength=9, sysNumber=1.0, core=true, t24Name=LENDING.TYPE)
+		SECURITIES_ACCOUNT -> SCO_PortfolioMaintenance:SEC_ACC_MASTER
+			@i18n:Label (en=Portfolio, fr="Compte titres", es=Cartera)
+			@i18n:Tooltip (fr="Compte titres")
+			@t24:i (align=L, inputBehaviour=F, maxLength=14, sysNumber=2.0, core=true, businessType=A, t24Name=SECURITIES.ACCOUNT)
+		SECURITY_NUMBER -> SCO_SecurityMasterMaintenance:SECURITY_MASTER required
+			@i18n:Label (en="Security No", fr="Code valeur", es="No. de Título")
+			@i18n:Tooltip (en="Indicates the security number", fr="Code de la valeur mobilière", es="Indica un Título Valor válido")
+			@t24:i (align=L, inputBehaviour=F, maxLength=12, sysNumber=3.0, core=true, businessType=SEC, t24Name=SECURITY.NUMBER)
+		DEPOSITORY -> ST_Customer:CUSTOMER required
+			@i18n:Label (en=Depository, fr=Dépositaire, es=Depositario)
+			@i18n:Tooltip (en="Depository the Security to be delivered from/to", fr=Dépositaire, es="Depositario de Título Valor a ser enviado de/a")
+			@t24:i (align=R, inputBehaviour=F, maxLength=10, sysNumber=4.0, core=true, businessType=CUS, t24Name=DEPOSITORY)
+		NOMINEE_CODE -> SC_Config:NOMINEE_CODE
+			@i18n:Label (en="Nominee Code", fr="Code Nominee", es="Código del Nominado")
+			@i18n:Tooltip (en="Identifies the Nominee Company ", fr="Code Nominee", es="Identifica la Compañía Nominada")
+			@t24:i (align=L, inputBehaviour=F, maxLength=5, sysNumber=5.0, core=true, businessType=A, t24Name=NOMINEE.CODE)
+		SUB_ACCOUNT : mml:Integer
+			@i18n:Label (en="Sub Account", fr=Sous-compte, es="Sub Cuenta")
+			@i18n:Tooltip (fr=Sous-compte)
+			@t24:i (align=R, inputBehaviour=F, maxLength=16, sysNumber=6.0, core=true, t24Name=SUB.ACCOUNT)
+		ORIG_NOMINAL : mml:string
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=7.0, core=true, businessType=NOMAMT, t24Name=ORIG.NOMINAL)
+		NOMINAL : mml:string required
+			@i18n:Label (en=Nominal, fr=Nominal, es=Nominales)
+			@i18n:Tooltip (en="No of Units or Amount", fr=Nominal)
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=8.0, core=true, businessType=NOMAMT, t24Name=NOMINAL)
+		EXPIRY_DATE : mml:date
+			@i18n:Label (en="Expiry Date", fr="Date d\'échéance", es="Fecha de Vencimiento")
+			@i18n:Tooltip (en="Indicates the Expiry Date of the Transaction", fr="Date d\'échéance", es="Indica la Fecha de Vencimiento de la transacción")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=9.0, core=true, businessType=D, t24Name=EXPIRY.DATE)
+		DATE_OF_LOAN : mml:date
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=10.0, core=true, businessType=D, t24Name=DATE.OF.LOAN)
+		ADJ_DATE -> byValue SCT_SecurityLending:BOND_LENT_MASTER__ADJ_DATE *
+		NOTES -> byValue SCT_SecurityLending:BOND_LENT_MASTER__NOTES *
+		RETURN_DATE : mml:date
+			@i18n:Label (en="Return Date", fr="Date de retour", es="Fecha de Retorno")
+			@i18n:Tooltip (fr="Date de retour")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=15.0, core=true, businessType=D, t24Name=RETURN.DATE)
+		FEE_CCY -> FIN_CurrencyConfig:CURRENCY
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=16.0, core=true, businessType=CCY, t24Name=FEE.CCY)
+		FEE_AMOUNT : mml:Double
+			@i18n:Label (en="Fee Amount")
+			@i18n:Tooltip (en="Amount of Fees")
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=17.0, core=true, businessType=AMT, t24Name=FEE.AMOUNT)
+		CHARGES : mml:Double
+			@i18n:Label (en="Charge Amt", fr=Commissions, es="Monto del Cargo")
+			@i18n:Tooltip (fr=Commissions)
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=18.0, core=true, businessType=AMT, t24Name=CHARGES)
+		NET_AMOUNT : mml:Double
+			@i18n:Label (en="Net Amount", fr="Montant net", es="Efect. Pagado a Clte.")
+			@i18n:Tooltip (fr="Montant net")
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=19.0, core=true, businessType=AMT, t24Name=NET.AMOUNT)
+		ACCOUNT_NUMBER -> ACM_AccountOpening:ACCOUNT
+			@i18n:Label (en="Account Number", fr="Numéro de compte", es="Número de Cuenta")
+			@i18n:Tooltip (fr="Numéro de compte")
+			@t24:i (align=R, inputBehaviour=I, maxLength=16, sysNumber=20.0, core=true, businessType=ACC, t24Name=ACCOUNT.NUMBER)
+		ACCOUNT_CCY -> FIN_CurrencyConfig:CURRENCY
+			@i18n:Label (en="Account Ccy", fr="Devise du cpte", es="Moneda de Cuenta")
+			@i18n:Tooltip (en="Indicates the currency of the account", fr="Devise du compte")
+			@t24:i (align=R, inputBehaviour=N, maxLength=3, sysNumber=21.0, core=true, t24Name=ACCOUNT.CCY)
+		EXCHANGE_RATE : mml:string
+			@i18n:Label (en="Exchange Rate", fr="Taux de Change", es="Tipo de Cambio")
+			@i18n:Tooltip (fr="Taux de Change")
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=22.0, core=true, businessType=R, t24Name=EXCHANGE.RATE)
+		DEP_ACCT_NUMBER -> ACM_AccountOpening:ACCOUNT
+			@i18n:Label (en="Depo Acct No")
+			@i18n:Tooltip (en="Account No of the Depository")
+			@t24:i (align=R, inputBehaviour=I, maxLength=16, sysNumber=23.0, core=true, businessType=ACC, t24Name=DEP.ACCT.NUMBER)
+		DEP_ACCT_CCY -> FIN_CurrencyConfig:CURRENCY
+			@i18n:Label (en="Depo Acct Ccy")
+			@i18n:Tooltip (en="Currency of the Depository\'s account")
+			@t24:i (align=R, inputBehaviour=N, maxLength=3, sysNumber=24.0, core=true, t24Name=DEP.ACCT.CCY)
+		DEP_EXCH_RATE : mml:string
+			@i18n:Label (en="Dep Exch Rate")
+			@i18n:Tooltip (en="Exchange rate to convert Fee Ccy to Acct Ccy")
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=25.0, core=true, businessType=R, t24Name=DEP.EXCH.RATE)
+		VALUE_DATE : mml:date
+			@i18n:Label (en="Value Date", fr="Date de valeur", es="Fecha Valor")
+			@i18n:Tooltip (en="Indicates the Value date of the Contract", fr="Date de valeur", es="Fecha en que Carteras serán act. por el evento")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=26.0, core=true, businessType=D, t24Name=VALUE.DATE)
+		CLOSURE_NOTES -> byValue SCT_SecurityLending:BOND_LENT_MASTER__CLOSURE_NOTES *
+		REFERENCE_NUMBER : mml:string
+			@i18n:Label (en=Reference, fr="No. de référence", es=Referencia)
+			@i18n:Tooltip (fr="Numéro de référence")
+			@t24:i (align=L, inputBehaviour=N, maxLength=16, sysNumber=28.0, core=true, businessType=A, t24Name=REFERENCE.NUMBER)
+		DELIVERY_KEY : mml:string
+			@i18n:Label (en="Delivery Key", fr="Référence confirmation", es="Clave de Envío")
+			@i18n:Tooltip (en="IDs of the delivery records related to transaction", fr="Référence confirmation", es="ID de registros de Envío relacionados con la trs.")
+			@t24:i (align=L, inputBehaviour=N, maxLength=30, sysNumber=29.0, core=true, businessType=A, t24Name=DELIVERY.KEY)
+		RESERVED_2 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=30.0, core=true, t24Name=RESERVED.2)
+		RESERVED_1 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=31.0, core=true, t24Name=RESERVED.1)
+		STATEMENT_NOS -> byValue SCT_SecurityLending:BOND_LENT_MASTER__STATEMENT_NOS *
+		OVERRIDE -> byValue SCT_SecurityLending:BOND_LENT_MASTER__OVERRIDE *
+		RECORD_STATUS : mml:string
+			@i18n:Label (en="Record Status", fr=Statut, es=Estado)
+			@i18n:Tooltip (fr="Statut de l\'enregistrement")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=35.0, core=true, businessType=STAT, t24Name=RECORD.STATUS)
+		CURR_NO : mml:Integer
+			@i18n:Label (en="Curr No", fr="N° version", es="No. Actual")
+			@i18n:Tooltip (fr="Numéro de version")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=36.0, core=true, t24Name=CURR.NO)
+		INPUTTER -> byValue SCT_SecurityLending:BOND_LENT_MASTER__INPUTTER *
+		DATE_TIME -> byValue SCT_SecurityLending:BOND_LENT_MASTER__DATE_TIME *
+		AUTHORISER : mml:string
+			@i18n:Label (en=Authoriser, fr="Validé par", es=Autorizador)
+			@i18n:Tooltip (en="Indicates the User who Authorises the record", fr="Utilisateur de validation", es="El usuario que autorizó el registro")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=39.0, core=true, businessType=A, t24Name=AUTHORISER)
+		CO_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company, fr=Entité, es="Compañía")
+			@i18n:Tooltip (fr="Code établissement ou agence")
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=40.0, core=true, businessType=A, t24Name=CO.CODE)
+		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Dept Code", fr=Service, es=Departamento)
+			@i18n:Tooltip (fr="Code du service")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=41.0, core=true, t24Name=DEPT.CODE)
+		AUDITOR_CODE : mml:string
+			@i18n:Label (en="Auditor Code", fr="Audité par", es="Código de Auditor")
+			@i18n:Tooltip (en="Auditor Code", fr="Utilisateur d\'audit", es="Nombre del auditor")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=42.0, core=true, businessType=A, t24Name=AUDITOR.CODE)
+		AUDIT_DATE_TIME : mml:dateTime
+			@i18n:Label (en="Audit Date Time", fr="Audité le", es="Fecha/Hora de Audit.")
+			@i18n:Tooltip (en="Date and time when record was audited", fr="Date et heure d\'audit", es="Fecha y Hora de Auditoría ")
+			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=43.0, core=true, businessType=RELTIME, t24Name=AUDIT.DATE.TIME)
+	}
+	BOND_LENT_MASTER__ADJ_DATE
+	{
+		ADJ_DATE : mml:date
+			@t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=11.0, core=true, businessType=D, t24Name=ADJ.DATE)
+		ADJ_NOMINAL : mml:string
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=12.0, core=true, businessType=NOMAMT, t24Name=ADJ.NOMINAL)
+		ADJ_NARRATIVE : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=13.0, core=true, businessType=S, t24Name=ADJ.NARRATIVE)
+	}
+	BOND_LENT_MASTER__NOTES
+	{
+		NOTES : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=40, sysNumber=14.0, core=true, businessType=S, t24Name=NOTES)
+	}
+	BOND_LENT_MASTER__CLOSURE_NOTES
+	{
+		CLOSURE_NOTES : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=40, sysNumber=27.0, core=true, businessType=S, t24Name=CLOSURE.NOTES)
+	}
+	BOND_LENT_MASTER__STATEMENT_NOS
+	{
+		STATEMENT_NOS : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=29, sysNumber=33.0, core=true, businessType=A, t24Name=STATEMENT.NOS)
+	}
+	BOND_LENT_MASTER__OVERRIDE
+	{
+		OVERRIDE : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=34.0, core=true, businessType=A, t24Name=OVERRIDE)
+	}
+	BOND_LENT_MASTER__INPUTTER
+	{
+		INPUTTER : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=37.0, core=true, businessType=A, t24Name=INPUTTER)
+	}
+	BOND_LENT_MASTER__DATE_TIME
+	{
+		DATE_TIME : mml:dateTime
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=38.0, core=true, businessType=RELTIME, t24Name=DATE.TIME)
+	}
+	SC_DEPOT_POSITION
+		@t24:i (t24Name=SC.DEPOT.POSITION, level=C, type=L, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		REFERENCE_NUMBER -> SCT_SecurityLending:SC_DEPOT_POSITION PK required
+			@i18n:Label (en=Reference, fr="No. de référence", es=Referencia)
+			@i18n:Tooltip (fr="Numéro de référence")
+			@t24:i (align=L, inputBehaviour=I, maxLength=80, sysNumber=0.0, core=true, businessType=S, t24Name=REFERENCE.NUMBER)
+		SECURITY_ACCOUNT : mml:string
+			@i18n:Label (en=Portfolio, fr=Portefeuille, es="Cuenta de Título")
+			@i18n:Tooltip (fr=Portefeuille)
+			@t24:i (align=L, inputBehaviour=I, maxLength=14, sysNumber=1.0, core=true, businessType=S, t24Name=SECURITY.ACCOUNT)
+		SECURITY_NUMBER -> SCO_SecurityMasterMaintenance:SECURITY_MASTER
+			@i18n:Label (en="Security No", fr="Code valeur", es="No. de Título")
+			@i18n:Tooltip (en="Indicates the security number", fr="Code de la valeur mobilière", es="Indica un Título Valor válido")
+			@t24:i (align=L, inputBehaviour=I, maxLength=12, sysNumber=2.0, core=true, businessType=SEC, t24Name=SECURITY.NUMBER)
+		DEPOSITORY -> ST_Customer:CUSTOMER
+			@i18n:Label (en=Depository, fr=Dépositaire, es=Depositario)
+			@i18n:Tooltip (en="Depository the Security to be delivered from/to", fr=Dépositaire, es="Depositario de Título Valor a ser enviado de/a")
+			@t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=3.0, core=true, businessType=CUS, t24Name=DEPOSITORY)
+		NOMINEE_CODE -> SC_Config:NOMINEE_CODE
+			@i18n:Label (en="Nominee Code", fr="Code Nominee", es="Código del Nominado")
+			@i18n:Tooltip (en="Identifies the Nominee Company ", fr="Code Nominee", es="Identifica la Compañía Nominada")
+			@t24:i (align=L, inputBehaviour=I, maxLength=5, sysNumber=4.0, core=true, businessType=S, t24Name=NOMINEE.CODE)
+		MATURITY_DATE : mml:date
+			@i18n:Label (en="Maturity Date", fr="Date d\'échéance", es="Fecha de Vencimiento")
+			@i18n:Tooltip (en="Indicates the Maturity Date of the Transaction", fr="Date d\'échéance", es="Indica la Fecha de Vencimiento de la Transacción")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=5.0, core=true, businessType=D, t24Name=MATURITY.DATE)
+		INTEREST_RATE : mml:string
+			@i18n:Label (en="Interest Rate", fr="Taux d\'intérêts", es="Tasa de Interés")
+			@i18n:Tooltip (en="Indicates interest rate", fr="Taux d\'intérêts")
+			@t24:i (align=R, inputBehaviour=I, maxLength=16, sysNumber=6.0, core=true, businessType=R, t24Name=INTEREST.RATE)
+		SUB_ACCOUNT : mml:Integer
+			@i18n:Label (en="Sub Account", fr=Sous-compte, es="Sub Cuenta")
+			@i18n:Tooltip (fr=Sous-compte)
+			@t24:i (align=R, inputBehaviour=I, maxLength=16, sysNumber=7.0, core=true, t24Name=SUB.ACCOUNT)
+		NO_NOM_BOND_LENT : mml:string
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=8.0, core=true, businessType=NOMAMT, t24Name=NO.NOM.BOND.LENT)
+	}
+}
+Enumerations {
+	BOND_LENT_MASTER__LENDING_TYPE : mml:string
+		PORTFOLIO=PORTFOLIO
+		DEPO=DEPO
+}

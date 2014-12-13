@@ -1,0 +1,115 @@
+# UTF-8
+/* Commitments processing for Loans and Deposits */
+Domain LD_Commitment
+	@t24:i (module=LD)
+	@java:Package (value=com.temenos.t24.datamodel.ld.ld_commitment)
+namespace "http://www.temenos.com/t24/LD_Commitment"
+metamodelVersion 4.3.0.20110527
+Classes {
+	LD_COMMITMENT
+		@t24:i (t24Name=LD.COMMITMENT, level=F, type=T, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		COMMITMENT_NO -> LD_Commitment:LD_COMMITMENT PK required
+			@i18n:Label (en="Commitment Number", fr="N° engagement", es=Compromiso)
+			@i18n:Tooltip (fr="Numéro de l\'engagement")
+			@t24:i (align=L, inputBehaviour=I, maxLength=14, sysNumber=0.0, core=true, businessType=A, t24Name=COMMITMENT.NO)
+		CONTRACT_NO : mml:string
+			@i18n:Label (en="Contract Number", fr="Réf. de contrat", es="No. de Contrato")
+			@i18n:Tooltip (fr="Référence de contrat")
+			@t24:i (align=L, inputBehaviour=I, maxLength=14, sysNumber=1.0, core=true, businessType=A, t24Name=CONTRACT.NO)
+	}
+	LD_SCHD_PAST_UPDATES
+		@t24:i (t24Name=LD.SCHD.PAST.UPDATES, level=F, type=L, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		CONTRACT_NO -> LD_Commitment:LD_SCHD_PAST_UPDATES PK required
+			@i18n:Label (en="Contract Number", fr="Réf. de contrat", es="No. de Contrato")
+			@i18n:Tooltip (fr="Référence de contrat")
+			@t24:i (align=L, inputBehaviour=I, maxLength=27, sysNumber=0.0, core=true, businessType=A, t24Name=CONTRACT.NO)
+		CURRENCY : mml:string
+			@i18n:Label (en=Ccy, fr=Devise, es=Moneda)
+			@i18n:Tooltip (fr="Code devise ISO")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=1.0, core=true, businessType=CCY, t24Name=CURRENCY)
+		VALUE_DATE : mml:date
+			@i18n:Label (en="Value Date", fr="Date de valeur", es="Fecha Valor")
+			@i18n:Tooltip (fr="Date de valeur", es="Fecha en que Carteras serán act. por el evento")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=2.0, core=true, businessType=D, t24Name=VALUE.DATE)
+		SCHD_JULDATE -> byValue LD_Commitment:LD_SCHD_PAST_UPDATES__SCHD_JULDATE *
+		REVERSAL_MARKER : mml:Character
+			@i18n:Label (en="Rev Marker", fr="Marqueur d\'extourne", es="Marcador Inversión")
+			@i18n:Tooltip (fr="Marqueur d\'extourne")
+			@t24:i (align=L, inputBehaviour=I, maxLength=1, sysNumber=7.0, core=true, businessType=A, t24Name=REVERSAL.MARKER)
+	}
+	LD_SCHD_PAST_UPDATES__SCHD_JULDATE
+	{
+		SCHD_JULDATE : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=3.0, core=true, t24Name=SCHD.JULDATE)
+		SEQ : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=4.0, core=true, t24Name=SEQ)
+		SCHD_TYPE -> byValue LD_Commitment:LD_SCHD_PAST_UPDATES__SCHD_JULDATE__SCHD_TYPE *
+	}
+	LD_SCHD_PAST_UPDATES__SCHD_JULDATE__SCHD_TYPE
+	{
+		SCHD_TYPE : mml:Character
+			@t24:i (align=L, inputBehaviour=I, maxLength=1, sysNumber=5.0, core=true, businessType=A, t24Name=SCHD.TYPE)
+		SCHD_AMOUNT : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=6.0, core=true, businessType=AMT, t24Name=SCHD.AMOUNT)
+	}
+	LD_TRANCHE_DETAILS
+		@t24:i (t24Name=LD.TRANCHE.DETAILS, level=F, type=L, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		KEY -> LD_Commitment:LD_TRANCHE_DETAILS PK required
+			@i18n:Label (en=Key, fr=Clé, es=Clave)
+			@i18n:Tooltip (fr=Clé)
+			@t24:i (align=L, inputBehaviour=I, maxLength=14, sysNumber=0.0, core=true, businessType=A, t24Name=KEY)
+		TRANCHE_AMT -> byValue LD_Commitment:LD_TRANCHE_DETAILS__TRANCHE_AMT *
+	}
+	LD_TRANCHE_DETAILS__TRANCHE_AMT
+	{
+		TRANCHE_AMT : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=1.0, core=true, businessType=AMT, t24Name=TRANCHE.AMT)
+		DD_START_DATE : mml:date
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=2.0, core=true, businessType=D, t24Name=DD.START.DATE)
+		DD_END_DATE : mml:date
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=3.0, core=true, businessType=D, t24Name=DD.END.DATE)
+		TR_OUTS_AMT -> byValue LD_Commitment:LD_TRANCHE_DETAILS__TRANCHE_AMT__TR_OUTS_AMT *
+	}
+	LD_TRANCHE_DETAILS__TRANCHE_AMT__TR_OUTS_AMT
+	{
+		TR_OUTS_AMT : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=4.0, core=true, businessType=AMT, t24Name=TR.OUTS.AMT)
+		AMT_INCREASE : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=5.0, core=true, businessType=AMT, t24Name=AMT.INCREASE)
+		AMT_MOVEMT : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=6.0, core=true, businessType=AMT, t24Name=AMT.MOVEMT)
+		AMT_MV_DATE : mml:date
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=7.0, core=true, businessType=D, t24Name=AMT.MV.DATE)
+	}
+	LD_TRANCHE_END_LIST
+		@t24:i (t24Name=LD.TRANCHE.END.LIST, level=F, type=L, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		DATE -> LD_Commitment:LD_TRANCHE_END_LIST PK required
+			@i18n:Label (en=Date, fr=Date, es=Fecha)
+			@i18n:Tooltip (fr=Date)
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=0.0, core=true, businessType=A, t24Name=DATE)
+		CONTRACT_ID -> byValue LD_Commitment:LD_TRANCHE_END_LIST__CONTRACT_ID *
+	}
+	LD_TRANCHE_END_LIST__CONTRACT_ID
+	{
+		CONTRACT_ID : mml:string required
+			@t24:i (align=L, inputBehaviour=I, maxLength=17, sysNumber=1.0, core=true, businessType=A, t24Name=CONTRACT.ID)
+	}
+	LD_TRANCHE_ST_LIST
+		@t24:i (t24Name=LD.TRANCHE.ST.LIST, level=F, type=L, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		DATE -> LD_Commitment:LD_TRANCHE_ST_LIST PK required
+			@i18n:Label (en=Date, fr=Date, es=Fecha)
+			@i18n:Tooltip (fr=Date)
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=0.0, core=true, businessType=A, t24Name=DATE)
+		CONTRACT_ID -> byValue LD_Commitment:LD_TRANCHE_ST_LIST__CONTRACT_ID *
+	}
+	LD_TRANCHE_ST_LIST__CONTRACT_ID
+	{
+		CONTRACT_ID : mml:string required
+			@t24:i (align=L, inputBehaviour=I, maxLength=17, sysNumber=1.0, core=true, businessType=A, t24Name=CONTRACT.ID)
+	}
+}

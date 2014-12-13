@@ -1,0 +1,448 @@
+# UTF-8
+/* Order Completion and Execution for Mutual Funds */
+Domain MF_Orders
+	@t24:i (module=MF)
+	@java:Package (value=com.temenos.t24.datamodel.mf.mf_orders)
+namespace "http://www.temenos.com/t24/MF_Orders"
+metamodelVersion 4.3.0.20110527
+Classes {
+	MF_EXECUTE_ORDERS
+		@t24:i (t24Name=MF.EXECUTE.ORDERS, level=F, type=W, allowedFunctions="C I L P Q R S V", localRefAllowed=true)
+	{
+		KEY -> MF_Orders:MF_EXECUTE_ORDERS PK required
+			@i18n:Label (en=Key, fr=Clé, es=Clave)
+			@i18n:Tooltip (en="Indicates th transaction key", fr=Clé)
+			@t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=0.0, core=true, businessType=S, t24Name=KEY)
+		ORDER_ID -> byValue MF_Orders:MF_EXECUTE_ORDERS__ORDER_ID *
+		FUND_ID -> MF_Config:MF_FUND_MASTER
+			@i18n:Label (en="Fund Id", fr=Fonds, es="ID de Fondo")
+			@i18n:Tooltip (en="Indicates Id of the fund to be subscribed.", fr="Code du fonds", es="Indica la ID del Fondo a ser suscrito")
+			@t24:i (align=L, inputBehaviour=I, maxLength=12, sysNumber=2.0, core=true, businessType=SEC, t24Name=FUND.ID)
+		CUSTOMER_ID -> SC_Config:CUSTOMER_SECURITY
+			@i18n:Label (en="Customer Id", fr="Code client", es="ID de Cliente")
+			@i18n:Tooltip (en="Identifies the Customer for the transaction.", fr="Numéro de client")
+			@t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=3.0, core=true, businessType=CUS, t24Name=CUSTOMER.ID)
+		PARTICIPATION_ACC -> SCO_PortfolioMaintenance:SEC_ACC_MASTER
+			@i18n:Label (en=Portfolio, fr="Compte de participation", es=Cartera)
+			@i18n:Tooltip (fr="Compte de participation")
+			@t24:i (align=L, inputBehaviour=I, maxLength=14, sysNumber=4.0, core=true, businessType=SAM, t24Name=PARTICIPATION.ACC)
+		ACCOUNT_OFFICER -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Account Officer", fr=Gestionnaire, es="Gestor de Cuenta")
+			@i18n:Tooltip (en="Indicates Account Officer responsible", fr="Gestionnaire responsable du compte ou du client")
+			@t24:i (align=R, inputBehaviour=I, maxLength=4, sysNumber=5.0, core=true, businessType=DAO, t24Name=ACCOUNT.OFFICER)
+		TRANS_TYPE : mml:string
+			@i18n:Label (en="Trans Type", fr="Type d\'opération", es="Ref. de Trs.")
+			@i18n:Tooltip (en="Indicates the Transaction Type", fr="Type d\'opération", es="Indica el Tipo de transacción")
+			@t24:i (align=L, inputBehaviour=I, maxLength=10, sysNumber=6.0, core=true, businessType=A, t24Name=TRANS.TYPE)
+		LIMIT_TYPE : MF_Orders:MF_EXECUTE_ORDERS__LIMIT_TYPE
+			@i18n:Label (en="Limit Type", fr="Type de limite", es="Tipo de Límite")
+			@i18n:Tooltip (en="Indicates the Limit Type", fr="Type de limite", es="Indica el Tipo de Límite ")
+			@t24:i (align=L, inputBehaviour=I, maxLength=6, sysNumber=7.0, core=true, t24Name=LIMIT.TYPE)
+		FROM_ORD_DATE : mml:date
+			@i18n:Label (en="From Order Date", es="Fecha Orden Desde")
+			@i18n:Tooltip (en="Starting date of orders to be executed", es="Fecha de inicio de las órdenes a ser ejecutadas")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=8.0, core=true, businessType=D, t24Name=FROM.ORD.DATE)
+		TO_ORD_DATE : mml:date
+			@i18n:Label (en="To Order Date", es="Fecha Orden Hasta")
+			@i18n:Tooltip (en="Indicates the end date of orders to be executed", es="Indica fecha final de órdenes a ser ejecutadas")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=9.0, core=true, businessType=D, t24Name=TO.ORD.DATE)
+		TRADE_STATUS : MF_Orders:MF_EXECUTE_ORDERS__TRADE_STATUS
+			@i18n:Label (en="Trade Status", fr="Statut de transaction", es="estado de Negocio")
+			@i18n:Tooltip (en="Status of the transaction in the system", fr="Statut de transaction", es="Estado de la transacción en el sistema ")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=10.0, core=true, t24Name=TRADE.STATUS)
+		REMARKS : mml:string
+			@i18n:Label (en=Remarks, fr=Remarques, es=Comentarios)
+			@i18n:Tooltip (fr=Remarques)
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=11.0, core=true, businessType=A, t24Name=REMARKS)
+		TRADE_DATE : mml:date
+			@i18n:Label (en="Trade Date", fr="Date transaction", es="Fecha de Transacción")
+			@i18n:Tooltip (fr="Date de la transaction")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=12.0, core=true, businessType=D, t24Name=TRADE.DATE)
+		RESERVED09 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=13.0, core=true, businessType=A, t24Name=RESERVED09)
+		RESERVED08 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=14.0, core=true, businessType=A, t24Name=RESERVED08)
+		RESERVED07 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=15.0, core=true, businessType=A, t24Name=RESERVED07)
+		RESERVED06 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=16.0, core=true, businessType=A, t24Name=RESERVED06)
+		RESERVED05 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=17.0, core=true, businessType=A, t24Name=RESERVED05)
+		RESERVED04 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=18.0, core=true, businessType=A, t24Name=RESERVED04)
+		RESERVED03 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=19.0, core=true, businessType=A, t24Name=RESERVED03)
+		RESERVED02 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=20.0, core=true, businessType=A, t24Name=RESERVED02)
+		RESERVED01 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=21.0, core=true, businessType=A, t24Name=RESERVED01)
+		OVERRIDE -> byValue MF_Orders:MF_EXECUTE_ORDERS__OVERRIDE *
+		RECORD_STATUS : mml:string
+			@i18n:Label (en="Record Status", fr=Statut, es=Estado)
+			@i18n:Tooltip (fr="Statut de l\'enregistrement")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=24.0, core=true, businessType=STAT, t24Name=RECORD.STATUS)
+		CURR_NO : mml:Integer
+			@i18n:Label (en="Curr No", fr="N° version", es="No. Actual")
+			@i18n:Tooltip (fr="Numéro de version")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=25.0, core=true, t24Name=CURR.NO)
+		INPUTTER -> byValue MF_Orders:MF_EXECUTE_ORDERS__INPUTTER *
+		DATE_TIME -> byValue MF_Orders:MF_EXECUTE_ORDERS__DATE_TIME *
+		AUTHORISER : mml:string
+			@i18n:Label (en=Authoriser, fr="Validé par", es=Autorizador)
+			@i18n:Tooltip (en="Indicates the User who Authorises the record", fr="Utilisateur de validation", es="El usuario que autorizó el registro")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=28.0, core=true, businessType=A, t24Name=AUTHORISER)
+		CO_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company, fr=Entité, es="Compañía")
+			@i18n:Tooltip (fr="Code établissement ou agence")
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=29.0, core=true, businessType=A, t24Name=CO.CODE)
+		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Dept Code", fr=Service, es=Departamento)
+			@i18n:Tooltip (fr="Code du service")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=30.0, core=true, t24Name=DEPT.CODE)
+		AUDITOR_CODE : mml:string
+			@i18n:Label (en="Auditor Code", fr="Audité par", es="Código de Auditor")
+			@i18n:Tooltip (en="Auditor Code", fr="Utilisateur d\'audit", es="Nombre del auditor")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=31.0, core=true, businessType=A, t24Name=AUDITOR.CODE)
+		AUDIT_DATE_TIME : mml:dateTime
+			@i18n:Label (en="Audit Date Time", fr="Audité le", es="Fecha/Hora de Audit.")
+			@i18n:Tooltip (en="Date and time when record was audited", fr="Date et heure d\'audit", es="Fecha y Hora de Auditoría ")
+			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=32.0, core=true, businessType=RELTIME, t24Name=AUDIT.DATE.TIME)
+	}
+	MF_EXECUTE_ORDERS__ORDER_ID
+	{
+		ORDER_ID -> MF_Orders:MF_ORDER
+			@t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=1.0, core=true, businessType=S, t24Name=ORDER.ID)
+	}
+	MF_EXECUTE_ORDERS__OVERRIDE
+	{
+		OVERRIDE : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=23.0, core=true, businessType=A, t24Name=OVERRIDE)
+	}
+	MF_EXECUTE_ORDERS__INPUTTER
+	{
+		INPUTTER : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=26.0, core=true, businessType=A, t24Name=INPUTTER)
+	}
+	MF_EXECUTE_ORDERS__DATE_TIME
+	{
+		DATE_TIME : mml:dateTime
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=27.0, core=true, businessType=RELTIME, t24Name=DATE.TIME)
+	}
+	MF_ORDER
+		@t24:i (t24Name=MF.ORDER, level=F, type=H, additionalInfo="UNP OEU", allowedFunctions="A C D E H I L P Q R S", localRefAllowed=true)
+	{
+		ORDER_NO -> MF_Orders:MF_ORDER PK required
+			@i18n:Label (en="Order No", fr="No ordre", es="No. de Orden")
+			@i18n:Tooltip (en="Indicates the order number", fr="Numéro ordre")
+			@t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=0.0, core=true, businessType=S, t24Name=ORDER.NO)
+		ORDER_DATE : mml:date
+			@i18n:Label (en="Order Date", fr="Date de l\'ordre", es=Fecha)
+			@i18n:Tooltip (fr="Date de l\'ordre")
+			@t24:i (align=R, inputBehaviour=F, maxLength=11, sysNumber=1.0, core=true, businessType=D, t24Name=ORDER.DATE)
+		CUSTOMER_ID -> SC_Config:CUSTOMER_SECURITY required
+			@i18n:Label (en="Customer Id", fr="Code client", es="ID de Cliente")
+			@i18n:Tooltip (en="Identifies the Customer for the transaction.", fr="Numéro de client")
+			@t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=2.0, core=true, businessType=CUS, t24Name=CUSTOMER.ID)
+		PARTICIPATION_ACC -> SCO_PortfolioMaintenance:SEC_ACC_MASTER
+			@i18n:Label (en=Portfolio, fr="Compte de participation", es=Cartera)
+			@i18n:Tooltip (fr="Compte de participation")
+			@t24:i (align=L, inputBehaviour=I, maxLength=14, sysNumber=3.0, core=true, businessType=SAM, t24Name=PARTICIPATION.ACC)
+		ORDER_TYPE : MF_Orders:MF_ORDER__ORDER_TYPE
+			@i18n:Label (en="Order Type", fr="Type d\'ordre", es=Tipo)
+			@i18n:Tooltip (fr="Type d\'ordre (unique, lot, )")
+			@t24:i (align=L, inputBehaviour=N, maxLength=6, sysNumber=4.0, core=true, t24Name=ORDER.TYPE)
+		FUND_ID -> MF_Config:MF_FUND_MASTER required
+			@i18n:Label (en="Fund Id", fr=Fonds, es="ID de Fondo")
+			@i18n:Tooltip (en="Indicates Id of the fund to be subscribed.", fr="Code du fonds", es="Indica la ID del Fondo a ser suscrito")
+			@t24:i (align=L, inputBehaviour=I, maxLength=12, sysNumber=5.0, core=true, businessType=SEC, t24Name=FUND.ID)
+		FUND_CCY -> FIN_CurrencyConfig:CURRENCY
+			@i18n:Label (en="Fund Ccy", fr="Devise du fonds", es="Moneda de Fondo")
+			@i18n:Tooltip (en="Indicates currency of the fund ", fr="Devise du fonds", es="Indica la moneda del fondo ")
+			@t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=6.0, core=true, businessType=CCY, t24Name=FUND.CCY)
+		ACCOUNT_OFFICER -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Account Officer", fr=Gestionnaire, es="Gestor de Cuenta")
+			@i18n:Tooltip (en="Indicates Account Officer responsible", fr="Gestionnaire responsable du compte ou du client")
+			@t24:i (align=R, inputBehaviour=I, maxLength=4, sysNumber=7.0, core=true, businessType=DAO, t24Name=ACCOUNT.OFFICER)
+		AGENT -> SC_Config:CUSTOMER_SECURITY required
+			@i18n:Label (en=Agent, fr=Agent, es=Agente)
+			@i18n:Tooltip (en="Agent through whom the order is being placed", fr=Agent, es="Agente a través de quien la Orden es realizada")
+			@t24:i (align=R, inputBehaviour=F, maxLength=10, sysNumber=8.0, core=true, businessType=CUS, t24Name=AGENT)
+		TRANS_TYPE -> SC_Config:SC_TRANS_NAME required
+			@i18n:Label (en="Trans Type", fr="Type d\'opération", es="Ref. de Trs.")
+			@i18n:Tooltip (en="Indicates the Transaction Type", fr="Type d\'opération", es="Indica el Tipo de transacción")
+			@t24:i (align=L, inputBehaviour=F, maxLength=3, sysNumber=9.0, core=true, businessType=S, t24Name=TRANS.TYPE)
+		ORDER_CCY -> FIN_CurrencyConfig:CURRENCY
+			@i18n:Label (en="Order Ccy", fr="Devise de l\'ordre", es="Moneda de Orden")
+			@i18n:Tooltip (en="Currency in which the order is being placed.", fr="Devise de l\'ordre", es="Moneda en la cual la Orden va a ser realizada")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=10.0, core=true, businessType=CCY, t24Name=ORDER.CCY)
+		ORDER_AMOUNT : mml:string required
+			@i18n:Label (en="Order Amt", fr="Montant de l\'ordre", es="Monto de Orden")
+			@i18n:Tooltip (fr="Montant de l\'ordre")
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=11.0, core=true, businessType=NOMAMT, t24Name=ORDER.AMOUNT)
+		UNIT_AMOUNT : MF_Orders:MF_ORDER__UNIT_AMOUNT
+			@i18n:Label (en="Unit Amt", fr="Quantité ou montant", es="Monto de Unidad")
+			@i18n:Tooltip (fr="Ordre en quantité de titres ou en montant")
+			@t24:i (align=L, inputBehaviour=I, maxLength=6, sysNumber=12.0, core=true, t24Name=UNIT.AMOUNT)
+		WAIVE_FEES : MF_Orders:MF_ORDER__WAIVE_FEES
+			@i18n:Label (en="Waive Fees", fr="Ventilation frais", es="Exonerar Cuotas")
+			@i18n:Tooltip (en="Indicates whether the fees is waived or not.", fr="Ventilation frais", es="Indica si las cuotas son condonadas o no")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=13.0, core=true, t24Name=WAIVE.FEES)
+		FEE_INCLUSIVE : MF_Orders:MF_ORDER__FEE_INCLUSIVE
+			@i18n:Label (en="Fee Inclusive", fr="Frais inclus", es="Cuota Inclusiva")
+			@i18n:Tooltip (en="The order amount is inclusive of fee or not,", fr="Frais inclus dans le montant de l\'ordre", es="El monto de Orden incluye la cuota o no")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=14.0, core=true, t24Name=FEE.INCLUSIVE)
+		CREDIT_TXN_ID -> byValue MF_Orders:MF_ORDER__CREDIT_TXN_ID *
+		LIMIT_TYPE : MF_Orders:MF_ORDER__LIMIT_TYPE
+			@i18n:Label (en="Limit Type", fr="Type de limite", es="Tipo de Límite")
+			@i18n:Tooltip (en="Indicates the Limit Type", fr="Type de limite", es="Indica el Tipo de Límite ")
+			@t24:i (align=L, inputBehaviour=I, maxLength=6, sysNumber=16.0, core=true, t24Name=LIMIT.TYPE)
+		ORDER_PRICE : mml:Double
+			@i18n:Label (en="Order Price", fr="Prix d\'exercice", es="Precio de Orden")
+			@i18n:Tooltip (en="Specifies the price Cap if it is a Limit Order.", fr="Prix d\'exercice de l\'ordre", es="Precio Máximo si es una orden Limitada")
+			@t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=17.0, core=true, businessType=PRICE, t24Name=ORDER.PRICE)
+		ORDER_EXP_DATE : mml:date
+			@i18n:Label (en="Order Expiry Date", fr="Date d\'exp d\'ordre", es="Fecha Vencim. Orden")
+			@i18n:Tooltip (en="Indicates the expiry date of the order", fr="Date d\'exp d\'ordre", es="Indica la fecha de Vencimiento de la orden")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=18.0, core=true, businessType=D, t24Name=ORDER.EXP.DATE)
+		PAYMENT_MODE : MF_Orders:MF_ORDER__PAYMENT_MODE required
+			@i18n:Label (en="Payment Mode", fr="Mode de paiement", es="Modo de Pago")
+			@i18n:Tooltip (en="Mode of payment like account, cash, cheque etc.", fr="Mode de paiement", es="\"Modo de pago como cuenta, efectivo, cheque, etc.\"")
+			@t24:i (align=L, inputBehaviour=I, maxLength=8, sysNumber=19.0, core=true, t24Name=PAYMENT.MODE)
+		CHEQUE_NO -> byValue MF_Orders:MF_ORDER__CHEQUE_NO *
+		CARD_NO : mml:Integer
+			@i18n:Label (en="Card No", fr="N° de carte", es="Número de Tarjeta")
+			@i18n:Tooltip (en="Credit card number, if payment mode is card.", fr="Numéro de carte")
+			@t24:i (align=R, inputBehaviour=I, maxLength=16, sysNumber=24.0, core=true, t24Name=CARD.NO)
+		CARD_EXP_DATE : mml:date
+			@i18n:Label (en="Card Expiry Date", fr="Date d\' expiration de la carte", es="Fecha Exp. Tarjeta")
+			@i18n:Tooltip (en="Identifies the expiry date of the card.", fr="Date d\' expiration de la carte")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=25.0, core=true, businessType=D, t24Name=CARD.EXP.DATE)
+		CARD_ISSUE_BNK : mml:string
+			@i18n:Label (en="Card Issue Bank", fr="Banque émettrice de la carte", es="Bco. Emisor Tarjeta")
+			@i18n:Tooltip (en="Identifies the bank which issued the card.", fr="Banque émettrice de la carte")
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=26.0, core=true, businessType=A, t24Name=CARD.ISSUE.BNK)
+		CARD_AMOUNT : mml:Double
+			@i18n:Label (en="Card Amount", fr="Montant carte", es="Monto de Tarjeta")
+			@i18n:Tooltip (en="Identifes the amount of payment made by card", fr="Montant carte")
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=27.0, core=true, businessType=AMT, t24Name=CARD.AMOUNT)
+		CASH_PYMT_RECD : mml:Double
+			@i18n:Label (en="Cash Payment Recd", fr="Montant cash reçu", es="Pago Efectivo Recibido")
+			@i18n:Tooltip (en="Indicates the amount of cash payment received", fr="Montant cash reçu")
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=28.0, core=true, businessType=AMT, t24Name=CASH.PYMT.RECD)
+		CASH_RECPT_NO : mml:string
+			@i18n:Label (en="Cash Receipt No", fr="N° de Reçu cash", es="No. Recibo Efectivo")
+			@i18n:Tooltip (en="Identifies the cash receipt no", fr="Numéro de Reçu cash")
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=29.0, core=true, businessType=A, t24Name=CASH.RECPT.NO)
+		CASH_PYMT_DATE : mml:date
+			@i18n:Label (en="Cash Payment Date", fr="Date de versement cash", es="Fecha de Pago Efectivo")
+			@i18n:Tooltip (en="Identifies the date of cash payment", fr="Date de versement cash")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=30.0, core=true, businessType=D, t24Name=CASH.PYMT.DATE)
+		SETTLEMENT_ACC : mml:string
+			@i18n:Label (en="Settlement Account", fr="Compte règlement", es="Cta. de Liquidación")
+			@i18n:Tooltip (en="Account from which customer makes payment", fr="Compte règlement", es="Cuenta desde la cual el Cliente realiza el pago")
+			@t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=31.0, core=true, businessType=ANT, t24Name=SETTLEMENT.ACC)
+		SETTLEMENT_CCY -> FIN_CurrencyConfig:CURRENCY
+			@i18n:Label (en="Settle Ccy", fr="Devise de règlement", es="Mda. de Liquidación")
+			@i18n:Tooltip (fr="Devise de règlement")
+			@t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=32.0, core=true, businessType=CCY, t24Name=SETTLEMENT.CCY)
+		EXT_ACCT_NO : mml:string
+			@i18n:Label (en="External Acc No", fr="Compte Banque externe", es="No. de Cta. Externa")
+			@i18n:Tooltip (en="The external account no held by the customer", fr="Compte de la Banque externe", es="Número de cuenta externa del Cliente ")
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=33.0, core=true, businessType=A, t24Name=EXT.ACCT.NO)
+		EXT_ACCT_CCY -> FIN_CurrencyConfig:CURRENCY
+			@i18n:Label (en="External Acc Ccy", fr="Devise Banque externe", es="Mda. de Cta. Externa")
+			@i18n:Tooltip (en="Indicates the external account currency", fr="Devise de la Banque externe", es="Indica la moneda de la cuenta externa ")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=34.0, core=true, businessType=CCY, t24Name=EXT.ACCT.CCY)
+		EXT_ACCT_BANK : mml:string
+			@i18n:Label (en="External Acc Bank", fr="Banque externe", es="Cta. de Banco Externa")
+			@i18n:Tooltip (en="Bank with which external account is maintained", fr="Banque externe", es="Banco con el cual la cuenta externa es mantenida")
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=35.0, core=true, businessType=A, t24Name=EXT.ACCT.BANK)
+		EXT_ACCT_BRANCH : mml:string
+			@i18n:Label (en="External Acc Branch", fr="Cpte externe Branche", es="Sucursal Cta. Externa")
+			@i18n:Tooltip (en="Branch of the bank holding the external account ", fr="Compte externe Branche", es="Sucursal del banco que tiene la cuenta externa ")
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=36.0, core=true, businessType=A, t24Name=EXT.ACCT.BRANCH)
+		TRADE_ID -> byValue MF_Orders:MF_ORDER__TRADE_ID *
+		CUST_ORDER_ID : mml:string
+			@i18n:Label (en="Cust Order Id", fr="Code d\'ordre de client", es="ID Pedido de Cliente")
+			@i18n:Tooltip (fr="Code d\'ordre de client")
+			@t24:i (align=L, inputBehaviour=N, maxLength=16, sysNumber=41.0, core=true, businessType=S, t24Name=CUST.ORDER.ID)
+		SWITCH_ORDER_ID -> byValue MF_Orders:MF_ORDER__SWITCH_ORDER_ID *
+		DEAL_STATUS : MF_Orders:MF_ORDER__DEAL_STATUS
+			@i18n:Label (en="Deal Status", fr="Statut de Contrat", es="Mda.Tasa de Contrato")
+			@i18n:Tooltip (en="Indicates the status of the deal", fr="Statut de Contrat", es="Indica el estado del contrato")
+			@t24:i (align=L, inputBehaviour=I, maxLength=7, sysNumber=45.0, core=true, t24Name=DEAL.STATUS)
+		PRICING_METHOD : MF_Orders:MF_ORDER__PRICING_METHOD
+			@i18n:Label (en="Pricing Method", fr="Méthode de tarification", es="MétodoFijación Precio")
+			@i18n:Tooltip (en="Indicates the pricing method", fr="Méthode de tarification", es="Indica el método de fijación de precios")
+			@t24:i (align=L, inputBehaviour=I, maxLength=10, sysNumber=46.0, core=true, t24Name=PRICING.METHOD)
+		TRADE_STATUS : MF_Orders:MF_ORDER__TRADE_STATUS
+			@i18n:Label (en="Trade Status", fr="Statut de transaction", es="estado de Negocio")
+			@i18n:Tooltip (en="Status of the transaction in the system", fr="Statut de transaction", es="Estado de la transacción en el sistema ")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=47.0, core=true, t24Name=TRADE.STATUS)
+		CU_NARRATIVE : mml:string
+			@i18n:Label (en="Customer Narrative", fr="Narratif Client", es="Descripción Cliente")
+			@i18n:Tooltip (en="Narrative concerning the customer or transaction", fr="Narratif Client", es="Descripción concerniente al Cliente o transacción")
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=48.0, core=true, businessType=A, t24Name=CU.NARRATIVE)
+		SEND_CONFIRMATION : MF_Orders:MF_ORDER__SEND_CONFIRMATION
+			@i18n:Label (en="Send Confirmation", fr="Envoi de confirmation", es="Enviar Confirmación")
+			@i18n:Tooltip (en="Send confirmation - Y/N ?", fr="Envoi de la confirmation", es="Aviso tiene que ser enviado al Cliente o no")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=49.0, core=true, t24Name=SEND.CONFIRMATION)
+		ORDER_NOMINAL : mml:string
+			@i18n:Label (en="Order Nominal", fr="Nominal total", es="Nominal Total")
+			@i18n:Tooltip (fr="Nominal total ")
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=50.0, core=true, businessType=NOMAMT, t24Name=ORDER.NOMINAL)
+		RESERVED14 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=51.0, core=true, businessType=A, t24Name=RESERVED14)
+		RESERVED13 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=52.0, core=true, businessType=A, t24Name=RESERVED13)
+		RESERVED12 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=53.0, core=true, businessType=A, t24Name=RESERVED12)
+		RESERVED11 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=54.0, core=true, businessType=A, t24Name=RESERVED11)
+		RESERVED10 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=55.0, core=true, businessType=A, t24Name=RESERVED10)
+		RESERVED09 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=56.0, core=true, businessType=A, t24Name=RESERVED09)
+		RESERVED08 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=57.0, core=true, businessType=A, t24Name=RESERVED08)
+		RESERVED07 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=58.0, core=true, businessType=A, t24Name=RESERVED07)
+		RESERVED06 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=59.0, core=true, businessType=A, t24Name=RESERVED06)
+		RESERVED05 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=60.0, core=true, businessType=A, t24Name=RESERVED05)
+		RESERVED04 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=61.0, core=true, businessType=A, t24Name=RESERVED04)
+		RESERVED03 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=62.0, core=true, businessType=A, t24Name=RESERVED03)
+		RESERVED02 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=63.0, core=true, businessType=A, t24Name=RESERVED02)
+		RESERVED01 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=64.0, core=true, businessType=A, t24Name=RESERVED01)
+		OVERRIDE -> byValue MF_Orders:MF_ORDER__OVERRIDE *
+		RECORD_STATUS : mml:string
+			@i18n:Label (en="Record Status", fr=Statut, es=Estado)
+			@i18n:Tooltip (fr="Statut de l\'enregistrement")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=67.0, core=true, businessType=STAT, t24Name=RECORD.STATUS)
+		CURR_NO : mml:Integer
+			@i18n:Label (en="Curr No", fr="N° version", es="No. Actual")
+			@i18n:Tooltip (fr="Numéro de version")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=68.0, core=true, t24Name=CURR.NO)
+		INPUTTER -> byValue MF_Orders:MF_ORDER__INPUTTER *
+		DATE_TIME -> byValue MF_Orders:MF_ORDER__DATE_TIME *
+		AUTHORISER : mml:string
+			@i18n:Label (en=Authoriser, fr="Validé par", es=Autorizador)
+			@i18n:Tooltip (en="Indicates the User who Authorises the record", fr="Utilisateur de validation", es="El usuario que autorizó el registro")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=71.0, core=true, businessType=A, t24Name=AUTHORISER)
+		CO_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company, fr=Entité, es="Compañía")
+			@i18n:Tooltip (fr="Code établissement ou agence")
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=72.0, core=true, businessType=A, t24Name=CO.CODE)
+		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Dept Code", fr=Service, es=Departamento)
+			@i18n:Tooltip (fr="Code du service")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=73.0, core=true, t24Name=DEPT.CODE)
+		AUDITOR_CODE : mml:string
+			@i18n:Label (en="Auditor Code", fr="Audité par", es="Código de Auditor")
+			@i18n:Tooltip (en="Auditor Code", fr="Utilisateur d\'audit", es="Nombre del auditor")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=74.0, core=true, businessType=A, t24Name=AUDITOR.CODE)
+		AUDIT_DATE_TIME : mml:dateTime
+			@i18n:Label (en="Audit Date Time", fr="Audité le", es="Fecha/Hora de Audit.")
+			@i18n:Tooltip (en="Date and time when record was audited", fr="Date et heure d\'audit", es="Fecha y Hora de Auditoría ")
+			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=75.0, core=true, businessType=RELTIME, t24Name=AUDIT.DATE.TIME)
+		CR_OR_DR : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=2, core=false, t24Name=CR.OR.DR, genOperation="SUBR(\"SCT.CR.OR.DR.IDESC\",TRANS.TYPE)")
+	}
+	MF_ORDER__CREDIT_TXN_ID
+	{
+		CREDIT_TXN_ID : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=15.0, core=true, businessType=S, t24Name=CREDIT.TXN.ID)
+	}
+	MF_ORDER__CHEQUE_NO
+	{
+		CHEQUE_NO : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=14, sysNumber=20.0, core=true, businessType=A, t24Name=CHEQUE.NO)
+		CHEQUE_DATE : mml:date
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=21.0, core=true, businessType=D, t24Name=CHEQUE.DATE)
+		DRAWN_ON : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=22.0, core=true, businessType=A, t24Name=DRAWN.ON)
+		CHEQUE_AMOUNT : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=23.0, core=true, businessType=AMT, t24Name=CHEQUE.AMOUNT)
+	}
+	MF_ORDER__TRADE_ID
+	{
+		TRADE_ID : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=16, sysNumber=37.0, core=true, businessType=S, t24Name=TRADE.ID)
+		TRAN_UNITS : mml:string
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=38.0, core=true, businessType=NOMAMT, t24Name=TRAN.UNITS)
+		TRAN_DATE : mml:date
+			@t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=39.0, core=true, businessType=D, t24Name=TRAN.DATE)
+		TRAN_PRICE : mml:Double
+			@t24:i (align=L, inputBehaviour=N, maxLength=16, sysNumber=40.0, core=true, businessType=PRICE, t24Name=TRAN.PRICE)
+	}
+	MF_ORDER__SWITCH_ORDER_ID
+	{
+		SWITCH_ORDER_ID : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=16, sysNumber=42.0, core=true, businessType=S, t24Name=SWITCH.ORDER.ID)
+		SWITCH_FUND_ID -> MF_Config:MF_FUND_MASTER
+			@t24:i (align=L, inputBehaviour=N, maxLength=12, sysNumber=43.0, core=true, businessType=SEC, t24Name=SWITCH.FUND.ID)
+		SWITCH_SHARE : MF_Orders:MF_ORDER__SWITCH_ORDER_ID__SWITCH_SHARE
+			@t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=44.0, core=true, t24Name=SWITCH.SHARE)
+	}
+	MF_ORDER__OVERRIDE
+	{
+		OVERRIDE : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=66.0, core=true, businessType=A, t24Name=OVERRIDE)
+	}
+	MF_ORDER__INPUTTER
+	{
+		INPUTTER : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=69.0, core=true, businessType=A, t24Name=INPUTTER)
+	}
+	MF_ORDER__DATE_TIME
+	{
+		DATE_TIME : mml:dateTime
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=70.0, core=true, businessType=RELTIME, t24Name=DATE.TIME)
+	}
+}
+Enumerations {
+	MF_EXECUTE_ORDERS__LIMIT_TYPE : mml:string
+		MARKET=MARKET
+		PRICE=PRICE
+	MF_EXECUTE_ORDERS__TRADE_STATUS : mml:string
+		HLD=HLD
+		NAU=NAU
+	MF_ORDER__ORDER_TYPE : mml:string
+		SINGLE=SINGLE
+		BULK=BULK
+		SWITCH=SWITCH
+	MF_ORDER__UNIT_AMOUNT : mml:string
+		UNIT=UNIT
+		AMOUNT=AMOUNT
+	MF_ORDER__WAIVE_FEES : mml:string
+		YES=YES
+	MF_ORDER__FEE_INCLUSIVE : mml:string
+		YES=YES
+	MF_ORDER__LIMIT_TYPE : mml:string
+		MARKET=MARKET
+		PRICE=PRICE
+	MF_ORDER__PAYMENT_MODE : mml:string
+		CHEQUE=CHEQUE
+		CASH=CASH
+		CARD=CARD
+		ACCOUNT=ACCOUNT
+		TRANSFER=TRANSFER
+		OTHER=OTHER
+	MF_ORDER__SWITCH_ORDER_ID__SWITCH_SHARE : mml:string
+		n1__100=1..100
+	MF_ORDER__DEAL_STATUS : mml:string
+		EXECUTE=EXECUTE
+	MF_ORDER__PRICING_METHOD : mml:string
+		FORWARD=FORWARD
+		HISTORICAL=HISTORICAL
+	MF_ORDER__TRADE_STATUS : mml:string
+		HLD=HLD
+		NAU=NAU
+	MF_ORDER__SEND_CONFIRMATION : mml:string
+		YES=YES
+}

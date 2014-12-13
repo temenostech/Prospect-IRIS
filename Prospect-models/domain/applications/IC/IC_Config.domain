@@ -1,0 +1,2763 @@
+# UTF-8
+/* Parameter definitions for Account Interest and Charges */
+Domain IC_Config
+	@t24:i (module=IC)
+	@java:Package (value=com.temenos.t24.datamodel.ic.ic_config)
+namespace "http://www.temenos.com/t24/IC_Config"
+metamodelVersion 4.3.0.20110527
+Classes {
+	ACCOUNT_ACCRUAL
+		@t24:i (t24Name=ACCOUNT.ACCRUAL, level=I, type=U, allowedFunctions="A C D E I L P Q R S", localRefAllowed=false)
+	{
+		COMPANY_CODE -> IC_Config:ACCOUNT_ACCRUAL PK required
+			@i18n:Label (en=Company, fr="Code établisst", es="Compañía")
+			@i18n:Tooltip (fr="Code établissement")
+			@t24:i (align=L, inputBehaviour=I, maxLength=11, sysNumber=0.0, core=true, businessType=COM, t24Name=COMPANY.CODE)
+		MTH_END_UPTO_DAY : mml:Integer
+			@t24:i (align=R, inputBehaviour=F, maxLength=2, sysNumber=1.0, core=true, t24Name=MTH.END.UPTO.DAY)
+		LAST_DAY_INCLUSIVE : IC_Config:ACCOUNT_ACCRUAL__LAST_DAY_INCLUSIVE required
+			@i18n:Label (en="Last Day Inclusive", fr="Dernier J Inclusive", es="Último Día Incluído")
+			@i18n:Tooltip (en="Last Day Inclusive", fr="Dernier J Inclusive", es="Último Día Incluído")
+			@t24:i (align=L, inputBehaviour=F, maxLength=2, sysNumber=2.0, core=true, t24Name=LAST.DAY.INCLUSIVE)
+		EXCLUSIVE_TYPE : IC_Config:ACCOUNT_ACCRUAL__EXCLUSIVE_TYPE
+			@t24:i (align=R, inputBehaviour=F, maxLength=1, sysNumber=3.0, core=true, t24Name=EXCLUSIVE.TYPE)
+		APP_POSTING_DAY : IC_Config:ACCOUNT_ACCRUAL__APP_POSTING_DAY required
+			@t24:i (align=L, inputBehaviour=F, maxLength=5, sysNumber=4.0, core=true, t24Name=APP.POSTING.DAY)
+		INCLUDE_CHARGES : IC_Config:ACCOUNT_ACCRUAL__INCLUDE_CHARGES required
+			@i18n:Label (en="Include Charges", fr="Inclure des cions", es="Incluir Cargos")
+			@i18n:Tooltip (en="Include Charges", fr="Inclure des cions", es="Incluir Cargos")
+			@t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=5.0, core=true, t24Name=INCLUDE.CHARGES)
+		DEFLT_ACCR_TYPE -> byValue IC_Config:ACCOUNT_ACCRUAL__DEFLT_ACCR_TYPE *
+		ACCRUAL_GRP -> byValue IC_Config:ACCOUNT_ACCRUAL__ACCRUAL_GRP *
+		ACCRUAL_CAT -> byValue IC_Config:ACCOUNT_ACCRUAL__ACCRUAL_CAT *
+		CONVERT_FCY_TAX : IC_Config:ACCOUNT_ACCRUAL__CONVERT_FCY_TAX
+			@t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=14.0, core=true, t24Name=CONVERT.FCY.TAX)
+		AUTO_SETTLE : IC_Config:ACCOUNT_ACCRUAL__AUTO_SETTLE
+			@i18n:Label (en="Auto Settle", fr="Règlement automatique", es="Auto Liquidación")
+			@i18n:Tooltip (en="Indicates system raised accounting transactions", fr="Règlement automatique")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=15.0, core=true, t24Name=AUTO.SETTLE)
+		VAL_DATE_ADJUST : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=16.0, core=true, t24Name=VAL.DATE.ADJUST)
+		WRITE_ACCR_ACCT : IC_Config:ACCOUNT_ACCRUAL__WRITE_ACCR_ACCT
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=17.0, core=true, t24Name=WRITE.ACCR.ACCT)
+		COMP_ACC_RTN -> EB_SystemTables:PGM_FILE
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=18.0, core=true, businessType=A, t24Name=COMP.ACC.RTN)
+		RESERVED1 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=19.0, core=true, t24Name=RESERVED1)
+		RECORD_STATUS : mml:string
+			@i18n:Label (en="Record Status", fr=Statut, es=Estado)
+			@i18n:Tooltip (fr="Statut de l\'enregistrement")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=20.0, core=true, businessType=STAT, t24Name=RECORD.STATUS)
+		CURR_NO : mml:Integer
+			@i18n:Label (en="Curr No", fr="N° version", es="No. Actual")
+			@i18n:Tooltip (fr="Numéro de version")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=21.0, core=true, t24Name=CURR.NO)
+		INPUTTER -> byValue IC_Config:ACCOUNT_ACCRUAL__INPUTTER *
+		DATE_TIME -> byValue IC_Config:ACCOUNT_ACCRUAL__DATE_TIME *
+		AUTHORISER : mml:string
+			@i18n:Label (en=Authoriser, fr="Validé par", es=Autorizador)
+			@i18n:Tooltip (en="Indicates the User who Authorises the record", fr="Utilisateur de validation", es="El usuario que autorizó el registro")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=24.0, core=true, businessType=A, t24Name=AUTHORISER)
+		CO_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company, fr=Entité, es="Compañía")
+			@i18n:Tooltip (fr="Code établissement ou agence")
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=25.0, core=true, businessType=A, t24Name=CO.CODE)
+		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Dept Code", fr=Service, es=Departamento)
+			@i18n:Tooltip (fr="Code du service")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=26.0, core=true, t24Name=DEPT.CODE)
+		AUDITOR_CODE : mml:string
+			@i18n:Label (en="Auditor Code", fr="Audité par", es="Código de Auditor")
+			@i18n:Tooltip (en="Auditor Code", fr="Utilisateur d\'audit", es="Nombre del auditor")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=27.0, core=true, businessType=A, t24Name=AUDITOR.CODE)
+		AUDIT_DATE_TIME : mml:dateTime
+			@i18n:Label (en="Audit Date Time", fr="Audité le", es="Fecha/Hora de Audit.")
+			@i18n:Tooltip (en="Date and time when record was audited", fr="Date et heure d\'audit", es="Fecha y Hora de Auditoría ")
+			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=28.0, core=true, businessType=RELTIME, t24Name=AUDIT.DATE.TIME)
+	}
+	ACCOUNT_ACCRUAL__DEFLT_ACCR_TYPE
+	{
+		DEFLT_ACCR_TYPE : IC_Config:ACCOUNT_ACCRUAL__DEFLT_ACCR_TYPE__DEFLT_ACCR_TYPE
+			@t24:i (align=L, inputBehaviour=I, maxLength=7, sysNumber=6.0, core=true, t24Name=DEFLT.ACCR.TYPE)
+		DEFLT_ACCR_FQU : IC_Config:ACCOUNT_ACCRUAL__DEFLT_ACCR_TYPE__DEFLT_ACCR_FQU
+			@t24:i (align=L, inputBehaviour=I, maxLength=7, sysNumber=7.0, core=true, t24Name=DEFLT.ACCR.FQU)
+	}
+	ACCOUNT_ACCRUAL__ACCRUAL_GRP
+	{
+		ACCRUAL_GRP -> ST_ChargeConfig:ACCT_GEN_CONDITION
+			@t24:i (align=R, inputBehaviour=I, maxLength=4, sysNumber=8.0, core=true, t24Name=ACCRUAL.GRP)
+		GRP_ACCR_TYP -> byValue IC_Config:ACCOUNT_ACCRUAL__ACCRUAL_GRP__GRP_ACCR_TYP *
+	}
+	ACCOUNT_ACCRUAL__ACCRUAL_GRP__GRP_ACCR_TYP
+	{
+		GRP_ACCR_TYP : IC_Config:ACCOUNT_ACCRUAL__ACCRUAL_GRP__GRP_ACCR_TYP__GRP_ACCR_TYP
+			@t24:i (align=L, inputBehaviour=I, maxLength=7, sysNumber=9.0, core=true, t24Name=GRP.ACCR.TYP)
+		GRP_ACCR_FQU : IC_Config:ACCOUNT_ACCRUAL__ACCRUAL_GRP__GRP_ACCR_TYP__GRP_ACCR_FQU
+			@t24:i (align=L, inputBehaviour=I, maxLength=7, sysNumber=10.0, core=true, t24Name=GRP.ACCR.FQU)
+	}
+	ACCOUNT_ACCRUAL__ACCRUAL_CAT
+	{
+		ACCRUAL_CAT -> ST_Config:CATEGORY
+			@t24:i (align=R, inputBehaviour=I, maxLength=6, sysNumber=11.0, core=true, t24Name=ACCRUAL.CAT)
+		CATEG_TYPE -> byValue IC_Config:ACCOUNT_ACCRUAL__ACCRUAL_CAT__CATEG_TYPE *
+	}
+	ACCOUNT_ACCRUAL__ACCRUAL_CAT__CATEG_TYPE
+	{
+		CATEG_TYPE : IC_Config:ACCOUNT_ACCRUAL__ACCRUAL_CAT__CATEG_TYPE__CATEG_TYPE
+			@t24:i (align=L, inputBehaviour=I, maxLength=7, sysNumber=12.0, core=true, t24Name=CATEG.TYPE)
+		CAT_ACCR_FQU : IC_Config:ACCOUNT_ACCRUAL__ACCRUAL_CAT__CATEG_TYPE__CAT_ACCR_FQU
+			@t24:i (align=L, inputBehaviour=I, maxLength=7, sysNumber=13.0, core=true, t24Name=CAT.ACCR.FQU)
+	}
+	ACCOUNT_ACCRUAL__INPUTTER
+	{
+		INPUTTER : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=22.0, core=true, businessType=A, t24Name=INPUTTER)
+	}
+	ACCOUNT_ACCRUAL__DATE_TIME
+	{
+		DATE_TIME : mml:dateTime
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=23.0, core=true, businessType=RELTIME, t24Name=DATE.TIME)
+	}
+	ACCOUNT_CREDIT_INT
+		@t24:i (t24Name=ACCOUNT.CREDIT.INT, level=F, type=H, allowedFunctions="A C D E H I L P Q R S", localRefAllowed=false)
+	{
+		ACCOUNT_NO_DATE -> IC_Config:ACCOUNT_CREDIT_INT PK required
+			@i18n:Label (en="Account Date", fr="Date de compte", es="Fecha de Cuenta")
+			@i18n:Tooltip (fr="Date de compte ")
+			@t24:i (align=R, inputBehaviour=I, maxLength=30, sysNumber=0.0, core=true, businessType=ACCD, t24Name=ACCOUNT.NO.DATE)
+		INTEREST_DAY_BASIS -> ST_RateParameters:INTEREST_BASIS
+			@i18n:Label (en="Interest Day Basis", fr="Base calcul intérêts", es="Base Diaria de Interés")
+			@i18n:Tooltip (en="Defines calculation basis for interest calculation", fr="Base de calcul des intérêts")
+			@t24:i (align=L, inputBehaviour=I, maxLength=7, sysNumber=1.0, core=true, t24Name=INTEREST.DAY.BASIS)
+		TAX_KEY -> ST_ChargeConfig:TAX
+			@i18n:Label (en="Tax Key", fr="Code taxe", es="Clave de Impuesto")
+			@i18n:Tooltip (en="Indicates the tax key ", fr="Code taxe")
+			@t24:i (align=L, inputBehaviour=I, maxLength=12, sysNumber=2.0, core=true, businessType=A, t24Name=TAX.KEY)
+		CR_BALANCE_TYPE : IC_Config:ACCOUNT_CREDIT_INT__CR_BALANCE_TYPE
+			@i18n:Label (en="Credit Bal Type", fr="Type de solde", es="Tipo Saldo Crédito")
+			@i18n:Tooltip (fr="Type de solde")
+			@t24:i (align=L, inputBehaviour=I, maxLength=7, sysNumber=3.0, core=true, t24Name=CR.BALANCE.TYPE)
+		CR_CALCUL_TYPE : IC_Config:ACCOUNT_CREDIT_INT__CR_CALCUL_TYPE
+			@i18n:Label (en="Calculation Type", fr="Mode de calcul", es="Tipo de Cálculo")
+			@i18n:Tooltip (en="Input Calculation type", fr="Mode de calcul")
+			@t24:i (align=L, inputBehaviour=I, maxLength=5, sysNumber=4.0, core=true, t24Name=CR.CALCUL.TYPE)
+		CR_MINIMUM_BAL : mml:Double
+			@i18n:Label (en="Minimum Credit Balance", fr="Solde minimum", es="Saldo de Crédito Mín.")
+			@i18n:Tooltip (en="Min Bal below which Intt will not be calculated", fr="Solde minimum", es="Saldo de Crédito Mínimo ")
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=5.0, core=true, businessType=AMT, t24Name=CR.MINIMUM.BAL)
+		CR_OFFSET_ONLY : IC_Config:ACCOUNT_CREDIT_INT__CR_OFFSET_ONLY
+			@i18n:Label (en="Offset Only", fr="Compenser que le Ct", es="Sólo Compensación")
+			@i18n:Tooltip (fr="Compenser que le Ct")
+			@t24:i (align=L, inputBehaviour=I, maxLength=1, sysNumber=6.0, core=true, t24Name=CR.OFFSET.ONLY)
+		CR_BASIC_RATE -> byValue IC_Config:ACCOUNT_CREDIT_INT__CR_BASIC_RATE *
+		CR2_BALANCE_TYPE : IC_Config:ACCOUNT_CREDIT_INT__CR2_BALANCE_TYPE
+			@i18n:Label (en="Balance Type", fr="Type de solde", es="Tipo de Saldo")
+			@i18n:Tooltip (fr="Type de solde")
+			@t24:i (align=L, inputBehaviour=I, maxLength=7, sysNumber=14.0, core=true, t24Name=CR2.BALANCE.TYPE)
+		CR2_CALCUL_TYPE : IC_Config:ACCOUNT_CREDIT_INT__CR2_CALCUL_TYPE
+			@i18n:Label (en="Calculation Type", fr="Type de calcul", es="Tipo de Cálculo")
+			@i18n:Tooltip (fr="Type de calcul")
+			@t24:i (align=L, inputBehaviour=I, maxLength=5, sysNumber=15.0, core=true, t24Name=CR2.CALCUL.TYPE)
+		CR2_MINIMUM_BAL : mml:Double
+			@i18n:Label (en="Min Credit Bal", fr="Solde min de crédit", es="Saldo de Crédito Mín.")
+			@i18n:Tooltip (en="Min Bal below which Intt will not be calculated", fr="Solde minimum de crédit", es="Saldo de Crédito Mínimo ")
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=16.0, core=true, businessType=AMT, t24Name=CR2.MINIMUM.BAL)
+		CR2_OFFSET_ONLY : IC_Config:ACCOUNT_CREDIT_INT__CR2_OFFSET_ONLY
+			@t24:i (align=L, inputBehaviour=I, maxLength=1, sysNumber=17.0, core=true, t24Name=CR2.OFFSET.ONLY)
+		CR2_BASIC_RATE -> byValue IC_Config:ACCOUNT_CREDIT_INT__CR2_BASIC_RATE *
+		INTEREST_TAX_MIN : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=25.0, core=true, businessType=AMT, t24Name=INTEREST.TAX.MIN)
+		NET_TAX : IC_Config:ACCOUNT_CREDIT_INT__NET_TAX
+			@t24:i (align=L, inputBehaviour=I, maxLength=1, sysNumber=26.0, core=true, t24Name=NET.TAX)
+		CR_MIN_BAL_ST_DTE : mml:Integer
+			@i18n:Label (en="Minimum Balance Start Day", fr="Début de période", es="Saldo Mín. Inicio Día")
+			@i18n:Tooltip (en="Indicates minimum balance start date", fr="Début de période", es="Saldo Mínimo al Inicio del Día")
+			@t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=27.0, core=true, t24Name=CR.MIN.BAL.ST.DTE)
+		CR_MIN_BAL_ED_DTE : mml:Integer
+			@i18n:Label (en="Minimum Balance End Day", fr="Fin de période", es="Saldo Mín. Fin de Día")
+			@i18n:Tooltip (en="Indicates minimum balance end date", fr="Fin de période", es="Saldo Mínimo al Fin del Día")
+			@t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=28.0, core=true, t24Name=CR.MIN.BAL.ED.DTE)
+		CR_ACCR_OPEN_AC : IC_Config:ACCOUNT_CREDIT_INT__CR_ACCR_OPEN_AC
+			@i18n:Label (en="A/c Open Month", fr="Cpte ouv. dans le mois", es="Mes Apertura de Cta.")
+			@i18n:Tooltip (en="Indicates A/c open month", fr="Cpte ouvert dans le mois", es="Mes de Apertura de Cuenta")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=29.0, core=true, t24Name=CR.ACCR.OPEN.AC)
+		CR_ACCR_CLOSE_AC : IC_Config:ACCOUNT_CREDIT_INT__CR_ACCR_CLOSE_AC
+			@i18n:Label (en="A/c Closure Month", fr="Cpte clos dans le mois", es="Mes de Cierre de Cta.")
+			@i18n:Tooltip (en="Indicates A/c Closure month", fr="Cpte clos dans le mois", es="Mes de Cierre de Cuenta")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=30.0, core=true, t24Name=CR.ACCR.CLOSE.AC)
+		CR2_MIN_BAL_ST_DTE : mml:Integer
+			@i18n:Label (en="Minimum Balance Start Day", fr="Date de début de solde min", es="Saldo Mín. Inicio Día")
+			@i18n:Tooltip (en="Indicates minimum balance start date", fr="Date de début de solde min", es="Saldo Mínimo al Inicio del Día")
+			@t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=31.0, core=true, t24Name=CR2.MIN.BAL.ST.DTE)
+		CR2_MIN_BAL_ED_DTE : mml:Integer
+			@i18n:Label (en="Minimum Balance End Day", fr="Date fin de solde min", es="Saldo Mín. Fin de Día")
+			@i18n:Tooltip (en="Indicates minimum balance end date", fr="Date fin de solde min", es="Saldo Mínimo al Fin del Día")
+			@t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=32.0, core=true, t24Name=CR2.MIN.BAL.ED.DTE)
+		CR2_ACCR_OPEN_AC : IC_Config:ACCOUNT_CREDIT_INT__CR2_ACCR_OPEN_AC
+			@i18n:Label (en="A/c Open Month", fr="Cpte ouv. dans le mois", es="Mes de Apertura Cta.")
+			@i18n:Tooltip (en="Indicates Account open month", fr="Cpte ouvert dans le mois", es="Mes de Apertura de Cuenta")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=33.0, core=true, t24Name=CR2.ACCR.OPEN.AC)
+		CR2_ACCR_CLOSE_AC : IC_Config:ACCOUNT_CREDIT_INT__CR2_ACCR_CLOSE_AC
+			@i18n:Label (en="A/c Closure Month", fr="Clos ds le mois", es="Mes de Cierre de Cta.")
+			@i18n:Tooltip (en="Indicates Account Closure month", fr="Clos dans le mois", es="Mes de Cierre de Cuenta")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=34.0, core=true, t24Name=CR2.ACCR.CLOSE.AC)
+		CR_MIN_VALUE : mml:Double
+			@i18n:Label (en="Minimum Interest Amount", fr="Mt mini. d\'intérêt", es="Mto. Mín. de Interés")
+			@i18n:Tooltip (en="Indicates minimum interest amount", fr="Montant minimum d\'intérêt", es="Monto Mínimo de Interés ")
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=35.0, core=true, businessType=AMT, t24Name=CR.MIN.VALUE)
+		CR_MIN_WAIVE : IC_Config:ACCOUNT_CREDIT_INT__CR_MIN_WAIVE
+			@i18n:Label (en="Minimum Interest Waive", fr="Abandon si < mini.", es="Exoner. Mín. de Int.")
+			@i18n:Tooltip (en="Indicates minimum interest waive", fr="Abandon si < minimum", es="Exoneración Mínima de Interés")
+			@t24:i (align=L, inputBehaviour=I, maxLength=4, sysNumber=36.0, core=true, t24Name=CR.MIN.WAIVE)
+		CR2_MIN_VALUE : mml:Double
+			@i18n:Label (en="Min Int Amt", fr="Mt mini. d\'intérêt", es="Monto de Interés Mínimo")
+			@i18n:Tooltip (fr="Montant minimum d\'intérêt")
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=37.0, core=true, businessType=AMT, t24Name=CR2.MIN.VALUE)
+		CR2_MIN_WAIVE : IC_Config:ACCOUNT_CREDIT_INT__CR2_MIN_WAIVE
+			@i18n:Label (fr="Abandon si < mini.")
+			@i18n:Tooltip (fr="Abandon si < minimum")
+			@t24:i (align=L, inputBehaviour=I, maxLength=4, sysNumber=38.0, core=true, t24Name=CR2.MIN.WAIVE)
+		CR_ZERO_INT_BAL : mml:Double
+			@i18n:Label (en="Zero Interest Balance", fr="Plancher paiement Int.", es="Cero Saldo de Interés")
+			@i18n:Tooltip (en="Indicates zero interest balance", fr="Plancher de paiement des intérêts")
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=39.0, core=true, businessType=AMT, t24Name=CR.ZERO.INT.BAL)
+		CR_ZERO_INT_OC : IC_Config:ACCOUNT_CREDIT_INT__CR_ZERO_INT_OC
+			@i18n:Label (en="Zero Interest Waive", fr="Intérêts ouv./clo. période", es="Cero Exoner. de Int.")
+			@i18n:Tooltip (en="Indicates zero interest waive", fr="Intérêts si ouvert ou clos dans la période", es="Cero Exoneración de Interés ")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=40.0, core=true, t24Name=CR.ZERO.INT.OC)
+		CR2_ZERO_INT_BAL : mml:Double
+			@i18n:Label (en="Zero Interest Balance", fr="Plancher paiement Int.", es="Cero Exoner. de Int.")
+			@i18n:Tooltip (en="Indicates zero interest balance", fr="Plancher de paiement des intérêts", es="Cero Saldo de Interés ")
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=41.0, core=true, businessType=AMT, t24Name=CR2.ZERO.INT.BAL)
+		CR2_ZERO_INT_OC : IC_Config:ACCOUNT_CREDIT_INT__CR2_ZERO_INT_OC
+			@i18n:Label (en="Zero Interest Waive", fr="Intérêts ouv./clo. période", es="Cero Exoner. de Int.")
+			@i18n:Tooltip (en="Indicates zero interest waive", fr="Intérêts si ouvert ou clos dans la période", es="Cero Exoneración de Interés ")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=42.0, core=true, t24Name=CR2.ZERO.INT.OC)
+		NEGATIVE_RATES : IC_Config:ACCOUNT_CREDIT_INT__NEGATIVE_RATES
+			@i18n:Label (en="Negative Rates", fr="Taux négatif", es="Tasas Negativas")
+			@i18n:Tooltip (en="Shows the negative Rate", fr="Taux négatif")
+			@t24:i (align=L, inputBehaviour=I, maxLength=12, sysNumber=43.0, core=true, t24Name=NEGATIVE.RATES)
+		COMPOUND_TYPE : mml:string
+			@i18n:Label (en=Compounding, fr="Int. composés", es=Compuesto)
+			@i18n:Tooltip (en="It supports both debit and credit interest", fr="Intérêts composés")
+			@t24:i (align=L, inputBehaviour=I, maxLength=5, sysNumber=44.0, core=true, businessType=COMPFQU, t24Name=COMPOUND.TYPE)
+		COMPOUND_YIELD_METHOD : IC_Config:ACCOUNT_CREDIT_INT__COMPOUND_YIELD_METHOD
+			@t24:i (align=L, inputBehaviour=I, maxLength=8, sysNumber=45.0, core=true, t24Name=COMPOUND.YIELD.METHOD)
+		RECORD_STATUS : mml:string
+			@i18n:Label (en="Record Status", fr=Statut, es=Estado)
+			@i18n:Tooltip (fr="Statut de l\'enregistrement")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=46.0, core=true, businessType=STAT, t24Name=RECORD.STATUS)
+		CURR_NO : mml:Integer
+			@i18n:Label (en="Curr No", fr="N° version", es="No. Actual")
+			@i18n:Tooltip (fr="Numéro de version")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=47.0, core=true, t24Name=CURR.NO)
+		INPUTTER -> byValue IC_Config:ACCOUNT_CREDIT_INT__INPUTTER *
+		DATE_TIME -> byValue IC_Config:ACCOUNT_CREDIT_INT__DATE_TIME *
+		AUTHORISER : mml:string
+			@i18n:Label (en=Authoriser, fr="Validé par", es=Autorizador)
+			@i18n:Tooltip (en="Indicates the User who Authorises the record", fr="Utilisateur de validation", es="El usuario que autorizó el registro")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=50.0, core=true, businessType=A, t24Name=AUTHORISER)
+		CO_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company, fr=Entité, es="Compañía")
+			@i18n:Tooltip (fr="Code établissement ou agence")
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=51.0, core=true, businessType=A, t24Name=CO.CODE)
+		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Dept Code", fr=Service, es=Departamento)
+			@i18n:Tooltip (fr="Code du service")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=52.0, core=true, t24Name=DEPT.CODE)
+		AUDITOR_CODE : mml:string
+			@i18n:Label (en="Auditor Code", fr="Audité par", es="Código de Auditor")
+			@i18n:Tooltip (en="Auditor Code", fr="Utilisateur d\'audit", es="Nombre del auditor")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=53.0, core=true, businessType=A, t24Name=AUDITOR.CODE)
+		AUDIT_DATE_TIME : mml:dateTime
+			@i18n:Label (en="Audit Date Time", fr="Audité le", es="Fecha/Hora de Audit.")
+			@i18n:Tooltip (en="Date and time when record was audited", fr="Date et heure d\'audit", es="Fecha y Hora de Auditoría ")
+			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=54.0, core=true, businessType=RELTIME, t24Name=AUDIT.DATE.TIME)
+	}
+	ACCOUNT_CREDIT_INT__CR_BASIC_RATE
+	{
+		CR_BASIC_RATE -> ST_RateParameters:BASIC_RATE_TEXT
+			@t24:i (align=R, inputBehaviour=I, maxLength=4, sysNumber=7.0, core=true, t24Name=CR.BASIC.RATE)
+		CR_INT_RATE : mml:string
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=8.0, core=true, businessType=R, t24Name=CR.INT.RATE)
+		CR_MARGIN_OPER : IC_Config:ACCOUNT_CREDIT_INT__CR_BASIC_RATE__CR_MARGIN_OPER
+			@t24:i (align=L, inputBehaviour=I, maxLength=8, sysNumber=9.0, core=true, t24Name=CR.MARGIN.OPER)
+		CR_MAX_RATE : mml:string
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=10.0, core=true, businessType=R, t24Name=CR.MAX.RATE)
+		CR_MARGIN_RATE : mml:string
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=11.0, core=true, businessType=R, t24Name=CR.MARGIN.RATE)
+		CR_LIMIT_AMT : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=12.0, core=true, businessType=AMT, t24Name=CR.LIMIT.AMT)
+		CR_MIN_RATE : mml:string
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=13.0, core=true, businessType=R, t24Name=CR.MIN.RATE)
+	}
+	ACCOUNT_CREDIT_INT__CR2_BASIC_RATE
+	{
+		CR2_BASIC_RATE -> ST_RateParameters:BASIC_RATE_TEXT
+			@t24:i (align=R, inputBehaviour=I, maxLength=4, sysNumber=18.0, core=true, t24Name=CR2.BASIC.RATE)
+		CR2_INT_RATE : mml:string
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=19.0, core=true, businessType=R, t24Name=CR2.INT.RATE)
+		CR2_MARGIN_OPER : IC_Config:ACCOUNT_CREDIT_INT__CR2_BASIC_RATE__CR2_MARGIN_OPER
+			@t24:i (align=L, inputBehaviour=I, maxLength=8, sysNumber=20.0, core=true, t24Name=CR2.MARGIN.OPER)
+		CR2_MAX_RATE : mml:string
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=21.0, core=true, businessType=R, t24Name=CR2.MAX.RATE)
+		CR2_MARGIN_RATE : mml:string
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=22.0, core=true, businessType=R, t24Name=CR2.MARGIN.RATE)
+		CR2_LIMIT_AMT : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=23.0, core=true, businessType=AMT, t24Name=CR2.LIMIT.AMT)
+		CR2_MIN_RATE : mml:string
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=24.0, core=true, businessType=R, t24Name=CR2.MIN.RATE)
+	}
+	ACCOUNT_CREDIT_INT__INPUTTER
+	{
+		INPUTTER : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=48.0, core=true, businessType=A, t24Name=INPUTTER)
+	}
+	ACCOUNT_CREDIT_INT__DATE_TIME
+	{
+		DATE_TIME : mml:dateTime
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=49.0, core=true, businessType=RELTIME, t24Name=DATE.TIME)
+	}
+	ACCOUNT_DEBIT_INT
+		@t24:i (t24Name=ACCOUNT.DEBIT.INT, level=F, type=H, allowedFunctions="A C D E H I L P Q R S", localRefAllowed=false)
+	{
+		ACCOUNT_NO_DATE -> IC_Config:ACCOUNT_DEBIT_INT PK required
+			@i18n:Label (en="Account Date", fr="Date de compte", es="Fecha de Cuenta")
+			@i18n:Tooltip (fr="Date de compte ")
+			@t24:i (align=R, inputBehaviour=I, maxLength=30, sysNumber=0.0, core=true, businessType=ACCD, t24Name=ACCOUNT.NO.DATE)
+		CHARGE_KEY -> IC_Config:GENERAL_CHARGE
+			@i18n:Label (en="Charge Key", fr="Code Cion", es="Clave de Cargo")
+			@i18n:Tooltip (en="Indicates charge key", fr="Code commission")
+			@t24:i (align=R, inputBehaviour=I, maxLength=4, sysNumber=1.0, core=true, t24Name=CHARGE.KEY)
+		INTEREST_DAY_BASIS -> ST_RateParameters:INTEREST_BASIS
+			@i18n:Label (en="Interest Day Basis", fr="Base calcul intérêts", es="Base Diaria de Interés")
+			@i18n:Tooltip (en="Defines calculation basis for interest calculation", fr="Base de calcul des intérêts")
+			@t24:i (align=L, inputBehaviour=I, maxLength=7, sysNumber=2.0, core=true, t24Name=INTEREST.DAY.BASIS)
+		TAX_KEY -> ST_ChargeConfig:TAX
+			@i18n:Label (en="Tax Key", fr="Code taxe", es="Clave de Impuesto")
+			@i18n:Tooltip (en="Indicates the tax key ", fr="Code taxe")
+			@t24:i (align=L, inputBehaviour=I, maxLength=12, sysNumber=3.0, core=true, businessType=A, t24Name=TAX.KEY)
+		DR_BALANCE_TYPE : IC_Config:ACCOUNT_DEBIT_INT__DR_BALANCE_TYPE
+			@i18n:Label (en="Debit Bal Type", fr="Type de solde", es="Tipo Saldo de Débito")
+			@i18n:Tooltip (fr="Type de solde")
+			@t24:i (align=L, inputBehaviour=I, maxLength=7, sysNumber=4.0, core=true, t24Name=DR.BALANCE.TYPE)
+		DR_CALCUL_TYPE : IC_Config:ACCOUNT_DEBIT_INT__DR_CALCUL_TYPE
+			@i18n:Label (en="Calculation Type", fr="Mode de calcul", es="Tipo de Cálculo")
+			@i18n:Tooltip (en="Indicates debit calculation type", fr="Mode de calcul")
+			@t24:i (align=L, inputBehaviour=I, maxLength=5, sysNumber=5.0, core=true, t24Name=DR.CALCUL.TYPE)
+		DR_BASIC_RATE -> byValue IC_Config:ACCOUNT_DEBIT_INT__DR_BASIC_RATE *
+		DR2_BALANCE_TYPE : IC_Config:ACCOUNT_DEBIT_INT__DR2_BALANCE_TYPE
+			@i18n:Label (en="Debit Balance Type", fr="Type de solde", es="Tipo de Saldo de Déb.")
+			@i18n:Tooltip (en="Indicates debit balance type", fr="Type de solde", es="Tipo de Saldo de Débito")
+			@t24:i (align=L, inputBehaviour=I, maxLength=7, sysNumber=13.0, core=true, t24Name=DR2.BALANCE.TYPE)
+		DR2_CALCUL_TYPE : IC_Config:ACCOUNT_DEBIT_INT__DR2_CALCUL_TYPE
+			@i18n:Label (en="Calculation Type", fr="Mode de calcul", es="Tipo de Cálculo")
+			@i18n:Tooltip (en="Indicates calculation type", fr="Mode de calcul ")
+			@t24:i (align=L, inputBehaviour=I, maxLength=5, sysNumber=14.0, core=true, t24Name=DR2.CALCUL.TYPE)
+		DR2_BASIC_RATE -> byValue IC_Config:ACCOUNT_DEBIT_INT__DR2_BASIC_RATE *
+		APR_REQUIRED : IC_Config:ACCOUNT_DEBIT_INT__APR_REQUIRED
+			@i18n:Label (fr="APR requis")
+			@i18n:Tooltip (fr="APR requis")
+			@t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=22.0, core=true, t24Name=APR.REQUIRED)
+		MAX_LEGAL_RATE : mml:string
+			@i18n:Label (fr="Taux d\'usure")
+			@i18n:Tooltip (fr="Taux d\'usure")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=23.0, core=true, businessType=R, t24Name=MAX.LEGAL.RATE)
+		LINK_TO_GROUP -> ST_ChargeConfig:ACCT_GEN_CONDITION
+			@t24:i (align=R, inputBehaviour=I, maxLength=4, sysNumber=24.0, core=true, t24Name=LINK.TO.GROUP)
+		MAX_DEBIT_CHG_RATE : mml:string
+			@i18n:Label (fr="Taux max de cion de dt")
+			@i18n:Tooltip (fr="Taux max de cion de dt")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=25.0, core=true, businessType=R, t24Name=MAX.DEBIT.CHG.RATE)
+		DR_MIN_VALUE : mml:Double
+			@i18n:Label (en="Minimum Interest Amount", fr="Minimum de perception", es="Mto. Mín. de Interés")
+			@i18n:Tooltip (en="Indicates minimum interest amount", fr="Minimum de perception des intérêts", es="Monto Mínimo de Interés ")
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=26.0, core=true, businessType=AMT, t24Name=DR.MIN.VALUE)
+		DR_MIN_WAIVE : IC_Config:ACCOUNT_DEBIT_INT__DR_MIN_WAIVE
+			@i18n:Label (en="Minimum Interest Waive", fr="Abandon si < minimum", es="Exoner. Mín. de Int.")
+			@i18n:Tooltip (en="Indicates minimum interest waive", fr="Abandon si < minimum, ou perception du minimum", es="Exoneración Mínima de Interés")
+			@t24:i (align=L, inputBehaviour=I, maxLength=4, sysNumber=27.0, core=true, t24Name=DR.MIN.WAIVE)
+		DR2_MIN_VALUE : mml:Double
+			@i18n:Label (en="Minimum Interest Amount", fr="Minimum de perception", es="Mto. Mín. de Interés")
+			@i18n:Tooltip (en="Indicates minimum interest amount", fr="Minimum de perception des intérêts", es="Monto Mínimo de Interés ")
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=28.0, core=true, businessType=AMT, t24Name=DR2.MIN.VALUE)
+		DR2_MIN_WAIVE : IC_Config:ACCOUNT_DEBIT_INT__DR2_MIN_WAIVE
+			@i18n:Label (en="Minimum Interest Waive", fr="Abandon si < minimum", es="Exoner. Mín. de Int.")
+			@i18n:Tooltip (en="Indicates minimum interest waive", fr="Abandon si < minimum, ou perception du minimum", es="Exoneración Mínima de Interés")
+			@t24:i (align=L, inputBehaviour=I, maxLength=4, sysNumber=29.0, core=true, t24Name=DR2.MIN.WAIVE)
+		COMPOUND_TYPE : mml:string
+			@i18n:Label (en=Compounding, fr="Int. composés", es=Compuesto)
+			@i18n:Tooltip (en="It supports both debit and credit interest", fr="Intérêts composés")
+			@t24:i (align=L, inputBehaviour=I, maxLength=5, sysNumber=30.0, core=true, businessType=COMPFQU, t24Name=COMPOUND.TYPE)
+		COMPOUND_YIELD_METHOD : IC_Config:ACCOUNT_DEBIT_INT__COMPOUND_YIELD_METHOD
+			@t24:i (align=L, inputBehaviour=I, maxLength=8, sysNumber=31.0, core=true, t24Name=COMPOUND.YIELD.METHOD)
+		RESERVED_3 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=32.0, core=true, t24Name=RESERVED.3)
+		RESERVED_2 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=33.0, core=true, t24Name=RESERVED.2)
+		RESERVED_1 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=34.0, core=true, t24Name=RESERVED.1)
+		RECORD_STATUS : mml:string
+			@i18n:Label (en="Record Status", fr=Statut, es=Estado)
+			@i18n:Tooltip (fr="Statut de l\'enregistrement")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=35.0, core=true, businessType=STAT, t24Name=RECORD.STATUS)
+		CURR_NO : mml:Integer
+			@i18n:Label (en="Curr No", fr="N° version", es="No. Actual")
+			@i18n:Tooltip (fr="Numéro de version")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=36.0, core=true, t24Name=CURR.NO)
+		INPUTTER -> byValue IC_Config:ACCOUNT_DEBIT_INT__INPUTTER *
+		DATE_TIME -> byValue IC_Config:ACCOUNT_DEBIT_INT__DATE_TIME *
+		AUTHORISER : mml:string
+			@i18n:Label (en=Authoriser, fr="Validé par", es=Autorizador)
+			@i18n:Tooltip (en="Indicates the User who Authorises the record", fr="Utilisateur de validation", es="El usuario que autorizó el registro")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=39.0, core=true, businessType=A, t24Name=AUTHORISER)
+		CO_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company, fr=Entité, es="Compañía")
+			@i18n:Tooltip (fr="Code établissement ou agence")
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=40.0, core=true, businessType=A, t24Name=CO.CODE)
+		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Dept Code", fr=Service, es=Departamento)
+			@i18n:Tooltip (fr="Code du service")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=41.0, core=true, t24Name=DEPT.CODE)
+		AUDITOR_CODE : mml:string
+			@i18n:Label (en="Auditor Code", fr="Audité par", es="Código de Auditor")
+			@i18n:Tooltip (en="Auditor Code", fr="Utilisateur d\'audit", es="Nombre del auditor")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=42.0, core=true, businessType=A, t24Name=AUDITOR.CODE)
+		AUDIT_DATE_TIME : mml:dateTime
+			@i18n:Label (en="Audit Date Time", fr="Audité le", es="Fecha/Hora de Audit.")
+			@i18n:Tooltip (en="Date and time when record was audited", fr="Date et heure d\'audit", es="Fecha y Hora de Auditoría ")
+			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=43.0, core=true, businessType=RELTIME, t24Name=AUDIT.DATE.TIME)
+	}
+	ACCOUNT_DEBIT_INT__DR_BASIC_RATE
+	{
+		DR_BASIC_RATE -> ST_RateParameters:BASIC_RATE_TEXT
+			@t24:i (align=R, inputBehaviour=I, maxLength=4, sysNumber=6.0, core=true, t24Name=DR.BASIC.RATE)
+		DR_INT_RATE : mml:string
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=7.0, core=true, businessType=R, t24Name=DR.INT.RATE)
+		DR_MARGIN_OPER : IC_Config:ACCOUNT_DEBIT_INT__DR_BASIC_RATE__DR_MARGIN_OPER
+			@t24:i (align=L, inputBehaviour=I, maxLength=8, sysNumber=8.0, core=true, t24Name=DR.MARGIN.OPER)
+		DR_MIN_RATE : mml:string
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=9.0, core=true, businessType=R, t24Name=DR.MIN.RATE)
+		DR_MARGIN_RATE : mml:string
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=10.0, core=true, businessType=R, t24Name=DR.MARGIN.RATE)
+		DR_LIMIT_AMT : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=11.0, core=true, businessType=AMT, t24Name=DR.LIMIT.AMT)
+		DR_MAX_RATE : mml:string
+			@t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=12.0, core=true, businessType=R, t24Name=DR.MAX.RATE)
+	}
+	ACCOUNT_DEBIT_INT__DR2_BASIC_RATE
+	{
+		DR2_BASIC_RATE -> ST_RateParameters:BASIC_RATE_TEXT
+			@t24:i (align=R, inputBehaviour=I, maxLength=4, sysNumber=15.0, core=true, t24Name=DR2.BASIC.RATE)
+		DR2_INT_RATE : mml:string
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=16.0, core=true, businessType=R, t24Name=DR2.INT.RATE)
+		DR2_MARGIN_OPER : IC_Config:ACCOUNT_DEBIT_INT__DR2_BASIC_RATE__DR2_MARGIN_OPER
+			@t24:i (align=L, inputBehaviour=I, maxLength=8, sysNumber=17.0, core=true, t24Name=DR2.MARGIN.OPER)
+		DR2_MIN_RATE : mml:string
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=18.0, core=true, businessType=R, t24Name=DR2.MIN.RATE)
+		DR2_MARGIN_RATE : mml:string
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=19.0, core=true, businessType=R, t24Name=DR2.MARGIN.RATE)
+		DR2_LIMIT_AMT : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=20.0, core=true, businessType=AMT, t24Name=DR2.LIMIT.AMT)
+		DR2_MAX_RATE : mml:string
+			@t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=21.0, core=true, businessType=R, t24Name=DR2.MAX.RATE)
+	}
+	ACCOUNT_DEBIT_INT__INPUTTER
+	{
+		INPUTTER : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=37.0, core=true, businessType=A, t24Name=INPUTTER)
+	}
+	ACCOUNT_DEBIT_INT__DATE_TIME
+	{
+		DATE_TIME : mml:dateTime
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=38.0, core=true, businessType=RELTIME, t24Name=DATE.TIME)
+	}
+	ACCOUNT_DEBIT_LIMIT
+		@t24:i (t24Name=ACCOUNT.DEBIT.LIMIT, level=F, type=H, allowedFunctions="A C D E H I L P Q R S", localRefAllowed=false)
+	{
+		ACCOUNT_NO_DATE -> IC_Config:ACCOUNT_DEBIT_LIMIT PK required
+			@i18n:Label (en="Account Date", fr="Date de compte", es="Fecha de Cuenta")
+			@i18n:Tooltip (fr="Date de compte ")
+			@t24:i (align=R, inputBehaviour=I, maxLength=30, sysNumber=0.0, core=true, businessType=ACCD, t24Name=ACCOUNT.NO.DATE)
+		LIMIT : mml:Double required
+			@i18n:Label (en=Limit, fr=Limite, es="Límite")
+			@i18n:Tooltip (en="Limit ", fr=Limite, es="Límite ")
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=1.0, core=true, businessType=AMT, t24Name=LIMIT)
+		SPARE1 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=10, sysNumber=2.0, core=true, businessType=A, t24Name=SPARE1)
+		SPARE2 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=10, sysNumber=3.0, core=true, businessType=A, t24Name=SPARE2)
+		SPARE4 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=10, sysNumber=4.0, core=true, businessType=A, t24Name=SPARE4)
+		RECORD_STATUS : mml:string
+			@i18n:Label (en="Record Status", fr=Statut, es=Estado)
+			@i18n:Tooltip (fr="Statut de l\'enregistrement")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=5.0, core=true, businessType=STAT, t24Name=RECORD.STATUS)
+		CURR_NO : mml:Integer
+			@i18n:Label (en="Curr No", fr="N° version", es="No. Actual")
+			@i18n:Tooltip (fr="Numéro de version")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=6.0, core=true, t24Name=CURR.NO)
+		INPUTTER -> byValue IC_Config:ACCOUNT_DEBIT_LIMIT__INPUTTER *
+		DATE_TIME -> byValue IC_Config:ACCOUNT_DEBIT_LIMIT__DATE_TIME *
+		AUTHORISER : mml:string
+			@i18n:Label (en=Authoriser, fr="Validé par", es=Autorizador)
+			@i18n:Tooltip (en="Indicates the User who Authorises the record", fr="Utilisateur de validation", es="El usuario que autorizó el registro")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=9.0, core=true, businessType=A, t24Name=AUTHORISER)
+		CO_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company, fr=Entité, es="Compañía")
+			@i18n:Tooltip (fr="Code établissement ou agence")
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=10.0, core=true, businessType=A, t24Name=CO.CODE)
+		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Dept Code", fr=Service, es=Departamento)
+			@i18n:Tooltip (fr="Code du service")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=11.0, core=true, t24Name=DEPT.CODE)
+		AUDITOR_CODE : mml:string
+			@i18n:Label (en="Auditor Code", fr="Audité par", es="Código de Auditor")
+			@i18n:Tooltip (en="Auditor Code", fr="Utilisateur d\'audit", es="Nombre del auditor")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=12.0, core=true, businessType=A, t24Name=AUDITOR.CODE)
+		AUDIT_DATE_TIME : mml:dateTime
+			@i18n:Label (en="Audit Date Time", fr="Audité le", es="Fecha/Hora de Audit.")
+			@i18n:Tooltip (en="Date and time when record was audited", fr="Date et heure d\'audit", es="Fecha y Hora de Auditoría ")
+			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=13.0, core=true, businessType=RELTIME, t24Name=AUDIT.DATE.TIME)
+	}
+	ACCOUNT_DEBIT_LIMIT__INPUTTER
+	{
+		INPUTTER : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=7.0, core=true, businessType=A, t24Name=INPUTTER)
+	}
+	ACCOUNT_DEBIT_LIMIT__DATE_TIME
+	{
+		DATE_TIME : mml:dateTime
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=8.0, core=true, businessType=RELTIME, t24Name=DATE.TIME)
+	}
+	ACCT_STATEMENT_CHARGE
+		@t24:i (t24Name=ACCT.STATEMENT.CHARGE, level=I, type=H, allowedFunctions="A C D E H I L P Q S", localRefAllowed=false)
+	{
+		SEQUENCE_YEAR_MTH -> IC_Config:ACCT_STATEMENT_CHARGE PK required
+			@t24:i (align=R, inputBehaviour=I, maxLength=12, sysNumber=0.0, core=true, businessType=YM, t24Name=SEQUENCE.YEAR.MTH)
+		DESCRIPTION -> byValue IC_Config:ACCT_STATEMENT_CHARGE__DESCRIPTION *
+		CATEGORY -> ST_Config:CATEGORY required
+			@i18n:Label (en=Category, fr=Produit, es="Categoría")
+			@i18n:Tooltip (en="Specifies the Category", fr="Code du produit")
+			@t24:i (align=R, inputBehaviour=I, maxLength=6, sysNumber=2.0, core=true, t24Name=CATEGORY)
+		TR_CODE_CR -> ST_Config:TRANSACTION required
+			@i18n:Label (en="Transaction Code Cr", fr="Code op. CR", es="Código Trs. Crédito")
+			@i18n:Tooltip (fr="Code opération au crédit")
+			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=3.0, core=true, t24Name=TR.CODE.CR)
+		TR_CODE_DR -> ST_Config:TRANSACTION required
+			@i18n:Label (en="Transaction Code Dr", fr="Code op. DB", es="Código Trs. Débito")
+			@i18n:Tooltip (fr="Code opération au débit")
+			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=4.0, core=true, t24Name=TR.CODE.DR)
+		DEFAULT_CHARGE_AMT : mml:Double
+			@i18n:Label (en="Default Charge Amount", fr="Montant de cion par défaut", es="Mto. Cargo Pre-establ.")
+			@i18n:Tooltip (fr="Montant de commission par défaut", es="Monto de Cargo Pre-establecido")
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=5.0, core=true, businessType=AMT, t24Name=DEFAULT.CHARGE.AMT)
+		DEFAULT_COPY_AMT : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=6.0, core=true, businessType=AMT, t24Name=DEFAULT.COPY.AMT)
+		DEFAULT_SHEET_AMT : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=7.0, core=true, businessType=AMT, t24Name=DEFAULT.SHEET.AMT)
+		DEFAULT_FREE_STMTS : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=4, sysNumber=8.0, core=true, t24Name=DEFAULT.FREE.STMTS)
+		DEFAULT_MIN_AMT : mml:Double
+			@i18n:Label (en="Default Minimum Amount", fr="Montant minimum par défaut", es="Monto Mín. Pre-establ.")
+			@i18n:Tooltip (en="Default minimum amount in local currency ", fr="Montant minimum par défaut", es="Monto Mínimo Pre-establecido")
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=9.0, core=true, businessType=AMT, t24Name=DEFAULT.MIN.AMT)
+		DEFAULT_MAX_AMT : mml:Double
+			@i18n:Label (en="Default Maximum Amount", fr="Montant maximum par défaut", es="Monto Máx. Pre-establ.")
+			@i18n:Tooltip (en="Default maximum amount in local currency ", fr="Montant maximum par défaut", es="Monto Máximo Pre-establecido")
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=10.0, core=true, businessType=AMT, t24Name=DEFAULT.MAX.AMT)
+		CURRENCY -> byValue IC_Config:ACCT_STATEMENT_CHARGE__CURRENCY *
+		RECORD_STATUS : mml:string
+			@i18n:Label (en="Record Status", fr=Statut, es=Estado)
+			@i18n:Tooltip (fr="Statut de l\'enregistrement")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=18.0, core=true, businessType=STAT, t24Name=RECORD.STATUS)
+		CURR_NO : mml:Integer
+			@i18n:Label (en="Curr No", fr="N° version", es="No. Actual")
+			@i18n:Tooltip (fr="Numéro de version")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=19.0, core=true, t24Name=CURR.NO)
+		INPUTTER -> byValue IC_Config:ACCT_STATEMENT_CHARGE__INPUTTER *
+		DATE_TIME -> byValue IC_Config:ACCT_STATEMENT_CHARGE__DATE_TIME *
+		AUTHORISER : mml:string
+			@i18n:Label (en=Authoriser, fr="Validé par", es=Autorizador)
+			@i18n:Tooltip (en="Indicates the User who Authorises the record", fr="Utilisateur de validation", es="El usuario que autorizó el registro")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=22.0, core=true, businessType=A, t24Name=AUTHORISER)
+		CO_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company, fr=Entité, es="Compañía")
+			@i18n:Tooltip (fr="Code établissement ou agence")
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=23.0, core=true, businessType=A, t24Name=CO.CODE)
+		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Dept Code", fr=Service, es=Departamento)
+			@i18n:Tooltip (fr="Code du service")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=24.0, core=true, t24Name=DEPT.CODE)
+		AUDITOR_CODE : mml:string
+			@i18n:Label (en="Auditor Code", fr="Audité par", es="Código de Auditor")
+			@i18n:Tooltip (en="Auditor Code", fr="Utilisateur d\'audit", es="Nombre del auditor")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=25.0, core=true, businessType=A, t24Name=AUDITOR.CODE)
+		AUDIT_DATE_TIME : mml:dateTime
+			@i18n:Label (en="Audit Date Time", fr="Audité le", es="Fecha/Hora de Audit.")
+			@i18n:Tooltip (en="Date and time when record was audited", fr="Date et heure d\'audit", es="Fecha y Hora de Auditoría ")
+			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=26.0, core=true, businessType=RELTIME, t24Name=AUDIT.DATE.TIME)
+	}
+	ACCT_STATEMENT_CHARGE__DESCRIPTION
+	{
+		DESCRIPTION : mml:string required
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, multiLanguage=true, sysNumber=1.0, core=true, businessType=A, t24Name=DESCRIPTION)
+	}
+	ACCT_STATEMENT_CHARGE__CURRENCY
+	{
+		CURRENCY -> FIN_CurrencyConfig:CURRENCY
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=11.0, core=true, businessType=CCY, t24Name=CURRENCY)
+		CHARGE_AMOUNT : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=12.0, core=true, businessType=AMT, t24Name=CHARGE.AMOUNT)
+		COPY_AMOUNT : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=13.0, core=true, businessType=AMT, t24Name=COPY.AMOUNT)
+		SHEET_AMOUNT : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=14.0, core=true, businessType=AMT, t24Name=SHEET.AMOUNT)
+		FREE_STMTS : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=4, sysNumber=15.0, core=true, t24Name=FREE.STMTS)
+		MINIMUM_AMOUNT : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=16.0, core=true, businessType=AMT, t24Name=MINIMUM.AMOUNT)
+		MAXIMUM_AMOUNT : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=17.0, core=true, businessType=AMT, t24Name=MAXIMUM.AMOUNT)
+	}
+	ACCT_STATEMENT_CHARGE__INPUTTER
+	{
+		INPUTTER : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=20.0, core=true, businessType=A, t24Name=INPUTTER)
+	}
+	ACCT_STATEMENT_CHARGE__DATE_TIME
+	{
+		DATE_TIME : mml:dateTime
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=21.0, core=true, businessType=RELTIME, t24Name=DATE.TIME)
+	}
+	BALANCE_REQUIREMENT
+		@t24:i (t24Name=BALANCE.REQUIREMENT, level=I, type=H, allowedFunctions="A C D E H I L P Q R S", localRefAllowed=false)
+	{
+		SEQUENCE_YEAR_MTH -> IC_Config:BALANCE_REQUIREMENT PK required
+			@t24:i (align=R, inputBehaviour=I, maxLength=12, sysNumber=0.0, core=true, businessType=YM, t24Name=SEQUENCE.YEAR.MTH)
+		DESCRIPTION -> byValue IC_Config:BALANCE_REQUIREMENT__DESCRIPTION *
+		CATEGORY -> ST_Config:CATEGORY required
+			@i18n:Label (en=Category, fr=Produit, es="Categoría")
+			@i18n:Tooltip (en="Specifies the Category", fr="Code du produit")
+			@t24:i (align=R, inputBehaviour=I, maxLength=6, sysNumber=2.0, core=true, t24Name=CATEGORY)
+		TR_CODE_CR -> ST_Config:TRANSACTION required
+			@i18n:Label (en="Transaction Code Cr", fr="Code op. CR", es="Código Trs. Crédito")
+			@i18n:Tooltip (fr="Code opération au crédit")
+			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=3.0, core=true, t24Name=TR.CODE.CR)
+		TR_CODE_DR -> ST_Config:TRANSACTION required
+			@i18n:Label (en="Transaction Code Dr", fr="Code op. DB", es="Código Trs. Débito")
+			@i18n:Tooltip (fr="Code opération au débit")
+			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=4.0, core=true, t24Name=TR.CODE.DR)
+		TAX_CODE -> ST_ChargeConfig:TAX
+			@i18n:Label (en="Tax Code", fr=Taxe, es="Código de Impuesto")
+			@i18n:Tooltip (fr="Code taxe")
+			@t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=5.0, core=true, t24Name=TAX.CODE)
+		CALCULATION_PERIOD : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=6.0, core=true, t24Name=CALCULATION.PERIOD)
+		BALANCE_TYPE : IC_Config:BALANCE_REQUIREMENT__BALANCE_TYPE required
+			@i18n:Label (en="Balance Type", fr="Type de solde", es="Tipo de Saldo")
+			@i18n:Tooltip (fr="Type de solde")
+			@t24:i (align=L, inputBehaviour=I, maxLength=7, sysNumber=7.0, core=true, t24Name=BALANCE.TYPE)
+		DEFAULT_BAL_AMT -> byValue IC_Config:BALANCE_REQUIREMENT__DEFAULT_BAL_AMT *
+		CURRENCY -> byValue IC_Config:BALANCE_REQUIREMENT__CURRENCY *
+		RECORD_STATUS : mml:string
+			@i18n:Label (en="Record Status", fr=Statut, es=Estado)
+			@i18n:Tooltip (fr="Statut de l\'enregistrement")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=13.0, core=true, businessType=STAT, t24Name=RECORD.STATUS)
+		CURR_NO : mml:Integer
+			@i18n:Label (en="Curr No", fr="N° version", es="No. Actual")
+			@i18n:Tooltip (fr="Numéro de version")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=14.0, core=true, t24Name=CURR.NO)
+		INPUTTER -> byValue IC_Config:BALANCE_REQUIREMENT__INPUTTER *
+		DATE_TIME -> byValue IC_Config:BALANCE_REQUIREMENT__DATE_TIME *
+		AUTHORISER : mml:string
+			@i18n:Label (en=Authoriser, fr="Validé par", es=Autorizador)
+			@i18n:Tooltip (en="Indicates the User who Authorises the record", fr="Utilisateur de validation", es="El usuario que autorizó el registro")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=17.0, core=true, businessType=A, t24Name=AUTHORISER)
+		CO_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company, fr=Entité, es="Compañía")
+			@i18n:Tooltip (fr="Code établissement ou agence")
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=18.0, core=true, businessType=A, t24Name=CO.CODE)
+		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Dept Code", fr=Service, es=Departamento)
+			@i18n:Tooltip (fr="Code du service")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=19.0, core=true, t24Name=DEPT.CODE)
+		AUDITOR_CODE : mml:string
+			@i18n:Label (en="Auditor Code", fr="Audité par", es="Código de Auditor")
+			@i18n:Tooltip (en="Auditor Code", fr="Utilisateur d\'audit", es="Nombre del auditor")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=20.0, core=true, businessType=A, t24Name=AUDITOR.CODE)
+		AUDIT_DATE_TIME : mml:dateTime
+			@i18n:Label (en="Audit Date Time", fr="Audité le", es="Fecha/Hora de Audit.")
+			@i18n:Tooltip (en="Date and time when record was audited", fr="Date et heure d\'audit", es="Fecha y Hora de Auditoría ")
+			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=21.0, core=true, businessType=RELTIME, t24Name=AUDIT.DATE.TIME)
+	}
+	BALANCE_REQUIREMENT__DESCRIPTION
+	{
+		DESCRIPTION : mml:string required
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, multiLanguage=true, sysNumber=1.0, core=true, businessType=A, t24Name=DESCRIPTION)
+	}
+	BALANCE_REQUIREMENT__DEFAULT_BAL_AMT
+	{
+		DEFAULT_BAL_AMT : mml:string
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=8.0, core=true, businessType=BMT, t24Name=DEFAULT.BAL.AMT)
+		DEF_CHARGE_AMT : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=9.0, core=true, businessType=AMT, t24Name=DEF.CHARGE.AMT)
+	}
+	BALANCE_REQUIREMENT__CURRENCY
+	{
+		CURRENCY -> FIN_CurrencyConfig:CURRENCY
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=10.0, core=true, businessType=CCY, t24Name=CURRENCY)
+		BALANCE_AMT -> byValue IC_Config:BALANCE_REQUIREMENT__CURRENCY__BALANCE_AMT *
+	}
+	BALANCE_REQUIREMENT__CURRENCY__BALANCE_AMT
+	{
+		BALANCE_AMT : mml:string
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=11.0, core=true, businessType=BMT, t24Name=BALANCE.AMT)
+		CHARGE_AMT : mml:string
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=12.0, core=true, businessType=BMT, t24Name=CHARGE.AMT)
+	}
+	BALANCE_REQUIREMENT__INPUTTER
+	{
+		INPUTTER : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=15.0, core=true, businessType=A, t24Name=INPUTTER)
+	}
+	BALANCE_REQUIREMENT__DATE_TIME
+	{
+		DATE_TIME : mml:dateTime
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=16.0, core=true, businessType=RELTIME, t24Name=DATE.TIME)
+	}
+	DEBIT_INT_ADDON
+		@t24:i (t24Name=DEBIT.INT.ADDON, level=I, type=H, allowedFunctions="A C D E H I L P Q R S", localRefAllowed=false)
+	{
+		SEQUENCE_YEAR_MTH -> IC_Config:DEBIT_INT_ADDON PK required
+			@t24:i (align=R, inputBehaviour=I, maxLength=12, sysNumber=0.0, core=true, businessType=YM, t24Name=SEQUENCE.YEAR.MTH)
+		DESCRIPTION -> byValue IC_Config:DEBIT_INT_ADDON__DESCRIPTION *
+		CATEGORY -> ST_Config:CATEGORY required
+			@i18n:Label (en=Category, fr=Produit, es="Categoría")
+			@i18n:Tooltip (en="Specifies the Category", fr="Code du produit")
+			@t24:i (align=R, inputBehaviour=I, maxLength=6, sysNumber=2.0, core=true, t24Name=CATEGORY)
+		TR_CODE_CR -> ST_Config:TRANSACTION required
+			@i18n:Label (en="Transaction Code Cr", fr="Code op. CR", es="Código Trs. Crédito")
+			@i18n:Tooltip (fr="Code opération au crédit")
+			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=3.0, core=true, t24Name=TR.CODE.CR)
+		TR_CODE_DR -> ST_Config:TRANSACTION required
+			@i18n:Label (en="Transaction Code Dr", fr="Code op. DB", es="Código Trs. Débito")
+			@i18n:Tooltip (fr="Code opération au débit")
+			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=4.0, core=true, t24Name=TR.CODE.DR)
+		TAX_CODE -> ST_ChargeConfig:TAX
+			@i18n:Label (en="Tax Code", fr=Taxe, es="Código de Impuesto")
+			@i18n:Tooltip (fr="Code taxe")
+			@t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=5.0, core=true, t24Name=TAX.CODE)
+		PERCENTAGE : mml:string required
+			@i18n:Label (en="% Change", fr=Pourcentage, es="% de Cambio")
+			@i18n:Tooltip (fr=Pourcentage)
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=6.0, core=true, businessType=R, t24Name=PERCENTAGE)
+		DEFAULT_FREE_AMT : mml:Double
+			@i18n:Label (en="Default Free Amount", fr="Montant gratuit par défaut", es="Monto de Cargo Libre")
+			@i18n:Tooltip (en="Default free amount to be deducted from charge ", fr="Montant gratuit par défaut ")
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=7.0, core=true, businessType=AMT, t24Name=DEFAULT.FREE.AMT)
+		DEFAULT_MIN_AMT : mml:Double
+			@i18n:Label (en="Default Minimum Amount", fr="Montant minimum par défaut", es="Monto Mín. Pre-establ.")
+			@i18n:Tooltip (en="Default minimum amount in local currency ", fr="Montant minimum par défaut", es="Monto Mínimo Pre-establecido")
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=8.0, core=true, businessType=AMT, t24Name=DEFAULT.MIN.AMT)
+		DEFAULT_MAX_AMT : mml:Double
+			@i18n:Label (en="Default Maximum Amount", fr="Montant maximum par défaut", es="Monto Máx. Pre-establ.")
+			@i18n:Tooltip (en="Default maximum amount in local currency ", fr="Montant maximum par défaut", es="Monto Máximo Pre-establecido")
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=9.0, core=true, businessType=AMT, t24Name=DEFAULT.MAX.AMT)
+		CURRENCY -> byValue IC_Config:DEBIT_INT_ADDON__CURRENCY *
+		RECORD_STATUS : mml:string
+			@i18n:Label (en="Record Status", fr=Statut, es=Estado)
+			@i18n:Tooltip (fr="Statut de l\'enregistrement")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=14.0, core=true, businessType=STAT, t24Name=RECORD.STATUS)
+		CURR_NO : mml:Integer
+			@i18n:Label (en="Curr No", fr="N° version", es="No. Actual")
+			@i18n:Tooltip (fr="Numéro de version")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=15.0, core=true, t24Name=CURR.NO)
+		INPUTTER -> byValue IC_Config:DEBIT_INT_ADDON__INPUTTER *
+		DATE_TIME -> byValue IC_Config:DEBIT_INT_ADDON__DATE_TIME *
+		AUTHORISER : mml:string
+			@i18n:Label (en=Authoriser, fr="Validé par", es=Autorizador)
+			@i18n:Tooltip (en="Indicates the User who Authorises the record", fr="Utilisateur de validation", es="El usuario que autorizó el registro")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=18.0, core=true, businessType=A, t24Name=AUTHORISER)
+		CO_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company, fr=Entité, es="Compañía")
+			@i18n:Tooltip (fr="Code établissement ou agence")
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=19.0, core=true, businessType=A, t24Name=CO.CODE)
+		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Dept Code", fr=Service, es=Departamento)
+			@i18n:Tooltip (fr="Code du service")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=20.0, core=true, t24Name=DEPT.CODE)
+		AUDITOR_CODE : mml:string
+			@i18n:Label (en="Auditor Code", fr="Audité par", es="Código de Auditor")
+			@i18n:Tooltip (en="Auditor Code", fr="Utilisateur d\'audit", es="Nombre del auditor")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=21.0, core=true, businessType=A, t24Name=AUDITOR.CODE)
+		AUDIT_DATE_TIME : mml:dateTime
+			@i18n:Label (en="Audit Date Time", fr="Audité le", es="Fecha/Hora de Audit.")
+			@i18n:Tooltip (en="Date and time when record was audited", fr="Date et heure d\'audit", es="Fecha y Hora de Auditoría ")
+			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=22.0, core=true, businessType=RELTIME, t24Name=AUDIT.DATE.TIME)
+	}
+	DEBIT_INT_ADDON__DESCRIPTION
+	{
+		DESCRIPTION : mml:string required
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, multiLanguage=true, sysNumber=1.0, core=true, businessType=A, t24Name=DESCRIPTION)
+	}
+	DEBIT_INT_ADDON__CURRENCY
+	{
+		CURRENCY -> FIN_CurrencyConfig:CURRENCY
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=10.0, core=true, businessType=CCY, t24Name=CURRENCY)
+		FREE_AMOUNT : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=11.0, core=true, businessType=AMT, t24Name=FREE.AMOUNT)
+		MINIMUM_AMOUNT : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=12.0, core=true, businessType=AMT, t24Name=MINIMUM.AMOUNT)
+		MAXIMUM_AMOUNT : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=13.0, core=true, businessType=AMT, t24Name=MAXIMUM.AMOUNT)
+	}
+	DEBIT_INT_ADDON__INPUTTER
+	{
+		INPUTTER : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=16.0, core=true, businessType=A, t24Name=INPUTTER)
+	}
+	DEBIT_INT_ADDON__DATE_TIME
+	{
+		DATE_TIME : mml:dateTime
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=17.0, core=true, businessType=RELTIME, t24Name=DATE.TIME)
+	}
+	GENERAL_CHARGE
+		@t24:i (t24Name=GENERAL.CHARGE, level=I, type=H, allowedFunctions="A C D E H I L P Q R S", localRefAllowed=false)
+	{
+		GEN_CHARGE_DATE -> IC_Config:GENERAL_CHARGE PK required
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=0.0, core=true, businessType=D, t24Name=GEN.CHARGE.DATE)
+		DESCRIPTION -> byValue IC_Config:GENERAL_CHARGE__DESCRIPTION *
+		DEBIT_INT_ADDON -> IC_Config:DEBIT_INT_ADDON
+			@i18n:Label (en="Debit Int Addon", fr="Intt supplém au DB", es="Interés Débito Agregado")
+			@i18n:Tooltip (fr="Intérêts supplémentaires au DB")
+			@t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=2.0, core=true, t24Name=DEBIT.INT.ADDON)
+		GOVERNMENT_MARGIN -> IC_Config:GOVERNMENT_MARGIN
+			@i18n:Label (en="Goverment Margin", fr="Marge gouvernement", es="Margen de Gobierno")
+			@i18n:Tooltip (fr="Marge gouvernement")
+			@t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=3.0, core=true, t24Name=GOVERNMENT.MARGIN)
+		HIGHEST_DEBIT -> IC_Config:HIGHEST_DEBIT
+			@i18n:Label (en="Highest Debit", fr="Débit plus haut", es="Débito Más Alto")
+			@i18n:Tooltip (fr="Débit plus haut")
+			@t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=4.0, core=true, t24Name=HIGHEST.DEBIT)
+		INTEREST_STATEMENT -> IC_Config:INTEREST_STATEMENT
+			@i18n:Label (en="Interest Statement", fr="Ecriture cptable d\'int", es="Estado de Interés")
+			@i18n:Tooltip (fr="Ecriture comptable d\'intérêts")
+			@t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=5.0, core=true, t24Name=INTEREST.STATEMENT)
+		INT_CHRG_BAL_TYPE : IC_Config:GENERAL_CHARGE__INT_CHRG_BAL_TYPE
+			@i18n:Label (en="Int Chrg Bal Type", fr="Type solde de Cion d\'Intt", es="Tipo Saldo Cargo Interés")
+			@i18n:Tooltip (fr="Type solde de Cion d\'Intt")
+			@t24:i (align=L, inputBehaviour=I, maxLength=7, sysNumber=6.0, core=true, t24Name=INT.CHRG.BAL.TYPE)
+		INT_CHARGE_DEF_BAL : mml:Double
+			@i18n:Label (en="Int Charge Def Bal", fr="Solde différé de Cion d\'Intt", es="Saldo Pre-est. Cargo Int.")
+			@i18n:Tooltip (fr="Solde différé de Cion d\'Intt")
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=7.0, core=true, businessType=AMT, t24Name=INT.CHARGE.DEF.BAL)
+		INT_CHARGE_CCY -> byValue IC_Config:GENERAL_CHARGE__INT_CHARGE_CCY *
+		CHARGE_CODE_LEVEL : IC_Config:GENERAL_CHARGE__CHARGE_CODE_LEVEL
+			@i18n:Label (fr="Code de cion")
+			@i18n:Tooltip (fr="Code de cion")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=10.0, core=true, t24Name=CHARGE.CODE.LEVEL)
+		CHARGE_OF_FCY_ACCT : IC_Config:GENERAL_CHARGE__CHARGE_OF_FCY_ACCT
+			@i18n:Label (en="Charge Fcy Acct", fr="Facturer Cpte de dev", es="Cargo Cta. Mda. Extranj.")
+			@i18n:Tooltip (fr="Facturer Compte de dev")
+			@t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=11.0, core=true, t24Name=CHARGE.OF.FCY.ACCT)
+		CALCUL_STEP_PERIOD : IC_Config:GENERAL_CHARGE__CALCUL_STEP_PERIOD
+			@i18n:Label (en="Calculation Step Period", fr="Fréquence de calcul", es="Periodo Fase Cálculo")
+			@i18n:Tooltip (en="Calculation Step Period", fr="Fréquence de calcul", es="Periodo de Fase de Cálculo")
+			@t24:i (align=L, inputBehaviour=I, maxLength=1, sysNumber=12.0, core=true, t24Name=CALCUL.STEP.PERIOD)
+		BAL_REQUIREMENT -> IC_Config:BALANCE_REQUIREMENT
+			@i18n:Label (en="Balance Requirement", fr="Exigence du solde", es="Requerimiento Saldo")
+			@i18n:Tooltip (en="Balance Requirement", fr="Exigence du solde", es="Requerimiento de Saldo")
+			@t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=13.0, core=true, t24Name=BAL.REQUIREMENT)
+		NUMBER_OF_CREDIT -> IC_Config:NUMBER_OF_CREDIT
+			@i18n:Label (fr=Installation)
+			@i18n:Tooltip (fr=Installation)
+			@t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=14.0, core=true, t24Name=NUMBER.OF.CREDIT)
+		NUMBER_OF_DEBIT -> IC_Config:NUMBER_OF_DEBIT
+			@i18n:Label (fr=Installation)
+			@i18n:Tooltip (fr=Installation)
+			@t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=15.0, core=true, t24Name=NUMBER.OF.DEBIT)
+		TURNOVER_CREDIT -> IC_Config:TURNOVER_CREDIT
+			@i18n:Label (en="Turnover Credit", fr="Profit au crédit", es="Crédito Rotativo")
+			@i18n:Tooltip (en="Turnover Credit", fr="Profit au crédit", es="Crédito Rotativo")
+			@t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=16.0, core=true, t24Name=TURNOVER.CREDIT)
+		TURNOVER_DEBIT -> IC_Config:TURNOVER_DEBIT
+			@i18n:Label (en="Turnover Debit", fr="Profit au débit", es="Débito Rotativo")
+			@i18n:Tooltip (en="Turnover Debit", fr="Profit au débit", es="Débito Rotativo")
+			@t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=17.0, core=true, t24Name=TURNOVER.DEBIT)
+		COMB_DEBIT_CREDIT : IC_Config:GENERAL_CHARGE__COMB_DEBIT_CREDIT
+			@i18n:Label (fr="Combiner Dt/Ct")
+			@i18n:Tooltip (fr="Combiner Dt/Ct")
+			@t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=18.0, core=true, t24Name=COMB.DEBIT.CREDIT)
+		STATEMENT_CHARGE -> IC_Config:ACCT_STATEMENT_CHARGE
+			@i18n:Label (fr="Cion de relève")
+			@i18n:Tooltip (fr="Commission de relève")
+			@t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=19.0, core=true, t24Name=STATEMENT.CHARGE)
+		TRANS_CODE_CHARGE : IC_Config:GENERAL_CHARGE__TRANS_CODE_CHARGE
+			@i18n:Label (en="Trans Code Charge", fr="Code transaction de cion", es="Cargo de Código Trs.")
+			@i18n:Tooltip (en="Transaction Code Charge", fr="Code transaction de cion", es="Cargo de Código de Transacción")
+			@t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=20.0, core=true, t24Name=TRANS.CODE.CHARGE)
+		COMB_TRNS_CHRG_CDE -> IC_Config:TRANSACTION_CHARGE_XREF
+			@i18n:Label (en="Combined Trns Chrg Cde", fr="Cion de trans combinée", es="Cód. Cargo Trs. Comb.")
+			@i18n:Tooltip (en="Combined Txn Chrge Code", fr="Cion de trans combinée", es="Código de Cargo de Transacción Combinada")
+			@t24:i (align=L, inputBehaviour=I, maxLength=5, sysNumber=21.0, core=true, businessType=A, t24Name=COMB.TRNS.CHRG.CDE)
+		WAIVE_CHRG_NEG_BAL : IC_Config:GENERAL_CHARGE__WAIVE_CHRG_NEG_BAL
+			@i18n:Label (en="Waive Chrg Neg Bal", fr="Renoncer cions si solde négatif", es="Exon.Cargos Negativos")
+			@i18n:Tooltip (en="Waive Chg Neg Bal", fr="Renoncer cions si solde négatif", es="Exonerar de Cargos Negativos")
+			@t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=22.0, core=true, t24Name=WAIVE.CHRG.NEG.BAL)
+		PERCT_FOR_OFFSET : mml:string
+			@i18n:Label (fr=Pourcentage)
+			@i18n:Tooltip (fr=Pourcentage)
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=23.0, core=true, businessType=R, t24Name=PERCT.FOR.OFFSET)
+		OFFSET_BAL_TYPE : IC_Config:GENERAL_CHARGE__OFFSET_BAL_TYPE
+			@i18n:Label (en="Offset Bal Type", fr="Type de solde", es="Tipo Saldo Compensación")
+			@i18n:Tooltip (fr="Type de solde")
+			@t24:i (align=L, inputBehaviour=I, maxLength=7, sysNumber=24.0, core=true, t24Name=OFFSET.BAL.TYPE)
+		DEFAULT_MIN_AV_BAL : mml:Double
+			@i18n:Label (en="Default Min Avg Bal", fr="Solde moyen min p/défaut", es="Saldo Mín. Prom. Pre-est.")
+			@i18n:Tooltip (fr="Solde moyen min p/défaut")
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=25.0, core=true, businessType=AMT, t24Name=DEFAULT.MIN.AV.BAL)
+		DEFAULT_DAY_BASIS -> ST_RateParameters:INTEREST_BASIS
+			@t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=26.0, core=true, t24Name=DEFAULT.DAY.BASIS)
+		DEF_BAL_NO_OFFSET : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=27.0, core=true, businessType=AMT, t24Name=DEF.BAL.NO.OFFSET)
+		DEF_LOW_AMT_CHARGE : mml:Double
+			@i18n:Label (en="Def Low Amt Charge", fr="Cions différées Montt bas", es="Cargo Monto Bajo Pre-est.")
+			@i18n:Tooltip (fr="Cions différées Montt bas")
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=28.0, core=true, businessType=AMT, t24Name=DEF.LOW.AMT.CHARGE)
+		OFFSET_CURRENCY -> byValue IC_Config:GENERAL_CHARGE__OFFSET_CURRENCY *
+		CATEGORY -> ST_Config:CATEGORY
+			@i18n:Label (en=Category, fr=Produit, es="Categoría")
+			@i18n:Tooltip (en="Specifies the Category", fr="Code du produit")
+			@t24:i (align=R, inputBehaviour=I, maxLength=6, sysNumber=34.0, core=true, t24Name=CATEGORY)
+		TR_CODE_CR -> ST_Config:TRANSACTION
+			@i18n:Label (en="Transaction Code Cr", fr="Code op. CR", es="Código Trs. Crédito")
+			@i18n:Tooltip (fr="Code opération au crédit")
+			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=35.0, core=true, t24Name=TR.CODE.CR)
+		TR_CODE_DR -> ST_Config:TRANSACTION
+			@i18n:Label (en="Transaction Code Dr", fr="Code op. DB", es="Código Trs. Débito")
+			@i18n:Tooltip (fr="Code opération au débit")
+			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=36.0, core=true, t24Name=TR.CODE.DR)
+		COMBINED_TAX_CODE -> ST_ChargeConfig:TAX
+			@i18n:Label (fr="Code de taxe")
+			@i18n:Tooltip (fr="Code de taxe")
+			@t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=37.0, core=true, t24Name=COMBINED.TAX.CODE)
+		HIGHEST_DEBIT_CHG -> IC_Config:HIGHEST_DEBIT
+			@i18n:Label (fr="Cion de dt le plus haut")
+			@i18n:Tooltip (fr="Cion de dt le plus haut")
+			@t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=38.0, core=true, businessType=AMT, t24Name=HIGHEST.DEBIT.CHG)
+		RECORD_STATUS : mml:string
+			@i18n:Label (en="Record Status", fr=Statut, es=Estado)
+			@i18n:Tooltip (fr="Statut de l\'enregistrement")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=39.0, core=true, businessType=STAT, t24Name=RECORD.STATUS)
+		CURR_NO : mml:Integer
+			@i18n:Label (en="Curr No", fr="N° version", es="No. Actual")
+			@i18n:Tooltip (fr="Numéro de version")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=40.0, core=true, t24Name=CURR.NO)
+		INPUTTER -> byValue IC_Config:GENERAL_CHARGE__INPUTTER *
+		DATE_TIME -> byValue IC_Config:GENERAL_CHARGE__DATE_TIME *
+		AUTHORISER : mml:string
+			@i18n:Label (en=Authoriser, fr="Validé par", es=Autorizador)
+			@i18n:Tooltip (en="Indicates the User who Authorises the record", fr="Utilisateur de validation", es="El usuario que autorizó el registro")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=43.0, core=true, businessType=A, t24Name=AUTHORISER)
+		CO_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company, fr=Entité, es="Compañía")
+			@i18n:Tooltip (fr="Code établissement ou agence")
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=44.0, core=true, businessType=A, t24Name=CO.CODE)
+		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Dept Code", fr=Service, es=Departamento)
+			@i18n:Tooltip (fr="Code du service")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=45.0, core=true, t24Name=DEPT.CODE)
+		AUDITOR_CODE : mml:string
+			@i18n:Label (en="Auditor Code", fr="Audité par", es="Código de Auditor")
+			@i18n:Tooltip (en="Auditor Code", fr="Utilisateur d\'audit", es="Nombre del auditor")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=46.0, core=true, businessType=A, t24Name=AUDITOR.CODE)
+		AUDIT_DATE_TIME : mml:dateTime
+			@i18n:Label (en="Audit Date Time", fr="Audité le", es="Fecha/Hora de Audit.")
+			@i18n:Tooltip (en="Date and time when record was audited", fr="Date et heure d\'audit", es="Fecha y Hora de Auditoría ")
+			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=47.0, core=true, businessType=RELTIME, t24Name=AUDIT.DATE.TIME)
+	}
+	GENERAL_CHARGE__DESCRIPTION
+	{
+		DESCRIPTION : mml:string required
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, multiLanguage=true, sysNumber=1.0, core=true, businessType=A, t24Name=DESCRIPTION)
+	}
+	GENERAL_CHARGE__INT_CHARGE_CCY
+	{
+		INT_CHARGE_CCY -> FIN_CurrencyConfig:CURRENCY
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=8.0, core=true, businessType=CCY, t24Name=INT.CHARGE.CCY)
+		INT_CHARGE_BAL : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=9.0, core=true, businessType=AMT, t24Name=INT.CHARGE.BAL)
+	}
+	GENERAL_CHARGE__OFFSET_CURRENCY
+	{
+		OFFSET_CURRENCY -> FIN_CurrencyConfig:CURRENCY
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=29.0, core=true, businessType=CCY, t24Name=OFFSET.CURRENCY)
+		MIN_AV_BAL : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=30.0, core=true, businessType=AMT, t24Name=MIN.AV.BAL)
+		DAY_BASIS -> ST_RateParameters:INTEREST_BASIS
+			@t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=31.0, core=true, t24Name=DAY.BASIS)
+		BAL_NO_OFFSET : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=32.0, core=true, businessType=AMT, t24Name=BAL.NO.OFFSET)
+		LOW_AMT_CHARGE : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=33.0, core=true, businessType=AMT, t24Name=LOW.AMT.CHARGE)
+	}
+	GENERAL_CHARGE__INPUTTER
+	{
+		INPUTTER : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=41.0, core=true, businessType=A, t24Name=INPUTTER)
+	}
+	GENERAL_CHARGE__DATE_TIME
+	{
+		DATE_TIME : mml:dateTime
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=42.0, core=true, businessType=RELTIME, t24Name=DATE.TIME)
+	}
+	GOVERNMENT_MARGIN
+		@t24:i (t24Name=GOVERNMENT.MARGIN, level=I, type=H, allowedFunctions="A C D E H I L P Q R S", localRefAllowed=false)
+	{
+		SEQUENCE_YEAR_MTH -> IC_Config:GOVERNMENT_MARGIN PK required
+			@t24:i (align=R, inputBehaviour=I, maxLength=12, sysNumber=0.0, core=true, businessType=YM, t24Name=SEQUENCE.YEAR.MTH)
+		DESCRIPTION -> byValue IC_Config:GOVERNMENT_MARGIN__DESCRIPTION *
+		CATEGORY -> ST_Config:CATEGORY required
+			@i18n:Label (en=Category, fr=Produit, es="Categoría")
+			@i18n:Tooltip (en="Specifies the Category", fr="Code du produit")
+			@t24:i (align=R, inputBehaviour=I, maxLength=6, sysNumber=2.0, core=true, t24Name=CATEGORY)
+		TR_CODE_CR -> ST_Config:TRANSACTION required
+			@i18n:Label (en="Transaction Code Cr", fr="Code op. CR", es="Código Trs. Crédito")
+			@i18n:Tooltip (fr="Code opération au crédit")
+			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=3.0, core=true, t24Name=TR.CODE.CR)
+		TR_CODE_DR -> ST_Config:TRANSACTION required
+			@i18n:Label (en="Transaction Code Dr", fr="Code op. DB", es="Código Trs. Débito")
+			@i18n:Tooltip (fr="Code opération au débit")
+			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=4.0, core=true, t24Name=TR.CODE.DR)
+		PERCENTAGE : mml:string required
+			@i18n:Label (en="% Change", fr=Pourcentage, es="% de Cambio")
+			@i18n:Tooltip (fr=Pourcentage)
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=5.0, core=true, businessType=R, t24Name=PERCENTAGE)
+		DEFAULT_MIN_AMT : mml:Double
+			@i18n:Label (en="Default Minimum Amount", fr="Montant minimum par défaut", es="Monto Mín. Pre-establ.")
+			@i18n:Tooltip (en="Default minimum amount in local currency ", fr="Montant minimum par défaut", es="Monto Mínimo Pre-establecido")
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=6.0, core=true, businessType=AMT, t24Name=DEFAULT.MIN.AMT)
+		DEFAULT_MAX_AMT : mml:Double
+			@i18n:Label (en="Default Maximum Amount", fr="Montant maximum par défaut", es="Monto Máx. Pre-establ.")
+			@i18n:Tooltip (en="Default maximum amount in local currency ", fr="Montant maximum par défaut", es="Monto Máximo Pre-establecido")
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=7.0, core=true, businessType=AMT, t24Name=DEFAULT.MAX.AMT)
+		CURRENCY -> byValue IC_Config:GOVERNMENT_MARGIN__CURRENCY *
+		RECORD_STATUS : mml:string
+			@i18n:Label (en="Record Status", fr=Statut, es=Estado)
+			@i18n:Tooltip (fr="Statut de l\'enregistrement")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=11.0, core=true, businessType=STAT, t24Name=RECORD.STATUS)
+		CURR_NO : mml:Integer
+			@i18n:Label (en="Curr No", fr="N° version", es="No. Actual")
+			@i18n:Tooltip (fr="Numéro de version")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=12.0, core=true, t24Name=CURR.NO)
+		INPUTTER -> byValue IC_Config:GOVERNMENT_MARGIN__INPUTTER *
+		DATE_TIME -> byValue IC_Config:GOVERNMENT_MARGIN__DATE_TIME *
+		AUTHORISER : mml:string
+			@i18n:Label (en=Authoriser, fr="Validé par", es=Autorizador)
+			@i18n:Tooltip (en="Indicates the User who Authorises the record", fr="Utilisateur de validation", es="El usuario que autorizó el registro")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=15.0, core=true, businessType=A, t24Name=AUTHORISER)
+		CO_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company, fr=Entité, es="Compañía")
+			@i18n:Tooltip (fr="Code établissement ou agence")
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=16.0, core=true, businessType=A, t24Name=CO.CODE)
+		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Dept Code", fr=Service, es=Departamento)
+			@i18n:Tooltip (fr="Code du service")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=17.0, core=true, t24Name=DEPT.CODE)
+		AUDITOR_CODE : mml:string
+			@i18n:Label (en="Auditor Code", fr="Audité par", es="Código de Auditor")
+			@i18n:Tooltip (en="Auditor Code", fr="Utilisateur d\'audit", es="Nombre del auditor")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=18.0, core=true, businessType=A, t24Name=AUDITOR.CODE)
+		AUDIT_DATE_TIME : mml:dateTime
+			@i18n:Label (en="Audit Date Time", fr="Audité le", es="Fecha/Hora de Audit.")
+			@i18n:Tooltip (en="Date and time when record was audited", fr="Date et heure d\'audit", es="Fecha y Hora de Auditoría ")
+			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=19.0, core=true, businessType=RELTIME, t24Name=AUDIT.DATE.TIME)
+	}
+	GOVERNMENT_MARGIN__DESCRIPTION
+	{
+		DESCRIPTION : mml:string required
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, multiLanguage=true, sysNumber=1.0, core=true, businessType=A, t24Name=DESCRIPTION)
+	}
+	GOVERNMENT_MARGIN__CURRENCY
+	{
+		CURRENCY -> FIN_CurrencyConfig:CURRENCY
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=8.0, core=true, businessType=CCY, t24Name=CURRENCY)
+		MINIMUM_AMOUNT : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=9.0, core=true, businessType=AMT, t24Name=MINIMUM.AMOUNT)
+		MAXIMUM_AMOUNT : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=10.0, core=true, businessType=AMT, t24Name=MAXIMUM.AMOUNT)
+	}
+	GOVERNMENT_MARGIN__INPUTTER
+	{
+		INPUTTER : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=13.0, core=true, businessType=A, t24Name=INPUTTER)
+	}
+	GOVERNMENT_MARGIN__DATE_TIME
+	{
+		DATE_TIME : mml:dateTime
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=14.0, core=true, businessType=RELTIME, t24Name=DATE.TIME)
+	}
+	GROUP_CREDIT_INT
+		@t24:i (t24Name=GROUP.CREDIT.INT, level=I, type=H, allowedFunctions="A C D E H I L P Q R S", localRefAllowed=false)
+	{
+		GROUP_CY_DATE -> IC_Config:GROUP_CREDIT_INT PK required
+			@t24:i (align=L, inputBehaviour=I, maxLength=21, sysNumber=0.0, core=true, businessType=CCYD, t24Name=GROUP.CY.DATE)
+		INTEREST_DAY_BASIS -> ST_RateParameters:INTEREST_BASIS
+			@i18n:Label (en="Interest Day Basis", fr="Base calcul intérêts", es="Base Diaria de Interés")
+			@i18n:Tooltip (en="Defines calculation basis for interest calculation", fr="Base de calcul des intérêts")
+			@t24:i (align=L, inputBehaviour=I, maxLength=4, sysNumber=1.0, core=true, t24Name=INTEREST.DAY.BASIS)
+		TAX_KEY -> ST_ChargeConfig:TAX
+			@i18n:Label (en="Tax Key", fr="Code taxe", es="Clave de Impuesto")
+			@i18n:Tooltip (en="Indicates the tax key ", fr="Code taxe")
+			@t24:i (align=L, inputBehaviour=I, maxLength=12, sysNumber=2.0, core=true, businessType=A, t24Name=TAX.KEY)
+		CR_BALANCE_TYPE : IC_Config:GROUP_CREDIT_INT__CR_BALANCE_TYPE
+			@i18n:Label (en="Credit Bal Type", fr="Type de solde", es="Tipo Saldo Crédito")
+			@i18n:Tooltip (fr="Type de solde")
+			@t24:i (align=L, inputBehaviour=I, maxLength=7, sysNumber=3.0, core=true, t24Name=CR.BALANCE.TYPE)
+		CR_CALCUL_TYPE : IC_Config:GROUP_CREDIT_INT__CR_CALCUL_TYPE
+			@i18n:Label (en="Calculation Type", fr="Mode de calcul", es="Tipo de Cálculo")
+			@i18n:Tooltip (en="Input Calculation type", fr="Mode de calcul")
+			@t24:i (align=L, inputBehaviour=I, maxLength=5, sysNumber=4.0, core=true, t24Name=CR.CALCUL.TYPE)
+		CR_MINIMUM_BAL : mml:Double
+			@i18n:Label (en="Minimum Credit Balance", fr="Solde minimum", es="Saldo de Crédito Mín.")
+			@i18n:Tooltip (en="Min Bal below which Intt will not be calculated", fr="Solde minimum", es="Saldo de Crédito Mínimo ")
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=5.0, core=true, businessType=AMT, t24Name=CR.MINIMUM.BAL)
+		CR_OFFSET_ONLY : IC_Config:GROUP_CREDIT_INT__CR_OFFSET_ONLY
+			@i18n:Label (fr="Compenser que le Ct")
+			@i18n:Tooltip (fr="Compenser que le Ct")
+			@t24:i (align=L, inputBehaviour=I, maxLength=1, sysNumber=6.0, core=true, t24Name=CR.OFFSET.ONLY)
+		CR_BASIC_RATE -> byValue IC_Config:GROUP_CREDIT_INT__CR_BASIC_RATE *
+		CR2_BALANCE_TYPE : IC_Config:GROUP_CREDIT_INT__CR2_BALANCE_TYPE
+			@i18n:Label (en="Credit Bal Type", fr="Type de solde", es="Tipo Saldo de Crédito")
+			@i18n:Tooltip (en="Credit Bal Type", fr="Type de solde", es="Tipo de Saldo de Crédito")
+			@t24:i (align=L, inputBehaviour=I, maxLength=7, sysNumber=14.0, core=true, t24Name=CR2.BALANCE.TYPE)
+		CR2_CALCUL_TYPE : IC_Config:GROUP_CREDIT_INT__CR2_CALCUL_TYPE
+			@i18n:Label (en="Calculation Type", fr="Type de calcul", es="Tipo de Cálculo")
+			@i18n:Tooltip (en="Calculation Type", fr="Type de calcul", es="Tipo de Cálculo")
+			@t24:i (align=L, inputBehaviour=I, maxLength=5, sysNumber=15.0, core=true, t24Name=CR2.CALCUL.TYPE)
+		CR2_MINIMUM_BAL : mml:Double
+			@i18n:Label (en="Min Credit Bal", fr="Solde min de crédit", es="Saldo de Crédito Mín.")
+			@i18n:Tooltip (en="Min Bal below which Intt will not be calculated", fr="Solde minimum de crédit", es="Saldo de Crédito Mínimo ")
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=16.0, core=true, businessType=AMT, t24Name=CR2.MINIMUM.BAL)
+		CR2_OFFSET_ONLY : IC_Config:GROUP_CREDIT_INT__CR2_OFFSET_ONLY
+			@t24:i (align=L, inputBehaviour=I, maxLength=1, sysNumber=17.0, core=true, t24Name=CR2.OFFSET.ONLY)
+		CR2_BASIC_RATE -> byValue IC_Config:GROUP_CREDIT_INT__CR2_BASIC_RATE *
+		INTEREST_TAX_MIN : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=25.0, core=true, businessType=AMT, t24Name=INTEREST.TAX.MIN)
+		NET_TAX : IC_Config:GROUP_CREDIT_INT__NET_TAX
+			@t24:i (align=L, inputBehaviour=I, maxLength=1, sysNumber=26.0, core=true, t24Name=NET.TAX)
+		CR_MIN_BAL_ST_DTE : mml:Integer
+			@i18n:Label (en="Minimum Balance Start Day", fr="Début de période", es="Saldo Mín. Inicio Día")
+			@i18n:Tooltip (en="Indicates minimum balance start date", fr="Début de période", es="Saldo Mínimo al Inicio del Día")
+			@t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=27.0, core=true, t24Name=CR.MIN.BAL.ST.DTE)
+		CR_MIN_BAL_ED_DTE : mml:Integer
+			@i18n:Label (en="Minimum Balance End Day", fr="Fin de période", es="Saldo Mín. Fin de Día")
+			@i18n:Tooltip (en="Indicates minimum balance end date", fr="Fin de période", es="Saldo Mínimo al Fin del Día")
+			@t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=28.0, core=true, t24Name=CR.MIN.BAL.ED.DTE)
+		CR_ACCR_OPEN_AC : IC_Config:GROUP_CREDIT_INT__CR_ACCR_OPEN_AC
+			@i18n:Label (en="A/c Open Month", fr="Cpte ouv. dans le mois", es="Mes Apertura de Cta.")
+			@i18n:Tooltip (en="Indicates A/c open month", fr="Cpte ouvert dans le mois", es="Mes de Apertura de Cuenta")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=29.0, core=true, t24Name=CR.ACCR.OPEN.AC)
+		CR_ACCR_CLOSE_AC : IC_Config:GROUP_CREDIT_INT__CR_ACCR_CLOSE_AC
+			@i18n:Label (en="A/c Closure Month", fr="Cpte clos dans le mois", es="Mes de Cierre de Cta.")
+			@i18n:Tooltip (en="Indicates A/c Closure month", fr="Cpte clos dans le mois", es="Mes de Cierre de Cuenta")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=30.0, core=true, t24Name=CR.ACCR.CLOSE.AC)
+		CR2_MIN_BAL_ST_DTE : mml:Integer
+			@i18n:Label (en="Minimum Balance Start Day", fr="Date de début de solde min", es="Saldo Mín. Inicio Día")
+			@i18n:Tooltip (en="Indicates minimum balance start date", fr="Date de début de solde min", es="Saldo Mínimo al Inicio del Día")
+			@t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=31.0, core=true, t24Name=CR2.MIN.BAL.ST.DTE)
+		CR2_MIN_BAL_ED_DTE : mml:Integer
+			@i18n:Label (en="Minimum Balance End Day", fr="Date fin de solde min", es="Saldo Mín. Fin de Día")
+			@i18n:Tooltip (en="Indicates minimum balance end date", fr="Date fin de solde min", es="Saldo Mínimo al Fin del Día")
+			@t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=32.0, core=true, t24Name=CR2.MIN.BAL.ED.DTE)
+		CR2_ACCR_OPEN_AC : IC_Config:GROUP_CREDIT_INT__CR2_ACCR_OPEN_AC
+			@i18n:Label (en="A/c Open Month", fr="Cpte ouv. dans le mois", es="Mes de Apertura Cta.")
+			@i18n:Tooltip (en="Indicates Account open month", fr="Cpte ouvert dans le mois", es="Mes de Apertura de Cuenta")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=33.0, core=true, t24Name=CR2.ACCR.OPEN.AC)
+		CR2_ACCR_CLOSE_AC : IC_Config:GROUP_CREDIT_INT__CR2_ACCR_CLOSE_AC
+			@i18n:Label (en="A/c Closure Month", fr="Clos ds le mois", es="Mes de Cierre de Cta.")
+			@i18n:Tooltip (en="Indicates Account Closure month", fr="Clos dans le mois", es="Mes de Cierre de Cuenta")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=34.0, core=true, t24Name=CR2.ACCR.CLOSE.AC)
+		CR_MIN_VALUE : mml:Double
+			@i18n:Label (en="Minimum Interest Amount", fr="Mt mini. d\'intérêt", es="Mto. Mín. de Interés")
+			@i18n:Tooltip (en="Indicates minimum interest amount", fr="Montant minimum d\'intérêt", es="Monto Mínimo de Interés ")
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=35.0, core=true, businessType=AMT, t24Name=CR.MIN.VALUE)
+		CR_MIN_WAIVE : IC_Config:GROUP_CREDIT_INT__CR_MIN_WAIVE
+			@i18n:Label (en="Minimum Interest Waive", fr="Abandon si < mini.", es="Exoner. Mín. de Int.")
+			@i18n:Tooltip (en="Indicates minimum interest waive", fr="Abandon si < minimum", es="Exoneración Mínima de Interés")
+			@t24:i (align=L, inputBehaviour=I, maxLength=18, sysNumber=36.0, core=true, t24Name=CR.MIN.WAIVE)
+		CR2_MIN_VALUE : mml:Double
+			@i18n:Label (en="Min Int Amt", fr="Mt mini. d\'intérêt", es="Monto de Interés Mínimo")
+			@i18n:Tooltip (fr="Montant minimum d\'intérêt")
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=37.0, core=true, businessType=AMT, t24Name=CR2.MIN.VALUE)
+		CR2_MIN_WAIVE : IC_Config:GROUP_CREDIT_INT__CR2_MIN_WAIVE
+			@i18n:Label (fr="Abandon si < mini.")
+			@i18n:Tooltip (fr="Abandon si < minimum")
+			@t24:i (align=L, inputBehaviour=I, maxLength=18, sysNumber=38.0, core=true, t24Name=CR2.MIN.WAIVE)
+		CR_ZERO_INT_BAL : mml:Double
+			@i18n:Label (en="Zero Interest Balance", fr="Plancher paiement Int.", es="Cero Saldo de Interés")
+			@i18n:Tooltip (en="Indicates zero interest balance", fr="Plancher de paiement des intérêts")
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=39.0, core=true, businessType=AMT, t24Name=CR.ZERO.INT.BAL)
+		CR_ZERO_INT_OC : IC_Config:GROUP_CREDIT_INT__CR_ZERO_INT_OC
+			@i18n:Label (en="Zero Interest Waive", fr="Intérêts ouv./clo. période", es="Cero Exoner. de Int.")
+			@i18n:Tooltip (en="Indicates zero interest waive", fr="Intérêts si ouvert ou clos dans la période", es="Cero Exoneración de Interés ")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=40.0, core=true, t24Name=CR.ZERO.INT.OC)
+		CR2_ZERO_INT_BAL : mml:Double
+			@i18n:Label (en="Zero Interest Balance", fr="Plancher paiement Int.", es="Cero Exoner. de Int.")
+			@i18n:Tooltip (en="Indicates zero interest balance", fr="Plancher de paiement des intérêts", es="Cero Saldo de Interés ")
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=41.0, core=true, businessType=AMT, t24Name=CR2.ZERO.INT.BAL)
+		CR2_ZERO_INT_OC : IC_Config:GROUP_CREDIT_INT__CR2_ZERO_INT_OC
+			@i18n:Label (en="Zero Interest Waive", fr="Intérêts ouv./clo. période", es="Cero Exoner. de Int.")
+			@i18n:Tooltip (en="Indicates zero interest waive", fr="Intérêts si ouvert ou clos dans la période", es="Cero Exoneración de Interés ")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=42.0, core=true, t24Name=CR2.ZERO.INT.OC)
+		NEGATIVE_RATES : IC_Config:GROUP_CREDIT_INT__NEGATIVE_RATES
+			@i18n:Label (en="Negative Rates", fr="Taux négatif", es="Tasas Negativas")
+			@i18n:Tooltip (en="Shows the negative Rate", fr="Taux négatif")
+			@t24:i (align=L, inputBehaviour=I, maxLength=12, sysNumber=43.0, core=true, t24Name=NEGATIVE.RATES)
+		COMPOUND_TYPE : mml:string
+			@i18n:Label (en=Compounding, fr="Int. composés", es=Compuesto)
+			@i18n:Tooltip (en="It supports both debit and credit interest", fr="Intérêts composés")
+			@t24:i (align=L, inputBehaviour=I, maxLength=5, sysNumber=44.0, core=true, businessType=COMPFQU, t24Name=COMPOUND.TYPE)
+		COMPOUND_YIELD_METHOD : IC_Config:GROUP_CREDIT_INT__COMPOUND_YIELD_METHOD
+			@t24:i (align=L, inputBehaviour=I, maxLength=8, sysNumber=45.0, core=true, t24Name=COMPOUND.YIELD.METHOD)
+		RECORD_STATUS : mml:string
+			@i18n:Label (en="Record Status", fr=Statut, es=Estado)
+			@i18n:Tooltip (fr="Statut de l\'enregistrement")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=46.0, core=true, businessType=STAT, t24Name=RECORD.STATUS)
+		CURR_NO : mml:Integer
+			@i18n:Label (en="Curr No", fr="N° version", es="No. Actual")
+			@i18n:Tooltip (fr="Numéro de version")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=47.0, core=true, t24Name=CURR.NO)
+		INPUTTER -> byValue IC_Config:GROUP_CREDIT_INT__INPUTTER *
+		DATE_TIME -> byValue IC_Config:GROUP_CREDIT_INT__DATE_TIME *
+		AUTHORISER : mml:string
+			@i18n:Label (en=Authoriser, fr="Validé par", es=Autorizador)
+			@i18n:Tooltip (en="Indicates the User who Authorises the record", fr="Utilisateur de validation", es="El usuario que autorizó el registro")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=50.0, core=true, businessType=A, t24Name=AUTHORISER)
+		CO_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company, fr=Entité, es="Compañía")
+			@i18n:Tooltip (fr="Code établissement ou agence")
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=51.0, core=true, businessType=A, t24Name=CO.CODE)
+		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Dept Code", fr=Service, es=Departamento)
+			@i18n:Tooltip (fr="Code du service")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=52.0, core=true, t24Name=DEPT.CODE)
+		AUDITOR_CODE : mml:string
+			@i18n:Label (en="Auditor Code", fr="Audité par", es="Código de Auditor")
+			@i18n:Tooltip (en="Auditor Code", fr="Utilisateur d\'audit", es="Nombre del auditor")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=53.0, core=true, businessType=A, t24Name=AUDITOR.CODE)
+		AUDIT_DATE_TIME : mml:dateTime
+			@i18n:Label (en="Audit Date Time", fr="Audité le", es="Fecha/Hora de Audit.")
+			@i18n:Tooltip (en="Date and time when record was audited", fr="Date et heure d\'audit", es="Fecha y Hora de Auditoría ")
+			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=54.0, core=true, businessType=RELTIME, t24Name=AUDIT.DATE.TIME)
+		KDATE : mml:Integer
+			@t24:i (align=L, inputBehaviour=I, maxLength=10, core=false, t24Name=KDATE, genOperation="@ID[8]")
+	}
+	GROUP_CREDIT_INT__CR_BASIC_RATE
+	{
+		CR_BASIC_RATE -> ST_RateParameters:BASIC_RATE_TEXT
+			@t24:i (align=R, inputBehaviour=I, maxLength=4, sysNumber=7.0, core=true, t24Name=CR.BASIC.RATE)
+		CR_INT_RATE : mml:string
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=8.0, core=true, businessType=R, t24Name=CR.INT.RATE)
+		CR_MARGIN_OPER : IC_Config:GROUP_CREDIT_INT__CR_BASIC_RATE__CR_MARGIN_OPER
+			@t24:i (align=L, inputBehaviour=I, maxLength=8, sysNumber=9.0, core=true, t24Name=CR.MARGIN.OPER)
+		CR_MAX_RATE : mml:string
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=10.0, core=true, businessType=R, t24Name=CR.MAX.RATE)
+		CR_MARGIN_RATE : mml:string
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=11.0, core=true, businessType=R, t24Name=CR.MARGIN.RATE)
+		CR_LIMIT_AMT : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=12.0, core=true, businessType=AMT, t24Name=CR.LIMIT.AMT)
+		CR_MIN_RATE : mml:string
+			@t24:i (align=R, inputBehaviour=I, maxLength=9, sysNumber=13.0, core=true, businessType=R, t24Name=CR.MIN.RATE)
+	}
+	GROUP_CREDIT_INT__CR2_BASIC_RATE
+	{
+		CR2_BASIC_RATE -> ST_RateParameters:BASIC_RATE_TEXT
+			@t24:i (align=R, inputBehaviour=I, maxLength=4, sysNumber=18.0, core=true, t24Name=CR2.BASIC.RATE)
+		CR2_INT_RATE : mml:string
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=19.0, core=true, businessType=R, t24Name=CR2.INT.RATE)
+		CR2_MARGIN_OPER : IC_Config:GROUP_CREDIT_INT__CR2_BASIC_RATE__CR2_MARGIN_OPER
+			@t24:i (align=L, inputBehaviour=I, maxLength=8, sysNumber=20.0, core=true, t24Name=CR2.MARGIN.OPER)
+		CR2_MAX_RATE : mml:string
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=21.0, core=true, businessType=R, t24Name=CR2.MAX.RATE)
+		CR2_MARGIN_RATE : mml:string
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=22.0, core=true, businessType=R, t24Name=CR2.MARGIN.RATE)
+		CR2_LIMIT_AMT : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=23.0, core=true, businessType=AMT, t24Name=CR2.LIMIT.AMT)
+		CR2_MIN_RATE : mml:string
+			@t24:i (align=R, inputBehaviour=I, maxLength=9, sysNumber=24.0, core=true, businessType=R, t24Name=CR2.MIN.RATE)
+	}
+	GROUP_CREDIT_INT__INPUTTER
+	{
+		INPUTTER : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=48.0, core=true, businessType=A, t24Name=INPUTTER)
+	}
+	GROUP_CREDIT_INT__DATE_TIME
+	{
+		DATE_TIME : mml:dateTime
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=49.0, core=true, businessType=RELTIME, t24Name=DATE.TIME)
+	}
+	GROUP_DEBIT_INT
+		@t24:i (t24Name=GROUP.DEBIT.INT, level=I, type=H, allowedFunctions="A C D E H I L P Q R S", localRefAllowed=false)
+	{
+		GROUP_CY_DATE -> IC_Config:GROUP_DEBIT_INT PK required
+			@t24:i (align=L, inputBehaviour=I, maxLength=21, sysNumber=0.0, core=true, businessType=CCYD, t24Name=GROUP.CY.DATE)
+		CHARGE_KEY -> IC_Config:GENERAL_CHARGE required
+			@i18n:Label (en="Charge Key", fr="Code Cion", es="Clave de Cargo")
+			@i18n:Tooltip (en="Indicates charge key", fr="Code commission")
+			@t24:i (align=R, inputBehaviour=I, maxLength=4, sysNumber=1.0, core=true, t24Name=CHARGE.KEY)
+		INTEREST_DAY_BASIS -> ST_RateParameters:INTEREST_BASIS
+			@i18n:Label (en="Interest Day Basis", fr="Base calcul intérêts", es="Base Diaria de Interés")
+			@i18n:Tooltip (en="Defines calculation basis for interest calculation", fr="Base de calcul des intérêts")
+			@t24:i (align=L, inputBehaviour=I, maxLength=4, sysNumber=2.0, core=true, t24Name=INTEREST.DAY.BASIS)
+		TAX_KEY -> ST_ChargeConfig:TAX
+			@i18n:Label (en="Tax Key", fr="Code taxe", es="Clave de Impuesto")
+			@i18n:Tooltip (en="Indicates the tax key ", fr="Code taxe")
+			@t24:i (align=L, inputBehaviour=I, maxLength=12, sysNumber=3.0, core=true, businessType=A, t24Name=TAX.KEY)
+		DR_BALANCE_TYPE : IC_Config:GROUP_DEBIT_INT__DR_BALANCE_TYPE
+			@i18n:Label (en="Debit Bal Type", fr="Type de solde", es="Tipo Saldo de Débito")
+			@i18n:Tooltip (fr="Type de solde")
+			@t24:i (align=L, inputBehaviour=I, maxLength=7, sysNumber=4.0, core=true, t24Name=DR.BALANCE.TYPE)
+		DR_CALCUL_TYPE : IC_Config:GROUP_DEBIT_INT__DR_CALCUL_TYPE
+			@i18n:Label (en="Calculation Type", fr="Mode de calcul", es="Tipo de Cálculo")
+			@i18n:Tooltip (en="Indicates debit calculation type", fr="Mode de calcul")
+			@t24:i (align=L, inputBehaviour=I, maxLength=5, sysNumber=5.0, core=true, t24Name=DR.CALCUL.TYPE)
+		DR_BASIC_RATE -> byValue IC_Config:GROUP_DEBIT_INT__DR_BASIC_RATE *
+		DR2_BALANCE_TYPE : IC_Config:GROUP_DEBIT_INT__DR2_BALANCE_TYPE
+			@i18n:Label (en="Debit Balance Type", fr="Type de solde", es="Tipo de Saldo de Déb.")
+			@i18n:Tooltip (en="Indicates debit balance type", fr="Type de solde", es="Tipo de Saldo de Débito")
+			@t24:i (align=L, inputBehaviour=I, maxLength=7, sysNumber=13.0, core=true, t24Name=DR2.BALANCE.TYPE)
+		DR2_CALCUL_TYPE : IC_Config:GROUP_DEBIT_INT__DR2_CALCUL_TYPE
+			@i18n:Label (en="Calculation Type", fr="Mode de calcul", es="Tipo de Cálculo")
+			@i18n:Tooltip (en="Indicates calculation type", fr="Mode de calcul ")
+			@t24:i (align=L, inputBehaviour=I, maxLength=5, sysNumber=14.0, core=true, t24Name=DR2.CALCUL.TYPE)
+		DR2_BASIC_RATE -> byValue IC_Config:GROUP_DEBIT_INT__DR2_BASIC_RATE *
+		APR_REQUIRED : IC_Config:GROUP_DEBIT_INT__APR_REQUIRED
+			@i18n:Label (fr="APR requis")
+			@i18n:Tooltip (fr="APR requis")
+			@t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=22.0, core=true, t24Name=APR.REQUIRED)
+		MAX_LEGAL_RATE : mml:string
+			@i18n:Label (fr="Taux d\'usure")
+			@i18n:Tooltip (fr="Taux d\'usure")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=23.0, core=true, businessType=R, t24Name=MAX.LEGAL.RATE)
+		LINK_TO_GROUP -> ST_ChargeConfig:ACCT_GEN_CONDITION
+			@t24:i (align=R, inputBehaviour=I, maxLength=4, sysNumber=24.0, core=true, t24Name=LINK.TO.GROUP)
+		MAX_DEBIT_CHG_RATE : mml:string
+			@i18n:Label (fr="Taux max de cion de dt")
+			@i18n:Tooltip (fr="Taux max de cion de dt")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=25.0, core=true, businessType=R, t24Name=MAX.DEBIT.CHG.RATE)
+		DR_MIN_VALUE : mml:Double
+			@i18n:Label (en="Minimum Interest Amount", fr="Minimum de perception", es="Mto. Mín. de Interés")
+			@i18n:Tooltip (en="Indicates minimum interest amount", fr="Minimum de perception des intérêts", es="Monto Mínimo de Interés ")
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=26.0, core=true, businessType=AMT, t24Name=DR.MIN.VALUE)
+		DR_MIN_WAIVE : IC_Config:GROUP_DEBIT_INT__DR_MIN_WAIVE
+			@i18n:Label (en="Minimum Interest Waive", fr="Abandon si < minimum", es="Exoner. Mín. de Int.")
+			@i18n:Tooltip (en="Indicates minimum interest waive", fr="Abandon si < minimum, ou perception du minimum", es="Exoneración Mínima de Interés")
+			@t24:i (align=L, inputBehaviour=I, maxLength=18, sysNumber=27.0, core=true, t24Name=DR.MIN.WAIVE)
+		DR2_MIN_VALUE : mml:Double
+			@i18n:Label (en="Minimum Interest Amount", fr="Minimum de perception", es="Mto. Mín. de Interés")
+			@i18n:Tooltip (en="Indicates minimum interest amount", fr="Minimum de perception des intérêts", es="Monto Mínimo de Interés ")
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=28.0, core=true, businessType=AMT, t24Name=DR2.MIN.VALUE)
+		DR2_MIN_WAIVE : IC_Config:GROUP_DEBIT_INT__DR2_MIN_WAIVE
+			@i18n:Label (en="Minimum Interest Waive", fr="Abandon si < minimum", es="Exoner. Mín. de Int.")
+			@i18n:Tooltip (en="Indicates minimum interest waive", fr="Abandon si < minimum, ou perception du minimum", es="Exoneración Mínima de Interés")
+			@t24:i (align=L, inputBehaviour=I, maxLength=18, sysNumber=29.0, core=true, t24Name=DR2.MIN.WAIVE)
+		COMPOUND_TYPE : mml:string
+			@i18n:Label (en=Compounding, fr="Int. composés", es=Compuesto)
+			@i18n:Tooltip (en="It supports both debit and credit interest", fr="Intérêts composés")
+			@t24:i (align=L, inputBehaviour=I, maxLength=5, sysNumber=30.0, core=true, businessType=COMPFQU, t24Name=COMPOUND.TYPE)
+		COMPOUND_YIELD_METHOD : IC_Config:GROUP_DEBIT_INT__COMPOUND_YIELD_METHOD
+			@t24:i (align=L, inputBehaviour=I, maxLength=8, sysNumber=31.0, core=true, t24Name=COMPOUND.YIELD.METHOD)
+		RESERVED_3 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=32.0, core=true, t24Name=RESERVED.3)
+		RESERVED_2 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=33.0, core=true, t24Name=RESERVED.2)
+		RESERVED_1 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=34.0, core=true, t24Name=RESERVED.1)
+		RECORD_STATUS : mml:string
+			@i18n:Label (en="Record Status", fr=Statut, es=Estado)
+			@i18n:Tooltip (fr="Statut de l\'enregistrement")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=35.0, core=true, businessType=STAT, t24Name=RECORD.STATUS)
+		CURR_NO : mml:Integer
+			@i18n:Label (en="Curr No", fr="N° version", es="No. Actual")
+			@i18n:Tooltip (fr="Numéro de version")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=36.0, core=true, t24Name=CURR.NO)
+		INPUTTER -> byValue IC_Config:GROUP_DEBIT_INT__INPUTTER *
+		DATE_TIME -> byValue IC_Config:GROUP_DEBIT_INT__DATE_TIME *
+		AUTHORISER : mml:string
+			@i18n:Label (en=Authoriser, fr="Validé par", es=Autorizador)
+			@i18n:Tooltip (en="Indicates the User who Authorises the record", fr="Utilisateur de validation", es="El usuario que autorizó el registro")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=39.0, core=true, businessType=A, t24Name=AUTHORISER)
+		CO_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company, fr=Entité, es="Compañía")
+			@i18n:Tooltip (fr="Code établissement ou agence")
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=40.0, core=true, businessType=A, t24Name=CO.CODE)
+		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Dept Code", fr=Service, es=Departamento)
+			@i18n:Tooltip (fr="Code du service")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=41.0, core=true, t24Name=DEPT.CODE)
+		AUDITOR_CODE : mml:string
+			@i18n:Label (en="Auditor Code", fr="Audité par", es="Código de Auditor")
+			@i18n:Tooltip (en="Auditor Code", fr="Utilisateur d\'audit", es="Nombre del auditor")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=42.0, core=true, businessType=A, t24Name=AUDITOR.CODE)
+		AUDIT_DATE_TIME : mml:dateTime
+			@i18n:Label (en="Audit Date Time", fr="Audité le", es="Fecha/Hora de Audit.")
+			@i18n:Tooltip (en="Date and time when record was audited", fr="Date et heure d\'audit", es="Fecha y Hora de Auditoría ")
+			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=43.0, core=true, businessType=RELTIME, t24Name=AUDIT.DATE.TIME)
+		KDATE : mml:Integer
+			@t24:i (align=L, inputBehaviour=I, maxLength=10, core=false, t24Name=KDATE, genOperation="@ID[8]")
+	}
+	GROUP_DEBIT_INT__DR_BASIC_RATE
+	{
+		DR_BASIC_RATE -> ST_RateParameters:BASIC_RATE_TEXT
+			@t24:i (align=R, inputBehaviour=I, maxLength=4, sysNumber=6.0, core=true, t24Name=DR.BASIC.RATE)
+		DR_INT_RATE : mml:string
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=7.0, core=true, businessType=R, t24Name=DR.INT.RATE)
+		DR_MARGIN_OPER : IC_Config:GROUP_DEBIT_INT__DR_BASIC_RATE__DR_MARGIN_OPER
+			@t24:i (align=L, inputBehaviour=I, maxLength=8, sysNumber=8.0, core=true, t24Name=DR.MARGIN.OPER)
+		DR_MIN_RATE : mml:string
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=9.0, core=true, businessType=R, t24Name=DR.MIN.RATE)
+		DR_MARGIN_RATE : mml:string
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=10.0, core=true, businessType=R, t24Name=DR.MARGIN.RATE)
+		DR_LIMIT_AMT : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=11.0, core=true, businessType=AMT, t24Name=DR.LIMIT.AMT)
+		DR_MAX_RATE : mml:string
+			@t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=12.0, core=true, businessType=R, t24Name=DR.MAX.RATE)
+	}
+	GROUP_DEBIT_INT__DR2_BASIC_RATE
+	{
+		DR2_BASIC_RATE -> ST_RateParameters:BASIC_RATE_TEXT
+			@t24:i (align=R, inputBehaviour=I, maxLength=4, sysNumber=15.0, core=true, t24Name=DR2.BASIC.RATE)
+		DR2_INT_RATE : mml:string
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=16.0, core=true, businessType=R, t24Name=DR2.INT.RATE)
+		DR2_MARGIN_OPER : IC_Config:GROUP_DEBIT_INT__DR2_BASIC_RATE__DR2_MARGIN_OPER
+			@t24:i (align=L, inputBehaviour=I, maxLength=8, sysNumber=17.0, core=true, t24Name=DR2.MARGIN.OPER)
+		DR2_MIN_RATE : mml:string
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=18.0, core=true, businessType=R, t24Name=DR2.MIN.RATE)
+		DR2_MARGIN_RATE : mml:string
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=19.0, core=true, businessType=R, t24Name=DR2.MARGIN.RATE)
+		DR2_LIMIT_AMT : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=20.0, core=true, businessType=AMT, t24Name=DR2.LIMIT.AMT)
+		DR2_MAX_RATE : mml:string
+			@t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=21.0, core=true, businessType=R, t24Name=DR2.MAX.RATE)
+	}
+	GROUP_DEBIT_INT__INPUTTER
+	{
+		INPUTTER : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=37.0, core=true, businessType=A, t24Name=INPUTTER)
+	}
+	GROUP_DEBIT_INT__DATE_TIME
+	{
+		DATE_TIME : mml:dateTime
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=38.0, core=true, businessType=RELTIME, t24Name=DATE.TIME)
+	}
+	HIGHEST_DEBIT
+		@t24:i (t24Name=HIGHEST.DEBIT, level=I, type=H, allowedFunctions="A C D E H I L P Q R S", localRefAllowed=false)
+	{
+		SEQUENCE_YEAR_MTH -> IC_Config:HIGHEST_DEBIT PK required
+			@t24:i (align=R, inputBehaviour=I, maxLength=12, sysNumber=0.0, core=true, businessType=YM, t24Name=SEQUENCE.YEAR.MTH)
+		DESCRIPTION -> byValue IC_Config:HIGHEST_DEBIT__DESCRIPTION *
+		CATEGORY -> ST_Config:CATEGORY required
+			@i18n:Label (en=Category, fr=Produit, es="Categoría")
+			@i18n:Tooltip (en="Specifies the Category", fr="Code du produit")
+			@t24:i (align=R, inputBehaviour=I, maxLength=6, sysNumber=2.0, core=true, t24Name=CATEGORY)
+		TR_CODE_CR -> ST_Config:TRANSACTION required
+			@i18n:Label (en="Transaction Code Cr", fr="Code op. CR", es="Código Trs. Crédito")
+			@i18n:Tooltip (fr="Code opération au crédit")
+			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=3.0, core=true, t24Name=TR.CODE.CR)
+		TR_CODE_DR -> ST_Config:TRANSACTION required
+			@i18n:Label (en="Transaction Code Dr", fr="Code op. DB", es="Código Trs. Débito")
+			@i18n:Tooltip (fr="Code opération au débit")
+			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=4.0, core=true, t24Name=TR.CODE.DR)
+		TAX_CODE -> ST_ChargeConfig:TAX
+			@i18n:Label (en="Tax Code", fr=Taxe, es="Código de Impuesto")
+			@i18n:Tooltip (fr="Code taxe")
+			@t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=5.0, core=true, t24Name=TAX.CODE)
+		PERCENTAGE : mml:string required
+			@i18n:Label (en="% Change", fr=Pourcentage, es="% de Cambio")
+			@i18n:Tooltip (fr=Pourcentage)
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=6.0, core=true, businessType=R, t24Name=PERCENTAGE)
+		DEFAULT_FREE_AMT : mml:Double
+			@i18n:Label (en="Default Free Amount", fr="Montant gratuit par défaut", es="Monto de Cargo Libre")
+			@i18n:Tooltip (en="Default free amount to be deducted from charge ", fr="Montant gratuit par défaut ")
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=7.0, core=true, businessType=AMT, t24Name=DEFAULT.FREE.AMT)
+		DEFAULT_MIN_AMT : mml:Double
+			@i18n:Label (en="Default Minimum Amount", fr="Montant minimum par défaut", es="Monto Mín. Pre-establ.")
+			@i18n:Tooltip (en="Default minimum amount in local currency ", fr="Montant minimum par défaut", es="Monto Mínimo Pre-establecido")
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=8.0, core=true, businessType=AMT, t24Name=DEFAULT.MIN.AMT)
+		DEFAULT_MAX_AMT : mml:Double
+			@i18n:Label (en="Default Maximum Amount", fr="Montant maximum par défaut", es="Monto Máx. Pre-establ.")
+			@i18n:Tooltip (en="Default maximum amount in local currency ", fr="Montant maximum par défaut", es="Monto Máximo Pre-establecido")
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=9.0, core=true, businessType=AMT, t24Name=DEFAULT.MAX.AMT)
+		CURRENCY -> byValue IC_Config:HIGHEST_DEBIT__CURRENCY *
+		RECORD_STATUS : mml:string
+			@i18n:Label (en="Record Status", fr=Statut, es=Estado)
+			@i18n:Tooltip (fr="Statut de l\'enregistrement")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=14.0, core=true, businessType=STAT, t24Name=RECORD.STATUS)
+		CURR_NO : mml:Integer
+			@i18n:Label (en="Curr No", fr="N° version", es="No. Actual")
+			@i18n:Tooltip (fr="Numéro de version")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=15.0, core=true, t24Name=CURR.NO)
+		INPUTTER -> byValue IC_Config:HIGHEST_DEBIT__INPUTTER *
+		DATE_TIME -> byValue IC_Config:HIGHEST_DEBIT__DATE_TIME *
+		AUTHORISER : mml:string
+			@i18n:Label (en=Authoriser, fr="Validé par", es=Autorizador)
+			@i18n:Tooltip (en="Indicates the User who Authorises the record", fr="Utilisateur de validation", es="El usuario que autorizó el registro")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=18.0, core=true, businessType=A, t24Name=AUTHORISER)
+		CO_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company, fr=Entité, es="Compañía")
+			@i18n:Tooltip (fr="Code établissement ou agence")
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=19.0, core=true, businessType=A, t24Name=CO.CODE)
+		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Dept Code", fr=Service, es=Departamento)
+			@i18n:Tooltip (fr="Code du service")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=20.0, core=true, t24Name=DEPT.CODE)
+		AUDITOR_CODE : mml:string
+			@i18n:Label (en="Auditor Code", fr="Audité par", es="Código de Auditor")
+			@i18n:Tooltip (en="Auditor Code", fr="Utilisateur d\'audit", es="Nombre del auditor")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=21.0, core=true, businessType=A, t24Name=AUDITOR.CODE)
+		AUDIT_DATE_TIME : mml:dateTime
+			@i18n:Label (en="Audit Date Time", fr="Audité le", es="Fecha/Hora de Audit.")
+			@i18n:Tooltip (en="Date and time when record was audited", fr="Date et heure d\'audit", es="Fecha y Hora de Auditoría ")
+			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=22.0, core=true, businessType=RELTIME, t24Name=AUDIT.DATE.TIME)
+	}
+	HIGHEST_DEBIT__DESCRIPTION
+	{
+		DESCRIPTION : mml:string required
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, multiLanguage=true, sysNumber=1.0, core=true, businessType=A, t24Name=DESCRIPTION)
+	}
+	HIGHEST_DEBIT__CURRENCY
+	{
+		CURRENCY -> FIN_CurrencyConfig:CURRENCY
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=10.0, core=true, businessType=CCY, t24Name=CURRENCY)
+		FREE_AMOUNT : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=11.0, core=true, businessType=AMT, t24Name=FREE.AMOUNT)
+		MINIMUM_AMOUNT : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=12.0, core=true, businessType=AMT, t24Name=MINIMUM.AMOUNT)
+		MAXIMUM_AMOUNT : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=13.0, core=true, businessType=AMT, t24Name=MAXIMUM.AMOUNT)
+	}
+	HIGHEST_DEBIT__INPUTTER
+	{
+		INPUTTER : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=16.0, core=true, businessType=A, t24Name=INPUTTER)
+	}
+	HIGHEST_DEBIT__DATE_TIME
+	{
+		DATE_TIME : mml:dateTime
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=17.0, core=true, businessType=RELTIME, t24Name=DATE.TIME)
+	}
+	IC_CHARGE
+		@t24:i (t24Name=IC.CHARGE, level=F, type=H, allowedFunctions="A C D E H I L P Q S", localRefAllowed=true)
+	{
+		IC_CHARGE_ID -> IC_Config:IC_CHARGE PK required
+			@t24:i (align=L, inputBehaviour=I, maxLength=21, sysNumber=0.0, core=true, businessType=A, t24Name=IC.CHARGE.ID)
+		IC_CHG_PRODUCT -> byValue IC_Config:IC_CHARGE__IC_CHG_PRODUCT *
+		WAIVE_ALL : IC_Config:IC_CHARGE__WAIVE_ALL
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=18.0, core=true, t24Name=WAIVE.ALL)
+		EB_ACCRUAL_PARAM -> AC_Fees:EB_ACCRUAL_PARAM
+			@i18n:Label (fr="Paramètres des courus")
+			@i18n:Tooltip (fr="Paramètres des courus")
+			@t24:i (align=L, inputBehaviour=I, maxLength=50, sysNumber=19.0, core=true, businessType=A, t24Name=EB.ACCRUAL.PARAM)
+		RESERVED_8 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=20.0, core=true, t24Name=RESERVED.8)
+		RESERVED_7 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=21.0, core=true, t24Name=RESERVED.7)
+		RESERVED_6 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=22.0, core=true, t24Name=RESERVED.6)
+		RESERVED_5 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=23.0, core=true, t24Name=RESERVED.5)
+		RESERVED_4 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=24.0, core=true, t24Name=RESERVED.4)
+		RESERVED_3 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=25.0, core=true, t24Name=RESERVED.3)
+		RESERVED_2 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=26.0, core=true, t24Name=RESERVED.2)
+		RESERVED_1 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=27.0, core=true, t24Name=RESERVED.1)
+		OVERRIDE -> byValue IC_Config:IC_CHARGE__OVERRIDE *
+		RECORD_STATUS : mml:string
+			@i18n:Label (en="Record Status", fr=Statut, es=Estado)
+			@i18n:Tooltip (fr="Statut de l\'enregistrement")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=30.0, core=true, businessType=STAT, t24Name=RECORD.STATUS)
+		CURR_NO : mml:Integer
+			@i18n:Label (en="Curr No", fr="N° version", es="No. Actual")
+			@i18n:Tooltip (fr="Numéro de version")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=31.0, core=true, t24Name=CURR.NO)
+		INPUTTER -> byValue IC_Config:IC_CHARGE__INPUTTER *
+		DATE_TIME -> byValue IC_Config:IC_CHARGE__DATE_TIME *
+		AUTHORISER : mml:string
+			@i18n:Label (en=Authoriser, fr="Validé par", es=Autorizador)
+			@i18n:Tooltip (en="Indicates the User who Authorises the record", fr="Utilisateur de validation", es="El usuario que autorizó el registro")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=34.0, core=true, businessType=A, t24Name=AUTHORISER)
+		CO_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company, fr=Entité, es="Compañía")
+			@i18n:Tooltip (fr="Code établissement ou agence")
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=35.0, core=true, businessType=A, t24Name=CO.CODE)
+		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Dept Code", fr=Service, es=Departamento)
+			@i18n:Tooltip (fr="Code du service")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=36.0, core=true, t24Name=DEPT.CODE)
+		AUDITOR_CODE : mml:string
+			@i18n:Label (en="Auditor Code", fr="Audité par", es="Código de Auditor")
+			@i18n:Tooltip (en="Auditor Code", fr="Utilisateur d\'audit", es="Nombre del auditor")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=37.0, core=true, businessType=A, t24Name=AUDITOR.CODE)
+		AUDIT_DATE_TIME : mml:dateTime
+			@i18n:Label (en="Audit Date Time", fr="Audité le", es="Fecha/Hora de Audit.")
+			@i18n:Tooltip (en="Date and time when record was audited", fr="Date et heure d\'audit", es="Fecha y Hora de Auditoría ")
+			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=38.0, core=true, businessType=RELTIME, t24Name=AUDIT.DATE.TIME)
+	}
+	IC_CHARGE__IC_CHG_PRODUCT
+	{
+		IC_CHG_PRODUCT -> IC_Config:IC_CHARGE_PRODUCT
+			@t24:i (align=L, inputBehaviour=I, maxLength=32, sysNumber=1.0, core=true, businessType=A, t24Name=IC.CHG.PRODUCT)
+		CAL_STEP_PERIOD : IC_Config:IC_CHARGE__IC_CHG_PRODUCT__CAL_STEP_PERIOD
+			@t24:i (align=L, inputBehaviour=I, maxLength=1, sysNumber=2.0, core=true, t24Name=CAL.STEP.PERIOD)
+		CHRG_FREQUENCY : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=17, sysNumber=3.0, core=true, businessType=FQU, t24Name=CHRG.FREQUENCY)
+		WAIVE_CHARGE : IC_Config:IC_CHARGE__IC_CHG_PRODUCT__WAIVE_CHARGE
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=4.0, core=true, t24Name=WAIVE.CHARGE)
+		CHRG_EFF_DATE : mml:date
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=5.0, core=true, businessType=D, t24Name=CHRG.EFF.DATE)
+		ACCRUE_AMORT : IC_Config:IC_CHARGE__IC_CHG_PRODUCT__ACCRUE_AMORT
+			@t24:i (align=L, inputBehaviour=I, maxLength=1, sysNumber=6.0, core=true, t24Name=ACCRUE.AMORT)
+		AMORT_TYPE : IC_Config:IC_CHARGE__IC_CHG_PRODUCT__AMORT_TYPE
+			@t24:i (align=L, inputBehaviour=F, maxLength=7, sysNumber=7.0, core=true, t24Name=AMORT.TYPE)
+		AMORT_DIFF_PL : IC_Config:IC_CHARGE__IC_CHG_PRODUCT__AMORT_DIFF_PL
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=8.0, core=true, t24Name=AMORT.DIFF.PL)
+		AMORT_DIF_ACCT : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=9.0, core=true, businessType=A, t24Name=AMORT.DIF.ACCT)
+		AMORT_RMN_ACCT : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=10.0, core=true, businessType=A, t24Name=AMORT.RMN.ACCT)
+		AMORT_ADJUST : IC_Config:IC_CHARGE__IC_CHG_PRODUCT__AMORT_ADJUST
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=11.0, core=true, t24Name=AMORT.ADJUST)
+		END_DATE : mml:date
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=12.0, core=true, businessType=D, t24Name=END.DATE)
+		RESERVED_13 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=13.0, core=true, t24Name=RESERVED.13)
+		RESERVED_12 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=14.0, core=true, t24Name=RESERVED.12)
+		RESERVED_11 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=15.0, core=true, t24Name=RESERVED.11)
+		RESERVED_10 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=16.0, core=true, t24Name=RESERVED.10)
+		RESERVED_9 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=17.0, core=true, t24Name=RESERVED.9)
+	}
+	IC_CHARGE__OVERRIDE
+	{
+		OVERRIDE : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=29.0, core=true, businessType=A, t24Name=OVERRIDE)
+	}
+	IC_CHARGE__INPUTTER
+	{
+		INPUTTER : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=32.0, core=true, businessType=A, t24Name=INPUTTER)
+	}
+	IC_CHARGE__DATE_TIME
+	{
+		DATE_TIME : mml:dateTime
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=33.0, core=true, businessType=RELTIME, t24Name=DATE.TIME)
+	}
+	IC_CHARGE_PRODUCT
+		@t24:i (t24Name=IC.CHARGE.PRODUCT, level=I, type=H, allowedFunctions="A C D E H I L P Q S", localRefAllowed=true)
+	{
+		IC_CHARGE_PRODUCT -> IC_Config:IC_CHARGE_PRODUCT PK required
+			@t24:i (align=L, inputBehaviour=I, maxLength=32, sysNumber=0.0, core=true, businessType=A, t24Name=IC.CHARGE.PRODUCT)
+		DESCRIPTION -> byValue IC_Config:IC_CHARGE_PRODUCT__DESCRIPTION *
+		GEN_CHARGE_KEY -> ST_ChargeConfig:FT_COMMISSION_TYPE required
+			@t24:i (align=R, inputBehaviour=I, maxLength=20, sysNumber=2.0, core=true, businessType=CHG, t24Name=GEN.CHARGE.KEY)
+		BASE_AMT_RTN : mml:string
+			@i18n:Label (en="Base Amt Rtn", fr="Routine de montt de base", es="Rutina de Monto Base")
+			@i18n:Tooltip (en="Base Amt Routine", fr="Routine de montt de base", es="Rutina de Monto Base")
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=3.0, core=true, businessType=A, t24Name=BASE.AMT.RTN)
+		CHARGE_MOD_RTN : mml:string
+			@i18n:Label (en="Charge Mod Rtn", fr="Facturer la routine de modif", es="Rutina Modif. Cargo")
+			@i18n:Tooltip (en="Charge Modification Rtn", fr="Facturer la routine de modif", es="Rutina de Modificación de Cargo")
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=4.0, core=true, businessType=A, t24Name=CHARGE.MOD.RTN)
+		AMORT_TYPE : IC_Config:IC_CHARGE_PRODUCT__AMORT_TYPE
+			@i18n:Label (en="Amortisation Type")
+			@i18n:Tooltip (en="Choose the Amortisation type")
+			@t24:i (align=L, inputBehaviour=I, maxLength=7, sysNumber=5.0, core=true, t24Name=AMORT.TYPE)
+		AMORT_DIFF_PL : IC_Config:IC_CHARGE_PRODUCT__AMORT_DIFF_PL
+			@i18n:Label (en="Amortise diff to P&L")
+			@i18n:Tooltip (en="Amortise difference to P&L ?")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=6.0, core=true, t24Name=AMORT.DIFF.PL)
+		AMORT_DIF_ACCT : mml:string
+			@i18n:Label (en="Amortise diff to Acct")
+			@i18n:Tooltip (en="Internal AC or Suspense category for difference in PL to be posted to")
+			@t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=7.0, core=true, businessType=A, t24Name=AMORT.DIF.ACCT)
+		AMORT_RMN_ACCT : mml:string
+			@i18n:Label (en="Amort remain Acct")
+			@i18n:Tooltip (en="Remaining amortisation amounts to be transferred past the end date")
+			@t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=8.0, core=true, businessType=A, t24Name=AMORT.RMN.ACCT)
+		AMORT_ADJUST : IC_Config:IC_CHARGE_PRODUCT__AMORT_ADJUST
+			@i18n:Label (en="Adjust amortisation")
+			@i18n:Tooltip (en="Adjust amortisation for changes to charges ?")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=9.0, core=true, t24Name=AMORT.ADJUST)
+		RESERVED_8 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=10.0, core=true, t24Name=RESERVED.8)
+		RESERVED_7 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=11.0, core=true, t24Name=RESERVED.7)
+		RESERVED_6 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=12.0, core=true, t24Name=RESERVED.6)
+		RESERVED_5 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=13.0, core=true, t24Name=RESERVED.5)
+		RESERVED_4 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=14.0, core=true, t24Name=RESERVED.4)
+		RESERVED_3 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=15.0, core=true, t24Name=RESERVED.3)
+		RESERVED_2 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=16.0, core=true, t24Name=RESERVED.2)
+		RESERVED_1 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=17.0, core=true, t24Name=RESERVED.1)
+		OVERRIDE -> byValue IC_Config:IC_CHARGE_PRODUCT__OVERRIDE *
+		RECORD_STATUS : mml:string
+			@i18n:Label (en="Record Status", fr=Statut, es=Estado)
+			@i18n:Tooltip (fr="Statut de l\'enregistrement")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=20.0, core=true, businessType=STAT, t24Name=RECORD.STATUS)
+		CURR_NO : mml:Integer
+			@i18n:Label (en="Curr No", fr="N° version", es="No. Actual")
+			@i18n:Tooltip (fr="Numéro de version")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=21.0, core=true, t24Name=CURR.NO)
+		INPUTTER -> byValue IC_Config:IC_CHARGE_PRODUCT__INPUTTER *
+		DATE_TIME -> byValue IC_Config:IC_CHARGE_PRODUCT__DATE_TIME *
+		AUTHORISER : mml:string
+			@i18n:Label (en=Authoriser, fr="Validé par", es=Autorizador)
+			@i18n:Tooltip (en="Indicates the User who Authorises the record", fr="Utilisateur de validation", es="El usuario que autorizó el registro")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=24.0, core=true, businessType=A, t24Name=AUTHORISER)
+		CO_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company, fr=Entité, es="Compañía")
+			@i18n:Tooltip (fr="Code établissement ou agence")
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=25.0, core=true, businessType=A, t24Name=CO.CODE)
+		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Dept Code", fr=Service, es=Departamento)
+			@i18n:Tooltip (fr="Code du service")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=26.0, core=true, t24Name=DEPT.CODE)
+		AUDITOR_CODE : mml:string
+			@i18n:Label (en="Auditor Code", fr="Audité par", es="Código de Auditor")
+			@i18n:Tooltip (en="Auditor Code", fr="Utilisateur d\'audit", es="Nombre del auditor")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=27.0, core=true, businessType=A, t24Name=AUDITOR.CODE)
+		AUDIT_DATE_TIME : mml:dateTime
+			@i18n:Label (en="Audit Date Time", fr="Audité le", es="Fecha/Hora de Audit.")
+			@i18n:Tooltip (en="Date and time when record was audited", fr="Date et heure d\'audit", es="Fecha y Hora de Auditoría ")
+			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=28.0, core=true, businessType=RELTIME, t24Name=AUDIT.DATE.TIME)
+	}
+	IC_CHARGE_PRODUCT__DESCRIPTION
+	{
+		DESCRIPTION : mml:string required
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, multiLanguage=true, sysNumber=1.0, core=true, businessType=A, t24Name=DESCRIPTION)
+	}
+	IC_CHARGE_PRODUCT__OVERRIDE
+	{
+		OVERRIDE : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=18.0, core=true, businessType=A, t24Name=OVERRIDE)
+	}
+	IC_CHARGE_PRODUCT__INPUTTER
+	{
+		INPUTTER : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=22.0, core=true, businessType=A, t24Name=INPUTTER)
+	}
+	IC_CHARGE_PRODUCT__DATE_TIME
+	{
+		DATE_TIME : mml:dateTime
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=23.0, core=true, businessType=RELTIME, t24Name=DATE.TIME)
+	}
+	INTEREST_STATEMENT
+		@t24:i (t24Name=INTEREST.STATEMENT, level=I, type=H, allowedFunctions="A C D E H I L P Q R S", localRefAllowed=false)
+	{
+		SEQUENCE_YEAR_MTH -> IC_Config:INTEREST_STATEMENT PK required
+			@t24:i (align=R, inputBehaviour=I, maxLength=12, sysNumber=0.0, core=true, businessType=YM, t24Name=SEQUENCE.YEAR.MTH)
+		DESCRIPTION -> byValue IC_Config:INTEREST_STATEMENT__DESCRIPTION *
+		CATEGORY -> ST_Config:CATEGORY required
+			@i18n:Label (en=Category, fr=Produit, es="Categoría")
+			@i18n:Tooltip (en="Specifies the Category", fr="Code du produit")
+			@t24:i (align=R, inputBehaviour=I, maxLength=6, sysNumber=2.0, core=true, t24Name=CATEGORY)
+		TR_CODE_CR -> ST_Config:TRANSACTION required
+			@i18n:Label (en="Transaction Code Cr", fr="Code op. CR", es="Código Trs. Crédito")
+			@i18n:Tooltip (fr="Code opération au crédit")
+			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=3.0, core=true, t24Name=TR.CODE.CR)
+		TR_CODE_DR -> ST_Config:TRANSACTION required
+			@i18n:Label (en="Transaction Code Dr", fr="Code op. DB", es="Código Trs. Débito")
+			@i18n:Tooltip (fr="Code opération au débit")
+			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=4.0, core=true, t24Name=TR.CODE.DR)
+		TAX_CODE -> ST_ChargeConfig:TAX
+			@i18n:Label (en="Tax Code", fr=Taxe, es="Código de Impuesto")
+			@i18n:Tooltip (fr="Code taxe")
+			@t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=5.0, core=true, t24Name=TAX.CODE)
+		DEFAULT_CHARGE_AMT : mml:Double
+			@i18n:Label (en="Default Charge Amount", fr="Montant de cion par défaut", es="Mto. Cargo Pre-establ.")
+			@i18n:Tooltip (fr="Montant de commission par défaut", es="Monto de Cargo Pre-establecido")
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=6.0, core=true, businessType=AMT, t24Name=DEFAULT.CHARGE.AMT)
+		CURRENCY -> byValue IC_Config:INTEREST_STATEMENT__CURRENCY *
+		RECORD_STATUS : mml:string
+			@i18n:Label (en="Record Status", fr=Statut, es=Estado)
+			@i18n:Tooltip (fr="Statut de l\'enregistrement")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=9.0, core=true, businessType=STAT, t24Name=RECORD.STATUS)
+		CURR_NO : mml:Integer
+			@i18n:Label (en="Curr No", fr="N° version", es="No. Actual")
+			@i18n:Tooltip (fr="Numéro de version")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=10.0, core=true, t24Name=CURR.NO)
+		INPUTTER -> byValue IC_Config:INTEREST_STATEMENT__INPUTTER *
+		DATE_TIME -> byValue IC_Config:INTEREST_STATEMENT__DATE_TIME *
+		AUTHORISER : mml:string
+			@i18n:Label (en=Authoriser, fr="Validé par", es=Autorizador)
+			@i18n:Tooltip (en="Indicates the User who Authorises the record", fr="Utilisateur de validation", es="El usuario que autorizó el registro")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=13.0, core=true, businessType=A, t24Name=AUTHORISER)
+		CO_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company, fr=Entité, es="Compañía")
+			@i18n:Tooltip (fr="Code établissement ou agence")
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=14.0, core=true, businessType=A, t24Name=CO.CODE)
+		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Dept Code", fr=Service, es=Departamento)
+			@i18n:Tooltip (fr="Code du service")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=15.0, core=true, t24Name=DEPT.CODE)
+		AUDITOR_CODE : mml:string
+			@i18n:Label (en="Auditor Code", fr="Audité par", es="Código de Auditor")
+			@i18n:Tooltip (en="Auditor Code", fr="Utilisateur d\'audit", es="Nombre del auditor")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=16.0, core=true, businessType=A, t24Name=AUDITOR.CODE)
+		AUDIT_DATE_TIME : mml:dateTime
+			@i18n:Label (en="Audit Date Time", fr="Audité le", es="Fecha/Hora de Audit.")
+			@i18n:Tooltip (en="Date and time when record was audited", fr="Date et heure d\'audit", es="Fecha y Hora de Auditoría ")
+			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=17.0, core=true, businessType=RELTIME, t24Name=AUDIT.DATE.TIME)
+	}
+	INTEREST_STATEMENT__DESCRIPTION
+	{
+		DESCRIPTION : mml:string required
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, multiLanguage=true, sysNumber=1.0, core=true, businessType=A, t24Name=DESCRIPTION)
+	}
+	INTEREST_STATEMENT__CURRENCY
+	{
+		CURRENCY -> FIN_CurrencyConfig:CURRENCY
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=7.0, core=true, businessType=CCY, t24Name=CURRENCY)
+		CHARGE_AMOUNT : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=8.0, core=true, businessType=AMT, t24Name=CHARGE.AMOUNT)
+	}
+	INTEREST_STATEMENT__INPUTTER
+	{
+		INPUTTER : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=11.0, core=true, businessType=A, t24Name=INPUTTER)
+	}
+	INTEREST_STATEMENT__DATE_TIME
+	{
+		DATE_TIME : mml:dateTime
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=12.0, core=true, businessType=RELTIME, t24Name=DATE.TIME)
+	}
+	NUMBER_OF_CREDIT
+		@t24:i (t24Name=NUMBER.OF.CREDIT, level=I, type=H, allowedFunctions="A C D E H I L P Q R S", localRefAllowed=false)
+	{
+		SEQUENCE_YEAR_MTH -> IC_Config:NUMBER_OF_CREDIT PK required
+			@t24:i (align=R, inputBehaviour=I, maxLength=12, sysNumber=0.0, core=true, businessType=YM, t24Name=SEQUENCE.YEAR.MTH)
+		DESCRIPTION -> byValue IC_Config:NUMBER_OF_CREDIT__DESCRIPTION *
+		CATEGORY -> ST_Config:CATEGORY required
+			@i18n:Label (en=Category, fr=Produit, es="Categoría")
+			@i18n:Tooltip (en="Specifies the Category", fr="Code du produit")
+			@t24:i (align=R, inputBehaviour=I, maxLength=6, sysNumber=2.0, core=true, t24Name=CATEGORY)
+		TR_CODE_CR -> ST_Config:TRANSACTION required
+			@i18n:Label (en="Transaction Code Cr", fr="Code op. CR", es="Código Trs. Crédito")
+			@i18n:Tooltip (fr="Code opération au crédit")
+			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=3.0, core=true, t24Name=TR.CODE.CR)
+		TR_CODE_DR -> ST_Config:TRANSACTION required
+			@i18n:Label (en="Transaction Code Dr", fr="Code op. DB", es="Código Trs. Débito")
+			@i18n:Tooltip (fr="Code opération au débit")
+			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=4.0, core=true, t24Name=TR.CODE.DR)
+		TAX_CODE -> ST_ChargeConfig:TAX
+			@i18n:Label (en="Tax Code", fr=Taxe, es="Código de Impuesto")
+			@i18n:Tooltip (fr="Code taxe")
+			@t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=5.0, core=true, t24Name=TAX.CODE)
+		DEFAULT_CHARGE_AMT : mml:Double
+			@i18n:Label (en="Default Charge Amount", fr="Montant de cion par défaut", es="Mto. Cargo Pre-establ.")
+			@i18n:Tooltip (fr="Montant de commission par défaut", es="Monto de Cargo Pre-establecido")
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=6.0, core=true, businessType=AMT, t24Name=DEFAULT.CHARGE.AMT)
+		DEFAULT_FREE_AMT : mml:Double
+			@i18n:Label (en="Default Free Amount", fr="Montant gratuit par défaut", es="Monto de Cargo Libre")
+			@i18n:Tooltip (en="Default free amount to be deducted from charge ", fr="Montant gratuit par défaut ")
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=7.0, core=true, businessType=AMT, t24Name=DEFAULT.FREE.AMT)
+		DEFAULT_MIN_AMT : mml:Double
+			@i18n:Label (en="Default Minimum Amount", fr="Montant minimum par défaut", es="Monto Mín. Pre-establ.")
+			@i18n:Tooltip (en="Default minimum amount in local currency ", fr="Montant minimum par défaut", es="Monto Mínimo Pre-establecido")
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=8.0, core=true, businessType=AMT, t24Name=DEFAULT.MIN.AMT)
+		DEFAULT_MAX_AMT : mml:Double
+			@i18n:Label (en="Default Maximum Amount", fr="Montant maximum par défaut", es="Monto Máx. Pre-establ.")
+			@i18n:Tooltip (en="Default maximum amount in local currency ", fr="Montant maximum par défaut", es="Monto Máximo Pre-establecido")
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=9.0, core=true, businessType=AMT, t24Name=DEFAULT.MAX.AMT)
+		CURRENCY -> byValue IC_Config:NUMBER_OF_CREDIT__CURRENCY *
+		RECORD_STATUS : mml:string
+			@i18n:Label (en="Record Status", fr=Statut, es=Estado)
+			@i18n:Tooltip (fr="Statut de l\'enregistrement")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=15.0, core=true, businessType=STAT, t24Name=RECORD.STATUS)
+		CURR_NO : mml:Integer
+			@i18n:Label (en="Curr No", fr="N° version", es="No. Actual")
+			@i18n:Tooltip (fr="Numéro de version")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=16.0, core=true, t24Name=CURR.NO)
+		INPUTTER -> byValue IC_Config:NUMBER_OF_CREDIT__INPUTTER *
+		DATE_TIME -> byValue IC_Config:NUMBER_OF_CREDIT__DATE_TIME *
+		AUTHORISER : mml:string
+			@i18n:Label (en=Authoriser, fr="Validé par", es=Autorizador)
+			@i18n:Tooltip (en="Indicates the User who Authorises the record", fr="Utilisateur de validation", es="El usuario que autorizó el registro")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=19.0, core=true, businessType=A, t24Name=AUTHORISER)
+		CO_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company, fr=Entité, es="Compañía")
+			@i18n:Tooltip (fr="Code établissement ou agence")
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=20.0, core=true, businessType=A, t24Name=CO.CODE)
+		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Dept Code", fr=Service, es=Departamento)
+			@i18n:Tooltip (fr="Code du service")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=21.0, core=true, t24Name=DEPT.CODE)
+		AUDITOR_CODE : mml:string
+			@i18n:Label (en="Auditor Code", fr="Audité par", es="Código de Auditor")
+			@i18n:Tooltip (en="Auditor Code", fr="Utilisateur d\'audit", es="Nombre del auditor")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=22.0, core=true, businessType=A, t24Name=AUDITOR.CODE)
+		AUDIT_DATE_TIME : mml:dateTime
+			@i18n:Label (en="Audit Date Time", fr="Audité le", es="Fecha/Hora de Audit.")
+			@i18n:Tooltip (en="Date and time when record was audited", fr="Date et heure d\'audit", es="Fecha y Hora de Auditoría ")
+			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=23.0, core=true, businessType=RELTIME, t24Name=AUDIT.DATE.TIME)
+	}
+	NUMBER_OF_CREDIT__DESCRIPTION
+	{
+		DESCRIPTION : mml:string required
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, multiLanguage=true, sysNumber=1.0, core=true, businessType=A, t24Name=DESCRIPTION)
+	}
+	NUMBER_OF_CREDIT__CURRENCY
+	{
+		CURRENCY -> FIN_CurrencyConfig:CURRENCY
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=10.0, core=true, businessType=CCY, t24Name=CURRENCY)
+		CHARGE_AMOUNT : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=11.0, core=true, businessType=AMT, t24Name=CHARGE.AMOUNT)
+		FREE_AMOUNT : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=12.0, core=true, businessType=AMT, t24Name=FREE.AMOUNT)
+		MINIMUM_AMOUNT : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=13.0, core=true, businessType=AMT, t24Name=MINIMUM.AMOUNT)
+		MAXIMUM_AMOUNT : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=14.0, core=true, businessType=AMT, t24Name=MAXIMUM.AMOUNT)
+	}
+	NUMBER_OF_CREDIT__INPUTTER
+	{
+		INPUTTER : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=17.0, core=true, businessType=A, t24Name=INPUTTER)
+	}
+	NUMBER_OF_CREDIT__DATE_TIME
+	{
+		DATE_TIME : mml:dateTime
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=18.0, core=true, businessType=RELTIME, t24Name=DATE.TIME)
+	}
+	NUMBER_OF_DEBIT
+		@t24:i (t24Name=NUMBER.OF.DEBIT, level=I, type=H, allowedFunctions="A C D E H I L P Q R S", localRefAllowed=false)
+	{
+		SEQUENCE_YEAR_MTH -> IC_Config:NUMBER_OF_DEBIT PK required
+			@t24:i (align=R, inputBehaviour=I, maxLength=12, sysNumber=0.0, core=true, businessType=YM, t24Name=SEQUENCE.YEAR.MTH)
+		DESCRIPTION -> byValue IC_Config:NUMBER_OF_DEBIT__DESCRIPTION *
+		CATEGORY -> ST_Config:CATEGORY required
+			@i18n:Label (en=Category, fr=Produit, es="Categoría")
+			@i18n:Tooltip (en="Specifies the Category", fr="Code du produit")
+			@t24:i (align=R, inputBehaviour=I, maxLength=6, sysNumber=2.0, core=true, t24Name=CATEGORY)
+		TR_CODE_CR -> ST_Config:TRANSACTION required
+			@i18n:Label (en="Transaction Code Cr", fr="Code op. CR", es="Código Trs. Crédito")
+			@i18n:Tooltip (fr="Code opération au crédit")
+			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=3.0, core=true, t24Name=TR.CODE.CR)
+		TR_CODE_DR -> ST_Config:TRANSACTION required
+			@i18n:Label (en="Transaction Code Dr", fr="Code op. DB", es="Código Trs. Débito")
+			@i18n:Tooltip (fr="Code opération au débit")
+			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=4.0, core=true, t24Name=TR.CODE.DR)
+		TAX_CODE -> ST_ChargeConfig:TAX
+			@i18n:Label (en="Tax Code", fr=Taxe, es="Código de Impuesto")
+			@i18n:Tooltip (fr="Code taxe")
+			@t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=5.0, core=true, t24Name=TAX.CODE)
+		DEFAULT_CHARGE_AMT : mml:Double
+			@i18n:Label (en="Default Charge Amount", fr="Montant de cion par défaut", es="Mto. Cargo Pre-establ.")
+			@i18n:Tooltip (fr="Montant de commission par défaut", es="Monto de Cargo Pre-establecido")
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=6.0, core=true, businessType=AMT, t24Name=DEFAULT.CHARGE.AMT)
+		DEFAULT_FREE_AMT : mml:Double
+			@i18n:Label (en="Default Free Amount", fr="Montant gratuit par défaut", es="Monto de Cargo Libre")
+			@i18n:Tooltip (en="Default free amount to be deducted from charge ", fr="Montant gratuit par défaut ")
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=7.0, core=true, businessType=AMT, t24Name=DEFAULT.FREE.AMT)
+		DEFAULT_MIN_AMT : mml:Double
+			@i18n:Label (en="Default Minimum Amount", fr="Montant minimum par défaut", es="Monto Mín. Pre-establ.")
+			@i18n:Tooltip (en="Default minimum amount in local currency ", fr="Montant minimum par défaut", es="Monto Mínimo Pre-establecido")
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=8.0, core=true, businessType=AMT, t24Name=DEFAULT.MIN.AMT)
+		DEFAULT_MAX_AMT : mml:Double
+			@i18n:Label (en="Default Maximum Amount", fr="Montant maximum par défaut", es="Monto Máx. Pre-establ.")
+			@i18n:Tooltip (en="Default maximum amount in local currency ", fr="Montant maximum par défaut", es="Monto Máximo Pre-establecido")
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=9.0, core=true, businessType=AMT, t24Name=DEFAULT.MAX.AMT)
+		CURRENCY -> byValue IC_Config:NUMBER_OF_DEBIT__CURRENCY *
+		RECORD_STATUS : mml:string
+			@i18n:Label (en="Record Status", fr=Statut, es=Estado)
+			@i18n:Tooltip (fr="Statut de l\'enregistrement")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=15.0, core=true, businessType=STAT, t24Name=RECORD.STATUS)
+		CURR_NO : mml:Integer
+			@i18n:Label (en="Curr No", fr="N° version", es="No. Actual")
+			@i18n:Tooltip (fr="Numéro de version")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=16.0, core=true, t24Name=CURR.NO)
+		INPUTTER -> byValue IC_Config:NUMBER_OF_DEBIT__INPUTTER *
+		DATE_TIME -> byValue IC_Config:NUMBER_OF_DEBIT__DATE_TIME *
+		AUTHORISER : mml:string
+			@i18n:Label (en=Authoriser, fr="Validé par", es=Autorizador)
+			@i18n:Tooltip (en="Indicates the User who Authorises the record", fr="Utilisateur de validation", es="El usuario que autorizó el registro")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=19.0, core=true, businessType=A, t24Name=AUTHORISER)
+		CO_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company, fr=Entité, es="Compañía")
+			@i18n:Tooltip (fr="Code établissement ou agence")
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=20.0, core=true, businessType=A, t24Name=CO.CODE)
+		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Dept Code", fr=Service, es=Departamento)
+			@i18n:Tooltip (fr="Code du service")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=21.0, core=true, t24Name=DEPT.CODE)
+		AUDITOR_CODE : mml:string
+			@i18n:Label (en="Auditor Code", fr="Audité par", es="Código de Auditor")
+			@i18n:Tooltip (en="Auditor Code", fr="Utilisateur d\'audit", es="Nombre del auditor")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=22.0, core=true, businessType=A, t24Name=AUDITOR.CODE)
+		AUDIT_DATE_TIME : mml:dateTime
+			@i18n:Label (en="Audit Date Time", fr="Audité le", es="Fecha/Hora de Audit.")
+			@i18n:Tooltip (en="Date and time when record was audited", fr="Date et heure d\'audit", es="Fecha y Hora de Auditoría ")
+			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=23.0, core=true, businessType=RELTIME, t24Name=AUDIT.DATE.TIME)
+	}
+	NUMBER_OF_DEBIT__DESCRIPTION
+	{
+		DESCRIPTION : mml:string required
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, multiLanguage=true, sysNumber=1.0, core=true, businessType=A, t24Name=DESCRIPTION)
+	}
+	NUMBER_OF_DEBIT__CURRENCY
+	{
+		CURRENCY -> FIN_CurrencyConfig:CURRENCY
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=10.0, core=true, businessType=CCY, t24Name=CURRENCY)
+		CHARGE_AMOUNT : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=11.0, core=true, businessType=AMT, t24Name=CHARGE.AMOUNT)
+		FREE_AMOUNT : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=12.0, core=true, businessType=AMT, t24Name=FREE.AMOUNT)
+		MINIMUM_AMOUNT : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=13.0, core=true, businessType=AMT, t24Name=MINIMUM.AMOUNT)
+		MAXIMUM_AMOUNT : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=14.0, core=true, businessType=AMT, t24Name=MAXIMUM.AMOUNT)
+	}
+	NUMBER_OF_DEBIT__INPUTTER
+	{
+		INPUTTER : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=17.0, core=true, businessType=A, t24Name=INPUTTER)
+	}
+	NUMBER_OF_DEBIT__DATE_TIME
+	{
+		DATE_TIME : mml:dateTime
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=18.0, core=true, businessType=RELTIME, t24Name=DATE.TIME)
+	}
+	NUMBER_OF_TXNS
+		@t24:i (t24Name=NUMBER.OF.TXNS, level=I, type=H, additionalInfo="For Generic charges - Number of Transactions", allowedFunctions="A C D E H I L P Q R S", localRefAllowed=false)
+	{
+		KEY -> IC_Config:NUMBER_OF_TXNS PK required
+			@i18n:Label (en=Key, fr=Clé, es=Clave)
+			@i18n:Tooltip (en="Indicates th transaction key", fr=Clé)
+			@t24:i (align=L, inputBehaviour=I, maxLength=12, sysNumber=0.0, core=true, businessType=COM, t24Name=KEY)
+		CALCULATION_TYPE : IC_Config:NUMBER_OF_TXNS__CALCULATION_TYPE required
+			@i18n:Label (en="Calculation Type", fr="Méthode de calcul")
+			@i18n:Tooltip (en="Specifies the Calculation Type", fr="Méthode de calcul")
+			@t24:i (align=L, inputBehaviour=I, maxLength=5, sysNumber=1.0, core=true, t24Name=CALCULATION.TYPE)
+		UPTO_TXN -> byValue IC_Config:NUMBER_OF_TXNS__UPTO_TXN *
+		RESERVED_9 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=6.0, core=true, t24Name=RESERVED.9)
+		RESERVED_8 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=7.0, core=true, t24Name=RESERVED.8)
+		RESERVED_7 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=8.0, core=true, t24Name=RESERVED.7)
+		RESERVED_6 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=9.0, core=true, t24Name=RESERVED.6)
+		RESERVED_5 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=10.0, core=true, t24Name=RESERVED.5)
+		RESERVED_4 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=11.0, core=true, t24Name=RESERVED.4)
+		RESERVED_3 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=12.0, core=true, t24Name=RESERVED.3)
+		RESERVED_2 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=13.0, core=true, t24Name=RESERVED.2)
+		RESERVED_1 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=14.0, core=true, t24Name=RESERVED.1)
+		OVERRIDE -> byValue IC_Config:NUMBER_OF_TXNS__OVERRIDE *
+		RECORD_STATUS : mml:string
+			@i18n:Label (en="Record Status", fr=Statut, es=Estado)
+			@i18n:Tooltip (fr="Statut de l\'enregistrement")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=16.0, core=true, businessType=STAT, t24Name=RECORD.STATUS)
+		CURR_NO : mml:Integer
+			@i18n:Label (en="Curr No", fr="N° version", es="No. Actual")
+			@i18n:Tooltip (fr="Numéro de version")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=17.0, core=true, t24Name=CURR.NO)
+		INPUTTER -> byValue IC_Config:NUMBER_OF_TXNS__INPUTTER *
+		DATE_TIME -> byValue IC_Config:NUMBER_OF_TXNS__DATE_TIME *
+		AUTHORISER : mml:string
+			@i18n:Label (en=Authoriser, fr="Validé par", es=Autorizador)
+			@i18n:Tooltip (en="Indicates the User who Authorises the record", fr="Utilisateur de validation", es="El usuario que autorizó el registro")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=20.0, core=true, businessType=A, t24Name=AUTHORISER)
+		CO_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company, fr=Entité, es="Compañía")
+			@i18n:Tooltip (fr="Code établissement ou agence")
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=21.0, core=true, businessType=A, t24Name=CO.CODE)
+		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Dept Code", fr=Service, es=Departamento)
+			@i18n:Tooltip (fr="Code du service")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=22.0, core=true, t24Name=DEPT.CODE)
+		AUDITOR_CODE : mml:string
+			@i18n:Label (en="Auditor Code", fr="Audité par", es="Código de Auditor")
+			@i18n:Tooltip (en="Auditor Code", fr="Utilisateur d\'audit", es="Nombre del auditor")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=23.0, core=true, businessType=A, t24Name=AUDITOR.CODE)
+		AUDIT_DATE_TIME : mml:dateTime
+			@i18n:Label (en="Audit Date Time", fr="Audité le", es="Fecha/Hora de Audit.")
+			@i18n:Tooltip (en="Date and time when record was audited", fr="Date et heure d\'audit", es="Fecha y Hora de Auditoría ")
+			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=24.0, core=true, businessType=RELTIME, t24Name=AUDIT.DATE.TIME)
+	}
+	NUMBER_OF_TXNS__UPTO_TXN
+	{
+		UPTO_TXN : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=2.0, core=true, t24Name=UPTO.TXN)
+		DEFAULT_CHG : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=3.0, core=true, businessType=AMT, t24Name=DEFAULT.CHG)
+		CURRENCY -> byValue IC_Config:NUMBER_OF_TXNS__UPTO_TXN__CURRENCY *
+	}
+	NUMBER_OF_TXNS__UPTO_TXN__CURRENCY
+	{
+		CURRENCY -> FIN_CurrencyConfig:CURRENCY
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=4.0, core=true, businessType=CCY, t24Name=CURRENCY)
+		FLAT_CHARGE : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=5.0, core=true, businessType=AMT, t24Name=FLAT.CHARGE)
+	}
+	NUMBER_OF_TXNS__OVERRIDE
+	{
+		OVERRIDE : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=15.0, core=true, businessType=A, t24Name=OVERRIDE)
+	}
+	NUMBER_OF_TXNS__INPUTTER
+	{
+		INPUTTER : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=18.0, core=true, businessType=A, t24Name=INPUTTER)
+	}
+	NUMBER_OF_TXNS__DATE_TIME
+	{
+		DATE_TIME : mml:dateTime
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=19.0, core=true, businessType=RELTIME, t24Name=DATE.TIME)
+	}
+	TRANSACTION_CHARGE
+		@t24:i (t24Name=TRANSACTION.CHARGE, level=I, type=H, allowedFunctions="A C D E H I L P Q R S", localRefAllowed=false)
+	{
+		SEQ_GCHRG_DATE -> IC_Config:TRANSACTION_CHARGE PK required
+			@t24:i (align=L, inputBehaviour=I, maxLength=20, sysNumber=0.0, core=true, businessType=A, t24Name=SEQ.GCHRG.DATE)
+		DESCRIPTION -> byValue IC_Config:TRANSACTION_CHARGE__DESCRIPTION *
+		CHARGE_PERIOD : IC_Config:TRANSACTION_CHARGE__CHARGE_PERIOD
+			@i18n:Label (en="Charge Period", fr=Périodicité, es="Periodo de Cargo")
+			@i18n:Tooltip (fr=Périodicité)
+			@t24:i (align=L, inputBehaviour=I, maxLength=1, sysNumber=2.0, core=true, t24Name=CHARGE.PERIOD)
+		CATEGORY -> ST_Config:CATEGORY required
+			@i18n:Label (en=Category, fr=Produit, es="Categoría")
+			@i18n:Tooltip (en="Specifies the Category", fr="Code du produit")
+			@t24:i (align=R, inputBehaviour=I, maxLength=6, sysNumber=3.0, core=true, t24Name=CATEGORY)
+		TR_CODE_CR -> ST_Config:TRANSACTION required
+			@i18n:Label (en="Transaction Code Cr", fr="Code op. CR", es="Código Trs. Crédito")
+			@i18n:Tooltip (fr="Code opération au crédit")
+			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=4.0, core=true, t24Name=TR.CODE.CR)
+		TR_CODE_DR -> ST_Config:TRANSACTION required
+			@i18n:Label (en="Transaction Code Dr", fr="Code op. DB", es="Código Trs. Débito")
+			@i18n:Tooltip (fr="Code opération au débit")
+			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=5.0, core=true, t24Name=TR.CODE.DR)
+		TAX_CODE -> ST_ChargeConfig:TAX
+			@i18n:Label (en="Tax Code", fr=Taxe, es="Código de Impuesto")
+			@i18n:Tooltip (fr="Code taxe")
+			@t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=6.0, core=true, t24Name=TAX.CODE)
+		PERCENTAGE : mml:string
+			@i18n:Label (en="% Change", fr=Pourcentage, es="% de Cambio")
+			@i18n:Tooltip (fr=Pourcentage)
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=7.0, core=true, businessType=R, t24Name=PERCENTAGE)
+		DEFAULT_CHARGE_AMT : mml:Double
+			@i18n:Label (en="Default Charge Amount", fr="Montant de cion par défaut", es="Mto. Cargo Pre-establ.")
+			@i18n:Tooltip (fr="Montant de commission par défaut", es="Monto de Cargo Pre-establecido")
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=8.0, core=true, businessType=AMT, t24Name=DEFAULT.CHARGE.AMT)
+		DEFAULT_FREE_AMT : mml:Double
+			@i18n:Label (en="Default Free Amount", fr="Montant gratuit par défaut", es="Monto de Cargo Libre")
+			@i18n:Tooltip (en="Default free amount to be deducted from charge ", fr="Montant gratuit par défaut ")
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=9.0, core=true, businessType=AMT, t24Name=DEFAULT.FREE.AMT)
+		DEFAULT_MIN_AMT : mml:Double
+			@i18n:Label (en="Default Minimum Amount", fr="Montant minimum par défaut", es="Monto Mín. Pre-establ.")
+			@i18n:Tooltip (en="Default minimum amount in local currency ", fr="Montant minimum par défaut", es="Monto Mínimo Pre-establecido")
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=10.0, core=true, businessType=AMT, t24Name=DEFAULT.MIN.AMT)
+		DEFAULT_MAX_AMT : mml:Double
+			@i18n:Label (en="Default Maximum Amount", fr="Montant maximum par défaut", es="Monto Máx. Pre-establ.")
+			@i18n:Tooltip (en="Default maximum amount in local currency ", fr="Montant maximum par défaut", es="Monto Máximo Pre-establecido")
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=11.0, core=true, businessType=AMT, t24Name=DEFAULT.MAX.AMT)
+		COMMISSION_KEY -> ST_ChargeConfig:FT_COMMISSION_TYPE
+			@i18n:Label (en="Commission Key", fr="Code de cion", es="Clave de Comisión")
+			@i18n:Tooltip (en="Commission Key", fr="Code de cion", es="Clave de Comisión")
+			@t24:i (align=L, inputBehaviour=I, maxLength=20, sysNumber=12.0, core=true, businessType=A, t24Name=COMMISSION.KEY)
+		CURRENCY -> byValue IC_Config:TRANSACTION_CHARGE__CURRENCY *
+		RECORD_STATUS : mml:string
+			@i18n:Label (en="Record Status", fr=Statut, es=Estado)
+			@i18n:Tooltip (fr="Statut de l\'enregistrement")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=18.0, core=true, businessType=STAT, t24Name=RECORD.STATUS)
+		CURR_NO : mml:Integer
+			@i18n:Label (en="Curr No", fr="N° version", es="No. Actual")
+			@i18n:Tooltip (fr="Numéro de version")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=19.0, core=true, t24Name=CURR.NO)
+		INPUTTER -> byValue IC_Config:TRANSACTION_CHARGE__INPUTTER *
+		DATE_TIME -> byValue IC_Config:TRANSACTION_CHARGE__DATE_TIME *
+		AUTHORISER : mml:string
+			@i18n:Label (en=Authoriser, fr="Validé par", es=Autorizador)
+			@i18n:Tooltip (en="Indicates the User who Authorises the record", fr="Utilisateur de validation", es="El usuario que autorizó el registro")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=22.0, core=true, businessType=A, t24Name=AUTHORISER)
+		CO_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company, fr=Entité, es="Compañía")
+			@i18n:Tooltip (fr="Code établissement ou agence")
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=23.0, core=true, businessType=A, t24Name=CO.CODE)
+		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Dept Code", fr=Service, es=Departamento)
+			@i18n:Tooltip (fr="Code du service")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=24.0, core=true, t24Name=DEPT.CODE)
+		AUDITOR_CODE : mml:string
+			@i18n:Label (en="Auditor Code", fr="Audité par", es="Código de Auditor")
+			@i18n:Tooltip (en="Auditor Code", fr="Utilisateur d\'audit", es="Nombre del auditor")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=25.0, core=true, businessType=A, t24Name=AUDITOR.CODE)
+		AUDIT_DATE_TIME : mml:dateTime
+			@i18n:Label (en="Audit Date Time", fr="Audité le", es="Fecha/Hora de Audit.")
+			@i18n:Tooltip (en="Date and time when record was audited", fr="Date et heure d\'audit", es="Fecha y Hora de Auditoría ")
+			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=26.0, core=true, businessType=RELTIME, t24Name=AUDIT.DATE.TIME)
+	}
+	TRANSACTION_CHARGE__DESCRIPTION
+	{
+		DESCRIPTION : mml:string required
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, multiLanguage=true, sysNumber=1.0, core=true, businessType=A, t24Name=DESCRIPTION)
+	}
+	TRANSACTION_CHARGE__CURRENCY
+	{
+		CURRENCY -> FIN_CurrencyConfig:CURRENCY
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=13.0, core=true, businessType=CCY, t24Name=CURRENCY)
+		CHARGE_AMOUNT : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=14.0, core=true, businessType=AMT, t24Name=CHARGE.AMOUNT)
+		FREE_AMOUNT : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=15.0, core=true, businessType=AMT, t24Name=FREE.AMOUNT)
+		MINIMUM_AMOUNT : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=16.0, core=true, businessType=AMT, t24Name=MINIMUM.AMOUNT)
+		MAXIMUM_AMOUNT : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=17.0, core=true, businessType=AMT, t24Name=MAXIMUM.AMOUNT)
+	}
+	TRANSACTION_CHARGE__INPUTTER
+	{
+		INPUTTER : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=20.0, core=true, businessType=A, t24Name=INPUTTER)
+	}
+	TRANSACTION_CHARGE__DATE_TIME
+	{
+		DATE_TIME : mml:dateTime
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=21.0, core=true, businessType=RELTIME, t24Name=DATE.TIME)
+	}
+	TRANSACTION_CHARGE_XREF
+		@t24:i (t24Name=TRANSACTION.CHARGE.XREF, level=I, type=T, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		CHARGE_XREF_KEY -> IC_Config:TRANSACTION_CHARGE_XREF PK required
+			@t24:i (align=L, inputBehaviour=I, maxLength=7, sysNumber=0.0, core=true, businessType=A, t24Name=CHARGE.XREF.KEY)
+		DATE_XREF : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=8, sysNumber=1.0, core=true, t24Name=DATE.XREF)
+	}
+	TURNOVER_CREDIT
+		@t24:i (t24Name=TURNOVER.CREDIT, level=I, type=H, allowedFunctions="A C D E H I L P Q R S", localRefAllowed=false)
+	{
+		SEQUENCE_YEAR_MTH -> IC_Config:TURNOVER_CREDIT PK required
+			@t24:i (align=R, inputBehaviour=I, maxLength=12, sysNumber=0.0, core=true, businessType=YM, t24Name=SEQUENCE.YEAR.MTH)
+		DESCRIPTION -> byValue IC_Config:TURNOVER_CREDIT__DESCRIPTION *
+		CATEGORY -> ST_Config:CATEGORY required
+			@i18n:Label (en=Category, fr=Produit, es="Categoría")
+			@i18n:Tooltip (en="Specifies the Category", fr="Code du produit")
+			@t24:i (align=R, inputBehaviour=I, maxLength=6, sysNumber=2.0, core=true, t24Name=CATEGORY)
+		TR_CODE_CR -> ST_Config:TRANSACTION required
+			@i18n:Label (en="Transaction Code Cr", fr="Code op. CR", es="Código Trs. Crédito")
+			@i18n:Tooltip (fr="Code opération au crédit")
+			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=3.0, core=true, t24Name=TR.CODE.CR)
+		TR_CODE_DR -> ST_Config:TRANSACTION required
+			@i18n:Label (en="Transaction Code Dr", fr="Code op. DB", es="Código Trs. Débito")
+			@i18n:Tooltip (fr="Code opération au débit")
+			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=4.0, core=true, t24Name=TR.CODE.DR)
+		TAX_CODE -> ST_ChargeConfig:TAX
+			@i18n:Label (en="Tax Code", fr=Taxe, es="Código de Impuesto")
+			@i18n:Tooltip (fr="Code taxe")
+			@t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=5.0, core=true, t24Name=TAX.CODE)
+		PERCENTAGE : mml:string required
+			@i18n:Label (en="% Change", fr=Pourcentage, es="% de Cambio")
+			@i18n:Tooltip (fr=Pourcentage)
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=6.0, core=true, businessType=R, t24Name=PERCENTAGE)
+		DEFAULT_FREE_AMT : mml:Double
+			@i18n:Label (en="Default Free Amount", fr="Montant gratuit par défaut", es="Monto de Cargo Libre")
+			@i18n:Tooltip (en="Default free amount to be deducted from charge ", fr="Montant gratuit par défaut ")
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=7.0, core=true, businessType=AMT, t24Name=DEFAULT.FREE.AMT)
+		DEFAULT_MIN_AMT : mml:Double
+			@i18n:Label (en="Default Minimum Amount", fr="Montant minimum par défaut", es="Monto Mín. Pre-establ.")
+			@i18n:Tooltip (en="Default minimum amount in local currency ", fr="Montant minimum par défaut", es="Monto Mínimo Pre-establecido")
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=8.0, core=true, businessType=AMT, t24Name=DEFAULT.MIN.AMT)
+		DEFAULT_MAX_AMT : mml:Double
+			@i18n:Label (en="Default Maximum Amount", fr="Montant maximum par défaut", es="Monto Máx. Pre-establ.")
+			@i18n:Tooltip (en="Default maximum amount in local currency ", fr="Montant maximum par défaut", es="Monto Máximo Pre-establecido")
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=9.0, core=true, businessType=AMT, t24Name=DEFAULT.MAX.AMT)
+		CURRENCY -> byValue IC_Config:TURNOVER_CREDIT__CURRENCY *
+		RECORD_STATUS : mml:string
+			@i18n:Label (en="Record Status", fr=Statut, es=Estado)
+			@i18n:Tooltip (fr="Statut de l\'enregistrement")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=14.0, core=true, businessType=STAT, t24Name=RECORD.STATUS)
+		CURR_NO : mml:Integer
+			@i18n:Label (en="Curr No", fr="N° version", es="No. Actual")
+			@i18n:Tooltip (fr="Numéro de version")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=15.0, core=true, t24Name=CURR.NO)
+		INPUTTER -> byValue IC_Config:TURNOVER_CREDIT__INPUTTER *
+		DATE_TIME -> byValue IC_Config:TURNOVER_CREDIT__DATE_TIME *
+		AUTHORISER : mml:string
+			@i18n:Label (en=Authoriser, fr="Validé par", es=Autorizador)
+			@i18n:Tooltip (en="Indicates the User who Authorises the record", fr="Utilisateur de validation", es="El usuario que autorizó el registro")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=18.0, core=true, businessType=A, t24Name=AUTHORISER)
+		CO_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company, fr=Entité, es="Compañía")
+			@i18n:Tooltip (fr="Code établissement ou agence")
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=19.0, core=true, businessType=A, t24Name=CO.CODE)
+		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Dept Code", fr=Service, es=Departamento)
+			@i18n:Tooltip (fr="Code du service")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=20.0, core=true, t24Name=DEPT.CODE)
+		AUDITOR_CODE : mml:string
+			@i18n:Label (en="Auditor Code", fr="Audité par", es="Código de Auditor")
+			@i18n:Tooltip (en="Auditor Code", fr="Utilisateur d\'audit", es="Nombre del auditor")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=21.0, core=true, businessType=A, t24Name=AUDITOR.CODE)
+		AUDIT_DATE_TIME : mml:dateTime
+			@i18n:Label (en="Audit Date Time", fr="Audité le", es="Fecha/Hora de Audit.")
+			@i18n:Tooltip (en="Date and time when record was audited", fr="Date et heure d\'audit", es="Fecha y Hora de Auditoría ")
+			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=22.0, core=true, businessType=RELTIME, t24Name=AUDIT.DATE.TIME)
+	}
+	TURNOVER_CREDIT__DESCRIPTION
+	{
+		DESCRIPTION : mml:string required
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, multiLanguage=true, sysNumber=1.0, core=true, businessType=A, t24Name=DESCRIPTION)
+	}
+	TURNOVER_CREDIT__CURRENCY
+	{
+		CURRENCY -> FIN_CurrencyConfig:CURRENCY
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=10.0, core=true, businessType=CCY, t24Name=CURRENCY)
+		FREE_AMOUNT : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=11.0, core=true, businessType=AMT, t24Name=FREE.AMOUNT)
+		MINIMUM_AMOUNT : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=12.0, core=true, businessType=AMT, t24Name=MINIMUM.AMOUNT)
+		MAXIMUM_AMOUNT : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=13.0, core=true, businessType=AMT, t24Name=MAXIMUM.AMOUNT)
+	}
+	TURNOVER_CREDIT__INPUTTER
+	{
+		INPUTTER : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=16.0, core=true, businessType=A, t24Name=INPUTTER)
+	}
+	TURNOVER_CREDIT__DATE_TIME
+	{
+		DATE_TIME : mml:dateTime
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=17.0, core=true, businessType=RELTIME, t24Name=DATE.TIME)
+	}
+	TURNOVER_DEBIT
+		@t24:i (t24Name=TURNOVER.DEBIT, level=I, type=H, allowedFunctions="A C D E H I L P Q R S", localRefAllowed=false)
+	{
+		SEQUENCE_YEAR_MTH -> IC_Config:TURNOVER_DEBIT PK required
+			@t24:i (align=R, inputBehaviour=I, maxLength=12, sysNumber=0.0, core=true, businessType=YM, t24Name=SEQUENCE.YEAR.MTH)
+		DESCRIPTION -> byValue IC_Config:TURNOVER_DEBIT__DESCRIPTION *
+		CATEGORY -> ST_Config:CATEGORY required
+			@i18n:Label (en=Category, fr=Produit, es="Categoría")
+			@i18n:Tooltip (en="Specifies the Category", fr="Code du produit")
+			@t24:i (align=R, inputBehaviour=I, maxLength=6, sysNumber=2.0, core=true, t24Name=CATEGORY)
+		TR_CODE_CR -> ST_Config:TRANSACTION required
+			@i18n:Label (en="Transaction Code Cr", fr="Code op. CR", es="Código Trs. Crédito")
+			@i18n:Tooltip (fr="Code opération au crédit")
+			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=3.0, core=true, t24Name=TR.CODE.CR)
+		TR_CODE_DR -> ST_Config:TRANSACTION required
+			@i18n:Label (en="Transaction Code Dr", fr="Code op. DB", es="Código Trs. Débito")
+			@i18n:Tooltip (fr="Code opération au débit")
+			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=4.0, core=true, t24Name=TR.CODE.DR)
+		TAX_CODE -> ST_ChargeConfig:TAX
+			@i18n:Label (en="Tax Code", fr=Taxe, es="Código de Impuesto")
+			@i18n:Tooltip (fr="Code taxe")
+			@t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=5.0, core=true, t24Name=TAX.CODE)
+		PERCENTAGE : mml:string required
+			@i18n:Label (en="% Change", fr=Pourcentage, es="% de Cambio")
+			@i18n:Tooltip (fr=Pourcentage)
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=6.0, core=true, businessType=R, t24Name=PERCENTAGE)
+		DEFAULT_FREE_AMT : mml:Double
+			@i18n:Label (en="Default Free Amount", fr="Montant gratuit par défaut", es="Monto de Cargo Libre")
+			@i18n:Tooltip (en="Default free amount to be deducted from charge ", fr="Montant gratuit par défaut ")
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=7.0, core=true, businessType=AMT, t24Name=DEFAULT.FREE.AMT)
+		DEFAULT_MIN_AMT : mml:Double
+			@i18n:Label (en="Default Minimum Amount", fr="Montant minimum par défaut", es="Monto Mín. Pre-establ.")
+			@i18n:Tooltip (en="Default minimum amount in local currency ", fr="Montant minimum par défaut", es="Monto Mínimo Pre-establecido")
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=8.0, core=true, businessType=AMT, t24Name=DEFAULT.MIN.AMT)
+		DEFAULT_MAX_AMT : mml:Double
+			@i18n:Label (en="Default Maximum Amount", fr="Montant maximum par défaut", es="Monto Máx. Pre-establ.")
+			@i18n:Tooltip (en="Default maximum amount in local currency ", fr="Montant maximum par défaut", es="Monto Máximo Pre-establecido")
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=9.0, core=true, businessType=AMT, t24Name=DEFAULT.MAX.AMT)
+		CURRENCY -> byValue IC_Config:TURNOVER_DEBIT__CURRENCY *
+		RECORD_STATUS : mml:string
+			@i18n:Label (en="Record Status", fr=Statut, es=Estado)
+			@i18n:Tooltip (fr="Statut de l\'enregistrement")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=14.0, core=true, businessType=STAT, t24Name=RECORD.STATUS)
+		CURR_NO : mml:Integer
+			@i18n:Label (en="Curr No", fr="N° version", es="No. Actual")
+			@i18n:Tooltip (fr="Numéro de version")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=15.0, core=true, t24Name=CURR.NO)
+		INPUTTER -> byValue IC_Config:TURNOVER_DEBIT__INPUTTER *
+		DATE_TIME -> byValue IC_Config:TURNOVER_DEBIT__DATE_TIME *
+		AUTHORISER : mml:string
+			@i18n:Label (en=Authoriser, fr="Validé par", es=Autorizador)
+			@i18n:Tooltip (en="Indicates the User who Authorises the record", fr="Utilisateur de validation", es="El usuario que autorizó el registro")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=18.0, core=true, businessType=A, t24Name=AUTHORISER)
+		CO_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company, fr=Entité, es="Compañía")
+			@i18n:Tooltip (fr="Code établissement ou agence")
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=19.0, core=true, businessType=A, t24Name=CO.CODE)
+		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Dept Code", fr=Service, es=Departamento)
+			@i18n:Tooltip (fr="Code du service")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=20.0, core=true, t24Name=DEPT.CODE)
+		AUDITOR_CODE : mml:string
+			@i18n:Label (en="Auditor Code", fr="Audité par", es="Código de Auditor")
+			@i18n:Tooltip (en="Auditor Code", fr="Utilisateur d\'audit", es="Nombre del auditor")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=21.0, core=true, businessType=A, t24Name=AUDITOR.CODE)
+		AUDIT_DATE_TIME : mml:dateTime
+			@i18n:Label (en="Audit Date Time", fr="Audité le", es="Fecha/Hora de Audit.")
+			@i18n:Tooltip (en="Date and time when record was audited", fr="Date et heure d\'audit", es="Fecha y Hora de Auditoría ")
+			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=22.0, core=true, businessType=RELTIME, t24Name=AUDIT.DATE.TIME)
+	}
+	TURNOVER_DEBIT__DESCRIPTION
+	{
+		DESCRIPTION : mml:string required
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, multiLanguage=true, sysNumber=1.0, core=true, businessType=A, t24Name=DESCRIPTION)
+	}
+	TURNOVER_DEBIT__CURRENCY
+	{
+		CURRENCY -> FIN_CurrencyConfig:CURRENCY
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=10.0, core=true, businessType=CCY, t24Name=CURRENCY)
+		FREE_AMOUNT : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=11.0, core=true, businessType=AMT, t24Name=FREE.AMOUNT)
+		MINIMUM_AMOUNT : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=12.0, core=true, businessType=AMT, t24Name=MINIMUM.AMOUNT)
+		MAXIMUM_AMOUNT : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=13.0, core=true, businessType=AMT, t24Name=MAXIMUM.AMOUNT)
+	}
+	TURNOVER_DEBIT__INPUTTER
+	{
+		INPUTTER : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=16.0, core=true, businessType=A, t24Name=INPUTTER)
+	}
+	TURNOVER_DEBIT__DATE_TIME
+	{
+		DATE_TIME : mml:dateTime
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=17.0, core=true, businessType=RELTIME, t24Name=DATE.TIME)
+	}
+}
+Enumerations {
+	ACCOUNT_ACCRUAL__LAST_DAY_INCLUSIVE : mml:string
+		NO=NO
+		Y=Y
+	ACCOUNT_ACCRUAL__EXCLUSIVE_TYPE : mml:string
+		n1=1
+		n2=2
+	ACCOUNT_ACCRUAL__APP_POSTING_DAY : mml:string
+		NEXT=NEXT
+		TODAY=TODAY
+	ACCOUNT_ACCRUAL__INCLUDE_CHARGES : mml:string
+		NO=NO
+		Y=Y
+	ACCOUNT_ACCRUAL__DEFLT_ACCR_TYPE__DEFLT_ACCR_TYPE : mml:string
+		BOTH=BOTH
+		FOREIGN=FOREIGN
+		LOCAL=LOCAL
+	ACCOUNT_ACCRUAL__DEFLT_ACCR_TYPE__DEFLT_ACCR_FQU : mml:string
+		DAILY=DAILY
+		MONTHLY=MONTHLY
+		NONE=NONE
+	ACCOUNT_ACCRUAL__ACCRUAL_GRP__GRP_ACCR_TYP__GRP_ACCR_TYP : mml:string
+		BOTH=BOTH
+		FOREIGN=FOREIGN
+		LOCAL=LOCAL
+	ACCOUNT_ACCRUAL__ACCRUAL_GRP__GRP_ACCR_TYP__GRP_ACCR_FQU : mml:string
+		DAILY=DAILY
+		MONTHLY=MONTHLY
+		NONE=NONE
+	ACCOUNT_ACCRUAL__ACCRUAL_CAT__CATEG_TYPE__CATEG_TYPE : mml:string
+		BOTH=BOTH
+		FOREIGN=FOREIGN
+		LOCAL=LOCAL
+	ACCOUNT_ACCRUAL__ACCRUAL_CAT__CATEG_TYPE__CAT_ACCR_FQU : mml:string
+		DAILY=DAILY
+		MONTHLY=MONTHLY
+		NONE=NONE
+	ACCOUNT_ACCRUAL__CONVERT_FCY_TAX : mml:string
+		NO=NO
+	ACCOUNT_ACCRUAL__AUTO_SETTLE : mml:string
+		NO=NO
+		YES=YES
+	ACCOUNT_ACCRUAL__WRITE_ACCR_ACCT : mml:string
+		YES=YES
+		NO=NO
+		NULL=NULL
+	ACCOUNT_CREDIT_INT__CR_BALANCE_TYPE : mml:string
+		AVERAGE=AVERAGE
+		DAILY=DAILY
+		MINIMUM=MINIMUM
+	ACCOUNT_CREDIT_INT__CR_CALCUL_TYPE : mml:string
+		BAND=BAND
+		LEVEL=LEVEL
+	ACCOUNT_CREDIT_INT__CR_OFFSET_ONLY : mml:string
+		Y=Y
+		NULL=NULL
+	ACCOUNT_CREDIT_INT__CR_BASIC_RATE__CR_MARGIN_OPER : mml:string
+		ADD=ADD
+		MULTIPLY=MULTIPLY
+		SUBTRACT=SUBTRACT
+	ACCOUNT_CREDIT_INT__CR2_BALANCE_TYPE : mml:string
+		AVERAGE=AVERAGE
+		DAILY=DAILY
+		MINIMUM=MINIMUM
+	ACCOUNT_CREDIT_INT__CR2_CALCUL_TYPE : mml:string
+		BAND=BAND
+		LEVEL=LEVEL
+	ACCOUNT_CREDIT_INT__CR2_OFFSET_ONLY : mml:string
+		Y=Y
+		NULL=NULL
+	ACCOUNT_CREDIT_INT__CR2_BASIC_RATE__CR2_MARGIN_OPER : mml:string
+		ADD=ADD
+		MULTIPLY=MULTIPLY
+		SUBTRACT=SUBTRACT
+	ACCOUNT_CREDIT_INT__NET_TAX : mml:string
+		Y=Y
+		N=N
+	ACCOUNT_CREDIT_INT__CR_ACCR_OPEN_AC : mml:string
+		YES=YES
+		NO=NO
+	ACCOUNT_CREDIT_INT__CR_ACCR_CLOSE_AC : mml:string
+		YES=YES
+		NO=NO
+	ACCOUNT_CREDIT_INT__CR2_ACCR_OPEN_AC : mml:string
+		YES=YES
+		NO=NO
+	ACCOUNT_CREDIT_INT__CR2_ACCR_CLOSE_AC : mml:string
+		YES=YES
+		NO=NO
+	ACCOUNT_CREDIT_INT__CR_MIN_WAIVE : mml:string
+		YES=YES
+		NO=NO
+		NULL=NULL
+	ACCOUNT_CREDIT_INT__CR2_MIN_WAIVE : mml:string
+		YES=YES
+		NO=NO
+		NULL=NULL
+	ACCOUNT_CREDIT_INT__CR_ZERO_INT_OC : mml:string
+		YES=YES
+		NO=NO
+		NULL=NULL
+	ACCOUNT_CREDIT_INT__CR2_ZERO_INT_OC : mml:string
+		YES=YES
+		NO=NO
+		NULL=NULL
+	ACCOUNT_CREDIT_INT__NEGATIVE_RATES : mml:string
+		YES=YES
+		BLOCK_MARGIN=BLOCK.MARGIN
+		NO=NO
+		NULL=NULL
+	ACCOUNT_CREDIT_INT__COMPOUND_YIELD_METHOD : mml:string
+		YIELD=YIELD
+		NULL=NULL
+	ACCOUNT_DEBIT_INT__DR_BALANCE_TYPE : mml:string
+		AVERAGE=AVERAGE
+		DAILY=DAILY
+		HIGHEST=HIGHEST
+	ACCOUNT_DEBIT_INT__DR_CALCUL_TYPE : mml:string
+		BAND=BAND
+		LEVEL=LEVEL
+	ACCOUNT_DEBIT_INT__DR_BASIC_RATE__DR_MARGIN_OPER : mml:string
+		ADD=ADD
+		MULTIPLY=MULTIPLY
+		SUBTRACT=SUBTRACT
+	ACCOUNT_DEBIT_INT__DR2_BALANCE_TYPE : mml:string
+		AVERAGE=AVERAGE
+		DAILY=DAILY
+		HIGHEST=HIGHEST
+	ACCOUNT_DEBIT_INT__DR2_CALCUL_TYPE : mml:string
+		BAND=BAND
+		LEVEL=LEVEL
+	ACCOUNT_DEBIT_INT__DR2_BASIC_RATE__DR2_MARGIN_OPER : mml:string
+		ADD=ADD
+		MULTIPLY=MULTIPLY
+		SUBTRACT=SUBTRACT
+	ACCOUNT_DEBIT_INT__APR_REQUIRED : mml:string
+		Y=Y
+		NO=NO
+	ACCOUNT_DEBIT_INT__DR_MIN_WAIVE : mml:string
+		YES=YES
+		NO=NO
+		NULL=NULL
+	ACCOUNT_DEBIT_INT__DR2_MIN_WAIVE : mml:string
+		YES=YES
+		NO=NO
+		NULL=NULL
+	ACCOUNT_DEBIT_INT__COMPOUND_YIELD_METHOD : mml:string
+		YIELD=YIELD
+		NULL=NULL
+	BALANCE_REQUIREMENT__BALANCE_TYPE : mml:string
+		AVERAGE=AVERAGE
+		MINIMUM=MINIMUM
+	GENERAL_CHARGE__INT_CHRG_BAL_TYPE : mml:string
+		AVERAGE=AVERAGE
+		MINIMUM=MINIMUM
+	GENERAL_CHARGE__CHARGE_CODE_LEVEL : mml:string
+		COM=COM
+		IND=IND
+	GENERAL_CHARGE__CHARGE_OF_FCY_ACCT : mml:string
+		NO=NO
+		Y=Y
+	GENERAL_CHARGE__CALCUL_STEP_PERIOD : mml:string
+		M=M
+		P=P
+	GENERAL_CHARGE__COMB_DEBIT_CREDIT : mml:string
+		NO=NO
+		Y=Y
+	GENERAL_CHARGE__TRANS_CODE_CHARGE : mml:string
+		NO=NO
+		Y=Y
+	GENERAL_CHARGE__WAIVE_CHRG_NEG_BAL : mml:string
+		NO=NO
+		Y=Y
+	GENERAL_CHARGE__OFFSET_BAL_TYPE : mml:string
+		AVERAGE=AVERAGE
+		MINIMUM=MINIMUM
+	GROUP_CREDIT_INT__CR_BALANCE_TYPE : mml:string
+		AVERAGE=AVERAGE
+		DAILY=DAILY
+		MINIMUM=MINIMUM
+	GROUP_CREDIT_INT__CR_CALCUL_TYPE : mml:string
+		BAND=BAND
+		LEVEL=LEVEL
+	GROUP_CREDIT_INT__CR_OFFSET_ONLY : mml:string
+		Y=Y
+		NULL=NULL
+	GROUP_CREDIT_INT__CR_BASIC_RATE__CR_MARGIN_OPER : mml:string
+		ADD=ADD
+		MULTIPLY=MULTIPLY
+		SUBTRACT=SUBTRACT
+	GROUP_CREDIT_INT__CR2_BALANCE_TYPE : mml:string
+		AVERAGE=AVERAGE
+		DAILY=DAILY
+		MINIMUM=MINIMUM
+	GROUP_CREDIT_INT__CR2_CALCUL_TYPE : mml:string
+		BAND=BAND
+		LEVEL=LEVEL
+	GROUP_CREDIT_INT__CR2_OFFSET_ONLY : mml:string
+		Y=Y
+		NULL=NULL
+	GROUP_CREDIT_INT__CR2_BASIC_RATE__CR2_MARGIN_OPER : mml:string
+		ADD=ADD
+		MULTIPLY=MULTIPLY
+		SUBTRACT=SUBTRACT
+	GROUP_CREDIT_INT__NET_TAX : mml:string
+		Y=Y
+		N=N
+	GROUP_CREDIT_INT__CR_ACCR_OPEN_AC : mml:string
+		YES=YES
+		NO=NO
+	GROUP_CREDIT_INT__CR_ACCR_CLOSE_AC : mml:string
+		YES=YES
+		NO=NO
+	GROUP_CREDIT_INT__CR2_ACCR_OPEN_AC : mml:string
+		YES=YES
+		NO=NO
+	GROUP_CREDIT_INT__CR2_ACCR_CLOSE_AC : mml:string
+		YES=YES
+		NO=NO
+	GROUP_CREDIT_INT__CR_MIN_WAIVE : mml:string
+		YES=YES
+		NO=NO
+		NULL=NULL
+	GROUP_CREDIT_INT__CR2_MIN_WAIVE : mml:string
+		YES=YES
+		NO=NO
+		NULL=NULL
+	GROUP_CREDIT_INT__CR_ZERO_INT_OC : mml:string
+		YES=YES
+		NO=NO
+		NULL=NULL
+	GROUP_CREDIT_INT__CR2_ZERO_INT_OC : mml:string
+		YES=YES
+		NO=NO
+		NULL=NULL
+	GROUP_CREDIT_INT__NEGATIVE_RATES : mml:string
+		YES=YES
+		BLOCK_MARGIN=BLOCK.MARGIN
+		NO=NO
+		NULL=NULL
+	GROUP_CREDIT_INT__COMPOUND_YIELD_METHOD : mml:string
+		YIELD=YIELD
+		NULL=NULL
+	GROUP_DEBIT_INT__DR_BALANCE_TYPE : mml:string
+		AVERAGE=AVERAGE
+		DAILY=DAILY
+		HIGHEST=HIGHEST
+	GROUP_DEBIT_INT__DR_CALCUL_TYPE : mml:string
+		BAND=BAND
+		LEVEL=LEVEL
+	GROUP_DEBIT_INT__DR_BASIC_RATE__DR_MARGIN_OPER : mml:string
+		ADD=ADD
+		MULTIPLY=MULTIPLY
+		SUBTRACT=SUBTRACT
+	GROUP_DEBIT_INT__DR2_BALANCE_TYPE : mml:string
+		AVERAGE=AVERAGE
+		DAILY=DAILY
+		HIGHEST=HIGHEST
+	GROUP_DEBIT_INT__DR2_CALCUL_TYPE : mml:string
+		BAND=BAND
+		LEVEL=LEVEL
+	GROUP_DEBIT_INT__DR2_BASIC_RATE__DR2_MARGIN_OPER : mml:string
+		ADD=ADD
+		MULTIPLY=MULTIPLY
+		SUBTRACT=SUBTRACT
+	GROUP_DEBIT_INT__APR_REQUIRED : mml:string
+		Y=Y
+		NO=NO
+	GROUP_DEBIT_INT__DR_MIN_WAIVE : mml:string
+		YES=YES
+		NO=NO
+		NULL=NULL
+	GROUP_DEBIT_INT__DR2_MIN_WAIVE : mml:string
+		YES=YES
+		NO=NO
+		NULL=NULL
+	GROUP_DEBIT_INT__COMPOUND_YIELD_METHOD : mml:string
+		YIELD=YIELD
+		NULL=NULL
+	IC_CHARGE__IC_CHG_PRODUCT__CAL_STEP_PERIOD : mml:string
+		M=M
+		P=P
+	IC_CHARGE__IC_CHG_PRODUCT__WAIVE_CHARGE : mml:string
+		YES=YES
+		NO=NO
+		NULL=NULL
+	IC_CHARGE__IC_CHG_PRODUCT__ACCRUE_AMORT : mml:string
+		A=A
+		M=M
+		NULL=NULL
+	IC_CHARGE__IC_CHG_PRODUCT__AMORT_TYPE : mml:string
+		END=END
+		SPECIAL=SPECIAL
+	IC_CHARGE__IC_CHG_PRODUCT__AMORT_DIFF_PL : mml:string
+		YES=YES
+		NULL=NULL
+	IC_CHARGE__IC_CHG_PRODUCT__AMORT_ADJUST : mml:string
+		YES=YES
+		NO=NO
+	IC_CHARGE__WAIVE_ALL : mml:string
+		YES=YES
+		NO=NO
+		NULL=NULL
+	IC_CHARGE_PRODUCT__AMORT_TYPE : mml:string
+		END=END
+		SPECIAL=SPECIAL
+	IC_CHARGE_PRODUCT__AMORT_DIFF_PL : mml:string
+		YES=YES
+		NULL=NULL
+	IC_CHARGE_PRODUCT__AMORT_ADJUST : mml:string
+		YES=YES
+		NO=NO
+	NUMBER_OF_TXNS__CALCULATION_TYPE : mml:string
+		BAND=BAND
+		LEVEL=LEVEL
+	TRANSACTION_CHARGE__CHARGE_PERIOD : mml:string
+		T=T
+}

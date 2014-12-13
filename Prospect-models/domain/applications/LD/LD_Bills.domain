@@ -1,0 +1,182 @@
+# UTF-8
+/* Bill Processing for Loans and Deposits */
+Domain LD_Bills
+	@t24:i (module=LD)
+	@java:Package (value=com.temenos.t24.datamodel.ld.ld_bills)
+namespace "http://www.temenos.com/t24/LD_Bills"
+metamodelVersion 4.3.0.20110527
+Classes {
+	BILL_REGISTER
+		@t24:i (t24Name=BILL.REGISTER, level=F, type=H, allowedFunctions="A C D E H I L P Q R S", localRefAllowed=true)
+	{
+		BILL_NUMBER -> LD_Bills:BILL_REGISTER PK required
+			@t24:i (align=L, inputBehaviour=I, maxLength=15, sysNumber=0.0, core=true, businessType=A, t24Name=BILL.NUMBER)
+		DRAWER -> ST_Customer:CUSTOMER required
+			@i18n:Label (en=Drawer, fr=Tireur, es=Solicitante)
+			@i18n:Tooltip (fr=Tireur)
+			@t24:i (align=L, inputBehaviour=I, maxLength=10, sysNumber=1.0, core=true, businessType=A, t24Name=DRAWER)
+		DRAWEE -> ST_Customer:CUSTOMER required
+			@i18n:Label (en=Drawee, fr=Tiré, es=Destinatario)
+			@i18n:Tooltip (fr=Tiré)
+			@t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=2.0, core=true, businessType=CUS, t24Name=DRAWEE)
+		CURRENCY -> FIN_CurrencyConfig:CURRENCY required
+			@i18n:Label (en=Ccy, fr=Devise, es=Moneda)
+			@i18n:Tooltip (fr="Code devise ISO")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=3.0, core=true, businessType=DEF, t24Name=CURRENCY)
+		AMOUNT : mml:Double required
+			@i18n:Label (en=Amount, fr=Montant, es=Monto)
+			@i18n:Tooltip (en="Indicates the Amount", fr=Montant)
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=4.0, core=true, businessType=AMT, t24Name=AMOUNT)
+		MATURITY_DATE : mml:string required
+			@i18n:Label (en="Maturity Date", fr="Date d\'échéance", es="Fecha de Vencimiento")
+			@i18n:Tooltip (en="Indicates the Maturity Date of the Transaction", fr="Date d\'échéance", es="Indica la Fecha de Vencimiento de la Transacción")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=5.0, core=true, businessType=MATLMM, t24Name=MATURITY.DATE)
+		ACCEPTOR -> ST_Customer:CUSTOMER
+			@i18n:Label (fr="Accepté par")
+			@i18n:Tooltip (fr="Accepté par")
+			@t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=6.0, core=true, businessType=CUS, t24Name=ACCEPTOR)
+		INSURER -> ST_Customer:CUSTOMER
+			@i18n:Label (en=Insurer, es=Aseguradora)
+			@t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=7.0, core=true, businessType=CUS, t24Name=INSURER)
+		RECOURSE : LD_Bills:BILL_REGISTER__RECOURSE
+			@i18n:Label (fr="Avec recours")
+			@i18n:Tooltip (fr="Escompte avec recours")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=8.0, core=true, t24Name=RECOURSE)
+		DISCOUNT : LD_Bills:BILL_REGISTER__DISCOUNT
+			@i18n:Label (en=Discount, fr=Escompte, es=Descuento)
+			@i18n:Tooltip (fr="Escompte de l\'effet")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=9.0, core=true, t24Name=DISCOUNT)
+		REDISCOUNT : LD_Bills:BILL_REGISTER__REDISCOUNT
+			@i18n:Label (en=Rediscount, es=Redescuento)
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=10.0, core=true, t24Name=REDISCOUNT)
+		REV_TRADE_BILL : LD_Bills:BILL_REGISTER__REV_TRADE_BILL
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=11.0, core=true, t24Name=REV.TRADE.BILL)
+		MOVE_TO_HIS : LD_Bills:BILL_REGISTER__MOVE_TO_HIS
+			@i18n:Label (fr="Passage en historique")
+			@i18n:Tooltip (fr="Passage en historique")
+			@t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=12.0, core=true, t24Name=MOVE.TO.HIS)
+		LIAB_CUST -> ST_Customer:CUSTOMER
+			@i18n:Label (en="Liab Cust", fr="Risque sur", es="Cliente de Pasivo")
+			@i18n:Tooltip (fr="Client sur lequel porte le risque")
+			@t24:i (align=R, inputBehaviour=N, maxLength=10, sysNumber=13.0, core=true, businessType=CUS, t24Name=LIAB.CUST)
+		STATUS : LD_Bills:BILL_REGISTER__STATUS
+			@i18n:Label (en=Status, fr=Statut, es=Estado)
+			@i18n:Tooltip (fr=Statut)
+			@t24:i (align=L, inputBehaviour=N, maxLength=14, sysNumber=15.0, core=true, t24Name=STATUS)
+		TRANS_REFERENCE -> byValue LD_Bills:BILL_REGISTER__TRANS_REFERENCE *
+		BILL_TYPE : LD_Bills:BILL_REGISTER__BILL_TYPE
+			@i18n:Label (en="Bill Type", fr="Type d\'effet", es="Tipo de Factura")
+			@i18n:Tooltip (en="Whether bill produced for payment or information", fr="Type d\'effet", es="Tipo de Cuota")
+			@t24:i (align=L, inputBehaviour=I, maxLength=20, sysNumber=17.0, core=true, t24Name=BILL.TYPE)
+		CONDITION -> byValue LD_Bills:BILL_REGISTER__CONDITION *
+		DISCOUNT_RATE : mml:string
+			@i18n:Label (en="Discount Rate", fr="Taux d\'escompte", es="Tasa de Descuento")
+			@i18n:Tooltip (fr="Taux d\'escompte")
+			@t24:i (align=R, inputBehaviour=E, maxLength=11, sysNumber=19.0, core=true, businessType=R, t24Name=DISCOUNT.RATE)
+		DISCOUNT_DATE : mml:date
+			@t24:i (align=R, inputBehaviour=E, maxLength=11, sysNumber=20.0, core=true, businessType=D, t24Name=DISCOUNT.DATE)
+		DISCOUNT_AMT : mml:Double
+			@i18n:Label (en="Discount Amount", fr="Montant escompté", es="Monto de Descuento")
+			@i18n:Tooltip (fr="Montant escompté")
+			@t24:i (align=R, inputBehaviour=E, maxLength=19, sysNumber=21.0, core=true, businessType=AMT, t24Name=DISCOUNT.AMT)
+		REDISCOUNT_RATE : mml:string
+			@t24:i (align=R, inputBehaviour=E, maxLength=11, sysNumber=22.0, core=true, businessType=R, t24Name=REDISCOUNT.RATE)
+		REDISCOUNT_DATE : mml:date
+			@t24:i (align=R, inputBehaviour=E, maxLength=11, sysNumber=23.0, core=true, businessType=D, t24Name=REDISCOUNT.DATE)
+		REDISCOUNT_AMT : mml:Double
+			@t24:i (align=R, inputBehaviour=E, maxLength=19, sysNumber=24.0, core=true, businessType=AMT, t24Name=REDISCOUNT.AMT)
+		REDISC_PROFIT_LOSS : mml:Double
+			@t24:i (align=R, inputBehaviour=E, maxLength=19, sysNumber=25.0, core=true, businessType=AMT, t24Name=REDISC.PROFIT.LOSS)
+		BATCH_NO : mml:string
+			@i18n:Label (en="Batch Number", es="Número de Lote")
+			@t24:i (align=L, inputBehaviour=I, maxLength=20, sysNumber=26.0, core=true, businessType=A, t24Name=BATCH.NO)
+		START_DATE : mml:date
+			@i18n:Label (en="Start Date", fr="Date de début", es="Fecha de Inicio")
+			@i18n:Tooltip (en="Start Date", fr="Date de début", es="Fecha de Inicio del Acuerdo")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=27.0, core=true, businessType=D, t24Name=START.DATE)
+		OVERRIDE -> byValue LD_Bills:BILL_REGISTER__OVERRIDE *
+		RECORD_STATUS : mml:string
+			@i18n:Label (en="Record Status", fr=Statut, es=Estado)
+			@i18n:Tooltip (fr="Statut de l\'enregistrement")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=29.0, core=true, businessType=STAT, t24Name=RECORD.STATUS)
+		CURR_NO : mml:Integer
+			@i18n:Label (en="Curr No", fr="N° version", es="No. Actual")
+			@i18n:Tooltip (fr="Numéro de version")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=30.0, core=true, t24Name=CURR.NO)
+		INPUTTER -> byValue LD_Bills:BILL_REGISTER__INPUTTER *
+		DATE_TIME -> byValue LD_Bills:BILL_REGISTER__DATE_TIME *
+		AUTHORISER : mml:string
+			@i18n:Label (en=Authoriser, fr="Validé par", es=Autorizador)
+			@i18n:Tooltip (en="Indicates the User who Authorises the record", fr="Utilisateur de validation", es="El usuario que autorizó el registro")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=33.0, core=true, businessType=A, t24Name=AUTHORISER)
+		CO_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company, fr=Entité, es="Compañía")
+			@i18n:Tooltip (fr="Code établissement ou agence")
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=34.0, core=true, businessType=A, t24Name=CO.CODE)
+		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Dept Code", fr=Service, es=Departamento)
+			@i18n:Tooltip (fr="Code du service")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=35.0, core=true, t24Name=DEPT.CODE)
+		AUDITOR_CODE : mml:string
+			@i18n:Label (en="Auditor Code", fr="Audité par", es="Código de Auditor")
+			@i18n:Tooltip (en="Auditor Code", fr="Utilisateur d\'audit", es="Nombre del auditor")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=36.0, core=true, businessType=A, t24Name=AUDITOR.CODE)
+		AUDIT_DATE_TIME : mml:dateTime
+			@i18n:Label (en="Audit Date Time", fr="Audité le", es="Fecha/Hora de Audit.")
+			@i18n:Tooltip (en="Date and time when record was audited", fr="Date et heure d\'audit", es="Fecha y Hora de Auditoría ")
+			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=37.0, core=true, businessType=RELTIME, t24Name=AUDIT.DATE.TIME)
+	}
+	BILL_REGISTER__TRANS_REFERENCE
+	{
+		TRANS_REFERENCE : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=12, sysNumber=16.0, core=true, t24Name=TRANS.REFERENCE)
+	}
+	BILL_REGISTER__CONDITION
+	{
+		CONDITION : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=18.0, core=true, businessType=S, t24Name=CONDITION)
+	}
+	BILL_REGISTER__OVERRIDE
+	{
+		OVERRIDE : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=50, sysNumber=28.0, core=true, businessType=A, t24Name=OVERRIDE)
+	}
+	BILL_REGISTER__INPUTTER
+	{
+		INPUTTER : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=31.0, core=true, businessType=A, t24Name=INPUTTER)
+	}
+	BILL_REGISTER__DATE_TIME
+	{
+		DATE_TIME : mml:dateTime
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=32.0, core=true, businessType=RELTIME, t24Name=DATE.TIME)
+	}
+}
+Enumerations {
+	BILL_REGISTER__RECOURSE : mml:string
+		YES=YES
+		NO=NO
+	BILL_REGISTER__DISCOUNT : mml:string
+		YES=YES
+		NO=NO
+	BILL_REGISTER__REDISCOUNT : mml:string
+		YES=YES
+		NO=NO
+	BILL_REGISTER__REV_TRADE_BILL : mml:string
+		YES=YES
+		NO=NO
+	BILL_REGISTER__MOVE_TO_HIS : mml:string
+		YES=YES
+		NO=NO
+	BILL_REGISTER__STATUS : mml:string
+		ACCEPTED=ACCEPTED
+		UNAU__ACCEPTED=UNAU-ACCEPTED
+		DISCOUNTED=DISCOUNTED
+		UNAU__DISCOUNTED=UNAU-DISCOUNTED
+		REDISCOUNTED=REDISCOUNTED
+	BILL_REGISTER__BILL_TYPE : mml:string
+		TRADE=TRADE
+		BANK=BANK
+		ELIGABLE=ELIGABLE
+		OTHER=OTHER
+}

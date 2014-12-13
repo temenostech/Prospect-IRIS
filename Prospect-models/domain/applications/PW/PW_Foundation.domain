@@ -1,0 +1,1447 @@
+# UTF-8
+/* Foundation for Process Workflow */
+Domain PW_Foundation
+	@t24:i (module=PW)
+	@java:Package (value=com.temenos.t24.datamodel.pw.pw_foundation)
+namespace "http://www.temenos.com/t24/PW_Foundation"
+metamodelVersion 4.3.0.20110527
+Classes {
+	PW_ACTIVITY
+		@t24:i (t24Name=PW.ACTIVITY, level=I, type=H, allowedFunctions="A C D E H I L P Q R S", localRefAllowed=true)
+	{
+		PW_ACTIVITY_ID -> PW_Foundation:PW_ACTIVITY PK required
+			@i18n:Label (en="Activity Id", fr="Code d\'activité", es="ID de Actividad")
+			@i18n:Tooltip (fr="Code d\'activité")
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=0.0, core=true, businessType=A, t24Name=PW.ACTIVITY.ID)
+		DESCRIPTION -> byValue PW_Foundation:PW_ACTIVITY__DESCRIPTION *
+		SHORT_DESC -> byValue PW_Foundation:PW_ACTIVITY__SHORT_DESC *
+		DEF_DURATION : mml:Integer
+			@i18n:Label (en="Default Duration", fr="Durée par défaut", es="Duración Pre-establ.")
+			@i18n:Tooltip (fr="Durée par défaut")
+			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=3.0, core=true, t24Name=DEF.DURATION)
+		ACTIVITY_TYPE : PW_Foundation:PW_ACTIVITY__ACTIVITY_TYPE
+			@i18n:Label (en=Type, fr="Type d\'activité", es=Tipo)
+			@i18n:Tooltip (fr="Type d\'activité")
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=4.0, core=true, t24Name=ACTIVITY.TYPE)
+		STATUS_CODES -> byValue PW_Foundation:PW_ACTIVITY__STATUS_CODES *
+		EVAL_RULE -> EB_RulesEngine:EB_RULE_GATEWAY
+			@i18n:Label (en="Evaluation Rule", fr="Règle d\'évaluation", es="Regla de Evaluación")
+			@i18n:Tooltip (en="Eval Rule", fr="Règle d\'évaluation")
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=7.0, core=true, businessType=MNE, t24Name=EVAL.RULE)
+		COMPLETE_STATUS -> byValue PW_Foundation:PW_ACTIVITY__COMPLETE_STATUS *
+		OWNER -> PW_Foundation:PW_PARTICIPANT
+			@i18n:Label (en=Owner, fr=Titulaire, es=Participante)
+			@i18n:Tooltip (fr=Titulaire)
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=9.0, core=true, businessType=A, t24Name=OWNER)
+		TARGET : mml:string required
+			@i18n:Label (en=Target, fr=Cible, es="Transacción de T24")
+			@i18n:Tooltip (fr=Cible)
+			@t24:i (align=L, inputBehaviour=I, maxLength=55, sysNumber=10.0, core=true, businessType=A, t24Name=TARGET)
+		DEF_STATUS_CODE -> PW_Foundation:PW_STATUS
+			@i18n:Label (en="Def Status Code", fr="Code de statut par défaut", es="Cód. Est. Pre-establ.")
+			@i18n:Tooltip (en="Def Status Code", fr="Code de statut par défaut", es="Código de Estado Pre-establecido")
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=11.0, core=true, businessType=A, t24Name=DEF.STATUS.CODE)
+		MAPPING_ID -> PW_Foundation:PW_MAPPING
+			@i18n:Label (en="Mapping Id", fr="Code de mapping", es="ID de Mapeo")
+			@i18n:Tooltip (en="Mapping Id", fr="Code de mapping")
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=12.0, core=true, businessType=A, t24Name=MAPPING.ID)
+		PRIORITY : PW_Foundation:PW_ACTIVITY__PRIORITY
+			@i18n:Label (en=Priority, fr=Priorité, es=Prioridad)
+			@i18n:Tooltip (fr=Priorité)
+			@t24:i (align=R, inputBehaviour=I, maxLength=1, sysNumber=13.0, core=true, t24Name=PRIORITY)
+		OFS_SOURCE_ID -> EB_Interface:OFS_SOURCE
+			@i18n:Label (en="OFS Source Id", fr="Code Source OFS", es="ID de Fuente OFS")
+			@i18n:Tooltip (en="Ofs Source Id", fr="Code Source OFS")
+			@t24:i (align=L, inputBehaviour=I, maxLength=20, sysNumber=14.0, core=true, businessType=A, t24Name=OFS.SOURCE.ID)
+		EB_MAPPING -> EB_SystemTables:EB_MAPPING_SOURCE
+			@i18n:Label (en="Mapping Source", fr=Mapping, es="Fuente de Mapeo")
+			@i18n:Tooltip (en="Eb Mapping", fr=Mapping)
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=15.0, core=true, businessType=A, t24Name=EB.MAPPING)
+		ALT_OWNER : mml:string
+			@i18n:Label (en="Alternate Owner", fr="Autre Propriétaire", es="Titular Alterno")
+			@i18n:Tooltip (en="Alt Owner", fr="Autre Propriétaire")
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=16.0, core=true, businessType=HOOK, t24Name=ALT.OWNER)
+		EXPIRATION_HOURS : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=17.0, core=true, t24Name=EXPIRATION.HOURS)
+		EXPIRATION_MINS : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=18.0, core=true, t24Name=EXPIRATION.MINS)
+		MONITOR_STAGE : PW_Foundation:PW_ACTIVITY__MONITOR_STAGE
+			@t24:i (align=L, inputBehaviour=I, maxLength=12, sysNumber=19.0, core=true, t24Name=MONITOR.STAGE)
+		MONITOR_KPI : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=5, sysNumber=20.0, core=true, t24Name=MONITOR.KPI)
+		MONITOR_ACTION : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=5, sysNumber=21.0, core=true, t24Name=MONITOR.ACTION)
+		SLA -> SG_Framework:SG_SLA
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=22.0, core=true, businessType=A, t24Name=SLA)
+		RESERVED_3 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=23.0, core=true, t24Name=RESERVED.3)
+		RESERVED_2 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=24.0, core=true, t24Name=RESERVED.2)
+		RESERVED_1 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=25.0, core=true, t24Name=RESERVED.1)
+		OVERRIDE -> byValue PW_Foundation:PW_ACTIVITY__OVERRIDE *
+		RECORD_STATUS : mml:string
+			@i18n:Label (en="Record Status", fr=Statut, es=Estado)
+			@i18n:Tooltip (fr="Statut de l\'enregistrement")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=28.0, core=true, businessType=STAT, t24Name=RECORD.STATUS)
+		CURR_NO : mml:Integer
+			@i18n:Label (en="Curr No", fr="N° version", es="No. Actual")
+			@i18n:Tooltip (fr="Numéro de version")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=29.0, core=true, t24Name=CURR.NO)
+		INPUTTER -> byValue PW_Foundation:PW_ACTIVITY__INPUTTER *
+		DATE_TIME -> byValue PW_Foundation:PW_ACTIVITY__DATE_TIME *
+		AUTHORISER : mml:string
+			@i18n:Label (en=Authoriser, fr="Validé par", es=Autorizador)
+			@i18n:Tooltip (en="Indicates the User who Authorises the record", fr="Utilisateur de validation", es="El usuario que autorizó el registro")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=32.0, core=true, businessType=A, t24Name=AUTHORISER)
+		CO_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company, fr=Entité, es="Compañía")
+			@i18n:Tooltip (fr="Code établissement ou agence")
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=33.0, core=true, businessType=A, t24Name=CO.CODE)
+		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Dept Code", fr=Service, es=Departamento)
+			@i18n:Tooltip (fr="Code du service")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=34.0, core=true, t24Name=DEPT.CODE)
+		AUDITOR_CODE : mml:string
+			@i18n:Label (en="Auditor Code", fr="Audité par", es="Código de Auditor")
+			@i18n:Tooltip (en="Auditor Code", fr="Utilisateur d\'audit", es="Nombre del auditor")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=35.0, core=true, businessType=A, t24Name=AUDITOR.CODE)
+		AUDIT_DATE_TIME : mml:dateTime
+			@i18n:Label (en="Audit Date Time", fr="Audité le", es="Fecha/Hora de Audit.")
+			@i18n:Tooltip (en="Date and time when record was audited", fr="Date et heure d\'audit", es="Fecha y Hora de Auditoría ")
+			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=36.0, core=true, businessType=RELTIME, t24Name=AUDIT.DATE.TIME)
+	}
+	PW_ACTIVITY__DESCRIPTION
+	{
+		DESCRIPTION : mml:string required
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, multiLanguage=true, sysNumber=1.0, core=true, businessType=A, t24Name=DESCRIPTION)
+	}
+	PW_ACTIVITY__SHORT_DESC
+	{
+		SHORT_DESC : mml:string required
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, multiLanguage=true, sysNumber=2.0, core=true, businessType=A, t24Name=SHORT.DESC)
+	}
+	PW_ACTIVITY__STATUS_CODES
+	{
+		STATUS_CODES -> PW_Foundation:PW_STATUS
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=5.0, core=true, businessType=A, t24Name=STATUS.CODES)
+		STATUS_RULES -> PW_Foundation:PW_TRANSITION
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=6.0, core=true, businessType=A, t24Name=STATUS.RULES)
+	}
+	PW_ACTIVITY__COMPLETE_STATUS
+	{
+		COMPLETE_STATUS -> PW_Foundation:PW_STATUS
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=8.0, core=true, businessType=A, t24Name=COMPLETE.STATUS)
+	}
+	PW_ACTIVITY__OVERRIDE
+	{
+		OVERRIDE : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=27.0, core=true, businessType=A, t24Name=OVERRIDE)
+	}
+	PW_ACTIVITY__INPUTTER
+	{
+		INPUTTER : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=30.0, core=true, businessType=A, t24Name=INPUTTER)
+	}
+	PW_ACTIVITY__DATE_TIME
+	{
+		DATE_TIME : mml:dateTime
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=31.0, core=true, businessType=RELTIME, t24Name=DATE.TIME)
+	}
+	PW_ACTIVITY_OBJECT
+		@t24:i (t24Name=PW.ACTIVITY.OBJECT, level=I, type=U, allowedFunctions="A C D E I L P Q R S", localRefAllowed=true)
+	{
+		PW_ACTIVITY_OBJECT_ID -> PW_Foundation:PW_ACTIVITY_OBJECT PK required
+			@i18n:Label (en="Pw Activity Object Id", fr="Id d\'obj d\'activ PW", es="ID Obj.Act.Riq.Priv.")
+			@i18n:Tooltip (fr="Identifiant d\'obj d\'activ PW")
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=0.0, core=true, businessType=A, t24Name=PW.ACTIVITY.OBJECT.ID)
+		DESCRIPTION -> byValue PW_Foundation:PW_ACTIVITY_OBJECT__DESCRIPTION *
+		DEFAULT_TARGET : mml:string
+			@i18n:Label (en="Default Target", fr="Cible par défaut", es="Objetivo Pre-establ.")
+			@i18n:Tooltip (en="Default Target", fr="Cible par défaut", es="Objetivo Pre-establecido")
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=2.0, core=true, businessType=A, t24Name=DEFAULT.TARGET)
+		RESERVED_10 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=3.0, core=true, t24Name=RESERVED.10)
+		RESERVED_9 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=4.0, core=true, t24Name=RESERVED.9)
+		RESERVED_8 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=5.0, core=true, t24Name=RESERVED.8)
+		RESERVED_7 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=6.0, core=true, t24Name=RESERVED.7)
+		RESERVED_6 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=7.0, core=true, t24Name=RESERVED.6)
+		RESERVED_5 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=8.0, core=true, t24Name=RESERVED.5)
+		RESERVED_4 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=9.0, core=true, t24Name=RESERVED.4)
+		RESERVED_3 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=10.0, core=true, t24Name=RESERVED.3)
+		RESERVED_2 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=11.0, core=true, t24Name=RESERVED.2)
+		RESERVED_1 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=12.0, core=true, t24Name=RESERVED.1)
+		OVERRIDE -> byValue PW_Foundation:PW_ACTIVITY_OBJECT__OVERRIDE *
+		RECORD_STATUS : mml:string
+			@i18n:Label (en="Record Status", fr=Statut, es=Estado)
+			@i18n:Tooltip (fr="Statut de l\'enregistrement")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=15.0, core=true, businessType=STAT, t24Name=RECORD.STATUS)
+		CURR_NO : mml:Integer
+			@i18n:Label (en="Curr No", fr="N° version", es="No. Actual")
+			@i18n:Tooltip (fr="Numéro de version")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=16.0, core=true, t24Name=CURR.NO)
+		INPUTTER -> byValue PW_Foundation:PW_ACTIVITY_OBJECT__INPUTTER *
+		DATE_TIME -> byValue PW_Foundation:PW_ACTIVITY_OBJECT__DATE_TIME *
+		AUTHORISER : mml:string
+			@i18n:Label (en=Authoriser, fr="Validé par", es=Autorizador)
+			@i18n:Tooltip (en="Indicates the User who Authorises the record", fr="Utilisateur de validation", es="El usuario que autorizó el registro")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=19.0, core=true, businessType=A, t24Name=AUTHORISER)
+		CO_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company, fr=Entité, es="Compañía")
+			@i18n:Tooltip (fr="Code établissement ou agence")
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=20.0, core=true, businessType=A, t24Name=CO.CODE)
+		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Dept Code", fr=Service, es=Departamento)
+			@i18n:Tooltip (fr="Code du service")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=21.0, core=true, t24Name=DEPT.CODE)
+		AUDITOR_CODE : mml:string
+			@i18n:Label (en="Auditor Code", fr="Audité par", es="Código de Auditor")
+			@i18n:Tooltip (en="Auditor Code", fr="Utilisateur d\'audit", es="Nombre del auditor")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=22.0, core=true, businessType=A, t24Name=AUDITOR.CODE)
+		AUDIT_DATE_TIME : mml:dateTime
+			@i18n:Label (en="Audit Date Time", fr="Audité le", es="Fecha/Hora de Audit.")
+			@i18n:Tooltip (en="Date and time when record was audited", fr="Date et heure d\'audit", es="Fecha y Hora de Auditoría ")
+			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=23.0, core=true, businessType=RELTIME, t24Name=AUDIT.DATE.TIME)
+	}
+	PW_ACTIVITY_OBJECT__DESCRIPTION
+	{
+		DESCRIPTION : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, multiLanguage=true, sysNumber=1.0, core=true, businessType=A, t24Name=DESCRIPTION)
+	}
+	PW_ACTIVITY_OBJECT__OVERRIDE
+	{
+		OVERRIDE : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=14.0, core=true, businessType=A, t24Name=OVERRIDE)
+	}
+	PW_ACTIVITY_OBJECT__INPUTTER
+	{
+		INPUTTER : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=17.0, core=true, businessType=A, t24Name=INPUTTER)
+	}
+	PW_ACTIVITY_OBJECT__DATE_TIME
+	{
+		DATE_TIME : mml:dateTime
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=18.0, core=true, businessType=RELTIME, t24Name=DATE.TIME)
+	}
+	PW_ACTIVITY_TXN
+		@t24:i (t24Name=PW.ACTIVITY.TXN, level=I, type=H, allowedFunctions="A C D E H I L P Q R S", localRefAllowed=true)
+	{
+		PW_ACTIVITY_TXN_ID -> PW_Foundation:PW_ACTIVITY_TXN PK required
+			@i18n:Label (en="Activity Txn", es="Trs. de Actividad")
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=0.0, core=true, businessType=A, t24Name=PW.ACTIVITY.TXN.ID)
+		PROCESS -> PW_Foundation:PW_PROCESS
+			@i18n:Label (en="Process Id", fr=Processus, es=Proceso)
+			@i18n:Tooltip (fr=Processus)
+			@t24:i (align=L, inputBehaviour=E, maxLength=35, sysNumber=1.0, core=true, businessType=A, t24Name=PROCESS)
+		ACTIVITY -> PW_Foundation:PW_ACTIVITY
+			@i18n:Label (en=Activity, fr=Opération, es=Actividad)
+			@i18n:Tooltip (fr="Numéro de l\'opération")
+			@t24:i (align=L, inputBehaviour=E, maxLength=35, sysNumber=2.0, core=true, businessType=A, t24Name=ACTIVITY)
+		OWNER -> PW_Foundation:PW_PARTICIPANT
+			@i18n:Label (en=Owner, fr=Titulaire, es=Participante)
+			@i18n:Tooltip (fr=Titulaire)
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=3.0, core=true, businessType=A, t24Name=OWNER)
+		ASSIGN_DATE -> byValue PW_Foundation:PW_ACTIVITY_TXN__ASSIGN_DATE *
+		START_DATE : mml:date
+			@i18n:Label (en="Start Date", fr="Date de début", es="Fecha de Inicio")
+			@i18n:Tooltip (en="Start Date", fr="Date de début", es="Fecha de Inicio del Acuerdo")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=7.0, core=true, businessType=D, t24Name=START.DATE)
+		DUE_DATE : mml:date
+			@i18n:Label (en="Due Date", fr="Date d\'échéance", es="Fecha de Vencimiento")
+			@i18n:Tooltip (en="Due Date", fr="Date d\'échéance")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=8.0, core=true, businessType=D, t24Name=DUE.DATE)
+		COMPLETION_DATE : mml:date
+			@i18n:Label (en="Completion Date", fr="Date de finalisation", es="Fecha de Terminación")
+			@i18n:Tooltip (fr="Date de finalisation")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=9.0, core=true, businessType=D, t24Name=COMPLETION.DATE)
+		TRANSACTION_REF : mml:string
+			@i18n:Label (en="Transaction Ref", fr="Réf. opération", es="Ref. de Transacción")
+			@i18n:Tooltip (en="Transaction Reference", fr="Référence de l\'opération")
+			@t24:i (align=L, inputBehaviour=E, maxLength=35, sysNumber=10.0, core=true, businessType=A, t24Name=TRANSACTION.REF)
+		TARGET : mml:string
+			@i18n:Label (en=Target, fr=Cible, es="Transacción de T24")
+			@i18n:Tooltip (fr=Cible)
+			@t24:i (align=L, inputBehaviour=I, maxLength=99, sysNumber=11.0, core=true, businessType=A, t24Name=TARGET)
+		PATTERN_CONSTRUCT : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=12.0, core=true, t24Name=PATTERN.CONSTRUCT)
+		ROUTE_RULE_VALN : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=13.0, core=true, t24Name=ROUTE.RULE.VALN)
+		ROUTE_TO_ACTIVITY : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=14.0, core=true, t24Name=ROUTE.TO.ACTIVITY)
+		CONSTRUCT_STATUS : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=15.0, core=true, t24Name=CONSTRUCT.STATUS)
+		PW_ACTIVITY_STATUS -> PW_Foundation:PW_STATUS
+			@i18n:Label (en="Activity Status", fr="Statut d\'activité", es="Estado de Actividad")
+			@i18n:Tooltip (en="Pw Activity Status", fr="Statut d\'activité", es="Estado de Actividad de Riqueza Privada")
+			@t24:i (align=R, inputBehaviour=E, maxLength=35, sysNumber=16.0, core=true, t24Name=PW.ACTIVITY.STATUS)
+		ACTIVITY_TYPE : mml:Integer
+			@i18n:Label (en=Type, fr="Type d\'activité", es=Tipo)
+			@i18n:Tooltip (fr="Type d\'activité")
+			@t24:i (align=R, inputBehaviour=E, maxLength=35, sysNumber=17.0, core=true, t24Name=ACTIVITY.TYPE)
+		RESULT_DATE -> byValue PW_Foundation:PW_ACTIVITY_TXN__RESULT_DATE *
+		MAPPING_COMP : PW_Foundation:PW_ACTIVITY_TXN__MAPPING_COMP
+			@i18n:Label (en="Mapping Comp", fr="Mapping complété", es="Mapeo Comp.")
+			@i18n:Tooltip (en="Mapping Comp", fr="Mapping complété")
+			@t24:i (align=L, inputBehaviour=N, maxLength=1, sysNumber=20.0, core=true, t24Name=MAPPING.COMP)
+		START_TIME : mml:Character
+			@i18n:Label (en="Start Time", fr="Heure de début", es="Hora de Inicio")
+			@i18n:Tooltip (en="Start Time", fr="Heure de début")
+			@t24:i (align=L, inputBehaviour=N, maxLength=1, sysNumber=21.0, core=true, businessType=TIME, t24Name=START.TIME)
+		STATUS -> byValue PW_Foundation:PW_ACTIVITY_TXN__STATUS *
+		TXN_ITERATION : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=5, sysNumber=25.0, core=true, t24Name=TXN.ITERATION)
+		PARENT_ACT_TXN : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=26.0, core=true, t24Name=PARENT.ACT.TXN)
+		UNIQUE_NAME : mml:Integer
+			@i18n:Label (en="Unique Name", fr="Nom unique", es="Nombre Único")
+			@i18n:Tooltip (fr="Nom unique")
+			@t24:i (align=R, inputBehaviour=N, maxLength=50, sysNumber=27.0, core=true, t24Name=UNIQUE.NAME)
+		PARENT_PROCESS -> PW_Foundation:PW_PROCESS
+			@i18n:Label (en="Parent Process", fr="Processus maître", es="Proceso Padre")
+			@i18n:Tooltip (en="Parent Process", fr="Processus maître")
+			@t24:i (align=R, inputBehaviour=E, maxLength=35, sysNumber=28.0, core=true, t24Name=PARENT.PROCESS)
+		ORIGINATE_PROCESS -> PW_Foundation:PW_PROCESS
+			@i18n:Label (en="Originate Process", fr="Originaire du processus", es="Originar Proceso")
+			@i18n:Tooltip (en="Originate Process", fr="Originaire du processus")
+			@t24:i (align=R, inputBehaviour=E, maxLength=35, sysNumber=29.0, core=true, t24Name=ORIGINATE.PROCESS)
+		EXTERNAL_PROCESS : mml:string
+			@i18n:Label (en="External Process", es="Proceso Externo")
+			@t24:i (align=L, inputBehaviour=I, maxLength=50, sysNumber=30.0, core=true, businessType=ANY, t24Name=EXTERNAL.PROCESS)
+		EXT_PROCESS_ID : mml:string
+			@i18n:Label (en="External Process Id", fr="Code Processus ext.", es="ID Proceso Externo")
+			@i18n:Tooltip (fr="Code Processus ext.")
+			@t24:i (align=L, inputBehaviour=I, maxLength=50, sysNumber=31.0, core=true, businessType=ANY, t24Name=EXT.PROCESS.ID)
+		MONITOR_INIT_TIME : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=6, sysNumber=32.0, core=true, businessType=TIME, t24Name=MONITOR.INIT.TIME)
+		MONITOR_INIT_DATE : mml:date
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=33.0, core=true, businessType=D, t24Name=MONITOR.INIT.DATE)
+		DUE_TIME : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=11, sysNumber=34.0, core=true, businessType=TIME, t24Name=DUE.TIME)
+		RESERVED_8 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=35.0, core=true, t24Name=RESERVED.8)
+		RESERVED_7 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=36.0, core=true, t24Name=RESERVED.7)
+		RESERVED_6 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=37.0, core=true, t24Name=RESERVED.6)
+		RESERVED_5 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=38.0, core=true, t24Name=RESERVED.5)
+		RESERVED_4 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=39.0, core=true, t24Name=RESERVED.4)
+		RESERVED_3 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=40.0, core=true, t24Name=RESERVED.3)
+		RESERVED_2 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=41.0, core=true, t24Name=RESERVED.2)
+		RESERVED_1 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=42.0, core=true, t24Name=RESERVED.1)
+		OVERRIDE -> byValue PW_Foundation:PW_ACTIVITY_TXN__OVERRIDE *
+		RECORD_STATUS : mml:string
+			@i18n:Label (en="Record Status", fr=Statut, es=Estado)
+			@i18n:Tooltip (fr="Statut de l\'enregistrement")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=45.0, core=true, businessType=STAT, t24Name=RECORD.STATUS)
+		CURR_NO : mml:Integer
+			@i18n:Label (en="Curr No", fr="N° version", es="No. Actual")
+			@i18n:Tooltip (fr="Numéro de version")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=46.0, core=true, t24Name=CURR.NO)
+		INPUTTER -> byValue PW_Foundation:PW_ACTIVITY_TXN__INPUTTER *
+		DATE_TIME -> byValue PW_Foundation:PW_ACTIVITY_TXN__DATE_TIME *
+		AUTHORISER : mml:string
+			@i18n:Label (en=Authoriser, fr="Validé par", es=Autorizador)
+			@i18n:Tooltip (en="Indicates the User who Authorises the record", fr="Utilisateur de validation", es="El usuario que autorizó el registro")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=49.0, core=true, businessType=A, t24Name=AUTHORISER)
+		CO_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company, fr=Entité, es="Compañía")
+			@i18n:Tooltip (fr="Code établissement ou agence")
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=50.0, core=true, businessType=A, t24Name=CO.CODE)
+		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Dept Code", fr=Service, es=Departamento)
+			@i18n:Tooltip (fr="Code du service")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=51.0, core=true, t24Name=DEPT.CODE)
+		AUDITOR_CODE : mml:string
+			@i18n:Label (en="Auditor Code", fr="Audité par", es="Código de Auditor")
+			@i18n:Tooltip (en="Auditor Code", fr="Utilisateur d\'audit", es="Nombre del auditor")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=52.0, core=true, businessType=A, t24Name=AUDITOR.CODE)
+		AUDIT_DATE_TIME : mml:dateTime
+			@i18n:Label (en="Audit Date Time", fr="Audité le", es="Fecha/Hora de Audit.")
+			@i18n:Tooltip (en="Date and time when record was audited", fr="Date et heure d\'audit", es="Fecha y Hora de Auditoría ")
+			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=53.0, core=true, businessType=RELTIME, t24Name=AUDIT.DATE.TIME)
+		PROCESS_COMP_DT : mml:Integer
+			@t24:i (align=L, inputBehaviour=I, maxLength=10, core=false, t24Name=PROCESS.COMP.DT, genOperation="PROCESS>PW.PROCESS>COMPLETION.DATE")
+		CUSTOMER_NUMBER : mml:Integer
+			@i18n:Label (en="Customer No", fr=Client, es="No. de Cliente")
+			@i18n:Tooltip (en="Identifies the Customer for the transaction.", fr="Numéro du client", es="Identifica al Cliente de la transacción")
+			@t24:i (align=R, inputBehaviour=I, maxLength=10, core=false, t24Name=CUSTOMER.NUMBER, genOperation="PROCESS>PW.PROCESS>CUSTOMER")
+	}
+	PW_ACTIVITY_TXN__ASSIGN_DATE
+	{
+		ASSIGN_DATE : mml:date
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=4.0, core=true, businessType=D, t24Name=ASSIGN.DATE)
+		ASSIGN_REASON -> byValue PW_Foundation:PW_ACTIVITY_TXN__ASSIGN_DATE__ASSIGN_REASON *
+		USER : mml:string required
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=6.0, core=true, businessType=A, t24Name=USER)
+	}
+	PW_ACTIVITY_TXN__ASSIGN_DATE__ASSIGN_REASON
+	{
+		ASSIGN_REASON : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=40, sysNumber=5.0, core=true, businessType=A, t24Name=ASSIGN.REASON)
+	}
+	PW_ACTIVITY_TXN__RESULT_DATE
+	{
+		RESULT_DATE : mml:date
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=18.0, core=true, businessType=D, t24Name=RESULT.DATE)
+		ACTIVITY_RESULT -> byValue PW_Foundation:PW_ACTIVITY_TXN__RESULT_DATE__ACTIVITY_RESULT *
+	}
+	PW_ACTIVITY_TXN__RESULT_DATE__ACTIVITY_RESULT
+	{
+		ACTIVITY_RESULT : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=40, sysNumber=19.0, core=true, businessType=A, t24Name=ACTIVITY.RESULT)
+	}
+	PW_ACTIVITY_TXN__STATUS
+	{
+		STATUS : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=22.0, core=true, t24Name=STATUS)
+		END_DATE : mml:Character
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=23.0, core=true, businessType=D, t24Name=END.DATE)
+		END_TIME : mml:Character
+			@t24:i (align=L, inputBehaviour=N, maxLength=1, sysNumber=24.0, core=true, businessType=TIME, t24Name=END.TIME)
+	}
+	PW_ACTIVITY_TXN__OVERRIDE
+	{
+		OVERRIDE : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=44.0, core=true, businessType=A, t24Name=OVERRIDE)
+	}
+	PW_ACTIVITY_TXN__INPUTTER
+	{
+		INPUTTER : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=47.0, core=true, businessType=A, t24Name=INPUTTER)
+	}
+	PW_ACTIVITY_TXN__DATE_TIME
+	{
+		DATE_TIME : mml:dateTime
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=48.0, core=true, businessType=RELTIME, t24Name=DATE.TIME)
+	}
+	PW_MAP_SOURCE
+		@t24:i (t24Name=PW.MAP.SOURCE, level=I, type=H, allowedFunctions="A C D E H I L P Q R S", localRefAllowed=true)
+	{
+		MAPPING_NAME -> PW_Foundation:PW_MAP_SOURCE PK required
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=0.0, core=true, businessType=A, t24Name=MAPPING.NAME)
+		DATA_NAME : mml:string required
+			@i18n:Label (fr="Nom de données")
+			@i18n:Tooltip (fr="Nom de données")
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=1.0, core=true, businessType=A, t24Name=DATA.NAME)
+		DATA_SOURCE -> byValue PW_Foundation:PW_MAP_SOURCE__DATA_SOURCE *
+		RESERVED_10 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=3.0, core=true, t24Name=RESERVED.10)
+		RESERVED_9 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=4.0, core=true, t24Name=RESERVED.9)
+		RESERVED_8 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=5.0, core=true, t24Name=RESERVED.8)
+		RESERVED_7 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=6.0, core=true, t24Name=RESERVED.7)
+		RESERVED_6 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=7.0, core=true, t24Name=RESERVED.6)
+		RESERVED_5 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=8.0, core=true, t24Name=RESERVED.5)
+		RESERVED_4 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=9.0, core=true, t24Name=RESERVED.4)
+		RESERVED_3 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=10.0, core=true, t24Name=RESERVED.3)
+		RESERVED_2 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=11.0, core=true, t24Name=RESERVED.2)
+		RESERVED_1 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=12.0, core=true, t24Name=RESERVED.1)
+		OVERRIDE -> byValue PW_Foundation:PW_MAP_SOURCE__OVERRIDE *
+		RECORD_STATUS : mml:string
+			@i18n:Label (en="Record Status", fr=Statut, es=Estado)
+			@i18n:Tooltip (fr="Statut de l\'enregistrement")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=15.0, core=true, businessType=STAT, t24Name=RECORD.STATUS)
+		CURR_NO : mml:Integer
+			@i18n:Label (en="Curr No", fr="N° version", es="No. Actual")
+			@i18n:Tooltip (fr="Numéro de version")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=16.0, core=true, t24Name=CURR.NO)
+		INPUTTER -> byValue PW_Foundation:PW_MAP_SOURCE__INPUTTER *
+		DATE_TIME -> byValue PW_Foundation:PW_MAP_SOURCE__DATE_TIME *
+		AUTHORISER : mml:string
+			@i18n:Label (en=Authoriser, fr="Validé par", es=Autorizador)
+			@i18n:Tooltip (en="Indicates the User who Authorises the record", fr="Utilisateur de validation", es="El usuario que autorizó el registro")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=19.0, core=true, businessType=A, t24Name=AUTHORISER)
+		CO_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company, fr=Entité, es="Compañía")
+			@i18n:Tooltip (fr="Code établissement ou agence")
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=20.0, core=true, businessType=A, t24Name=CO.CODE)
+		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Dept Code", fr=Service, es=Departamento)
+			@i18n:Tooltip (fr="Code du service")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=21.0, core=true, t24Name=DEPT.CODE)
+		AUDITOR_CODE : mml:string
+			@i18n:Label (en="Auditor Code", fr="Audité par", es="Código de Auditor")
+			@i18n:Tooltip (en="Auditor Code", fr="Utilisateur d\'audit", es="Nombre del auditor")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=22.0, core=true, businessType=A, t24Name=AUDITOR.CODE)
+		AUDIT_DATE_TIME : mml:dateTime
+			@i18n:Label (en="Audit Date Time", fr="Audité le", es="Fecha/Hora de Audit.")
+			@i18n:Tooltip (en="Date and time when record was audited", fr="Date et heure d\'audit", es="Fecha y Hora de Auditoría ")
+			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=23.0, core=true, businessType=RELTIME, t24Name=AUDIT.DATE.TIME)
+	}
+	PW_MAP_SOURCE__DATA_SOURCE
+	{
+		DATA_SOURCE : mml:string required
+			@t24:i (align=L, inputBehaviour=I, maxLength=50, sysNumber=2.0, core=true, businessType=A, t24Name=DATA.SOURCE)
+	}
+	PW_MAP_SOURCE__OVERRIDE
+	{
+		OVERRIDE : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=14.0, core=true, businessType=A, t24Name=OVERRIDE)
+	}
+	PW_MAP_SOURCE__INPUTTER
+	{
+		INPUTTER : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=17.0, core=true, businessType=A, t24Name=INPUTTER)
+	}
+	PW_MAP_SOURCE__DATE_TIME
+	{
+		DATE_TIME : mml:dateTime
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=18.0, core=true, businessType=RELTIME, t24Name=DATE.TIME)
+	}
+	PW_MAPPING
+		@t24:i (t24Name=PW.MAPPING, level=I, type=H, allowedFunctions="A C D E H I L P Q R S", localRefAllowed=true)
+	{
+		MAPPING_NAME -> PW_Foundation:PW_MAPPING PK required
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=0.0, core=true, businessType=A, t24Name=MAPPING.NAME)
+		TABLE_TO : mml:string required
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=1.0, core=true, businessType=A, t24Name=TABLE.TO)
+		DATA_NAME -> byValue PW_Foundation:PW_MAPPING__DATA_NAME *
+		MAP_SOURCE_ID -> byValue PW_Foundation:PW_MAPPING__MAP_SOURCE_ID *
+		TARGET_FIELD -> byValue PW_Foundation:PW_MAPPING__TARGET_FIELD *
+		OVERWRITE : PW_Foundation:PW_MAPPING__OVERWRITE
+			@i18n:Label (fr=Écraser)
+			@i18n:Tooltip (fr=Écraser)
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=7.0, core=true, t24Name=OVERWRITE)
+		RESERVED_10 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=8.0, core=true, t24Name=RESERVED.10)
+		RESERVED_9 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=9.0, core=true, t24Name=RESERVED.9)
+		RESERVED_8 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=10.0, core=true, t24Name=RESERVED.8)
+		RESERVED_7 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=11.0, core=true, t24Name=RESERVED.7)
+		RESERVED_6 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=12.0, core=true, t24Name=RESERVED.6)
+		RESERVED_5 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=13.0, core=true, t24Name=RESERVED.5)
+		RESERVED_4 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=14.0, core=true, t24Name=RESERVED.4)
+		RESERVED_3 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=15.0, core=true, t24Name=RESERVED.3)
+		RESERVED_2 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=16.0, core=true, t24Name=RESERVED.2)
+		RESERVED_1 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=17.0, core=true, t24Name=RESERVED.1)
+		OVERRIDE -> byValue PW_Foundation:PW_MAPPING__OVERRIDE *
+		RECORD_STATUS : mml:string
+			@i18n:Label (en="Record Status", fr=Statut, es=Estado)
+			@i18n:Tooltip (fr="Statut de l\'enregistrement")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=20.0, core=true, businessType=STAT, t24Name=RECORD.STATUS)
+		CURR_NO : mml:Integer
+			@i18n:Label (en="Curr No", fr="N° version", es="No. Actual")
+			@i18n:Tooltip (fr="Numéro de version")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=21.0, core=true, t24Name=CURR.NO)
+		INPUTTER -> byValue PW_Foundation:PW_MAPPING__INPUTTER *
+		DATE_TIME -> byValue PW_Foundation:PW_MAPPING__DATE_TIME *
+		AUTHORISER : mml:string
+			@i18n:Label (en=Authoriser, fr="Validé par", es=Autorizador)
+			@i18n:Tooltip (en="Indicates the User who Authorises the record", fr="Utilisateur de validation", es="El usuario que autorizó el registro")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=24.0, core=true, businessType=A, t24Name=AUTHORISER)
+		CO_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company, fr=Entité, es="Compañía")
+			@i18n:Tooltip (fr="Code établissement ou agence")
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=25.0, core=true, businessType=A, t24Name=CO.CODE)
+		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Dept Code", fr=Service, es=Departamento)
+			@i18n:Tooltip (fr="Code du service")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=26.0, core=true, t24Name=DEPT.CODE)
+		AUDITOR_CODE : mml:string
+			@i18n:Label (en="Auditor Code", fr="Audité par", es="Código de Auditor")
+			@i18n:Tooltip (en="Auditor Code", fr="Utilisateur d\'audit", es="Nombre del auditor")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=27.0, core=true, businessType=A, t24Name=AUDITOR.CODE)
+		AUDIT_DATE_TIME : mml:dateTime
+			@i18n:Label (en="Audit Date Time", fr="Audité le", es="Fecha/Hora de Audit.")
+			@i18n:Tooltip (en="Date and time when record was audited", fr="Date et heure d\'audit", es="Fecha y Hora de Auditoría ")
+			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=28.0, core=true, businessType=RELTIME, t24Name=AUDIT.DATE.TIME)
+	}
+	PW_MAPPING__DATA_NAME
+	{
+		DATA_NAME : mml:string required
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=2.0, core=true, businessType=A, t24Name=DATA.NAME)
+		DATA_SOURCE -> byValue PW_Foundation:PW_MAPPING__DATA_NAME__DATA_SOURCE *
+	}
+	PW_MAPPING__DATA_NAME__DATA_SOURCE
+	{
+		DATA_SOURCE : mml:string required
+			@t24:i (align=L, inputBehaviour=I, maxLength=50, sysNumber=3.0, core=true, businessType=A, t24Name=DATA.SOURCE)
+	}
+	PW_MAPPING__MAP_SOURCE_ID
+	{
+		MAP_SOURCE_ID : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=4.0, core=true, businessType=A, t24Name=MAP.SOURCE.ID)
+	}
+	PW_MAPPING__TARGET_FIELD
+	{
+		TARGET_FIELD : mml:string required
+			@t24:i (align=L, inputBehaviour=I, maxLength=40, sysNumber=5.0, core=true, businessType=A, t24Name=TARGET.FIELD)
+		TARGET_VALUE : mml:string required
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=6.0, core=true, businessType=A, t24Name=TARGET.VALUE)
+	}
+	PW_MAPPING__OVERRIDE
+	{
+		OVERRIDE : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=19.0, core=true, businessType=A, t24Name=OVERRIDE)
+	}
+	PW_MAPPING__INPUTTER
+	{
+		INPUTTER : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=22.0, core=true, businessType=A, t24Name=INPUTTER)
+	}
+	PW_MAPPING__DATE_TIME
+	{
+		DATE_TIME : mml:dateTime
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=23.0, core=true, businessType=RELTIME, t24Name=DATE.TIME)
+	}
+	PW_PARAMETER
+		@t24:i (t24Name=PW.PARAMETER, level=I, type=H, allowedFunctions="A C D E H I L P Q R S", localRefAllowed=true)
+	{
+		SYSTEM -> PW_Foundation:PW_PARAMETER PK required
+			@i18n:Label (en=System, fr=Système, es=Sistema)
+			@i18n:Tooltip (fr=Système)
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=0.0, core=true, t24Name=SYSTEM)
+		DESCRIPTION -> byValue PW_Foundation:PW_PARAMETER__DESCRIPTION *
+		MOV_HIS_DATE : mml:date
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=2.0, core=true, businessType=D, t24Name=MOV.HIS.DATE)
+		RETENTION_PERIOD : mml:string
+			@i18n:Label (fr="Période de rétention")
+			@i18n:Tooltip (fr="Période de rétention")
+			@t24:i (align=L, inputBehaviour=I, maxLength=10, sysNumber=3.0, core=true, businessType=PERIOD, t24Name=RETENTION.PERIOD)
+		USE_WFLOW_PATTERNS : PW_Foundation:PW_PARAMETER__USE_WFLOW_PATTERNS
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=4.0, core=true, t24Name=USE.WFLOW.PATTERNS)
+		RESERVED_10 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=5.0, core=true, businessType=A, t24Name=RESERVED.10)
+		RESERVED_9 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=6.0, core=true, businessType=A, t24Name=RESERVED.9)
+		RESERVED_8 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=7.0, core=true, businessType=A, t24Name=RESERVED.8)
+		RESERVED_7 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=8.0, core=true, businessType=A, t24Name=RESERVED.7)
+		RESERVED_6 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=9.0, core=true, businessType=A, t24Name=RESERVED.6)
+		RESERVED_5 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=10.0, core=true, businessType=A, t24Name=RESERVED.5)
+		RESERVED_4 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=11.0, core=true, businessType=A, t24Name=RESERVED.4)
+		RESERVED_3 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=12.0, core=true, businessType=A, t24Name=RESERVED.3)
+		RESERVED_2 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=13.0, core=true, businessType=A, t24Name=RESERVED.2)
+		RESERVED_1 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=14.0, core=true, businessType=A, t24Name=RESERVED.1)
+		OVERRIDE -> byValue PW_Foundation:PW_PARAMETER__OVERRIDE *
+		RECORD_STATUS : mml:string
+			@i18n:Label (en="Record Status", fr=Statut, es=Estado)
+			@i18n:Tooltip (fr="Statut de l\'enregistrement")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=17.0, core=true, businessType=STAT, t24Name=RECORD.STATUS)
+		CURR_NO : mml:Integer
+			@i18n:Label (en="Curr No", fr="N° version", es="No. Actual")
+			@i18n:Tooltip (fr="Numéro de version")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=18.0, core=true, t24Name=CURR.NO)
+		INPUTTER -> byValue PW_Foundation:PW_PARAMETER__INPUTTER *
+		DATE_TIME -> byValue PW_Foundation:PW_PARAMETER__DATE_TIME *
+		AUTHORISER : mml:string
+			@i18n:Label (en=Authoriser, fr="Validé par", es=Autorizador)
+			@i18n:Tooltip (en="Indicates the User who Authorises the record", fr="Utilisateur de validation", es="El usuario que autorizó el registro")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=21.0, core=true, businessType=A, t24Name=AUTHORISER)
+		CO_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company, fr=Entité, es="Compañía")
+			@i18n:Tooltip (fr="Code établissement ou agence")
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=22.0, core=true, businessType=A, t24Name=CO.CODE)
+		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Dept Code", fr=Service, es=Departamento)
+			@i18n:Tooltip (fr="Code du service")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=23.0, core=true, t24Name=DEPT.CODE)
+		AUDITOR_CODE : mml:string
+			@i18n:Label (en="Auditor Code", fr="Audité par", es="Código de Auditor")
+			@i18n:Tooltip (en="Auditor Code", fr="Utilisateur d\'audit", es="Nombre del auditor")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=24.0, core=true, businessType=A, t24Name=AUDITOR.CODE)
+		AUDIT_DATE_TIME : mml:dateTime
+			@i18n:Label (en="Audit Date Time", fr="Audité le", es="Fecha/Hora de Audit.")
+			@i18n:Tooltip (en="Date and time when record was audited", fr="Date et heure d\'audit", es="Fecha y Hora de Auditoría ")
+			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=25.0, core=true, businessType=RELTIME, t24Name=AUDIT.DATE.TIME)
+	}
+	PW_PARAMETER__DESCRIPTION
+	{
+		DESCRIPTION : mml:string required
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, multiLanguage=true, sysNumber=1.0, core=true, businessType=A, t24Name=DESCRIPTION)
+	}
+	PW_PARAMETER__OVERRIDE
+	{
+		OVERRIDE : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=16.0, core=true, businessType=A, t24Name=OVERRIDE)
+	}
+	PW_PARAMETER__INPUTTER
+	{
+		INPUTTER : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=19.0, core=true, businessType=A, t24Name=INPUTTER)
+	}
+	PW_PARAMETER__DATE_TIME
+	{
+		DATE_TIME : mml:dateTime
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=20.0, core=true, businessType=RELTIME, t24Name=DATE.TIME)
+	}
+	PW_PARTICIPANT
+		@t24:i (t24Name=PW.PARTICIPANT, level=I, type=H, allowedFunctions="A C D E H I L P Q R S", localRefAllowed=true)
+	{
+		PW_PARTICIPANT_ID -> PW_Foundation:PW_PARTICIPANT PK required
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=0.0, core=true, businessType=A, t24Name=PW.PARTICIPANT.ID)
+		DESCRIPTION -> byValue PW_Foundation:PW_PARTICIPANT__DESCRIPTION *
+		SHORT_DESC -> byValue PW_Foundation:PW_PARTICIPANT__SHORT_DESC *
+		ACCT_OFFICER -> byValue PW_Foundation:PW_PARTICIPANT__ACCT_OFFICER *
+		USER -> byValue PW_Foundation:PW_PARTICIPANT__USER *
+		LAST_USER : mml:Integer
+			@i18n:Label (en="Last User", fr="Dernier utilisateur", es="Último Usuario")
+			@i18n:Tooltip (en="Last User", fr="Dernier utilisateur")
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=5.0, core=true, t24Name=LAST.USER)
+		LAST_DAO : mml:Integer
+			@i18n:Label (en="Last DAO", fr="Dernier gestionnaire", es="Último DAO")
+			@i18n:Tooltip (en="Last Dao", fr="Dernier gestionnaire")
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=6.0, core=true, t24Name=LAST.DAO)
+		ALLOW_EXT_USR : PW_Foundation:PW_PARTICIPANT__ALLOW_EXT_USR
+			@i18n:Label (en="Allow Ext Usr", fr="Autoriser utilisateur externe", es="Permite Usuario Ext.")
+			@i18n:Tooltip (en="Allow External User", fr="Autoriser utilisateur externe", es="Permite Usuario Externo")
+			@t24:i (align=L, inputBehaviour=I, maxLength=1, sysNumber=7.0, core=true, t24Name=ALLOW.EXT.USR)
+		RESERVED_9 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=8.0, core=true, t24Name=RESERVED.9)
+		RESERVED_8 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=9.0, core=true, t24Name=RESERVED.8)
+		RESERVED_7 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=10.0, core=true, t24Name=RESERVED.7)
+		RESERVED_6 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=11.0, core=true, t24Name=RESERVED.6)
+		RESERVED_5 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=12.0, core=true, t24Name=RESERVED.5)
+		RESERVED_4 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=13.0, core=true, t24Name=RESERVED.4)
+		RESERVED_3 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=14.0, core=true, t24Name=RESERVED.3)
+		RESERVED_2 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=15.0, core=true, t24Name=RESERVED.2)
+		RESERVED_1 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=16.0, core=true, t24Name=RESERVED.1)
+		OVERRIDE -> byValue PW_Foundation:PW_PARTICIPANT__OVERRIDE *
+		RECORD_STATUS : mml:string
+			@i18n:Label (en="Record Status", fr=Statut, es=Estado)
+			@i18n:Tooltip (fr="Statut de l\'enregistrement")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=19.0, core=true, businessType=STAT, t24Name=RECORD.STATUS)
+		CURR_NO : mml:Integer
+			@i18n:Label (en="Curr No", fr="N° version", es="No. Actual")
+			@i18n:Tooltip (fr="Numéro de version")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=20.0, core=true, t24Name=CURR.NO)
+		INPUTTER -> byValue PW_Foundation:PW_PARTICIPANT__INPUTTER *
+		DATE_TIME -> byValue PW_Foundation:PW_PARTICIPANT__DATE_TIME *
+		AUTHORISER : mml:string
+			@i18n:Label (en=Authoriser, fr="Validé par", es=Autorizador)
+			@i18n:Tooltip (en="Indicates the User who Authorises the record", fr="Utilisateur de validation", es="El usuario que autorizó el registro")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=23.0, core=true, businessType=A, t24Name=AUTHORISER)
+		CO_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company, fr=Entité, es="Compañía")
+			@i18n:Tooltip (fr="Code établissement ou agence")
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=24.0, core=true, businessType=A, t24Name=CO.CODE)
+		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Dept Code", fr=Service, es=Departamento)
+			@i18n:Tooltip (fr="Code du service")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=25.0, core=true, t24Name=DEPT.CODE)
+		AUDITOR_CODE : mml:string
+			@i18n:Label (en="Auditor Code", fr="Audité par", es="Código de Auditor")
+			@i18n:Tooltip (en="Auditor Code", fr="Utilisateur d\'audit", es="Nombre del auditor")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=26.0, core=true, businessType=A, t24Name=AUDITOR.CODE)
+		AUDIT_DATE_TIME : mml:dateTime
+			@i18n:Label (en="Audit Date Time", fr="Audité le", es="Fecha/Hora de Audit.")
+			@i18n:Tooltip (en="Date and time when record was audited", fr="Date et heure d\'audit", es="Fecha y Hora de Auditoría ")
+			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=27.0, core=true, businessType=RELTIME, t24Name=AUDIT.DATE.TIME)
+	}
+	PW_PARTICIPANT__DESCRIPTION
+	{
+		DESCRIPTION : mml:string required
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, multiLanguage=true, sysNumber=1.0, core=true, businessType=A, t24Name=DESCRIPTION)
+	}
+	PW_PARTICIPANT__SHORT_DESC
+	{
+		SHORT_DESC : mml:string required
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, multiLanguage=true, sysNumber=2.0, core=true, businessType=A, t24Name=SHORT.DESC)
+	}
+	PW_PARTICIPANT__ACCT_OFFICER
+	{
+		ACCT_OFFICER -> ST_Config:DEPT_ACCT_OFFICER
+			@t24:i (align=R, inputBehaviour=I, maxLength=35, sysNumber=3.0, core=true, businessType=DAO, t24Name=ACCT.OFFICER)
+	}
+	PW_PARTICIPANT__USER
+	{
+		USER -> EB_Security:USER
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=4.0, core=true, businessType=A, t24Name=USER)
+	}
+	PW_PARTICIPANT__OVERRIDE
+	{
+		OVERRIDE : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=18.0, core=true, businessType=A, t24Name=OVERRIDE)
+	}
+	PW_PARTICIPANT__INPUTTER
+	{
+		INPUTTER : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=21.0, core=true, businessType=A, t24Name=INPUTTER)
+	}
+	PW_PARTICIPANT__DATE_TIME
+	{
+		DATE_TIME : mml:dateTime
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=22.0, core=true, businessType=RELTIME, t24Name=DATE.TIME)
+	}
+	PW_PROCESS
+		@t24:i (t24Name=PW.PROCESS, level=I, type=H, allowedFunctions="A C D E H I L P Q R S", localRefAllowed=true)
+	{
+		PW_PROCESS_ID -> PW_Foundation:PW_PROCESS PK required
+			@i18n:Label (en="Process Id", fr="Id de processus", es="ID del Proceso")
+			@i18n:Tooltip (fr="Identifiant de processus")
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=0.0, core=true, businessType=A, t24Name=PW.PROCESS.ID)
+		PROCESS_DEFINITION -> PW_Foundation:PW_PROCESS_DEFINITION required
+			@i18n:Label (en="Product ID", fr="Code de Produit", es="ID de Procucto")
+			@i18n:Tooltip (en="Process definition key", fr="Code de Produit")
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=1.0, core=true, businessType=A, t24Name=PROCESS.DEFINITION)
+		CUSTOMER -> ST_Customer:CUSTOMER
+			@i18n:Label (en="Customer No", fr=Client, es="No. de Cliente")
+			@i18n:Tooltip (fr="Code du client")
+			@t24:i (align=R, inputBehaviour=I, maxLength=35, sysNumber=2.0, core=true, businessType=CUS, t24Name=CUSTOMER)
+		OWNER -> PW_Foundation:PW_PARTICIPANT
+			@i18n:Label (en=Owner, fr=Titulaire, es=Participante)
+			@i18n:Tooltip (fr=Titulaire)
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=3.0, core=true, businessType=A, t24Name=OWNER)
+		START_DATE : mml:date
+			@i18n:Label (en="Start Date", fr="Date de début", es="Fecha de Inicio")
+			@i18n:Tooltip (en="Start Date", fr="Date de début", es="Fecha de Inicio del Acuerdo")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=4.0, core=true, businessType=D, t24Name=START.DATE)
+		DUE_DATE : mml:date
+			@i18n:Label (en="Due Date", fr="Date d\'échéance", es="Fecha de Vencimiento")
+			@i18n:Tooltip (en="Due Date", fr="Date d\'échéance")
+			@t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=5.0, core=true, businessType=D, t24Name=DUE.DATE)
+		COMPLETION_DATE : mml:date
+			@i18n:Label (en="Completion Date", fr="Date de finalisation", es="Fecha de Terminación")
+			@i18n:Tooltip (fr="Date de finalisation")
+			@t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=6.0, core=true, businessType=D, t24Name=COMPLETION.DATE)
+		ACTIVITY_TXN -> byValue PW_Foundation:PW_PROCESS__ACTIVITY_TXN *
+		PROCESS_STATUS : mml:Integer
+			@i18n:Label (en="Process Status", fr="Statut de processus", es="Estado de Proceso")
+			@i18n:Tooltip (fr="Statut de processus")
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=18.0, core=true, t24Name=PROCESS.STATUS)
+		PARENT_PROCESS : mml:Integer
+			@i18n:Label (en="Parent Process", fr="Processus maître", es="Proceso Padre")
+			@i18n:Tooltip (en="Parent Process", fr="Processus maître")
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=19.0, core=true, t24Name=PARENT.PROCESS)
+		CAMP_GEN_ID : mml:string
+			@t24:i (align=L, inputBehaviour=E, maxLength=35, sysNumber=20.0, core=true, businessType=A, t24Name=CAMP.GEN.ID)
+		OPP_GEN_ID : mml:string
+			@t24:i (align=L, inputBehaviour=E, maxLength=35, sysNumber=21.0, core=true, businessType=A, t24Name=OPP.GEN.ID)
+		PARENT_CTX_ID : mml:string
+			@t24:i (align=L, inputBehaviour=E, maxLength=35, sysNumber=22.0, core=true, businessType=A, t24Name=PARENT.CTX.ID)
+		SLA : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=23.0, core=true, businessType=A, t24Name=SLA)
+		EXTERNAL_PROCESS : mml:string
+			@i18n:Label (en="External Process", es="Proceso Externo")
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=24.0, core=true, businessType=A, t24Name=EXTERNAL.PROCESS)
+		OVERRIDE -> byValue PW_Foundation:PW_PROCESS__OVERRIDE *
+		RECORD_STATUS : mml:string
+			@i18n:Label (en="Record Status", fr=Statut, es=Estado)
+			@i18n:Tooltip (fr="Statut de l\'enregistrement")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=27.0, core=true, businessType=STAT, t24Name=RECORD.STATUS)
+		CURR_NO : mml:Integer
+			@i18n:Label (en="Curr No", fr="N° version", es="No. Actual")
+			@i18n:Tooltip (fr="Numéro de version")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=28.0, core=true, t24Name=CURR.NO)
+		INPUTTER -> byValue PW_Foundation:PW_PROCESS__INPUTTER *
+		DATE_TIME -> byValue PW_Foundation:PW_PROCESS__DATE_TIME *
+		AUTHORISER : mml:string
+			@i18n:Label (en=Authoriser, fr="Validé par", es=Autorizador)
+			@i18n:Tooltip (en="Indicates the User who Authorises the record", fr="Utilisateur de validation", es="El usuario que autorizó el registro")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=31.0, core=true, businessType=A, t24Name=AUTHORISER)
+		CO_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company, fr=Entité, es="Compañía")
+			@i18n:Tooltip (fr="Code établissement ou agence")
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=32.0, core=true, businessType=A, t24Name=CO.CODE)
+		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Dept Code", fr=Service, es=Departamento)
+			@i18n:Tooltip (fr="Code du service")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=33.0, core=true, t24Name=DEPT.CODE)
+		AUDITOR_CODE : mml:string
+			@i18n:Label (en="Auditor Code", fr="Audité par", es="Código de Auditor")
+			@i18n:Tooltip (en="Auditor Code", fr="Utilisateur d\'audit", es="Nombre del auditor")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=34.0, core=true, businessType=A, t24Name=AUDITOR.CODE)
+		AUDIT_DATE_TIME : mml:dateTime
+			@i18n:Label (en="Audit Date Time", fr="Audité le", es="Fecha/Hora de Audit.")
+			@i18n:Tooltip (en="Date and time when record was audited", fr="Date et heure d\'audit", es="Fecha y Hora de Auditoría ")
+			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=35.0, core=true, businessType=RELTIME, t24Name=AUDIT.DATE.TIME)
+	}
+	PW_PROCESS__ACTIVITY_TXN
+	{
+		ACTIVITY_TXN : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=7.0, core=true, businessType=A, t24Name=ACTIVITY.TXN)
+		COMPLETED : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=8.0, core=true, t24Name=COMPLETED)
+		ACTIVITY : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=99, sysNumber=9.0, core=true, t24Name=ACTIVITY)
+		PATTERN_CONSTR : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=10.0, core=true, t24Name=PATTERN.CONSTR)
+		ROUTE_RULE_VALN : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=11.0, core=true, t24Name=ROUTE.RULE.VALN)
+		ROUTE_TO_ACT : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=12.0, core=true, t24Name=ROUTE.TO.ACT)
+		FLOW_ACT -> byValue PW_Foundation:PW_PROCESS__ACTIVITY_TXN__FLOW_ACT *
+		CASE_ACTIVITY : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=14.0, core=true, t24Name=CASE.ACTIVITY)
+		DEF_ACTIVITY : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=15.0, core=true, t24Name=DEF.ACTIVITY)
+		REPEAT_BLOCK : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=16.0, core=true, t24Name=REPEAT.BLOCK)
+		UNIQUE_NAME : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=50, sysNumber=17.0, core=true, t24Name=UNIQUE.NAME)
+	}
+	PW_PROCESS__ACTIVITY_TXN__FLOW_ACT
+	{
+		FLOW_ACT : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=13.0, core=true, t24Name=FLOW.ACT)
+	}
+	PW_PROCESS__OVERRIDE
+	{
+		OVERRIDE : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=26.0, core=true, businessType=A, t24Name=OVERRIDE)
+	}
+	PW_PROCESS__INPUTTER
+	{
+		INPUTTER : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=29.0, core=true, businessType=A, t24Name=INPUTTER)
+	}
+	PW_PROCESS__DATE_TIME
+	{
+		DATE_TIME : mml:dateTime
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=30.0, core=true, businessType=RELTIME, t24Name=DATE.TIME)
+	}
+	PW_PROCESS_DEFINITION
+		@t24:i (t24Name=PW.PROCESS.DEFINITION, level=I, type=H, allowedFunctions="A C D E H I L P Q R S", localRefAllowed=true)
+	{
+		PW_DEF_ID -> PW_Foundation:PW_PROCESS_DEFINITION PK required
+			@i18n:Label (en=Process, fr=Processus, es=Proceso)
+			@i18n:Tooltip (fr=Processus)
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=0.0, core=true, businessType=A, t24Name=PW.DEF.ID)
+		DESCRIPTION -> byValue PW_Foundation:PW_PROCESS_DEFINITION__DESCRIPTION *
+		SHORT_DESC -> byValue PW_Foundation:PW_PROCESS_DEFINITION__SHORT_DESC *
+		DEF_DURATION : mml:Integer required
+			@i18n:Label (en="Default Duration", fr="Durée par défaut", es="Duración Pre-establ.")
+			@i18n:Tooltip (fr="Durée par défaut")
+			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=3.0, core=true, t24Name=DEF.DURATION)
+		ACTIVITY -> byValue PW_Foundation:PW_PROCESS_DEFINITION__ACTIVITY *
+		PROCESS_COMPLETION_STATUS -> byValue PW_Foundation:PW_PROCESS_DEFINITION__PROCESS_COMPLETION_STATUS *
+		ALLOWED_STATUS -> byValue PW_Foundation:PW_PROCESS_DEFINITION__ALLOWED_STATUS *
+		OWNER -> PW_Foundation:PW_PARTICIPANT required
+			@i18n:Label (en=Owner, fr=Titulaire, es=Participante)
+			@i18n:Tooltip (fr=Titulaire)
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=37.0, core=true, businessType=A, t24Name=OWNER)
+		PROC_STAT_EVAL -> EB_RulesEngine:EB_RULE_GATEWAY
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=38.0, core=true, businessType=MNE, t24Name=PROC.STAT.EVAL)
+		SLA -> SG_Framework:SG_SLA
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=39.0, core=true, businessType=A, t24Name=SLA)
+		PROCESS_XML : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=40.0, core=true, businessType=A, t24Name=PROCESS.XML)
+		RESERVED_3 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=41.0, core=true, t24Name=RESERVED.3)
+		RESERVED_2 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=42.0, core=true, t24Name=RESERVED.2)
+		RESERVED_1 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=43.0, core=true, t24Name=RESERVED.1)
+		OVERRIDE -> byValue PW_Foundation:PW_PROCESS_DEFINITION__OVERRIDE *
+		RECORD_STATUS : mml:string
+			@i18n:Label (en="Record Status", fr=Statut, es=Estado)
+			@i18n:Tooltip (fr="Statut de l\'enregistrement")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=46.0, core=true, businessType=STAT, t24Name=RECORD.STATUS)
+		CURR_NO : mml:Integer
+			@i18n:Label (en="Curr No", fr="N° version", es="No. Actual")
+			@i18n:Tooltip (fr="Numéro de version")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=47.0, core=true, t24Name=CURR.NO)
+		INPUTTER -> byValue PW_Foundation:PW_PROCESS_DEFINITION__INPUTTER *
+		DATE_TIME -> byValue PW_Foundation:PW_PROCESS_DEFINITION__DATE_TIME *
+		AUTHORISER : mml:string
+			@i18n:Label (en=Authoriser, fr="Validé par", es=Autorizador)
+			@i18n:Tooltip (en="Indicates the User who Authorises the record", fr="Utilisateur de validation", es="El usuario que autorizó el registro")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=50.0, core=true, businessType=A, t24Name=AUTHORISER)
+		CO_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company, fr=Entité, es="Compañía")
+			@i18n:Tooltip (fr="Code établissement ou agence")
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=51.0, core=true, businessType=A, t24Name=CO.CODE)
+		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Dept Code", fr=Service, es=Departamento)
+			@i18n:Tooltip (fr="Code du service")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=52.0, core=true, t24Name=DEPT.CODE)
+		AUDITOR_CODE : mml:string
+			@i18n:Label (en="Auditor Code", fr="Audité par", es="Código de Auditor")
+			@i18n:Tooltip (en="Auditor Code", fr="Utilisateur d\'audit", es="Nombre del auditor")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=53.0, core=true, businessType=A, t24Name=AUDITOR.CODE)
+		AUDIT_DATE_TIME : mml:dateTime
+			@i18n:Label (en="Audit Date Time", fr="Audité le", es="Fecha/Hora de Audit.")
+			@i18n:Tooltip (en="Date and time when record was audited", fr="Date et heure d\'audit", es="Fecha y Hora de Auditoría ")
+			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=54.0, core=true, businessType=RELTIME, t24Name=AUDIT.DATE.TIME)
+	}
+	PW_PROCESS_DEFINITION__DESCRIPTION
+	{
+		DESCRIPTION : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, multiLanguage=true, sysNumber=1.0, core=true, businessType=A, t24Name=DESCRIPTION)
+	}
+	PW_PROCESS_DEFINITION__SHORT_DESC
+	{
+		SHORT_DESC : mml:string required
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, multiLanguage=true, sysNumber=2.0, core=true, businessType=A, t24Name=SHORT.DESC)
+	}
+	PW_PROCESS_DEFINITION__ACTIVITY
+	{
+		ACTIVITY : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=4.0, core=true, businessType=A, t24Name=ACTIVITY)
+		PRE_REQ_ACT -> byValue PW_Foundation:PW_PROCESS_DEFINITION__ACTIVITY__PRE_REQ_ACT *
+		PRE_REQ_CONSTR : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=9.0, core=true, businessType=ANY, t24Name=PRE.REQ.CONSTR)
+		UNIQUE_NAME : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=50, sysNumber=10.0, core=true, businessType=A, t24Name=UNIQUE.NAME)
+		TIME_TRIGGER : PW_Foundation:PW_PROCESS_DEFINITION__ACTIVITY__TIME_TRIGGER
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=11.0, core=true, t24Name=TIME.TRIGGER)
+		FOLLOW_ON_ACT : PW_Foundation:PW_PROCESS_DEFINITION__ACTIVITY__FOLLOW_ON_ACT
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=12.0, core=true, t24Name=FOLLOW.ON.ACT)
+		EB_MAPPING -> EB_SystemTables:EB_MAPPING_SOURCE
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=13.0, core=true, businessType=A, t24Name=EB.MAPPING)
+		PRE_REQ_EVAL -> EB_RulesEngine:EB_RULE_GATEWAY
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=14.0, core=true, businessType=MNE, t24Name=PRE.REQ.EVAL)
+		RECU_EVAL_RULE -> EB_RulesEngine:EB_RULE_GATEWAY
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=15.0, core=true, businessType=MNE, t24Name=RECU.EVAL.RULE)
+		RECU_EVAL_COND : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=16.0, core=true, businessType=A, t24Name=RECU.EVAL.COND)
+		PATTERN_CONSTR : PW_Foundation:PW_PROCESS_DEFINITION__ACTIVITY__PATTERN_CONSTR
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=17.0, core=true, t24Name=PATTERN.CONSTR)
+		EVAL_CONDITION : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=18.0, core=true, businessType=A, t24Name=EVAL.CONDITION)
+		EVAL_RULE -> EB_RulesEngine:EB_RULE_GATEWAY
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=19.0, core=true, businessType=MNE, t24Name=EVAL.RULE)
+		ROUTE_TO_ACT : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=20.0, core=true, businessType=ANY, t24Name=ROUTE.TO.ACT)
+		ROUTE_ACT_STATUS -> PW_Foundation:PW_STATUS
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=21.0, core=true, businessType=A, t24Name=ROUTE.ACT.STATUS)
+		FLOW_ACT -> byValue PW_Foundation:PW_PROCESS_DEFINITION__ACTIVITY__FLOW_ACT *
+		CASE_ACTIVITY -> byValue PW_Foundation:PW_PROCESS_DEFINITION__ACTIVITY__CASE_ACTIVITY *
+		DEF_ACTIVITY : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=24.0, core=true, businessType=ANY, t24Name=DEF.ACTIVITY)
+		ACTIVITY_OWNER -> PW_Foundation:PW_PARTICIPANT
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=25.0, core=true, businessType=A, t24Name=ACTIVITY.OWNER)
+		RESERVED_12 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=26.0, core=true, t24Name=RESERVED.12)
+	}
+	PW_PROCESS_DEFINITION__ACTIVITY__PRE_REQ_ACT
+	{
+		PRE_REQ_ACT : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=40, sysNumber=5.0, core=true, businessType=ANY, t24Name=PRE.REQ.ACT)
+		PRE_REQ_STAT -> PW_Foundation:PW_STATUS
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=6.0, core=true, businessType=A, t24Name=PRE.REQ.STAT)
+		PRE_REQ_RULE -> PW_Foundation:PW_TRANSITION
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=7.0, core=true, businessType=A, t24Name=PRE.REQ.RULE)
+		OPERATION : PW_Foundation:PW_PROCESS_DEFINITION__ACTIVITY__PRE_REQ_ACT__OPERATION
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=8.0, core=true, t24Name=OPERATION)
+	}
+	PW_PROCESS_DEFINITION__ACTIVITY__FLOW_ACT
+	{
+		FLOW_ACT : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=22.0, core=true, businessType=A, t24Name=FLOW.ACT)
+	}
+	PW_PROCESS_DEFINITION__ACTIVITY__CASE_ACTIVITY
+	{
+		CASE_ACTIVITY : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=23.0, core=true, businessType=ANY, t24Name=CASE.ACTIVITY)
+	}
+	PW_PROCESS_DEFINITION__PROCESS_COMPLETION_STATUS
+	{
+		PROCESS_COMPLETION_STATUS -> PW_Foundation:PW_STATUS required
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=27.0, core=true, businessType=A, t24Name=PROCESS.COMPLETION.STATUS)
+	}
+	PW_PROCESS_DEFINITION__ALLOWED_STATUS
+	{
+		ALLOWED_STATUS -> PW_Foundation:PW_STATUS
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=28.0, core=true, businessType=A, t24Name=ALLOWED.STATUS)
+		PROCESS_ACTIVITY -> byValue PW_Foundation:PW_PROCESS_DEFINITION__ALLOWED_STATUS__PROCESS_ACTIVITY *
+		PROCESS_CONSTR -> byValue PW_Foundation:PW_PROCESS_DEFINITION__ALLOWED_STATUS__PROCESS_CONSTR *
+		PROCESS_STATUS_RULE -> PW_Foundation:PW_TRANSITION
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=33.0, core=true, businessType=A, t24Name=PROCESS.STATUS.RULE)
+		RESERVED_10 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=34.0, core=true, t24Name=RESERVED.10)
+		RESERVED_9 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=35.0, core=true, t24Name=RESERVED.9)
+		RESERVED_8 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=36.0, core=true, t24Name=RESERVED.8)
+	}
+	PW_PROCESS_DEFINITION__ALLOWED_STATUS__PROCESS_ACTIVITY
+	{
+		PROCESS_ACTIVITY : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=40, sysNumber=29.0, core=true, businessType=ANY, t24Name=PROCESS.ACTIVITY)
+		ACTIVITY_STATUS -> PW_Foundation:PW_STATUS
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=30.0, core=true, businessType=A, t24Name=ACTIVITY.STATUS)
+	}
+	PW_PROCESS_DEFINITION__ALLOWED_STATUS__PROCESS_CONSTR
+	{
+		PROCESS_CONSTR : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=40, sysNumber=31.0, core=true, businessType=ANY, t24Name=PROCESS.CONSTR)
+		CONSTR_STATUS -> PW_Foundation:PW_STATUS
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=32.0, core=true, businessType=A, t24Name=CONSTR.STATUS)
+	}
+	PW_PROCESS_DEFINITION__OVERRIDE
+	{
+		OVERRIDE : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=45.0, core=true, businessType=A, t24Name=OVERRIDE)
+	}
+	PW_PROCESS_DEFINITION__INPUTTER
+	{
+		INPUTTER : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=48.0, core=true, businessType=A, t24Name=INPUTTER)
+	}
+	PW_PROCESS_DEFINITION__DATE_TIME
+	{
+		DATE_TIME : mml:dateTime
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=49.0, core=true, businessType=RELTIME, t24Name=DATE.TIME)
+	}
+	PW_STATUS
+		@t24:i (t24Name=PW.STATUS, level=I, type=H, allowedFunctions="A C D E H I L P Q R S", localRefAllowed=true)
+	{
+		PW_STATUS_ID -> PW_Foundation:PW_STATUS PK required
+			@i18n:Label (en="PW Status", fr="Statut PW", es="Esta. Riqueza Priva.")
+			@i18n:Tooltip (fr="Statut PW")
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=0.0, core=true, businessType=A, t24Name=PW.STATUS.ID)
+		DESCRIPTION -> byValue PW_Foundation:PW_STATUS__DESCRIPTION *
+		SHORT_DESC -> byValue PW_Foundation:PW_STATUS__SHORT_DESC *
+		RESERVED_10 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=3.0, core=true, t24Name=RESERVED.10)
+		RESERVED_9 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=4.0, core=true, t24Name=RESERVED.9)
+		RESERVED_8 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=5.0, core=true, t24Name=RESERVED.8)
+		RESERVED_7 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=6.0, core=true, t24Name=RESERVED.7)
+		RESERVED_6 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=7.0, core=true, t24Name=RESERVED.6)
+		RESERVED_5 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=8.0, core=true, t24Name=RESERVED.5)
+		RESERVED_4 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=9.0, core=true, t24Name=RESERVED.4)
+		RESERVED_3 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=10.0, core=true, t24Name=RESERVED.3)
+		RESERVED_2 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=11.0, core=true, t24Name=RESERVED.2)
+		RESERVED_1 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=12.0, core=true, t24Name=RESERVED.1)
+		RECORD_STATUS : mml:string
+			@i18n:Label (en="Record Status", fr=Statut, es=Estado)
+			@i18n:Tooltip (fr="Statut de l\'enregistrement")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=14.0, core=true, businessType=STAT, t24Name=RECORD.STATUS)
+		CURR_NO : mml:Integer
+			@i18n:Label (en="Curr No", fr="N° version", es="No. Actual")
+			@i18n:Tooltip (fr="Numéro de version")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=15.0, core=true, t24Name=CURR.NO)
+		INPUTTER -> byValue PW_Foundation:PW_STATUS__INPUTTER *
+		DATE_TIME -> byValue PW_Foundation:PW_STATUS__DATE_TIME *
+		AUTHORISER : mml:string
+			@i18n:Label (en=Authoriser, fr="Validé par", es=Autorizador)
+			@i18n:Tooltip (en="Indicates the User who Authorises the record", fr="Utilisateur de validation", es="El usuario que autorizó el registro")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=18.0, core=true, businessType=A, t24Name=AUTHORISER)
+		CO_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company, fr=Entité, es="Compañía")
+			@i18n:Tooltip (fr="Code établissement ou agence")
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=19.0, core=true, businessType=A, t24Name=CO.CODE)
+		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Dept Code", fr=Service, es=Departamento)
+			@i18n:Tooltip (fr="Code du service")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=20.0, core=true, t24Name=DEPT.CODE)
+		AUDITOR_CODE : mml:string
+			@i18n:Label (en="Auditor Code", fr="Audité par", es="Código de Auditor")
+			@i18n:Tooltip (en="Auditor Code", fr="Utilisateur d\'audit", es="Nombre del auditor")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=21.0, core=true, businessType=A, t24Name=AUDITOR.CODE)
+		AUDIT_DATE_TIME : mml:dateTime
+			@i18n:Label (en="Audit Date Time", fr="Audité le", es="Fecha/Hora de Audit.")
+			@i18n:Tooltip (en="Date and time when record was audited", fr="Date et heure d\'audit", es="Fecha y Hora de Auditoría ")
+			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=22.0, core=true, businessType=RELTIME, t24Name=AUDIT.DATE.TIME)
+	}
+	PW_STATUS__DESCRIPTION
+	{
+		DESCRIPTION : mml:string required
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, multiLanguage=true, sysNumber=1.0, core=true, businessType=A, t24Name=DESCRIPTION)
+	}
+	PW_STATUS__SHORT_DESC
+	{
+		SHORT_DESC : mml:string required
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, multiLanguage=true, sysNumber=2.0, core=true, businessType=A, t24Name=SHORT.DESC)
+	}
+	PW_STATUS__INPUTTER
+	{
+		INPUTTER : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=16.0, core=true, businessType=A, t24Name=INPUTTER)
+	}
+	PW_STATUS__DATE_TIME
+	{
+		DATE_TIME : mml:dateTime
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=17.0, core=true, businessType=RELTIME, t24Name=DATE.TIME)
+	}
+	PW_TRANSITION
+		@t24:i (t24Name=PW.TRANSITION, level=I, type=H, allowedFunctions="A C D E H I L P Q R S", localRefAllowed=true)
+	{
+		PW_TRANSITION_ID -> PW_Foundation:PW_TRANSITION PK required
+			@i18n:Label (en=RULE.ID, fr="Code de règle", es="ID de Regla")
+			@i18n:Tooltip (fr="Code de règle")
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=0.0, core=true, businessType=A, t24Name=PW.TRANSITION.ID)
+		DESCRIPTION -> byValue PW_Foundation:PW_TRANSITION__DESCRIPTION *
+		SELECTION_FIELD -> byValue PW_Foundation:PW_TRANSITION__SELECTION_FIELD *
+		SELECTION_OPERAND : PW_Foundation:PW_TRANSITION__SELECTION_OPERAND
+			@i18n:Label (en="Selection Operand", fr="Opérande de sélection", es="Selección de Operando")
+			@i18n:Tooltip (en="Selection Operand", fr="Opérande de sélection")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=5.0, core=true, t24Name=SELECTION.OPERAND)
+		ROUTINE : mml:string
+			@i18n:Label (en=Routine, fr=Routine, es=Rutina)
+			@i18n:Tooltip (en=Routine, fr=Routine)
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=6.0, core=true, businessType=A, t24Name=ROUTINE)
+		RESERVED_10 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=7.0, core=true, t24Name=RESERVED.10)
+		RESERVED_9 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=8.0, core=true, t24Name=RESERVED.9)
+		RESERVED_8 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=9.0, core=true, t24Name=RESERVED.8)
+		RESERVED_7 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=10.0, core=true, t24Name=RESERVED.7)
+		RESERVED_6 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=11.0, core=true, t24Name=RESERVED.6)
+		RESERVED_5 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=12.0, core=true, t24Name=RESERVED.5)
+		RESERVED_4 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=13.0, core=true, t24Name=RESERVED.4)
+		RESERVED_3 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=14.0, core=true, t24Name=RESERVED.3)
+		RESERVED_2 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=15.0, core=true, t24Name=RESERVED.2)
+		RESERVED_1 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=16.0, core=true, t24Name=RESERVED.1)
+		OVERRIDE -> byValue PW_Foundation:PW_TRANSITION__OVERRIDE *
+		RECORD_STATUS : mml:string
+			@i18n:Label (en="Record Status", fr=Statut, es=Estado)
+			@i18n:Tooltip (fr="Statut de l\'enregistrement")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=19.0, core=true, businessType=STAT, t24Name=RECORD.STATUS)
+		CURR_NO : mml:Integer
+			@i18n:Label (en="Curr No", fr="N° version", es="No. Actual")
+			@i18n:Tooltip (fr="Numéro de version")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=20.0, core=true, t24Name=CURR.NO)
+		INPUTTER -> byValue PW_Foundation:PW_TRANSITION__INPUTTER *
+		DATE_TIME -> byValue PW_Foundation:PW_TRANSITION__DATE_TIME *
+		AUTHORISER : mml:string
+			@i18n:Label (en=Authoriser, fr="Validé par", es=Autorizador)
+			@i18n:Tooltip (en="Indicates the User who Authorises the record", fr="Utilisateur de validation", es="El usuario que autorizó el registro")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=23.0, core=true, businessType=A, t24Name=AUTHORISER)
+		CO_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company, fr=Entité, es="Compañía")
+			@i18n:Tooltip (fr="Code établissement ou agence")
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=24.0, core=true, businessType=A, t24Name=CO.CODE)
+		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Dept Code", fr=Service, es=Departamento)
+			@i18n:Tooltip (fr="Code du service")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=25.0, core=true, t24Name=DEPT.CODE)
+		AUDITOR_CODE : mml:string
+			@i18n:Label (en="Auditor Code", fr="Audité par", es="Código de Auditor")
+			@i18n:Tooltip (en="Auditor Code", fr="Utilisateur d\'audit", es="Nombre del auditor")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=26.0, core=true, businessType=A, t24Name=AUDITOR.CODE)
+		AUDIT_DATE_TIME : mml:dateTime
+			@i18n:Label (en="Audit Date Time", fr="Audité le", es="Fecha/Hora de Audit.")
+			@i18n:Tooltip (en="Date and time when record was audited", fr="Date et heure d\'audit", es="Fecha y Hora de Auditoría ")
+			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=27.0, core=true, businessType=RELTIME, t24Name=AUDIT.DATE.TIME)
+	}
+	PW_TRANSITION__DESCRIPTION
+	{
+		DESCRIPTION : mml:string required
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, multiLanguage=true, sysNumber=1.0, core=true, businessType=A, t24Name=DESCRIPTION)
+	}
+	PW_TRANSITION__SELECTION_FIELD
+	{
+		SELECTION_FIELD : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=2.0, core=true, businessType=A, t24Name=SELECTION.FIELD)
+		OPERAND : PW_Foundation:PW_TRANSITION__SELECTION_FIELD__OPERAND
+			@t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=3.0, core=true, t24Name=OPERAND)
+		CRITERIA -> byValue PW_Foundation:PW_TRANSITION__SELECTION_FIELD__CRITERIA *
+	}
+	PW_TRANSITION__SELECTION_FIELD__CRITERIA
+	{
+		CRITERIA : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=4.0, core=true, businessType=A, t24Name=CRITERIA)
+	}
+	PW_TRANSITION__OVERRIDE
+	{
+		OVERRIDE : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=18.0, core=true, businessType=A, t24Name=OVERRIDE)
+	}
+	PW_TRANSITION__INPUTTER
+	{
+		INPUTTER : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=21.0, core=true, businessType=A, t24Name=INPUTTER)
+	}
+	PW_TRANSITION__DATE_TIME
+	{
+		DATE_TIME : mml:dateTime
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=22.0, core=true, businessType=RELTIME, t24Name=DATE.TIME)
+	}
+	PW_TXN_REF
+		@t24:i (t24Name=PW.TXN.REF, level=F, type=T, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		PW_TXN_REF_ID -> PW_Foundation:PW_TXN_REF PK required
+			@t24:i (align=L, inputBehaviour=I, maxLength=50, sysNumber=0.0, core=true, businessType=A, t24Name=PW.TXN.REF.ID)
+		ACTIVITY_TXN_ID -> PW_Foundation:PW_ACTIVITY_TXN required
+			@t24:i (align=R, inputBehaviour=I, maxLength=35, sysNumber=1.0, core=true, t24Name=ACTIVITY.TXN.ID)
+	}
+	PW_VERB
+		@t24:i (t24Name=PW.VERB, level=I, type=U, allowedFunctions="A C D E I L P Q R S", localRefAllowed=true)
+	{
+		PW_VERB_ID -> PW_Foundation:PW_VERB PK required
+			@i18n:Label (en="Verb Id", fr="Verb PW Id", es="ID Riqueza Privada")
+			@i18n:Tooltip (fr="Verb PW Identifiant ")
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=0.0, core=true, businessType=A, t24Name=PW.VERB.ID)
+		DESCRIPTION -> byValue PW_Foundation:PW_VERB__DESCRIPTION *
+		PARENT -> PW_Foundation:PW_VERB
+			@i18n:Label (en=Parent, fr="Réf. Parent", es="Referencia Padre")
+			@i18n:Tooltip (fr="Référence Parent")
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=2.0, core=true, businessType=A, t24Name=PARENT)
+		RESERVED_10 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=3.0, core=true, t24Name=RESERVED.10)
+		RESERVED_9 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=4.0, core=true, t24Name=RESERVED.9)
+		RESERVED_8 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=5.0, core=true, t24Name=RESERVED.8)
+		RESERVED_7 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=6.0, core=true, t24Name=RESERVED.7)
+		RESERVED_6 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=7.0, core=true, t24Name=RESERVED.6)
+		RESERVED_5 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=8.0, core=true, t24Name=RESERVED.5)
+		RESERVED_4 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=9.0, core=true, t24Name=RESERVED.4)
+		RESERVED_3 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=10.0, core=true, t24Name=RESERVED.3)
+		RESERVED_2 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=11.0, core=true, t24Name=RESERVED.2)
+		RESERVED_1 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=12.0, core=true, t24Name=RESERVED.1)
+		OVERRIDE -> byValue PW_Foundation:PW_VERB__OVERRIDE *
+		RECORD_STATUS : mml:string
+			@i18n:Label (en="Record Status", fr=Statut, es=Estado)
+			@i18n:Tooltip (fr="Statut de l\'enregistrement")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=15.0, core=true, businessType=STAT, t24Name=RECORD.STATUS)
+		CURR_NO : mml:Integer
+			@i18n:Label (en="Curr No", fr="N° version", es="No. Actual")
+			@i18n:Tooltip (fr="Numéro de version")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=16.0, core=true, t24Name=CURR.NO)
+		INPUTTER -> byValue PW_Foundation:PW_VERB__INPUTTER *
+		DATE_TIME -> byValue PW_Foundation:PW_VERB__DATE_TIME *
+		AUTHORISER : mml:string
+			@i18n:Label (en=Authoriser, fr="Validé par", es=Autorizador)
+			@i18n:Tooltip (en="Indicates the User who Authorises the record", fr="Utilisateur de validation", es="El usuario que autorizó el registro")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=19.0, core=true, businessType=A, t24Name=AUTHORISER)
+		CO_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company, fr=Entité, es="Compañía")
+			@i18n:Tooltip (fr="Code établissement ou agence")
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=20.0, core=true, businessType=A, t24Name=CO.CODE)
+		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Dept Code", fr=Service, es=Departamento)
+			@i18n:Tooltip (fr="Code du service")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=21.0, core=true, t24Name=DEPT.CODE)
+		AUDITOR_CODE : mml:string
+			@i18n:Label (en="Auditor Code", fr="Audité par", es="Código de Auditor")
+			@i18n:Tooltip (en="Auditor Code", fr="Utilisateur d\'audit", es="Nombre del auditor")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=22.0, core=true, businessType=A, t24Name=AUDITOR.CODE)
+		AUDIT_DATE_TIME : mml:dateTime
+			@i18n:Label (en="Audit Date Time", fr="Audité le", es="Fecha/Hora de Audit.")
+			@i18n:Tooltip (en="Date and time when record was audited", fr="Date et heure d\'audit", es="Fecha y Hora de Auditoría ")
+			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=23.0, core=true, businessType=RELTIME, t24Name=AUDIT.DATE.TIME)
+	}
+	PW_VERB__DESCRIPTION
+	{
+		DESCRIPTION : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, multiLanguage=true, sysNumber=1.0, core=true, businessType=A, t24Name=DESCRIPTION)
+	}
+	PW_VERB__OVERRIDE
+	{
+		OVERRIDE : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=14.0, core=true, businessType=A, t24Name=OVERRIDE)
+	}
+	PW_VERB__INPUTTER
+	{
+		INPUTTER : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=17.0, core=true, businessType=A, t24Name=INPUTTER)
+	}
+	PW_VERB__DATE_TIME
+	{
+		DATE_TIME : mml:dateTime
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=18.0, core=true, businessType=RELTIME, t24Name=DATE.TIME)
+	}
+}
+Enumerations {
+	PW_ACTIVITY__ACTIVITY_TYPE : mml:string
+		MANUAL=MANUAL
+		AUTO=AUTO
+	PW_ACTIVITY__PRIORITY : mml:string
+		n1=1
+		n2=2
+		n3=3
+		n4=4
+		n5=5
+	PW_ACTIVITY__MONITOR_STAGE : mml:string
+		START=START
+		COMPENSATE=COMPENSATE
+		FAULT=FAULT
+	PW_ACTIVITY_TXN__MAPPING_COMP : mml:string
+		Y=Y
+	PW_MAPPING__OVERWRITE : mml:string
+		YES=YES
+		NO=NO
+	PW_PARAMETER__USE_WFLOW_PATTERNS : mml:string
+		YES=YES
+		NO=NO
+	PW_PARTICIPANT__ALLOW_EXT_USR : mml:string
+		Y=Y
+		N=N
+	PW_PROCESS_DEFINITION__ACTIVITY__PRE_REQ_ACT__OPERATION : mml:string
+		AND=AND
+		OR=OR
+	PW_PROCESS_DEFINITION__ACTIVITY__TIME_TRIGGER : mml:string
+		YES=YES
+		NO=NO
+	PW_PROCESS_DEFINITION__ACTIVITY__FOLLOW_ON_ACT : mml:string
+		NO=NO
+		YES=YES
+	PW_PROCESS_DEFINITION__ACTIVITY__PATTERN_CONSTR : mml:string
+		ROUTE_TO=ROUTE.TO
+		PARALLEL_FLOW=PARALLEL.FLOW
+		SWITCH=SWITCH
+	PW_TRANSITION__SELECTION_FIELD__OPERAND : mml:string
+		EQ=EQ
+		NE=NE
+		GT=GT
+		GE=GE
+		LT=LT
+		LE=LE
+		LK=LK
+		UL=UL
+	PW_TRANSITION__SELECTION_OPERAND : mml:string
+		AND=AND
+		OR=OR
+}

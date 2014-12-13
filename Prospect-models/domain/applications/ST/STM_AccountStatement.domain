@@ -1,0 +1,1887 @@
+# UTF-8
+/* Parameter Definitions for Account Statement */
+Domain STM_AccountStatement
+	@t24:i (module=ST)
+	@java:Package (value=com.temenos.t24.datamodel.st.stm_accountstatement)
+namespace "http://www.temenos.com/t24/STM_AccountStatement"
+metamodelVersion 4.3.0.20110527
+Classes {
+	AC_NOSTRO_STMT
+		@t24:i (t24Name=AC.NOSTRO.STMT, level=F, type=W, allowedFunctions="C I L P Q R S V", localRefAllowed=false)
+	{
+		KEY -> STM_AccountStatement:AC_NOSTRO_STMT PK required
+			@i18n:Label (en=Key, fr=Clé, es=Clave)
+			@i18n:Tooltip (en="Indicates th transaction key", fr=Clé)
+			@t24:i (align=L, inputBehaviour=I, maxLength=20, sysNumber=0.0, core=true, businessType=A, t24Name=KEY)
+		CUSTOMER_NO -> byValue STM_AccountStatement:AC_NOSTRO_STMT__CUSTOMER_NO *
+		ACCOUNT_NUMBER -> byValue STM_AccountStatement:AC_NOSTRO_STMT__ACCOUNT_NUMBER *
+		RECORD_STATUS : mml:string
+			@i18n:Label (en="Record Status", fr=Statut, es=Estado)
+			@i18n:Tooltip (fr="Statut de l\'enregistrement")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=3.0, core=true, businessType=STAT, t24Name=RECORD.STATUS)
+		CURR_NO : mml:Integer
+			@i18n:Label (en="Curr No", fr="N° version", es="No. Actual")
+			@i18n:Tooltip (fr="Numéro de version")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=4.0, core=true, t24Name=CURR.NO)
+		INPUTTER -> byValue STM_AccountStatement:AC_NOSTRO_STMT__INPUTTER *
+		DATE_TIME -> byValue STM_AccountStatement:AC_NOSTRO_STMT__DATE_TIME *
+		AUTHORISER : mml:string
+			@i18n:Label (en=Authoriser, fr="Validé par", es=Autorizador)
+			@i18n:Tooltip (en="Indicates the User who Authorises the record", fr="Utilisateur de validation", es="El usuario que autorizó el registro")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=7.0, core=true, businessType=A, t24Name=AUTHORISER)
+		CO_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company, fr=Entité, es="Compañía")
+			@i18n:Tooltip (fr="Code établissement ou agence")
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=8.0, core=true, businessType=A, t24Name=CO.CODE)
+		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Dept Code", fr=Service, es=Departamento)
+			@i18n:Tooltip (fr="Code du service")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=9.0, core=true, t24Name=DEPT.CODE)
+		AUDITOR_CODE : mml:string
+			@i18n:Label (en="Auditor Code", fr="Audité par", es="Código de Auditor")
+			@i18n:Tooltip (en="Auditor Code", fr="Utilisateur d\'audit", es="Nombre del auditor")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=10.0, core=true, businessType=A, t24Name=AUDITOR.CODE)
+		AUDIT_DATE_TIME : mml:dateTime
+			@i18n:Label (en="Audit Date Time", fr="Audité le", es="Fecha/Hora de Audit.")
+			@i18n:Tooltip (en="Date and time when record was audited", fr="Date et heure d\'audit", es="Fecha y Hora de Auditoría ")
+			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=11.0, core=true, businessType=RELTIME, t24Name=AUDIT.DATE.TIME)
+	}
+	AC_NOSTRO_STMT__CUSTOMER_NO
+	{
+		CUSTOMER_NO -> ST_Customer:CUSTOMER
+			@t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=1.0, core=true, businessType=CUS, t24Name=CUSTOMER.NO)
+	}
+	AC_NOSTRO_STMT__ACCOUNT_NUMBER
+	{
+		ACCOUNT_NUMBER -> ACM_AccountOpening:ACCOUNT
+			@t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=2.0, core=true, businessType=ANT, t24Name=ACCOUNT.NUMBER)
+	}
+	AC_NOSTRO_STMT__INPUTTER
+	{
+		INPUTTER : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=5.0, core=true, businessType=A, t24Name=INPUTTER)
+	}
+	AC_NOSTRO_STMT__DATE_TIME
+	{
+		DATE_TIME : mml:dateTime
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=6.0, core=true, businessType=RELTIME, t24Name=DATE.TIME)
+	}
+	AC_PRINT_MASK
+		@t24:i (t24Name=AC.PRINT.MASK, level=F, type=H, allowedFunctions="C D E H I L P Q S", localRefAllowed=true)
+	{
+		ACCT_DATE_SEQU -> STM_AccountStatement:AC_PRINT_MASK PK required
+			@t24:i (align=L, inputBehaviour=I, maxLength=45, sysNumber=0.0, core=true, businessType=A, t24Name=ACCT.DATE.SEQU)
+		ACCOUNT_NO -> ACM_AccountOpening:ACCOUNT required
+			@i18n:Label (en=Account, fr="N° de compte", es=Cuenta)
+			@i18n:Tooltip (en="Indicates Customer Account Number", fr="Numéro de compte")
+			@t24:i (align=R, inputBehaviour=I, maxLength=16, sysNumber=1.0, core=true, businessType=ACC, t24Name=ACCOUNT.NO)
+		MASK_DATE : mml:date
+			@i18n:Label (en="Mask Date", fr="Date de masque", es="Fecha de Máscara")
+			@i18n:Tooltip (en="Mask Date", fr="Date de masque", es="Fecha de Máscara")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=2.0, core=true, businessType=D, t24Name=MASK.DATE)
+		ENQ_START_DATE : mml:date
+			@i18n:Label (en="Enq Start Date", fr="Date de début d\'enquête", es="Fecha Inicio Consulta")
+			@i18n:Tooltip (en="Enquiry Start Date", fr="Date de début d\'enquête", es="Fecha de Inicio de Consulta")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=3.0, core=true, businessType=D, t24Name=ENQ.START.DATE)
+		ENQ_END_DATE : mml:date
+			@i18n:Label (en="Enq End Date", fr="Date de fin d\'enquête", es="Fecha Final Consulta")
+			@i18n:Tooltip (en="Enquiry End Date", fr="Date de fin d\'enquête", es="Fecha Final de Consulta")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=4.0, core=true, businessType=D, t24Name=ENQ.END.DATE)
+		MASK : STM_AccountStatement:AC_PRINT_MASK__MASK required
+			@i18n:Label (en=Mask, fr=Masque, es="Máscara")
+			@i18n:Tooltip (en=Mask, fr=Masque, es="Máscara")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=5.0, core=true, t24Name=MASK)
+		MASK_NARRATIVE : mml:string
+			@i18n:Label (en="Mask Narrative", fr="Narratif de masque", es="Descripción Máscara")
+			@i18n:Tooltip (en="Mask Narrative", fr="Narratif de masque", es="Descripción de Máscara")
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=6.0, core=true, businessType=S, t24Name=MASK.NARRATIVE)
+		MATCHED_TO -> byValue STM_AccountStatement:AC_PRINT_MASK__MATCHED_TO *
+		TO_TOTAL : mml:Double
+			@i18n:Label (en="To Total", fr="à total", es="A Total")
+			@i18n:Tooltip (en="To Total", fr="à total", es="A Total")
+			@t24:i (align=R, inputBehaviour=N, maxLength=20, sysNumber=8.0, core=true, businessType=AMT, t24Name=TO.TOTAL)
+		MATCHED_FROM -> byValue STM_AccountStatement:AC_PRINT_MASK__MATCHED_FROM *
+		FROM_TOTAL : mml:Double
+			@i18n:Label (en="From Total", fr="De Total", es="Del Total")
+			@i18n:Tooltip (en="From Total", fr="De Total", es="Del Total")
+			@t24:i (align=R, inputBehaviour=N, maxLength=20, sysNumber=10.0, core=true, businessType=AMT, t24Name=FROM.TOTAL)
+		NET_TOTAL : mml:Double
+			@i18n:Label (en="Net Total", fr="Net Total", es="Total Neto")
+			@i18n:Tooltip (en="Net Total", fr="Net Total", es="Total Neto ")
+			@t24:i (align=R, inputBehaviour=N, maxLength=20, sysNumber=11.0, core=true, businessType=AMT, t24Name=NET.TOTAL)
+		RESERVED_1 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=3, sysNumber=12.0, core=true, t24Name=RESERVED.1)
+		RESERVED_2 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=3, sysNumber=13.0, core=true, t24Name=RESERVED.2)
+		RESERVED_3 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=3, sysNumber=14.0, core=true, t24Name=RESERVED.3)
+		RESERVED_4 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=3, sysNumber=15.0, core=true, t24Name=RESERVED.4)
+		RESERVED_5 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=3, sysNumber=16.0, core=true, t24Name=RESERVED.5)
+		OVERRIDE -> byValue STM_AccountStatement:AC_PRINT_MASK__OVERRIDE *
+		RECORD_STATUS : mml:string
+			@i18n:Label (en="Record Status", fr=Statut, es=Estado)
+			@i18n:Tooltip (fr="Statut de l\'enregistrement")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=19.0, core=true, businessType=STAT, t24Name=RECORD.STATUS)
+		CURR_NO : mml:Integer
+			@i18n:Label (en="Curr No", fr="N° version", es="No. Actual")
+			@i18n:Tooltip (fr="Numéro de version")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=20.0, core=true, t24Name=CURR.NO)
+		INPUTTER -> byValue STM_AccountStatement:AC_PRINT_MASK__INPUTTER *
+		DATE_TIME -> byValue STM_AccountStatement:AC_PRINT_MASK__DATE_TIME *
+		AUTHORISER : mml:string
+			@i18n:Label (en=Authoriser, fr="Validé par", es=Autorizador)
+			@i18n:Tooltip (en="Indicates the User who Authorises the record", fr="Utilisateur de validation", es="El usuario que autorizó el registro")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=23.0, core=true, businessType=A, t24Name=AUTHORISER)
+		CO_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company, fr=Entité, es="Compañía")
+			@i18n:Tooltip (fr="Code établissement ou agence")
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=24.0, core=true, businessType=A, t24Name=CO.CODE)
+		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Dept Code", fr=Service, es=Departamento)
+			@i18n:Tooltip (fr="Code du service")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=25.0, core=true, t24Name=DEPT.CODE)
+		AUDITOR_CODE : mml:string
+			@i18n:Label (en="Auditor Code", fr="Audité par", es="Código de Auditor")
+			@i18n:Tooltip (en="Auditor Code", fr="Utilisateur d\'audit", es="Nombre del auditor")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=26.0, core=true, businessType=A, t24Name=AUDITOR.CODE)
+		AUDIT_DATE_TIME : mml:dateTime
+			@i18n:Label (en="Audit Date Time", fr="Audité le", es="Fecha/Hora de Audit.")
+			@i18n:Tooltip (en="Date and time when record was audited", fr="Date et heure d\'audit", es="Fecha y Hora de Auditoría ")
+			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=27.0, core=true, businessType=RELTIME, t24Name=AUDIT.DATE.TIME)
+	}
+	AC_PRINT_MASK__MATCHED_TO
+	{
+		MATCHED_TO -> ENT_EntryCreation:STMT_ENTRY
+			@t24:i (align=L, inputBehaviour=I, maxLength=30, sysNumber=7.0, core=true, businessType=A, t24Name=MATCHED.TO)
+	}
+	AC_PRINT_MASK__MATCHED_FROM
+	{
+		MATCHED_FROM -> ENT_EntryCreation:STMT_ENTRY
+			@t24:i (align=L, inputBehaviour=I, maxLength=30, sysNumber=9.0, core=true, businessType=A, t24Name=MATCHED.FROM)
+	}
+	AC_PRINT_MASK__OVERRIDE
+	{
+		OVERRIDE : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=18.0, core=true, businessType=AN, t24Name=OVERRIDE)
+	}
+	AC_PRINT_MASK__INPUTTER
+	{
+		INPUTTER : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=21.0, core=true, businessType=A, t24Name=INPUTTER)
+	}
+	AC_PRINT_MASK__DATE_TIME
+	{
+		DATE_TIME : mml:dateTime
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=22.0, core=true, businessType=RELTIME, t24Name=DATE.TIME)
+	}
+	AC_STMT_HANDOFF
+		@t24:i (t24Name=AC.STMT.HANDOFF, level=F, type=H, allowedFunctions="A D E I L P Q S", localRefAllowed=false)
+	{
+		ACCT_DATE_FREQU -> STM_AccountStatement:AC_STMT_HANDOFF PK required
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=0.0, core=true, businessType=A, t24Name=ACCT.DATE.FREQU)
+		CARRIER_ADDR_NO -> byValue STM_AccountStatement:AC_STMT_HANDOFF__CARRIER_ADDR_NO *
+		CUSTOMER -> ST_Customer:CUSTOMER required
+			@i18n:Label (en="Nom client", fr=Client, es=Cliente)
+			@i18n:Tooltip (en="Nom du client", fr="Code du client", es="Pasivo de Cliente")
+			@t24:i (align=R, inputBehaviour=I, maxLength=6, sysNumber=4.0, core=true, businessType=CUS, t24Name=CUSTOMER)
+		SECTOR_CODE -> ST_Config:SECTOR
+			@t24:i (align=R, inputBehaviour=I, maxLength=4, sysNumber=5.0, core=true, t24Name=SECTOR.CODE)
+		COMPANY_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company, fr="Code établisst", es="Compañía")
+			@i18n:Tooltip (fr="Code établissement")
+			@t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=6.0, core=true, t24Name=COMPANY.CODE)
+		ACCOUNT_OFFICER -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Account Officer", fr=Gestionnaire, es="Gestor de Cuenta")
+			@i18n:Tooltip (en="Indicates Account Officer responsible", fr="Gestionnaire responsable du compte ou du client")
+			@t24:i (align=R, inputBehaviour=I, maxLength=4, sysNumber=7.0, core=true, t24Name=ACCOUNT.OFFICER)
+		CURRENCY -> FIN_CurrencyConfig:CURRENCY
+			@i18n:Label (en=Ccy, fr=Devise, es=Moneda)
+			@i18n:Tooltip (fr="Code devise ISO")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=8.0, core=true, businessType=CCY, t24Name=CURRENCY)
+		ACCT_CATEGORY -> ST_Config:CATEGORY
+			@t24:i (align=R, inputBehaviour=I, maxLength=4, sysNumber=9.0, core=true, t24Name=ACCT.CATEGORY)
+		ACCT_LIMIT_REF : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=8, sysNumber=10.0, core=true, t24Name=ACCT.LIMIT.REF)
+		STATEMENT_NO : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=6, sysNumber=11.0, core=true, t24Name=STATEMENT.NO)
+		OPENING_DATE : mml:date
+			@t24:i (align=R, inputBehaviour=I, maxLength=8, sysNumber=12.0, core=true, businessType=D, t24Name=OPENING.DATE)
+		OPENING_BALANCE : mml:Double required
+			@i18n:Label (en="Opening Balance", fr="Solde d\'ouverture", es="Saldo de Apertura")
+			@i18n:Tooltip (fr="Solde d\'ouverture")
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=13.0, core=true, businessType=AMT, t24Name=OPENING.BALANCE)
+		DESCRIPTIVE_STMT : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=1, sysNumber=14.0, core=true, t24Name=DESCRIPTIVE.STMT)
+		PRINT_ERROR -> byValue STM_AccountStatement:AC_STMT_HANDOFF__PRINT_ERROR *
+		STMT_FREQU : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=7, sysNumber=16.0, core=true, businessType=A, t24Name=STMT.FREQU)
+		ACCT_TITLE_2 : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=17.0, core=true, businessType=A, t24Name=ACCT.TITLE.2)
+		CONDITION_GROUP -> ST_ChargeConfig:ACCT_GEN_CONDITION
+			@i18n:Label (en="Condition Group", fr="Condition de Groupe", es="Condición de Grupo")
+			@i18n:Tooltip (fr="Condition de Groupe")
+			@t24:i (align=R, inputBehaviour=I, maxLength=6, sysNumber=18.0, core=true, t24Name=CONDITION.GROUP)
+		SHORT_TITLE : mml:Integer
+			@i18n:Label (en="Account Name", fr="Intitulé court", es="Nombre de Cuenta")
+			@i18n:Tooltip (en="Indicates the abbreviated title of the account", fr="Intitulé abrégé")
+			@t24:i (align=R, inputBehaviour=I, maxLength=25, sysNumber=19.0, core=true, t24Name=SHORT.TITLE)
+		TO_DATE : mml:date
+			@i18n:Label (en="To Date", fr="Jusqu\'au", es="A Fecha")
+			@i18n:Tooltip (fr="Jusqu\'au")
+			@t24:i (align=R, inputBehaviour=I, maxLength=8, sysNumber=20.0, core=true, businessType=D, t24Name=TO.DATE)
+		LIMIT_AMOUNT : mml:Double required
+			@i18n:Label (en="Limit Amount", fr=Montant, es="Monto Límite")
+			@i18n:Tooltip (en="It shows the limit amount", fr=Montant)
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=21.0, core=true, businessType=AMT, t24Name=LIMIT.AMOUNT)
+		LIMIT_AVAIL : mml:Double required
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=22.0, core=true, businessType=AMT, t24Name=LIMIT.AVAIL)
+		PENDING_ID -> byValue STM_AccountStatement:AC_STMT_HANDOFF__PENDING_ID *
+		RECORD_STATUS : mml:string
+			@i18n:Label (en="Record Status", fr=Statut, es=Estado)
+			@i18n:Tooltip (fr="Statut de l\'enregistrement")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=25.0, core=true, businessType=STAT, t24Name=RECORD.STATUS)
+		CURR_NO : mml:Integer
+			@i18n:Label (en="Curr No", fr="N° version", es="No. Actual")
+			@i18n:Tooltip (fr="Numéro de version")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=26.0, core=true, t24Name=CURR.NO)
+		INPUTTER -> byValue STM_AccountStatement:AC_STMT_HANDOFF__INPUTTER *
+		DATE_TIME -> byValue STM_AccountStatement:AC_STMT_HANDOFF__DATE_TIME *
+		AUTHORISER : mml:string
+			@i18n:Label (en=Authoriser, fr="Validé par", es=Autorizador)
+			@i18n:Tooltip (en="Indicates the User who Authorises the record", fr="Utilisateur de validation", es="El usuario que autorizó el registro")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=29.0, core=true, businessType=A, t24Name=AUTHORISER)
+		CO_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company, fr=Entité, es="Compañía")
+			@i18n:Tooltip (fr="Code établissement ou agence")
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=30.0, core=true, businessType=A, t24Name=CO.CODE)
+		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Dept Code", fr=Service, es=Departamento)
+			@i18n:Tooltip (fr="Code du service")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=31.0, core=true, t24Name=DEPT.CODE)
+		AUDITOR_CODE : mml:string
+			@i18n:Label (en="Auditor Code", fr="Audité par", es="Código de Auditor")
+			@i18n:Tooltip (en="Auditor Code", fr="Utilisateur d\'audit", es="Nombre del auditor")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=32.0, core=true, businessType=A, t24Name=AUDITOR.CODE)
+		AUDIT_DATE_TIME : mml:dateTime
+			@i18n:Label (en="Audit Date Time", fr="Audité le", es="Fecha/Hora de Audit.")
+			@i18n:Tooltip (en="Date and time when record was audited", fr="Date et heure d\'audit", es="Fecha y Hora de Auditoría ")
+			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=33.0, core=true, businessType=RELTIME, t24Name=AUDIT.DATE.TIME)
+		ACCOUNT : mml:Integer
+			@i18n:Label (en=Account, fr=Compte, es="Número de Cuenta")
+			@i18n:Tooltip (en="Identifies the customer account", fr=Compte, es="Identifica la cuenta del Cliente ")
+			@t24:i (align=L, inputBehaviour=I, maxLength=16, core=false, t24Name=ACCOUNT, genOperation="@ID[\".\",1,1]")
+		DATE : mml:Integer
+			@i18n:Label (en=Date, fr=Date, es=Fecha)
+			@i18n:Tooltip (fr=Date)
+			@t24:i (align=L, inputBehaviour=I, maxLength=11, core=false, t24Name=DATE, genOperation="@ID[\".\",2,1]")
+		FREQUENCY : mml:Integer
+			@i18n:Label (en=Frequency, fr=Fréquence, es=Frecuencia)
+			@i18n:Tooltip (en=Frequency, fr=Fréquence)
+			@t24:i (align=R, inputBehaviour=I, maxLength=1, core=false, t24Name=FREQUENCY, genOperation="@ID[\".\",3,1]")
+		CARRIER : mml:Integer
+			@i18n:Label (en=Carrier, fr=Canal, es=Portador)
+			@i18n:Tooltip (fr=Canal)
+			@t24:i (align=R, inputBehaviour=I, maxLength=1, core=false, t24Name=CARRIER, genOperation="@ID[\".\",4,1]")
+		ACCT_OFF_SEL : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=4, core=false, t24Name=ACCT.OFF.SEL, genOperation=ACCOUNT.OFFICER)
+	}
+	AC_STMT_HANDOFF__CARRIER_ADDR_NO
+	{
+		CARRIER_ADDR_NO : mml:string required
+			@t24:i (align=L, inputBehaviour=I, maxLength=11, sysNumber=1.0, core=true, businessType=A, t24Name=CARRIER.ADDR.NO)
+		LANGUAGE : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=2.0, core=true, businessType=A, t24Name=LANGUAGE)
+		COPIES : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=3.0, core=true, t24Name=COPIES)
+	}
+	AC_STMT_HANDOFF__PRINT_ERROR
+	{
+		PRINT_ERROR : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=35, sysNumber=15.0, core=true, t24Name=PRINT.ERROR)
+	}
+	AC_STMT_HANDOFF__PENDING_ID
+	{
+		PENDING_ID : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=12, sysNumber=23.0, core=true, businessType=A, t24Name=PENDING.ID)
+		TOTAL_PENDING : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=24.0, core=true, businessType=AMT, t24Name=TOTAL.PENDING)
+	}
+	AC_STMT_HANDOFF__INPUTTER
+	{
+		INPUTTER : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=27.0, core=true, businessType=A, t24Name=INPUTTER)
+	}
+	AC_STMT_HANDOFF__DATE_TIME
+	{
+		DATE_TIME : mml:dateTime
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=28.0, core=true, businessType=RELTIME, t24Name=DATE.TIME)
+	}
+	AC_STMT_PARAMETER
+		@t24:i (t24Name=AC.STMT.PARAMETER, level=I, type=H, allowedFunctions="A D E I L P Q S", localRefAllowed=false)
+	{
+		ID -> STM_AccountStatement:AC_STMT_PARAMETER PK required
+			@i18n:Label (en="Transaction Ref", fr=Code, es="Ref. de Transacción")
+			@i18n:Tooltip (en="Transaction Reference", fr=Identifiant)
+			@t24:i (align=L, inputBehaviour=I, maxLength=6, sysNumber=0.0, core=true, t24Name=ID)
+		IF_NO_MOVEMENT : STM_AccountStatement:AC_STMT_PARAMETER__IF_NO_MOVEMENT required
+			@i18n:Label (fr="Si aucun mouvement")
+			@i18n:Tooltip (fr="Si aucun mouvement")
+			@t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=1.0, core=true, t24Name=IF.NO.MOVEMENT)
+		DESCRIPT_STATEMENT : STM_AccountStatement:AC_STMT_PARAMETER__DESCRIPT_STATEMENT required
+			@t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=2.0, core=true, t24Name=DESCRIPT.STATEMENT)
+		INT_CLOSING_ADVICE : STM_AccountStatement:AC_STMT_PARAMETER__INT_CLOSING_ADVICE required
+			@i18n:Label (fr="Avis de clôture d\'Intt")
+			@i18n:Tooltip (fr="Avis de clôture d\'Intt")
+			@t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=3.0, core=true, t24Name=INT.CLOSING.ADVICE)
+		INTEREST_SCALE : STM_AccountStatement:AC_STMT_PARAMETER__INTEREST_SCALE required
+			@i18n:Label (en="Interest Scale", fr="Echelle d\'Intérêt", es="Escala de Interés")
+			@i18n:Tooltip (en="Interest Scale", fr="Echelle d\'Intérêt ", es="Escala de Interés")
+			@t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=4.0, core=true, t24Name=INTEREST.SCALE)
+		TAX_ADVICE : STM_AccountStatement:AC_STMT_PARAMETER__TAX_ADVICE required
+			@i18n:Label (en="Tax Advice", fr="Avis de taxe", es="Aviso de Impuesto")
+			@i18n:Tooltip (en="Tax Advice", fr="Avis de taxe", es="Aviso de Impuesto")
+			@t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=5.0, core=true, t24Name=TAX.ADVICE)
+		MIN_MONTHS_STMT : mml:string
+			@i18n:Label (en="Min Months Stmt", fr="Ecriture cptable de mois min", es="Estado Mínimo Meses")
+			@i18n:Tooltip (en="Minimum Months Stmt", fr="Ecriture cptable de mois min", es="Estado de Mínimo de Meses ")
+			@t24:i (align=L, inputBehaviour=I, maxLength=4, sysNumber=6.0, core=true, businessType=A, t24Name=MIN.MONTHS.STMT)
+		FIRST_STMT : STM_AccountStatement:AC_STMT_PARAMETER__FIRST_STMT required
+			@i18n:Label (en="First Stmt", fr="1ère écriture cptable", es="Primera Estado")
+			@i18n:Tooltip (en="First Statement", fr="1ère écriture cptable", es="Primer Estado")
+			@t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=7.0, core=true, t24Name=FIRST.STMT)
+		OTHER_OFFICER : STM_AccountStatement:AC_STMT_PARAMETER__OTHER_OFFICER required
+			@i18n:Label (en="Other Officer", fr="Autre gestionnaire", es="Otro Gestor")
+			@i18n:Tooltip (en="Other Ac officer who may have some involvement", fr="Autre gestionnaire")
+			@t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=8.0, core=true, t24Name=OTHER.OFFICER)
+		FWD_MVMT_REQD : STM_AccountStatement:AC_STMT_PARAMETER__FWD_MVMT_REQD
+			@i18n:Label (en="Fwd Mvmt Reqd", fr="Mouvt à terme requis", es="Movimiento Fut. Req.")
+			@i18n:Tooltip (en="Fwd Mvmt Reqd", fr="Mouvt à terme requis", es="Movimiento Futuro Requerido")
+			@t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=9.0, core=true, t24Name=FWD.MVMT.REQD)
+		SP_PB_CONS_MAX : mml:Integer
+			@i18n:Label (en="Sp Pb Cons Max", fr="Ecriture max de livret de consolidation", es="Máx.Entr. Cons.Libr.")
+			@i18n:Tooltip (en="SP PB Cons Max ", fr="Ecriture max de livret de consolidation", es="Máximo de Entradas de Consolidación de Libreta")
+			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=10.0, core=true, t24Name=SP.PB.CONS.MAX)
+		PB_CONS_DR_TRANS -> ST_Config:TRANSACTION
+			@i18n:Label (en="Pb Cons Dr Trans", fr="PB consolider trans de Dt", es="Trs. Débito Cons. Pb")
+			@i18n:Tooltip (en="PB Cons Dr Trans", fr="PB consolider trans de Dt", es="Transacción de Débito Consolidada Pb")
+			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=11.0, core=true, t24Name=PB.CONS.DR.TRANS)
+		PB_CONS_CR_TRANS -> ST_Config:TRANSACTION
+			@i18n:Label (en="Pb Cons Cr Trans", fr="PB consolider trans de Ct", es="Trs. Crédito Cons. Pb")
+			@i18n:Tooltip (en="PB Cons Cr Trans", fr="PB consolider trans de Ct", es="Transacción de Crédito Consolidada Pb")
+			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=12.0, core=true, t24Name=PB.CONS.CR.TRANS)
+		INT_STMT_AND_ADV : STM_AccountStatement:AC_STMT_PARAMETER__INT_STMT_AND_ADV
+			@t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=13.0, core=true, t24Name=INT.STMT.AND.ADV)
+		RESERVED_4 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=14.0, core=true, t24Name=RESERVED.4)
+		RESERVED_3 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=15.0, core=true, t24Name=RESERVED.3)
+		RESERVED_2 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=16.0, core=true, t24Name=RESERVED.2)
+		RESERVED_1 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=17.0, core=true, t24Name=RESERVED.1)
+		RECORD_STATUS : mml:string
+			@i18n:Label (en="Record Status", fr=Statut, es=Estado)
+			@i18n:Tooltip (fr="Statut de l\'enregistrement")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=18.0, core=true, businessType=STAT, t24Name=RECORD.STATUS)
+		CURR_NO : mml:Integer
+			@i18n:Label (en="Curr No", fr="N° version", es="No. Actual")
+			@i18n:Tooltip (fr="Numéro de version")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=19.0, core=true, t24Name=CURR.NO)
+		INPUTTER -> byValue STM_AccountStatement:AC_STMT_PARAMETER__INPUTTER *
+		DATE_TIME -> byValue STM_AccountStatement:AC_STMT_PARAMETER__DATE_TIME *
+		AUTHORISER : mml:string
+			@i18n:Label (en=Authoriser, fr="Validé par", es=Autorizador)
+			@i18n:Tooltip (en="Indicates the User who Authorises the record", fr="Utilisateur de validation", es="El usuario que autorizó el registro")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=22.0, core=true, businessType=A, t24Name=AUTHORISER)
+		CO_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company, fr=Entité, es="Compañía")
+			@i18n:Tooltip (fr="Code établissement ou agence")
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=23.0, core=true, businessType=A, t24Name=CO.CODE)
+		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Dept Code", fr=Service, es=Departamento)
+			@i18n:Tooltip (fr="Code du service")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=24.0, core=true, t24Name=DEPT.CODE)
+		AUDITOR_CODE : mml:string
+			@i18n:Label (en="Auditor Code", fr="Audité par", es="Código de Auditor")
+			@i18n:Tooltip (en="Auditor Code", fr="Utilisateur d\'audit", es="Nombre del auditor")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=25.0, core=true, businessType=A, t24Name=AUDITOR.CODE)
+		AUDIT_DATE_TIME : mml:dateTime
+			@i18n:Label (en="Audit Date Time", fr="Audité le", es="Fecha/Hora de Audit.")
+			@i18n:Tooltip (en="Date and time when record was audited", fr="Date et heure d\'audit", es="Fecha y Hora de Auditoría ")
+			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=26.0, core=true, businessType=RELTIME, t24Name=AUDIT.DATE.TIME)
+	}
+	AC_STMT_PARAMETER__INPUTTER
+	{
+		INPUTTER : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=20.0, core=true, businessType=A, t24Name=INPUTTER)
+	}
+	AC_STMT_PARAMETER__DATE_TIME
+	{
+		DATE_TIME : mml:dateTime
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=21.0, core=true, businessType=RELTIME, t24Name=DATE.TIME)
+	}
+	AC_STMT_SERVICE_DETAIL
+		@t24:i (t24Name=AC.STMT.SERVICE.DETAIL, level=F, type=L, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		STMT_KEY -> STM_AccountStatement:AC_STMT_SERVICE_DETAIL PK required
+			@t24:i (align=L, inputBehaviour=I, maxLength=50, sysNumber=0.0, core=true, businessType=A, t24Name=STMT.KEY)
+		STMT_DATE : mml:string
+			@i18n:Label (en="Statement Date", es="Fecha de Estado")
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=1.0, core=true, businessType=A, t24Name=STMT.DATE)
+		STMT_FQU_TYPE : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=2.0, core=true, businessType=A, t24Name=STMT.FQU.TYPE)
+		STMT_FQU_CYCLE : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=3.0, core=true, businessType=A, t24Name=STMT.FQU.CYCLE)
+		LAST_STMT_NO : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=4.0, core=true, businessType=A, t24Name=LAST.STMT.NO)
+		STMT_AV : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=5.0, core=true, businessType=A, t24Name=STMT.AV)
+		OPEN_STMT_DATE : mml:date
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=6.0, core=true, businessType=D, t24Name=OPEN.STMT.DATE)
+		LAST_BALANCE : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=7.0, core=true, businessType=A, t24Name=LAST.BALANCE)
+		TOT_STM_AMT : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=8.0, core=true, businessType=A, t24Name=TOT.STM.AMT)
+		FWD_MVMT_REQD : mml:string
+			@i18n:Label (fr="Mouvt à terme requis")
+			@i18n:Tooltip (fr="Mouvt à terme requis")
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=9.0, core=true, businessType=A, t24Name=FWD.MVMT.REQD)
+		SWIFT_STMT : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=10.0, core=true, businessType=A, t24Name=SWIFT.STMT)
+		SPL_STMT : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=11.0, core=true, businessType=A, t24Name=SPL.STMT)
+		ADHOC_TODAY : mml:date
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=12.0, core=true, businessType=D, t24Name=ADHOC.TODAY)
+		CLOSURE_STMT : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=13.0, core=true, businessType=A, t24Name=CLOSURE.STMT)
+		SEND_VIA_DEL : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=14.0, core=true, businessType=A, t24Name=SEND.VIA.DEL)
+		SEND_VIA_SWIFT : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=15.0, core=true, businessType=A, t24Name=SEND.VIA.SWIFT)
+		AC_CLEARED_BAL : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=16.0, core=true, businessType=A, t24Name=AC.CLEARED.BAL)
+		AC_ACTUAL_BAL : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=17.0, core=true, businessType=A, t24Name=AC.ACTUAL.BAL)
+		OPEN_AVAIL_BAL -> byValue STM_AccountStatement:AC_STMT_SERVICE_DETAIL__OPEN_AVAIL_BAL *
+		OPEN_AVAIL_DATE -> byValue STM_AccountStatement:AC_STMT_SERVICE_DETAIL__OPEN_AVAIL_DATE *
+		AUTH_DB_MVMT -> byValue STM_AccountStatement:AC_STMT_SERVICE_DETAIL__AUTH_DB_MVMT *
+		NAU_DB_MVMT -> byValue STM_AccountStatement:AC_STMT_SERVICE_DETAIL__NAU_DB_MVMT *
+		AUTH_CR_MVMT -> byValue STM_AccountStatement:AC_STMT_SERVICE_DETAIL__AUTH_CR_MVMT *
+		NAU_CR_MVMT -> byValue STM_AccountStatement:AC_STMT_SERVICE_DETAIL__NAU_CR_MVMT *
+		AVAILABLE_BAL -> byValue STM_AccountStatement:AC_STMT_SERVICE_DETAIL__AVAILABLE_BAL *
+		FWD_MVMT -> byValue STM_AccountStatement:AC_STMT_SERVICE_DETAIL__FWD_MVMT *
+		NEXT_AF_DATE -> byValue STM_AccountStatement:AC_STMT_SERVICE_DETAIL__NEXT_AF_DATE *
+		FIRST_AF_DATE -> byValue STM_AccountStatement:AC_STMT_SERVICE_DETAIL__FIRST_AF_DATE *
+		STMT_PRINTED_ID : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=28.0, core=true, businessType=A, t24Name=STMT.PRINTED.ID)
+		NO_MVMT_STMT : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=29.0, core=true, businessType=A, t24Name=NO.MVMT.STMT)
+		ADDITIONAL_STMT : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=30.0, core=true, businessType=A, t24Name=ADDITIONAL.STMT)
+		AC_PERIOD_END : mml:date
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=31.0, core=true, businessType=D, t24Name=AC.PERIOD.END)
+		AC_LWORKING_DAY : mml:date
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=32.0, core=true, businessType=D, t24Name=AC.LWORKING.DAY)
+		DE_STMT_REQ : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=33.0, core=true, businessType=A, t24Name=DE.STMT.REQ)
+		MAPPING_KEY : mml:string
+			@i18n:Label (en="Mapping Key", fr="Clé de correspondance", es="Clave de Mapeo")
+			@i18n:Tooltip (fr="Clé de correspondance")
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=34.0, core=true, businessType=A, t24Name=MAPPING.KEY)
+		FWD_STMT_PRINTED : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=35.0, core=true, businessType=A, t24Name=FWD.STMT.PRINTED)
+		RESERVED_5 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=36.0, core=true, t24Name=RESERVED.5)
+		RESERVED_4 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=37.0, core=true, t24Name=RESERVED.4)
+		RESERVED_3 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=38.0, core=true, t24Name=RESERVED.3)
+		RESERVED_2 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=39.0, core=true, t24Name=RESERVED.2)
+		RESERVED_1 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=40.0, core=true, t24Name=RESERVED.1)
+	}
+	AC_STMT_SERVICE_DETAIL__OPEN_AVAIL_BAL
+	{
+		OPEN_AVAIL_BAL : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=18.0, core=true, businessType=A, t24Name=OPEN.AVAIL.BAL)
+	}
+	AC_STMT_SERVICE_DETAIL__OPEN_AVAIL_DATE
+	{
+		OPEN_AVAIL_DATE : mml:date
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=19.0, core=true, businessType=D, t24Name=OPEN.AVAIL.DATE)
+	}
+	AC_STMT_SERVICE_DETAIL__AUTH_DB_MVMT
+	{
+		AUTH_DB_MVMT : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=20.0, core=true, businessType=A, t24Name=AUTH.DB.MVMT)
+	}
+	AC_STMT_SERVICE_DETAIL__NAU_DB_MVMT
+	{
+		NAU_DB_MVMT : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=21.0, core=true, businessType=A, t24Name=NAU.DB.MVMT)
+	}
+	AC_STMT_SERVICE_DETAIL__AUTH_CR_MVMT
+	{
+		AUTH_CR_MVMT : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=22.0, core=true, businessType=A, t24Name=AUTH.CR.MVMT)
+	}
+	AC_STMT_SERVICE_DETAIL__NAU_CR_MVMT
+	{
+		NAU_CR_MVMT : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=23.0, core=true, businessType=A, t24Name=NAU.CR.MVMT)
+	}
+	AC_STMT_SERVICE_DETAIL__AVAILABLE_BAL
+	{
+		AVAILABLE_BAL : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=24.0, core=true, businessType=A, t24Name=AVAILABLE.BAL)
+	}
+	AC_STMT_SERVICE_DETAIL__FWD_MVMT
+	{
+		FWD_MVMT : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=25.0, core=true, businessType=A, t24Name=FWD.MVMT)
+	}
+	AC_STMT_SERVICE_DETAIL__NEXT_AF_DATE
+	{
+		NEXT_AF_DATE : mml:date
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=26.0, core=true, businessType=D, t24Name=NEXT.AF.DATE)
+	}
+	AC_STMT_SERVICE_DETAIL__FIRST_AF_DATE
+	{
+		FIRST_AF_DATE : mml:date
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=27.0, core=true, businessType=D, t24Name=FIRST.AF.DATE)
+	}
+	ACCOUNT_STATEMENT
+		@t24:i (t24Name=ACCOUNT.STATEMENT, level=F, type=H, allowedFunctions="A C D E H I L P Q R S", localRefAllowed=true)
+	{
+		ACCOUNT_NUMBER -> STM_AccountStatement:ACCOUNT_STATEMENT PK required
+			@i18n:Label (en="Account Number", fr="Numéro de compte", es="Número de Cuenta")
+			@i18n:Tooltip (fr="Numéro de compte")
+			@t24:i (align=L, inputBehaviour=I, maxLength=19, sysNumber=0.0, core=true, businessType=POSANT, t24Name=ACCOUNT.NUMBER)
+		STMT_FQU_1 -> byValue STM_AccountStatement:ACCOUNT_STATEMENT__STMT_FQU_1 *
+		SPECIAL_STATEMENT : mml:date
+			@i18n:Label (en="Special Statement Frequency", fr="Fréquence d\'écriture cptable spéciale", es="Frec. Estado Especial")
+			@i18n:Tooltip (en="Special Statement Frequency", fr="Fréquence d\'écriture cptable spéciale", es="Frecuencia de Estado Especial ")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=2.0, core=true, businessType=D, t24Name=SPECIAL.STATEMENT)
+		IF_NO_MOVEMENT : STM_AccountStatement:ACCOUNT_STATEMENT__IF_NO_MOVEMENT required
+			@i18n:Label (en="If No Movement", fr="Si aucun mouvement", es="Si No Hay Movimientos")
+			@i18n:Tooltip (fr="Si aucun mouvement")
+			@t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=3.0, core=true, t24Name=IF.NO.MOVEMENT)
+		DESCRIPT_STATEMENT : STM_AccountStatement:ACCOUNT_STATEMENT__DESCRIPT_STATEMENT required
+			@t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=4.0, core=true, t24Name=DESCRIPT.STATEMENT)
+		INT_CLOSING_ADVICE : STM_AccountStatement:ACCOUNT_STATEMENT__INT_CLOSING_ADVICE required
+			@i18n:Label (en="Interest Closing Advice", fr="Avis de clôture d\'Intt", es="Aviso Cierre de Interés")
+			@i18n:Tooltip (fr="Avis de clôture d\'Intt")
+			@t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=5.0, core=true, t24Name=INT.CLOSING.ADVICE)
+		INTEREST_SCALE : STM_AccountStatement:ACCOUNT_STATEMENT__INTEREST_SCALE required
+			@i18n:Label (fr="Echelle d\'Intérêt")
+			@i18n:Tooltip (fr="Echelle d\'Intérêt ")
+			@t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=6.0, core=true, t24Name=INTEREST.SCALE)
+		TAX_ADVICE : STM_AccountStatement:ACCOUNT_STATEMENT__TAX_ADVICE required
+			@i18n:Label (fr="Avis de taxe")
+			@i18n:Tooltip (fr="Avis de taxe")
+			@t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=7.0, core=true, t24Name=TAX.ADVICE)
+		CURRENCY -> FIN_CurrencyConfig:CURRENCY
+			@i18n:Label (en=Ccy, fr=Devise, es=Moneda)
+			@i18n:Tooltip (fr="Code devise ISO")
+			@t24:i (align=L, inputBehaviour=E, maxLength=3, sysNumber=8.0, core=true, businessType=CCY, t24Name=CURRENCY)
+		FQU1_LAST_DATE : mml:date
+			@i18n:Label (en="Last Statement Date", fr="Dte de dernière écriture cptable", es="Fecha Últ. Estado")
+			@i18n:Tooltip (en="Last Statement Date", fr="Dte de dernière écriture cptable", es="Fecha de Última Estado")
+			@t24:i (align=R, inputBehaviour=E, maxLength=11, sysNumber=9.0, core=true, businessType=D, t24Name=FQU1.LAST.DATE)
+		FQU1_LAST_BALANCE : mml:Double
+			@i18n:Label (en="Last Statement Balance", fr="Solde de dernière écriture cptable", es="Saldo Últ. Estado")
+			@i18n:Tooltip (en="Last Statement Balance", fr="Solde de dernière écriture cptable", es="Saldo de Última Estado")
+			@t24:i (align=R, inputBehaviour=E, maxLength=19, sysNumber=10.0, core=true, businessType=AMT, t24Name=FQU1.LAST.BALANCE)
+		LAST_STATEMENT_NO : mml:Integer
+			@i18n:Label (en="Last Statement - 1 No", fr="Dernière écriture cptable- No.1", es="Últ. Estado- 1 No.")
+			@i18n:Tooltip (en="Last Statement - 1 No", fr="Dernière écriture cptable- No.1 ", es="Último Estado - Número 1 ")
+			@t24:i (align=R, inputBehaviour=E, maxLength=5, sysNumber=11.0, core=true, t24Name=LAST.STATEMENT.NO)
+		SWIFT_STMT_TYPE -> byValue STM_AccountStatement:ACCOUNT_STATEMENT__SWIFT_STMT_TYPE *
+		STMT_FQU_2 -> byValue STM_AccountStatement:ACCOUNT_STATEMENT__STMT_FQU_2 *
+		PASSBOOK_NEXTLINE : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=5, sysNumber=21.0, core=true, businessType=A, t24Name=PASSBOOK.NEXTLINE)
+		STATEMENT_DATE -> byValue STM_AccountStatement:ACCOUNT_STATEMENT__STATEMENT_DATE *
+		MESSAGE_TIME -> byValue STM_AccountStatement:ACCOUNT_STATEMENT__MESSAGE_TIME *
+		DR_FLOOR_LIMIT : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=26.0, core=true, businessType=AMT, t24Name=DR.FLOOR.LIMIT)
+		CR_FLOOR_LIMIT : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=27.0, core=true, businessType=AMT, t24Name=CR.FLOOR.LIMIT)
+		MESSAGE_TYPE -> byValue STM_AccountStatement:ACCOUNT_STATEMENT__MESSAGE_TYPE *
+		LAST_MT942_STMT_NO : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=5, sysNumber=30.0, core=true, t24Name=LAST.MT942.STMT.NO)
+		PRINT_STMT : STM_AccountStatement:ACCOUNT_STATEMENT__PRINT_STMT
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=31.0, core=true, t24Name=PRINT.STMT)
+		PASSBOOK_ID -> TT_Passbook:TELLER_PASSBOOK
+			@i18n:Label (fr="Code livret")
+			@i18n:Tooltip (fr="Code du livret")
+			@t24:i (align=L, inputBehaviour=I, maxLength=10, sysNumber=32.0, core=true, businessType=A, t24Name=PASSBOOK.ID)
+		CONS_SB_PASSBOOK : STM_AccountStatement:ACCOUNT_STATEMENT__CONS_SB_PASSBOOK
+			@i18n:Label (fr="Consolidation des écritures")
+			@i18n:Tooltip (fr="Consolidation des écritures")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=33.0, core=true, t24Name=CONS.SB.PASSBOOK)
+		LAST_MT941_DATE : mml:date
+			@t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=34.0, core=true, businessType=D, t24Name=LAST.MT941.DATE)
+		LAST_MT941_BAL : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=35.0, core=true, businessType=AMT, t24Name=LAST.MT941.BAL)
+		LAST_MT941_STMT_NO : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=5, sysNumber=36.0, core=true, t24Name=LAST.MT941.STMT.NO)
+		RESERVED_10 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=37.0, core=true, t24Name=RESERVED.10)
+		RESERVED_9 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=38.0, core=true, t24Name=RESERVED.9)
+		RESERVED_8 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=39.0, core=true, t24Name=RESERVED.8)
+		RESERVED_7 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=40.0, core=true, t24Name=RESERVED.7)
+		RESERVED_6 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=41.0, core=true, t24Name=RESERVED.6)
+		RESERVED_5 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=42.0, core=true, t24Name=RESERVED.5)
+		RESERVED_4 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=43.0, core=true, t24Name=RESERVED.4)
+		RESERVED_3 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=44.0, core=true, t24Name=RESERVED.3)
+		RESERVED_2 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=45.0, core=true, t24Name=RESERVED.2)
+		RESERVED_1 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=46.0, core=true, t24Name=RESERVED.1)
+		OVERRIDE -> byValue STM_AccountStatement:ACCOUNT_STATEMENT__OVERRIDE *
+		RECORD_STATUS : mml:string
+			@i18n:Label (en="Record Status", fr=Statut, es=Estado)
+			@i18n:Tooltip (fr="Statut de l\'enregistrement")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=48.0, core=true, businessType=STAT, t24Name=RECORD.STATUS)
+		CURR_NO : mml:Integer
+			@i18n:Label (en="Curr No", fr="N° version", es="No. Actual")
+			@i18n:Tooltip (fr="Numéro de version")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=49.0, core=true, t24Name=CURR.NO)
+		INPUTTER -> byValue STM_AccountStatement:ACCOUNT_STATEMENT__INPUTTER *
+		DATE_TIME -> byValue STM_AccountStatement:ACCOUNT_STATEMENT__DATE_TIME *
+		AUTHORISER : mml:string
+			@i18n:Label (en=Authoriser, fr="Validé par", es=Autorizador)
+			@i18n:Tooltip (en="Indicates the User who Authorises the record", fr="Utilisateur de validation", es="El usuario que autorizó el registro")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=52.0, core=true, businessType=A, t24Name=AUTHORISER)
+		CO_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company, fr=Entité, es="Compañía")
+			@i18n:Tooltip (fr="Code établissement ou agence")
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=53.0, core=true, businessType=A, t24Name=CO.CODE)
+		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Dept Code", fr=Service, es=Departamento)
+			@i18n:Tooltip (fr="Code du service")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=54.0, core=true, t24Name=DEPT.CODE)
+		AUDITOR_CODE : mml:string
+			@i18n:Label (en="Auditor Code", fr="Audité par", es="Código de Auditor")
+			@i18n:Tooltip (en="Auditor Code", fr="Utilisateur d\'audit", es="Nombre del auditor")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=55.0, core=true, businessType=A, t24Name=AUDITOR.CODE)
+		AUDIT_DATE_TIME : mml:dateTime
+			@i18n:Label (en="Audit Date Time", fr="Audité le", es="Fecha/Hora de Audit.")
+			@i18n:Tooltip (en="Date and time when record was audited", fr="Date et heure d\'audit", es="Fecha y Hora de Auditoría ")
+			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=56.0, core=true, businessType=RELTIME, t24Name=AUDIT.DATE.TIME)
+	}
+	ACCOUNT_STATEMENT__STMT_FQU_1
+	{
+		STMT_FQU_1 : mml:string required
+			@t24:i (align=L, inputBehaviour=I, maxLength=17, sysNumber=1.0, core=true, businessType=FQU, t24Name=STMT.FQU.1)
+	}
+	ACCOUNT_STATEMENT__SWIFT_STMT_TYPE
+	{
+		SWIFT_STMT_TYPE -> DE_Config:DE_MESSAGE
+			@t24:i (align=R, inputBehaviour=I, maxLength=4, sysNumber=12.0, core=true, t24Name=SWIFT.STMT.TYPE)
+	}
+	ACCOUNT_STATEMENT__STMT_FQU_2
+	{
+		STMT_FQU_2 -> byValue STM_AccountStatement:ACCOUNT_STATEMENT__STMT_FQU_2__STMT_FQU_2 *
+		FREQ_NO : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=1, sysNumber=14.0, core=true, t24Name=FREQ.NO)
+		SPL_STMT_FQU2 : mml:date
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=15.0, core=true, businessType=D, t24Name=SPL.STMT.FQU2)
+		IF_NO_MVMT_FQU2 : STM_AccountStatement:ACCOUNT_STATEMENT__STMT_FQU_2__IF_NO_MVMT_FQU2
+			@t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=16.0, core=true, t24Name=IF.NO.MVMT.FQU2)
+		FQU2_LAST_DATE : mml:date
+			@t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=17.0, core=true, businessType=D, t24Name=FQU2.LAST.DATE)
+		FQU2_LAST_BAL : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=18.0, core=true, businessType=AMT, t24Name=FQU2.LAST.BAL)
+		LAST_STMT2_NO : mml:Integer
+			@t24:i (align=R, inputBehaviour=E, maxLength=5, sysNumber=19.0, core=true, t24Name=LAST.STMT2.NO)
+		SW_STMT2_TYP -> byValue STM_AccountStatement:ACCOUNT_STATEMENT__STMT_FQU_2__SW_STMT2_TYP *
+	}
+	ACCOUNT_STATEMENT__STMT_FQU_2__STMT_FQU_2
+	{
+		STMT_FQU_2 : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=17, sysNumber=13.0, core=true, businessType=FQU, t24Name=STMT.FQU.2)
+	}
+	ACCOUNT_STATEMENT__STMT_FQU_2__SW_STMT2_TYP
+	{
+		SW_STMT2_TYP -> DE_Config:DE_MESSAGE
+			@t24:i (align=R, inputBehaviour=I, maxLength=4, sysNumber=20.0, core=true, t24Name=SW.STMT2.TYP)
+	}
+	ACCOUNT_STATEMENT__STATEMENT_DATE
+	{
+		STATEMENT_DATE : mml:date
+			@t24:i (align=R, inputBehaviour=E, maxLength=11, sysNumber=22.0, core=true, businessType=D, t24Name=STATEMENT.DATE)
+		DELIVERY_REF -> byValue STM_AccountStatement:ACCOUNT_STATEMENT__STATEMENT_DATE__DELIVERY_REF *
+	}
+	ACCOUNT_STATEMENT__STATEMENT_DATE__DELIVERY_REF
+	{
+		DELIVERY_REF : mml:string
+			@t24:i (align=L, inputBehaviour=E, maxLength=36, sysNumber=23.0, core=true, businessType=A, t24Name=DELIVERY.REF)
+	}
+	ACCOUNT_STATEMENT__MESSAGE_TIME
+	{
+		MESSAGE_TIME : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=5, sysNumber=25.0, core=true, businessType=TIME, t24Name=MESSAGE.TIME)
+	}
+	ACCOUNT_STATEMENT__MESSAGE_TYPE
+	{
+		MESSAGE_TYPE : STM_AccountStatement:ACCOUNT_STATEMENT__MESSAGE_TYPE__MESSAGE_TYPE
+			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=28.0, core=true, t24Name=MESSAGE.TYPE)
+		SEND_MSG_TYPE : STM_AccountStatement:ACCOUNT_STATEMENT__MESSAGE_TYPE__SEND_MSG_TYPE
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=29.0, core=true, t24Name=SEND.MSG.TYPE)
+	}
+	ACCOUNT_STATEMENT__OVERRIDE
+	{
+		OVERRIDE : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=47.0, core=true, businessType=A, t24Name=OVERRIDE)
+	}
+	ACCOUNT_STATEMENT__INPUTTER
+	{
+		INPUTTER : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=50.0, core=true, businessType=A, t24Name=INPUTTER)
+	}
+	ACCOUNT_STATEMENT__DATE_TIME
+	{
+		DATE_TIME : mml:dateTime
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=51.0, core=true, businessType=RELTIME, t24Name=DATE.TIME)
+	}
+	ACCT_ENT_STMT
+		@t24:i (t24Name=ACCT.ENT.STMT, level=I, type=W, allowedFunctions="C I L P Q R S V", localRefAllowed=false)
+	{
+		KEY -> STM_AccountStatement:ACCT_ENT_STMT PK required
+			@i18n:Label (en=Key, fr=Clé, es=Clave)
+			@i18n:Tooltip (en="Indicates th transaction key", fr=Clé)
+			@t24:i (align=L, inputBehaviour=I, maxLength=15, sysNumber=0.0, core=true, businessType=A, t24Name=KEY)
+		DESCRIPTION -> byValue STM_AccountStatement:ACCT_ENT_STMT__DESCRIPTION *
+		ACCOUNT_NUMBER -> ACM_AccountOpening:ACCOUNT
+			@i18n:Label (en="Account Number", fr="Numéro de compte", es="Número de Cuenta")
+			@i18n:Tooltip (fr="Numéro de compte")
+			@t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=2.0, core=true, businessType=ANT, t24Name=ACCOUNT.NUMBER)
+		CUSTOMER -> ST_Customer:CUSTOMER
+			@i18n:Label (en="Nom client", fr=Client, es=Cliente)
+			@i18n:Tooltip (en="Nom du client", fr="Code du client", es="Pasivo de Cliente")
+			@t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=3.0, core=true, businessType=CUS, t24Name=CUSTOMER)
+		START_DATE : mml:date
+			@i18n:Label (en="Start Date", fr="Date de début", es="Fecha de Inicio")
+			@i18n:Tooltip (en="Start Date", fr="Date de début", es="Fecha de Inicio del Acuerdo")
+			@t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=4.0, core=true, businessType=D, t24Name=START.DATE)
+		END_DATE : mml:date
+			@i18n:Label (en="End Date", fr="Date de fin", es="Fecha Final")
+			@i18n:Tooltip (en="End Date", fr="Date de fin")
+			@t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=5.0, core=true, businessType=D, t24Name=END.DATE)
+		REPORT_CONTROL -> EB_Reports:REPORT_CONTROL
+			@i18n:Label (fr="Contrôles")
+			@i18n:Tooltip (fr="Contrôles")
+			@t24:i (align=L, inputBehaviour=I, maxLength=30, sysNumber=6.0, core=true, businessType=A, t24Name=REPORT.CONTROL)
+		RECORD_STATUS : mml:string
+			@i18n:Label (en="Record Status", fr=Statut, es=Estado)
+			@i18n:Tooltip (fr="Statut de l\'enregistrement")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=7.0, core=true, businessType=STAT, t24Name=RECORD.STATUS)
+		CURR_NO : mml:Integer
+			@i18n:Label (en="Curr No", fr="N° version", es="No. Actual")
+			@i18n:Tooltip (fr="Numéro de version")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=8.0, core=true, t24Name=CURR.NO)
+		INPUTTER -> byValue STM_AccountStatement:ACCT_ENT_STMT__INPUTTER *
+		DATE_TIME -> byValue STM_AccountStatement:ACCT_ENT_STMT__DATE_TIME *
+		AUTHORISER : mml:string
+			@i18n:Label (en=Authoriser, fr="Validé par", es=Autorizador)
+			@i18n:Tooltip (en="Indicates the User who Authorises the record", fr="Utilisateur de validation", es="El usuario que autorizó el registro")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=11.0, core=true, businessType=A, t24Name=AUTHORISER)
+		CO_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company, fr=Entité, es="Compañía")
+			@i18n:Tooltip (fr="Code établissement ou agence")
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=12.0, core=true, businessType=A, t24Name=CO.CODE)
+		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Dept Code", fr=Service, es=Departamento)
+			@i18n:Tooltip (fr="Code du service")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=13.0, core=true, t24Name=DEPT.CODE)
+		AUDITOR_CODE : mml:string
+			@i18n:Label (en="Auditor Code", fr="Audité par", es="Código de Auditor")
+			@i18n:Tooltip (en="Auditor Code", fr="Utilisateur d\'audit", es="Nombre del auditor")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=14.0, core=true, businessType=A, t24Name=AUDITOR.CODE)
+		AUDIT_DATE_TIME : mml:dateTime
+			@i18n:Label (en="Audit Date Time", fr="Audité le", es="Fecha/Hora de Audit.")
+			@i18n:Tooltip (en="Date and time when record was audited", fr="Date et heure d\'audit", es="Fecha y Hora de Auditoría ")
+			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=15.0, core=true, businessType=RELTIME, t24Name=AUDIT.DATE.TIME)
+	}
+	ACCT_ENT_STMT__DESCRIPTION
+	{
+		DESCRIPTION : mml:string required
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, multiLanguage=true, sysNumber=1.0, core=true, businessType=A, t24Name=DESCRIPTION)
+	}
+	ACCT_ENT_STMT__INPUTTER
+	{
+		INPUTTER : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=9.0, core=true, businessType=A, t24Name=INPUTTER)
+	}
+	ACCT_ENT_STMT__DATE_TIME
+	{
+		DATE_TIME : mml:dateTime
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=10.0, core=true, businessType=RELTIME, t24Name=DATE.TIME)
+	}
+	ACCT_ENTRY_STMT
+		@t24:i (t24Name=ACCT.ENTRY.STMT, level=I, type=W, allowedFunctions="C I L P Q R S V", localRefAllowed=false)
+	{
+		KEY -> STM_AccountStatement:ACCT_ENTRY_STMT PK required
+			@i18n:Label (en=Key, fr=Clé, es=Clave)
+			@i18n:Tooltip (en="Indicates th transaction key", fr=Clé)
+			@t24:i (align=L, inputBehaviour=I, maxLength=15, sysNumber=0.0, core=true, businessType=A, t24Name=KEY)
+		DESCRIPTION -> byValue STM_AccountStatement:ACCT_ENTRY_STMT__DESCRIPTION *
+		SELECT_FILE : STM_AccountStatement:ACCT_ENTRY_STMT__SELECT_FILE required
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=2.0, core=true, t24Name=SELECT.FILE)
+		SELECTION_FIELD -> byValue STM_AccountStatement:ACCT_ENTRY_STMT__SELECTION_FIELD *
+		OPERAND -> byValue STM_AccountStatement:ACCT_ENTRY_STMT__OPERAND *
+		SORT_FIELD -> byValue STM_AccountStatement:ACCT_ENTRY_STMT__SORT_FIELD *
+		START_DATE : mml:date required
+			@i18n:Label (en="Start Date", fr="Date de début", es="Fecha de Inicio")
+			@i18n:Tooltip (en="Start Date", fr="Date de début", es="Fecha de Inicio del Acuerdo")
+			@t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=7.0, core=true, businessType=D, t24Name=START.DATE)
+		END_DATE : mml:date
+			@i18n:Label (en="End Date", fr="Date de fin", es="Fecha Final")
+			@i18n:Tooltip (en="End Date", fr="Date de fin")
+			@t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=8.0, core=true, businessType=D, t24Name=END.DATE)
+		FORMAT -> EB_Reports:ENQUIRY required
+			@i18n:Label (en=Format, fr=Format, es=Formato)
+			@i18n:Tooltip (fr=Format)
+			@t24:i (align=L, inputBehaviour=I, maxLength=32, sysNumber=9.0, core=true, businessType=A, t24Name=FORMAT)
+		ENQ_SEL_FIELD -> byValue STM_AccountStatement:ACCT_ENTRY_STMT__ENQ_SEL_FIELD *
+		ENQ_OPERAND -> byValue STM_AccountStatement:ACCT_ENTRY_STMT__ENQ_OPERAND *
+		ENQ_SORT -> byValue STM_AccountStatement:ACCT_ENTRY_STMT__ENQ_SORT *
+		REPORT_CONTROL_ID -> EB_Reports:REPORT_CONTROL required
+			@i18n:Label (fr="Réf. contrôle édition")
+			@i18n:Tooltip (fr="Référence de contrôle de l\'édition")
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=14.0, core=true, businessType=A, t24Name=REPORT.CONTROL.ID)
+		STANDARD_HEADING : STM_AccountStatement:ACCT_ENTRY_STMT__STANDARD_HEADING
+			@i18n:Label (fr="En-tête standard")
+			@i18n:Tooltip (fr="En-tête standard")
+			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=15.0, core=true, t24Name=STANDARD.HEADING)
+		REPORT_HEADER -> byValue STM_AccountStatement:ACCT_ENTRY_STMT__REPORT_HEADER *
+		PAGE_BREAK : STM_AccountStatement:ACCT_ENTRY_STMT__PAGE_BREAK
+			@t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=17.0, core=true, t24Name=PAGE.BREAK)
+		RESERVED_6 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=18.0, core=true, t24Name=RESERVED.6)
+		RESERVED_5 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=19.0, core=true, t24Name=RESERVED.5)
+		RESERVED_4 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=20.0, core=true, t24Name=RESERVED.4)
+		RESERVED_3 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=21.0, core=true, t24Name=RESERVED.3)
+		RESERVED_2 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=22.0, core=true, t24Name=RESERVED.2)
+		RESERVED_1 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=23.0, core=true, t24Name=RESERVED.1)
+		RECORD_STATUS : mml:string
+			@i18n:Label (en="Record Status", fr=Statut, es=Estado)
+			@i18n:Tooltip (fr="Statut de l\'enregistrement")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=24.0, core=true, businessType=STAT, t24Name=RECORD.STATUS)
+		CURR_NO : mml:Integer
+			@i18n:Label (en="Curr No", fr="N° version", es="No. Actual")
+			@i18n:Tooltip (fr="Numéro de version")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=25.0, core=true, t24Name=CURR.NO)
+		INPUTTER -> byValue STM_AccountStatement:ACCT_ENTRY_STMT__INPUTTER *
+		DATE_TIME -> byValue STM_AccountStatement:ACCT_ENTRY_STMT__DATE_TIME *
+		AUTHORISER : mml:string
+			@i18n:Label (en=Authoriser, fr="Validé par", es=Autorizador)
+			@i18n:Tooltip (en="Indicates the User who Authorises the record", fr="Utilisateur de validation", es="El usuario que autorizó el registro")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=28.0, core=true, businessType=A, t24Name=AUTHORISER)
+		CO_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company, fr=Entité, es="Compañía")
+			@i18n:Tooltip (fr="Code établissement ou agence")
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=29.0, core=true, businessType=A, t24Name=CO.CODE)
+		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Dept Code", fr=Service, es=Departamento)
+			@i18n:Tooltip (fr="Code du service")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=30.0, core=true, t24Name=DEPT.CODE)
+		AUDITOR_CODE : mml:string
+			@i18n:Label (en="Auditor Code", fr="Audité par", es="Código de Auditor")
+			@i18n:Tooltip (en="Auditor Code", fr="Utilisateur d\'audit", es="Nombre del auditor")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=31.0, core=true, businessType=A, t24Name=AUDITOR.CODE)
+		AUDIT_DATE_TIME : mml:dateTime
+			@i18n:Label (en="Audit Date Time", fr="Audité le", es="Fecha/Hora de Audit.")
+			@i18n:Tooltip (en="Date and time when record was audited", fr="Date et heure d\'audit", es="Fecha y Hora de Auditoría ")
+			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=32.0, core=true, businessType=RELTIME, t24Name=AUDIT.DATE.TIME)
+	}
+	ACCT_ENTRY_STMT__DESCRIPTION
+	{
+		DESCRIPTION : mml:string required
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, multiLanguage=true, sysNumber=1.0, core=true, businessType=A, t24Name=DESCRIPTION)
+	}
+	ACCT_ENTRY_STMT__SELECTION_FIELD
+	{
+		SELECTION_FIELD : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=50, sysNumber=3.0, core=true, businessType=ANY, t24Name=SELECTION.FIELD)
+	}
+	ACCT_ENTRY_STMT__OPERAND
+	{
+		OPERAND : STM_AccountStatement:ACCT_ENTRY_STMT__OPERAND__OPERAND
+			@t24:i (align=L, inputBehaviour=I, maxLength=30, sysNumber=4.0, core=true, t24Name=OPERAND)
+		SELECTION : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=45, sysNumber=5.0, core=true, businessType=ANY, t24Name=SELECTION)
+	}
+	ACCT_ENTRY_STMT__SORT_FIELD
+	{
+		SORT_FIELD : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=23, sysNumber=6.0, core=true, businessType=ANY, t24Name=SORT.FIELD)
+	}
+	ACCT_ENTRY_STMT__ENQ_SEL_FIELD
+	{
+		ENQ_SEL_FIELD : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=50, sysNumber=10.0, core=true, businessType=ANY, t24Name=ENQ.SEL.FIELD)
+	}
+	ACCT_ENTRY_STMT__ENQ_OPERAND
+	{
+		ENQ_OPERAND : STM_AccountStatement:ACCT_ENTRY_STMT__ENQ_OPERAND__ENQ_OPERAND
+			@t24:i (align=L, inputBehaviour=I, maxLength=30, sysNumber=11.0, core=true, t24Name=ENQ.OPERAND)
+		ENQ_SEL : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=45, sysNumber=12.0, core=true, businessType=ANY, t24Name=ENQ.SEL)
+	}
+	ACCT_ENTRY_STMT__ENQ_SORT
+	{
+		ENQ_SORT : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=23, sysNumber=13.0, core=true, businessType=ANY, t24Name=ENQ.SORT)
+	}
+	ACCT_ENTRY_STMT__REPORT_HEADER
+	{
+		REPORT_HEADER : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=42, sysNumber=16.0, core=true, businessType=A, t24Name=REPORT.HEADER)
+	}
+	ACCT_ENTRY_STMT__INPUTTER
+	{
+		INPUTTER : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=26.0, core=true, businessType=A, t24Name=INPUTTER)
+	}
+	ACCT_ENTRY_STMT__DATE_TIME
+	{
+		DATE_TIME : mml:dateTime
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=27.0, core=true, businessType=RELTIME, t24Name=DATE.TIME)
+	}
+	ACCT_STMT_ENTRY
+		@t24:i (t24Name=ACCT.STMT.ENTRY, level=F, type=T, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		STMT_ACCOUNT_NO -> STM_AccountStatement:ACCT_STMT_ENTRY PK required
+			@t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=0.0, core=true, businessType=ANT, t24Name=STMT.ACCOUNT.NO)
+		STMT_ENTRY_NO : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=25, sysNumber=1.0, core=true, businessType=A, t24Name=STMT.ENTRY.NO)
+	}
+	ACCT_STMT_PRINT
+		@t24:i (t24Name=ACCT.STMT.PRINT, level=F, type=T, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		STMT_ACCOUNT_NO -> STM_AccountStatement:ACCT_STMT_PRINT PK required
+			@t24:i (align=L, inputBehaviour=I, maxLength=19, sysNumber=0.0, core=true, businessType=POSANT, t24Name=STMT.ACCOUNT.NO)
+		STMT_DATE_BAL : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=16, sysNumber=1.0, core=true, t24Name=STMT.DATE/BAL)
+		ACCOUNT_CCY : mml:Integer
+			@i18n:Label (en="Account Ccy", fr="Devise du cpte", es="Moneda de Cuenta")
+			@i18n:Tooltip (en="Indicates the currency of the account", fr="Devise du compte")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, core=false, t24Name=ACCOUNT.CCY, genOperation="@ID>ACCOUNT>CURRENCY")
+	}
+	ACCT_STMT2_ENTRY
+		@t24:i (t24Name=ACCT.STMT2.ENTRY, level=F, type=T, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		STMT2_ACCT_NO -> STM_AccountStatement:ACCT_STMT2_ENTRY PK required
+			@t24:i (align=L, inputBehaviour=I, maxLength=18, sysNumber=0.0, core=true, businessType=A, t24Name=STMT2.ACCT.NO)
+		STMT2_ENTRY_NO : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=25, sysNumber=1.0, core=true, businessType=A, t24Name=STMT2.ENTRY.NO)
+	}
+	ACCT_STMT2_PRINT
+		@t24:i (t24Name=ACCT.STMT2.PRINT, level=F, type=T, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		STMT_ACCOUNT_NO -> STM_AccountStatement:ACCT_STMT2_PRINT PK required
+			@t24:i (align=L, inputBehaviour=I, maxLength=18, sysNumber=0.0, core=true, businessType=A, t24Name=STMT.ACCOUNT.NO)
+		STMT2_DATE_BAL : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=16, sysNumber=1.0, core=true, t24Name=STMT2.DATE/BAL)
+	}
+	ACCT_STMT2_PRINT_HIST
+		@t24:i (t24Name=ACCT.STMT2.PRINT.HIST, level=F, type=T, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		STMT_ACCOUNT_NO -> STM_AccountStatement:ACCT_STMT2_PRINT_HIST PK required
+			@t24:i (align=L, inputBehaviour=I, maxLength=18, sysNumber=0.0, core=true, businessType=A, t24Name=STMT.ACCOUNT.NO)
+		STMT2_DATE_BAL : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=16, sysNumber=1.0, core=true, t24Name=STMT2.DATE/BAL)
+	}
+	ADHOC_MESSAGES
+		@t24:i (t24Name=ADHOC.MESSAGES, level=F, type=L, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		ADHOC_ACCT -> STM_AccountStatement:ADHOC_MESSAGES PK required
+			@t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=0.0, core=true, businessType=A, t24Name=ADHOC.ACCT)
+		REQUEST_MSG -> byValue STM_AccountStatement:ADHOC_MESSAGES__REQUEST_MSG *
+		REGULAR_STMT : mml:string required
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=3.0, core=true, businessType=A, t24Name=REGULAR.STMT)
+	}
+	ADHOC_MESSAGES__REQUEST_MSG
+	{
+		REQUEST_MSG : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=1.0, core=true, businessType=A, t24Name=REQUEST.MSG)
+		REQUEST_ID : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=12, sysNumber=2.0, core=true, businessType=A, t24Name=REQUEST.ID)
+	}
+	ADHOC_STATEMENTS
+		@t24:i (t24Name=ADHOC.STATEMENTS, level=F, type=L, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		STMT_DATE -> STM_AccountStatement:ADHOC_STATEMENTS PK required
+			@i18n:Label (en="Statement Date", es="Fecha de Estado")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=0.0, core=true, businessType=D, t24Name=STMT.DATE)
+		REQUEST_ACCT -> byValue STM_AccountStatement:ADHOC_STATEMENTS__REQUEST_ACCT *
+	}
+	ADHOC_STATEMENTS__REQUEST_ACCT
+	{
+		REQUEST_ACCT : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=1.0, core=true, businessType=A, t24Name=REQUEST.ACCT)
+	}
+	BILATERAL_AGREEMENT
+		@t24:i (t24Name=BILATERAL.AGREEMENT, level=C, type=H, allowedFunctions="A C D E H I L P Q R S", localRefAllowed=true)
+	{
+		AGREEMENT_CUST -> STM_AccountStatement:BILATERAL_AGREEMENT PK required
+			@t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=0.0, core=true, businessType=CUS, t24Name=AGREEMENT.CUST)
+		AGREEMENT_REF -> byValue STM_AccountStatement:BILATERAL_AGREEMENT__AGREEMENT_REF *
+		RESERVED10 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=6.0, core=true, businessType=A, t24Name=RESERVED10)
+		RESERVED09 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=7.0, core=true, businessType=A, t24Name=RESERVED09)
+		RESERVED08 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=8.0, core=true, businessType=A, t24Name=RESERVED08)
+		RESERVED07 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=9.0, core=true, businessType=A, t24Name=RESERVED07)
+		RESERVED06 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=10.0, core=true, businessType=A, t24Name=RESERVED06)
+		RESERVED05 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=11.0, core=true, businessType=A, t24Name=RESERVED05)
+		RESERVED04 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=12.0, core=true, businessType=A, t24Name=RESERVED04)
+		RESERVED03 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=13.0, core=true, businessType=A, t24Name=RESERVED03)
+		RESERVED02 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=14.0, core=true, businessType=A, t24Name=RESERVED02)
+		RESERVED01 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=15.0, core=true, businessType=A, t24Name=RESERVED01)
+		OVERRIDE -> byValue STM_AccountStatement:BILATERAL_AGREEMENT__OVERRIDE *
+		RECORD_STATUS : mml:string
+			@i18n:Label (en="Record Status", fr=Statut, es=Estado)
+			@i18n:Tooltip (fr="Statut de l\'enregistrement")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=18.0, core=true, businessType=STAT, t24Name=RECORD.STATUS)
+		CURR_NO : mml:Integer
+			@i18n:Label (en="Curr No", fr="N° version", es="No. Actual")
+			@i18n:Tooltip (fr="Numéro de version")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=19.0, core=true, t24Name=CURR.NO)
+		INPUTTER -> byValue STM_AccountStatement:BILATERAL_AGREEMENT__INPUTTER *
+		DATE_TIME -> byValue STM_AccountStatement:BILATERAL_AGREEMENT__DATE_TIME *
+		AUTHORISER : mml:string
+			@i18n:Label (en=Authoriser, fr="Validé par", es=Autorizador)
+			@i18n:Tooltip (en="Indicates the User who Authorises the record", fr="Utilisateur de validation", es="El usuario que autorizó el registro")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=22.0, core=true, businessType=A, t24Name=AUTHORISER)
+		CO_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company, fr=Entité, es="Compañía")
+			@i18n:Tooltip (fr="Code établissement ou agence")
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=23.0, core=true, businessType=A, t24Name=CO.CODE)
+		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Dept Code", fr=Service, es=Departamento)
+			@i18n:Tooltip (fr="Code du service")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=24.0, core=true, t24Name=DEPT.CODE)
+		AUDITOR_CODE : mml:string
+			@i18n:Label (en="Auditor Code", fr="Audité par", es="Código de Auditor")
+			@i18n:Tooltip (en="Auditor Code", fr="Utilisateur d\'audit", es="Nombre del auditor")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=25.0, core=true, businessType=A, t24Name=AUDITOR.CODE)
+		AUDIT_DATE_TIME : mml:dateTime
+			@i18n:Label (en="Audit Date Time", fr="Audité le", es="Fecha/Hora de Audit.")
+			@i18n:Tooltip (en="Date and time when record was audited", fr="Date et heure d\'audit", es="Fecha y Hora de Auditoría ")
+			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=26.0, core=true, businessType=RELTIME, t24Name=AUDIT.DATE.TIME)
+	}
+	BILATERAL_AGREEMENT__AGREEMENT_REF
+	{
+		AGREEMENT_REF : mml:string required
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=1.0, core=true, businessType=A, t24Name=AGREEMENT.REF)
+		CPARTY : mml:string required
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=2.0, core=true, businessType=CUST.BIC, t24Name=CPARTY)
+		MESSAGE_TYPE -> byValue STM_AccountStatement:BILATERAL_AGREEMENT__AGREEMENT_REF__MESSAGE_TYPE *
+		START_DATE : mml:date required
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=4.0, core=true, businessType=D, t24Name=START.DATE)
+		END_DATE : mml:date
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=5.0, core=true, businessType=D, t24Name=END.DATE)
+	}
+	BILATERAL_AGREEMENT__AGREEMENT_REF__MESSAGE_TYPE
+	{
+		MESSAGE_TYPE : STM_AccountStatement:BILATERAL_AGREEMENT__AGREEMENT_REF__MESSAGE_TYPE__MESSAGE_TYPE required
+			@t24:i (align=R, inputBehaviour=I, maxLength=15, sysNumber=3.0, core=true, t24Name=MESSAGE.TYPE)
+	}
+	BILATERAL_AGREEMENT__OVERRIDE
+	{
+		OVERRIDE : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=17.0, core=true, businessType=A, t24Name=OVERRIDE)
+	}
+	BILATERAL_AGREEMENT__INPUTTER
+	{
+		INPUTTER : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=20.0, core=true, businessType=A, t24Name=INPUTTER)
+	}
+	BILATERAL_AGREEMENT__DATE_TIME
+	{
+		DATE_TIME : mml:dateTime
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=21.0, core=true, businessType=RELTIME, t24Name=DATE.TIME)
+	}
+	DE_MT942_HIST
+		@t24:i (t24Name=DE.MT942.HIST, level=F, type=L, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		ACCT_DATE_TIME -> STM_AccountStatement:DE_MT942_HIST PK required
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=0.0, core=true, businessType=A, t24Name=ACCT-DATE-TIME)
+		INWARD_REF : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=1.0, core=true, businessType=A, t24Name=INWARD.REF)
+		DELIVERY_REF : mml:string
+			@i18n:Label (en="Delivery Ref", fr="Référence messagerie", es="Ref. de Entrega")
+			@i18n:Tooltip (en="System generated Delivery ref key", fr="Référence du message ou de l\'avis", es="Indica la referencia de mensaje de entrega ")
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=2.0, core=true, businessType=A, t24Name=DELIVERY.REF)
+		NO_ENTRIES : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=3.0, core=true, businessType=A, t24Name=NO.ENTRIES)
+	}
+	DE_MT942_REQUEST
+		@t24:i (t24Name=DE.MT942.REQUEST, level=F, type=W, allowedFunctions="C I L P Q R S V", localRefAllowed=false)
+	{
+		REQUEST_ID -> STM_AccountStatement:DE_MT942_REQUEST PK required
+			@i18n:Label (en="Sweep Request", fr="Demande pour Sweep", es="Solicitud weep")
+			@i18n:Tooltip (fr="Demande pour Sweep")
+			@t24:i (align=L, inputBehaviour=I, maxLength=12, sysNumber=0.0, core=true, businessType=A, t24Name=REQUEST.ID)
+		ACCOUNT_NO -> ACM_AccountOpening:ACCOUNT required
+			@i18n:Label (en=Account, fr="N° de compte", es=Cuenta)
+			@i18n:Tooltip (en="Indicates Customer Account Number", fr="Numéro de compte")
+			@t24:i (align=R, inputBehaviour=I, maxLength=16, sysNumber=1.0, core=true, businessType=ACC, t24Name=ACCOUNT.NO)
+		INWARD_REF : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=2.0, core=true, businessType=A, t24Name=INWARD.REF)
+		RESERVED10 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=3.0, core=true, t24Name=RESERVED10)
+		RESERVED9 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=4.0, core=true, t24Name=RESERVED9)
+		RESERVED8 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=5.0, core=true, t24Name=RESERVED8)
+		RESERVED7 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=6.0, core=true, t24Name=RESERVED7)
+		RESERVED6 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=7.0, core=true, t24Name=RESERVED6)
+		RESERVED5 : mml:Integer
+			@i18n:Label (fr="Propriété saisie avec activité paimt")
+			@i18n:Tooltip (fr="Propriété saisie avec activité paimt ")
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=8.0, core=true, t24Name=RESERVED5)
+		RESERVED4 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=9.0, core=true, t24Name=RESERVED4)
+		RESERVED3 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=10.0, core=true, t24Name=RESERVED3)
+		RESERVED2 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=11.0, core=true, t24Name=RESERVED2)
+		RESERVED1 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=12.0, core=true, t24Name=RESERVED1)
+		RECORD_STATUS : mml:string
+			@i18n:Label (en="Record Status", fr=Statut, es=Estado)
+			@i18n:Tooltip (fr="Statut de l\'enregistrement")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=13.0, core=true, businessType=STAT, t24Name=RECORD.STATUS)
+		CURR_NO : mml:Integer
+			@i18n:Label (en="Curr No", fr="N° version", es="No. Actual")
+			@i18n:Tooltip (fr="Numéro de version")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=14.0, core=true, t24Name=CURR.NO)
+		INPUTTER -> byValue STM_AccountStatement:DE_MT942_REQUEST__INPUTTER *
+		DATE_TIME -> byValue STM_AccountStatement:DE_MT942_REQUEST__DATE_TIME *
+		AUTHORISER : mml:string
+			@i18n:Label (en=Authoriser, fr="Validé par", es=Autorizador)
+			@i18n:Tooltip (en="Indicates the User who Authorises the record", fr="Utilisateur de validation", es="El usuario que autorizó el registro")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=17.0, core=true, businessType=A, t24Name=AUTHORISER)
+		CO_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company, fr=Entité, es="Compañía")
+			@i18n:Tooltip (fr="Code établissement ou agence")
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=18.0, core=true, businessType=A, t24Name=CO.CODE)
+		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Dept Code", fr=Service, es=Departamento)
+			@i18n:Tooltip (fr="Code du service")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=19.0, core=true, t24Name=DEPT.CODE)
+		AUDITOR_CODE : mml:string
+			@i18n:Label (en="Auditor Code", fr="Audité par", es="Código de Auditor")
+			@i18n:Tooltip (en="Auditor Code", fr="Utilisateur d\'audit", es="Nombre del auditor")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=20.0, core=true, businessType=A, t24Name=AUDITOR.CODE)
+		AUDIT_DATE_TIME : mml:dateTime
+			@i18n:Label (en="Audit Date Time", fr="Audité le", es="Fecha/Hora de Audit.")
+			@i18n:Tooltip (en="Date and time when record was audited", fr="Date et heure d\'audit", es="Fecha y Hora de Auditoría ")
+			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=21.0, core=true, businessType=RELTIME, t24Name=AUDIT.DATE.TIME)
+	}
+	DE_MT942_REQUEST__INPUTTER
+	{
+		INPUTTER : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=15.0, core=true, businessType=A, t24Name=INPUTTER)
+	}
+	DE_MT942_REQUEST__DATE_TIME
+	{
+		DATE_TIME : mml:dateTime
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=16.0, core=true, businessType=RELTIME, t24Name=DATE.TIME)
+	}
+	DE_MT942_SEND_TIME
+		@t24:i (t24Name=DE.MT942.SEND.TIME, level=F, type=T, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		MSG_SEND_TIME -> STM_AccountStatement:DE_MT942_SEND_TIME PK required
+			@t24:i (align=L, inputBehaviour=I, maxLength=5, sysNumber=0.0, core=true, businessType=TIME, t24Name=MSG.SEND.TIME)
+		ACCOUNT_ID -> ACM_AccountOpening:ACCOUNT
+			@i18n:Label (en="Account No", fr=Compte, es="Número de Cuenta")
+			@i18n:Tooltip (en="Indicates the Account Number", fr=Compte)
+			@t24:i (align=R, inputBehaviour=I, maxLength=16, sysNumber=1.0, core=true, t24Name=ACCOUNT.ID)
+	}
+	DE_MT942_SENT_ENTRIES
+		@t24:i (t24Name=DE.MT942.SENT.ENTRIES, level=F, type=T, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		ACCOUNT_ID -> STM_AccountStatement:DE_MT942_SENT_ENTRIES PK required
+			@i18n:Label (en="Account No", fr=Compte, es="Número de Cuenta")
+			@i18n:Tooltip (en="Indicates the Account Number", fr=Compte)
+			@t24:i (align=R, inputBehaviour=I, maxLength=16, sysNumber=0.0, core=true, businessType=ACC, t24Name=ACCOUNT.ID)
+		ENTRY_ID -> byValue STM_AccountStatement:DE_MT942_SENT_ENTRIES__ENTRY_ID *
+	}
+	DE_MT942_SENT_ENTRIES__ENTRY_ID
+	{
+		ENTRY_ID : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=20, sysNumber=1.0, core=true, businessType=A, t24Name=ENTRY.ID)
+	}
+	DE_STATEMENT_REQUEST
+		@t24:i (t24Name=DE.STATEMENT.REQUEST, level=F, type=H, additionalInfo=IDA, allowedFunctions="A C D E H I L P Q R S", localRefAllowed=true)
+	{
+		REQUEST_KEY -> STM_AccountStatement:DE_STATEMENT_REQUEST PK required
+			@t24:i (align=L, inputBehaviour=I, maxLength=12, sysNumber=0.0, core=true, businessType=A, t24Name=REQUEST.KEY)
+		INSTITUTION : mml:string required
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=1.0, core=true, businessType=CUST.BIC, t24Name=INSTITUTION)
+		MESSAGE_TYPE -> byValue STM_AccountStatement:DE_STATEMENT_REQUEST__MESSAGE_TYPE *
+		DIRECTION : STM_AccountStatement:DE_STATEMENT_REQUEST__DIRECTION required
+			@i18n:Label (en=Direction, fr=Sens, es="Dirección")
+			@i18n:Tooltip (en="In or Out", fr=Sens)
+			@t24:i (align=L, inputBehaviour=I, maxLength=10, sysNumber=8.0, core=true, t24Name=DIRECTION)
+		IN_TRANS_REF : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=9.0, core=true, businessType=SW, t24Name=IN.TRANS.REF)
+		IN_DELIVERY_REF : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=46, sysNumber=10.0, core=true, businessType=A, t24Name=IN.DELIVERY.REF)
+		OUT_DELIVERY_REF : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=46, sysNumber=11.0, core=true, businessType=A, t24Name=OUT.DELIVERY.REF)
+		IN_PROCESS_ERR -> byValue STM_AccountStatement:DE_STATEMENT_REQUEST__IN_PROCESS_ERR *
+		IN_SWIFT_MSG -> byValue STM_AccountStatement:DE_STATEMENT_REQUEST__IN_SWIFT_MSG *
+		CREATION_DATE : mml:date
+			@i18n:Label (en="Creation Date", fr="Date de création", es="Fecha de Creación")
+			@i18n:Tooltip (fr="Date de création")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=14.0, core=true, businessType=D, t24Name=CREATION.DATE)
+		RESERVED04 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=15.0, core=true, businessType=A, t24Name=RESERVED04)
+		RESERVED03 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=16.0, core=true, businessType=A, t24Name=RESERVED03)
+		RESERVED02 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=17.0, core=true, businessType=A, t24Name=RESERVED02)
+		RESERVED01 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=18.0, core=true, businessType=A, t24Name=RESERVED01)
+		OVERRIDE -> byValue STM_AccountStatement:DE_STATEMENT_REQUEST__OVERRIDE *
+		RECORD_STATUS : mml:string
+			@i18n:Label (en="Record Status", fr=Statut, es=Estado)
+			@i18n:Tooltip (fr="Statut de l\'enregistrement")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=21.0, core=true, businessType=STAT, t24Name=RECORD.STATUS)
+		CURR_NO : mml:Integer
+			@i18n:Label (en="Curr No", fr="N° version", es="No. Actual")
+			@i18n:Tooltip (fr="Numéro de version")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=22.0, core=true, t24Name=CURR.NO)
+		INPUTTER -> byValue STM_AccountStatement:DE_STATEMENT_REQUEST__INPUTTER *
+		DATE_TIME -> byValue STM_AccountStatement:DE_STATEMENT_REQUEST__DATE_TIME *
+		AUTHORISER : mml:string
+			@i18n:Label (en=Authoriser, fr="Validé par", es=Autorizador)
+			@i18n:Tooltip (en="Indicates the User who Authorises the record", fr="Utilisateur de validation", es="El usuario que autorizó el registro")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=25.0, core=true, businessType=A, t24Name=AUTHORISER)
+		CO_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company, fr=Entité, es="Compañía")
+			@i18n:Tooltip (fr="Code établissement ou agence")
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=26.0, core=true, businessType=A, t24Name=CO.CODE)
+		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Dept Code", fr=Service, es=Departamento)
+			@i18n:Tooltip (fr="Code du service")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=27.0, core=true, t24Name=DEPT.CODE)
+		AUDITOR_CODE : mml:string
+			@i18n:Label (en="Auditor Code", fr="Audité par", es="Código de Auditor")
+			@i18n:Tooltip (en="Auditor Code", fr="Utilisateur d\'audit", es="Nombre del auditor")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=28.0, core=true, businessType=A, t24Name=AUDITOR.CODE)
+		AUDIT_DATE_TIME : mml:dateTime
+			@i18n:Label (en="Audit Date Time", fr="Audité le", es="Fecha/Hora de Audit.")
+			@i18n:Tooltip (en="Date and time when record was audited", fr="Date et heure d\'audit", es="Fecha y Hora de Auditoría ")
+			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=29.0, core=true, businessType=RELTIME, t24Name=AUDIT.DATE.TIME)
+	}
+	DE_STATEMENT_REQUEST__MESSAGE_TYPE
+	{
+		MESSAGE_TYPE -> DE_Config:DE_MESSAGE required
+			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=2.0, core=true, t24Name=MESSAGE.TYPE)
+		IN_ACCOUNT : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=3.0, core=true, businessType=A, t24Name=IN.ACCOUNT)
+		OUT_ACCOUNT : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=4.0, core=true, businessType=SW, t24Name=OUT.ACCOUNT)
+		AC_CURRENCY -> FIN_CurrencyConfig:CURRENCY
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=5.0, core=true, businessType=CCY, t24Name=AC.CURRENCY)
+		DR_FLOOR_LMT : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=6.0, core=true, businessType=AMT, t24Name=DR.FLOOR.LMT)
+		CR_FLOOR_LMT : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=7.0, core=true, businessType=AMT, t24Name=CR.FLOOR.LMT)
+	}
+	DE_STATEMENT_REQUEST__IN_PROCESS_ERR
+	{
+		IN_PROCESS_ERR : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=65, sysNumber=12.0, core=true, businessType=A, t24Name=IN.PROCESS.ERR)
+	}
+	DE_STATEMENT_REQUEST__IN_SWIFT_MSG
+	{
+		IN_SWIFT_MSG : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=65, sysNumber=13.0, core=true, businessType=A, t24Name=IN.SWIFT.MSG)
+	}
+	DE_STATEMENT_REQUEST__OVERRIDE
+	{
+		OVERRIDE : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=20.0, core=true, businessType=A, t24Name=OVERRIDE)
+	}
+	DE_STATEMENT_REQUEST__INPUTTER
+	{
+		INPUTTER : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=23.0, core=true, businessType=A, t24Name=INPUTTER)
+	}
+	DE_STATEMENT_REQUEST__DATE_TIME
+	{
+		DATE_TIME : mml:dateTime
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=24.0, core=true, businessType=RELTIME, t24Name=DATE.TIME)
+	}
+	FWD_STMT1_PRINTED
+		@t24:i (t24Name=FWD.STMT1.PRINTED, level=F, type=T, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		ACCT_DAY_STMT -> STM_AccountStatement:FWD_STMT1_PRINTED PK required
+			@t24:i (align=R, inputBehaviour=I, maxLength=30, sysNumber=0.0, core=true, businessType=ACCD, t24Name=ACCT.DAY.STMT)
+		STMT_ENTRY_NO : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=25, sysNumber=1.0, core=true, businessType=A, t24Name=STMT.ENTRY.NO)
+	}
+	FWD_STMT2_PRINTED
+		@t24:i (t24Name=FWD.STMT2.PRINTED, level=F, type=T, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		ACCT_DAY_STMT -> STM_AccountStatement:FWD_STMT2_PRINTED PK required
+			@t24:i (align=L, inputBehaviour=I, maxLength=32, sysNumber=0.0, core=true, businessType=A, t24Name=ACCT.DAY.STMT)
+		STMT_ENTRY_NO : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=25, sysNumber=1.0, core=true, businessType=A, t24Name=STMT.ENTRY.NO)
+	}
+	FWD_STMT2_PRINTED_HIST
+		@t24:i (t24Name=FWD.STMT2.PRINTED.HIST, level=F, type=T, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		n0 -> STM_AccountStatement:FWD_STMT2_PRINTED_HIST PK required
+			@t24:i (align=L, inputBehaviour=I, maxLength=32, sysNumber=0.0, core=true, businessType=A, t24Name=0)
+		STMT_ENTRY_NO : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=25, sysNumber=1.0, core=true, businessType=A, t24Name=STMT.ENTRY.NO)
+	}
+	PRINT_STATEMENT
+		@t24:i (t24Name=PRINT.STATEMENT, level=I, type=W, allowedFunctions="C I L P Q R S V", localRefAllowed=true)
+	{
+		REQUEST_ID -> STM_AccountStatement:PRINT_STATEMENT PK required
+			@i18n:Label (en="Sweep Request", fr="Demande pour Sweep", es="Solicitud weep")
+			@i18n:Tooltip (fr="Demande pour Sweep")
+			@t24:i (align=L, inputBehaviour=I, maxLength=15, sysNumber=0.0, core=true, businessType=A, t24Name=REQUEST.ID)
+		DESCRIPTION -> byValue STM_AccountStatement:PRINT_STATEMENT__DESCRIPTION *
+		SELECTION_FIELD -> byValue STM_AccountStatement:PRINT_STATEMENT__SELECTION_FIELD *
+		SORT_FIELD -> byValue STM_AccountStatement:PRINT_STATEMENT__SORT_FIELD *
+		CHARGE : STM_AccountStatement:PRINT_STATEMENT__CHARGE
+			@i18n:Label (en=Charge, fr=Commission, es=Cargo)
+			@i18n:Tooltip (en="Defines the charges", fr=Commission)
+			@t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=6.0, core=true, t24Name=CHARGE)
+		REPRINT : STM_AccountStatement:PRINT_STATEMENT__REPRINT
+			@i18n:Label (en=Reprint, fr=Réimpression, es=Re-Imprimir)
+			@i18n:Tooltip (en=Reprint, fr=Réimpression, es=Re-Imprimir)
+			@t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=7.0, core=true, t24Name=REPRINT)
+		FORMAT : mml:string required
+			@i18n:Label (en=Format, fr=Format, es=Formato)
+			@i18n:Tooltip (fr=Format)
+			@t24:i (align=L, inputBehaviour=I, maxLength=32, sysNumber=8.0, core=true, businessType=A, t24Name=FORMAT)
+		REPORT_CONTROL_ID -> EB_Reports:REPORT_CONTROL required
+			@i18n:Label (en="Report Control ID", fr="Réf. contrôle édition", es="ID Control de Informe")
+			@i18n:Tooltip (en="Report Control ID", fr="Référence de contrôle de l\'édition", es="ID Control de Informe")
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=9.0, core=true, businessType=A, t24Name=REPORT.CONTROL.ID)
+		NUMBER_TO_BULK : mml:string
+			@i18n:Label (en="Number to bulk", fr="Quantité à regrouper", es="Número a Volumen")
+			@i18n:Tooltip (en="Number to bulk", fr="Quantité à regrouper", es="Número a Volumen")
+			@t24:i (align=L, inputBehaviour=I, maxLength=8, sysNumber=10.0, core=true, businessType=A, t24Name=NUMBER.TO.BULK)
+		PRINT_ROUTINE : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=11.0, core=true, businessType=A, t24Name=PRINT.ROUTINE)
+		CHARGE_ROUTINE : mml:string
+			@i18n:Label (en="Charge Routine", fr=Programme, es="Rutina de Cargo")
+			@i18n:Tooltip (en="Programme used to apply complex conditions for charge ", fr=Programme)
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=12.0, core=true, businessType=A, t24Name=CHARGE.ROUTINE)
+		RESERVED_10 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=9, sysNumber=13.0, core=true, t24Name=RESERVED.10)
+		RESERVED_9 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=9, sysNumber=14.0, core=true, t24Name=RESERVED.9)
+		RESERVED_8 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=9, sysNumber=15.0, core=true, t24Name=RESERVED.8)
+		RESERVED_7 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=9, sysNumber=16.0, core=true, t24Name=RESERVED.7)
+		RESERVED_6 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=9, sysNumber=17.0, core=true, t24Name=RESERVED.6)
+		RESERVED_5 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=9, sysNumber=18.0, core=true, t24Name=RESERVED.5)
+		RESERVED_4 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=9, sysNumber=19.0, core=true, t24Name=RESERVED.4)
+		RESERVED_3 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=9, sysNumber=20.0, core=true, t24Name=RESERVED.3)
+		RESERVED_2 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=9, sysNumber=21.0, core=true, t24Name=RESERVED.2)
+		RESERVED_1 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=9, sysNumber=22.0, core=true, t24Name=RESERVED.1)
+		RECORD_STATUS : mml:string
+			@i18n:Label (en="Record Status", fr=Statut, es=Estado)
+			@i18n:Tooltip (fr="Statut de l\'enregistrement")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=24.0, core=true, businessType=STAT, t24Name=RECORD.STATUS)
+		CURR_NO : mml:Integer
+			@i18n:Label (en="Curr No", fr="N° version", es="No. Actual")
+			@i18n:Tooltip (fr="Numéro de version")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=25.0, core=true, t24Name=CURR.NO)
+		INPUTTER -> byValue STM_AccountStatement:PRINT_STATEMENT__INPUTTER *
+		DATE_TIME -> byValue STM_AccountStatement:PRINT_STATEMENT__DATE_TIME *
+		AUTHORISER : mml:string
+			@i18n:Label (en=Authoriser, fr="Validé par", es=Autorizador)
+			@i18n:Tooltip (en="Indicates the User who Authorises the record", fr="Utilisateur de validation", es="El usuario que autorizó el registro")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=28.0, core=true, businessType=A, t24Name=AUTHORISER)
+		CO_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company, fr=Entité, es="Compañía")
+			@i18n:Tooltip (fr="Code établissement ou agence")
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=29.0, core=true, businessType=A, t24Name=CO.CODE)
+		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Dept Code", fr=Service, es=Departamento)
+			@i18n:Tooltip (fr="Code du service")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=30.0, core=true, t24Name=DEPT.CODE)
+		AUDITOR_CODE : mml:string
+			@i18n:Label (en="Auditor Code", fr="Audité par", es="Código de Auditor")
+			@i18n:Tooltip (en="Auditor Code", fr="Utilisateur d\'audit", es="Nombre del auditor")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=31.0, core=true, businessType=A, t24Name=AUDITOR.CODE)
+		AUDIT_DATE_TIME : mml:dateTime
+			@i18n:Label (en="Audit Date Time", fr="Audité le", es="Fecha/Hora de Audit.")
+			@i18n:Tooltip (en="Date and time when record was audited", fr="Date et heure d\'audit", es="Fecha y Hora de Auditoría ")
+			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=32.0, core=true, businessType=RELTIME, t24Name=AUDIT.DATE.TIME)
+	}
+	PRINT_STATEMENT__DESCRIPTION
+	{
+		DESCRIPTION : mml:string required
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, multiLanguage=true, sysNumber=1.0, core=true, businessType=ANY, t24Name=DESCRIPTION)
+	}
+	PRINT_STATEMENT__SELECTION_FIELD
+	{
+		SELECTION_FIELD : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=18, sysNumber=2.0, core=true, businessType=ANY, t24Name=SELECTION.FIELD)
+		OPERAND : STM_AccountStatement:PRINT_STATEMENT__SELECTION_FIELD__OPERAND
+			@t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=3.0, core=true, t24Name=OPERAND)
+		SELECTION -> byValue STM_AccountStatement:PRINT_STATEMENT__SELECTION_FIELD__SELECTION *
+	}
+	PRINT_STATEMENT__SELECTION_FIELD__SELECTION
+	{
+		SELECTION : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=40, sysNumber=4.0, core=true, businessType=ANY, t24Name=SELECTION)
+	}
+	PRINT_STATEMENT__SORT_FIELD
+	{
+		SORT_FIELD : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=24, sysNumber=5.0, core=true, businessType=ANY, t24Name=SORT.FIELD)
+	}
+	PRINT_STATEMENT__INPUTTER
+	{
+		INPUTTER : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=26.0, core=true, businessType=A, t24Name=INPUTTER)
+	}
+	PRINT_STATEMENT__DATE_TIME
+	{
+		DATE_TIME : mml:dateTime
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=27.0, core=true, businessType=RELTIME, t24Name=DATE.TIME)
+	}
+	REPRINT_STMT_PARAMS
+		@t24:i (t24Name=REPRINT.STMT.PARAMS, level=I, type=W, allowedFunctions="C I L P Q R S V", localRefAllowed=false)
+	{
+		STMT_TYPE -> STM_AccountStatement:REPRINT_STMT_PARAMS PK required
+			@t24:i (align=L, inputBehaviour=I, maxLength=10, sysNumber=0.0, core=true, businessType=A, t24Name=STMT.TYPE)
+		STMT_DATE : mml:date
+			@i18n:Label (en="Statement Date", es="Fecha de Estado")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=1.0, core=true, businessType=D, t24Name=STMT.DATE)
+		ACCT_CATEGORY -> byValue STM_AccountStatement:REPRINT_STMT_PARAMS__ACCT_CATEGORY *
+		FROM_CATEGORY -> byValue STM_AccountStatement:REPRINT_STMT_PARAMS__FROM_CATEGORY *
+		EXCEPT_CATEGORY -> byValue STM_AccountStatement:REPRINT_STMT_PARAMS__EXCEPT_CATEGORY *
+		ACCOUNT_NUMBER -> byValue STM_AccountStatement:REPRINT_STMT_PARAMS__ACCOUNT_NUMBER *
+		STMT_FREQUENCY : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=7.0, core=true, t24Name=STMT.FREQUENCY)
+		RESERVED_3 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=9, sysNumber=8.0, core=true, t24Name=RESERVED.3)
+		RESERVED_2 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=9, sysNumber=9.0, core=true, t24Name=RESERVED.2)
+		RESERVED_1 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=9, sysNumber=10.0, core=true, t24Name=RESERVED.1)
+		RECORD_STATUS : mml:string
+			@i18n:Label (en="Record Status", fr=Statut, es=Estado)
+			@i18n:Tooltip (fr="Statut de l\'enregistrement")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=11.0, core=true, businessType=STAT, t24Name=RECORD.STATUS)
+		CURR_NO : mml:Integer
+			@i18n:Label (en="Curr No", fr="N° version", es="No. Actual")
+			@i18n:Tooltip (fr="Numéro de version")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=12.0, core=true, t24Name=CURR.NO)
+		INPUTTER -> byValue STM_AccountStatement:REPRINT_STMT_PARAMS__INPUTTER *
+		DATE_TIME -> byValue STM_AccountStatement:REPRINT_STMT_PARAMS__DATE_TIME *
+		AUTHORISER : mml:string
+			@i18n:Label (en=Authoriser, fr="Validé par", es=Autorizador)
+			@i18n:Tooltip (en="Indicates the User who Authorises the record", fr="Utilisateur de validation", es="El usuario que autorizó el registro")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=15.0, core=true, businessType=A, t24Name=AUTHORISER)
+		CO_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company, fr=Entité, es="Compañía")
+			@i18n:Tooltip (fr="Code établissement ou agence")
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=16.0, core=true, businessType=A, t24Name=CO.CODE)
+		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Dept Code", fr=Service, es=Departamento)
+			@i18n:Tooltip (fr="Code du service")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=17.0, core=true, t24Name=DEPT.CODE)
+		AUDITOR_CODE : mml:string
+			@i18n:Label (en="Auditor Code", fr="Audité par", es="Código de Auditor")
+			@i18n:Tooltip (en="Auditor Code", fr="Utilisateur d\'audit", es="Nombre del auditor")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=18.0, core=true, businessType=A, t24Name=AUDITOR.CODE)
+		AUDIT_DATE_TIME : mml:dateTime
+			@i18n:Label (en="Audit Date Time", fr="Audité le", es="Fecha/Hora de Audit.")
+			@i18n:Tooltip (en="Date and time when record was audited", fr="Date et heure d\'audit", es="Fecha y Hora de Auditoría ")
+			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=19.0, core=true, businessType=RELTIME, t24Name=AUDIT.DATE.TIME)
+	}
+	REPRINT_STMT_PARAMS__ACCT_CATEGORY
+	{
+		ACCT_CATEGORY -> ST_Config:CATEGORY
+			@t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=2.0, core=true, t24Name=ACCT.CATEGORY)
+	}
+	REPRINT_STMT_PARAMS__FROM_CATEGORY
+	{
+		FROM_CATEGORY -> ST_Config:CATEGORY
+			@t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=3.0, core=true, t24Name=FROM.CATEGORY)
+		TO_CATEGORY -> ST_Config:CATEGORY
+			@t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=4.0, core=true, t24Name=TO.CATEGORY)
+	}
+	REPRINT_STMT_PARAMS__EXCEPT_CATEGORY
+	{
+		EXCEPT_CATEGORY -> ST_Config:CATEGORY
+			@t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=5.0, core=true, t24Name=EXCEPT.CATEGORY)
+	}
+	REPRINT_STMT_PARAMS__ACCOUNT_NUMBER
+	{
+		ACCOUNT_NUMBER -> ACM_AccountOpening:ACCOUNT
+			@t24:i (align=L, inputBehaviour=I, maxLength=19, sysNumber=6.0, core=true, businessType=POSANT, t24Name=ACCOUNT.NUMBER)
+	}
+	REPRINT_STMT_PARAMS__INPUTTER
+	{
+		INPUTTER : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=13.0, core=true, businessType=A, t24Name=INPUTTER)
+	}
+	REPRINT_STMT_PARAMS__DATE_TIME
+	{
+		DATE_TIME : mml:dateTime
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=14.0, core=true, businessType=RELTIME, t24Name=DATE.TIME)
+	}
+	SPECIAL_STATEMENT
+		@t24:i (t24Name=SPECIAL.STATEMENT, level=F, type=T, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		SPECIAL_STATEMENT -> STM_AccountStatement:SPECIAL_STATEMENT PK required
+			@i18n:Label (fr="Fréquence d\'écriture cptable spéciale")
+			@i18n:Tooltip (fr="Fréquence d\'écriture cptable spéciale")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=0.0, core=true, businessType=D, t24Name=SPECIAL.STATEMENT)
+		ACCOUNT_NUMBER : mml:Integer required
+			@i18n:Label (en="Account Number", fr="Numéro de compte", es="Número de Cuenta")
+			@i18n:Tooltip (fr="Numéro de compte")
+			@t24:i (align=R, inputBehaviour=I, maxLength=16, sysNumber=1.0, core=true, t24Name=ACCOUNT.NUMBER)
+	}
+	STMT_NARR_FORMAT
+		@t24:i (t24Name=STMT.NARR.FORMAT, level=I, type=H, allowedFunctions="A C D E H I L P Q R S", localRefAllowed=false)
+	{
+		NARR_FORMAT_ID -> STM_AccountStatement:STMT_NARR_FORMAT PK required
+			@t24:i (align=L, inputBehaviour=I, maxLength=8, sysNumber=0.0, core=true, businessType=A, t24Name=NARR.FORMAT.ID)
+		DESCRIPTION -> byValue STM_AccountStatement:STMT_NARR_FORMAT__DESCRIPTION *
+		FILE : mml:string
+			@i18n:Label (en=File, fr=Dossier, es=Archivo)
+			@i18n:Tooltip (fr=Dossier)
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=2.0, core=true, businessType=A, t24Name=FILE)
+		TEXT_DATA -> byValue STM_AccountStatement:STMT_NARR_FORMAT__TEXT_DATA *
+		LINE_LENGTH : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=5.0, core=true, t24Name=LINE.LENGTH)
+		MAX_LINES : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=6.0, core=true, t24Name=MAX.LINES)
+		WRAP_TRUNCATE : STM_AccountStatement:STMT_NARR_FORMAT__WRAP_TRUNCATE required
+			@t24:i (align=L, inputBehaviour=I, maxLength=8, sysNumber=7.0, core=true, t24Name=WRAP.TRUNCATE)
+		RECORD_STATUS : mml:string
+			@i18n:Label (en="Record Status", fr=Statut, es=Estado)
+			@i18n:Tooltip (fr="Statut de l\'enregistrement")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=8.0, core=true, businessType=STAT, t24Name=RECORD.STATUS)
+		CURR_NO : mml:Integer
+			@i18n:Label (en="Curr No", fr="N° version", es="No. Actual")
+			@i18n:Tooltip (fr="Numéro de version")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=9.0, core=true, t24Name=CURR.NO)
+		INPUTTER -> byValue STM_AccountStatement:STMT_NARR_FORMAT__INPUTTER *
+		DATE_TIME -> byValue STM_AccountStatement:STMT_NARR_FORMAT__DATE_TIME *
+		AUTHORISER : mml:string
+			@i18n:Label (en=Authoriser, fr="Validé par", es=Autorizador)
+			@i18n:Tooltip (en="Indicates the User who Authorises the record", fr="Utilisateur de validation", es="El usuario que autorizó el registro")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=12.0, core=true, businessType=A, t24Name=AUTHORISER)
+		CO_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company, fr=Entité, es="Compañía")
+			@i18n:Tooltip (fr="Code établissement ou agence")
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=13.0, core=true, businessType=A, t24Name=CO.CODE)
+		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Dept Code", fr=Service, es=Departamento)
+			@i18n:Tooltip (fr="Code du service")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=14.0, core=true, t24Name=DEPT.CODE)
+		AUDITOR_CODE : mml:string
+			@i18n:Label (en="Auditor Code", fr="Audité par", es="Código de Auditor")
+			@i18n:Tooltip (en="Auditor Code", fr="Utilisateur d\'audit", es="Nombre del auditor")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=15.0, core=true, businessType=A, t24Name=AUDITOR.CODE)
+		AUDIT_DATE_TIME : mml:dateTime
+			@i18n:Label (en="Audit Date Time", fr="Audité le", es="Fecha/Hora de Audit.")
+			@i18n:Tooltip (en="Date and time when record was audited", fr="Date et heure d\'audit", es="Fecha y Hora de Auditoría ")
+			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=16.0, core=true, businessType=RELTIME, t24Name=AUDIT.DATE.TIME)
+	}
+	STMT_NARR_FORMAT__DESCRIPTION
+	{
+		DESCRIPTION : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, multiLanguage=true, sysNumber=1.0, core=true, businessType=A, t24Name=DESCRIPTION)
+	}
+	STMT_NARR_FORMAT__TEXT_DATA
+	{
+		TEXT_DATA -> byValue STM_AccountStatement:STMT_NARR_FORMAT__TEXT_DATA__TEXT_DATA *
+		FORMAT : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=30, sysNumber=4.0, core=true, businessType=ANY, t24Name=FORMAT)
+	}
+	STMT_NARR_FORMAT__TEXT_DATA__TEXT_DATA
+	{
+		TEXT_DATA : mml:string required
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, multiLanguage=true, sysNumber=3.0, core=true, businessType=A, t24Name=TEXT.DATA)
+	}
+	STMT_NARR_FORMAT__INPUTTER
+	{
+		INPUTTER : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=10.0, core=true, businessType=A, t24Name=INPUTTER)
+	}
+	STMT_NARR_FORMAT__DATE_TIME
+	{
+		DATE_TIME : mml:dateTime
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=11.0, core=true, businessType=RELTIME, t24Name=DATE.TIME)
+	}
+	STMT_NARR_PARAM
+		@t24:i (t24Name=STMT.NARR.PARAM, level=I, type=H, allowedFunctions="A C D E H I L P Q R S", localRefAllowed=false)
+	{
+		NR_PRM_ID -> STM_AccountStatement:STMT_NARR_PARAM PK required
+			@t24:i (align=L, inputBehaviour=I, maxLength=8, sysNumber=0.0, core=true, businessType=A, t24Name=NR.PRM.ID)
+		SYSTEM_ID -> byValue STM_AccountStatement:STMT_NARR_PARAM__SYSTEM_ID *
+		RECORD_STATUS : mml:string
+			@i18n:Label (en="Record Status", fr=Statut, es=Estado)
+			@i18n:Tooltip (fr="Statut de l\'enregistrement")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=7.0, core=true, businessType=STAT, t24Name=RECORD.STATUS)
+		CURR_NO : mml:Integer
+			@i18n:Label (en="Curr No", fr="N° version", es="No. Actual")
+			@i18n:Tooltip (fr="Numéro de version")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=8.0, core=true, t24Name=CURR.NO)
+		INPUTTER -> byValue STM_AccountStatement:STMT_NARR_PARAM__INPUTTER *
+		DATE_TIME -> byValue STM_AccountStatement:STMT_NARR_PARAM__DATE_TIME *
+		AUTHORISER : mml:string
+			@i18n:Label (en=Authoriser, fr="Validé par", es=Autorizador)
+			@i18n:Tooltip (en="Indicates the User who Authorises the record", fr="Utilisateur de validation", es="El usuario que autorizó el registro")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=11.0, core=true, businessType=A, t24Name=AUTHORISER)
+		CO_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company, fr=Entité, es="Compañía")
+			@i18n:Tooltip (fr="Code établissement ou agence")
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=12.0, core=true, businessType=A, t24Name=CO.CODE)
+		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Dept Code", fr=Service, es=Departamento)
+			@i18n:Tooltip (fr="Code du service")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=13.0, core=true, t24Name=DEPT.CODE)
+		AUDITOR_CODE : mml:string
+			@i18n:Label (en="Auditor Code", fr="Audité par", es="Código de Auditor")
+			@i18n:Tooltip (en="Auditor Code", fr="Utilisateur d\'audit", es="Nombre del auditor")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=14.0, core=true, businessType=A, t24Name=AUDITOR.CODE)
+		AUDIT_DATE_TIME : mml:dateTime
+			@i18n:Label (en="Audit Date Time", fr="Audité le", es="Fecha/Hora de Audit.")
+			@i18n:Tooltip (en="Date and time when record was audited", fr="Date et heure d\'audit", es="Fecha y Hora de Auditoría ")
+			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=15.0, core=true, businessType=RELTIME, t24Name=AUDIT.DATE.TIME)
+	}
+	STMT_NARR_PARAM__SYSTEM_ID
+	{
+		SYSTEM_ID : mml:string required
+			@t24:i (align=L, inputBehaviour=I, maxLength=6, sysNumber=1.0, core=true, businessType=A, t24Name=SYSTEM.ID)
+		FILE : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=40, sysNumber=2.0, core=true, businessType=A, t24Name=FILE)
+		FIELD_NAME : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=50, sysNumber=3.0, core=true, businessType=A, t24Name=FIELD.NAME)
+		FIELD_OPERAND : STM_AccountStatement:STMT_NARR_PARAM__SYSTEM_ID__FIELD_OPERAND
+			@t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=4.0, core=true, t24Name=FIELD.OPERAND)
+		FIELD_VALUE -> byValue STM_AccountStatement:STMT_NARR_PARAM__SYSTEM_ID__FIELD_VALUE *
+		NARR_FORMAT -> STM_AccountStatement:STMT_NARR_FORMAT required
+			@t24:i (align=L, inputBehaviour=I, maxLength=8, sysNumber=6.0, core=true, businessType=A, t24Name=NARR.FORMAT)
+	}
+	STMT_NARR_PARAM__SYSTEM_ID__FIELD_VALUE
+	{
+		FIELD_VALUE : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=5.0, core=true, businessType=A, t24Name=FIELD.VALUE)
+	}
+	STMT_NARR_PARAM__INPUTTER
+	{
+		INPUTTER : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=9.0, core=true, businessType=A, t24Name=INPUTTER)
+	}
+	STMT_NARR_PARAM__DATE_TIME
+	{
+		DATE_TIME : mml:dateTime
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=10.0, core=true, businessType=RELTIME, t24Name=DATE.TIME)
+	}
+	STMT_PRINTED
+		@t24:i (t24Name=STMT.PRINTED, level=F, type=T, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		ACCT_DAY_STMT -> STM_AccountStatement:STMT_PRINTED PK required
+			@t24:i (align=L, inputBehaviour=I, maxLength=33, sysNumber=0.0, core=true, businessType=A, t24Name=ACCT.DAY.STMT)
+		STMT_ENTRY_NO : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=25, sysNumber=1.0, core=true, businessType=A, t24Name=STMT.ENTRY.NO)
+	}
+	STMT2_PRINTED
+		@t24:i (t24Name=STMT2.PRINTED, level=F, type=T, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		ACCT_DAY_STMT2 -> STM_AccountStatement:STMT2_PRINTED PK required
+			@t24:i (align=L, inputBehaviour=I, maxLength=32, sysNumber=0.0, core=true, businessType=A, t24Name=ACCT.DAY.STMT2)
+		STMT_ENTRY_NO : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=25, sysNumber=1.0, core=true, businessType=A, t24Name=STMT.ENTRY.NO)
+	}
+	STMT2_PRINTED_HIST
+		@t24:i (t24Name=STMT2.PRINTED.HIST, level=F, type=T, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		ACCT_DAY_STMT2 -> STM_AccountStatement:STMT2_PRINTED_HIST PK required
+			@t24:i (align=L, inputBehaviour=I, maxLength=32, sysNumber=0.0, core=true, businessType=A, t24Name=ACCT.DAY.STMT2)
+		STMT_ENTRY_NO : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=25, sysNumber=1.0, core=true, businessType=A, t24Name=STMT.ENTRY.NO)
+	}
+}
+Enumerations {
+	AC_PRINT_MASK__MASK : mml:string
+		YES=YES
+		NO=NO
+	AC_STMT_PARAMETER__IF_NO_MOVEMENT : mml:string
+		Y=Y
+		NO=NO
+	AC_STMT_PARAMETER__DESCRIPT_STATEMENT : mml:string
+		Y=Y
+		NO=NO
+	AC_STMT_PARAMETER__INT_CLOSING_ADVICE : mml:string
+		Y=Y
+		NO=NO
+	AC_STMT_PARAMETER__INTEREST_SCALE : mml:string
+		Y=Y
+		NO=NO
+	AC_STMT_PARAMETER__TAX_ADVICE : mml:string
+		Y=Y
+		NO=NO
+	AC_STMT_PARAMETER__FIRST_STMT : mml:string
+		Y=Y
+		NO=NO
+	AC_STMT_PARAMETER__OTHER_OFFICER : mml:string
+		Y=Y
+		NO=NO
+	AC_STMT_PARAMETER__FWD_MVMT_REQD : mml:string
+		Y=Y
+		NO=NO
+		NULL=NULL
+	AC_STMT_PARAMETER__INT_STMT_AND_ADV : mml:string
+		Y=Y
+		NO=NO
+	ACCOUNT_STATEMENT__IF_NO_MOVEMENT : mml:string
+		Y=Y
+		NO=NO
+	ACCOUNT_STATEMENT__DESCRIPT_STATEMENT : mml:string
+		Y=Y
+		NO=NO
+	ACCOUNT_STATEMENT__INT_CLOSING_ADVICE : mml:string
+		Y=Y
+		NO=NO
+	ACCOUNT_STATEMENT__INTEREST_SCALE : mml:string
+		Y=Y
+		NO=NO
+	ACCOUNT_STATEMENT__TAX_ADVICE : mml:string
+		Y=Y
+		NO=NO
+	ACCOUNT_STATEMENT__STMT_FQU_2__IF_NO_MVMT_FQU2 : mml:string
+		Y=Y
+		NO=NO
+	ACCOUNT_STATEMENT__MESSAGE_TYPE__MESSAGE_TYPE : mml:string
+		n941=941
+		n942=942
+		NULL=NULL
+	ACCOUNT_STATEMENT__MESSAGE_TYPE__SEND_MSG_TYPE : mml:string
+		Y=Y
+		NO=NO
+		STP=STP
+	ACCOUNT_STATEMENT__PRINT_STMT : mml:string
+		YES=YES
+		NO=NO
+		NULL=NULL
+	ACCOUNT_STATEMENT__CONS_SB_PASSBOOK : mml:string
+		YES=YES
+		NULL=NULL
+	ACCT_ENTRY_STMT__SELECT_FILE : mml:string
+		ACCOUNT=ACCOUNT
+		ACCOUNT_DOLLAR_HIS="ACCOUNT$HIS"
+	ACCT_ENTRY_STMT__OPERAND__OPERAND : mml:string
+		EQ=EQ
+		RG=RG
+		LT=LT
+		GT=GT
+		NE=NE
+		GE=GE
+		LE=LE
+		LK=LK
+		UL=UL
+		NR=NR
+	ACCT_ENTRY_STMT__ENQ_OPERAND__ENQ_OPERAND : mml:string
+		EQ=EQ
+		RG=RG
+		LT=LT
+		GT=GT
+		NE=NE
+		GE=GE
+		LE=LE
+		LK=LK
+		UL=UL
+		NR=NR
+	ACCT_ENTRY_STMT__STANDARD_HEADING : mml:string
+		n80=80
+		n132=132
+	ACCT_ENTRY_STMT__PAGE_BREAK : mml:string
+		Y=Y
+		NO=NO
+	BILATERAL_AGREEMENT__AGREEMENT_REF__MESSAGE_TYPE__MESSAGE_TYPE : mml:string
+		n940=940
+		n941=941
+		n942=942
+		n950=950
+	DE_STATEMENT_REQUEST__DIRECTION : mml:string
+		INWARD=INWARD
+		OUTWARD=OUTWARD
+	PRINT_STATEMENT__SELECTION_FIELD__OPERAND : mml:string
+		EQ=EQ
+		GT=GT
+		LT=LT
+		GE=GE
+		LE=LE
+		LK=LK
+		UL=UL
+		RG=RG
+		NR=NR
+		NE=NE
+	PRINT_STATEMENT__CHARGE : mml:string
+		Y=Y
+		NO=NO
+	PRINT_STATEMENT__REPRINT : mml:string
+		Y=Y
+		NO=NO
+	STMT_NARR_FORMAT__WRAP_TRUNCATE : mml:string
+		WRAP=WRAP
+		TRUNCATE=TRUNCATE
+	STMT_NARR_PARAM__SYSTEM_ID__FIELD_OPERAND : mml:string
+		EQ=EQ
+		LT=LT
+		GT=GT
+		NE=NE
+		LE=LE
+		GE=GE
+		LK=LK
+		UL=UL
+		RG=RG
+}

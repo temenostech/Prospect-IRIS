@@ -1,0 +1,117 @@
+# UTF-8
+/* Fees Calculation for Mutual Funds */
+Domain MF_Fees
+	@t24:i (module=MF)
+	@java:Package (value=com.temenos.t24.datamodel.mf.mf_fees)
+namespace "http://www.temenos.com/t24/MF_Fees"
+metamodelVersion 4.3.0.20110527
+Classes {
+	MF_AGENT_POSITION
+		@t24:i (t24Name=MF.AGENT.POSITION, level=I, type=L, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		AGENT_POS_ID -> MF_Fees:MF_AGENT_POSITION PK required
+			@t24:i (align=L, inputBehaviour=I, maxLength=25, sysNumber=0.0, core=true, businessType=S, t24Name=AGENT.POS.ID)
+		CLOSING_BAL : mml:string
+			@i18n:Label (en="Closing Balance", fr="Solde de clôture", es="Saldo de Cierre")
+			@i18n:Tooltip (fr="Solde de clôture")
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=1.0, core=true, businessType=NOMAMT, t24Name=CLOSING.BAL)
+		VALUE_DATE -> byValue MF_Fees:MF_AGENT_POSITION__VALUE_DATE *
+	}
+	MF_AGENT_POSITION__VALUE_DATE
+	{
+		VALUE_DATE : mml:date
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=2.0, core=true, businessType=D, t24Name=VALUE.DATE)
+		NOMINAL : mml:string
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=3.0, core=true, businessType=NOMAMT, t24Name=NOMINAL)
+	}
+	MF_TRAIL_FEE
+		@t24:i (t24Name=MF.TRAIL.FEE, level=I, type=H, allowedFunctions="A C D E H I L P Q R S", localRefAllowed=false)
+	{
+		FUND_ID -> MF_Fees:MF_TRAIL_FEE PK required
+			@i18n:Label (en="Fund Id", fr=Fonds, es="ID de Fondo")
+			@i18n:Tooltip (en="Indicates Id of the fund to be subscribed.", fr="Code du fonds", es="Indica la ID del Fondo a ser suscrito")
+			@t24:i (align=L, inputBehaviour=I, maxLength=12, sysNumber=0.0, core=true, businessType=SEC, t24Name=FUND.ID)
+		MIN_HOLDING : mml:string
+			@i18n:Label (fr="Valeur minimum")
+			@i18n:Tooltip (fr="Valeur minimum")
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=1.0, core=true, businessType=NOMAMT, t24Name=MIN.HOLDING)
+		MIN_PERIOD : mml:Integer required
+			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=2.0, core=true, t24Name=MIN.PERIOD)
+		CALC_BASIS : MF_Fees:MF_TRAIL_FEE__CALC_BASIS required
+			@t24:i (align=L, inputBehaviour=I, maxLength=12, sysNumber=3.0, core=true, t24Name=CALC.BASIS)
+		FEE_CODE -> ST_ChargeConfig:FT_COMMISSION_TYPE required
+			@i18n:Label (fr="Code d\'honoraire")
+			@i18n:Tooltip (fr="Code d\'honoraire")
+			@t24:i (align=L, inputBehaviour=I, maxLength=20, sysNumber=4.0, core=true, businessType=A, t24Name=FEE.CODE)
+		FEE_FREQUENCY : mml:string required
+			@t24:i (align=L, inputBehaviour=I, maxLength=17, sysNumber=5.0, core=true, businessType=FQU, t24Name=FEE.FREQUENCY)
+		FEE_PAY_DATE : mml:date
+			@t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=6.0, core=true, businessType=D, t24Name=FEE.PAY.DATE)
+		FEE_LAST_PAY_DATE : mml:date
+			@t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=7.0, core=true, businessType=D, t24Name=FEE.LAST.PAY.DATE)
+		DEBIT_ACCOUNT -> ACM_AccountOpening:ACCOUNT required
+			@i18n:Label (en="Debit account", fr="Compte à débiter", es="Cuenta de Débito")
+			@i18n:Tooltip (en="Indicates the account to be debited ", fr="Compte à débiter")
+			@t24:i (align=R, inputBehaviour=I, maxLength=16, sysNumber=8.0, core=true, businessType=ACC, t24Name=DEBIT.ACCOUNT)
+		RESERVED05 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=9.0, core=true, businessType=A, t24Name=RESERVED05)
+		RESERVED04 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=10.0, core=true, businessType=A, t24Name=RESERVED04)
+		RESERVED03 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=11.0, core=true, businessType=A, t24Name=RESERVED03)
+		RESERVED02 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=12.0, core=true, businessType=A, t24Name=RESERVED02)
+		RESERVED01 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=13.0, core=true, businessType=A, t24Name=RESERVED01)
+		OVERRIDE -> byValue MF_Fees:MF_TRAIL_FEE__OVERRIDE *
+		RECORD_STATUS : mml:string
+			@i18n:Label (en="Record Status", fr=Statut, es=Estado)
+			@i18n:Tooltip (fr="Statut de l\'enregistrement")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=15.0, core=true, businessType=STAT, t24Name=RECORD.STATUS)
+		CURR_NO : mml:Integer
+			@i18n:Label (en="Curr No", fr="N° version", es="No. Actual")
+			@i18n:Tooltip (fr="Numéro de version")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=16.0, core=true, t24Name=CURR.NO)
+		INPUTTER -> byValue MF_Fees:MF_TRAIL_FEE__INPUTTER *
+		DATE_TIME -> byValue MF_Fees:MF_TRAIL_FEE__DATE_TIME *
+		AUTHORISER : mml:string
+			@i18n:Label (en=Authoriser, fr="Validé par", es=Autorizador)
+			@i18n:Tooltip (en="Indicates the User who Authorises the record", fr="Utilisateur de validation", es="El usuario que autorizó el registro")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=19.0, core=true, businessType=A, t24Name=AUTHORISER)
+		CO_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company, fr=Entité, es="Compañía")
+			@i18n:Tooltip (fr="Code établissement ou agence")
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=20.0, core=true, businessType=A, t24Name=CO.CODE)
+		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Dept Code", fr=Service, es=Departamento)
+			@i18n:Tooltip (fr="Code du service")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=21.0, core=true, t24Name=DEPT.CODE)
+		AUDITOR_CODE : mml:string
+			@i18n:Label (en="Auditor Code", fr="Audité par", es="Código de Auditor")
+			@i18n:Tooltip (en="Auditor Code", fr="Utilisateur d\'audit", es="Nombre del auditor")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=22.0, core=true, businessType=A, t24Name=AUDITOR.CODE)
+		AUDIT_DATE_TIME : mml:dateTime
+			@i18n:Label (en="Audit Date Time", fr="Audité le", es="Fecha/Hora de Audit.")
+			@i18n:Tooltip (en="Date and time when record was audited", fr="Date et heure d\'audit", es="Fecha y Hora de Auditoría ")
+			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=23.0, core=true, businessType=RELTIME, t24Name=AUDIT.DATE.TIME)
+	}
+	MF_TRAIL_FEE__OVERRIDE
+	{
+		OVERRIDE : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=14.0, core=true, businessType=A, t24Name=OVERRIDE)
+	}
+	MF_TRAIL_FEE__INPUTTER
+	{
+		INPUTTER : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=17.0, core=true, businessType=A, t24Name=INPUTTER)
+	}
+	MF_TRAIL_FEE__DATE_TIME
+	{
+		DATE_TIME : mml:dateTime
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=18.0, core=true, businessType=RELTIME, t24Name=DATE.TIME)
+	}
+}
+Enumerations {
+	MF_TRAIL_FEE__CALC_BASIS : mml:string
+		LAST_HOLDING=LAST.HOLDING
+}

@@ -1,0 +1,89 @@
+# UTF-8
+/* Model Configuration For ARC CRM */
+Domain CR_ModelBank
+	@t24:i (module=CR)
+	@java:Package (value=com.temenos.t24.datamodel.cr.cr_modelbank)
+namespace "http://www.temenos.com/t24/CR_ModelBank"
+metamodelVersion 4.3.0.20110527
+Classes {
+	CR_CAMPAIGN_STATISTICS
+		@t24:i (t24Name=CR.CAMPAIGN.STATISTICS, level=I, type=L, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		BANK_CAMPAIGN_START_END -> CR_ModelBank:CR_CAMPAIGN_STATISTICS PK required
+			@t24:i (align=L, inputBehaviour=I, maxLength=75, sysNumber=0.0, core=true, businessType=A, t24Name=BANK.CAMPAIGN.START.END)
+		BANK_ID -> ST_CompanyCreation:COMPANY
+			@t24:i (align=L, inputBehaviour=I, maxLength=11, sysNumber=1.0, core=true, businessType=COM, t24Name=BANK.ID)
+		CAMPAIGN_ID -> CR_Operational:CR_CAMPAIGN_GENERATOR
+			@i18n:Label (en="Campaign Id", fr=Campagne, es="ID campaña")
+			@i18n:Tooltip (fr=Campagne)
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=2.0, core=true, businessType=A, t24Name=CAMPAIGN.ID)
+		START_DATE : mml:date
+			@i18n:Label (en="Start Date", fr="Date de début", es="Fecha de Inicio")
+			@i18n:Tooltip (en="Start Date", fr="Date de début", es="Fecha de Inicio del Acuerdo")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=3.0, core=true, businessType=D, t24Name=START.DATE)
+		END_DATE : mml:date
+			@i18n:Label (en="End Date", fr="Date de fin", es="Fecha Final")
+			@i18n:Tooltip (en="End Date", fr="Date de fin")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=4.0, core=true, businessType=D, t24Name=END.DATE)
+		LENGTH_IN_DAYS : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=5, sysNumber=5.0, core=true, businessType=A, t24Name=LENGTH.IN.DAYS)
+		COMPANY -> byValue CR_ModelBank:CR_CAMPAIGN_STATISTICS__COMPANY *
+		CHANNEL -> byValue CR_ModelBank:CR_CAMPAIGN_STATISTICS__CHANNEL *
+		TOTAL_BANK_OPP : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=15.0, core=true, t24Name=TOTAL.BANK.OPP)
+		LAST_UPDATED_ON : mml:date
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=16.0, core=true, businessType=D, t24Name=LAST.UPDATED.ON)
+		RESERVED_10 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=17.0, core=true, t24Name=RESERVED.10)
+		RESERVED_9 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=18.0, core=true, t24Name=RESERVED.9)
+		RESERVED_8 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=19.0, core=true, t24Name=RESERVED.8)
+		RESERVED_7 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=20.0, core=true, t24Name=RESERVED.7)
+		RESERVED_6 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=21.0, core=true, t24Name=RESERVED.6)
+		RESERVED_5 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=22.0, core=true, t24Name=RESERVED.5)
+		RESERVED_4 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=23.0, core=true, t24Name=RESERVED.4)
+		RESERVED_3 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=24.0, core=true, t24Name=RESERVED.3)
+		RESERVED_2 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=25.0, core=true, t24Name=RESERVED.2)
+		RESERVED_1 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=26.0, core=true, t24Name=RESERVED.1)
+	}
+	CR_CAMPAIGN_STATISTICS__COMPANY
+	{
+		COMPANY -> ST_CompanyCreation:COMPANY
+			@t24:i (align=L, inputBehaviour=I, maxLength=11, sysNumber=6.0, core=true, businessType=A, t24Name=COMPANY)
+		STATUS -> byValue CR_ModelBank:CR_CAMPAIGN_STATISTICS__COMPANY__STATUS *
+		LEAD_COMPANY -> ST_CompanyCreation:COMPANY
+			@t24:i (align=L, inputBehaviour=I, maxLength=11, sysNumber=9.0, core=true, businessType=COM, t24Name=LEAD.COMPANY)
+		COMP_TOTAL_OPP : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=10.0, core=true, t24Name=COMP.TOTAL.OPP)
+	}
+	CR_CAMPAIGN_STATISTICS__COMPANY__STATUS
+	{
+		STATUS -> CR_Operational:CR_OPPORTUNITY_STATUS
+			@t24:i (align=L, inputBehaviour=I, maxLength=50, sysNumber=7.0, core=true, businessType=A, t24Name=STATUS)
+		OPP_COUNT : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=8.0, core=true, t24Name=OPP.COUNT)
+	}
+	CR_CAMPAIGN_STATISTICS__CHANNEL
+	{
+		CHANNEL -> EB_ARC:EB_CHANNEL
+			@t24:i (align=L, inputBehaviour=I, maxLength=20, sysNumber=11.0, core=true, businessType=A, t24Name=CHANNEL)
+		CH_STATUS -> byValue CR_ModelBank:CR_CAMPAIGN_STATISTICS__CHANNEL__CH_STATUS *
+		CH_TOTAL_OPP : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=14.0, core=true, t24Name=CH.TOTAL.OPP)
+	}
+	CR_CAMPAIGN_STATISTICS__CHANNEL__CH_STATUS
+	{
+		CH_STATUS -> CR_Operational:CR_OPPORTUNITY_STATUS
+			@t24:i (align=L, inputBehaviour=I, maxLength=50, sysNumber=12.0, core=true, businessType=A, t24Name=CH.STATUS)
+		CH_OPP_COUNT : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=13.0, core=true, t24Name=CH.OPP.COUNT)
+	}
+}

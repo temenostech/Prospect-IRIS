@@ -1,0 +1,69 @@
+# UTF-8
+/* GenericAccountingInterest for Funds Transfer */
+Domain FT_GenericAccountingInterest
+	@t24:i (module=FT)
+	@java:Package (value=com.temenos.t24.datamodel.ft.ft_genericaccountinginterest)
+namespace "http://www.temenos.com/t24/FT_GenericAccountingInterest"
+metamodelVersion 4.3.0.20110527
+Classes {
+	FT_ACC_TAPE_DATA
+		@t24:i (t24Name=FT.ACC.TAPE.DATA, level=C, type=L, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		DATA_ID -> FT_GenericAccountingInterest:FT_ACC_TAPE_DATA PK required
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=0.0, core=true, businessType=A, t24Name=DATA.ID)
+		PROCESS_DATE : mml:date
+			@i18n:Label (en="Process Date", fr="Date de processus", es="Fecha de Proceso")
+			@i18n:Tooltip (fr="Date de processus")
+			@t24:i (align=R, inputBehaviour=E, maxLength=11, sysNumber=1.0, core=true, businessType=D, t24Name=PROCESS.DATE)
+		ACCOUNT_NAME : mml:string
+			@i18n:Label (en="Portfolio Name", fr=Intitulé, es="Nombre de Cartera")
+			@i18n:Tooltip (fr="Intitulé du compte")
+			@t24:i (align=L, inputBehaviour=E, maxLength=20, sysNumber=2.0, core=true, businessType=A, t24Name=ACCOUNT.NAME)
+		ACCOUNT -> ACM_AccountOpening:ACCOUNT
+			@i18n:Label (en=Account, fr=Compte, es="Número de Cuenta")
+			@i18n:Tooltip (en="Identifies the customer account", fr=Compte, es="Identifica la cuenta del Cliente ")
+			@t24:i (align=R, inputBehaviour=E, maxLength=16, sysNumber=3.0, core=true, businessType=ACC, t24Name=ACCOUNT)
+		AMOUNT : mml:Double
+			@i18n:Label (en=Amount, fr=Montant, es=Monto)
+			@i18n:Tooltip (en="Indicates the Amount", fr=Montant)
+			@t24:i (align=R, inputBehaviour=E, maxLength=14, sysNumber=4.0, core=true, businessType=AMT, t24Name=AMOUNT)
+		CHEQUE_NUMBER : mml:string
+			@i18n:Label (en="Cheque No", fr="N° de chèque", es="No. de Cheque")
+			@i18n:Tooltip (fr="Numéro de chèque", es="Número de Cheque ")
+			@t24:i (align=L, inputBehaviour=E, maxLength=35, sysNumber=5.0, core=true, businessType=A, t24Name=CHEQUE.NUMBER)
+		ERROR_TEXT -> byValue FT_GenericAccountingInterest:FT_ACC_TAPE_DATA__ERROR_TEXT *
+		TRANS_REFERENCE : mml:string
+			@i18n:Label (en="Transaction Ref", fr=Référence, es="Ref. de Transacción")
+			@i18n:Tooltip (fr=Référence)
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=7.0, core=true, businessType=A, t24Name=TRANS.REFERENCE)
+		OUR_REFERENCE : mml:string
+			@i18n:Label (en="Transaction Ref", fr="Notre référence", es="Ref. de Transacción")
+			@i18n:Tooltip (en="Our Reference", fr="Notre référence")
+			@t24:i (align=L, inputBehaviour=E, maxLength=35, sysNumber=8.0, core=true, businessType=A, t24Name=OUR.REFERENCE)
+		REVERSAL_MARKER : mml:Character
+			@i18n:Label (en="Rev Marker", fr="Marqueur d\'extourne", es="Marcador Inversión")
+			@i18n:Tooltip (fr="Marqueur d\'extourne")
+			@t24:i (align=L, inputBehaviour=E, maxLength=1, sysNumber=9.0, core=true, businessType=A, t24Name=REVERSAL.MARKER)
+		TAPE_DATA -> byValue FT_GenericAccountingInterest:FT_ACC_TAPE_DATA__TAPE_DATA *
+	}
+	FT_ACC_TAPE_DATA__ERROR_TEXT
+	{
+		ERROR_TEXT : mml:string
+			@t24:i (align=L, inputBehaviour=E, maxLength=35, sysNumber=6.0, core=true, businessType=A, t24Name=ERROR.TEXT)
+	}
+	FT_ACC_TAPE_DATA__TAPE_DATA
+	{
+		TAPE_DATA : mml:Integer
+			@t24:i (align=R, inputBehaviour=E, maxLength=50, sysNumber=10.0, core=true, t24Name=TAPE.DATA)
+	}
+	FT_BED_TXNS
+		@t24:i (t24Name=FT.BED.TXNS, level=C, type=T, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		ACCOUNT_NO_DATE -> FT_GenericAccountingInterest:FT_BED_TXNS PK required
+			@i18n:Label (en="Account Date", fr="Date de compte", es="Fecha de Cuenta")
+			@i18n:Tooltip (fr="Date de compte ")
+			@t24:i (align=R, inputBehaviour=I, maxLength=30, sysNumber=0.0, core=true, businessType=ACCD, t24Name=ACCOUNT.NO.DATE)
+		BED_DATA : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=128, sysNumber=1.0, core=true, businessType=A, t24Name=BED.DATA)
+	}
+}

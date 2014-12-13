@@ -1,0 +1,1442 @@
+# UTF-8
+/* Entitlement creation and processing for Securities */
+Domain SCC_Entitlements
+	@t24:i (module=SC)
+	@java:Package (value=com.temenos.t24.datamodel.sc.scc_entitlements)
+namespace "http://www.temenos.com/t24/SCC_Entitlements"
+metamodelVersion 4.3.0.20110527
+Classes {
+	ENTITLEMENT
+		@t24:i (t24Name=ENTITLEMENT, level=F, type=H, additionalInfo="OEU NOH", allowedFunctions="A C D E H I L P Q R S V", localRefAllowed=true)
+	{
+		ENTITLEMENT_ID -> SCC_Entitlements:ENTITLEMENT PK required
+			@i18n:Label (en="Entitlement Id", fr="Code de Droit", es="ID de Titulación")
+			@i18n:Tooltip (fr="Code de Droit")
+			@t24:i (align=L, inputBehaviour=I, maxLength=97, sysNumber=0.0, core=true, businessType=S, t24Name=ENTITLEMENT.ID)
+		PORTFOLIO_NO -> SCO_PortfolioMaintenance:SEC_ACC_MASTER
+			@i18n:Label (en="Portfoio No", fr="N° du portefeuille", es="No. de Cartera")
+			@i18n:Tooltip (en="Indicates the Portfolio Account of the customer", fr="Numéro du portefeuille", es="Indica la Cuenta de Cartera del Cliente")
+			@t24:i (align=R, inputBehaviour=N, maxLength=14, sysNumber=1.0, core=true, t24Name=PORTFOLIO.NO)
+		SECURITY_NO -> SCO_SecurityMasterMaintenance:SECURITY_MASTER
+			@i18n:Label (en="Security No", fr="Code valeur", es="No. de Título")
+			@i18n:Tooltip (en="Indicates the security code/number", fr="Code valeur", es="Indica un Título Valor válido")
+			@t24:i (align=L, inputBehaviour=N, maxLength=12, sysNumber=2.0, core=true, businessType=SEC, t24Name=SECURITY.NO)
+		DEPOSITORY -> SC_Config:CUSTOMER_SECURITY
+			@i18n:Label (en=Depository, fr=Dépositaire, es=Depositario)
+			@i18n:Tooltip (en="Depository the Security to be delivered from/to", fr=Dépositaire, es="Depositario de Título Valor a ser enviado de/a")
+			@t24:i (align=R, inputBehaviour=N, maxLength=6, sysNumber=3.0, core=true, businessType=CUS, t24Name=DEPOSITORY)
+		NOMINEE -> SC_Config:NOMINEE_CODE
+			@i18n:Label (en=Nominee, fr="Code Nominee", es=Candidato)
+			@i18n:Tooltip (fr="Code Nominee")
+			@t24:i (align=L, inputBehaviour=N, maxLength=5, sysNumber=4.0, core=true, businessType=S, t24Name=NOMINEE)
+		SUB_ACCOUNT : mml:Integer
+			@i18n:Label (en="Sub Account", fr=Sous-compte, es="Sub Cuenta")
+			@i18n:Tooltip (fr=Sous-compte)
+			@t24:i (align=R, inputBehaviour=N, maxLength=16, sysNumber=5.0, core=true, t24Name=SUB.ACCOUNT)
+		QUALIFY_HOLDING : mml:string required
+			@i18n:Label (en="Qualifying holdings", fr="Qualifier valeurs", es="Valores Cualificados")
+			@i18n:Tooltip (en="Portfolio holding in original security on EX.DATE", fr="Qualifier valeurs", es="Valores portafolio en tít. original en EX.DATE")
+			@t24:i (align=R, inputBehaviour=I, maxLength=25, sysNumber=6.0, core=true, businessType=NOMAMT, t24Name=QUALIFY.HOLDING)
+		EVENT_NOMINAL : mml:string
+			@i18n:Label (en="Number selected", fr="Nombre sélectionné", es="Número Seleccionado")
+			@i18n:Tooltip (en="Holds total nominal involved in the event", fr="Nombre sélectionné", es="Tiene el nominal total implicado en el evento")
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=7.0, core=true, businessType=NOMAMT, t24Name=EVENT.NOMINAL)
+		CURRENCY -> FIN_CurrencyConfig:CURRENCY
+			@i18n:Label (en=Ccy, fr=Devise, es=Moneda)
+			@i18n:Tooltip (fr="Code devise ISO")
+			@t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=8.0, core=true, businessType=CCY, t24Name=CURRENCY)
+		VALUE_DATE : mml:date required
+			@i18n:Label (en="Value Date", fr="Date de valeur", es="Fecha Valor")
+			@i18n:Tooltip (en="Indicates the Value date of the Contract", fr="Date de valeur", es="Fecha en que Carteras serán act. por el evento")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=9.0, core=true, businessType=D, t24Name=VALUE.DATE)
+		OPTION_DESC -> byValue SCC_Entitlements:ENTITLEMENT__OPTION_DESC *
+		SEC_TRADE_ID -> byValue SCC_Entitlements:ENTITLEMENT__SEC_TRADE_ID *
+		RETAIN_NOMINAL : mml:string
+			@i18n:Label (en="Retain Nominal", fr="Nominal conservé", es="Conservar Nominal")
+			@i18n:Tooltip (en="User to select some or all of the EVENT.NOMINAL ", fr="Nominal conservé", es="Usuario a selec. algunos/todos EVENT.NOMINAL ")
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=36.0, core=true, businessType=NOMAMT, t24Name=RETAIN.NOMINAL)
+		OPTION : mml:Integer
+			@i18n:Label (en=Opt, fr=Option, es="Opción")
+			@i18n:Tooltip (fr=Option)
+			@t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=37.0, core=true, t24Name=OPTION)
+		ACCOUNT_NO : mml:string required
+			@i18n:Label (en=Account, fr="N° de compte", es=Cuenta)
+			@i18n:Tooltip (en="Indicates Customer Account Number", fr="Numéro de compte")
+			@t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=38.0, core=true, businessType=ANT, t24Name=ACCOUNT.NO)
+		ACCOUNT_CURR -> FIN_CurrencyConfig:CURRENCY
+			@i18n:Label (en="Account Ccy", fr="Devise du Compte", es="Moneda de Cuenta")
+			@i18n:Tooltip (fr="Devise du Compte ")
+			@t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=39.0, core=true, businessType=CCY, t24Name=ACCOUNT.CURR)
+		REFERENCE_CCY -> FIN_CurrencyConfig:CURRENCY
+			@i18n:Label (en="Ref Ccy", fr="Devise de référence", es="Moneda de Ref.")
+			@i18n:Tooltip (fr="Devise de référence")
+			@t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=40.0, core=true, businessType=CCY, t24Name=REFERENCE.CCY)
+		SOURCE_TAX_AMT : mml:string
+			@i18n:Label (en="Source Tax Amount", fr="Mt retenue à la source", es="Mto. Impuesto Fuente")
+			@i18n:Tooltip (en="Amount of Source Tax charged in event currency", fr="Montant retenue à la source", es="Monto de Impuesto Fuente cobrado en Mda del evento")
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=41.0, core=true, businessType=BMT, t24Name=SOURCE.TAX.AMT)
+		LOCAL_TAX_AMT -> byValue SCC_Entitlements:ENTITLEMENT__LOCAL_TAX_AMT *
+		TAX_CREDIT : mml:Double
+			@i18n:Label (en="Tax Credit", fr="Crédit de Taxe", es="Crédito de Impuesto")
+			@i18n:Tooltip (fr="Crédit de Taxe")
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=43.0, core=true, businessType=AMT, t24Name=TAX.CREDIT)
+		FGN_CHARGES_AMT : mml:Double
+			@i18n:Label (en="Fgn Charges Amount", fr="Montant frais étrangers", es="Monto Cargos Extranjeros")
+			@i18n:Tooltip (fr="Montant frais étrangers")
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=44.0, core=true, businessType=AMT, t24Name=FGN.CHARGES.AMT)
+		COMMISSION_AMT : mml:Double
+			@i18n:Label (en="Commission Amount", fr="Montant commission", es="Monto de Comisión")
+			@i18n:Tooltip (fr="Montant de la commission")
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=45.0, core=true, businessType=AMT, t24Name=COMMISSION.AMT)
+		COMM_TAX_AMT : mml:Double
+			@i18n:Label (en="Commission Tax Amount", es="Monto Impuesto Comisión")
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=46.0, core=true, businessType=AMT, t24Name=COMM.TAX.AMT)
+		STAMP_TAX_CODE -> ST_ChargeConfig:TAX
+			@t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=47.0, core=true, businessType=A, t24Name=STAMP.TAX.CODE)
+		STAMP_BASE_AMT : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=48.0, core=true, businessType=AMT, t24Name=STAMP.BASE.AMT)
+		STAMP_BK_LCY : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=49.0, core=true, businessType=AMT, t24Name=STAMP.BK.LCY)
+		STAMP_SEC_CCY : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=50.0, core=true, businessType=AMT, t24Name=STAMP.SEC.CCY)
+		STAMP_ACC_CCY : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=51.0, core=true, businessType=AMT, t24Name=STAMP.ACC.CCY)
+		STAMP_LOC_CCY : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=52.0, core=true, businessType=AMT, t24Name=STAMP.LOC.CCY)
+		NET_AMT_ACC_CUR : mml:Double
+			@i18n:Label (en="Net Amount Acc Currency", fr="Mt Net Devise du compte", es="Mto. Neto Mda. de Cta.")
+			@i18n:Tooltip (en="Net Amount credited/ debited in account Currency ", fr="Montant net devise du compte", es="Monto Neto acreditado o debitado en Mda. de cuenta")
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=53.0, core=true, businessType=AMT, t24Name=NET.AMT.ACC.CUR)
+		NET_AMOUNT : mml:Double
+			@i18n:Label (en="Net Amount", fr="Montant net", es="Efect. Pagado a Clte.")
+			@i18n:Tooltip (fr="Montant net")
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=54.0, core=true, businessType=AMT, t24Name=NET.AMOUNT)
+		LCCY_EXCH_RATE : mml:string
+			@i18n:Label (en="Total Cash Exchange", fr="Taux change montant cash", es="Cambio Efectivo Total")
+			@i18n:Tooltip (en="Exchange Rate between event and local Currency", fr="Taux change montant cash", es="Tipo de cambio entre la Moneda Local y el evento ")
+			@t24:i (align=R, inputBehaviour=I, maxLength=15, sysNumber=55.0, core=true, businessType=R, t24Name=LCCY.EXCH.RATE)
+		ACC_EXCH_RATE : mml:string
+			@i18n:Label (en="Acc Exchange Rate", fr="Taux de change sur compte", es="Tipo Cambio de Cuenta")
+			@i18n:Tooltip (en="Exchange rate between Event and Account currency", fr="Taux de change sur compte", es="Tipo de cambio entre moneda de Cuenta y de Evento")
+			@t24:i (align=R, inputBehaviour=I, maxLength=15, sysNumber=56.0, core=true, businessType=R, t24Name=ACC.EXCH.RATE)
+		REF_LCCY_RATE : mml:string
+			@i18n:Label (en="Ref Ccy Exchange Rate", fr="Taux change devise réf", es="Tipo Cambio Mda. Ref.")
+			@i18n:Tooltip (en="Exchange rate Reference and Local Currency", fr="Taux change devise réf", es="Referencia de tipo de cambio y Moneda Local")
+			@t24:i (align=R, inputBehaviour=F, maxLength=15, sysNumber=57.0, core=true, businessType=R, t24Name=REF.LCCY.RATE)
+		FGN_CHGES_LCCY : mml:Double
+			@i18n:Label (en="Fgn Ccy Exchange Rate", es="Tipo Cambio en ME.")
+			@i18n:Tooltip (en="Holds foreign Charges amount in the Local Currency", es="Tiene monto de Cargos extranjeros en ML. ")
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=58.0, core=true, businessType=AMT, t24Name=FGN.CHGES.LCCY)
+		COMMISSION_LCCY : mml:Double
+			@i18n:Label (en="Commission Lccy", es="Moneda Local de Comisión")
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=59.0, core=true, businessType=AMT, t24Name=COMMISSION.LCCY)
+		NET_AMT_LCCY : mml:Double
+			@i18n:Label (en="Net Amount Local", es="Mto. Neto Mda. Local")
+			@i18n:Tooltip (en="Holds the net amount in Local Currency", es="Tiene el monto neto en Moneda Local")
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=60.0, core=true, businessType=AMT, t24Name=NET.AMT.LCCY)
+		REFERENCE_NO : mml:Integer
+			@i18n:Label (en="Reference No", fr=Référence, es="No. de Referencia")
+			@i18n:Tooltip (en="Unique reference which identifies the transaction", fr=Référence, es="Ref. única que identifica la transacción")
+			@t24:i (align=R, inputBehaviour=N, maxLength=16, sysNumber=61.0, core=true, t24Name=REFERENCE.NO)
+		COMMISSION_CODE -> ST_ChargeConfig:FT_COMMISSION_TYPE
+			@i18n:Label (en="Commission Code", fr=Commission, es="Código de Comisión")
+			@i18n:Tooltip (en="Indicates the commission code", fr="Code de la commission", es="Indica el código de comisión ")
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=62.0, core=true, businessType=A, t24Name=COMMISSION.CODE)
+		COMM_TAX_CODE -> ST_ChargeConfig:TAX
+			@i18n:Label (en="Commission Tax code", fr="Code taxe sur commission", es="Cod Impuesto Comisión")
+			@i18n:Tooltip (en="Indicates the commission tax code", fr="Code taxe sur commission", es="Indica el código de impuesto de comisión")
+			@t24:i (align=L, inputBehaviour=N, maxLength=2, sysNumber=63.0, core=true, businessType=A, t24Name=COMM.TAX.CODE)
+		COMM_TAX_LCCY : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=64.0, core=true, businessType=AMT, t24Name=COMM.TAX.LCCY)
+		COMM_TAX_XRATE : mml:string
+			@i18n:Label (en="Commission Tax Exch Rate", fr="Taux de change taxe sur commission", es="Tasa Impuesto Com.")
+			@i18n:Tooltip (en="Indicates the commission Tax Exchange Rate ", fr="Taux de change taxe sur commission", es="Indica el Tipo de Cambio del Impuesto de comisión")
+			@t24:i (align=R, inputBehaviour=N, maxLength=15, sysNumber=65.0, core=true, businessType=R, t24Name=COMM.TAX.XRATE)
+		SEC_NO -> byValue SCC_Entitlements:ENTITLEMENT__SEC_NO *
+		ACTIVITY_CODE -> byValue SCC_Entitlements:ENTITLEMENT__ACTIVITY_CODE *
+		OVE_ADDR -> byValue SCC_Entitlements:ENTITLEMENT__OVE_ADDR *
+		MESS_CONTROL -> EB_Delivery:MESSAGE_CONTROL
+			@i18n:Label (en="Message Control", es="Control de Mensaje")
+			@i18n:Tooltip (en="Indicates the message control id")
+			@t24:i (align=R, inputBehaviour=F, maxLength=3, sysNumber=72.0, core=true, t24Name=MESS.CONTROL)
+		TAX_CHANGED : SCC_Entitlements:ENTITLEMENT__TAX_CHANGED
+			@i18n:Label (en="Tax Changed", es="Impuesto Cambiado")
+			@i18n:Tooltip (en="The default tax has been changed or not", es="Impuesto pre-establecido ha sido cambiado o no")
+			@t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=73.0, core=true, t24Name=TAX.CHANGED)
+		COMM_CHANGED : SCC_Entitlements:ENTITLEMENT__COMM_CHANGED
+			@i18n:Label (en="Commission Changed", es="Comisión Cambiada")
+			@t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=74.0, core=true, t24Name=COMM.CHANGED)
+		FOREIGN_CHGES_TAX : mml:string
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=75.0, core=true, businessType=BMT, t24Name=FOREIGN.CHGES.TAX)
+		FGN_TAX_CODE : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=76.0, core=true, businessType=TAX, t24Name=FGN.TAX.CODE)
+		FGN_TAX_BCUR : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=77.0, core=true, businessType=AMT, t24Name=FGN.TAX.BCUR)
+		FGN_TAX_XRATE : mml:string
+			@t24:i (align=R, inputBehaviour=N, maxLength=15, sysNumber=78.0, core=true, businessType=R, t24Name=FGN.TAX.XRATE)
+		MBS_RED_DIV_AMT : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=79.0, core=true, businessType=AMT, t24Name=MBS.RED.DIV.AMT)
+		MBS_RED_ACC_AMT : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=80.0, core=true, businessType=AMT, t24Name=MBS.RED.ACC.AMT)
+		MBS_RED_LCY_AMT : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=81.0, core=true, businessType=AMT, t24Name=MBS.RED.LCY.AMT)
+		PRE_ADVICE_REQ : SCC_Entitlements:ENTITLEMENT__PRE_ADVICE_REQ
+			@i18n:Label (en="Pre Advice Reqd?", fr="Préavis Requis", es="¿Pre Aviso Requerido ?")
+			@i18n:Tooltip (en="Whether pre-confirmation advices required?", fr="Préavis Requis", es="Si se requiere aviso de pre-confirmación o no")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=83.0, core=true, t24Name=PRE.ADVICE.REQ)
+		CONFIRM_REQ : SCC_Entitlements:ENTITLEMENT__CONFIRM_REQ
+			@i18n:Label (en="Confirmation Reqd?", fr="Confirmation Requise", es="¿Requiere Confirmación?")
+			@i18n:Tooltip (en="Indicates whether confirmation messages required?", fr="Confirmation Requise", es="Indica si mensajes de confirmación son requeridos")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=84.0, core=true, t24Name=CONFIRM.REQ)
+		CGT_BAMT_CCY : mml:string
+			@i18n:Label (en="CG Base Amount Ccy", fr="Dev. Mntt base GC", es="Mda. Mto. Base de GC")
+			@i18n:Tooltip (en="Capital Gains base amount currency", fr="Devise Montant base GC")
+			@t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=85.0, core=true, businessType=CCY, t24Name=CGT.BAMT.CCY)
+		CGT_BASE_AMT : mml:Double
+			@i18n:Label (en="CG Base Amount", fr="Montant base Gain Capital", es="Mto. Base de GC")
+			@i18n:Tooltip (en="Amount on which capital gains tax to be calculated", fr="Montant base Gain Capital")
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=86.0, core=true, businessType=AMT, t24Name=CGT.BASE.AMT)
+		CGT_CODE -> byValue SCC_Entitlements:ENTITLEMENT__CGT_CODE *
+		CGT_PARAM_COND -> SCT_CapitalGains:CG_PARAM_CONDITION
+			@i18n:Label (en="CGT Parameter Condition", es="Cond.Parám.Gan.Calc.")
+			@i18n:Tooltip (en="Capital Gains method and tax to be applied", es="Condición Parámetros Impuesto Ganancia Calculada")
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=91.0, core=true, businessType=A, t24Name=CGT.PARAM.COND)
+		CGT_SRC_LCL_TAX : mml:string
+			@i18n:Label (en="CGT Source Local Tax", es=Fuen.Impu.L.Gan.Calc.)
+			@i18n:Tooltip (en="Indicates whether CGT is source or local ", es="Fuente de Impuesto Local de Ganancia Calculada ")
+			@t24:i (align=L, inputBehaviour=N, maxLength=6, sysNumber=92.0, core=true, businessType=A, t24Name=CGT.SRC.LCL.TAX)
+		BLOCK_TYPE : mml:Integer
+			@i18n:Label (en="Block Type", es="Tipo de Bloqueo")
+			@t24:i (align=R, inputBehaviour=N, maxLength=15, sysNumber=93.0, core=true, t24Name=BLOCK.TYPE)
+		LOCAL_TAX_CODE -> byValue SCC_Entitlements:ENTITLEMENT__LOCAL_TAX_CODE *
+		EQUALISATION_ACC : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=96.0, core=true, businessType=ANT, t24Name=EQUALISATION.ACC)
+		EQUALISATION_CCY : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=97.0, core=true, businessType=CCY, t24Name=EQUALISATION.CCY)
+		EQUALIS_EX_RATE : mml:string
+			@t24:i (align=R, inputBehaviour=I, maxLength=16, sysNumber=98.0, core=true, businessType=R, t24Name=EQUALIS.EX.RATE)
+		EQUALIS_AMT_ACY : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=99.0, core=true, businessType=AMT, t24Name=EQUALIS.AMT.ACY)
+		SOURCE_TAX_CODE : mml:Integer
+			@i18n:Label (en="Source Tax code", fr="Code retenue à la Source", es="Cód. Fuente Impuesto")
+			@i18n:Tooltip (en="Holds source tax code used to calculate Source Tax", fr="Code retenue à la Source", es="Código de Impu. usado para cálculo de Impu. Fuente")
+			@t24:i (align=R, inputBehaviour=N, maxLength=16, sysNumber=100.0, core=true, t24Name=SOURCE.TAX.CODE)
+		SOURCE_TAX_PERC : mml:string
+			@i18n:Label (en="Tax %", fr="% d\'impôt", es="Porcentaje Impuesto")
+			@i18n:Tooltip (fr="% d\'impôt")
+			@t24:i (align=R, inputBehaviour=I, maxLength=15, sysNumber=101.0, core=true, businessType=R, t24Name=SOURCE.TAX.PERC)
+		CUST_ACT_SUSP_CAT -> ST_Config:CATEGORY
+			@i18n:Label (en="Cust Cash Susp", fr="Catégorie suspens client", es=Cat.Cta.Trans.Cliente)
+			@i18n:Tooltip (en="Suspense account to post customer cash amount", fr="Catégorie suspens client", es="Categoría de Cuenta Transitoria de Cliente")
+			@t24:i (align=L, inputBehaviour=I, maxLength=5, sysNumber=102.0, core=true, businessType=A, t24Name=CUST.ACT.SUSP.CAT)
+		BROK_ACT_SUSP_CAT -> ST_Config:CATEGORY
+			@i18n:Label (en="Brok Cash Susp", fr="Catégorie suspens courtier", es="Cta. Orden Efec. Corr.")
+			@i18n:Tooltip (en="Broker suspense account to post suspense amount", fr="Catégorie suspens courtier")
+			@t24:i (align=L, inputBehaviour=I, maxLength=5, sysNumber=103.0, core=true, businessType=A, t24Name=BROK.ACT.SUSP.CAT)
+		MISC_ACT_SUSP_CAT -> ST_Config:CATEGORY
+			@i18n:Label (en="Misc Cash Susp", fr="Catégorie montant en suspens", es="Cta. Orden Efec. Varias")
+			@i18n:Tooltip (en="Miscellaneous Cash suspense account", fr="Catégorie montant en suspens ", es="Cuenta varias de Orden de Efectivo")
+			@t24:i (align=L, inputBehaviour=I, maxLength=5, sysNumber=104.0, core=true, businessType=A, t24Name=MISC.ACT.SUSP.CAT)
+		AUTO_CUST_SETT : SCC_Entitlements:ENTITLEMENT__AUTO_CUST_SETT
+			@i18n:Label (en="Auto Cust Settle", fr="Réglt Auto Clt", es="Liquid. Auto. Cliente")
+			@i18n:Tooltip (en="Automatic settlement of Customer nominal and cash ", fr="Règlement Automatique Client", es="Liquid. auto. de Cliente de nominal y efectivo")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=105.0, core=true, t24Name=AUTO.CUST.SETT)
+		ADJUST_SEC -> byValue SCC_Entitlements:ENTITLEMENT__ADJUST_SEC *
+		AUT_AUTH_DATE : mml:date
+			@i18n:Label (en="Auto Auth Date", es="Fecha Auto Autoriz.")
+			@i18n:Tooltip (en="Date of automatic authorisation of ENTITLEMENT ", es="Fecha de autorización automática de Titulación")
+			@t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=108.0, core=true, businessType=D, t24Name=AUT.AUTH.DATE)
+		DEF_INSTR_DATE : mml:date
+			@i18n:Label (en="Default Instrument Date", fr="Date instr par défaut", es="Fecha Pre-est. Instr.")
+			@i18n:Tooltip (en="Date when default instructions apply to entitlmnts", fr="Date instr par défaut", es="Fecha Pre-establecida del Instrumento")
+			@t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=109.0, core=true, businessType=D, t24Name=DEF.INSTR.DATE)
+		REINVEST_ORDER : mml:string
+			@i18n:Label (en="Reinvest Order", es="Orden de Reinversión")
+			@i18n:Tooltip (en="Transaction id by corporate actions STP process", es="ID trs. por acciones corporativas en proceso STP")
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=110.0, core=true, businessType=A, t24Name=REINVEST.ORDER)
+		STAND_INST : mml:Integer
+			@i18n:Label (en="Standing Instruction", fr="Instruction permanente", es="Instrucción Permanente")
+			@i18n:Tooltip (en="Standing instructions used to default option", fr="Instruction permanente", es="Instr. perman. usadas para pre-establecer opción")
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=111.0, core=true, t24Name=STAND.INST)
+		AUTO_BROK_SETT : SCC_Entitlements:ENTITLEMENT__AUTO_BROK_SETT
+			@i18n:Label (en="Settlement type", fr="Régler Courtier Auto", es="Tipo de liquidación")
+			@i18n:Tooltip (fr="Régler Courtier Auto")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=112.0, core=true, t24Name=AUTO.BROK.SETT)
+		RCVBL_TAX_PERC : mml:string
+			@t24:i (align=R, inputBehaviour=I, maxLength=15, sysNumber=113.0, core=true, businessType=R, t24Name=RCVBL.TAX.PERC)
+		RCVBL_TAX_REF_AMT : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=114.0, core=true, businessType=AMT, t24Name=RCVBL.TAX.REF.AMT)
+		RCVBL_TAX_LCY_AMT : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=115.0, core=true, businessType=AMT, t24Name=RCVBL.TAX.LCY.AMT)
+		RCVBL_TAX_SEC_AMT : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=116.0, core=true, businessType=AMT, t24Name=RCVBL.TAX.SEC.AMT)
+		BND_RND_METH : mml:Integer
+			@i18n:Label (en="Bond Rounding Method", es="Método Redondeo Bono")
+			@t24:i (align=R, inputBehaviour=N, maxLength=10, sysNumber=117.0, core=true, t24Name=BND.RND.METH)
+		BROKER_TXN_ID -> byValue SCC_Entitlements:ENTITLEMENT__BROKER_TXN_ID *
+		DEPOT_HOLDING : mml:string
+			@i18n:Label (en="Depot Holding", es="Valores de Depositario")
+			@i18n:Tooltip (en="Effect of the position has on the Depot ", es="Efecto que la posición tiene en el Depósito")
+			@t24:i (align=R, inputBehaviour=E, maxLength=25, sysNumber=125.0, core=true, businessType=NOMAMT, t24Name=DEPOT.HOLDING)
+		DEPO_RIGHTS_NOM : mml:string
+			@i18n:Label (en="Depo Rights Nominal", es="Nomin Derechos Depósit.")
+			@i18n:Tooltip (en="Rights security nominal held with Depository", es="Derechos nominales de título valor mantenidos con Depositario")
+			@t24:i (align=R, inputBehaviour=E, maxLength=25, sysNumber=126.0, core=true, businessType=NOMAMT, t24Name=DEPO.RIGHTS.NOM)
+		OPT_DESC_DEP -> byValue SCC_Entitlements:ENTITLEMENT__OPT_DESC_DEP *
+		BROKER_NO -> byValue SCC_Entitlements:ENTITLEMENT__BROKER_NO *
+		TOT_OUT_NOM : mml:string
+			@i18n:Label (en="Total Outstanding Nominal", es="Nominal Total Pendiente")
+			@t24:i (align=R, inputBehaviour=E, maxLength=18, sysNumber=132.0, core=true, businessType=NOMAMT, t24Name=TOT.OUT.NOM)
+		TOT_RIGHTS_NOM : mml:string
+			@i18n:Label (en="Total Rights Nominal", es="Nominal Derec.Total")
+			@i18n:Tooltip (en="Total broker rightss nominal outstanding ", es="Total nominal de derechos de corredor pendiente ")
+			@t24:i (align=R, inputBehaviour=E, maxLength=18, sysNumber=133.0, core=true, businessType=NOMAMT, t24Name=TOT.RIGHTS.NOM)
+		BR_ENT_KEY -> byValue SCC_Entitlements:ENTITLEMENT__BR_ENT_KEY *
+		ODD_RTS_BAM : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=135.0, core=true, t24Name=ODD.RTS.BAM)
+		ODD_RTS_SAM : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=136.0, core=true, t24Name=ODD.RTS.SAM)
+		OPT_STATUS : SCC_Entitlements:ENTITLEMENT__OPT_STATUS
+			@i18n:Label (en="Option Status", es="Estado de Opción")
+			@i18n:Tooltip (en="Holds the status of the option selected", es="Tiene el estado de la opción seleccionada")
+			@t24:i (align=L, inputBehaviour=E, maxLength=10, sysNumber=137.0, core=true, t24Name=OPT.STATUS)
+		BORROW_NOMINAL : mml:string
+			@i18n:Label (en="Borrow Nominal")
+			@i18n:Tooltip (en="Borrowed Nominal")
+			@t24:i (align=R, inputBehaviour=E, maxLength=18, sysNumber=138.0, core=true, businessType=NOMAMT, t24Name=BORROW.NOMINAL)
+		BORROW_AMT : mml:Double
+			@i18n:Label (en="Borrowed Amount")
+			@i18n:Tooltip (en="Borrowed Amount")
+			@t24:i (align=R, inputBehaviour=E, maxLength=18, sysNumber=139.0, core=true, businessType=AMT, t24Name=BORROW.AMT)
+		LENT_NOMINAL : mml:string
+			@i18n:Label (en="Lent Nominal")
+			@i18n:Tooltip (en="Lent Nominal")
+			@t24:i (align=R, inputBehaviour=E, maxLength=18, sysNumber=140.0, core=true, businessType=NOMAMT, t24Name=LENT.NOMINAL)
+		LENT_AMT : mml:Double
+			@i18n:Label (en="Lent Amount")
+			@i18n:Tooltip (en="Lent Amount")
+			@t24:i (align=R, inputBehaviour=E, maxLength=18, sysNumber=141.0, core=true, businessType=AMT, t24Name=LENT.AMT)
+		SBL_QUALIFY_HOLD : mml:string
+			@i18n:Label (en="SBL Qualify Holding")
+			@i18n:Tooltip (en="Stock Borrow Lending Qualify Holding")
+			@t24:i (align=R, inputBehaviour=E, maxLength=25, sysNumber=142.0, core=true, businessType=NOMAMT, t24Name=SBL.QUALIFY.HOLD)
+		SC_TAX_CODE -> byValue SCC_Entitlements:ENTITLEMENT__SC_TAX_CODE *
+		INT_DIST_FACTOR : mml:string
+			@t24:i (align=R, inputBehaviour=I, maxLength=15, sysNumber=151.0, core=true, businessType=R, t24Name=INT.DIST.FACTOR)
+		INT_CTR : mml:string
+			@i18n:Label (en="Interest Counter")
+			@i18n:Tooltip (en="Interest Counter")
+			@t24:i (align=R, inputBehaviour=I, maxLength=15, sysNumber=152.0, core=true, businessType=R, t24Name=INT.CTR)
+		MANUAL_CREATION : SCC_Entitlements:ENTITLEMENT__MANUAL_CREATION
+			@i18n:Label (en="Manual Creation", es="Creación Manual")
+			@i18n:Tooltip (en="Entitlement generated manually or through service", es="Titulación generada manual. o a través de servicio")
+			@t24:i (align=L, inputBehaviour=N, maxLength=5, sysNumber=153.0, core=true, t24Name=MANUAL.CREATION)
+		EXT_CUSTODIAN -> ST_Customer:CUSTOMER
+			@i18n:Label (fr="Dépositaire externe")
+			@i18n:Tooltip (fr="Dépositaire externe")
+			@t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=154.0, core=true, businessType=CUS, t24Name=EXT.CUSTODIAN)
+		MARGIN_FACTOR : mml:string
+			@t24:i (align=R, inputBehaviour=I, maxLength=9, sysNumber=155.0, core=true, businessType=R, t24Name=MARGIN.FACTOR)
+		RESERVED_2 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=156.0, core=true, t24Name=RESERVED.2)
+		RESERVED_1 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=157.0, core=true, t24Name=RESERVED.1)
+		RESERVED_3 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=158.0, core=true, t24Name=RESERVED.3)
+		RESERVED_4 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=159.0, core=true, t24Name=RESERVED.4)
+		RESERVED_5 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=160.0, core=true, t24Name=RESERVED.5)
+		STMT_NOS -> byValue SCC_Entitlements:ENTITLEMENT__STMT_NOS *
+		OVERRIDE -> byValue SCC_Entitlements:ENTITLEMENT__OVERRIDE *
+		RECORD_STATUS : mml:string
+			@i18n:Label (en="Record Status", fr=Statut, es=Estado)
+			@i18n:Tooltip (fr="Statut de l\'enregistrement")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=163.0, core=true, businessType=STAT, t24Name=RECORD.STATUS)
+		CURR_NO : mml:Integer
+			@i18n:Label (en="Curr No", fr="N° version", es="No. Actual")
+			@i18n:Tooltip (fr="Numéro de version")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=164.0, core=true, t24Name=CURR.NO)
+		INPUTTER -> byValue SCC_Entitlements:ENTITLEMENT__INPUTTER *
+		DATE_TIME -> byValue SCC_Entitlements:ENTITLEMENT__DATE_TIME *
+		AUTHORISER : mml:string
+			@i18n:Label (en=Authoriser, fr="Validé par", es=Autorizador)
+			@i18n:Tooltip (en="Indicates the User who Authorises the record", fr="Utilisateur de validation", es="El usuario que autorizó el registro")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=167.0, core=true, businessType=A, t24Name=AUTHORISER)
+		CO_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company, fr=Entité, es="Compañía")
+			@i18n:Tooltip (fr="Code établissement ou agence")
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=168.0, core=true, businessType=A, t24Name=CO.CODE)
+		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Dept Code", fr=Service, es=Departamento)
+			@i18n:Tooltip (fr="Code du service")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=169.0, core=true, t24Name=DEPT.CODE)
+		AUDITOR_CODE : mml:string
+			@i18n:Label (en="Auditor Code", fr="Audité par", es="Código de Auditor")
+			@i18n:Tooltip (en="Auditor Code", fr="Utilisateur d\'audit", es="Nombre del auditor")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=170.0, core=true, businessType=A, t24Name=AUDITOR.CODE)
+		AUDIT_DATE_TIME : mml:dateTime
+			@i18n:Label (en="Audit Date Time", fr="Audité le", es="Fecha/Hora de Audit.")
+			@i18n:Tooltip (en="Date and time when record was audited", fr="Date et heure d\'audit", es="Fecha y Hora de Auditoría ")
+			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=171.0, core=true, businessType=RELTIME, t24Name=AUDIT.DATE.TIME)
+		MANAGER : mml:Integer
+			@i18n:Label (en=Manager, fr=Gestionnaire, es=Gerente)
+			@i18n:Tooltip (fr=Gestionnaire)
+			@t24:i (align=R, inputBehaviour=I, maxLength=4, core=false, t24Name=MANAGER, genOperation="PORTFOLIO.NO>SEC.ACC.MASTER>ACCOUNT.OFFICER")
+		DIARY_ID : mml:Integer
+			@i18n:Label (en="Diary Id", fr="Réf. de journal", es="ID de Diario")
+			@i18n:Tooltip (en="Indicates the diary Id", fr="Référence de journal")
+			@t24:i (align=R, inputBehaviour=I, maxLength=12, core=false, t24Name=DIARY.ID, genOperation="FIELD(ENTITLEMENT.ID,\".\",1)")
+		EVENT_TYPE : mml:Integer
+			@i18n:Label (en="Event type", fr="Type d\'événement", es="Tipo de Evento")
+			@i18n:Tooltip (en="Type of event - Dividend Payment/Bonus etc.", fr="Type d\'événement", es="\"Tipo de evento - Pago de Dividendo/Prima, etc.\"")
+			@t24:i (align=L, inputBehaviour=I, core=false, t24Name=EVENT.TYPE, genOperation="DIARY.ID>DIARY>EVENT.TYPE")
+		ASSET_TYPE : mml:Integer
+			@i18n:Label (en="Asset Type", fr="Type d\'avoir", es="Tipo de Activo")
+			@i18n:Tooltip (en="Indicates the asset type", fr="Type d\'avoir", es="Indica el tipo de activo")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, core=false, t24Name=ASSET.TYPE, genOperation="SECURITY.NO>SECURITY.MASTER>ASSET.TYPE")
+		SUB_ASSET_TYPE : mml:Integer
+			@i18n:Label (en="Sub Asset Type", fr="Classe d\'actif", es="Sub Activo")
+			@i18n:Tooltip (fr="Classe d\'actif")
+			@t24:i (align=L, inputBehaviour=I, maxLength=5, core=false, t24Name=SUB.ASSET.TYPE, genOperation="SECURITY.NO>SECURITY.MASTER>SUB.ASSET.TYPE")
+		EVENT_STATUS : mml:Integer
+			@i18n:Label (en="Event Status", fr="Statut d\'événement", es="Estado del Evento")
+			@i18n:Tooltip (en="Identifies the status of the event", fr="Statut d\'événement", es="Identifica el estado del evento")
+			@t24:i (align=L, inputBehaviour=I, maxLength=12, core=false, t24Name=EVENT.STATUS, genOperation="DIARY.ID>DIARY>EVENT.STATUS")
+		DIARY_EX_DATE : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, core=false, t24Name=DIARY.EX.DATE, genOperation="DIARY.ID>DIARY>EX.DATE")
+	}
+	ENTITLEMENT__OPTION_DESC
+	{
+		OPTION_DESC : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=10.0, core=true, t24Name=OPTION.DESC)
+		GROSS_RATE : mml:string
+			@t24:i (align=R, inputBehaviour=N, maxLength=15, sysNumber=11.0, core=true, businessType=R, t24Name=GROSS.RATE)
+		NET_RATE : mml:string
+			@t24:i (align=R, inputBehaviour=N, maxLength=15, sysNumber=12.0, core=true, businessType=R, t24Name=NET.RATE)
+		GROSS_OR_NET : SCC_Entitlements:ENTITLEMENT__OPTION_DESC__GROSS_OR_NET
+			@t24:i (align=L, inputBehaviour=I, maxLength=5, sysNumber=13.0, core=true, t24Name=GROSS.OR.NET)
+		ENTITLEMENT_AMT : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=14.0, core=true, businessType=AMT, t24Name=ENTITLEMENT.AMT)
+		MBS_PAID_AMT : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=15.0, core=true, businessType=AMT, t24Name=MBS.PAID.AMT)
+		EQUALISE_HLDING : mml:string
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=16.0, core=true, businessType=NOMAMT, t24Name=EQUALISE.HLDING)
+		GROUP2_AMT : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=17.0, core=true, businessType=AMT, t24Name=GROUP2.AMT)
+		EQUALISE_AMT : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=18.0, core=true, businessType=AMT, t24Name=EQUALISE.AMT)
+		NEW_SECURITY -> byValue SCC_Entitlements:ENTITLEMENT__OPTION_DESC__NEW_SECURITY *
+		OPT_SOURCE_TAX : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=29.0, core=true, businessType=AMT, t24Name=OPT.SOURCE.TAX)
+		OPT_LOCAL_TAX : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=30.0, core=true, businessType=AMT, t24Name=OPT.LOCAL.TAX)
+		OPT_TAX_CREDIT : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=31.0, core=true, businessType=AMT, t24Name=OPT.TAX.CREDIT)
+		OPTION_NOM : mml:string
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=32.0, core=true, businessType=NOMAMT, t24Name=OPTION.NOM)
+	}
+	ENTITLEMENT__OPTION_DESC__NEW_SECURITY
+	{
+		NEW_SECURITY -> SCO_SecurityMasterMaintenance:SECURITY_MASTER
+			@t24:i (align=L, inputBehaviour=N, maxLength=12, sysNumber=19.0, core=true, businessType=SEC, t24Name=NEW.SECURITY)
+		NOMINAL : mml:string
+			@t24:i (align=R, inputBehaviour=I, maxLength=25, sysNumber=20.0, core=true, businessType=NOMAMT, t24Name=NOMINAL)
+		RATIO : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=16, sysNumber=21.0, core=true, t24Name=RATIO)
+		PRICE : mml:string
+			@t24:i (align=R, inputBehaviour=E, maxLength=16, sysNumber=22.0, core=true, businessType=R, t24Name=PRICE)
+		BOOK_COST : mml:string
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=23.0, core=true, businessType=R, t24Name=BOOK.COST)
+		TAX_PRICE : mml:string
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=24.0, core=true, businessType=R, t24Name=TAX.PRICE)
+		TAX_VALUE : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=25.0, core=true, businessType=AMT, t24Name=TAX.VALUE)
+		ODD_LOT_NUM -> SCO_SecurityMasterMaintenance:SECURITY_MASTER
+			@t24:i (align=L, inputBehaviour=I, maxLength=12, sysNumber=26.0, core=true, businessType=SEC, t24Name=ODD.LOT.NUM)
+		ODD_LOT_NOM : mml:string
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=27.0, core=true, businessType=NOMAMT, t24Name=ODD.LOT.NOM)
+		ODD_LOT_REF : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=28.0, core=true, t24Name=ODD.LOT.REF)
+	}
+	ENTITLEMENT__SEC_TRADE_ID
+	{
+		SEC_TRADE_ID : mml:string
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=33.0, core=true, businessType=A, t24Name=SEC.TRADE.ID)
+		BUY_NUMBER : mml:string
+			@t24:i (align=R, inputBehaviour=E, maxLength=18, sysNumber=34.0, core=true, businessType=NOMAMT, t24Name=BUY.NUMBER)
+		SELL_NUMBER : mml:string
+			@t24:i (align=R, inputBehaviour=E, maxLength=18, sysNumber=35.0, core=true, businessType=NOMAMT, t24Name=SELL.NUMBER)
+	}
+	ENTITLEMENT__LOCAL_TAX_AMT
+	{
+		LOCAL_TAX_AMT : mml:string
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=42.0, core=true, businessType=BMT, t24Name=LOCAL.TAX.AMT)
+	}
+	ENTITLEMENT__SEC_NO
+	{
+		SEC_NO -> SCO_SecurityMasterMaintenance:SECURITY_MASTER
+			@t24:i (align=L, inputBehaviour=N, maxLength=12, sysNumber=66.0, core=true, businessType=SEC, t24Name=SEC.NO)
+		SEC_NOMINAL : mml:string
+			@t24:i (align=R, inputBehaviour=N, maxLength=25, sysNumber=67.0, core=true, businessType=NOMAMT, t24Name=SEC.NOMINAL)
+	}
+	ENTITLEMENT__ACTIVITY_CODE
+	{
+		ACTIVITY_CODE : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=7, sysNumber=68.0, core=true, t24Name=ACTIVITY.CODE)
+		MESSAGE_TYPE -> byValue SCC_Entitlements:ENTITLEMENT__ACTIVITY_CODE__MESSAGE_TYPE *
+	}
+	ENTITLEMENT__ACTIVITY_CODE__MESSAGE_TYPE
+	{
+		MESSAGE_TYPE -> DE_Config:DE_MESSAGE
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=69.0, core=true, t24Name=MESSAGE.TYPE)
+		DELIVERY_KEY : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=16, sysNumber=70.0, core=true, t24Name=DELIVERY.KEY)
+	}
+	ENTITLEMENT__OVE_ADDR
+	{
+		OVE_ADDR : mml:Integer
+			@t24:i (align=R, inputBehaviour=F, maxLength=20, sysNumber=71.0, core=true, t24Name=OVE.ADDR)
+	}
+	ENTITLEMENT__CGT_CODE
+	{
+		CGT_CODE -> ST_ChargeConfig:TAX
+			@t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=87.0, core=true, businessType=TAX, t24Name=CGT.CODE)
+		CGT_TAX_RATE : mml:string
+			@t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=88.0, core=true, businessType=R, t24Name=CGT.TAX.RATE)
+		CGT_TAX_LCL : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=89.0, core=true, businessType=AMT, t24Name=CGT.TAX.LCL)
+		CGT_TAX_AMT : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=90.0, core=true, businessType=AMT, t24Name=CGT.TAX.AMT)
+	}
+	ENTITLEMENT__LOCAL_TAX_CODE
+	{
+		LOCAL_TAX_CODE : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=16, sysNumber=94.0, core=true, t24Name=LOCAL.TAX.CODE)
+		LOCAL_TAX_PERC : mml:string
+			@t24:i (align=R, inputBehaviour=I, maxLength=15, sysNumber=95.0, core=true, businessType=R, t24Name=LOCAL.TAX.PERC)
+	}
+	ENTITLEMENT__ADJUST_SEC
+	{
+		ADJUST_SEC : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=12, sysNumber=106.0, core=true, t24Name=ADJUST.SEC)
+		ADJUST_NOM : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=10, sysNumber=107.0, core=true, t24Name=ADJUST.NOM)
+	}
+	ENTITLEMENT__BROKER_TXN_ID
+	{
+		BROKER_TXN_ID : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=118.0, core=true, businessType=A, t24Name=BROKER.TXN.ID)
+		TRANS_TYPE -> SC_Config:SC_TRANS_NAME
+			@t24:i (align=L, inputBehaviour=E, maxLength=5, sysNumber=119.0, core=true, businessType=A, t24Name=TRANS.TYPE)
+		BR_OUTS_NOM : mml:string
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=120.0, core=true, businessType=NOMAMT, t24Name=BR.OUTS.NOM)
+		BR_RIGHTS_NOM : mml:string
+			@t24:i (align=R, inputBehaviour=E, maxLength=18, sysNumber=121.0, core=true, businessType=NOMAMT, t24Name=BR.RIGHTS.NOM)
+		OPT_DESC -> byValue SCC_Entitlements:ENTITLEMENT__BROKER_TXN_ID__OPT_DESC *
+		TAX_NARR : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=15, sysNumber=124.0, core=true, businessType=A, t24Name=TAX.NARR)
+	}
+	ENTITLEMENT__BROKER_TXN_ID__OPT_DESC
+	{
+		OPT_DESC : mml:string
+			@t24:i (align=L, inputBehaviour=E, maxLength=35, sysNumber=122.0, core=true, businessType=A, t24Name=OPT.DESC)
+		OPT_NOM : mml:string
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=123.0, core=true, businessType=NOMAMT, t24Name=OPT.NOM)
+	}
+	ENTITLEMENT__OPT_DESC_DEP
+	{
+		OPT_DESC_DEP : mml:string
+			@t24:i (align=L, inputBehaviour=E, maxLength=35, sysNumber=127.0, core=true, businessType=A, t24Name=OPT.DESC.DEP)
+		OPT_NOM_DEP : mml:string
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=128.0, core=true, businessType=NOMAMT, t24Name=OPT.NOM.DEP)
+	}
+	ENTITLEMENT__BROKER_NO
+	{
+		BROKER_NO -> SC_Config:CUSTOMER_SECURITY
+			@t24:i (align=R, inputBehaviour=E, maxLength=12, sysNumber=129.0, core=true, businessType=CUS, t24Name=BROKER.NO)
+		OUTSTAND_NOM : mml:string
+			@t24:i (align=R, inputBehaviour=E, maxLength=18, sysNumber=130.0, core=true, businessType=NOMAMT, t24Name=OUTSTAND.NOM)
+		RIGHTS_NOM : mml:string
+			@t24:i (align=R, inputBehaviour=E, maxLength=18, sysNumber=131.0, core=true, businessType=NOMAMT, t24Name=RIGHTS.NOM)
+	}
+	ENTITLEMENT__BR_ENT_KEY
+	{
+		BR_ENT_KEY : mml:string
+			@t24:i (align=L, inputBehaviour=E, maxLength=97, sysNumber=134.0, core=true, businessType=A, t24Name=BR.ENT.KEY)
+	}
+	ENTITLEMENT__SC_TAX_CODE
+	{
+		SC_TAX_CODE -> SCT_Taxes:TXN_TAX_CODE
+			@t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=143.0, core=true, businessType=A, t24Name=SC.TAX.CODE)
+		SC_TAX_TYPE : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=144.0, core=true, businessType=TAX, t24Name=SC.TAX.TYPE)
+		SOURCE_OR_LOCAL : SCC_Entitlements:ENTITLEMENT__SC_TAX_CODE__SOURCE_OR_LOCAL
+			@t24:i (align=L, inputBehaviour=I, maxLength=7, sysNumber=145.0, core=true, t24Name=SOURCE.OR.LOCAL)
+		SRC_TAX_ADJ_AMT : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=146.0, core=true, businessType=AMT, t24Name=SRC.TAX.ADJ.AMT)
+		SC_AMT_ACY : mml:Double
+			@t24:i (align=R, inputBehaviour=E, maxLength=16, sysNumber=147.0, core=true, businessType=AMT, t24Name=SC.AMT.ACY)
+		SC_AMT_LCY : mml:Double
+			@t24:i (align=R, inputBehaviour=E, maxLength=16, sysNumber=148.0, core=true, businessType=AMT, t24Name=SC.AMT.LCY)
+		MAN_TAX_ACY : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=16, sysNumber=149.0, core=true, businessType=AMT, t24Name=MAN.TAX.ACY)
+		MAN_TAX_LCY : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=16, sysNumber=150.0, core=true, businessType=AMT, t24Name=MAN.TAX.LCY)
+	}
+	ENTITLEMENT__STMT_NOS
+	{
+		STMT_NOS : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=10, sysNumber=161.0, core=true, t24Name=STMT.NOS)
+	}
+	ENTITLEMENT__OVERRIDE
+	{
+		OVERRIDE : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=162.0, core=true, businessType=A, t24Name=OVERRIDE)
+	}
+	ENTITLEMENT__INPUTTER
+	{
+		INPUTTER : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=165.0, core=true, businessType=A, t24Name=INPUTTER)
+	}
+	ENTITLEMENT__DATE_TIME
+	{
+		DATE_TIME : mml:dateTime
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=166.0, core=true, businessType=RELTIME, t24Name=DATE.TIME)
+	}
+	ENTITLEMENT_BROKER
+		@t24:i (t24Name=ENTITLEMENT.BROKER, level=F, type=L, allowedFunctions="L P S", localRefAllowed=true)
+	{
+		ENTITLEMENT_ID -> SCC_Entitlements:ENTITLEMENT_BROKER PK required
+			@i18n:Label (en="Entitlement Id", fr="Code de Droit", es="ID de Titulación")
+			@i18n:Tooltip (fr="Code de Droit")
+			@t24:i (align=L, inputBehaviour=I, maxLength=97, sysNumber=0.0, core=true, businessType=S, t24Name=ENTITLEMENT.ID)
+		PORTFOLIO_NO -> SCO_PortfolioMaintenance:SEC_ACC_MASTER
+			@i18n:Label (en="Portfoio No", fr="N° du portefeuille", es="No. de Cartera")
+			@i18n:Tooltip (en="Indicates the Portfolio Account of the customer", fr="Numéro du portefeuille", es="Indica la Cuenta de Cartera del Cliente")
+			@t24:i (align=R, inputBehaviour=N, maxLength=14, sysNumber=1.0, core=true, t24Name=PORTFOLIO.NO)
+		SECURITY_NO -> SCO_SecurityMasterMaintenance:SECURITY_MASTER
+			@i18n:Label (en="Security No", fr="Code valeur", es="No. de Título")
+			@i18n:Tooltip (en="Indicates the security code/number", fr="Code valeur", es="Indica un Título Valor válido")
+			@t24:i (align=L, inputBehaviour=N, maxLength=12, sysNumber=2.0, core=true, businessType=SEC, t24Name=SECURITY.NO)
+		DEPOSITORY -> SC_Config:CUSTOMER_SECURITY
+			@i18n:Label (en=Depository, fr=Dépositaire, es=Depositario)
+			@i18n:Tooltip (en="Depository the Security to be delivered from/to", fr=Dépositaire, es="Depositario de Título Valor a ser enviado de/a")
+			@t24:i (align=R, inputBehaviour=N, maxLength=6, sysNumber=3.0, core=true, businessType=CUS, t24Name=DEPOSITORY)
+		NOMINEE -> SC_Config:NOMINEE_CODE
+			@i18n:Label (en=Nominee, fr="Code Nominee", es=Candidato)
+			@i18n:Tooltip (fr="Code Nominee")
+			@t24:i (align=L, inputBehaviour=N, maxLength=5, sysNumber=4.0, core=true, businessType=S, t24Name=NOMINEE)
+		SUB_ACCOUNT : mml:Integer
+			@i18n:Label (en="Sub Account", fr=Sous-compte, es="Sub Cuenta")
+			@i18n:Tooltip (fr=Sous-compte)
+			@t24:i (align=R, inputBehaviour=N, maxLength=16, sysNumber=5.0, core=true, t24Name=SUB.ACCOUNT)
+		QUALIFY_HOLDING : mml:string required
+			@i18n:Label (en="Qual holding", fr="Qualifier valeurs", es="Calificar Valores")
+			@i18n:Tooltip (fr="Qualifier valeurs")
+			@t24:i (align=R, inputBehaviour=I, maxLength=25, sysNumber=6.0, core=true, businessType=NOMAMT, t24Name=QUALIFY.HOLDING)
+		EVENT_NOMINAL : mml:string
+			@i18n:Label (fr="Nombre sélectionné")
+			@i18n:Tooltip (fr="Nombre sélectionné")
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=7.0, core=true, businessType=NOMAMT, t24Name=EVENT.NOMINAL)
+		CURRENCY -> FIN_CurrencyConfig:CURRENCY
+			@i18n:Label (en=Ccy, fr=Devise, es=Moneda)
+			@i18n:Tooltip (fr="Code devise ISO")
+			@t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=8.0, core=true, businessType=CCY, t24Name=CURRENCY)
+		VALUE_DATE : mml:date required
+			@i18n:Label (en="Value Date", fr="Date de valeur", es="Fecha Valor")
+			@i18n:Tooltip (en="Indicates the Value date of the Contract", fr="Date de valeur", es="Fecha en que Carteras serán act. por el evento")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=9.0, core=true, businessType=D, t24Name=VALUE.DATE)
+		OPTION_DESC -> byValue SCC_Entitlements:ENTITLEMENT_BROKER__OPTION_DESC *
+		SEC_TRADE_ID -> byValue SCC_Entitlements:ENTITLEMENT_BROKER__SEC_TRADE_ID *
+		RETAIN_NOMINAL : mml:string
+			@i18n:Label (fr="Nominal conservé")
+			@i18n:Tooltip (fr="Nominal conservé")
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=36.0, core=true, businessType=NOMAMT, t24Name=RETAIN.NOMINAL)
+		OPTION : mml:Integer
+			@i18n:Label (en=Opt, fr=Option, es="Opción")
+			@i18n:Tooltip (fr=Option)
+			@t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=37.0, core=true, t24Name=OPTION)
+		ACCOUNT_NO : mml:string required
+			@i18n:Label (en=Account, fr="N° de compte", es=Cuenta)
+			@i18n:Tooltip (en="Indicates Customer Account Number", fr="Numéro de compte")
+			@t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=38.0, core=true, businessType=ANT, t24Name=ACCOUNT.NO)
+		ACCOUNT_CURR -> FIN_CurrencyConfig:CURRENCY
+			@i18n:Label (fr="Devise du Compte")
+			@i18n:Tooltip (fr="Devise du Compte ")
+			@t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=39.0, core=true, businessType=CCY, t24Name=ACCOUNT.CURR)
+		REFERENCE_CCY -> FIN_CurrencyConfig:CURRENCY
+			@i18n:Label (en="Ref Ccy", fr="Devise de référence", es="Moneda de Ref.")
+			@i18n:Tooltip (fr="Devise de référence")
+			@t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=40.0, core=true, businessType=CCY, t24Name=REFERENCE.CCY)
+		SOURCE_TAX_AMT : mml:string
+			@i18n:Label (fr="Mt retenue à la source")
+			@i18n:Tooltip (fr="Montant retenue à la source")
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=41.0, core=true, businessType=BMT, t24Name=SOURCE.TAX.AMT)
+		LOCAL_TAX_AMT -> byValue SCC_Entitlements:ENTITLEMENT_BROKER__LOCAL_TAX_AMT *
+		TAX_CREDIT : mml:Double
+			@i18n:Label (en="Tax Credit", fr="Crédit de Taxe", es="Crédito de Impuesto")
+			@i18n:Tooltip (fr="Crédit de Taxe")
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=43.0, core=true, businessType=AMT, t24Name=TAX.CREDIT)
+		FGN_CHARGES_AMT : mml:Double
+			@i18n:Label (en="Fgn Charges Amount", fr="Montant frais étrangers", es="Monto Cargos Extranjeros")
+			@i18n:Tooltip (fr="Montant frais étrangers")
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=44.0, core=true, businessType=AMT, t24Name=FGN.CHARGES.AMT)
+		COMMISSION_AMT : mml:Double
+			@i18n:Label (en="Commission Amount", fr="Montant commission", es="Monto de Comisión")
+			@i18n:Tooltip (fr="Montant de la commission")
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=45.0, core=true, businessType=AMT, t24Name=COMMISSION.AMT)
+		COMM_TAX_AMT : mml:Double
+			@i18n:Label (en="Commission Tax Amount", es="Monto Impuesto Comisión")
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=46.0, core=true, businessType=AMT, t24Name=COMM.TAX.AMT)
+		STAMP_TAX_CODE -> ST_ChargeConfig:TAX
+			@t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=47.0, core=true, businessType=A, t24Name=STAMP.TAX.CODE)
+		STAMP_BASE_AMT : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=48.0, core=true, businessType=AMT, t24Name=STAMP.BASE.AMT)
+		STAMP_BK_LCY : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=49.0, core=true, businessType=AMT, t24Name=STAMP.BK.LCY)
+		STAMP_SEC_CCY : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=50.0, core=true, businessType=AMT, t24Name=STAMP.SEC.CCY)
+		STAMP_ACC_CCY : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=51.0, core=true, businessType=AMT, t24Name=STAMP.ACC.CCY)
+		STAMP_LOC_CCY : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=52.0, core=true, businessType=AMT, t24Name=STAMP.LOC.CCY)
+		NET_AMT_ACC_CUR : mml:Double
+			@i18n:Label (fr="Mt Net Devise du compte")
+			@i18n:Tooltip (fr="Montant net devise du compte")
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=53.0, core=true, businessType=AMT, t24Name=NET.AMT.ACC.CUR)
+		NET_AMOUNT : mml:Double
+			@i18n:Label (en="Net Amount", fr="Montant net", es="Efect. Pagado a Clte.")
+			@i18n:Tooltip (fr="Montant net")
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=54.0, core=true, businessType=AMT, t24Name=NET.AMOUNT)
+		LCCY_EXCH_RATE : mml:string
+			@i18n:Label (fr="Taux change montant cash")
+			@i18n:Tooltip (fr="Taux change montant cash")
+			@t24:i (align=R, inputBehaviour=I, maxLength=15, sysNumber=55.0, core=true, businessType=R, t24Name=LCCY.EXCH.RATE)
+		ACC_EXCH_RATE : mml:string
+			@i18n:Label (fr="Taux de change sur compte")
+			@i18n:Tooltip (fr="Taux de change sur compte")
+			@t24:i (align=R, inputBehaviour=I, maxLength=15, sysNumber=56.0, core=true, businessType=R, t24Name=ACC.EXCH.RATE)
+		REF_LCCY_RATE : mml:string
+			@i18n:Label (fr="Taux change devise réf")
+			@i18n:Tooltip (fr="Taux change devise réf")
+			@t24:i (align=R, inputBehaviour=F, maxLength=15, sysNumber=57.0, core=true, businessType=R, t24Name=REF.LCCY.RATE)
+		FGN_CHGES_LCCY : mml:Double
+			@i18n:Label (en="Fgn Ccy Exchange Rate", es="Tipo Cambio en ME.")
+			@i18n:Tooltip (en="Holds foreign Charges amount in the Local Currency", es="Tiene monto de Cargos extranjeros en ML. ")
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=58.0, core=true, businessType=AMT, t24Name=FGN.CHGES.LCCY)
+		COMMISSION_LCCY : mml:Double
+			@i18n:Label (en="Commission Lccy", es="Moneda Local de Comisión")
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=59.0, core=true, businessType=AMT, t24Name=COMMISSION.LCCY)
+		NET_AMT_LCCY : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=60.0, core=true, businessType=AMT, t24Name=NET.AMT.LCCY)
+		REFERENCE_NO : mml:Integer
+			@i18n:Label (en="Reference No", fr=Référence, es="No. de Referencia")
+			@i18n:Tooltip (en="Unique reference which identifies the transaction", fr=Référence, es="Ref. única que identifica la transacción")
+			@t24:i (align=R, inputBehaviour=N, maxLength=16, sysNumber=61.0, core=true, t24Name=REFERENCE.NO)
+		COMMISSION_CODE -> ST_ChargeConfig:FT_COMMISSION_TYPE
+			@i18n:Label (en="Commission Code", fr=Commission, es="Código de Comisión")
+			@i18n:Tooltip (en="Indicates the commission code", fr="Code de la commission", es="Indica el código de comisión ")
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=62.0, core=true, businessType=A, t24Name=COMMISSION.CODE)
+		COMM_TAX_CODE -> ST_ChargeConfig:TAX
+			@i18n:Label (en="Commission Tax code", fr="Code taxe sur commission", es="Cod Impuesto Comisión")
+			@i18n:Tooltip (en="Indicates the commission tax code", fr="Code taxe sur commission", es="Indica el código de impuesto de comisión")
+			@t24:i (align=L, inputBehaviour=N, maxLength=2, sysNumber=63.0, core=true, businessType=A, t24Name=COMM.TAX.CODE)
+		COMM_TAX_LCCY : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=64.0, core=true, businessType=AMT, t24Name=COMM.TAX.LCCY)
+		COMM_TAX_XRATE : mml:string
+			@i18n:Label (en="Commission Tax Exch Rate", fr="Taux de change taxe sur commission", es="Tasa Impuesto Com.")
+			@i18n:Tooltip (en="Indicates the commission Tax Exchange Rate ", fr="Taux de change taxe sur commission", es="Indica el Tipo de Cambio del Impuesto de comisión")
+			@t24:i (align=R, inputBehaviour=N, maxLength=15, sysNumber=65.0, core=true, businessType=R, t24Name=COMM.TAX.XRATE)
+		SEC_NO -> byValue SCC_Entitlements:ENTITLEMENT_BROKER__SEC_NO *
+		ACTIVITY_CODE -> byValue SCC_Entitlements:ENTITLEMENT_BROKER__ACTIVITY_CODE *
+		OVE_ADDR -> byValue SCC_Entitlements:ENTITLEMENT_BROKER__OVE_ADDR *
+		MESS_CONTROL -> EB_Delivery:MESSAGE_CONTROL
+			@i18n:Label (en="Message Control", es="Control de Mensaje")
+			@i18n:Tooltip (en="Indicates the message control id")
+			@t24:i (align=R, inputBehaviour=F, maxLength=3, sysNumber=72.0, core=true, t24Name=MESS.CONTROL)
+		TAX_CHANGED : SCC_Entitlements:ENTITLEMENT_BROKER__TAX_CHANGED
+			@t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=73.0, core=true, t24Name=TAX.CHANGED)
+		COMM_CHANGED : SCC_Entitlements:ENTITLEMENT_BROKER__COMM_CHANGED
+			@i18n:Label (en="Commission Changed", es="Comisión Cambiada")
+			@t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=74.0, core=true, t24Name=COMM.CHANGED)
+		FOREIGN_CHGES_TAX : mml:string
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=75.0, core=true, businessType=BMT, t24Name=FOREIGN.CHGES.TAX)
+		FGN_TAX_CODE : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=76.0, core=true, businessType=TAX, t24Name=FGN.TAX.CODE)
+		FGN_TAX_BCUR : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=77.0, core=true, businessType=AMT, t24Name=FGN.TAX.BCUR)
+		FGN_TAX_XRATE : mml:string
+			@t24:i (align=R, inputBehaviour=N, maxLength=15, sysNumber=78.0, core=true, businessType=R, t24Name=FGN.TAX.XRATE)
+		MBS_RED_DIV_AMT : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=79.0, core=true, businessType=AMT, t24Name=MBS.RED.DIV.AMT)
+		MBS_RED_ACC_AMT : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=80.0, core=true, businessType=AMT, t24Name=MBS.RED.ACC.AMT)
+		MBS_RED_LCY_AMT : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=81.0, core=true, businessType=AMT, t24Name=MBS.RED.LCY.AMT)
+		PRE_ADVICE_REQ : SCC_Entitlements:ENTITLEMENT_BROKER__PRE_ADVICE_REQ
+			@i18n:Label (en="Pre Advice Reqd?", fr="Préavis Requis", es="¿Pre Aviso Requerido ?")
+			@i18n:Tooltip (en="Whether pre-confirmation advices required?", fr="Préavis Requis", es="Si se requiere aviso de pre-confirmación o no")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=83.0, core=true, t24Name=PRE.ADVICE.REQ)
+		CONFIRM_REQ : SCC_Entitlements:ENTITLEMENT_BROKER__CONFIRM_REQ
+			@i18n:Label (en="Confirmation Reqd?", fr="Confirmation Requise", es="¿Requiere Confirmación?")
+			@i18n:Tooltip (en="Indicates whether confirmation messages required?", fr="Confirmation Requise", es="Indica si mensajes de confirmación son requeridos")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=84.0, core=true, t24Name=CONFIRM.REQ)
+		CGT_BAMT_CCY : mml:string
+			@i18n:Label (en="CG Base Amount Ccy", fr="Dev. Mntt base GC", es="Mda. Mto. Base de GC")
+			@i18n:Tooltip (en="Capital Gains base amount currency", fr="Devise Montant base GC")
+			@t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=85.0, core=true, businessType=CCY, t24Name=CGT.BAMT.CCY)
+		CGT_BASE_AMT : mml:Double
+			@i18n:Label (en="CG Base Amount", fr="Montant base Gain Capital", es="Mto. Base de GC")
+			@i18n:Tooltip (en="Amount on which capital gains tax to be calculated", fr="Montant base Gain Capital")
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=86.0, core=true, businessType=AMT, t24Name=CGT.BASE.AMT)
+		CGT_CODE -> byValue SCC_Entitlements:ENTITLEMENT_BROKER__CGT_CODE *
+		CGT_PARAM_COND -> SCT_CapitalGains:CG_PARAM_CONDITION
+			@i18n:Label (en="CGT Parameter Condition", es="Cond.Parám.Gan.Calc.")
+			@i18n:Tooltip (en="Capital Gains method and tax to be applied", es="Condición Parámetros Impuesto Ganancia Calculada")
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=91.0, core=true, businessType=A, t24Name=CGT.PARAM.COND)
+		CGT_SRC_LCL_TAX : mml:string
+			@i18n:Label (en="CGT Source Local Tax", es=Fuen.Impu.L.Gan.Calc.)
+			@i18n:Tooltip (en="Indicates whether CGT is source or local ", es="Fuente de Impuesto Local de Ganancia Calculada ")
+			@t24:i (align=L, inputBehaviour=N, maxLength=6, sysNumber=92.0, core=true, businessType=A, t24Name=CGT.SRC.LCL.TAX)
+		BLOCK_TYPE : mml:Integer
+			@i18n:Label (en="Block Type", es="Tipo de Bloqueo")
+			@t24:i (align=R, inputBehaviour=N, maxLength=15, sysNumber=93.0, core=true, t24Name=BLOCK.TYPE)
+		LOCAL_TAX_CODE -> byValue SCC_Entitlements:ENTITLEMENT_BROKER__LOCAL_TAX_CODE *
+		EQUALISATION_ACC : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=96.0, core=true, businessType=ANT, t24Name=EQUALISATION.ACC)
+		EQUALISATION_CCY : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=97.0, core=true, businessType=CCY, t24Name=EQUALISATION.CCY)
+		EQUALIS_EX_RATE : mml:string
+			@t24:i (align=R, inputBehaviour=I, maxLength=16, sysNumber=98.0, core=true, businessType=R, t24Name=EQUALIS.EX.RATE)
+		EQUALIS_AMT_ACY : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=99.0, core=true, businessType=AMT, t24Name=EQUALIS.AMT.ACY)
+		SOURCE_TAX_CODE : mml:Integer
+			@i18n:Label (en="Source Tax code", fr="Code retenue à la Source", es="Cód. Fuente Impuesto")
+			@i18n:Tooltip (en="Holds source tax code used to calculate Source Tax", fr="Code retenue à la Source", es="Código de Impu. usado para cálculo de Impu. Fuente")
+			@t24:i (align=R, inputBehaviour=N, maxLength=16, sysNumber=100.0, core=true, t24Name=SOURCE.TAX.CODE)
+		SOURCE_TAX_PERC : mml:string
+			@i18n:Label (en="Tax %", fr="% d\'impôt", es="Porcentaje Impuesto")
+			@i18n:Tooltip (fr="% d\'impôt")
+			@t24:i (align=R, inputBehaviour=I, maxLength=15, sysNumber=101.0, core=true, businessType=R, t24Name=SOURCE.TAX.PERC)
+		CUST_ACT_SUSP_CAT -> ST_Config:CATEGORY
+			@i18n:Label (en="Cust Cash Susp", fr="Catégorie suspens client", es=Cat.Cta.Trans.Cliente)
+			@i18n:Tooltip (en="Suspense account to post customer cash amount", fr="Catégorie suspens client", es="Categoría de Cuenta Transitoria de Cliente")
+			@t24:i (align=L, inputBehaviour=I, maxLength=5, sysNumber=102.0, core=true, businessType=A, t24Name=CUST.ACT.SUSP.CAT)
+		BROK_ACT_SUSP_CAT -> ST_Config:CATEGORY
+			@i18n:Label (en="Brok Cash Susp", fr="Catégorie suspens courtier", es="Cta. Orden Efec. Corr.")
+			@i18n:Tooltip (en="Broker suspense account to post suspense amount", fr="Catégorie suspens courtier")
+			@t24:i (align=L, inputBehaviour=I, maxLength=5, sysNumber=103.0, core=true, businessType=A, t24Name=BROK.ACT.SUSP.CAT)
+		MISC_ACT_SUSP_CAT -> ST_Config:CATEGORY
+			@i18n:Label (en="Misc Cash Susp", fr="Catégorie montant en suspens", es="Cta. Orden Efec. Varias")
+			@i18n:Tooltip (en="Miscellaneous Cash suspense account", fr="Catégorie montant en suspens ", es="Cuenta varias de Orden de Efectivo")
+			@t24:i (align=L, inputBehaviour=I, maxLength=5, sysNumber=104.0, core=true, businessType=A, t24Name=MISC.ACT.SUSP.CAT)
+		AUTO_CUST_SETT : SCC_Entitlements:ENTITLEMENT_BROKER__AUTO_CUST_SETT
+			@i18n:Label (en="Auto Cust Settle", fr="Réglt Auto Clt", es="Liquid. Auto. Cliente")
+			@i18n:Tooltip (en="Automatic settlement of Customer nominal and cash ", fr="Règlement Automatique Client", es="Liquid. auto. de Cliente de nominal y efectivo")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=105.0, core=true, t24Name=AUTO.CUST.SETT)
+		ADJUST_SEC -> byValue SCC_Entitlements:ENTITLEMENT_BROKER__ADJUST_SEC *
+		AUT_AUTH_DATE : mml:date
+			@t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=108.0, core=true, businessType=D, t24Name=AUT.AUTH.DATE)
+		DEF_INSTR_DATE : mml:date
+			@i18n:Label (en="Default Instrument Date", fr="Date instr par défaut", es="Fecha Pre-est. Instr.")
+			@i18n:Tooltip (en="Date when default instructions apply to entitlmnts", fr="Date instr par défaut", es="Fecha Pre-establecida del Instrumento")
+			@t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=109.0, core=true, businessType=D, t24Name=DEF.INSTR.DATE)
+		REINVEST_ORDER : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=110.0, core=true, businessType=A, t24Name=REINVEST.ORDER)
+		STAND_INST : mml:Integer
+			@i18n:Label (fr="Instruction permanente")
+			@i18n:Tooltip (fr="Instruction permanente")
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=111.0, core=true, t24Name=STAND.INST)
+		AUTO_BROK_SETT : SCC_Entitlements:ENTITLEMENT_BROKER__AUTO_BROK_SETT
+			@i18n:Label (en="Settlement type", fr="Régler Courtier Auto", es="Tipo de liquidación")
+			@i18n:Tooltip (fr="Régler Courtier Auto")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=112.0, core=true, t24Name=AUTO.BROK.SETT)
+		RCVBL_TAX_PERC : mml:string
+			@t24:i (align=R, inputBehaviour=I, maxLength=15, sysNumber=113.0, core=true, businessType=R, t24Name=RCVBL.TAX.PERC)
+		RCVBL_TAX_REF_AMT : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=114.0, core=true, businessType=AMT, t24Name=RCVBL.TAX.REF.AMT)
+		RCVBL_TAX_LCY_AMT : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=115.0, core=true, businessType=AMT, t24Name=RCVBL.TAX.LCY.AMT)
+		RCVBL_TAX_SEC_AMT : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=116.0, core=true, businessType=AMT, t24Name=RCVBL.TAX.SEC.AMT)
+		BND_RND_METH : mml:Integer
+			@i18n:Label (en="Bond Rounding Method", es="Método Redondeo Bono")
+			@t24:i (align=R, inputBehaviour=N, maxLength=10, sysNumber=117.0, core=true, t24Name=BND.RND.METH)
+		BROKER_TXN_ID -> byValue SCC_Entitlements:ENTITLEMENT_BROKER__BROKER_TXN_ID *
+		DEPOT_HOLDING : mml:string
+			@i18n:Label (en="Depot Holding", es="Valores de Depositario")
+			@i18n:Tooltip (en="Effect of the position has on the Depot ", es="Efecto que la posición tiene en el Depósito")
+			@t24:i (align=R, inputBehaviour=E, maxLength=25, sysNumber=125.0, core=true, businessType=NOMAMT, t24Name=DEPOT.HOLDING)
+		DEPO_RIGHTS_NOM : mml:string
+			@i18n:Label (en="Depo Rights Nominal", es="Nomin Derechos Depósit.")
+			@i18n:Tooltip (en="Rights security nominal held with Depository", es="Derechos nominales de título valor mantenidos con Depositario")
+			@t24:i (align=R, inputBehaviour=E, maxLength=25, sysNumber=126.0, core=true, businessType=NOMAMT, t24Name=DEPO.RIGHTS.NOM)
+		OPT_DESC_DEP -> byValue SCC_Entitlements:ENTITLEMENT_BROKER__OPT_DESC_DEP *
+		BROKER_NO -> byValue SCC_Entitlements:ENTITLEMENT_BROKER__BROKER_NO *
+		TOT_OUT_NOM : mml:string
+			@i18n:Label (en="Total Outstanding Nominal", es="Nominal Total Pendiente")
+			@t24:i (align=R, inputBehaviour=E, maxLength=18, sysNumber=132.0, core=true, businessType=NOMAMT, t24Name=TOT.OUT.NOM)
+		TOT_RIGHTS_NOM : mml:string
+			@t24:i (align=R, inputBehaviour=E, maxLength=18, sysNumber=133.0, core=true, businessType=NOMAMT, t24Name=TOT.RIGHTS.NOM)
+		BR_ENT_KEY -> byValue SCC_Entitlements:ENTITLEMENT_BROKER__BR_ENT_KEY *
+		ODD_RTS_BAM : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=135.0, core=true, t24Name=ODD.RTS.BAM)
+		ODD_RTS_SAM : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=136.0, core=true, t24Name=ODD.RTS.SAM)
+		OPT_STATUS : SCC_Entitlements:ENTITLEMENT_BROKER__OPT_STATUS
+			@i18n:Label (en="Option Status", es="Estado de Opción")
+			@t24:i (align=L, inputBehaviour=E, maxLength=10, sysNumber=137.0, core=true, t24Name=OPT.STATUS)
+		BORROW_NOMINAL : mml:string
+			@t24:i (align=R, inputBehaviour=E, maxLength=18, sysNumber=138.0, core=true, businessType=NOMAMT, t24Name=BORROW.NOMINAL)
+		BORROW_AMT : mml:Double
+			@t24:i (align=R, inputBehaviour=E, maxLength=18, sysNumber=139.0, core=true, businessType=AMT, t24Name=BORROW.AMT)
+		LENT_NOMINAL : mml:string
+			@t24:i (align=R, inputBehaviour=E, maxLength=18, sysNumber=140.0, core=true, businessType=NOMAMT, t24Name=LENT.NOMINAL)
+		LENT_AMT : mml:Double
+			@t24:i (align=R, inputBehaviour=E, maxLength=18, sysNumber=141.0, core=true, businessType=AMT, t24Name=LENT.AMT)
+		SBL_QUALIFY_HOLD : mml:string
+			@t24:i (align=R, inputBehaviour=E, maxLength=25, sysNumber=142.0, core=true, businessType=NOMAMT, t24Name=SBL.QUALIFY.HOLD)
+		SC_TAX_CODE -> byValue SCC_Entitlements:ENTITLEMENT_BROKER__SC_TAX_CODE *
+		INT_DIST_FACTOR : mml:string
+			@t24:i (align=R, inputBehaviour=I, maxLength=15, sysNumber=151.0, core=true, businessType=R, t24Name=INT.DIST.FACTOR)
+		INT_CTR : mml:string
+			@i18n:Label (en="Interest Counter")
+			@i18n:Tooltip (en="Interest Counter")
+			@t24:i (align=R, inputBehaviour=I, maxLength=15, sysNumber=152.0, core=true, businessType=R, t24Name=INT.CTR)
+		MANUAL_CREATION : SCC_Entitlements:ENTITLEMENT_BROKER__MANUAL_CREATION
+			@t24:i (align=L, inputBehaviour=N, maxLength=5, sysNumber=153.0, core=true, t24Name=MANUAL.CREATION)
+		EXT_CUSTODIAN -> ST_Customer:CUSTOMER
+			@i18n:Label (fr="Dépositaire externe")
+			@i18n:Tooltip (fr="Dépositaire externe")
+			@t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=154.0, core=true, businessType=CUS, t24Name=EXT.CUSTODIAN)
+		MARGIN_FACTOR : mml:string
+			@t24:i (align=R, inputBehaviour=I, maxLength=9, sysNumber=155.0, core=true, businessType=R, t24Name=MARGIN.FACTOR)
+		RESERVED_2 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=156.0, core=true, t24Name=RESERVED.2)
+		RESERVED_1 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=157.0, core=true, t24Name=RESERVED.1)
+		RESERVED_3 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=158.0, core=true, t24Name=RESERVED.3)
+		RESERVED_4 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=159.0, core=true, t24Name=RESERVED.4)
+		RESERVED_5 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=160.0, core=true, t24Name=RESERVED.5)
+		STMT_NOS -> byValue SCC_Entitlements:ENTITLEMENT_BROKER__STMT_NOS *
+		OVERRIDE -> byValue SCC_Entitlements:ENTITLEMENT_BROKER__OVERRIDE *
+	}
+	ENTITLEMENT_BROKER__OPTION_DESC
+	{
+		OPTION_DESC : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=10.0, core=true, t24Name=OPTION.DESC)
+		GROSS_RATE : mml:string
+			@t24:i (align=R, inputBehaviour=N, maxLength=15, sysNumber=11.0, core=true, businessType=R, t24Name=GROSS.RATE)
+		NET_RATE : mml:string
+			@t24:i (align=R, inputBehaviour=N, maxLength=15, sysNumber=12.0, core=true, businessType=R, t24Name=NET.RATE)
+		GROSS_OR_NET : SCC_Entitlements:ENTITLEMENT_BROKER__OPTION_DESC__GROSS_OR_NET
+			@t24:i (align=L, inputBehaviour=I, maxLength=5, sysNumber=13.0, core=true, t24Name=GROSS.OR.NET)
+		ENTITLEMENT_AMT : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=14.0, core=true, businessType=AMT, t24Name=ENTITLEMENT.AMT)
+		MBS_PAID_AMT : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=15.0, core=true, businessType=AMT, t24Name=MBS.PAID.AMT)
+		EQUALISE_HLDING : mml:string
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=16.0, core=true, businessType=NOMAMT, t24Name=EQUALISE.HLDING)
+		GROUP2_AMT : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=17.0, core=true, businessType=AMT, t24Name=GROUP2.AMT)
+		EQUALISE_AMT : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=18.0, core=true, businessType=AMT, t24Name=EQUALISE.AMT)
+		NEW_SECURITY -> byValue SCC_Entitlements:ENTITLEMENT_BROKER__OPTION_DESC__NEW_SECURITY *
+		OPT_SOURCE_TAX : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=29.0, core=true, businessType=AMT, t24Name=OPT.SOURCE.TAX)
+		OPT_LOCAL_TAX : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=30.0, core=true, businessType=AMT, t24Name=OPT.LOCAL.TAX)
+		OPT_TAX_CREDIT : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=31.0, core=true, businessType=AMT, t24Name=OPT.TAX.CREDIT)
+		OPTION_NOM : mml:string
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=32.0, core=true, businessType=NOMAMT, t24Name=OPTION.NOM)
+	}
+	ENTITLEMENT_BROKER__OPTION_DESC__NEW_SECURITY
+	{
+		NEW_SECURITY -> SCO_SecurityMasterMaintenance:SECURITY_MASTER
+			@t24:i (align=L, inputBehaviour=N, maxLength=12, sysNumber=19.0, core=true, businessType=SEC, t24Name=NEW.SECURITY)
+		NOMINAL : mml:string
+			@t24:i (align=R, inputBehaviour=I, maxLength=25, sysNumber=20.0, core=true, businessType=NOMAMT, t24Name=NOMINAL)
+		RATIO : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=16, sysNumber=21.0, core=true, t24Name=RATIO)
+		PRICE : mml:string
+			@t24:i (align=R, inputBehaviour=E, maxLength=16, sysNumber=22.0, core=true, businessType=R, t24Name=PRICE)
+		BOOK_COST : mml:string
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=23.0, core=true, businessType=R, t24Name=BOOK.COST)
+		TAX_PRICE : mml:string
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=24.0, core=true, businessType=R, t24Name=TAX.PRICE)
+		TAX_VALUE : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=25.0, core=true, businessType=AMT, t24Name=TAX.VALUE)
+		ODD_LOT_NUM -> SCO_SecurityMasterMaintenance:SECURITY_MASTER
+			@t24:i (align=L, inputBehaviour=I, maxLength=12, sysNumber=26.0, core=true, businessType=SEC, t24Name=ODD.LOT.NUM)
+		ODD_LOT_NOM : mml:string
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=27.0, core=true, businessType=NOMAMT, t24Name=ODD.LOT.NOM)
+		ODD_LOT_REF : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=28.0, core=true, t24Name=ODD.LOT.REF)
+	}
+	ENTITLEMENT_BROKER__SEC_TRADE_ID
+	{
+		SEC_TRADE_ID : mml:string
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=33.0, core=true, businessType=A, t24Name=SEC.TRADE.ID)
+		BUY_NUMBER : mml:string
+			@t24:i (align=R, inputBehaviour=E, maxLength=18, sysNumber=34.0, core=true, businessType=NOMAMT, t24Name=BUY.NUMBER)
+		SELL_NUMBER : mml:string
+			@t24:i (align=R, inputBehaviour=E, maxLength=18, sysNumber=35.0, core=true, businessType=NOMAMT, t24Name=SELL.NUMBER)
+	}
+	ENTITLEMENT_BROKER__LOCAL_TAX_AMT
+	{
+		LOCAL_TAX_AMT : mml:string
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=42.0, core=true, businessType=BMT, t24Name=LOCAL.TAX.AMT)
+	}
+	ENTITLEMENT_BROKER__SEC_NO
+	{
+		SEC_NO -> SCO_SecurityMasterMaintenance:SECURITY_MASTER
+			@t24:i (align=L, inputBehaviour=N, maxLength=12, sysNumber=66.0, core=true, businessType=SEC, t24Name=SEC.NO)
+		SEC_NOMINAL : mml:string
+			@t24:i (align=R, inputBehaviour=N, maxLength=25, sysNumber=67.0, core=true, businessType=NOMAMT, t24Name=SEC.NOMINAL)
+	}
+	ENTITLEMENT_BROKER__ACTIVITY_CODE
+	{
+		ACTIVITY_CODE : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=7, sysNumber=68.0, core=true, t24Name=ACTIVITY.CODE)
+		MESSAGE_TYPE -> byValue SCC_Entitlements:ENTITLEMENT_BROKER__ACTIVITY_CODE__MESSAGE_TYPE *
+	}
+	ENTITLEMENT_BROKER__ACTIVITY_CODE__MESSAGE_TYPE
+	{
+		MESSAGE_TYPE -> DE_Config:DE_MESSAGE
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=69.0, core=true, t24Name=MESSAGE.TYPE)
+		DELIVERY_KEY : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=16, sysNumber=70.0, core=true, t24Name=DELIVERY.KEY)
+	}
+	ENTITLEMENT_BROKER__OVE_ADDR
+	{
+		OVE_ADDR : mml:Integer
+			@t24:i (align=R, inputBehaviour=F, maxLength=20, sysNumber=71.0, core=true, t24Name=OVE.ADDR)
+	}
+	ENTITLEMENT_BROKER__CGT_CODE
+	{
+		CGT_CODE -> ST_ChargeConfig:TAX
+			@t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=87.0, core=true, businessType=TAX, t24Name=CGT.CODE)
+		CGT_TAX_RATE : mml:string
+			@t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=88.0, core=true, businessType=R, t24Name=CGT.TAX.RATE)
+		CGT_TAX_LCL : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=89.0, core=true, businessType=AMT, t24Name=CGT.TAX.LCL)
+		CGT_TAX_AMT : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=90.0, core=true, businessType=AMT, t24Name=CGT.TAX.AMT)
+	}
+	ENTITLEMENT_BROKER__LOCAL_TAX_CODE
+	{
+		LOCAL_TAX_CODE : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=16, sysNumber=94.0, core=true, t24Name=LOCAL.TAX.CODE)
+		LOCAL_TAX_PERC : mml:string
+			@t24:i (align=R, inputBehaviour=I, maxLength=15, sysNumber=95.0, core=true, businessType=R, t24Name=LOCAL.TAX.PERC)
+	}
+	ENTITLEMENT_BROKER__ADJUST_SEC
+	{
+		ADJUST_SEC : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=12, sysNumber=106.0, core=true, t24Name=ADJUST.SEC)
+		ADJUST_NOM : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=10, sysNumber=107.0, core=true, t24Name=ADJUST.NOM)
+	}
+	ENTITLEMENT_BROKER__BROKER_TXN_ID
+	{
+		BROKER_TXN_ID : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=118.0, core=true, businessType=A, t24Name=BROKER.TXN.ID)
+		TRANS_TYPE -> SC_Config:SC_TRANS_NAME
+			@t24:i (align=L, inputBehaviour=E, maxLength=5, sysNumber=119.0, core=true, businessType=A, t24Name=TRANS.TYPE)
+		BR_OUTS_NOM : mml:string
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=120.0, core=true, businessType=NOMAMT, t24Name=BR.OUTS.NOM)
+		BR_RIGHTS_NOM : mml:string
+			@t24:i (align=R, inputBehaviour=E, maxLength=18, sysNumber=121.0, core=true, businessType=NOMAMT, t24Name=BR.RIGHTS.NOM)
+		OPT_DESC -> byValue SCC_Entitlements:ENTITLEMENT_BROKER__BROKER_TXN_ID__OPT_DESC *
+		TAX_NARR : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=15, sysNumber=124.0, core=true, businessType=A, t24Name=TAX.NARR)
+	}
+	ENTITLEMENT_BROKER__BROKER_TXN_ID__OPT_DESC
+	{
+		OPT_DESC : mml:string
+			@t24:i (align=L, inputBehaviour=E, maxLength=35, sysNumber=122.0, core=true, businessType=A, t24Name=OPT.DESC)
+		OPT_NOM : mml:string
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=123.0, core=true, businessType=NOMAMT, t24Name=OPT.NOM)
+	}
+	ENTITLEMENT_BROKER__OPT_DESC_DEP
+	{
+		OPT_DESC_DEP : mml:string
+			@t24:i (align=L, inputBehaviour=E, maxLength=35, sysNumber=127.0, core=true, businessType=A, t24Name=OPT.DESC.DEP)
+		OPT_NOM_DEP : mml:string
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=128.0, core=true, businessType=NOMAMT, t24Name=OPT.NOM.DEP)
+	}
+	ENTITLEMENT_BROKER__BROKER_NO
+	{
+		BROKER_NO -> SC_Config:CUSTOMER_SECURITY
+			@t24:i (align=R, inputBehaviour=E, maxLength=12, sysNumber=129.0, core=true, businessType=CUS, t24Name=BROKER.NO)
+		OUTSTAND_NOM : mml:string
+			@t24:i (align=R, inputBehaviour=E, maxLength=18, sysNumber=130.0, core=true, businessType=NOMAMT, t24Name=OUTSTAND.NOM)
+		RIGHTS_NOM : mml:string
+			@t24:i (align=R, inputBehaviour=E, maxLength=18, sysNumber=131.0, core=true, businessType=NOMAMT, t24Name=RIGHTS.NOM)
+	}
+	ENTITLEMENT_BROKER__BR_ENT_KEY
+	{
+		BR_ENT_KEY : mml:string
+			@t24:i (align=L, inputBehaviour=E, maxLength=97, sysNumber=134.0, core=true, businessType=A, t24Name=BR.ENT.KEY)
+	}
+	ENTITLEMENT_BROKER__SC_TAX_CODE
+	{
+		SC_TAX_CODE -> SCT_Taxes:TXN_TAX_CODE
+			@t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=143.0, core=true, businessType=A, t24Name=SC.TAX.CODE)
+		SC_TAX_TYPE : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=144.0, core=true, businessType=TAX, t24Name=SC.TAX.TYPE)
+		SOURCE_OR_LOCAL : SCC_Entitlements:ENTITLEMENT_BROKER__SC_TAX_CODE__SOURCE_OR_LOCAL
+			@t24:i (align=L, inputBehaviour=I, maxLength=7, sysNumber=145.0, core=true, t24Name=SOURCE.OR.LOCAL)
+		SRC_TAX_ADJ_AMT : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=146.0, core=true, businessType=AMT, t24Name=SRC.TAX.ADJ.AMT)
+		SC_AMT_ACY : mml:Double
+			@t24:i (align=R, inputBehaviour=E, maxLength=16, sysNumber=147.0, core=true, businessType=AMT, t24Name=SC.AMT.ACY)
+		SC_AMT_LCY : mml:Double
+			@t24:i (align=R, inputBehaviour=E, maxLength=16, sysNumber=148.0, core=true, businessType=AMT, t24Name=SC.AMT.LCY)
+		MAN_TAX_ACY : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=16, sysNumber=149.0, core=true, businessType=AMT, t24Name=MAN.TAX.ACY)
+		MAN_TAX_LCY : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=16, sysNumber=150.0, core=true, businessType=AMT, t24Name=MAN.TAX.LCY)
+	}
+	ENTITLEMENT_BROKER__STMT_NOS
+	{
+		STMT_NOS : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=10, sysNumber=161.0, core=true, t24Name=STMT.NOS)
+	}
+	ENTITLEMENT_BROKER__OVERRIDE
+	{
+		OVERRIDE : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=162.0, core=true, businessType=A, t24Name=OVERRIDE)
+	}
+	MT565_INSTRUCT
+		@t24:i (t24Name=MT565.INSTRUCT, level=F, type=W, allowedFunctions="C I L P Q R S V", localRefAllowed=false)
+	{
+		MT565_INSTRUCT_ID -> SCC_Entitlements:MT565_INSTRUCT PK required
+			@t24:i (align=L, inputBehaviour=I, maxLength=10, sysNumber=0.0, core=true, businessType=S, t24Name=MT565.INSTRUCT.ID)
+		DIARY_ID -> SCC_EventCapture:DIARY required
+			@i18n:Label (en="Diary Id", fr="Réf. de journal", es="ID de Diario")
+			@i18n:Tooltip (en="Indicates the diary Id", fr="Référence de journal")
+			@t24:i (align=L, inputBehaviour=I, maxLength=18, sysNumber=1.0, core=true, businessType=A, t24Name=DIARY.ID)
+		DEPOSITORY -> byValue SCC_Entitlements:MT565_INSTRUCT__DEPOSITORY *
+		RECORD_STATUS : mml:string
+			@i18n:Label (en="Record Status", fr=Statut, es=Estado)
+			@i18n:Tooltip (fr="Statut de l\'enregistrement")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=4.0, core=true, businessType=STAT, t24Name=RECORD.STATUS)
+		CURR_NO : mml:Integer
+			@i18n:Label (en="Curr No", fr="N° version", es="No. Actual")
+			@i18n:Tooltip (fr="Numéro de version")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=5.0, core=true, t24Name=CURR.NO)
+		INPUTTER -> byValue SCC_Entitlements:MT565_INSTRUCT__INPUTTER *
+		DATE_TIME -> byValue SCC_Entitlements:MT565_INSTRUCT__DATE_TIME *
+		AUTHORISER : mml:string
+			@i18n:Label (en=Authoriser, fr="Validé par", es=Autorizador)
+			@i18n:Tooltip (en="Indicates the User who Authorises the record", fr="Utilisateur de validation", es="El usuario que autorizó el registro")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=8.0, core=true, businessType=A, t24Name=AUTHORISER)
+		CO_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company, fr=Entité, es="Compañía")
+			@i18n:Tooltip (fr="Code établissement ou agence")
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=9.0, core=true, businessType=A, t24Name=CO.CODE)
+		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Dept Code", fr=Service, es=Departamento)
+			@i18n:Tooltip (fr="Code du service")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=10.0, core=true, t24Name=DEPT.CODE)
+		AUDITOR_CODE : mml:string
+			@i18n:Label (en="Auditor Code", fr="Audité par", es="Código de Auditor")
+			@i18n:Tooltip (en="Auditor Code", fr="Utilisateur d\'audit", es="Nombre del auditor")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=11.0, core=true, businessType=A, t24Name=AUDITOR.CODE)
+		AUDIT_DATE_TIME : mml:dateTime
+			@i18n:Label (en="Audit Date Time", fr="Audité le", es="Fecha/Hora de Audit.")
+			@i18n:Tooltip (en="Date and time when record was audited", fr="Date et heure d\'audit", es="Fecha y Hora de Auditoría ")
+			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=12.0, core=true, businessType=RELTIME, t24Name=AUDIT.DATE.TIME)
+	}
+	MT565_INSTRUCT__DEPOSITORY
+	{
+		DEPOSITORY -> SC_Config:CUSTOMER_SECURITY required
+			@t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=2.0, core=true, businessType=CUS, t24Name=DEPOSITORY)
+		SUB_ACCOUNT -> byValue SCC_Entitlements:MT565_INSTRUCT__DEPOSITORY__SUB_ACCOUNT *
+	}
+	MT565_INSTRUCT__DEPOSITORY__SUB_ACCOUNT
+	{
+		SUB_ACCOUNT : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=3.0, core=true, t24Name=SUB.ACCOUNT)
+	}
+	MT565_INSTRUCT__INPUTTER
+	{
+		INPUTTER : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=6.0, core=true, businessType=A, t24Name=INPUTTER)
+	}
+	MT565_INSTRUCT__DATE_TIME
+	{
+		DATE_TIME : mml:dateTime
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=7.0, core=true, businessType=RELTIME, t24Name=DATE.TIME)
+	}
+	SC_ENT_AUTHORISE
+		@t24:i (t24Name=SC.ENT.AUTHORISE, level=F, type=U, allowedFunctions="A C D E I L P Q R S", localRefAllowed=false)
+	{
+		KEY -> SCC_Entitlements:SC_ENT_AUTHORISE PK required
+			@i18n:Label (en=Key, fr=Clé, es=Clave)
+			@i18n:Tooltip (en="Indicates th transaction key", fr=Clé)
+			@t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=0.0, core=true, businessType=S, t24Name=KEY)
+		DIARY_ID -> byValue SCC_Entitlements:SC_ENT_AUTHORISE__DIARY_ID *
+		ENTITLEMENT_ID -> byValue SCC_Entitlements:SC_ENT_AUTHORISE__ENTITLEMENT_ID *
+		OVERRIDE -> byValue SCC_Entitlements:SC_ENT_AUTHORISE__OVERRIDE *
+		RECORD_STATUS : mml:string
+			@i18n:Label (en="Record Status", fr=Statut, es=Estado)
+			@i18n:Tooltip (fr="Statut de l\'enregistrement")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=7.0, core=true, businessType=STAT, t24Name=RECORD.STATUS)
+		CURR_NO : mml:Integer
+			@i18n:Label (en="Curr No", fr="N° version", es="No. Actual")
+			@i18n:Tooltip (fr="Numéro de version")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=8.0, core=true, t24Name=CURR.NO)
+		INPUTTER -> byValue SCC_Entitlements:SC_ENT_AUTHORISE__INPUTTER *
+		DATE_TIME -> byValue SCC_Entitlements:SC_ENT_AUTHORISE__DATE_TIME *
+		AUTHORISER : mml:string
+			@i18n:Label (en=Authoriser, fr="Validé par", es=Autorizador)
+			@i18n:Tooltip (en="Indicates the User who Authorises the record", fr="Utilisateur de validation", es="El usuario que autorizó el registro")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=11.0, core=true, businessType=A, t24Name=AUTHORISER)
+		CO_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company, fr=Entité, es="Compañía")
+			@i18n:Tooltip (fr="Code établissement ou agence")
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=12.0, core=true, businessType=A, t24Name=CO.CODE)
+		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Dept Code", fr=Service, es=Departamento)
+			@i18n:Tooltip (fr="Code du service")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=13.0, core=true, t24Name=DEPT.CODE)
+		AUDITOR_CODE : mml:string
+			@i18n:Label (en="Auditor Code", fr="Audité par", es="Código de Auditor")
+			@i18n:Tooltip (en="Auditor Code", fr="Utilisateur d\'audit", es="Nombre del auditor")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=14.0, core=true, businessType=A, t24Name=AUDITOR.CODE)
+		AUDIT_DATE_TIME : mml:dateTime
+			@i18n:Label (en="Audit Date Time", fr="Audité le", es="Fecha/Hora de Audit.")
+			@i18n:Tooltip (en="Date and time when record was audited", fr="Date et heure d\'audit", es="Fecha y Hora de Auditoría ")
+			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=15.0, core=true, businessType=RELTIME, t24Name=AUDIT.DATE.TIME)
+	}
+	SC_ENT_AUTHORISE__DIARY_ID
+	{
+		DIARY_ID -> SCC_EventCapture:DIARY required
+			@t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=1.0, core=true, businessType=S, t24Name=DIARY.ID)
+		DEPOSITORY -> SC_Config:CUSTOMER_SECURITY
+			@t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=2.0, core=true, businessType=CUS, t24Name=DEPOSITORY)
+		SUB_ACCOUNT -> byValue SCC_Entitlements:SC_ENT_AUTHORISE__DIARY_ID__SUB_ACCOUNT *
+	}
+	SC_ENT_AUTHORISE__DIARY_ID__SUB_ACCOUNT
+	{
+		SUB_ACCOUNT : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=3.0, core=true, businessType=A, t24Name=SUB.ACCOUNT)
+	}
+	SC_ENT_AUTHORISE__ENTITLEMENT_ID
+	{
+		ENTITLEMENT_ID : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=4.0, core=true, businessType=S, t24Name=ENTITLEMENT.ID)
+		REJECTION : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=5.0, core=true, businessType=S, t24Name=REJECTION)
+	}
+	SC_ENT_AUTHORISE__OVERRIDE
+	{
+		OVERRIDE : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=6.0, core=true, t24Name=OVERRIDE)
+	}
+	SC_ENT_AUTHORISE__INPUTTER
+	{
+		INPUTTER : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=9.0, core=true, businessType=A, t24Name=INPUTTER)
+	}
+	SC_ENT_AUTHORISE__DATE_TIME
+	{
+		DATE_TIME : mml:dateTime
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=10.0, core=true, businessType=RELTIME, t24Name=DATE.TIME)
+	}
+	SC_ENT_VALIDATE
+		@t24:i (t24Name=SC.ENT.VALIDATE, level=F, type=U, allowedFunctions="A C D E I L P Q R S", localRefAllowed=false)
+	{
+		KEY -> SCC_Entitlements:SC_ENT_VALIDATE PK required
+			@i18n:Label (en=Key, fr=Clé, es=Clave)
+			@i18n:Tooltip (en="Indicates th transaction key", fr=Clé)
+			@t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=0.0, core=true, businessType=S, t24Name=KEY)
+		DIARY_ID -> byValue SCC_Entitlements:SC_ENT_VALIDATE__DIARY_ID *
+		ENTITLEMENT_ID -> byValue SCC_Entitlements:SC_ENT_VALIDATE__ENTITLEMENT_ID *
+		RECORD_STATUS : mml:string
+			@i18n:Label (en="Record Status", fr=Statut, es=Estado)
+			@i18n:Tooltip (fr="Statut de l\'enregistrement")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=4.0, core=true, businessType=STAT, t24Name=RECORD.STATUS)
+		CURR_NO : mml:Integer
+			@i18n:Label (en="Curr No", fr="N° version", es="No. Actual")
+			@i18n:Tooltip (fr="Numéro de version")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=5.0, core=true, t24Name=CURR.NO)
+		INPUTTER -> byValue SCC_Entitlements:SC_ENT_VALIDATE__INPUTTER *
+		DATE_TIME -> byValue SCC_Entitlements:SC_ENT_VALIDATE__DATE_TIME *
+		AUTHORISER : mml:string
+			@i18n:Label (en=Authoriser, fr="Validé par", es=Autorizador)
+			@i18n:Tooltip (en="Indicates the User who Authorises the record", fr="Utilisateur de validation", es="El usuario que autorizó el registro")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=8.0, core=true, businessType=A, t24Name=AUTHORISER)
+		CO_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company, fr=Entité, es="Compañía")
+			@i18n:Tooltip (fr="Code établissement ou agence")
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=9.0, core=true, businessType=A, t24Name=CO.CODE)
+		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Dept Code", fr=Service, es=Departamento)
+			@i18n:Tooltip (fr="Code du service")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=10.0, core=true, t24Name=DEPT.CODE)
+		AUDITOR_CODE : mml:string
+			@i18n:Label (en="Auditor Code", fr="Audité par", es="Código de Auditor")
+			@i18n:Tooltip (en="Auditor Code", fr="Utilisateur d\'audit", es="Nombre del auditor")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=11.0, core=true, businessType=A, t24Name=AUDITOR.CODE)
+		AUDIT_DATE_TIME : mml:dateTime
+			@i18n:Label (en="Audit Date Time", fr="Audité le", es="Fecha/Hora de Audit.")
+			@i18n:Tooltip (en="Date and time when record was audited", fr="Date et heure d\'audit", es="Fecha y Hora de Auditoría ")
+			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=12.0, core=true, businessType=RELTIME, t24Name=AUDIT.DATE.TIME)
+	}
+	SC_ENT_VALIDATE__DIARY_ID
+	{
+		DIARY_ID -> SCC_EventCapture:DIARY required
+			@t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=1.0, core=true, businessType=S, t24Name=DIARY.ID)
+	}
+	SC_ENT_VALIDATE__ENTITLEMENT_ID
+	{
+		ENTITLEMENT_ID : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=2.0, core=true, businessType=S, t24Name=ENTITLEMENT.ID)
+		REJECTION : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=3.0, core=true, businessType=S, t24Name=REJECTION)
+	}
+	SC_ENT_VALIDATE__INPUTTER
+	{
+		INPUTTER : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=6.0, core=true, businessType=A, t24Name=INPUTTER)
+	}
+	SC_ENT_VALIDATE__DATE_TIME
+	{
+		DATE_TIME : mml:dateTime
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=7.0, core=true, businessType=RELTIME, t24Name=DATE.TIME)
+	}
+	SC_ENT_VERIFY
+		@t24:i (t24Name=SC.ENT.VERIFY, level=F, type=U, allowedFunctions="A C D E I L P Q R S", localRefAllowed=false)
+	{
+		KEY -> SCC_Entitlements:SC_ENT_VERIFY PK required
+			@i18n:Label (en=Key, fr=Clé, es=Clave)
+			@i18n:Tooltip (en="Indicates th transaction key", fr=Clé)
+			@t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=0.0, core=true, businessType=S, t24Name=KEY)
+		DIARY_ID -> byValue SCC_Entitlements:SC_ENT_VERIFY__DIARY_ID *
+		ENTITLEMENT_ID -> byValue SCC_Entitlements:SC_ENT_VERIFY__ENTITLEMENT_ID *
+		RECORD_STATUS : mml:string
+			@i18n:Label (en="Record Status", fr=Statut, es=Estado)
+			@i18n:Tooltip (fr="Statut de l\'enregistrement")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=4.0, core=true, businessType=STAT, t24Name=RECORD.STATUS)
+		CURR_NO : mml:Integer
+			@i18n:Label (en="Curr No", fr="N° version", es="No. Actual")
+			@i18n:Tooltip (fr="Numéro de version")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=5.0, core=true, t24Name=CURR.NO)
+		INPUTTER -> byValue SCC_Entitlements:SC_ENT_VERIFY__INPUTTER *
+		DATE_TIME -> byValue SCC_Entitlements:SC_ENT_VERIFY__DATE_TIME *
+		AUTHORISER : mml:string
+			@i18n:Label (en=Authoriser, fr="Validé par", es=Autorizador)
+			@i18n:Tooltip (en="Indicates the User who Authorises the record", fr="Utilisateur de validation", es="El usuario que autorizó el registro")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=8.0, core=true, businessType=A, t24Name=AUTHORISER)
+		CO_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company, fr=Entité, es="Compañía")
+			@i18n:Tooltip (fr="Code établissement ou agence")
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=9.0, core=true, businessType=A, t24Name=CO.CODE)
+		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Dept Code", fr=Service, es=Departamento)
+			@i18n:Tooltip (fr="Code du service")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=10.0, core=true, t24Name=DEPT.CODE)
+		AUDITOR_CODE : mml:string
+			@i18n:Label (en="Auditor Code", fr="Audité par", es="Código de Auditor")
+			@i18n:Tooltip (en="Auditor Code", fr="Utilisateur d\'audit", es="Nombre del auditor")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=11.0, core=true, businessType=A, t24Name=AUDITOR.CODE)
+		AUDIT_DATE_TIME : mml:dateTime
+			@i18n:Label (en="Audit Date Time", fr="Audité le", es="Fecha/Hora de Audit.")
+			@i18n:Tooltip (en="Date and time when record was audited", fr="Date et heure d\'audit", es="Fecha y Hora de Auditoría ")
+			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=12.0, core=true, businessType=RELTIME, t24Name=AUDIT.DATE.TIME)
+	}
+	SC_ENT_VERIFY__DIARY_ID
+	{
+		DIARY_ID -> SCC_EventCapture:DIARY required
+			@t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=1.0, core=true, businessType=S, t24Name=DIARY.ID)
+	}
+	SC_ENT_VERIFY__ENTITLEMENT_ID
+	{
+		ENTITLEMENT_ID : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=2.0, core=true, businessType=S, t24Name=ENTITLEMENT.ID)
+		REJECTION : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=3.0, core=true, businessType=S, t24Name=REJECTION)
+	}
+	SC_ENT_VERIFY__INPUTTER
+	{
+		INPUTTER : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=6.0, core=true, businessType=A, t24Name=INPUTTER)
+	}
+	SC_ENT_VERIFY__DATE_TIME
+	{
+		DATE_TIME : mml:dateTime
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=7.0, core=true, businessType=RELTIME, t24Name=DATE.TIME)
+	}
+}
+Enumerations {
+	ENTITLEMENT__OPTION_DESC__GROSS_OR_NET : mml:string
+		GROSS=GROSS
+		NET=NET
+	ENTITLEMENT__TAX_CHANGED : mml:string
+		YES=YES
+		NO=NO
+	ENTITLEMENT__COMM_CHANGED : mml:string
+		YES=YES
+		NO=NO
+	ENTITLEMENT__PRE_ADVICE_REQ : mml:string
+		YES=YES
+		NO=NO
+	ENTITLEMENT__CONFIRM_REQ : mml:string
+		YES=YES
+		NO=NO
+	ENTITLEMENT__AUTO_CUST_SETT : mml:string
+		YES=YES
+		NO=NO
+	ENTITLEMENT__AUTO_BROK_SETT : mml:string
+		YES=YES
+		NO=NO
+	ENTITLEMENT__OPT_STATUS : mml:string
+		CREATED=CREATED
+		PENDING=PENDING
+		COMPLETED=COMPLETED
+	ENTITLEMENT__SC_TAX_CODE__SOURCE_OR_LOCAL : mml:string
+		SOURCE=SOURCE
+		LOCAL=LOCAL
+	ENTITLEMENT__MANUAL_CREATION : mml:string
+		YES=YES
+		NO=NO
+	ENTITLEMENT_BROKER__OPTION_DESC__GROSS_OR_NET : mml:string
+		GROSS=GROSS
+		NET=NET
+	ENTITLEMENT_BROKER__TAX_CHANGED : mml:string
+		YES=YES
+		NO=NO
+	ENTITLEMENT_BROKER__COMM_CHANGED : mml:string
+		YES=YES
+		NO=NO
+	ENTITLEMENT_BROKER__PRE_ADVICE_REQ : mml:string
+		YES=YES
+		NO=NO
+	ENTITLEMENT_BROKER__CONFIRM_REQ : mml:string
+		YES=YES
+		NO=NO
+	ENTITLEMENT_BROKER__AUTO_CUST_SETT : mml:string
+		YES=YES
+		NO=NO
+	ENTITLEMENT_BROKER__AUTO_BROK_SETT : mml:string
+		YES=YES
+		NO=NO
+	ENTITLEMENT_BROKER__OPT_STATUS : mml:string
+		CREATED=CREATED
+		PENDING=PENDING
+		COMPLETED=COMPLETED
+	ENTITLEMENT_BROKER__SC_TAX_CODE__SOURCE_OR_LOCAL : mml:string
+		SOURCE=SOURCE
+		LOCAL=LOCAL
+	ENTITLEMENT_BROKER__MANUAL_CREATION : mml:string
+		YES=YES
+		NO=NO
+}

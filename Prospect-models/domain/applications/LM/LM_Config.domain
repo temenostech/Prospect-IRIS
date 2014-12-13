@@ -1,0 +1,621 @@
+# UTF-8
+/* Parameter definitions for Loans and Money Market */
+Domain LM_Config
+	@t24:i (module=LM)
+	@java:Package (value=com.temenos.t24.datamodel.lm.lm_config)
+namespace "http://www.temenos.com/t24/LM_Config"
+metamodelVersion 4.3.0.20110527
+Classes {
+	LMM_ACTION_CODES
+		@t24:i (t24Name=LMM.ACTION.CODES, level=I, type=U, allowedFunctions="A C D E I L P Q R S", localRefAllowed=false)
+	{
+		ACTION_CODE -> LM_Config:LMM_ACTION_CODES PK required
+			@i18n:Label (en=ID, fr=Code, es=ID)
+			@i18n:Tooltip (fr=Code)
+			@t24:i (align=L, inputBehaviour=I, maxLength=8, sysNumber=0.0, core=true, businessType=A, t24Name=ACTION.CODE)
+		DESCRIPTION -> byValue LM_Config:LMM_ACTION_CODES__DESCRIPTION *
+		RECORD_STATUS : mml:string
+			@i18n:Label (en="Record Status", fr=Statut, es=Estado)
+			@i18n:Tooltip (fr="Statut de l\'enregistrement")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=2.0, core=true, businessType=STAT, t24Name=RECORD.STATUS)
+		CURR_NO : mml:Integer
+			@i18n:Label (en="Curr No", fr="N° version", es="No. Actual")
+			@i18n:Tooltip (fr="Numéro de version")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=3.0, core=true, t24Name=CURR.NO)
+		INPUTTER -> byValue LM_Config:LMM_ACTION_CODES__INPUTTER *
+		DATE_TIME -> byValue LM_Config:LMM_ACTION_CODES__DATE_TIME *
+		AUTHORISER : mml:string
+			@i18n:Label (en=Authoriser, fr="Validé par", es=Autorizador)
+			@i18n:Tooltip (en="Indicates the User who Authorises the record", fr="Utilisateur de validation", es="El usuario que autorizó el registro")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=6.0, core=true, businessType=A, t24Name=AUTHORISER)
+		CO_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company, fr=Entité, es="Compañía")
+			@i18n:Tooltip (fr="Code établissement ou agence")
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=7.0, core=true, businessType=A, t24Name=CO.CODE)
+		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Dept Code", fr=Service, es=Departamento)
+			@i18n:Tooltip (fr="Code du service")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=8.0, core=true, t24Name=DEPT.CODE)
+		AUDITOR_CODE : mml:string
+			@i18n:Label (en="Auditor Code", fr="Audité par", es="Código de Auditor")
+			@i18n:Tooltip (en="Auditor Code", fr="Utilisateur d\'audit", es="Nombre del auditor")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=9.0, core=true, businessType=A, t24Name=AUDITOR.CODE)
+		AUDIT_DATE_TIME : mml:dateTime
+			@i18n:Label (en="Audit Date Time", fr="Audité le", es="Fecha/Hora de Audit.")
+			@i18n:Tooltip (en="Date and time when record was audited", fr="Date et heure d\'audit", es="Fecha y Hora de Auditoría ")
+			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=10.0, core=true, businessType=RELTIME, t24Name=AUDIT.DATE.TIME)
+	}
+	LMM_ACTION_CODES__DESCRIPTION
+	{
+		DESCRIPTION : mml:string required
+			@t24:i (align=L, inputBehaviour=I, maxLength=40, multiLanguage=true, sysNumber=1.0, core=true, businessType=A, t24Name=DESCRIPTION)
+	}
+	LMM_ACTION_CODES__INPUTTER
+	{
+		INPUTTER : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=4.0, core=true, businessType=A, t24Name=INPUTTER)
+	}
+	LMM_ACTION_CODES__DATE_TIME
+	{
+		DATE_TIME : mml:dateTime
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=5.0, core=true, businessType=RELTIME, t24Name=DATE.TIME)
+	}
+	LMM_CATEGORY
+		@t24:i (t24Name=LMM.CATEGORY, level=F, type=T, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		CATEGORY -> LM_Config:LMM_CATEGORY PK required
+			@i18n:Label (en=Category, fr=Produit, es="Categoría")
+			@i18n:Tooltip (en="Specifies the Category", fr="Code du produit")
+			@t24:i (align=L, inputBehaviour=I, maxLength=6, sysNumber=0.0, core=true, businessType=A, t24Name=CATEGORY)
+		CONTRACT_NO : mml:string
+			@i18n:Label (en="Contract No", fr="Réf. de contrat", es="No. de Contrato")
+			@i18n:Tooltip (fr="Référence de contrat")
+			@t24:i (align=L, inputBehaviour=I, maxLength=14, sysNumber=1.0, core=true, businessType=A, t24Name=CONTRACT.NO)
+	}
+	LMM_CURRENCY
+		@t24:i (t24Name=LMM.CURRENCY, level=F, type=T, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		CURRENCY -> LM_Config:LMM_CURRENCY PK required
+			@i18n:Label (en=Ccy, fr=Devise, es=Moneda)
+			@i18n:Tooltip (fr="Code devise ISO")
+			@t24:i (align=L, inputBehaviour=I, maxLength=6, sysNumber=0.0, core=true, businessType=CCY, t24Name=CURRENCY)
+		CONTRACT_NO : mml:string
+			@i18n:Label (en="Contract No", fr="Réf. de contrat", es="No. de Contrato")
+			@i18n:Tooltip (fr="Référence de contrat")
+			@t24:i (align=L, inputBehaviour=I, maxLength=14, sysNumber=1.0, core=true, businessType=A, t24Name=CONTRACT.NO)
+	}
+	LMM_HISTORY_TODAY
+		@t24:i (t24Name=LMM.HISTORY.TODAY, level=F, type=T, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		CONTRACT_ID -> LM_Config:LMM_HISTORY_TODAY PK required
+			@t24:i (align=L, inputBehaviour=I, maxLength=14, sysNumber=0.0, core=true, businessType=A, t24Name="CONTRACT ID")
+	}
+	LMM_INSTALL_CONDS
+		@t24:i (t24Name=LMM.INSTALL.CONDS, level=I, type=H, additionalInfo="TABLE FILE UNP OEU", allowedFunctions="A C D E H I L P Q R S", localRefAllowed=false)
+	{
+		COMPANY -> LM_Config:LMM_INSTALL_CONDS PK required
+			@i18n:Label (en=Company, fr=Entité, es="Código de Compañía")
+			@i18n:Tooltip (fr=Entité)
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=0.0, core=true, businessType=COM, t24Name=COMPANY)
+		DAYS_PRIOR_PDO_P : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=3, sysNumber=1.0, core=true, t24Name=DAYS.PRIOR.PDO.P)
+		DAYS_PRIOR_NAB_P : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=3, sysNumber=2.0, core=true, t24Name=DAYS.PRIOR.NAB.P)
+		DAYS_PRIOR_PDO_I : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=3, sysNumber=3.0, core=true, t24Name=DAYS.PRIOR.PDO.I)
+		DAYS_PRIOR_NAB_I : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=3, sysNumber=4.0, core=true, t24Name=DAYS.PRIOR.NAB.I)
+		DAYS_PRIOR_PDO_C : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=3, sysNumber=5.0, core=true, t24Name=DAYS.PRIOR.PDO.C)
+		DAYS_PRIOR_NAB_C : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=3, sysNumber=6.0, core=true, t24Name=DAYS.PRIOR.NAB.C)
+		DAYS_PRIOR_PDO_MAT : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=3, sysNumber=7.0, core=true, t24Name=DAYS.PRIOR.PDO.MAT)
+		DAYS_PRIOR_NAB_MAT : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=3, sysNumber=8.0, core=true, t24Name=DAYS.PRIOR.NAB.MAT)
+		DAYS_PRIOR_RPT_LIQ : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=9.0, core=true, t24Name=DAYS.PRIOR.RPT.LIQ)
+		DAYS_PRIOR_RPT_REV : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=10.0, core=true, t24Name=DAYS.PRIOR.RPT.REV)
+		DAYS_PRIOR_RPT_MAT : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=11.0, core=true, t24Name=DAYS.PRIOR.RPT.MAT)
+		MAX_LEGAL_INT_RATE : mml:string
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=12.0, core=true, businessType=R, t24Name=MAX.LEGAL.INT.RATE)
+		SIGNIFICANT_AMT : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=15, sysNumber=13.0, core=true, t24Name=SIGNIFICANT.AMT)
+		DAYS_POST_MATURITY : mml:Integer required
+			@i18n:Label (en="Days Post Maturity", fr="Jrs aprés l\'échéance", es="Días Pos Vencimiento")
+			@i18n:Tooltip (fr="Jours aprés l\'échéance")
+			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=14.0, core=true, t24Name=DAYS.POST.MATURITY)
+		DEFAULT_CHG_CODE -> LM_Fees:LMM_CHARGE_CONDITIONS required
+			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=15.0, core=true, t24Name=DEFAULT.CHG.CODE)
+		ACCRUAL_PARAM -> AC_Fees:EB_ACCRUAL_PARAM
+			@i18n:Label (en="Interest Accrual Method", fr="Intérêts courus", es="Método Devengo Interés")
+			@i18n:Tooltip (en="Method by which interest accrual is processed", fr="Intérêts courus")
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=16.0, core=true, businessType=A, t24Name=ACCRUAL.PARAM)
+		MM_ACC_CYCLE_L_CCY : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=19, sysNumber=17.0, core=true, businessType=FQU, t24Name=MM.ACC.CYCLE.L.CCY)
+		MM_ACC_CYCLE_F_CCY : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=19, sysNumber=18.0, core=true, businessType=FQU, t24Name=MM.ACC.CYCLE.F.CCY)
+		LD_ACC_CYCLE_L_CCY : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=19, sysNumber=19.0, core=true, businessType=FQU, t24Name=LD.ACC.CYCLE.L.CCY)
+		LD_ACC_CYCLE_F_CCY : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=19, sysNumber=20.0, core=true, businessType=FQU, t24Name=LD.ACC.CYCLE.F.CCY)
+		ACC_CYCLE_FLOAT : LM_Config:LMM_INSTALL_CONDS__ACC_CYCLE_FLOAT
+			@t24:i (align=R, inputBehaviour=I, maxLength=1, sysNumber=21.0, core=true, t24Name=ACC.CYCLE.FLOAT)
+		FID_MIN_COMM_RATE : mml:string
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=22.0, core=true, businessType=R, t24Name=FID.MIN.COMM.RATE)
+		FID_MAX_COMM_RATE : mml:string
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=23.0, core=true, businessType=R, t24Name=FID.MAX.COMM.RATE)
+		FID_COM_CHRG_QUOTE : LM_Config:LMM_INSTALL_CONDS__FID_COM_CHRG_QUOTE required
+			@t24:i (align=L, inputBehaviour=I, maxLength=7, sysNumber=24.0, core=true, t24Name=FID.COM.CHRG.QUOTE)
+		FID_COMM_AT_MAT_Y : LM_Config:LMM_INSTALL_CONDS__FID_COMM_AT_MAT_Y required
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=25.0, core=true, t24Name=FID.COMM.AT.MAT.Y)
+		PEN_I_ACC_FIN_MEM : LM_Config:LMM_INSTALL_CONDS__PEN_I_ACC_FIN_MEM required
+			@t24:i (align=L, inputBehaviour=I, maxLength=9, sysNumber=26.0, core=true, businessType=A, t24Name=PEN.I.ACC.FIN.MEM)
+		PEN_C_ACC_FIN_MEM : LM_Config:LMM_INSTALL_CONDS__PEN_C_ACC_FIN_MEM required
+			@t24:i (align=L, inputBehaviour=I, maxLength=9, sysNumber=27.0, core=true, businessType=A, t24Name=PEN.C.ACC.FIN.MEM)
+		NAB___W_OFF__CAP : LM_Config:LMM_INSTALL_CONDS__NAB___W_OFF__CAP required
+			@t24:i (align=L, inputBehaviour=I, maxLength=10, sysNumber=28.0, core=true, businessType=A, t24Name=NAB...W.OFF..CAP)
+		PL_O_SET_COMMT -> ST_Config:CATEGORY required
+			@t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=29.0, core=true, t24Name=PL.O.SET.COMMT)
+		PL_O_SET_IR__CUR -> ST_Config:CATEGORY required
+			@t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=30.0, core=true, t24Name=PL.O.SET.IR..CUR)
+		PL_O_SET_CR__CUR -> ST_Config:CATEGORY required
+			@t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=31.0, core=true, t24Name=PL.O.SET.CR..CUR)
+		PL_O_SET_IRA -> ST_Config:CATEGORY required
+			@t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=32.0, core=true, t24Name=PL.O.SET.IRA)
+		PL_O_SET_CRA -> ST_Config:CATEGORY required
+			@t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=33.0, core=true, t24Name=PL.O.SET.CRA)
+		PL_O_SET_IP__CUR -> ST_Config:CATEGORY required
+			@t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=34.0, core=true, t24Name=PL.O.SET.IP..CUR)
+		PL_O_SET_IPA -> ST_Config:CATEGORY required
+			@t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=35.0, core=true, t24Name=PL.O.SET.IPA)
+		PL_O_SET_IR__PEN -> ST_Config:CATEGORY
+			@t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=36.0, core=true, t24Name=PL.O.SET.IR..PEN)
+		PL_O_SET_CP__CUR -> ST_Config:CATEGORY
+			@t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=37.0, core=true, t24Name=PL.O.SET.CP..CUR)
+		PL_O_SET_IR__PEN_M -> ST_Config:CATEGORY
+			@t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=38.0, core=true, t24Name=PL.O.SET.IR..PEN.M)
+		PL_O_SET_CR__PEN_M -> ST_Config:CATEGORY
+			@t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=39.0, core=true, t24Name=PL.O.SET.CR..PEN.M)
+		PL_O_SET_IR__SUS -> ST_Config:CATEGORY required
+			@t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=40.0, core=true, t24Name=PL.O.SET.IR..SUS)
+		PL_O_SET_CR__SUS -> ST_Config:CATEGORY required
+			@t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=41.0, core=true, t24Name=PL.O.SET.CR..SUS)
+		PL_OS_IR_CUR_CUR_M -> ST_Config:CATEGORY
+			@t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=42.0, core=true, t24Name=PL.OS.IR.CUR.CUR.M)
+		PL_OS_IR_CUR_PRV_M -> ST_Config:CATEGORY
+			@t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=43.0, core=true, t24Name=PL.OS.IR.CUR.PRV.M)
+		PL_OS_IR_CUR_PRV_Y -> ST_Config:CATEGORY
+			@t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=44.0, core=true, t24Name=PL.OS.IR.CUR.PRV.Y)
+		PL_OS_CR_CUR_CUR_M -> ST_Config:CATEGORY
+			@t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=45.0, core=true, t24Name=PL.OS.CR.CUR.CUR.M)
+		PL_OS_CR_CUR_PRV_M -> ST_Config:CATEGORY
+			@t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=46.0, core=true, t24Name=PL.OS.CR.CUR.PRV.M)
+		PL_OS_CR_CUR_PRV_Y -> ST_Config:CATEGORY
+			@t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=47.0, core=true, t24Name=PL.OS.CR.CUR.PRV.Y)
+		PL_OS_IRA____CUR_M -> ST_Config:CATEGORY
+			@t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=48.0, core=true, t24Name=PL.OS.IRA....CUR.M)
+		PL_OS_IRA____PRV_M -> ST_Config:CATEGORY
+			@t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=49.0, core=true, t24Name=PL.OS.IRA....PRV.M)
+		PL_OS_IRA____PRV_Y -> ST_Config:CATEGORY
+			@t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=50.0, core=true, t24Name=PL.OS.IRA....PRV.Y)
+		PL_OS_CRA____CUR_M -> ST_Config:CATEGORY
+			@t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=51.0, core=true, t24Name=PL.OS.CRA....CUR.M)
+		PL_OS_CRA____PRV_M -> ST_Config:CATEGORY
+			@t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=52.0, core=true, t24Name=PL.OS.CRA....PRV.M)
+		PL_OS_CRA____PRV_Y -> ST_Config:CATEGORY
+			@t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=53.0, core=true, t24Name=PL.OS.CRA....PRV.Y)
+		PL_OS_IP_CUR_CUR_M -> ST_Config:CATEGORY
+			@t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=54.0, core=true, t24Name=PL.OS.IP.CUR.CUR.M)
+		PL_OS_IP_CUR_PRV_M -> ST_Config:CATEGORY
+			@t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=55.0, core=true, t24Name=PL.OS.IP.CUR.PRV.M)
+		PL_OS_IP_CUR_PRV_Y -> ST_Config:CATEGORY
+			@t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=56.0, core=true, t24Name=PL.OS.IP.CUR.PRV.Y)
+		PL_OS_IPA____CUR_M -> ST_Config:CATEGORY
+			@t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=57.0, core=true, t24Name=PL.OS.IPA....CUR.M)
+		PL_OS_IPA____PRV_M -> ST_Config:CATEGORY
+			@t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=58.0, core=true, t24Name=PL.OS.IPA....PRV.M)
+		PL_OS_IPA____PRV_Y -> ST_Config:CATEGORY
+			@t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=59.0, core=true, t24Name=PL.OS.IPA....PRV.Y)
+		PL_OS_IR_PEN_CUR_M -> ST_Config:CATEGORY
+			@t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=60.0, core=true, t24Name=PL.OS.IR.PEN.CUR.M)
+		PL_OS_IR_PEN_PRV_M -> ST_Config:CATEGORY
+			@t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=61.0, core=true, t24Name=PL.OS.IR.PEN.PRV.M)
+		PL_OS_IR_PEN_PRV_Y -> ST_Config:CATEGORY
+			@t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=62.0, core=true, t24Name=PL.OS.IR.PEN.PRV.Y)
+		PL_OS_CP_CUR_CUR_M -> ST_Config:CATEGORY
+			@t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=63.0, core=true, t24Name=PL.OS.CP.CUR.CUR.M)
+		PL_OS_CP_CUR_PRV_M -> ST_Config:CATEGORY
+			@t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=64.0, core=true, t24Name=PL.OS.CP.CUR.PRV.M)
+		PL_OS_CP_CUR_PRV_Y -> ST_Config:CATEGORY
+			@t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=65.0, core=true, t24Name=PL.OS.CP.CUR.PRV.Y)
+		PL_OS_IR_PEN_MEMO -> ST_Config:CATEGORY
+			@t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=66.0, core=true, t24Name=PL.OS.IR.PEN.MEMO)
+		PL_OS_CR_PEN_MEMO -> ST_Config:CATEGORY
+			@t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=67.0, core=true, t24Name=PL.OS.CR.PEN.MEMO)
+		PL_OS_IR_DUE_CUR_M -> ST_Config:CATEGORY required
+			@t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=68.0, core=true, t24Name=PL.OS.IR.DUE.CUR.M)
+		PL_OS_IR_DUE_PRV_M -> ST_Config:CATEGORY
+			@t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=69.0, core=true, t24Name=PL.OS.IR.DUE.PRV.M)
+		PL_OS_IR_DUE_PRV_Y -> ST_Config:CATEGORY
+			@t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=70.0, core=true, t24Name=PL.OS.IR.DUE.PRV.Y)
+		PL_OS_CR_DUE_CUR_M -> ST_Config:CATEGORY required
+			@t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=71.0, core=true, t24Name=PL.OS.CR.DUE.CUR.M)
+		PL_OS_CR_DUE_PRV_M -> ST_Config:CATEGORY
+			@t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=72.0, core=true, t24Name=PL.OS.CR.DUE.PRV.M)
+		PL_OS_CR_DUE_PRV_Y -> ST_Config:CATEGORY
+			@t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=73.0, core=true, t24Name=PL.OS.CR.DUE.PRV.Y)
+		PL_DEBIT_WRITE_OFF -> ST_Config:CATEGORY required
+			@t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=74.0, core=true, t24Name=PL.DEBIT.WRITE.OFF)
+		PL_ISSUE_CATEG -> byValue LM_Config:LMM_INSTALL_CONDS__PL_ISSUE_CATEG *
+		PL_REIMB_CAT -> byValue LM_Config:LMM_INSTALL_CONDS__PL_REIMB_CAT *
+		PL_REIMB_SETCAT -> byValue LM_Config:LMM_INSTALL_CONDS__PL_REIMB_SETCAT *
+		PL_ISSUE_SETCAT -> byValue LM_Config:LMM_INSTALL_CONDS__PL_ISSUE_SETCAT *
+		PL_ADJ_WHT -> ST_Config:CATEGORY required
+			@t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=85.0, core=true, t24Name=PL.ADJ.WHT)
+		GEN_EXP_ADJ_WHT -> ST_Config:CATEGORY required
+			@t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=86.0, core=true, t24Name=GEN.EXP.ADJ.WHT)
+		GEN_EXP_ADJ_WHT_NT -> ST_Config:CATEGORY required
+			@t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=87.0, core=true, t24Name=GEN.EXP.ADJ.WHT.NT)
+		GEN_EXP_ADJ_WHT_GS -> ST_Config:CATEGORY required
+			@t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=88.0, core=true, t24Name=GEN.EXP.ADJ.WHT.GS)
+		BROKERAGE_PAYABLE -> ST_Config:CATEGORY required
+			@t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=89.0, core=true, t24Name=BROKERAGE.PAYABLE)
+		FWD_ACCT_MODE : LM_Config:LMM_INSTALL_CONDS__FWD_ACCT_MODE required
+			@i18n:Label (fr="Mode de cpte à terme")
+			@i18n:Tooltip (fr="Mode de cpte à terme")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=90.0, core=true, businessType=A, t24Name=FWD.ACCT.MODE)
+		T_NOINPUT_FIELD -> byValue LM_Config:LMM_INSTALL_CONDS__T_NOINPUT_FIELD *
+		MAND_FLDS -> byValue LM_Config:LMM_INSTALL_CONDS__MAND_FLDS *
+		INT_TOLERANCE : mml:string
+			@i18n:Label (fr="Tolérance d\'intérêt")
+			@i18n:Tooltip (fr="Tolérance d\'intérêt")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=93.0, core=true, businessType=R, t24Name=INT.TOLERANCE)
+		MM_LAST_EOD_RUN : mml:date
+			@t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=94.0, core=true, businessType=D, t24Name=MM.LAST.EOD.RUN)
+		LD_LAST_EOD_RUN : mml:date
+			@t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=95.0, core=true, businessType=D, t24Name=LD.LAST.EOD.RUN)
+		LD_RATE_CHANGE_ADV : LM_Config:LMM_INSTALL_CONDS__LD_RATE_CHANGE_ADV
+			@t24:i (align=L, inputBehaviour=I, maxLength=1, sysNumber=96.0, core=true, t24Name=LD.RATE.CHANGE.ADV)
+		MM_ROLL_AMEND_ADV : LM_Config:LMM_INSTALL_CONDS__MM_ROLL_AMEND_ADV
+			@t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=97.0, core=true, t24Name=MM.ROLL.AMEND.ADV)
+		PROJECT_R_TYPE : LM_Config:LMM_INSTALL_CONDS__PROJECT_R_TYPE
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=98.0, core=true, t24Name=PROJECT.R.TYPE)
+		FWD_R_TYPE_FQU : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=13, sysNumber=99.0, core=true, businessType=FQU, t24Name=FWD.R.TYPE.FQU)
+		BILL_CHG_CODE -> byValue LM_Config:LMM_INSTALL_CONDS__BILL_CHG_CODE *
+		S_BASIS_RATE_VAL : LM_Config:LMM_INSTALL_CONDS__S_BASIS_RATE_VAL
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=101.0, core=true, t24Name=S.BASIS.RATE.VAL)
+		FIN_LEASE_REQ : LM_Config:LMM_INSTALL_CONDS__FIN_LEASE_REQ
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=102.0, core=true, t24Name=FIN.LEASE.REQ)
+		PL_CI_CUR_M -> ST_Config:CATEGORY
+			@t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=103.0, core=true, t24Name=PL.CI.CUR.M)
+		PL_CI_PRV_M -> ST_Config:CATEGORY
+			@t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=104.0, core=true, t24Name=PL.CI.PRV.M)
+		PL_CI_PRV_Y -> ST_Config:CATEGORY
+			@t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=105.0, core=true, t24Name=PL.CI.PRV.Y)
+		PL_CI_TRANS_CODE -> ST_Config:TRANSACTION
+			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=106.0, core=true, t24Name=PL.CI.TRANS.CODE)
+		PL_FC_CUR_M -> ST_Config:CATEGORY
+			@t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=107.0, core=true, t24Name=PL.FC.CUR.M)
+		PL_FC_PRV_M -> ST_Config:CATEGORY
+			@t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=108.0, core=true, t24Name=PL.FC.PRV.M)
+		PL_FC_PRV_Y -> ST_Config:CATEGORY
+			@t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=109.0, core=true, t24Name=PL.FC.PRV.Y)
+		PL_FC_TRANS_CODE -> ST_Config:TRANSACTION
+			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=110.0, core=true, t24Name=PL.FC.TRANS.CODE)
+		PL_CP_CUR_M -> ST_Config:CATEGORY
+			@t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=111.0, core=true, t24Name=PL.CP.CUR.M)
+		PL_CP_PRV_M -> ST_Config:CATEGORY
+			@t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=112.0, core=true, t24Name=PL.CP.PRV.M)
+		PL_CP_PRV_Y -> ST_Config:CATEGORY
+			@t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=113.0, core=true, t24Name=PL.CP.PRV.Y)
+		PL_CP_TRANS_CODE -> ST_Config:TRANSACTION
+			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=114.0, core=true, t24Name=PL.CP.TRANS.CODE)
+		PL_PO_CUR_M -> ST_Config:CATEGORY
+			@t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=115.0, core=true, t24Name=PL.PO.CUR.M)
+		PL_PO_PRV_M -> ST_Config:CATEGORY
+			@t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=116.0, core=true, t24Name=PL.PO.PRV.M)
+		PL_PO_PRV_Y -> ST_Config:CATEGORY
+			@t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=117.0, core=true, t24Name=PL.PO.PRV.Y)
+		PL_PO_TRANS_CODE -> ST_Config:TRANSACTION
+			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=118.0, core=true, t24Name=PL.PO.TRANS.CODE)
+		RETURN_INT : LM_Config:LMM_INSTALL_CONDS__RETURN_INT
+			@i18n:Label (en="Return interest", fr="Rétrocession intérêts", es="Interés de Ingreso")
+			@i18n:Tooltip (en="Whether to return interest or not?", fr="Rétrocession des intérêts")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=119.0, core=true, t24Name=RETURN.INT)
+		RETURN_COM : LM_Config:LMM_INSTALL_CONDS__RETURN_COM
+			@i18n:Label (en="Return Commission?", fr="Rétrocession Cion", es="¿Comisión de Ingreso?")
+			@i18n:Tooltip (en="Indicates return commission Y / N ?", fr="Rétrocession des commissions")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=120.0, core=true, t24Name=RETURN.COM)
+		CTPY_202_MSG : LM_Config:LMM_INSTALL_CONDS__CTPY_202_MSG
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=121.0, core=true, t24Name=CTPY.202.MSG)
+		ROLLOVER_RTN : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=20, sysNumber=122.0, core=true, businessType=A, t24Name=ROLLOVER.RTN)
+		FWD_PROJ : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=123.0, core=true, t24Name=FWD.PROJ)
+		MM_SPEC_INT_METHOD : LM_Config:LMM_INSTALL_CONDS__MM_SPEC_INT_METHOD
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=124.0, core=true, t24Name=MM.SPEC.INT.METHOD)
+		ROUNDING_RULE -> EB_SystemTables:EB_ROUNDING_RULE
+			@i18n:Label (en="Rounding Rule", fr="Règle d\'arrondi", es="Regla de Redondeo")
+			@i18n:Tooltip (en="Indicates the rounding rule", fr="Règle d\'arrondi")
+			@t24:i (align=L, inputBehaviour=I, maxLength=20, sysNumber=125.0, core=true, businessType=A, t24Name=ROUNDING.RULE)
+		LD_WRITE_SCH_HISTORY : LM_Config:LMM_INSTALL_CONDS__LD_WRITE_SCH_HISTORY
+			@t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=126.0, core=true, t24Name=LD.WRITE.SCH.HISTORY)
+		MM_ACCRUAL_ASSET_TYPE : LM_Config:LMM_INSTALL_CONDS__MM_ACCRUAL_ASSET_TYPE
+			@t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=127.0, core=true, t24Name=MM.ACCRUAL.ASSET.TYPE)
+		OVERRIDE -> byValue LM_Config:LMM_INSTALL_CONDS__OVERRIDE *
+		RECORD_STATUS : mml:string
+			@i18n:Label (en="Record Status", fr=Statut, es=Estado)
+			@i18n:Tooltip (fr="Statut de l\'enregistrement")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=129.0, core=true, businessType=STAT, t24Name=RECORD.STATUS)
+		CURR_NO : mml:Integer
+			@i18n:Label (en="Curr No", fr="N° version", es="No. Actual")
+			@i18n:Tooltip (fr="Numéro de version")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=130.0, core=true, t24Name=CURR.NO)
+		INPUTTER -> byValue LM_Config:LMM_INSTALL_CONDS__INPUTTER *
+		DATE_TIME -> byValue LM_Config:LMM_INSTALL_CONDS__DATE_TIME *
+		AUTHORISER : mml:string
+			@i18n:Label (en=Authoriser, fr="Validé par", es=Autorizador)
+			@i18n:Tooltip (en="Indicates the User who Authorises the record", fr="Utilisateur de validation", es="El usuario que autorizó el registro")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=133.0, core=true, businessType=A, t24Name=AUTHORISER)
+		CO_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company, fr=Entité, es="Compañía")
+			@i18n:Tooltip (fr="Code établissement ou agence")
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=134.0, core=true, businessType=A, t24Name=CO.CODE)
+		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Dept Code", fr=Service, es=Departamento)
+			@i18n:Tooltip (fr="Code du service")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=135.0, core=true, t24Name=DEPT.CODE)
+		AUDITOR_CODE : mml:string
+			@i18n:Label (en="Auditor Code", fr="Audité par", es="Código de Auditor")
+			@i18n:Tooltip (en="Auditor Code", fr="Utilisateur d\'audit", es="Nombre del auditor")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=136.0, core=true, businessType=A, t24Name=AUDITOR.CODE)
+		AUDIT_DATE_TIME : mml:dateTime
+			@i18n:Label (en="Audit Date Time", fr="Audité le", es="Fecha/Hora de Audit.")
+			@i18n:Tooltip (en="Date and time when record was audited", fr="Date et heure d\'audit", es="Fecha y Hora de Auditoría ")
+			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=137.0, core=true, businessType=RELTIME, t24Name=AUDIT.DATE.TIME)
+	}
+	LMM_INSTALL_CONDS__PL_ISSUE_CATEG
+	{
+		PL_ISSUE_CATEG -> ST_Config:CATEGORY required
+			@t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=75.0, core=true, t24Name=PL.ISSUE.CATEG)
+		PL_ISSUE_TRANS -> ST_Config:TRANSACTION required
+			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=76.0, core=true, t24Name=PL.ISSUE.TRANS)
+	}
+	LMM_INSTALL_CONDS__PL_REIMB_CAT
+	{
+		PL_REIMB_CAT -> ST_Config:CATEGORY required
+			@t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=77.0, core=true, t24Name=PL.REIMB.CAT)
+		PL_REIMB_TRANS -> ST_Config:TRANSACTION required
+			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=78.0, core=true, t24Name=PL.REIMB.TRANS)
+	}
+	LMM_INSTALL_CONDS__PL_REIMB_SETCAT
+	{
+		PL_REIMB_SETCAT -> ST_Config:CATEGORY required
+			@t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=79.0, core=true, t24Name=PL.REIMB.SETCAT)
+		PL_REIMB_CAT_PM -> ST_Config:CATEGORY required
+			@t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=80.0, core=true, t24Name=PL.REIMB.CAT.PM)
+		PL_REIMB_CAT_PY -> ST_Config:CATEGORY required
+			@t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=81.0, core=true, t24Name=PL.REIMB.CAT.PY)
+	}
+	LMM_INSTALL_CONDS__PL_ISSUE_SETCAT
+	{
+		PL_ISSUE_SETCAT -> ST_Config:CATEGORY required
+			@t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=82.0, core=true, t24Name=PL.ISSUE.SETCAT)
+		PL_ISSUE_CAT_PM -> ST_Config:CATEGORY required
+			@t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=83.0, core=true, t24Name=PL.ISSUE.CAT.PM)
+		PL_ISSUE_CAT_PY -> ST_Config:CATEGORY required
+			@t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=84.0, core=true, t24Name=PL.ISSUE.CAT.PY)
+	}
+	LMM_INSTALL_CONDS__T_NOINPUT_FIELD
+	{
+		T_NOINPUT_FIELD : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=91.0, core=true, t24Name=T.NOINPUT.FIELD)
+	}
+	LMM_INSTALL_CONDS__MAND_FLDS
+	{
+		MAND_FLDS : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=92.0, core=true, t24Name=MAND.FLDS)
+	}
+	LMM_INSTALL_CONDS__BILL_CHG_CODE
+	{
+		BILL_CHG_CODE -> LM_Fees:LMM_CHARGE_CONDITIONS
+			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=100.0, core=true, t24Name=BILL.CHG.CODE)
+	}
+	LMM_INSTALL_CONDS__OVERRIDE
+	{
+		OVERRIDE : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=40, sysNumber=128.0, core=true, t24Name=OVERRIDE)
+	}
+	LMM_INSTALL_CONDS__INPUTTER
+	{
+		INPUTTER : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=131.0, core=true, businessType=A, t24Name=INPUTTER)
+	}
+	LMM_INSTALL_CONDS__DATE_TIME
+	{
+		DATE_TIME : mml:dateTime
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=132.0, core=true, businessType=RELTIME, t24Name=DATE.TIME)
+	}
+	LMM_RATE_TYPE
+		@t24:i (t24Name=LMM.RATE.TYPE, level=F, type=T, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		RATE_TYPE -> LM_Config:LMM_RATE_TYPE PK required
+			@i18n:Label (en="Rate Type", fr="Type de taux", es="Tipo de Tasa")
+			@i18n:Tooltip (en="Is the Rate quoted net of tax or gross of tax", fr="Type de taux", es="Es la Tasa citada neta o bruta de impuesto ")
+			@t24:i (align=R, inputBehaviour=I, maxLength=1, sysNumber=0.0, core=true, t24Name=RATE.TYPE)
+		CONTRACT_NO : mml:string
+			@i18n:Label (en="Contract No", fr="Réf. de contrat", es="No. de Contrato")
+			@i18n:Tooltip (fr="Référence de contrat")
+			@t24:i (align=L, inputBehaviour=I, maxLength=14, sysNumber=1.0, core=true, businessType=A, t24Name=CONTRACT.NO)
+	}
+	LMM_STATUS
+		@t24:i (t24Name=LMM.STATUS, level=F, type=T, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		STATUS -> LM_Config:LMM_STATUS PK required
+			@i18n:Label (en=Status, fr=Statut, es=Estado)
+			@i18n:Tooltip (fr=Statut)
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=0.0, core=true, businessType=A, t24Name=STATUS)
+		CONTRACT_NO : mml:string
+			@i18n:Label (en="Contract No", fr="Réf. de contrat", es="No. de Contrato")
+			@i18n:Tooltip (fr="Référence de contrat")
+			@t24:i (align=L, inputBehaviour=I, maxLength=14, sysNumber=1.0, core=true, businessType=A, t24Name=CONTRACT.NO)
+	}
+	LMM_TEXT
+		@t24:i (t24Name=LMM.TEXT, level=I, type=U, additionalInfo="UNP OEU", allowedFunctions="A C D E I L P Q R S", localRefAllowed=false)
+	{
+		CATEGORY_CODE -> LM_Config:LMM_TEXT PK required
+			@t24:i (align=L, inputBehaviour=I, maxLength=6, sysNumber=0.0, core=true, businessType=A, t24Name="CATEGORY CODE")
+		ADVICE_TXT_1 -> byValue LM_Config:LMM_TEXT__ADVICE_TXT_1 *
+		ADVICE_TXT_2 -> byValue LM_Config:LMM_TEXT__ADVICE_TXT_2 *
+		ADVICE_TXT_3 -> byValue LM_Config:LMM_TEXT__ADVICE_TXT_3 *
+		ADVICE_TXT_4 -> byValue LM_Config:LMM_TEXT__ADVICE_TXT_4 *
+		ADVICE_TXT_5 -> byValue LM_Config:LMM_TEXT__ADVICE_TXT_5 *
+		ADVICE_TXT_6 -> byValue LM_Config:LMM_TEXT__ADVICE_TXT_6 *
+		ADVICE_TXT_7 -> byValue LM_Config:LMM_TEXT__ADVICE_TXT_7 *
+		ADVICE_TXT_8 -> byValue LM_Config:LMM_TEXT__ADVICE_TXT_8 *
+		ADVICE_TXT_9 -> byValue LM_Config:LMM_TEXT__ADVICE_TXT_9 *
+		RECORD_STATUS : mml:string
+			@i18n:Label (en="Record Status", fr=Statut, es=Estado)
+			@i18n:Tooltip (fr="Statut de l\'enregistrement")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=10.0, core=true, businessType=STAT, t24Name=RECORD.STATUS)
+		CURR_NO : mml:Integer
+			@i18n:Label (en="Curr No", fr="N° version", es="No. Actual")
+			@i18n:Tooltip (fr="Numéro de version")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=11.0, core=true, t24Name=CURR.NO)
+		INPUTTER -> byValue LM_Config:LMM_TEXT__INPUTTER *
+		DATE_TIME -> byValue LM_Config:LMM_TEXT__DATE_TIME *
+		AUTHORISER : mml:string
+			@i18n:Label (en=Authoriser, fr="Validé par", es=Autorizador)
+			@i18n:Tooltip (en="Indicates the User who Authorises the record", fr="Utilisateur de validation", es="El usuario que autorizó el registro")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=14.0, core=true, businessType=A, t24Name=AUTHORISER)
+		CO_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company, fr=Entité, es="Compañía")
+			@i18n:Tooltip (fr="Code établissement ou agence")
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=15.0, core=true, businessType=A, t24Name=CO.CODE)
+		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Dept Code", fr=Service, es=Departamento)
+			@i18n:Tooltip (fr="Code du service")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=16.0, core=true, t24Name=DEPT.CODE)
+		AUDITOR_CODE : mml:string
+			@i18n:Label (en="Auditor Code", fr="Audité par", es="Código de Auditor")
+			@i18n:Tooltip (en="Auditor Code", fr="Utilisateur d\'audit", es="Nombre del auditor")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=17.0, core=true, businessType=A, t24Name=AUDITOR.CODE)
+		AUDIT_DATE_TIME : mml:dateTime
+			@i18n:Label (en="Audit Date Time", fr="Audité le", es="Fecha/Hora de Audit.")
+			@i18n:Tooltip (en="Date and time when record was audited", fr="Date et heure d\'audit", es="Fecha y Hora de Auditoría ")
+			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=18.0, core=true, businessType=RELTIME, t24Name=AUDIT.DATE.TIME)
+	}
+	LMM_TEXT__ADVICE_TXT_1
+	{
+		ADVICE_TXT_1 : mml:string required
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, multiLanguage=true, sysNumber=1.0, core=true, businessType=S, t24Name="ADVICE TXT 1")
+	}
+	LMM_TEXT__ADVICE_TXT_2
+	{
+		ADVICE_TXT_2 : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, multiLanguage=true, sysNumber=2.0, core=true, businessType=S, t24Name="ADVICE TXT 2")
+	}
+	LMM_TEXT__ADVICE_TXT_3
+	{
+		ADVICE_TXT_3 : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, multiLanguage=true, sysNumber=3.0, core=true, businessType=S, t24Name="ADVICE TXT 3")
+	}
+	LMM_TEXT__ADVICE_TXT_4
+	{
+		ADVICE_TXT_4 : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, multiLanguage=true, sysNumber=4.0, core=true, businessType=S, t24Name="ADVICE TXT 4")
+	}
+	LMM_TEXT__ADVICE_TXT_5
+	{
+		ADVICE_TXT_5 : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, multiLanguage=true, sysNumber=5.0, core=true, businessType=S, t24Name="ADVICE TXT 5")
+	}
+	LMM_TEXT__ADVICE_TXT_6
+	{
+		ADVICE_TXT_6 : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, multiLanguage=true, sysNumber=6.0, core=true, businessType=S, t24Name="ADVICE TXT 6")
+	}
+	LMM_TEXT__ADVICE_TXT_7
+	{
+		ADVICE_TXT_7 : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, multiLanguage=true, sysNumber=7.0, core=true, businessType=S, t24Name="ADVICE TXT 7")
+	}
+	LMM_TEXT__ADVICE_TXT_8
+	{
+		ADVICE_TXT_8 : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, multiLanguage=true, sysNumber=8.0, core=true, businessType=S, t24Name="ADVICE TXT 8")
+	}
+	LMM_TEXT__ADVICE_TXT_9
+	{
+		ADVICE_TXT_9 : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, multiLanguage=true, sysNumber=9.0, core=true, businessType=S, t24Name="ADVICE TXT 9")
+	}
+	LMM_TEXT__INPUTTER
+	{
+		INPUTTER : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=12.0, core=true, businessType=A, t24Name=INPUTTER)
+	}
+	LMM_TEXT__DATE_TIME
+	{
+		DATE_TIME : mml:dateTime
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=13.0, core=true, businessType=RELTIME, t24Name=DATE.TIME)
+	}
+}
+Enumerations {
+	LMM_INSTALL_CONDS__ACC_CYCLE_FLOAT : mml:string
+		n1=1
+		n2=2
+	LMM_INSTALL_CONDS__FID_COM_CHRG_QUOTE : mml:string
+		LOCAL=LOCAL
+		FOREIGN=FOREIGN
+	LMM_INSTALL_CONDS__FID_COMM_AT_MAT_Y : mml:string
+		YES=YES
+	LMM_INSTALL_CONDS__PEN_I_ACC_FIN_MEM : mml:string
+		FINANCIAL=FINANCIAL
+		MEMO=MEMO
+	LMM_INSTALL_CONDS__PEN_C_ACC_FIN_MEM : mml:string
+		FINANCIAL=FINANCIAL
+		MEMO=MEMO
+	LMM_INSTALL_CONDS__NAB___W_OFF__CAP : mml:string
+		WRITEOFF=WRITEOFF
+		CAPITALISE=CAPITALISE
+	LMM_INSTALL_CONDS__FWD_ACCT_MODE : mml:string
+		SAO=SAO
+		SSS=SSS
+	LMM_INSTALL_CONDS__LD_RATE_CHANGE_ADV : mml:string
+		Y=Y
+		N=N
+	LMM_INSTALL_CONDS__MM_ROLL_AMEND_ADV : mml:string
+		Y=Y
+		NO=NO
+	LMM_INSTALL_CONDS__PROJECT_R_TYPE : mml:string
+		YES=YES
+	LMM_INSTALL_CONDS__S_BASIS_RATE_VAL : mml:string
+		YES=YES
+		NO=NO
+	LMM_INSTALL_CONDS__FIN_LEASE_REQ : mml:string
+		YES=YES
+		NO=NO
+	LMM_INSTALL_CONDS__RETURN_INT : mml:string
+		YES=YES
+		NO=NO
+	LMM_INSTALL_CONDS__RETURN_COM : mml:string
+		YES=YES
+		NO=NO
+	LMM_INSTALL_CONDS__CTPY_202_MSG : mml:string
+		NO=NO
+		YES=YES
+	LMM_INSTALL_CONDS__MM_SPEC_INT_METHOD : mml:string
+		YES=YES
+		NO=NO
+	LMM_INSTALL_CONDS__LD_WRITE_SCH_HISTORY : mml:string
+		NO=NO
+		NULL=NULL
+	LMM_INSTALL_CONDS__MM_ACCRUAL_ASSET_TYPE : mml:string
+		PANDL=PANDL
+		MAIN_ASSET_TYPE=MAIN.ASSET.TYPE
+}

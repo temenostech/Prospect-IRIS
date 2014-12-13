@@ -1,0 +1,660 @@
+# UTF-8
+/* Template Servicing of Payment Due */
+Domain PD_Contract
+	@t24:i (module=PD)
+	@java:Package (value=com.temenos.t24.datamodel.pd.pd_contract)
+namespace "http://www.temenos.com/t24/PD_Contract"
+metamodelVersion 4.3.0.20110527
+Classes {
+	PD_CAPTURE
+		@t24:i (t24Name=PD.CAPTURE, level=F, type=H, additionalInfo="NOH UNP OEU", allowedFunctions="A C D E H I L P Q S", localRefAllowed=true)
+	{
+		ID -> PD_Contract:PD_CAPTURE PK required
+			@i18n:Label (en="Transaction Ref", fr=Code, es="Ref. de Transacción")
+			@i18n:Tooltip (en="Transaction Reference", fr=Identifiant)
+			@t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=0.0, core=true, businessType=A, t24Name=ID)
+		CONTRACT_NUMBER : mml:string required
+			@i18n:Label (en="Contract Number", fr="Réf. contrat", es="Ref. de Contrato")
+			@i18n:Tooltip (fr="Référence du contrat")
+			@t24:i (align=L, inputBehaviour=I, maxLength=20, sysNumber=1.0, core=true, businessType=A, t24Name=CONTRACT.NUMBER)
+		CUSTOMER -> ST_Customer:CUSTOMER
+			@i18n:Label (en=Customer, fr=Client, es=Cliente)
+			@i18n:Tooltip (fr="Code du client", es="Pasivo de Cliente")
+			@t24:i (align=R, inputBehaviour=N, maxLength=10, sysNumber=2.0, core=true, businessType=CUS, t24Name=CUSTOMER)
+		CURRENCY -> FIN_CurrencyConfig:CURRENCY
+			@i18n:Label (en=Currency, fr=Devise, es=Moneda)
+			@i18n:Tooltip (fr="Code devise ISO")
+			@t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=3.0, core=true, businessType=CCY, t24Name=CURRENCY)
+		CURRENCY_MARKET -> FIN_CurrencyConfig:CURRENCY_MARKET
+			@i18n:Label (en="Currency Market", fr=Marché, es="Mercado de Divisas")
+			@i18n:Tooltip (fr="Marché des changes")
+			@t24:i (align=R, inputBehaviour=N, maxLength=2, sysNumber=4.0, core=true, t24Name=CURRENCY.MARKET)
+		POSITION_TYPE -> ST_Config:FX_POS_TYPE
+			@i18n:Label (en="Position Type", fr="Type de position", es="Tipo de Posición")
+			@i18n:Tooltip (fr="Type de position")
+			@t24:i (align=L, inputBehaviour=N, maxLength=2, sysNumber=5.0, core=true, businessType=A, t24Name=POSITION.TYPE)
+		CATEGORY -> ST_Config:CATEGORY
+			@i18n:Label (en=Category, fr=Produit, es="Categoría")
+			@i18n:Tooltip (fr="Code du produit")
+			@t24:i (align=R, inputBehaviour=N, maxLength=6, sysNumber=6.0, core=true, t24Name=CATEGORY)
+		LIMIT_REFERENCE : mml:Integer
+			@i18n:Label (en="Limit Reference", fr="Référence limite", es="Ref. de Límite")
+			@i18n:Tooltip (fr="Référence de la limite")
+			@t24:i (align=R, inputBehaviour=N, maxLength=10, sysNumber=7.0, core=true, t24Name=LIMIT.REFERENCE)
+		ACCOUNT_OFFICER -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Account Officer", fr=Gestionnaire, es="Gestor de Cuenta")
+			@i18n:Tooltip (fr="Gestionnaire responsable du compte ou du client")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=8.0, core=true, businessType=DAO, t24Name=ACCOUNT.OFFICER)
+		INTEREST_BASIS -> ST_RateParameters:INTEREST_BASIS
+			@i18n:Label (en="Interest Basis", fr="Base de calcul", es="Base de Interés")
+			@i18n:Tooltip (fr="Base de calcul des intérêts")
+			@t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=9.0, core=true, businessType=A, t24Name=INTEREST.BASIS)
+		DEALER_DESK -> ST_Config:DEALER_DESK
+			@i18n:Label (en="Dealer Desk", fr="Table cambiste", es="Unidad de Negocios")
+			@i18n:Tooltip (fr="Table cambiste", es="Especifica mesa de Agente gestionando transacción")
+			@t24:i (align=L, inputBehaviour=N, maxLength=2, sysNumber=10.0, core=true, businessType=A, t24Name=DEALER.DESK)
+		PORTFOLIO_NUMBER : mml:Integer
+			@i18n:Label (en="Portfolio Number", fr=Portefeuille, es="Número de Portfolio")
+			@i18n:Tooltip (fr="Numéro de portefeuille")
+			@t24:i (align=R, inputBehaviour=N, maxLength=3, sysNumber=11.0, core=true, t24Name=PORTFOLIO.NUMBER)
+		TOTAL_OVERDUE_AMT : mml:Double
+			@i18n:Label (en="Total Overdue Amount", fr="Montant impayé", es="Monto Total Pendiente")
+			@i18n:Tooltip (fr="Montant impayé")
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=12.0, core=true, businessType=AMT, t24Name=TOTAL.OVERDUE.AMT)
+		NARRATIVE -> byValue PD_Contract:PD_CAPTURE__NARRATIVE *
+		VALUE_DATE : mml:date required
+			@i18n:Label (en="Value Date", fr="Date de valeur", es="Fecha Valor")
+			@i18n:Tooltip (fr="Date de valeur", es="Fecha en que Carteras serán act. por el evento")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=14.0, core=true, businessType=D, t24Name=VALUE.DATE)
+		INTEREST_RATE : mml:string
+			@i18n:Label (en="Interest Rate", fr="Taux d\'intérêts", es="Tasa de Interés")
+			@i18n:Tooltip (fr="Taux d\'intérêts")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=15.0, core=true, businessType=R, t24Name=INTEREST.RATE)
+		INTEREST_KEY : mml:Integer
+			@i18n:Label (en="Interest Key", fr="Taux de référence", es="Clave de Interés")
+			@i18n:Tooltip (fr="Taux de référence")
+			@t24:i (align=R, inputBehaviour=I, maxLength=4, sysNumber=16.0, core=true, t24Name=INTEREST.KEY)
+		OUTSTANDING_BAL : mml:Double required
+			@i18n:Label (en="Outstanding Balance", fr="Solde restant du", es="Saldo Pendiente")
+			@i18n:Tooltip (en="Outstanding Balance", fr="Solde restant du", es="Saldo Pendiente")
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=17.0, core=true, businessType=AMT, t24Name=OUTSTANDING.BAL)
+		PAYMENT_TYPE -> byValue PD_Contract:PD_CAPTURE__PAYMENT_TYPE *
+		NEXT_PD_ID : mml:string
+			@i18n:Label (en="PD Reference", fr="Référence d\'impayé", es="Referencia PD")
+			@i18n:Tooltip (en="PD Reference", fr="Référence d\'impayé", es="Referencia PD")
+			@t24:i (align=L, inputBehaviour=N, maxLength=14, sysNumber=21.0, core=true, businessType=A, t24Name=NEXT.PD.ID)
+		PD_LOC_REF_NO -> byValue PD_Contract:PD_CAPTURE__PD_LOC_REF_NO *
+		ACCRUAL_PARAM -> AC_Fees:EB_ACCRUAL_PARAM
+			@i18n:Label (en="Accrual Parameter", fr="Intérêts courus", es="Método Devengo Interés")
+			@i18n:Tooltip (fr="Intérêts courus")
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=25.0, core=true, businessType=A, t24Name=ACCRUAL.PARAM)
+		ROUNDING_RULE -> EB_SystemTables:EB_ROUNDING_RULE
+			@i18n:Label (en="Rounding Rule", fr="Règle d\'arrondi", es="Regla de Redondeo")
+			@i18n:Tooltip (fr="Règle d\'arrondi")
+			@t24:i (align=L, inputBehaviour=F, maxLength=35, sysNumber=26.0, core=true, businessType=A, t24Name=ROUNDING.RULE)
+		RESERVED_8 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=27.0, core=true, t24Name=RESERVED.8)
+		RESERVED_7 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=28.0, core=true, t24Name=RESERVED.7)
+		RESERVED_6 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=29.0, core=true, t24Name=RESERVED.6)
+		RESERVED_5 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=30.0, core=true, t24Name=RESERVED.5)
+		RESERVED_4 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=31.0, core=true, t24Name=RESERVED.4)
+		RESERVED_3 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=32.0, core=true, t24Name=RESERVED.3)
+		RESERVED_2 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=33.0, core=true, t24Name=RESERVED.2)
+		RESERVED_1 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=34.0, core=true, t24Name=RESERVED.1)
+		STMT_NO -> byValue PD_Contract:PD_CAPTURE__STMT_NO *
+		OVERRIDE -> byValue PD_Contract:PD_CAPTURE__OVERRIDE *
+		RECORD_STATUS : mml:string
+			@i18n:Label (en="Record Status", fr=Statut, es=Estado)
+			@i18n:Tooltip (fr="Statut de l\'enregistrement")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=37.0, core=true, businessType=STAT, t24Name=RECORD.STATUS)
+		CURR_NO : mml:Integer
+			@i18n:Label (en="Curr No", fr="N° version", es="No. Actual")
+			@i18n:Tooltip (fr="Numéro de version")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=38.0, core=true, t24Name=CURR.NO)
+		INPUTTER -> byValue PD_Contract:PD_CAPTURE__INPUTTER *
+		DATE_TIME -> byValue PD_Contract:PD_CAPTURE__DATE_TIME *
+		AUTHORISER : mml:string
+			@i18n:Label (en=Authoriser, fr="Validé par", es=Autorizador)
+			@i18n:Tooltip (en="Indicates the User who Authorises the record", fr="Utilisateur de validation", es="El usuario que autorizó el registro")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=41.0, core=true, businessType=A, t24Name=AUTHORISER)
+		CO_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company, fr=Entité, es="Compañía")
+			@i18n:Tooltip (fr="Code établissement ou agence")
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=42.0, core=true, businessType=A, t24Name=CO.CODE)
+		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Department Code", fr=Service, es=Departamento)
+			@i18n:Tooltip (fr="Code du service")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=43.0, core=true, t24Name=DEPT.CODE)
+		AUDITOR_CODE : mml:string
+			@i18n:Label (en="Auditor Code", fr="Audité par", es="Código de Auditor")
+			@i18n:Tooltip (en="Auditor Code", fr="Utilisateur d\'audit", es="Nombre del auditor")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=44.0, core=true, businessType=A, t24Name=AUDITOR.CODE)
+		AUDIT_DATE_TIME : mml:dateTime
+			@i18n:Label (en="Audit Date Time", fr="Audité le", es="Fecha/Hora de Audit.")
+			@i18n:Tooltip (en="Date and time when record was audited", fr="Date et heure d\'audit", es="Fecha y Hora de Auditoría ")
+			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=45.0, core=true, businessType=RELTIME, t24Name=AUDIT.DATE.TIME)
+	}
+	PD_CAPTURE__NARRATIVE
+	{
+		NARRATIVE : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, multiLanguage=true, sysNumber=13.0, core=true, businessType=A, t24Name=NARRATIVE)
+	}
+	PD_CAPTURE__PAYMENT_TYPE
+	{
+		PAYMENT_TYPE -> PD_Config:PD_AMOUNT_TYPE required
+			@t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=18.0, core=true, businessType=A, t24Name=PAYMENT.TYPE)
+		PAYMENT_AMT : mml:Double required
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=19.0, core=true, businessType=AMT, t24Name=PAYMENT.AMT)
+		SETTLEMENT_ACCT -> ACM_AccountOpening:ACCOUNT
+			@t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=20.0, core=true, businessType=ANT, t24Name=SETTLEMENT.ACCT)
+	}
+	PD_CAPTURE__PD_LOC_REF_NO
+	{
+		PD_LOC_REF_NO : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=5, sysNumber=23.0, core=true, businessType=A, t24Name=PD.LOC.REF.NO)
+		PD_LOC_REF_DATA : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=24.0, core=true, businessType=A, t24Name=PD.LOC.REF.DATA)
+	}
+	PD_CAPTURE__STMT_NO
+	{
+		STMT_NO : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=29, sysNumber=35.0, core=true, businessType=A, t24Name=STMT.NO)
+	}
+	PD_CAPTURE__OVERRIDE
+	{
+		OVERRIDE : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=36.0, core=true, businessType=A, t24Name=OVERRIDE)
+	}
+	PD_CAPTURE__INPUTTER
+	{
+		INPUTTER : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=39.0, core=true, businessType=A, t24Name=INPUTTER)
+	}
+	PD_CAPTURE__DATE_TIME
+	{
+		DATE_TIME : mml:dateTime
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=40.0, core=true, businessType=RELTIME, t24Name=DATE.TIME)
+	}
+	PD_ENT_TODAY
+		@t24:i (t24Name=PD.ENT.TODAY, level=F, type=T, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		CONTRACT_ID -> PD_Contract:PD_ENT_TODAY PK required
+			@t24:i (align=L, inputBehaviour=I, maxLength=31, sysNumber=0.0, core=true, businessType=A, t24Name="CONTRACT ID")
+	}
+	PD_PAYMENT_DUE
+		@t24:i (t24Name=PD.PAYMENT.DUE, level=F, type=H, additionalInfo="NOH UNP OEU", allowedFunctions="A C D E H I L P Q S", localRefAllowed=true)
+	{
+		CONTRACT_NUMBER -> PD_Contract:PD_PAYMENT_DUE PK required
+			@i18n:Label (en="Contract Number", fr="Réf. contrat", es="Ref. de Contrato")
+			@i18n:Tooltip (fr="Référence du contrat")
+			@t24:i (align=L, inputBehaviour=I, maxLength=31, sysNumber=0.0, core=true, businessType=A, t24Name=CONTRACT.NUMBER)
+		OPERATION : PD_Contract:PD_PAYMENT_DUE__OPERATION
+			@i18n:Label (en=Operation, fr=Opération, es="Operación")
+			@i18n:Tooltip (fr="Code opération")
+			@t24:i (align=L, inputBehaviour=I, maxLength=11, sysNumber=1.0, core=true, t24Name=OPERATION)
+		CUSTOMER -> ST_Customer:CUSTOMER
+			@i18n:Label (en="Client ID", fr=Client, es="ID de Cliente")
+			@i18n:Tooltip (en="Identifies the customer of the PD contract", fr="Code du client", es="Identifica al cliente del contrato PD")
+			@t24:i (align=R, inputBehaviour=N, maxLength=10, sysNumber=2.0, core=true, businessType=CUS, t24Name=CUSTOMER)
+		CURRENCY -> FIN_CurrencyConfig:CURRENCY
+			@i18n:Label (en=Currency, fr=Devise, es=Moneda)
+			@i18n:Tooltip (fr="Code devise ISO")
+			@t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=3.0, core=true, businessType=CCY, t24Name=CURRENCY)
+		CURRENCY_MARKET -> FIN_CurrencyConfig:CURRENCY_MARKET
+			@i18n:Label (en="Currency Market", fr=Marché, es="Mercado de Divisas")
+			@i18n:Tooltip (fr="Marché des changes")
+			@t24:i (align=R, inputBehaviour=N, maxLength=2, sysNumber=4.0, core=true, t24Name=CURRENCY.MARKET)
+		POSITION_TYPE -> ST_Config:FX_POS_TYPE
+			@i18n:Label (en="Position Type", fr="Type de position", es="Tipo de Posición")
+			@i18n:Tooltip (fr="Type de position")
+			@t24:i (align=L, inputBehaviour=N, maxLength=2, sysNumber=5.0, core=true, businessType=A, t24Name=POSITION.TYPE)
+		DEALER_DESK -> ST_Config:DEALER_DESK
+			@i18n:Label (en="Dealer Desk", fr="Table cambiste", es="Unidad de Negocios")
+			@i18n:Tooltip (fr="Table cambiste", es="Especifica mesa de Agente gestionando transacción")
+			@t24:i (align=L, inputBehaviour=N, maxLength=2, sysNumber=6.0, core=true, businessType=A, t24Name=DEALER.DESK)
+		ACCOUNT_OFFICER -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Account Officer", fr=Gestionnaire, es="Gestor de Cuenta")
+			@i18n:Tooltip (fr="Gestionnaire responsable du compte ou du client")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=7.0, core=true, businessType=DAO, t24Name=ACCOUNT.OFFICER)
+		CATEGORY -> ST_Config:CATEGORY
+			@i18n:Label (en=Product, fr=Produit, es=Producto)
+			@i18n:Tooltip (en="Specifies Product Category Code", fr="Code du produit", es="Especifica el Código de Categoría del Producto ")
+			@t24:i (align=R, inputBehaviour=N, maxLength=6, sysNumber=8.0, core=true, t24Name=CATEGORY)
+		INTEREST_BASIS -> ST_RateParameters:INTEREST_BASIS
+			@i18n:Label (en="Interest Basis", fr="Base de calcul", es="Base de Interés")
+			@i18n:Tooltip (fr="Base de calcul des intérêts")
+			@t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=9.0, core=true, businessType=A, t24Name=INTEREST.BASIS)
+		ORIG_STLMNT_ACT -> byValue PD_Contract:PD_PAYMENT_DUE__ORIG_STLMNT_ACT *
+		PENALTY_RATE : mml:string
+			@i18n:Label (en="Penalty Rate", fr="Action du particip", es="Tasa de Multa")
+			@i18n:Tooltip (fr="Action du particip")
+			@t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=11.0, core=true, businessType=R, t24Name=PENALTY.RATE)
+		PENALTY_KEY -> ST_RateParameters:BASIC_RATE_TEXT
+			@i18n:Label (en="Penalty Key", fr="% tolérance", es="Clave de Multa")
+			@i18n:Tooltip (fr="% tolérance")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=12.0, core=true, t24Name=PENALTY.KEY)
+		PENALTY_SPREAD : mml:string
+			@i18n:Label (en="Penalty Spread", fr="% tolérance", es="Margen de Multa")
+			@i18n:Tooltip (fr="% tolérance")
+			@t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=13.0, core=true, businessType=R, t24Name=PENALTY.SPREAD)
+		PARAMETER_RECORD : mml:string
+			@i18n:Label (en="Parameter Record")
+			@t24:i (align=L, inputBehaviour=N, maxLength=6, sysNumber=14.0, core=true, businessType=A, t24Name=PARAMETER.RECORD)
+		ORIG_LIMIT_REF : mml:Integer
+			@i18n:Label (en="Original Limit Reference", fr="Réf. de limite originale", es="Ref. Original Límite")
+			@i18n:Tooltip (fr="Référence de limite originale", es="Referencia Original de Límite")
+			@t24:i (align=R, inputBehaviour=N, maxLength=10, sysNumber=15.0, core=true, t24Name=ORIG.LIMIT.REF)
+		LIMIT_REFERENCE : mml:Integer
+			@i18n:Label (en="Limit Reference", fr="Référence limite", es="Ref. de Límite")
+			@i18n:Tooltip (fr="Référence de la limite")
+			@t24:i (align=R, inputBehaviour=N, maxLength=10, sysNumber=16.0, core=true, t24Name=LIMIT.REFERENCE)
+		LIMIT_AMOUNT : mml:Double
+			@i18n:Label (en="Limit Amount", fr=Montant, es="Monto Límite")
+			@i18n:Tooltip (fr=Montant)
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=17.0, core=true, businessType=AMT, t24Name=LIMIT.AMOUNT)
+		TOTAL_AMT_TO_REPAY : mml:Double
+			@i18n:Label (en="Total Amt to Repay", fr="montt total à rembourser", es="Mto.Total Reembolsar")
+			@i18n:Tooltip (en="Total Amount to Repay", fr="montt total à rembourser", es="Monto Total a Reembolsar")
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=18.0, core=true, businessType=AMT, t24Name=TOTAL.AMT.TO.REPAY)
+		TOTAL_OVERDUE_AMT : mml:Double
+			@i18n:Label (en="Total Overdue Amount", fr="Montant impayé", es="Monto Total Pendiente")
+			@i18n:Tooltip (fr="Montant impayé")
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=19.0, core=true, businessType=AMT, t24Name=TOTAL.OVERDUE.AMT)
+		TOTAL_OVERDUE_TAX : mml:Double
+			@i18n:Label (en="Total Overdue Tax Amount")
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=20.0, core=true, businessType=AMT, t24Name=TOTAL.OVERDUE.TAX)
+		TOT_OVRDUE_TYPE -> byValue PD_Contract:PD_PAYMENT_DUE__TOT_OVRDUE_TYPE *
+		FINAL_DUE_DATE : mml:date
+			@i18n:Label (en="Mat Date of Loan", fr="Echéance du prêt", es="Fecha Vencim.Préstamo")
+			@i18n:Tooltip (en="Maturity Date of Loan", fr="Echéance finale du prêt", es="Fecha de Vencimiento de Préstamo")
+			@t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=23.0, core=true, businessType=D, t24Name=FINAL.DUE.DATE)
+		PAYMENT_DTE_DUE -> byValue PD_Contract:PD_PAYMENT_DUE__PAYMENT_DTE_DUE *
+		SCHD_TYPE -> byValue PD_Contract:PD_PAYMENT_DUE__SCHD_TYPE *
+		REPAYMENT_DATE : mml:date
+			@i18n:Label (en="Date Of Repayment", fr="Date remboursement", es="Fecha de Reembolso")
+			@i18n:Tooltip (fr="Date du remboursement")
+			@t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=47.0, core=true, businessType=D, t24Name=REPAYMENT.DATE)
+		REPAYMENT_REF -> byValue PD_Contract:PD_PAYMENT_DUE__REPAYMENT_REF *
+		REPAYMENT_ACCT -> ACM_AccountOpening:ACCOUNT
+			@i18n:Label (en="Account to Debit", fr="Compte à débiter", es="Cuenta a Debitar")
+			@i18n:Tooltip (en="Specifies total amount due for individual payment", fr="Compte à débiter", es="Especifica el monto total adeudado para pago individual")
+			@t24:i (align=L, inputBehaviour=N, maxLength=16, sysNumber=49.0, core=true, businessType=ANT, t24Name=REPAYMENT.ACCT)
+		TOT_REPAY_AMT : mml:Double
+			@i18n:Label (en="Repayment Amt", fr="Montant remboursé", es="Monto Amortización")
+			@i18n:Tooltip (en="Specifies the total repayment amount", fr="Montant remboursé", es="Monto de Amortización ")
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=50.0, core=true, businessType=AMT, t24Name=TOT.REPAY.AMT)
+		TOT_AFTER_DEDUCT : mml:Double
+			@i18n:Label (en="Total Amount Which Is Actually Used Towards Repayment Of The Funds Due")
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=51.0, core=true, businessType=AMT, t24Name=TOT.AFTER.DEDUCT)
+		CHARGE_TYPE -> byValue PD_Contract:PD_PAYMENT_DUE__CHARGE_TYPE *
+		CHARGE_TAX_CODE -> byValue PD_Contract:PD_PAYMENT_DUE__CHARGE_TAX_CODE *
+		REPAY_TYPE -> byValue PD_Contract:PD_PAYMENT_DUE__REPAY_TYPE *
+		NET_CUST_ENTRIES : PD_Contract:PD_PAYMENT_DUE__NET_CUST_ENTRIES
+			@i18n:Label (en="To Net Any Accounting Entries Across The Customer\'S Account Together")
+			@t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=69.0, core=true, t24Name=NET.CUST.ENTRIES)
+		PORTFOLIO_NUMBER : mml:Integer
+			@i18n:Label (en="Portfolio Number", fr=Portefeuille, es="Número de Portfolio")
+			@i18n:Tooltip (fr="Numéro de portefeuille")
+			@t24:i (align=R, inputBehaviour=N, maxLength=3, sysNumber=70.0, core=true, t24Name=PORTFOLIO.NUMBER)
+		CONSOL_KEY : mml:string
+			@i18n:Label (en="Consolidation Record", fr="Clé de consolidation", es="Clave Consolidación")
+			@i18n:Tooltip (fr="Clé de consolidation")
+			@t24:i (align=L, inputBehaviour=N, maxLength=70, sysNumber=71.0, core=true, businessType=A, t24Name=CONSOL.KEY)
+		STATUS : PD_Contract:PD_PAYMENT_DUE__STATUS
+			@i18n:Label (en=Status, fr=Statut, es=Estado)
+			@i18n:Tooltip (fr=Statut)
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=72.0, core=true, businessType=A, t24Name=STATUS)
+		NOTES -> byValue PD_Contract:PD_PAYMENT_DUE__NOTES *
+		MESSAGE_TYPE -> byValue PD_Contract:PD_PAYMENT_DUE__MESSAGE_TYPE *
+		ADVICE_CHGS : PD_Contract:PD_PAYMENT_DUE__ADVICE_CHGS
+			@i18n:Label (en="Charges For Advices")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=78.0, core=true, t24Name=ADVICE.CHGS)
+		PREVENT_RETRY : PD_Contract:PD_PAYMENT_DUE__PREVENT_RETRY
+			@i18n:Label (en="Prevent Retry?", fr="Empêcher Réessayer?", es="¿Prevenir Reintento?")
+			@i18n:Tooltip (en="Prevent Retry?", fr="Empêcher Réessayer?", es="¿Prevenir Reintento?")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=79.0, core=true, t24Name=PREVENT.RETRY)
+		BACK_VALUE : mml:date
+			@i18n:Label (en="Backdated Value")
+			@t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=80.0, core=true, businessType=D, t24Name=BACK.VALUE)
+		START_DATE : mml:date
+			@i18n:Label (en="Start Date", fr="Date de début", es="Fecha de Inicio")
+			@i18n:Tooltip (fr="Date de début", es="Fecha de Inicio del Acuerdo")
+			@t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=81.0, core=true, businessType=D, t24Name=START.DATE)
+		ADVICE_FREQ : mml:string
+			@i18n:Label (en="Freqeuncy For Sending Advices", fr="Fréquence de conseil", es="Frecuencia de Aviso")
+			@i18n:Tooltip (fr="Fréquence de conseil")
+			@t24:i (align=L, inputBehaviour=N, maxLength=16, sysNumber=82.0, core=true, businessType=FQU, t24Name=ADVICE.FREQ)
+		CONTRACT_GRP : mml:string
+			@i18n:Label (en="Group To Which This Contract Or Customer Belongs", fr="Groupe de contrat", es="Grupo de Contrato")
+			@i18n:Tooltip (fr="Groupe de contrat")
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=83.0, core=true, businessType=A, t24Name=CONTRACT.GRP)
+		CE_LAST_CAP_DATE : mml:date
+			@i18n:Label (en="Last Interest Capitalisation Date")
+			@t24:i (align=R, inputBehaviour=N, maxLength=8, sysNumber=84.0, core=true, businessType=D, t24Name=CE.LAST.CAP.DATE)
+		CS_LAST_CAP_DATE : mml:date
+			@i18n:Label (en="Last Spread Capitalisation Date")
+			@t24:i (align=R, inputBehaviour=N, maxLength=8, sysNumber=85.0, core=true, businessType=D, t24Name=CS.LAST.CAP.DATE)
+		MANUAL_NAB : PD_Contract:PD_PAYMENT_DUE__MANUAL_NAB
+			@i18n:Label (en="Manual NAB ?", fr="NAB Manuel", es="¿Manual NAB ?")
+			@i18n:Tooltip (en="Manual NAB ?", fr="NAB Manuel", es="¿Manual NAB ?")
+			@t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=86.0, core=true, t24Name=MANUAL.NAB)
+		LOAN_SPREAD : mml:string
+			@i18n:Label (en="Loan Spread")
+			@t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=87.0, core=true, businessType=R, t24Name=LOAN.SPREAD)
+		AUTO_SPREAD : PD_Contract:PD_PAYMENT_DUE__AUTO_SPREAD
+			@i18n:Label (en="Auto Spread")
+			@t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=88.0, core=true, t24Name=AUTO.SPREAD)
+		ASSET_CLASS -> ASSET_Foundation:LN_ASSET_CLASS
+			@i18n:Label (en="Asset Classification For The Contract", fr="Classe d\'actif", es="Clase del Activo")
+			@i18n:Tooltip (fr="Classe d\'actif")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=89.0, core=true, businessType=A, t24Name=ASSET.CLASS)
+		PROVISION : mml:string
+			@i18n:Label (en="Provision Percentage", fr="Provision en %", es="% de Provisión")
+			@i18n:Tooltip (fr="Pourcentage de provision", es="Porcentaje de Provisión")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=90.0, core=true, businessType=R, t24Name=PROVISION)
+		MOVE_TO_HIS : PD_Contract:PD_PAYMENT_DUE__MOVE_TO_HIS
+			@i18n:Label (en="Move to History?", fr="Passage en historique", es="¿Mover a Histórico?")
+			@i18n:Tooltip (en="Move to History?", fr="Passage en historique", es="¿Mover a Histórico?")
+			@t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=91.0, core=true, t24Name=MOVE.TO.HIS)
+		PROVISION_AMOUNT : mml:Double
+			@i18n:Label (en="Provision Amount", fr="Montant de provision", es="Monto de Provisión")
+			@i18n:Tooltip (fr="Montant de la provision")
+			@t24:i (align=R, inputBehaviour=N, maxLength=15, sysNumber=92.0, core=true, businessType=AMT, t24Name=PROVISION.AMOUNT)
+		PROVISION_METHOD : PD_Contract:PD_PAYMENT_DUE__PROVISION_METHOD
+			@i18n:Label (en="Asset Classification For The Contract", fr="Méthode provisionnement", es="Método de Provisión")
+			@i18n:Tooltip (fr="Méthode de provisionnement")
+			@t24:i (align=L, inputBehaviour=I, maxLength=6, sysNumber=93.0, core=true, t24Name=PROVISION.METHOD)
+		WOF_REASON -> PD_Config:PD_WOF_REASON
+			@i18n:Label (en="Reason for Writeoff", fr="Motif d\'annulation", es="Motivo por Saneam.")
+			@i18n:Tooltip (en="Reason for Writeoff", fr="Motif d\'annulation", es="Motivo por Saneamiento")
+			@t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=94.0, core=true, businessType=A, t24Name=WOF.REASON)
+		ACCRUAL_PARAM -> AC_Fees:EB_ACCRUAL_PARAM
+			@i18n:Label (en="Accrual Parameter", fr="Intérêts courus", es="Método Devengo Interés")
+			@i18n:Tooltip (fr="Intérêts courus")
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=95.0, core=true, businessType=A, t24Name=ACCRUAL.PARAM)
+		ROUNDING_RULE -> EB_SystemTables:EB_ROUNDING_RULE
+			@i18n:Label (en="Rounding Rule", fr="Règle d\'arrondi", es="Regla de Redondeo")
+			@i18n:Tooltip (fr="Règle d\'arrondi")
+			@t24:i (align=L, inputBehaviour=F, maxLength=35, sysNumber=96.0, core=true, businessType=A, t24Name=ROUNDING.RULE)
+		WAIVE_GRA_PE : PD_Contract:PD_PAYMENT_DUE__WAIVE_GRA_PE
+			@i18n:Label (en="To Waive GRA PE?", fr="Abandon int. grâce", es="¿Exon.Periodo Gracia?")
+			@i18n:Tooltip (en="Indicates whether to waive grace period PE", fr="Abandon des intérêts de grâce", es="¿Exoneración de Periodo de Gracia?")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=97.0, core=true, t24Name=WAIVE.GRA.PE)
+		WAIVE_GRA_PS : PD_Contract:PD_PAYMENT_DUE__WAIVE_GRA_PS
+			@i18n:Label (en="To Waive GRA PS?", fr="Abandon marge grâce", es="Exonerar PERIODOS GRACIA?")
+			@i18n:Tooltip (en="Indicates whether to waive grace period PS", fr="Abandon de la marge sur intérêts de grâce", es="Indica si exonerar al período de gracia PS")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=98.0, core=true, t24Name=WAIVE.GRA.PS)
+		INSTAL_DATE -> byValue PD_Contract:PD_PAYMENT_DUE__INSTAL_DATE *
+		RESERVED_3 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=101.0, core=true, t24Name=RESERVED.3)
+		RESERVED_2 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=102.0, core=true, t24Name=RESERVED.2)
+		RESERVED_1 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=103.0, core=true, t24Name=RESERVED.1)
+		STMT_NO -> byValue PD_Contract:PD_PAYMENT_DUE__STMT_NO *
+		OVERRIDE -> byValue PD_Contract:PD_PAYMENT_DUE__OVERRIDE *
+		RECORD_STATUS : mml:string
+			@i18n:Label (en="Record Status", fr=Statut, es=Estado)
+			@i18n:Tooltip (fr="Statut de l\'enregistrement")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=106.0, core=true, businessType=STAT, t24Name=RECORD.STATUS)
+		CURR_NO : mml:Integer
+			@i18n:Label (en="Curr No", fr="N° version", es="No. Actual")
+			@i18n:Tooltip (fr="Numéro de version")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=107.0, core=true, t24Name=CURR.NO)
+		INPUTTER -> byValue PD_Contract:PD_PAYMENT_DUE__INPUTTER *
+		DATE_TIME -> byValue PD_Contract:PD_PAYMENT_DUE__DATE_TIME *
+		AUTHORISER : mml:string
+			@i18n:Label (en=Authoriser, fr="Validé par", es=Autorizador)
+			@i18n:Tooltip (en="Indicates the User who Authorises the record", fr="Utilisateur de validation", es="El usuario que autorizó el registro")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=110.0, core=true, businessType=A, t24Name=AUTHORISER)
+		CO_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company, fr=Entité, es="Compañía")
+			@i18n:Tooltip (fr="Code établissement ou agence")
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=111.0, core=true, businessType=A, t24Name=CO.CODE)
+		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Department Code", fr=Service, es=Departamento)
+			@i18n:Tooltip (fr="Code du service")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=112.0, core=true, t24Name=DEPT.CODE)
+		AUDITOR_CODE : mml:string
+			@i18n:Label (en="Auditor Code", fr="Audité par", es="Código de Auditor")
+			@i18n:Tooltip (en="Auditor Code", fr="Utilisateur d\'audit", es="Nombre del auditor")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=113.0, core=true, businessType=A, t24Name=AUDITOR.CODE)
+		AUDIT_DATE_TIME : mml:dateTime
+			@i18n:Label (en="Audit Date Time", fr="Audité le", es="Fecha/Hora de Audit.")
+			@i18n:Tooltip (en="Date and time when record was audited", fr="Date et heure d\'audit", es="Fecha y Hora de Auditoría ")
+			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=114.0, core=true, businessType=RELTIME, t24Name=AUDIT.DATE.TIME)
+		CUSTOMER_NAME : mml:Integer
+			@i18n:Label (en="Customer Name", fr=Client, es="Nombre de Cliente")
+			@i18n:Tooltip (fr="Nom du client")
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, core=false, t24Name=CUSTOMER.NAME, genOperation="CUSTOMER>CUSTOMER>SHORT.NAME")
+		CONTRACT_ID : mml:Integer
+			@i18n:Label (en="Contract Id", fr="N° de contrat", es="ID de Transacción")
+			@i18n:Tooltip (fr="Numéro de contrat")
+			@t24:i (align=R, inputBehaviour=I, maxLength=14, core=false, t24Name=CONTRACT.ID, genOperation="@ID[3,99]")
+	}
+	PD_PAYMENT_DUE__ORIG_STLMNT_ACT
+	{
+		ORIG_STLMNT_ACT -> ACM_AccountOpening:ACCOUNT
+			@t24:i (align=L, inputBehaviour=N, maxLength=16, sysNumber=10.0, core=true, businessType=ANT, t24Name=ORIG.STLMNT.ACT)
+	}
+	PD_PAYMENT_DUE__TOT_OVRDUE_TYPE
+	{
+		TOT_OVRDUE_TYPE -> PD_Config:PD_AMOUNT_TYPE
+			@t24:i (align=L, inputBehaviour=N, maxLength=12, sysNumber=21.0, core=true, businessType=A, t24Name=TOT.OVRDUE.TYPE)
+		TOT_OD_TYPE_AMT : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=22.0, core=true, businessType=AMT, t24Name=TOT.OD.TYPE.AMT)
+	}
+	PD_PAYMENT_DUE__PAYMENT_DTE_DUE
+	{
+		PAYMENT_DTE_DUE : mml:date
+			@t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=24.0, core=true, businessType=D, t24Name=PAYMENT.DTE.DUE)
+		PAYMENT_AMOUNT : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=25.0, core=true, businessType=AMT, t24Name=PAYMENT.AMOUNT)
+		PAYMENT_AMT_TAX : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=26.0, core=true, businessType=AMT, t24Name=PAYMENT.AMT.TAX)
+		OUTSTANDING_AMT : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=27.0, core=true, businessType=AMT, t24Name=OUTSTANDING.AMT)
+		PAY_TYPE -> byValue PD_Contract:PD_PAYMENT_DUE__PAYMENT_DTE_DUE__PAY_TYPE *
+		REPAID_STATUS : PD_Contract:PD_PAYMENT_DUE__PAYMENT_DTE_DUE__REPAID_STATUS
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=35.0, core=true, t24Name=REPAID.STATUS)
+	}
+	PD_PAYMENT_DUE__PAYMENT_DTE_DUE__PAY_TYPE
+	{
+		PAY_TYPE -> PD_Config:PD_AMOUNT_TYPE
+			@t24:i (align=L, inputBehaviour=N, maxLength=12, sysNumber=28.0, core=true, businessType=A, t24Name=PAY.TYPE)
+		PAY_AMT_ORIG : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=29.0, core=true, businessType=AMT, t24Name=PAY.AMT.ORIG)
+		PAY_AMT_OUTS : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=30.0, core=true, businessType=AMT, t24Name=PAY.AMT.OUTS)
+		PAY_AMT_OSTX : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=31.0, core=true, businessType=AMT, t24Name=PAY.AMT.OSTX)
+		REPAID_AMT : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=32.0, core=true, businessType=AMT, t24Name=REPAID.AMT)
+		ADJUSTED_AMT : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=20, sysNumber=33.0, core=true, businessType=AMT, t24Name=ADJUSTED.AMT)
+		NEW_OUTS_AMT : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=34.0, core=true, businessType=AMT, t24Name=NEW.OUTS.AMT)
+	}
+	PD_PAYMENT_DUE__SCHD_TYPE
+	{
+		SCHD_TYPE -> PD_Config:PD_SCHEDULE_TYPE
+			@t24:i (align=L, inputBehaviour=N, maxLength=8, sysNumber=36.0, core=true, businessType=A, t24Name=SCHD.TYPE)
+		SCHD_DATE_FREQ : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=16, sysNumber=37.0, core=true, businessType=FQO, t24Name=SCHD.DATE.FREQ)
+		SCHD_END_DATE : mml:date
+			@t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=38.0, core=true, businessType=D, t24Name=SCHD.END.DATE)
+		SCHD_AMOUNT : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=39.0, core=true, businessType=AMT, t24Name=SCHD.AMOUNT)
+		SCHD_RATE : mml:string
+			@t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=40.0, core=true, businessType=R, t24Name=SCHD.RATE)
+		SCHD_SPREAD : mml:string
+			@t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=41.0, core=true, businessType=R, t24Name=SCHD.SPREAD)
+		SCHD_NARR -> byValue PD_Contract:PD_PAYMENT_DUE__SCHD_TYPE__SCHD_NARR *
+		SCHD_ADV_SENT : PD_Contract:PD_PAYMENT_DUE__SCHD_TYPE__SCHD_ADV_SENT
+			@t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=43.0, core=true, businessType=A, t24Name=SCHD.ADV.SENT)
+		SCHD_PROC_DATE : mml:date
+			@t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=44.0, core=true, businessType=D, t24Name=SCHD.PROC.DATE)
+		SCHD_ACTIVITY : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=45.0, core=true, businessType=A, t24Name=SCHD.ACTIVITY)
+		SCHD_CHG_CODE : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=19, sysNumber=46.0, core=true, businessType=A, t24Name=SCHD.CHG.CODE)
+	}
+	PD_PAYMENT_DUE__SCHD_TYPE__SCHD_NARR
+	{
+		SCHD_NARR : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=42.0, core=true, businessType=S, t24Name=SCHD.NARR)
+	}
+	PD_PAYMENT_DUE__REPAYMENT_REF
+	{
+		REPAYMENT_REF : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=48.0, core=true, businessType=A, t24Name=REPAYMENT.REF)
+	}
+	PD_PAYMENT_DUE__CHARGE_TYPE
+	{
+		CHARGE_TYPE : mml:string
+			@t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=52.0, core=true, businessType=CHG, t24Name=CHARGE.TYPE)
+		CHARGE_AMT : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=53.0, core=true, businessType=AMT, t24Name=CHARGE.AMT)
+	}
+	PD_PAYMENT_DUE__CHARGE_TAX_CODE
+	{
+		CHARGE_TAX_CODE -> ST_ChargeConfig:TAX
+			@t24:i (align=R, inputBehaviour=N, maxLength=2, sysNumber=54.0, core=true, t24Name=CHARGE.TAX.CODE)
+		CHARGE_TAX_AMT : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=55.0, core=true, businessType=AMT, t24Name=CHARGE.TAX.AMT)
+		CHARGE_TAX_LCY : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=56.0, core=true, businessType=AMT, t24Name=CHARGE.TAX.LCY)
+		CHARGE_TAX_XRTE : mml:string
+			@t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=57.0, core=true, businessType=R, t24Name=CHARGE.TAX.XRTE)
+	}
+	PD_PAYMENT_DUE__REPAY_TYPE
+	{
+		REPAY_TYPE -> PD_Config:PD_AMOUNT_TYPE
+			@t24:i (align=L, inputBehaviour=N, maxLength=12, sysNumber=58.0, core=true, businessType=A, t24Name=REPAY.TYPE)
+		REPAY_AMT : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=59.0, core=true, businessType=AMT, t24Name=REPAY.AMT)
+		REPAY_DEFAULT : mml:Character
+			@t24:i (align=L, inputBehaviour=N, maxLength=1, sysNumber=60.0, core=true, businessType=A, t24Name=REPAY.DEFAULT)
+		REPAY_TAX_CODE -> ST_ChargeConfig:TAX
+			@t24:i (align=R, inputBehaviour=N, maxLength=2, sysNumber=61.0, core=true, t24Name=REPAY.TAX.CODE)
+		REPAY_TAX_AMT : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=62.0, core=true, businessType=AMT, t24Name=REPAY.TAX.AMT)
+		REPAY_TAX_LCY : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=63.0, core=true, businessType=AMT, t24Name=REPAY.TAX.LCY)
+		REPAY_TAX_XRATE : mml:string
+			@t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=64.0, core=true, businessType=R, t24Name=REPAY.TAX.XRATE)
+		REPAY_DATE -> byValue PD_Contract:PD_PAYMENT_DUE__REPAY_TYPE__REPAY_DATE *
+	}
+	PD_PAYMENT_DUE__REPAY_TYPE__REPAY_DATE
+	{
+		REPAY_DATE : mml:date
+			@t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=65.0, core=true, businessType=D, t24Name=REPAY.DATE)
+		RD_AMT : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=66.0, core=true, businessType=AMT, t24Name=RD.AMT)
+		RD_TAX : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=67.0, core=true, businessType=AMT, t24Name=RD.TAX)
+		RD_TAX_LCY : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=68.0, core=true, businessType=AMT, t24Name=RD.TAX.LCY)
+	}
+	PD_PAYMENT_DUE__NOTES
+	{
+		NOTES : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=73.0, core=true, businessType=ANY, t24Name=NOTES)
+	}
+	PD_PAYMENT_DUE__MESSAGE_TYPE
+	{
+		MESSAGE_TYPE -> DE_Config:DE_MESSAGE
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=75.0, core=true, t24Name=MESSAGE.TYPE)
+		MESSAGE_DATE : mml:date
+			@t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=76.0, core=true, businessType=D, t24Name=MESSAGE.DATE)
+		DELIVERY_REF : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=17, sysNumber=77.0, core=true, businessType=AA, t24Name=DELIVERY.REF)
+	}
+	PD_PAYMENT_DUE__INSTAL_DATE
+	{
+		INSTAL_DATE : mml:date
+			@t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=99.0, core=true, businessType=D, t24Name=INSTAL.DATE)
+		INSTAL_AMT : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=100.0, core=true, businessType=AMT, t24Name=INSTAL.AMT)
+	}
+	PD_PAYMENT_DUE__STMT_NO
+	{
+		STMT_NO : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=29, sysNumber=104.0, core=true, businessType=A, t24Name=STMT.NO)
+	}
+	PD_PAYMENT_DUE__OVERRIDE
+	{
+		OVERRIDE : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=105.0, core=true, businessType=A, t24Name=OVERRIDE)
+	}
+	PD_PAYMENT_DUE__INPUTTER
+	{
+		INPUTTER : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=108.0, core=true, businessType=A, t24Name=INPUTTER)
+	}
+	PD_PAYMENT_DUE__DATE_TIME
+	{
+		DATE_TIME : mml:dateTime
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=109.0, core=true, businessType=RELTIME, t24Name=DATE.TIME)
+	}
+}
+Enumerations {
+	PD_PAYMENT_DUE__OPERATION : mml:string
+		MAINTENANCE=MAINTENANCE
+		ADJUSTMENT=ADJUSTMENT
+		REPAYMENT=REPAYMENT
+		SCHEDULE=SCHEDULE
+	PD_PAYMENT_DUE__PAYMENT_DTE_DUE__REPAID_STATUS : mml:string
+		PRE=PRE
+		GRA=GRA
+		PDO=PDO
+		NAB=NAB
+		RPD=RPD
+		FWOF=FWOF
+		WOF=WOF
+	PD_PAYMENT_DUE__SCHD_TYPE__SCHD_ADV_SENT : mml:string
+		YES=YES
+		CAN=CAN
+	PD_PAYMENT_DUE__NET_CUST_ENTRIES : mml:string
+		NO=NO
+		YES=YES
+	PD_PAYMENT_DUE__STATUS : mml:string
+		CUR=CUR
+		GRA=GRA
+		PDO=PDO
+		NAB=NAB
+		RPD=RPD
+		WOF=WOF
+		FWOF=FWOF
+		MAT=MAT
+	PD_PAYMENT_DUE__ADVICE_CHGS : mml:string
+		NO=NO
+		YES=YES
+	PD_PAYMENT_DUE__PREVENT_RETRY : mml:string
+		YES=YES
+	PD_PAYMENT_DUE__MANUAL_NAB : mml:string
+		YES=YES
+		NULL=NULL
+	PD_PAYMENT_DUE__AUTO_SPREAD : mml:string
+		YES=YES
+		NULL=NULL
+	PD_PAYMENT_DUE__MOVE_TO_HIS : mml:string
+		YES=YES
+		NULL=NULL
+	PD_PAYMENT_DUE__PROVISION_METHOD : mml:string
+		AUTO=AUTO
+		MANUAL=MANUAL
+	PD_PAYMENT_DUE__WAIVE_GRA_PE : mml:string
+		YES=YES
+		NULL=NULL
+	PD_PAYMENT_DUE__WAIVE_GRA_PS : mml:string
+		YES=YES
+		NULL=NULL
+}

@@ -1,0 +1,535 @@
+# UTF-8
+/* Corporate Actions Processing for Derivatives */
+Domain DX_CorporateActions
+	@t24:i (module=DX)
+	@java:Package (value=com.temenos.t24.datamodel.dx.dx_corporateactions)
+namespace "http://www.temenos.com/t24/DX_CorporateActions"
+metamodelVersion 4.3.0.20110527
+Classes {
+	DX_DIARY
+		@t24:i (t24Name=DX.DIARY, level=F, type=H, allowedFunctions="A C D E H I L P Q R S", localRefAllowed=true)
+	{
+		DX_DIARY_ID -> DX_CorporateActions:DX_DIARY PK required
+			@i18n:Label (fr="Id OST")
+			@i18n:Tooltip (fr="Id OST")
+			@t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=0.0, core=true, businessType=S, t24Name=DX.DIARY.ID)
+		SECURITY_NO -> SCO_SecurityMasterMaintenance:SECURITY_MASTER
+			@i18n:Label (en="Security No", fr="Code valeur", es="No. de Título")
+			@i18n:Tooltip (en="Indicates the security code/number", fr="Code valeur", es="Indica un Título Valor válido")
+			@t24:i (align=L, inputBehaviour=F, maxLength=12, sysNumber=1.0, core=true, businessType=SEC, t24Name=SECURITY.NO)
+		CONTRACT_CODE -> DX_Configuration:DX_CONTRACT_MASTER
+			@i18n:Label (en=Contract, fr=Contrat, es=Contrato)
+			@i18n:Tooltip (en="Identifies the contract code of the transaction", fr=Contrat, es="Identifica el código de contrato de la transacción")
+			@t24:i (align=L, inputBehaviour=I, maxLength=12, sysNumber=2.0, core=true, businessType=DXCM, t24Name=CONTRACT.CODE)
+		CONTRACT_SIZE : mml:Double
+			@i18n:Label (en="Contract Size", fr="Taille du contrat", es="Tamaño de Contrato")
+			@i18n:Tooltip (en="Specifies the size of the contract", fr="Taille du contrat", es="Especifica el tamaño del contrato")
+			@t24:i (align=R, inputBehaviour=N, maxLength=16, sysNumber=3.0, core=true, businessType=AMT, t24Name=CONTRACT.SIZE)
+		CURRENCY -> FIN_CurrencyConfig:CURRENCY
+			@i18n:Label (en=Ccy, fr=Devise, es=Moneda)
+			@i18n:Tooltip (fr="Code devise ISO")
+			@t24:i (align=R, inputBehaviour=N, maxLength=3, sysNumber=4.0, core=true, t24Name=CURRENCY)
+		NARRATIVE -> byValue DX_CorporateActions:DX_DIARY__NARRATIVE *
+		EVENT_TYPE -> SCC_EventCapture:DIARY_TYPE required
+			@i18n:Label (en="Event type", fr="Type d\'événement", es="Tipo de Evento")
+			@i18n:Tooltip (en="Type of event - Dividend Payment/Bonus etc.", fr="Type d\'événement", es="\"Tipo de evento - Pago de Dividendo/Prima, etc.\"")
+			@t24:i (align=L, inputBehaviour=F, maxLength=15, sysNumber=6.0, core=true, businessType=A, t24Name=EVENT.TYPE)
+		EX_DATE : mml:date required
+			@i18n:Label (en="Ex Date", fr="Date d\'échange", es="Fecha de Intercambio")
+			@i18n:Tooltip (en="Holds Ex Dividend date of the Diary.", fr="Date d\'échange", es="Fecha de intercambio de dividendos del Diario")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=7.0, core=true, businessType=D, t24Name=EX.DATE)
+		PAY_DATE : mml:date
+			@i18n:Label (en="Pay Date", fr="Date de paiement", es="Fecha de Pago")
+			@i18n:Tooltip (en="Holds the date the Event is Paid or Issued", fr="Date de paiement", es="Fecha en que el Evento es Pagado o Emitido")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=8.0, core=true, businessType=D, t24Name=PAY.DATE)
+		VALUE_DATE : mml:date
+			@i18n:Label (en="Value Date", fr="Date de valeur", es="Fecha Valor")
+			@i18n:Tooltip (en="Indicates the Value date of the Contract", fr="Date de valeur", es="Fecha en que Carteras serán act. por el evento")
+			@t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=9.0, core=true, businessType=D, t24Name=VALUE.DATE)
+		REPLY_BY_DATE : mml:date
+			@i18n:Label (en="Reply By Date", fr="Date de réponse", es="Responder a Fecha")
+			@i18n:Tooltip (en="Date reply should be sent back to Depository", fr="Date de réponse", es="Fecha en que respuesta debe ser enviada a Depos.")
+			@t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=10.0, core=true, businessType=D, t24Name=REPLY.BY.DATE)
+		END_MATURITY_DATE : mml:string
+			@i18n:Label (en="End Maturity Date", fr="Fin date d\'échéance", es="Fecha Final Vencimiento")
+			@i18n:Tooltip (fr="Fin date d\'échéance ")
+			@t24:i (align=L, inputBehaviour=I, maxLength=11, sysNumber=11.0, core=true, businessType=A, t24Name=END.MATURITY.DATE)
+		DESCRIPTION : mml:string
+			@i18n:Label (en=Description, fr=Libellé, es="Descripción")
+			@i18n:Tooltip (en=Description, fr=Libellé)
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=12.0, core=true, businessType=S, t24Name=DESCRIPTION)
+		OLD_RATIO : mml:string
+			@i18n:Label (en="Old Ratio", fr="Ratio titre initial", es="Tasa Antigua")
+			@i18n:Tooltip (en="Number of Old shares to decide new for old ratio", fr="Ratio titre initial", es="No. acciones Antiguas a decidir ratio nuevo/ant.")
+			@t24:i (align=R, inputBehaviour=I, maxLength=15, sysNumber=13.0, core=true, businessType=R, t24Name=OLD.RATIO)
+		NEW_RATIO : mml:string
+			@i18n:Label (en="New Ratio", fr="Nouveau Ratio", es="Nueva Tasa")
+			@i18n:Tooltip (en="Number of New shares to decide new for old ratio", fr="Nouveau Ratio", es="No. acciones nuevas a decidir ratio nuevo por ant.")
+			@t24:i (align=R, inputBehaviour=I, maxLength=16, sysNumber=14.0, core=true, businessType=R, t24Name=NEW.RATIO)
+		OLD_STR_RATIO : mml:string
+			@i18n:Label (en="Old Strike Ratio", fr="Ancien prix d\'exercice", es="Ratio Ejercicio Antiguo")
+			@i18n:Tooltip (en="Old strike in ratio of old to new strike price", fr="Ancien prix d\'exercice", es="Ejercicio antiguo en ratio precio antiguo a nuevo ")
+			@t24:i (align=R, inputBehaviour=I, maxLength=15, sysNumber=15.0, core=true, businessType=R, t24Name=OLD.STR.RATIO)
+		NEW_STR_RATIO : mml:string
+			@i18n:Label (en="New Strike Ratio", fr="Nouveau prix d\'exercice", es="Nuevo Ratio Ejercicio")
+			@i18n:Tooltip (en="New strike in ratio of old to new strike price", fr="Nouveau prix d\'exercice", es="Ejercicio nuevo en ratio precio antiguo a nuevo ")
+			@t24:i (align=R, inputBehaviour=I, maxLength=16, sysNumber=16.0, core=true, businessType=R, t24Name=NEW.STR.RATIO)
+		OLD_LOT_RATIO : mml:string
+			@i18n:Label (en="Old Lot Ratio", fr="Ancien nombre de lots", es="Ratio de Lote Antiguo")
+			@i18n:Tooltip (en="Number of old option lots for the new option lots", fr="Ancien nombre de lots", es="No. lotes opción antigua para lotes opción nueva")
+			@t24:i (align=R, inputBehaviour=I, maxLength=15, sysNumber=17.0, core=true, businessType=R, t24Name=OLD.LOT.RATIO)
+		NEW_LOT_RATIO : mml:string
+			@i18n:Label (en="New Lot Ratio", fr="Nouveau nombre de lots", es="Nuevo Ratio de Lote")
+			@i18n:Tooltip (en="Number of new option lots for the old option lots", fr="Nouveau nombre de lots", es="No. lotes opción nueva para lotes opción antigua")
+			@t24:i (align=R, inputBehaviour=I, maxLength=16, sysNumber=18.0, core=true, businessType=R, t24Name=NEW.LOT.RATIO)
+		NEW_SEC_NO -> SCO_SecurityMasterMaintenance:SECURITY_MASTER
+			@i18n:Label (en="New Security Number", fr="Nouveau no de titre", es="Nuevo No. Título")
+			@i18n:Tooltip (en="Identifies the new security number", fr="Nouveau numéro de titre", es="Identifica el número de título nuevo")
+			@t24:i (align=L, inputBehaviour=I, maxLength=12, sysNumber=19.0, core=true, businessType=SEC, t24Name=NEW.SEC.NO)
+		NEW_CONT_CODE : mml:Integer
+			@i18n:Label (en="New Contract Code", fr="Nouveau contrat", es="Nuevo Cód. Contrato")
+			@i18n:Tooltip (en="Identifies the new option contract code", fr="Nouveau contrat", es="Identifica el código de contrato de opción nueva ")
+			@t24:i (align=R, inputBehaviour=I, maxLength=12, sysNumber=20.0, core=true, t24Name=NEW.CONT.CODE)
+		NEW_CONT_SIZE : mml:Double
+			@i18n:Label (en="New Contract Size", fr="Taille nouveau contrat", es="Nuevo Tamaño Contrato")
+			@i18n:Tooltip (en="Indicates the new contract size", fr="Taille nouveau contrat", es="Indica el tamaño del contrato nuevo")
+			@t24:i (align=R, inputBehaviour=N, maxLength=16, sysNumber=21.0, core=true, businessType=AMT, t24Name=NEW.CONT.SIZE)
+		OLD_PRICE_RATIO : mml:string
+			@i18n:Label (en="Old Price Ratio", fr="Ancien cours", es="Ratio de Precio Antiguo")
+			@i18n:Tooltip (en="Input of old price ratio on Corporate actions", fr="Ancien cours", es="Entrada ratio de precio antiguo acciones Corpor.")
+			@t24:i (align=R, inputBehaviour=I, maxLength=15, sysNumber=22.0, core=true, businessType=R, t24Name=OLD.PRICE.RATIO)
+		NEW_PRICE_RATIO : mml:string
+			@i18n:Label (en="New Price Ratio", fr="Nouveau cours", es="Nuevo Ratio Precio")
+			@i18n:Tooltip (en="New price ratio on Corporate actions", fr="Nouveau cours", es="Nuevo ratio de precio en acciones Corporativas")
+			@t24:i (align=R, inputBehaviour=I, maxLength=16, sysNumber=23.0, core=true, businessType=R, t24Name=NEW.PRICE.RATIO)
+		LAST_VALID_DATE : mml:date
+			@i18n:Label (en="Last Validity Date", fr="Date de validité", es="Última Fecha Validez")
+			@i18n:Tooltip (en="Last date that the old contract can be traded", fr="Date de validité", es="Última fecha contrato antiguo puede ser negociado")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=24.0, core=true, businessType=D, t24Name=LAST.VALID.DATE)
+		RESERVED13 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=25.0, core=true, t24Name=RESERVED13)
+		RESERVED12 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=26.0, core=true, t24Name=RESERVED12)
+		AUTO_UPDATE : DX_CorporateActions:DX_DIARY__AUTO_UPDATE
+			@i18n:Label (en="Auto Update", fr="Mise à jour automatique", es="Actualización Auto.")
+			@i18n:Tooltip (en="Update from an external source is allowed", fr="Mise à jour automatique", es="Actualización de una fuente externa es permitido")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=27.0, core=true, t24Name=AUTO.UPDATE)
+		SOURCE : mml:string
+			@i18n:Label (en=Source, fr=Source, es=Fuente)
+			@i18n:Tooltip (fr=Source)
+			@t24:i (align=L, inputBehaviour=N, maxLength=8, sysNumber=28.0, core=true, businessType=A, t24Name=SOURCE)
+		RERUN : DX_CorporateActions:DX_DIARY__RERUN
+			@i18n:Label (en=Rerun, fr="Ré exécutez", es=Repetir)
+			@i18n:Tooltip (en="Whether to rerun the diary?", fr="Ré exécutez", es="¿Se debe repetir el Diario?")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=29.0, core=true, t24Name=RERUN)
+		ENTITLEMENT_FLAG : mml:Integer
+			@i18n:Label (en="Entitlement Flag", es="Indicador Titulación")
+			@i18n:Tooltip (en="To generate DX.ENTITLEMENT records or not", es="Si generar registros de DX.ENTITLEMENT o no")
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=30.0, core=true, t24Name=ENTITLEMENT.FLAG)
+		EVENT_STATUS : mml:string
+			@i18n:Label (en="Event Status", fr="Statut d\'événement", es="Estado del Evento")
+			@i18n:Tooltip (en="Identifies the status of the event", fr="Statut d\'événement", es="Identifica el estado del evento")
+			@t24:i (align=L, inputBehaviour=N, maxLength=10, sysNumber=31.0, core=true, businessType=A, t24Name=EVENT.STATUS)
+		CONFIRM_REQ : DX_CorporateActions:DX_DIARY__CONFIRM_REQ
+			@i18n:Label (en="Confirmation Reqd?", fr="Confirmation Requise", es="¿Requiere Confirmación?")
+			@i18n:Tooltip (en="Indicates whether confirmation messages required?", fr="Confirmation Requise", es="Indica si mensajes de confirmación son requeridos")
+			@t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=32.0, core=true, t24Name=CONFIRM.REQ)
+		ADVICE_TYPE : mml:Integer
+			@i18n:Label (en="Advice Type", fr="Type d\'avis", es="Tipo de Aviso")
+			@i18n:Tooltip (en="Denotes the type of the advice", fr="Type d\'avis", es="Denota el tipo de aviso")
+			@t24:i (align=R, inputBehaviour=N, maxLength=2, sysNumber=33.0, core=true, t24Name=ADVICE.TYPE)
+		ADVICE_FORMAT : mml:Integer
+			@i18n:Label (en="Advice Format", fr="Format d\'avis", es="Formato de Aviso")
+			@i18n:Tooltip (en="Denotes the advice format", fr="Format d\'avis", es="Denota el formato del aviso")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=34.0, core=true, t24Name=ADVICE.FORMAT)
+		PRE_ADVICE_REQ : DX_CorporateActions:DX_DIARY__PRE_ADVICE_REQ
+			@i18n:Label (en="Pre Advice Reqd?", fr="Préavis Requis", es="¿Pre Aviso Requerido ?")
+			@i18n:Tooltip (en="Whether pre-confirmation advices required?", fr="Préavis Requis", es="Si se requiere aviso de pre-confirmación o no")
+			@t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=35.0, core=true, t24Name=PRE.ADVICE.REQ)
+		DIA_AUTO_AUTH_DAT : mml:date
+			@t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=36.0, core=true, businessType=D, t24Name=DIA.AUTO.AUTH.DAT)
+		RESERVED11 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=37.0, core=true, t24Name=RESERVED11)
+		ENT_AUTO_AUTH_DAT : mml:date
+			@t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=38.0, core=true, businessType=D, t24Name=ENT.AUTO.AUTH.DAT)
+		ENTL_CREATED : mml:Double
+			@i18n:Label (en="Entitlement Created", fr="Nb entitlement créés", es="Titulación Creada")
+			@i18n:Tooltip (en="Indicates the number of entitlements created", fr="Nb entitlement créés", es="Indica el número de titulaciones creadas")
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=39.0, core=true, businessType=AMT, t24Name=ENTL.CREATED)
+		ENTL_AUTHORISED : mml:Double
+			@i18n:Label (en="Entitlement Authorised", fr="Nb entitlement autorisés", es="Titulación Autorizada")
+			@i18n:Tooltip (en="Indicates the number of authorised entitlements", fr="Nb entitlement autorisés", es="Indica el número de titulaciones autorizadas")
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=40.0, core=true, businessType=AMT, t24Name=ENTL.AUTHORISED)
+		RESERVED5 : mml:Integer
+			@i18n:Label (fr="Propriété saisie avec activité paimt")
+			@i18n:Tooltip (fr="Propriété saisie avec activité paimt ")
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=41.0, core=true, t24Name=RESERVED5)
+		ROUNDING : DX_CorporateActions:DX_DIARY__ROUNDING
+			@i18n:Label (en=Rounding, fr=Arrondi, es=Redondeo)
+			@i18n:Tooltip (en="Type of rounding method to be applied ", fr=Arrondi, es="Tipo de método de redondeo a ser aplicado")
+			@t24:i (align=L, inputBehaviour=I, maxLength=8, sysNumber=42.0, core=true, t24Name=ROUNDING)
+		RND_FACTOR : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=19, sysNumber=43.0, core=true, businessType=DEC, t24Name=RND.FACTOR)
+		CREATE_CONT_Y_N : DX_CorporateActions:DX_DIARY__CREATE_CONT_Y_N
+			@i18n:Label (en="Create Contract Y/N?", fr="Créer nouveau contrat", es="¿Crear Contrato S/N?")
+			@i18n:Tooltip (fr="Créer nouveau contrat")
+			@t24:i (align=L, inputBehaviour=I, maxLength=4, sysNumber=44.0, core=true, t24Name=CREATE.CONT.Y.N)
+		NEW_CONT_MNE : mml:string
+			@i18n:Label (en="New Contract Mnemonic", fr="Mnémonique nouveau contrat", es="Nuevo Mnemó. Contrato")
+			@i18n:Tooltip (en="Mnemonic of the new Contract master record created", fr="Mnémonique nouveau contrat", es="Mnemó. de nuevo registro maestro de Contra. creado")
+			@t24:i (align=L, inputBehaviour=I, maxLength=10, sysNumber=45.0, core=true, businessType=MNE, t24Name=NEW.CONT.MNE)
+		NEW_EXCH_CODE -> DX_Configuration:DX_EXCHANGE_MASTER
+			@i18n:Label (en="New Exchange Code", es="Nuevo Cód. Intercambio")
+			@i18n:Tooltip (en="Exchange code of the new contract master", es="Código de intercambio de maestro de contrato nuevo")
+			@t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=46.0, core=true, t24Name=NEW.EXCH.CODE)
+		CREATE_ENT_ONLINE : DX_CorporateActions:DX_DIARY__CREATE_ENT_ONLINE
+			@i18n:Label (en="Create Entitlement Online", fr="Créer droits en ligne", es="Crear Titulación Online")
+			@i18n:Tooltip (fr="Créer droits en ligne")
+			@t24:i (align=L, inputBehaviour=I, maxLength=4, sysNumber=47.0, core=true, t24Name=CREATE.ENT.ONLINE)
+		RESERVED4 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=48.0, core=true, t24Name=RESERVED4)
+		RESERVED3 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=49.0, core=true, t24Name=RESERVED3)
+		RESERVED2 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=50.0, core=true, t24Name=RESERVED2)
+		RESERVED1 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=51.0, core=true, t24Name=RESERVED1)
+		OVERRIDE -> byValue DX_CorporateActions:DX_DIARY__OVERRIDE *
+		RECORD_STATUS : mml:string
+			@i18n:Label (en="Record Status", fr=Statut, es=Estado)
+			@i18n:Tooltip (fr="Statut de l\'enregistrement")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=54.0, core=true, businessType=STAT, t24Name=RECORD.STATUS)
+		CURR_NO : mml:Integer
+			@i18n:Label (en="Curr No", fr="N° version", es="No. Actual")
+			@i18n:Tooltip (fr="Numéro de version")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=55.0, core=true, t24Name=CURR.NO)
+		INPUTTER -> byValue DX_CorporateActions:DX_DIARY__INPUTTER *
+		DATE_TIME -> byValue DX_CorporateActions:DX_DIARY__DATE_TIME *
+		AUTHORISER : mml:string
+			@i18n:Label (en=Authoriser, fr="Validé par", es=Autorizador)
+			@i18n:Tooltip (en="Indicates the User who Authorises the record", fr="Utilisateur de validation", es="El usuario que autorizó el registro")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=58.0, core=true, businessType=A, t24Name=AUTHORISER)
+		CO_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company, fr=Entité, es="Compañía")
+			@i18n:Tooltip (fr="Code établissement ou agence")
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=59.0, core=true, businessType=A, t24Name=CO.CODE)
+		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Dept Code", fr=Service, es=Departamento)
+			@i18n:Tooltip (fr="Code du service")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=60.0, core=true, t24Name=DEPT.CODE)
+		AUDITOR_CODE : mml:string
+			@i18n:Label (en="Auditor Code", fr="Audité par", es="Código de Auditor")
+			@i18n:Tooltip (en="Auditor Code", fr="Utilisateur d\'audit", es="Nombre del auditor")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=61.0, core=true, businessType=A, t24Name=AUDITOR.CODE)
+		AUDIT_DATE_TIME : mml:dateTime
+			@i18n:Label (en="Audit Date Time", fr="Audité le", es="Fecha/Hora de Audit.")
+			@i18n:Tooltip (en="Date and time when record was audited", fr="Date et heure d\'audit", es="Fecha y Hora de Auditoría ")
+			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=62.0, core=true, businessType=RELTIME, t24Name=AUDIT.DATE.TIME)
+	}
+	DX_DIARY__NARRATIVE
+	{
+		NARRATIVE : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=50, sysNumber=5.0, core=true, businessType=A, t24Name=NARRATIVE)
+	}
+	DX_DIARY__OVERRIDE
+	{
+		OVERRIDE : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=53.0, core=true, t24Name=OVERRIDE)
+	}
+	DX_DIARY__INPUTTER
+	{
+		INPUTTER : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=56.0, core=true, businessType=A, t24Name=INPUTTER)
+	}
+	DX_DIARY__DATE_TIME
+	{
+		DATE_TIME : mml:dateTime
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=57.0, core=true, businessType=RELTIME, t24Name=DATE.TIME)
+	}
+	DX_ENT_ACTION
+		@t24:i (t24Name=DX.ENT.ACTION, level=F, type=U, allowedFunctions="A C D E I L P Q R S", localRefAllowed=true)
+	{
+		KEY -> DX_CorporateActions:DX_ENT_ACTION PK required
+			@i18n:Label (en=Key, fr=Clé, es=Clave)
+			@i18n:Tooltip (en="Indicates th transaction key", fr=Clé)
+			@t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=0.0, core=true, businessType=S, t24Name=KEY)
+		DX_DIARY_ID -> byValue DX_CorporateActions:DX_ENT_ACTION__DX_DIARY_ID *
+		RESERVED3 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=9.0, core=true, t24Name=RESERVED3)
+		RESERVED2 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=10.0, core=true, t24Name=RESERVED2)
+		RESERVED1 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=11.0, core=true, t24Name=RESERVED1)
+		OVERRIDE -> byValue DX_CorporateActions:DX_ENT_ACTION__OVERRIDE *
+		RECORD_STATUS : mml:string
+			@i18n:Label (en="Record Status", fr=Statut, es=Estado)
+			@i18n:Tooltip (fr="Statut de l\'enregistrement")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=14.0, core=true, businessType=STAT, t24Name=RECORD.STATUS)
+		CURR_NO : mml:Integer
+			@i18n:Label (en="Curr No", fr="N° version", es="No. Actual")
+			@i18n:Tooltip (fr="Numéro de version")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=15.0, core=true, t24Name=CURR.NO)
+		INPUTTER -> byValue DX_CorporateActions:DX_ENT_ACTION__INPUTTER *
+		DATE_TIME -> byValue DX_CorporateActions:DX_ENT_ACTION__DATE_TIME *
+		AUTHORISER : mml:string
+			@i18n:Label (en=Authoriser, fr="Validé par", es=Autorizador)
+			@i18n:Tooltip (en="Indicates the User who Authorises the record", fr="Utilisateur de validation", es="El usuario que autorizó el registro")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=18.0, core=true, businessType=A, t24Name=AUTHORISER)
+		CO_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company, fr=Entité, es="Compañía")
+			@i18n:Tooltip (fr="Code établissement ou agence")
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=19.0, core=true, businessType=A, t24Name=CO.CODE)
+		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Dept Code", fr=Service, es=Departamento)
+			@i18n:Tooltip (fr="Code du service")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=20.0, core=true, t24Name=DEPT.CODE)
+		AUDITOR_CODE : mml:string
+			@i18n:Label (en="Auditor Code", fr="Audité par", es="Código de Auditor")
+			@i18n:Tooltip (en="Auditor Code", fr="Utilisateur d\'audit", es="Nombre del auditor")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=21.0, core=true, businessType=A, t24Name=AUDITOR.CODE)
+		AUDIT_DATE_TIME : mml:dateTime
+			@i18n:Label (en="Audit Date Time", fr="Audité le", es="Fecha/Hora de Audit.")
+			@i18n:Tooltip (en="Date and time when record was audited", fr="Date et heure d\'audit", es="Fecha y Hora de Auditoría ")
+			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=22.0, core=true, businessType=RELTIME, t24Name=AUDIT.DATE.TIME)
+	}
+	DX_ENT_ACTION__DX_DIARY_ID
+	{
+		DX_DIARY_ID -> DX_CorporateActions:DX_DIARY required
+			@t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=1.0, core=true, businessType=S, t24Name=DX.DIARY.ID)
+		FROM_STATUS : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=10, sysNumber=2.0, core=true, t24Name=FROM.STATUS)
+		TO_STATUS : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=10, sysNumber=3.0, core=true, t24Name=TO.STATUS)
+		ENTITLEMENT -> byValue DX_CorporateActions:DX_ENT_ACTION__DX_DIARY_ID__ENTITLEMENT *
+		TRADES -> byValue DX_CorporateActions:DX_ENT_ACTION__DX_DIARY_ID__TRADES *
+		MVRESERVED1 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=8.0, core=true, t24Name=MVRESERVED1)
+	}
+	DX_ENT_ACTION__DX_DIARY_ID__ENTITLEMENT
+	{
+		ENTITLEMENT : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=44, sysNumber=4.0, core=true, businessType=A, t24Name=ENTITLEMENT)
+	}
+	DX_ENT_ACTION__DX_DIARY_ID__TRADES
+	{
+		TRADES : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=5.0, core=true, businessType=A, t24Name=TRADES)
+		REJECTION : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=6.0, core=true, businessType=A, t24Name=REJECTION)
+		SVRESERVED1 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=7.0, core=true, t24Name=SVRESERVED1)
+	}
+	DX_ENT_ACTION__OVERRIDE
+	{
+		OVERRIDE : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=13.0, core=true, businessType=A, t24Name=OVERRIDE)
+	}
+	DX_ENT_ACTION__INPUTTER
+	{
+		INPUTTER : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=16.0, core=true, businessType=A, t24Name=INPUTTER)
+	}
+	DX_ENT_ACTION__DATE_TIME
+	{
+		DATE_TIME : mml:dateTime
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=17.0, core=true, businessType=RELTIME, t24Name=DATE.TIME)
+	}
+	DX_ENTITLEMENT
+		@t24:i (t24Name=DX.ENTITLEMENT, level=F, type=H, allowedFunctions="A C D E H I L P Q R S", localRefAllowed=true)
+	{
+		DX_ENTITLEMENT_ID -> DX_CorporateActions:DX_ENTITLEMENT PK required
+			@t24:i (align=L, inputBehaviour=I, maxLength=44, sysNumber=0.0, core=true, businessType=S, t24Name=DX.ENTITLEMENT.ID)
+		CUSTOMER -> DX_Customer:DX_CUSTOMER
+			@i18n:Label (en="Nom client", fr=Client, es=Cliente)
+			@i18n:Tooltip (en="Nom du client", fr="Code du client", es="Pasivo de Cliente")
+			@t24:i (align=R, inputBehaviour=N, maxLength=10, sysNumber=1.0, core=true, businessType=CUS, t24Name=CUSTOMER)
+		PORTFOLIO -> SCO_PortfolioMaintenance:SEC_ACC_MASTER
+			@i18n:Label (en=Portfolio, fr=Portefeuille, es="No. de Cartera")
+			@i18n:Tooltip (fr=Portefeuille)
+			@t24:i (align=L, inputBehaviour=N, maxLength=14, sysNumber=2.0, core=true, businessType=SAM, t24Name=PORTFOLIO)
+		SECURITY_NO -> SCO_SecurityMasterMaintenance:SECURITY_MASTER required
+			@i18n:Label (en="Security No", fr="Code valeur", es="No. de Título")
+			@i18n:Tooltip (en="Indicates the security code/number", fr="Code valeur", es="Indica un Título Valor válido")
+			@t24:i (align=L, inputBehaviour=N, maxLength=12, sysNumber=3.0, core=true, businessType=SEC, t24Name=SECURITY.NO)
+		CONTRACT_CODE -> DX_Configuration:DX_CONTRACT_MASTER required
+			@i18n:Label (en=Contract, fr=Contrat, es=Contrato)
+			@i18n:Tooltip (en="Identifies the contract code of the transaction", fr=Contrat, es="Identifica el código de contrato de la transacción")
+			@t24:i (align=L, inputBehaviour=N, maxLength=12, sysNumber=4.0, core=true, businessType=DXCM, t24Name=CONTRACT.CODE)
+		CURRENCY -> FIN_CurrencyConfig:CURRENCY
+			@i18n:Label (en=Ccy, fr=Devise, es=Moneda)
+			@i18n:Tooltip (fr="Code devise ISO")
+			@t24:i (align=R, inputBehaviour=N, maxLength=3, sysNumber=5.0, core=true, t24Name=CURRENCY)
+		DESCRIPTION : mml:Integer
+			@i18n:Label (en=Description, fr=Libellé, es="Descripción")
+			@i18n:Tooltip (en=Description, fr=Libellé)
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=6.0, core=true, t24Name=DESCRIPTION)
+		NEW_SEC_NO : mml:string required
+			@i18n:Label (en="New Security No", fr="Nouveau no de titre", es="Nuevo No. de Título")
+			@i18n:Tooltip (en="Security No of the New security being alloted", fr="Nouveau numéro de titre", es="No. de Título del Título Nuevo a ser asignado")
+			@t24:i (align=L, inputBehaviour=N, maxLength=12, sysNumber=7.0, core=true, businessType=SEC, t24Name=NEW.SEC.NO)
+		NEW_CONT_CODE -> DX_Configuration:DX_CONTRACT_MASTER required
+			@i18n:Label (fr="Nouveau contrat")
+			@i18n:Tooltip (fr="Nouveau contrat")
+			@t24:i (align=L, inputBehaviour=N, maxLength=12, sysNumber=8.0, core=true, businessType=DXCM, t24Name=NEW.CONT.CODE)
+		NEW_CONT_SIZE : mml:Double
+			@i18n:Label (fr="Taille nouveau contrat")
+			@i18n:Tooltip (fr="Taille nouveau contrat")
+			@t24:i (align=R, inputBehaviour=N, maxLength=16, sysNumber=9.0, core=true, businessType=AMT, t24Name=NEW.CONT.SIZE)
+		SIZE_RATIO : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=16, sysNumber=10.0, core=true, t24Name=SIZE.RATIO)
+		OLD_SIZE : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=16, sysNumber=11.0, core=true, businessType=AMT, t24Name=OLD.SIZE)
+		NEW_SIZE : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=16, sysNumber=12.0, core=true, businessType=AMT, t24Name=NEW.SIZE)
+		STR_RATIO : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=16, sysNumber=13.0, core=true, t24Name=STR.RATIO)
+		LOT_RATIO : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=16, sysNumber=14.0, core=true, t24Name=LOT.RATIO)
+		PRICE_RATIO : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=16, sysNumber=15.0, core=true, t24Name=PRICE.RATIO)
+		ROUNDING : mml:string
+			@i18n:Label (en=Rounding, fr=Arrondi, es=Redondeo)
+			@i18n:Tooltip (fr=Arrondi)
+			@t24:i (align=L, inputBehaviour=N, maxLength=8, sysNumber=16.0, core=true, businessType=A, t24Name=ROUNDING)
+		RND_FACTOR : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=19, sysNumber=17.0, core=true, businessType=DEC, t24Name=RND.FACTOR)
+		MAT_DATE -> byValue DX_CorporateActions:DX_ENTITLEMENT__MAT_DATE *
+		RESERVED14 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=31.0, core=true, t24Name=RESERVED14)
+		RESERVED13 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=32.0, core=true, t24Name=RESERVED13)
+		RESERVED12 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=33.0, core=true, t24Name=RESERVED12)
+		RESERVED11 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=34.0, core=true, t24Name=RESERVED11)
+		RESERVED10 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=35.0, core=true, t24Name=RESERVED10)
+		RESERVED09 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=36.0, core=true, t24Name=RESERVED09)
+		RESERVED08 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=37.0, core=true, t24Name=RESERVED08)
+		RESERVED07 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=38.0, core=true, t24Name=RESERVED07)
+		RESERVED06 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=39.0, core=true, t24Name=RESERVED06)
+		RESERVED05 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=40.0, core=true, t24Name=RESERVED05)
+		RESERVED4 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=41.0, core=true, t24Name=RESERVED4)
+		RESERVED3 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=42.0, core=true, t24Name=RESERVED3)
+		RESERVED2 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=43.0, core=true, t24Name=RESERVED2)
+		RESERVED1 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=44.0, core=true, t24Name=RESERVED1)
+		OVERRIDE -> byValue DX_CorporateActions:DX_ENTITLEMENT__OVERRIDE *
+		RECORD_STATUS : mml:string
+			@i18n:Label (en="Record Status", fr=Statut, es=Estado)
+			@i18n:Tooltip (fr="Statut de l\'enregistrement")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=47.0, core=true, businessType=STAT, t24Name=RECORD.STATUS)
+		CURR_NO : mml:Integer
+			@i18n:Label (en="Curr No", fr="N° version", es="No. Actual")
+			@i18n:Tooltip (fr="Numéro de version")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=48.0, core=true, t24Name=CURR.NO)
+		INPUTTER -> byValue DX_CorporateActions:DX_ENTITLEMENT__INPUTTER *
+		DATE_TIME -> byValue DX_CorporateActions:DX_ENTITLEMENT__DATE_TIME *
+		AUTHORISER : mml:string
+			@i18n:Label (en=Authoriser, fr="Validé par", es=Autorizador)
+			@i18n:Tooltip (en="Indicates the User who Authorises the record", fr="Utilisateur de validation", es="El usuario que autorizó el registro")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=51.0, core=true, businessType=A, t24Name=AUTHORISER)
+		CO_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company, fr=Entité, es="Compañía")
+			@i18n:Tooltip (fr="Code établissement ou agence")
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=52.0, core=true, businessType=A, t24Name=CO.CODE)
+		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Dept Code", fr=Service, es=Departamento)
+			@i18n:Tooltip (fr="Code du service")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=53.0, core=true, t24Name=DEPT.CODE)
+		AUDITOR_CODE : mml:string
+			@i18n:Label (en="Auditor Code", fr="Audité par", es="Código de Auditor")
+			@i18n:Tooltip (en="Auditor Code", fr="Utilisateur d\'audit", es="Nombre del auditor")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=54.0, core=true, businessType=A, t24Name=AUDITOR.CODE)
+		AUDIT_DATE_TIME : mml:dateTime
+			@i18n:Label (en="Audit Date Time", fr="Audité le", es="Fecha/Hora de Audit.")
+			@i18n:Tooltip (en="Date and time when record was audited", fr="Date et heure d\'audit", es="Fecha y Hora de Auditoría ")
+			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=55.0, core=true, businessType=RELTIME, t24Name=AUDIT.DATE.TIME)
+	}
+	DX_ENTITLEMENT__MAT_DATE
+	{
+		MAT_DATE : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=18.0, core=true, businessType=A, t24Name=MAT.DATE)
+		CALL_PUT : DX_CorporateActions:DX_ENTITLEMENT__MAT_DATE__CALL_PUT
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=19.0, core=true, t24Name=CALL.PUT)
+		OLD_STR_PRI : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=20.0, core=true, t24Name=OLD.STR.PRI)
+		NEW_STR_PRI : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=21.0, core=true, t24Name=NEW.STR.PRI)
+		TRADES -> byValue DX_CorporateActions:DX_ENTITLEMENT__MAT_DATE__TRADES *
+		MVRESERVED3 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=28.0, core=true, t24Name=MVRESERVED3)
+		MVRESERVED2 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=29.0, core=true, t24Name=MVRESERVED2)
+		MVRESERVED1 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=30.0, core=true, t24Name=MVRESERVED1)
+	}
+	DX_ENTITLEMENT__MAT_DATE__TRADES
+	{
+		TRADES : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=22.0, core=true, businessType=A, t24Name=TRADES)
+		BUY_SELL : DX_CorporateActions:DX_ENTITLEMENT__MAT_DATE__TRADES__BUY_SELL
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=23.0, core=true, t24Name=BUY.SELL)
+		OLD_LOTS : mml:string required
+			@t24:i (align=L, inputBehaviour=N, maxLength=19, sysNumber=24.0, core=true, businessType=DEC, t24Name=OLD.LOTS)
+		NEW_LOTS : mml:string required
+			@t24:i (align=L, inputBehaviour=N, maxLength=19, sysNumber=25.0, core=true, businessType=DEC, t24Name=NEW.LOTS)
+		OLD_PRICE : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=26.0, core=true, t24Name=OLD.PRICE)
+		NEW_PRICE : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=27.0, core=true, t24Name=NEW.PRICE)
+	}
+	DX_ENTITLEMENT__OVERRIDE
+	{
+		OVERRIDE : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=46.0, core=true, businessType=A, t24Name=OVERRIDE)
+	}
+	DX_ENTITLEMENT__INPUTTER
+	{
+		INPUTTER : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=49.0, core=true, businessType=A, t24Name=INPUTTER)
+	}
+	DX_ENTITLEMENT__DATE_TIME
+	{
+		DATE_TIME : mml:dateTime
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=50.0, core=true, businessType=RELTIME, t24Name=DATE.TIME)
+	}
+}
+Enumerations {
+	DX_DIARY__AUTO_UPDATE : mml:string
+		YES=YES
+		NO=NO
+	DX_DIARY__RERUN : mml:string
+		YES=YES
+		NO=NO
+	DX_DIARY__CONFIRM_REQ : mml:string
+		YES=YES
+		NO=NO
+	DX_DIARY__PRE_ADVICE_REQ : mml:string
+		YES=YES
+		NO=NO
+	DX_DIARY__ROUNDING : mml:string
+		STANDARD=STANDARD
+		UP=UP
+		DOWN=DOWN
+	DX_DIARY__CREATE_CONT_Y_N : mml:string
+		YES=YES
+		NO=NO
+	DX_DIARY__CREATE_ENT_ONLINE : mml:string
+		YES=YES
+		NO=NO
+	DX_ENTITLEMENT__MAT_DATE__CALL_PUT : mml:string
+		CALL=CALL
+		PUT=PUT
+	DX_ENTITLEMENT__MAT_DATE__TRADES__BUY_SELL : mml:string
+		BUY=BUY
+		SELL=SELL
+}

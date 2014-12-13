@@ -1,0 +1,697 @@
+# UTF-8
+/* Prameter Definitions for Mutual Funds */
+Domain MF_Config
+	@t24:i (module=MF)
+	@java:Package (value=com.temenos.t24.datamodel.mf.mf_config)
+namespace "http://www.temenos.com/t24/MF_Config"
+metamodelVersion 4.3.0.20110527
+Classes {
+	MF_AMORT_MASTER
+		@t24:i (t24Name=MF.AMORT.MASTER, level=I, type=H, allowedFunctions="A C D E H I L P Q R S", localRefAllowed=false)
+	{
+		FUND_ID -> MF_Config:MF_AMORT_MASTER PK required
+			@i18n:Label (en="Fund Id", fr=Fonds, es="ID de Fondo")
+			@i18n:Tooltip (en="Indicates Id of the fund to be subscribed.", fr="Code du fonds", es="Indica la ID del Fondo a ser suscrito")
+			@t24:i (align=L, inputBehaviour=I, maxLength=12, sysNumber=0.0, core=true, businessType=SEC, t24Name=FUND.ID)
+		AMORT_DESC -> byValue MF_Config:MF_AMORT_MASTER__AMORT_DESC *
+		DR_TRAN_CODE -> ST_Config:TRANSACTION required
+			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=13.0, core=true, t24Name=DR.TRAN.CODE)
+		CR_TRAN_CODE -> ST_Config:TRANSACTION required
+			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=14.0, core=true, t24Name=CR.TRAN.CODE)
+		STATEMENT_NOS -> byValue MF_Config:MF_AMORT_MASTER__STATEMENT_NOS *
+		OVERRIDE -> byValue MF_Config:MF_AMORT_MASTER__OVERRIDE *
+		RECORD_STATUS : mml:string
+			@i18n:Label (en="Record Status", fr=Statut, es=Estado)
+			@i18n:Tooltip (fr="Statut de l\'enregistrement")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=17.0, core=true, businessType=STAT, t24Name=RECORD.STATUS)
+		CURR_NO : mml:Integer
+			@i18n:Label (en="Curr No", fr="N° version", es="No. Actual")
+			@i18n:Tooltip (fr="Numéro de version")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=18.0, core=true, t24Name=CURR.NO)
+		INPUTTER -> byValue MF_Config:MF_AMORT_MASTER__INPUTTER *
+		DATE_TIME -> byValue MF_Config:MF_AMORT_MASTER__DATE_TIME *
+		AUTHORISER : mml:string
+			@i18n:Label (en=Authoriser, fr="Validé par", es=Autorizador)
+			@i18n:Tooltip (en="Indicates the User who Authorises the record", fr="Utilisateur de validation", es="El usuario que autorizó el registro")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=21.0, core=true, businessType=A, t24Name=AUTHORISER)
+		CO_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company, fr=Entité, es="Compañía")
+			@i18n:Tooltip (fr="Code établissement ou agence")
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=22.0, core=true, businessType=A, t24Name=CO.CODE)
+		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Dept Code", fr=Service, es=Departamento)
+			@i18n:Tooltip (fr="Code du service")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=23.0, core=true, t24Name=DEPT.CODE)
+		AUDITOR_CODE : mml:string
+			@i18n:Label (en="Auditor Code", fr="Audité par", es="Código de Auditor")
+			@i18n:Tooltip (en="Auditor Code", fr="Utilisateur d\'audit", es="Nombre del auditor")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=24.0, core=true, businessType=A, t24Name=AUDITOR.CODE)
+		AUDIT_DATE_TIME : mml:dateTime
+			@i18n:Label (en="Audit Date Time", fr="Audité le", es="Fecha/Hora de Audit.")
+			@i18n:Tooltip (en="Date and time when record was audited", fr="Date et heure d\'audit", es="Fecha y Hora de Auditoría ")
+			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=25.0, core=true, businessType=RELTIME, t24Name=AUDIT.DATE.TIME)
+	}
+	MF_AMORT_MASTER__AMORT_DESC
+	{
+		AMORT_DESC : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=1.0, core=true, businessType=A, t24Name=AMORT.DESC)
+		AMORT_CCY -> FIN_CurrencyConfig:CURRENCY
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=2.0, core=true, businessType=CCY, t24Name=AMORT.CCY)
+		AMORT_CHRG_AMT : mml:Double required
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=3.0, core=true, businessType=AMT, t24Name=AMORT.CHRG.AMT)
+		AMORT_START_DT : mml:date
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=4.0, core=true, businessType=D, t24Name=AMORT.START.DT)
+		AMORT_CHRG_FREQ : mml:string required
+			@t24:i (align=L, inputBehaviour=I, maxLength=11, sysNumber=5.0, core=true, businessType=FQU, t24Name=AMORT.CHRG.FREQ)
+		AMORT_END_DT : mml:date required
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=6.0, core=true, businessType=D, t24Name=AMORT.END.DT)
+		PREV_CHRG_DT : mml:date
+			@t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=7.0, core=true, businessType=D, t24Name=PREV.CHRG.DT)
+		NEXT_CHRG_DT : mml:date
+			@t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=8.0, core=true, businessType=D, t24Name=NEXT.CHRG.DT)
+		AMORT_CHRG_BAL : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=9.0, core=true, businessType=AMT, t24Name=AMORT.CHRG.BAL)
+		AMORT_SETT_ACC -> ACM_AccountOpening:ACCOUNT required
+			@t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=10.0, core=true, businessType=ANT, t24Name=AMORT.SETT.ACC)
+		AMORT_CHRG_ACC -> ACM_AccountOpening:ACCOUNT required
+			@t24:i (align=R, inputBehaviour=I, maxLength=16, sysNumber=11.0, core=true, businessType=ACC, t24Name=AMORT.CHRG.ACC)
+		ACTIVE_CLOSE : MF_Config:MF_AMORT_MASTER__AMORT_DESC__ACTIVE_CLOSE
+			@t24:i (align=L, inputBehaviour=I, maxLength=6, sysNumber=12.0, core=true, t24Name=ACTIVE.CLOSE)
+	}
+	MF_AMORT_MASTER__STATEMENT_NOS
+	{
+		STATEMENT_NOS : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=15.0, core=true, businessType=A, t24Name=STATEMENT.NOS)
+	}
+	MF_AMORT_MASTER__OVERRIDE
+	{
+		OVERRIDE : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=16.0, core=true, businessType=A, t24Name=OVERRIDE)
+	}
+	MF_AMORT_MASTER__INPUTTER
+	{
+		INPUTTER : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=19.0, core=true, businessType=A, t24Name=INPUTTER)
+	}
+	MF_AMORT_MASTER__DATE_TIME
+	{
+		DATE_TIME : mml:dateTime
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=20.0, core=true, businessType=RELTIME, t24Name=DATE.TIME)
+	}
+	MF_FUND_MASTER
+		@t24:i (t24Name=MF.FUND.MASTER, level=I, type=H, allowedFunctions="A C D E H I L P Q R S", localRefAllowed=true)
+	{
+		FUND_ID -> MF_Config:MF_FUND_MASTER PK required
+			@i18n:Label (en="Fund Id", fr=Fonds, es="ID de Fondo")
+			@i18n:Tooltip (en="Indicates Id of the fund to be subscribed.", fr="Code du fonds", es="Indica la ID del Fondo a ser suscrito")
+			@t24:i (align=L, inputBehaviour=I, maxLength=12, sysNumber=0.0, core=true, businessType=SEC, t24Name=FUND.ID)
+		FUND_NAME -> byValue MF_Config:MF_FUND_MASTER__FUND_NAME *
+		INTERNAL_FUND : MF_Config:MF_FUND_MASTER__INTERNAL_FUND
+			@i18n:Label (en="Internal Fund", fr="Fonds intt", es="Fondo Interno")
+			@i18n:Tooltip (fr="Fonds intérêts")
+			@t24:i (align=L, inputBehaviour=I, maxLength=1, sysNumber=2.0, core=true, t24Name=INTERNAL.FUND)
+		FUND_BOOK -> ST_CompanyCreation:COMPANY required
+			@i18n:Label (en="Fund Book", fr="Livre de fond", es="Libro de Fondo")
+			@i18n:Tooltip (fr="Livre de fond")
+			@t24:i (align=L, inputBehaviour=I, maxLength=11, sysNumber=3.0, core=true, businessType=COM, t24Name=FUND.BOOK)
+		FUND_TYPE : MF_Config:MF_FUND_MASTER__FUND_TYPE required
+			@i18n:Label (en="Fund Type", fr="Type de fonds", es="Tipo de Fondo")
+			@i18n:Tooltip (fr="Type de fonds")
+			@t24:i (align=L, inputBehaviour=I, maxLength=12, sysNumber=4.0, core=true, t24Name=FUND.TYPE)
+		DFUND_OR_FOF : MF_Config:MF_FUND_MASTER__DFUND_OR_FOF required
+			@i18n:Label (en="Direct Fund Or FoF", fr="Fonds direct ou FOF", es="Fondo Directo O FoF")
+			@i18n:Tooltip (fr="Fonds direct ou FOF")
+			@t24:i (align=L, inputBehaviour=I, maxLength=6, sysNumber=5.0, core=true, t24Name=DFUND.OR.FOF)
+		START_DATE : mml:date required
+			@i18n:Label (en="Start Date", fr="Date de début", es="Fecha de Inicio")
+			@i18n:Tooltip (en="Start Date", fr="Date de début", es="Fecha de Inicio del Acuerdo")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=6.0, core=true, businessType=D, t24Name=START.DATE)
+		ISSUE_SIZE : mml:string
+			@i18n:Label (en="Issue Size", fr="Taille d\'émission", es="Tamaño de Emisión")
+			@i18n:Tooltip (fr="Taille d\'émission")
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=7.0, core=true, businessType=NOMAMT, t24Name=ISSUE.SIZE)
+		INIT_SUBS_CLOSE_DT : mml:date
+			@i18n:Label (en="Initial Subs Close Dt", fr="Dt de clôture d\'abonnement initial", es="Fecha Cierre Susc.Inicial")
+			@i18n:Tooltip (fr="Dt de clôture d\'abonnement initial")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=8.0, core=true, businessType=D, t24Name=INIT.SUBS.CLOSE.DT)
+		CLOSURE_DATE : mml:date
+			@i18n:Label (en="Closure Date", fr="Date de clôture", es="Fecha de Cierre")
+			@i18n:Tooltip (fr="Date de clôture")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=9.0, core=true, businessType=D, t24Name=CLOSURE.DATE)
+		FACE_VALUE : mml:Double required
+			@i18n:Label (en="Face Value", fr="Face Value", es="Valor Nominal")
+			@i18n:Tooltip (fr="Face Value")
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=10.0, core=true, businessType=AMT, t24Name=FACE.VALUE)
+		ROUNDING_PARAM -> MF_Config:MF_ROUNDING_PARAM
+			@i18n:Label (en="Rounding Param", fr="Paramètres d\'arrondi", es="Parámetro de Redondeo")
+			@i18n:Tooltip (fr="Paramètres d\'arrondi")
+			@t24:i (align=L, inputBehaviour=I, maxLength=14, sysNumber=11.0, core=true, businessType=A, t24Name=ROUNDING.PARAM)
+		MIN_INIT_SUBS : mml:string
+			@i18n:Label (en="Min Initial Subs", fr="Abonnement initial min", es="Suscripción Inicial Mín.")
+			@i18n:Tooltip (fr="Abonnement initial min")
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=12.0, core=true, businessType=NOMAMT, t24Name=MIN.INIT.SUBS)
+		MIN_INIT_ACTION : MF_Config:MF_FUND_MASTER__MIN_INIT_ACTION
+			@i18n:Label (en="Min Initial Action", fr="Action initiale min", es="Acción Inicial Mínima")
+			@i18n:Tooltip (fr="Action initiale min")
+			@t24:i (align=L, inputBehaviour=I, maxLength=8, sysNumber=13.0, core=true, t24Name=MIN.INIT.ACTION)
+		MIN_ENSUING_SUBS : mml:string
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=14.0, core=true, businessType=NOMAMT, t24Name=MIN.ENSUING.SUBS)
+		MIN_ENS_ACTION : MF_Config:MF_FUND_MASTER__MIN_ENS_ACTION
+			@i18n:Label (en="Minimum Ensuing Action", fr="Action min qui suivit", es="Acción Contínua Mínima")
+			@i18n:Tooltip (fr="Action min qui suivit")
+			@t24:i (align=L, inputBehaviour=I, maxLength=8, sysNumber=15.0, core=true, t24Name=MIN.ENS.ACTION)
+		MIN_INIT_REDM_PRD : mml:string
+			@i18n:Label (en="Min Initial Redm Prd", fr="Prde rachat initiale mini", es="Periodo Reden.InicialMín.")
+			@i18n:Tooltip (fr="Prde rachat initiale mini")
+			@t24:i (align=L, inputBehaviour=I, maxLength=4, sysNumber=16.0, core=true, businessType=A, t24Name=MIN.INIT.REDM.PRD)
+		MIN_REDM_PRD_ACTN : MF_Config:MF_FUND_MASTER__MIN_REDM_PRD_ACTN
+			@i18n:Label (en="Min Redemption Product Action", fr="Action de Prodt de rachat", es="Acción Prod. Reden.Mín.")
+			@i18n:Tooltip (fr="Action de Prodt de rachat")
+			@t24:i (align=L, inputBehaviour=I, maxLength=8, sysNumber=17.0, core=true, t24Name=MIN.REDM.PRD.ACTN)
+		MINIMUM_HOLDING : mml:string
+			@i18n:Label (en="Minimum Holding", fr="Avoir Minimum", es="Tenencia Mínima")
+			@i18n:Tooltip (fr="Avoir Minimum")
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=18.0, core=true, businessType=NOMAMT, t24Name=MINIMUM.HOLDING)
+		MIN_HLDG_ACTION : MF_Config:MF_FUND_MASTER__MIN_HLDG_ACTION
+			@i18n:Label (en="Min Holding Action", fr="Action de valeur min", es="Acción de Valor Mínimo")
+			@i18n:Tooltip (fr="Action de valeur min")
+			@t24:i (align=L, inputBehaviour=I, maxLength=8, sysNumber=19.0, core=true, t24Name=MIN.HLDG.ACTION)
+		MIN_HLDG_PERIOD : mml:string
+			@i18n:Label (en="Min Holding Period", fr="Période de valeur min", es="Periodo de Valor Mínimo")
+			@i18n:Tooltip (fr="Période de valeur min")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=20.0, core=true, businessType=A, t24Name=MIN.HLDG.PERIOD)
+		MIN_PERIOD_ACTION : MF_Config:MF_FUND_MASTER__MIN_PERIOD_ACTION
+			@i18n:Label (en="Min Period Action", fr="Action de Prde min", es="Acción de Periodo Mínimo")
+			@i18n:Tooltip (fr="Action de Prde min")
+			@t24:i (align=L, inputBehaviour=I, maxLength=8, sysNumber=21.0, core=true, t24Name=MIN.PERIOD.ACTION)
+		MIN_REDEMPTION : mml:string
+			@i18n:Label (en="Min Redemption", fr="Rachat min", es="Redención Mínima")
+			@i18n:Tooltip (fr="Rachat min")
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=22.0, core=true, businessType=NOMAMT, t24Name=MIN.REDEMPTION)
+		MIN_REDEM_UNIT_VAL : MF_Config:MF_FUND_MASTER__MIN_REDEM_UNIT_VAL
+			@i18n:Label (en="Min Redem Unit Value", fr="Valeur unitaire de rachat min", es="Valor Unidad Reden. Mín.")
+			@i18n:Tooltip (fr="Valeur unitaire de rachat min")
+			@t24:i (align=L, inputBehaviour=I, maxLength=5, sysNumber=23.0, core=true, t24Name=MIN.REDEM.UNIT.VAL)
+		MIN_REDEM_ACTION : MF_Config:MF_FUND_MASTER__MIN_REDEM_ACTION
+			@i18n:Label (en="Min Redem Action", fr="Action de rachat min", es="Acción Redención Mínima")
+			@i18n:Tooltip (fr="Action de rachat min")
+			@t24:i (align=L, inputBehaviour=I, maxLength=8, sysNumber=24.0, core=true, t24Name=MIN.REDEM.ACTION)
+		PRICE_AT_INCEPTION : mml:Double required
+			@i18n:Label (en="Price At Inception", fr="Prix à l\'origine", es="Precio al Inicio")
+			@i18n:Tooltip (fr="Prix à l\'origine")
+			@t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=25.0, core=true, businessType=PRICE, t24Name=PRICE.AT.INCEPTION)
+		FUND_MANAGER -> ST_Customer:CUSTOMER
+			@i18n:Label (en="Fund Manager", fr="Gestionnaire de porteflle", es="Gerente de Fondo")
+			@i18n:Tooltip (fr="Gestionnaire de portefeuille")
+			@t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=26.0, core=true, businessType=CUS, t24Name=FUND.MANAGER)
+		TRUSTEE_NAME : mml:string
+			@i18n:Label (en="Trustee Name", fr="Nom du fiduciaire", es="Nombre de Deposiatrio")
+			@i18n:Tooltip (fr="Nom du fiduciaire")
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=27.0, core=true, businessType=A, t24Name=TRUSTEE.NAME)
+		TRUSTEE_ADDR -> byValue MF_Config:MF_FUND_MASTER__TRUSTEE_ADDR *
+		CONTROL_ACCOUNT -> ACM_AccountOpening:ACCOUNT required
+			@i18n:Label (en="Control Account", fr="Cpte de contrôle", es="Cuenta de Control")
+			@i18n:Tooltip (fr="Cpte de contrôle")
+			@t24:i (align=R, inputBehaviour=I, maxLength=16, sysNumber=29.0, core=true, businessType=ACC, t24Name=CONTROL.ACCOUNT)
+		SETTLEMENT_ACCOUNT -> ACM_AccountOpening:ACCOUNT required
+			@i18n:Label (en="Settlement Account", fr="Cpte de Règlt", es="Cuenta de Liquidación")
+			@i18n:Tooltip (fr="Cpte de Règlt")
+			@t24:i (align=R, inputBehaviour=I, maxLength=16, sysNumber=30.0, core=true, businessType=ACC, t24Name=SETTLEMENT.ACCOUNT)
+		PAYABLE_ACCOUNT -> ACM_AccountOpening:ACCOUNT required
+			@i18n:Label (en="Payable Account", fr="Compte Payable", es="Cuenta Pagadera")
+			@i18n:Tooltip (fr="Compte Payable")
+			@t24:i (align=R, inputBehaviour=I, maxLength=16, sysNumber=31.0, core=true, businessType=ACC, t24Name=PAYABLE.ACCOUNT)
+		PORTFOLIO_CHG -> ST_ChargeConfig:FT_COMMISSION_TYPE
+			@i18n:Label (en="Portfolio Charges", fr="Cions de portefeuille", es="Cambios de Cartera")
+			@i18n:Tooltip (fr="Cions de portefeuille")
+			@t24:i (align=L, inputBehaviour=I, maxLength=20, sysNumber=32.0, core=true, businessType=A, t24Name=PORTFOLIO.CHG)
+		SALES_LOAD -> ST_ChargeConfig:FT_COMMISSION_TYPE
+			@i18n:Label (en="Sales Load", fr="Charge de vente", es="Carga de Venta")
+			@i18n:Tooltip (fr="Charge de vente")
+			@t24:i (align=L, inputBehaviour=I, maxLength=20, sysNumber=33.0, core=true, businessType=A, t24Name=SALES.LOAD)
+		PLAN_ALLOWED : MF_Config:MF_FUND_MASTER__PLAN_ALLOWED required
+			@i18n:Label (en="Plan Allowed", fr="Plan autorisé", es="Plan Permitido")
+			@i18n:Tooltip (fr="Plan autorisé")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=34.0, core=true, t24Name=PLAN.ALLOWED)
+		ALLOW_FUND_SWITCH : MF_Config:MF_FUND_MASTER__ALLOW_FUND_SWITCH required
+			@i18n:Label (en="Allow Fund Switch", fr="Autoriser Switch de fonds", es="Permitir Switch de Fondo")
+			@i18n:Tooltip (fr="Autoriser Switch de fonds")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=35.0, core=true, t24Name=ALLOW.FUND.SWITCH)
+		SWITCH_TO -> byValue MF_Config:MF_FUND_MASTER__SWITCH_TO *
+		ALLOW_UNIT_SWITCH : MF_Config:MF_FUND_MASTER__ALLOW_UNIT_SWITCH required
+			@i18n:Label (en="Allow Unit Switch", fr="Autoriser Switch d\'unité", es="Permitir Switch de Unidad")
+			@i18n:Tooltip (fr="Autoriser Switch d\'unité")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=37.0, core=true, t24Name=ALLOW.UNIT.SWITCH)
+		PRICING_METHOD : MF_Config:MF_FUND_MASTER__PRICING_METHOD required
+			@i18n:Label (en="Pricing Method", fr="Méthode de tarification", es="Método de Precio")
+			@i18n:Tooltip (fr="Méthode de tarification")
+			@t24:i (align=L, inputBehaviour=I, maxLength=10, sysNumber=38.0, core=true, t24Name=PRICING.METHOD)
+		NAV_CALC_START_DT : mml:date required
+			@i18n:Label (en="Nav Calc Start Date", fr="Dte début de calcul VNA", es="Fecha Inicio Cálculo")
+			@i18n:Tooltip (fr="Dte début de calcul VNA")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=39.0, core=true, businessType=D, t24Name=NAV.CALC.START.DT)
+		SETTLEMENT_DAYS : mml:Integer
+			@i18n:Label (en="Settle Days", fr="Jours de règlt", es="Días de Liquidación")
+			@i18n:Tooltip (fr="Jours de règlement")
+			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=40.0, core=true, t24Name=SETTLEMENT.DAYS)
+		TRANS_TYPE -> byValue MF_Config:MF_FUND_MASTER__TRANS_TYPE *
+		OTHER_FEES_DESC -> byValue MF_Config:MF_FUND_MASTER__OTHER_FEES_DESC *
+		RESERVED15 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=49.0, core=true, businessType=A, t24Name=RESERVED15)
+		RESERVED14 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=50.0, core=true, businessType=A, t24Name=RESERVED14)
+		RESERVED13 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=51.0, core=true, businessType=A, t24Name=RESERVED13)
+		RESERVED12 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=52.0, core=true, businessType=A, t24Name=RESERVED12)
+		RESERVED11 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=53.0, core=true, businessType=A, t24Name=RESERVED11)
+		RESERVED10 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=54.0, core=true, businessType=A, t24Name=RESERVED10)
+		RESERVED09 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=55.0, core=true, businessType=A, t24Name=RESERVED09)
+		RESERVED08 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=56.0, core=true, businessType=A, t24Name=RESERVED08)
+		RESERVED07 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=57.0, core=true, businessType=A, t24Name=RESERVED07)
+		RESERVED06 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=58.0, core=true, businessType=A, t24Name=RESERVED06)
+		RESERVED05 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=59.0, core=true, businessType=A, t24Name=RESERVED05)
+		RESERVED04 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=60.0, core=true, businessType=A, t24Name=RESERVED04)
+		RESERVED03 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=61.0, core=true, businessType=A, t24Name=RESERVED03)
+		RESERVED02 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=62.0, core=true, businessType=A, t24Name=RESERVED02)
+		RESERVED01 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=63.0, core=true, businessType=A, t24Name=RESERVED01)
+		OVERRIDE -> byValue MF_Config:MF_FUND_MASTER__OVERRIDE *
+		RECORD_STATUS : mml:string
+			@i18n:Label (en="Record Status", fr=Statut, es=Estado)
+			@i18n:Tooltip (fr="Statut de l\'enregistrement")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=66.0, core=true, businessType=STAT, t24Name=RECORD.STATUS)
+		CURR_NO : mml:Integer
+			@i18n:Label (en="Curr No", fr="N° version", es="No. Actual")
+			@i18n:Tooltip (fr="Numéro de version")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=67.0, core=true, t24Name=CURR.NO)
+		INPUTTER -> byValue MF_Config:MF_FUND_MASTER__INPUTTER *
+		DATE_TIME -> byValue MF_Config:MF_FUND_MASTER__DATE_TIME *
+		AUTHORISER : mml:string
+			@i18n:Label (en=Authoriser, fr="Validé par", es=Autorizador)
+			@i18n:Tooltip (en="Indicates the User who Authorises the record", fr="Utilisateur de validation", es="El usuario que autorizó el registro")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=70.0, core=true, businessType=A, t24Name=AUTHORISER)
+		CO_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company, fr=Entité, es="Compañía")
+			@i18n:Tooltip (fr="Code établissement ou agence")
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=71.0, core=true, businessType=A, t24Name=CO.CODE)
+		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Dept Code", fr=Service, es=Departamento)
+			@i18n:Tooltip (fr="Code du service")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=72.0, core=true, t24Name=DEPT.CODE)
+		AUDITOR_CODE : mml:string
+			@i18n:Label (en="Auditor Code", fr="Audité par", es="Código de Auditor")
+			@i18n:Tooltip (en="Auditor Code", fr="Utilisateur d\'audit", es="Nombre del auditor")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=73.0, core=true, businessType=A, t24Name=AUDITOR.CODE)
+		AUDIT_DATE_TIME : mml:dateTime
+			@i18n:Label (en="Audit Date Time", fr="Audité le", es="Fecha/Hora de Audit.")
+			@i18n:Tooltip (en="Date and time when record was audited", fr="Date et heure d\'audit", es="Fecha y Hora de Auditoría ")
+			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=74.0, core=true, businessType=RELTIME, t24Name=AUDIT.DATE.TIME)
+	}
+	MF_FUND_MASTER__FUND_NAME
+	{
+		FUND_NAME : mml:string required
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, multiLanguage=true, sysNumber=1.0, core=true, businessType=A, t24Name=FUND.NAME)
+	}
+	MF_FUND_MASTER__TRUSTEE_ADDR
+	{
+		TRUSTEE_ADDR : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=28.0, core=true, businessType=A, t24Name=TRUSTEE.ADDR)
+	}
+	MF_FUND_MASTER__SWITCH_TO
+	{
+		SWITCH_TO : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=18, sysNumber=36.0, core=true, businessType=A, t24Name=SWITCH.TO)
+	}
+	MF_FUND_MASTER__TRANS_TYPE
+	{
+		TRANS_TYPE : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=10, sysNumber=41.0, core=true, businessType=A, t24Name=TRANS.TYPE)
+		HOLD_PERIOD -> byValue MF_Config:MF_FUND_MASTER__TRANS_TYPE__HOLD_PERIOD *
+	}
+	MF_FUND_MASTER__TRANS_TYPE__HOLD_PERIOD
+	{
+		HOLD_PERIOD : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=42.0, core=true, businessType=A, t24Name=HOLD.PERIOD)
+		CHARGE_CODE -> ST_ChargeConfig:FT_COMMISSION_TYPE
+			@t24:i (align=L, inputBehaviour=I, maxLength=20, sysNumber=43.0, core=true, businessType=A, t24Name=CHARGE.CODE)
+		DISC_TYPE : MF_Config:MF_FUND_MASTER__TRANS_TYPE__HOLD_PERIOD__DISC_TYPE
+			@t24:i (align=L, inputBehaviour=I, maxLength=10, sysNumber=44.0, core=true, t24Name=DISC.TYPE)
+		DISC_AMT : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=45.0, core=true, businessType=AMT, t24Name=DISC.AMT)
+	}
+	MF_FUND_MASTER__OTHER_FEES_DESC
+	{
+		OTHER_FEES_DESC : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=46.0, core=true, businessType=A, t24Name=OTHER.FEES.DESC)
+		OTH_FEE_TRN_TYP : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=10, sysNumber=47.0, core=true, businessType=A, t24Name=OTH.FEE.TRN.TYP)
+		OTH_FEE_CHG_CDE -> ST_ChargeConfig:FT_COMMISSION_TYPE
+			@t24:i (align=L, inputBehaviour=I, maxLength=20, sysNumber=48.0, core=true, businessType=A, t24Name=OTH.FEE.CHG.CDE)
+	}
+	MF_FUND_MASTER__OVERRIDE
+	{
+		OVERRIDE : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=65.0, core=true, businessType=A, t24Name=OVERRIDE)
+	}
+	MF_FUND_MASTER__INPUTTER
+	{
+		INPUTTER : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=68.0, core=true, businessType=A, t24Name=INPUTTER)
+	}
+	MF_FUND_MASTER__DATE_TIME
+	{
+		DATE_TIME : mml:dateTime
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=69.0, core=true, businessType=RELTIME, t24Name=DATE.TIME)
+	}
+	MF_PARAMETER
+		@t24:i (t24Name=MF.PARAMETER, level=I, type=H, allowedFunctions="A C D E H I L P Q R S", localRefAllowed=true)
+	{
+		COMPANY -> MF_Config:MF_PARAMETER PK required
+			@i18n:Label (en=Company, fr=Entité, es="Código de Compañía")
+			@i18n:Tooltip (fr=Entité)
+			@t24:i (align=L, inputBehaviour=I, maxLength=12, sysNumber=0.0, core=true, businessType=COM, t24Name=COMPANY)
+		DEFAULT_PRODUCT -> ST_Config:CATEGORY required
+			@i18n:Label (fr="Produit par défaut")
+			@i18n:Tooltip (fr="Produit par défaut")
+			@t24:i (align=L, inputBehaviour=I, maxLength=6, sysNumber=1.0, core=true, businessType=CAT, t24Name=DEFAULT.PRODUCT)
+		DEFAULT_CCY_MARKET -> FIN_CurrencyConfig:CURRENCY_MARKET
+			@i18n:Label (fr="Marché de Dev. p/défaut")
+			@i18n:Tooltip (fr="Marché de Dev. p/défaut")
+			@t24:i (align=R, inputBehaviour=I, maxLength=1, sysNumber=2.0, core=true, t24Name=DEFAULT.CCY.MARKET)
+		BUSINESS_MODEL : MF_Config:MF_PARAMETER__BUSINESS_MODEL required
+			@i18n:Label (en="Business Model", fr="Modèle d\'affaires", es="Modelo de Negocios")
+			@i18n:Tooltip (fr="Modèle d\'affaires")
+			@t24:i (align=L, inputBehaviour=I, maxLength=6, sysNumber=3.0, core=true, t24Name=BUSINESS.MODEL)
+		FUND_GL_REQD : MF_Config:MF_PARAMETER__FUND_GL_REQD
+			@t24:i (align=L, inputBehaviour=I, maxLength=1, sysNumber=4.0, core=true, t24Name=FUND.GL.REQD)
+		FUND_BR_PL_BAL_AC -> ST_Config:CATEGORY
+			@t24:i (align=L, inputBehaviour=I, maxLength=6, sysNumber=5.0, core=true, businessType=CAT, t24Name=FUND.BR.PL.BAL.AC)
+		SWITCH_CATEG -> ST_Config:CATEGORY required
+			@t24:i (align=L, inputBehaviour=I, maxLength=6, sysNumber=6.0, core=true, businessType=CAT, t24Name=SWITCH.CATEG)
+		ENTRY_LOAD_CATEG -> ST_Config:CATEGORY
+			@t24:i (align=L, inputBehaviour=I, maxLength=6, sysNumber=7.0, core=true, businessType=CAT, t24Name=ENTRY.LOAD.CATEG)
+		ENTRY_LOAD_TXN_CD -> ST_Config:TRANSACTION
+			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=8.0, core=true, t24Name=ENTRY.LOAD.TXN.CD)
+		EXIT_LOAD_CATEG -> ST_Config:CATEGORY
+			@t24:i (align=L, inputBehaviour=I, maxLength=6, sysNumber=9.0, core=true, businessType=CAT, t24Name=EXIT.LOAD.CATEG)
+		EXIT_LOAD_TXN_CD -> ST_Config:TRANSACTION
+			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=10.0, core=true, t24Name=EXIT.LOAD.TXN.CD)
+		SWITCH_FEE_CATEG -> ST_Config:CATEGORY
+			@t24:i (align=L, inputBehaviour=I, maxLength=6, sysNumber=11.0, core=true, businessType=CAT, t24Name=SWITCH.FEE.CATEG)
+		SWITCH_FEE_TXN_CD -> ST_Config:TRANSACTION
+			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=12.0, core=true, t24Name=SWITCH.FEE.TXN.CD)
+		DISC_AMT_CATEG -> ST_Config:CATEGORY
+			@t24:i (align=L, inputBehaviour=I, maxLength=6, sysNumber=13.0, core=true, businessType=CAT, t24Name=DISC.AMT.CATEG)
+		DISC_AMT_TXN_CD -> ST_Config:TRANSACTION
+			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=14.0, core=true, t24Name=DISC.AMT.TXN.CD)
+		OTHER_FEE_CATEG -> ST_Config:CATEGORY
+			@t24:i (align=L, inputBehaviour=I, maxLength=6, sysNumber=15.0, core=true, businessType=CAT, t24Name=OTHER.FEE.CATEG)
+		OTHER_FEE_TXN_CD -> ST_Config:TRANSACTION
+			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=16.0, core=true, t24Name=OTHER.FEE.TXN.CD)
+		MISC_FEE_CATEG -> ST_Config:CATEGORY
+			@t24:i (align=L, inputBehaviour=I, maxLength=6, sysNumber=17.0, core=true, businessType=CAT, t24Name=MISC.FEE.CATEG)
+		MISC_FEE_TXN_CD -> ST_Config:TRANSACTION
+			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=18.0, core=true, t24Name=MISC.FEE.TXN.CD)
+		AGENT_FEE_CATEG -> ST_Config:CATEGORY required
+			@t24:i (align=L, inputBehaviour=I, maxLength=6, sysNumber=19.0, core=true, businessType=CAT, t24Name=AGENT.FEE.CATEG)
+		SETT_ACCT_TYPE : MF_Config:MF_PARAMETER__SETT_ACCT_TYPE required
+			@t24:i (align=L, inputBehaviour=I, maxLength=8, sysNumber=20.0, core=true, t24Name=SETT.ACCT.TYPE)
+		SETT_ACCT_CATEG -> ST_Config:CATEGORY
+			@t24:i (align=L, inputBehaviour=I, maxLength=6, sysNumber=21.0, core=true, businessType=CAT, t24Name=SETT.ACCT.CATEG)
+		MF_CONTRA_CATEG -> ST_Config:CATEGORY
+			@t24:i (align=L, inputBehaviour=I, maxLength=6, sysNumber=22.0, core=true, businessType=CAT, t24Name=MF.CONTRA.CATEG)
+		EXCHANGE_PL_CAT -> ST_Config:CATEGORY required
+			@t24:i (align=L, inputBehaviour=I, maxLength=6, sysNumber=23.0, core=true, businessType=CAT, t24Name=EXCHANGE.PL.CAT)
+		EXCHANGE_PL_CR_CD -> ST_Config:TRANSACTION required
+			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=24.0, core=true, t24Name=EXCHANGE.PL.CR.CD)
+		EXCHANGE_PL_DB_CD -> ST_Config:TRANSACTION required
+			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=25.0, core=true, t24Name=EXCHANGE.PL.DB.CD)
+		RESERVED13 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=26.0, core=true, businessType=A, t24Name=RESERVED13)
+		RESERVED12 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=27.0, core=true, businessType=A, t24Name=RESERVED12)
+		ORDER_EXP_DAYS : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=28.0, core=true, t24Name=ORDER.EXP.DAYS)
+		SETTLEMENT_DAYS : mml:Integer
+			@i18n:Label (en="Settle Days", fr="Jours de règlt", es="Días de Liquidación")
+			@i18n:Tooltip (fr="Jours de règlement")
+			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=29.0, core=true, t24Name=SETTLEMENT.DAYS)
+		REINVEST_TRAN_TYPE -> SC_Config:SC_TRANS_NAME
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=30.0, core=true, businessType=S, t24Name=REINVEST.TRAN.TYPE)
+		NAV_ROUTINE : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=31.0, core=true, businessType=A, t24Name=NAV.ROUTINE)
+		OFS_SOURCE -> byValue MF_Config:MF_PARAMETER__OFS_SOURCE *
+		LAST_ARCH_DATE : mml:date
+			@t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=34.0, core=true, businessType=D, t24Name=LAST.ARCH.DATE)
+		RESERVED11 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=35.0, core=true, businessType=A, t24Name=RESERVED11)
+		RESERVED10 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=36.0, core=true, businessType=A, t24Name=RESERVED10)
+		RESERVED09 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=37.0, core=true, businessType=A, t24Name=RESERVED09)
+		RESERVED08 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=38.0, core=true, businessType=A, t24Name=RESERVED08)
+		RESERVED07 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=39.0, core=true, businessType=A, t24Name=RESERVED07)
+		RESERVED06 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=40.0, core=true, businessType=A, t24Name=RESERVED06)
+		RESERVED05 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=41.0, core=true, businessType=A, t24Name=RESERVED05)
+		RESERVED04 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=42.0, core=true, businessType=A, t24Name=RESERVED04)
+		RESERVED03 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=43.0, core=true, businessType=A, t24Name=RESERVED03)
+		RESERVED02 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=44.0, core=true, businessType=A, t24Name=RESERVED02)
+		RESERVED01 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=45.0, core=true, businessType=A, t24Name=RESERVED01)
+		OVERRIDE -> byValue MF_Config:MF_PARAMETER__OVERRIDE *
+		RECORD_STATUS : mml:string
+			@i18n:Label (en="Record Status", fr=Statut, es=Estado)
+			@i18n:Tooltip (fr="Statut de l\'enregistrement")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=48.0, core=true, businessType=STAT, t24Name=RECORD.STATUS)
+		CURR_NO : mml:Integer
+			@i18n:Label (en="Curr No", fr="N° version", es="No. Actual")
+			@i18n:Tooltip (fr="Numéro de version")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=49.0, core=true, t24Name=CURR.NO)
+		INPUTTER -> byValue MF_Config:MF_PARAMETER__INPUTTER *
+		DATE_TIME -> byValue MF_Config:MF_PARAMETER__DATE_TIME *
+		AUTHORISER : mml:string
+			@i18n:Label (en=Authoriser, fr="Validé par", es=Autorizador)
+			@i18n:Tooltip (en="Indicates the User who Authorises the record", fr="Utilisateur de validation", es="El usuario que autorizó el registro")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=52.0, core=true, businessType=A, t24Name=AUTHORISER)
+		CO_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company, fr=Entité, es="Compañía")
+			@i18n:Tooltip (fr="Code établissement ou agence")
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=53.0, core=true, businessType=A, t24Name=CO.CODE)
+		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Dept Code", fr=Service, es=Departamento)
+			@i18n:Tooltip (fr="Code du service")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=54.0, core=true, t24Name=DEPT.CODE)
+		AUDITOR_CODE : mml:string
+			@i18n:Label (en="Auditor Code", fr="Audité par", es="Código de Auditor")
+			@i18n:Tooltip (en="Auditor Code", fr="Utilisateur d\'audit", es="Nombre del auditor")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=55.0, core=true, businessType=A, t24Name=AUDITOR.CODE)
+		AUDIT_DATE_TIME : mml:dateTime
+			@i18n:Label (en="Audit Date Time", fr="Audité le", es="Fecha/Hora de Audit.")
+			@i18n:Tooltip (en="Date and time when record was audited", fr="Date et heure d\'audit", es="Fecha y Hora de Auditoría ")
+			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=56.0, core=true, businessType=RELTIME, t24Name=AUDIT.DATE.TIME)
+	}
+	MF_PARAMETER__OFS_SOURCE
+	{
+		OFS_SOURCE -> EB_Interface:OFS_SOURCE required
+			@t24:i (align=L, inputBehaviour=I, maxLength=20, sysNumber=32.0, core=true, businessType=A, t24Name=OFS.SOURCE)
+		OFS_VERSION -> EB_Versions:VERSION required
+			@t24:i (align=L, inputBehaviour=I, maxLength=54, sysNumber=33.0, core=true, businessType=A, t24Name=OFS.VERSION)
+	}
+	MF_PARAMETER__OVERRIDE
+	{
+		OVERRIDE : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=47.0, core=true, businessType=A, t24Name=OVERRIDE)
+	}
+	MF_PARAMETER__INPUTTER
+	{
+		INPUTTER : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=50.0, core=true, businessType=A, t24Name=INPUTTER)
+	}
+	MF_PARAMETER__DATE_TIME
+	{
+		DATE_TIME : mml:dateTime
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=51.0, core=true, businessType=RELTIME, t24Name=DATE.TIME)
+	}
+	MF_ROUNDING_PARAM
+		@t24:i (t24Name=MF.ROUNDING.PARAM, level=I, type=H, allowedFunctions="A C D E H I L P Q R S", localRefAllowed=false)
+	{
+		ID -> MF_Config:MF_ROUNDING_PARAM PK required
+			@i18n:Label (en="Transaction Ref", fr=Code, es="Ref. de Transacción")
+			@i18n:Tooltip (en="Transaction Reference", fr=Identifiant)
+			@t24:i (align=L, inputBehaviour=I, maxLength=14, sysNumber=0.0, core=true, businessType=A, t24Name=ID)
+		DESCRIPTION -> byValue MF_Config:MF_ROUNDING_PARAM__DESCRIPTION *
+		SUBS_DECIMAL : mml:Integer required
+			@i18n:Label (en="Subscription Decimal")
+			@i18n:Tooltip (en="Subscription Decimal")
+			@t24:i (align=R, inputBehaviour=I, maxLength=1, sysNumber=2.0, core=true, t24Name=SUBS.DECIMAL)
+		SUBS_RNDG_TYPE : MF_Config:MF_ROUNDING_PARAM__SUBS_RNDG_TYPE required
+			@i18n:Label (en="Subs Rounding Type")
+			@i18n:Tooltip (en="Subscription Rounding Type")
+			@t24:i (align=L, inputBehaviour=I, maxLength=13, sysNumber=3.0, core=true, t24Name=SUBS.RNDG.TYPE)
+		REDM_AMT_DECIMAL : mml:Integer required
+			@i18n:Label (en="Redem Amount Decimal")
+			@i18n:Tooltip (en="Redemption Amount Decimal")
+			@t24:i (align=R, inputBehaviour=I, maxLength=1, sysNumber=4.0, core=true, t24Name=REDM.AMT.DECIMAL)
+		REDM_UNIT_DECIMAL : mml:Integer required
+			@i18n:Label (en="Redem Unit Decimal")
+			@i18n:Tooltip (en="Redemption Unit Decimal")
+			@t24:i (align=R, inputBehaviour=I, maxLength=1, sysNumber=5.0, core=true, t24Name=REDM.UNIT.DECIMAL)
+		REDM_AMT_RNDG_TYPE : MF_Config:MF_ROUNDING_PARAM__REDM_AMT_RNDG_TYPE required
+			@i18n:Label (en="Redem Amt Rounding TYPE")
+			@i18n:Tooltip (en="Redemption Amount Rounding Type")
+			@t24:i (align=L, inputBehaviour=I, maxLength=13, sysNumber=6.0, core=true, t24Name=REDM.AMT.RNDG.TYPE)
+		REDM_UNT_RNDG_TYPE : MF_Config:MF_ROUNDING_PARAM__REDM_UNT_RNDG_TYPE required
+			@t24:i (align=L, inputBehaviour=I, maxLength=13, sysNumber=7.0, core=true, t24Name=REDM.UNT.RNDG.TYPE)
+		NAV_PRICE_DECIMAL : mml:Integer required
+			@i18n:Label (en="NAV Price Decimal")
+			@i18n:Tooltip (en="NAV Price Decimal")
+			@t24:i (align=R, inputBehaviour=I, maxLength=1, sysNumber=8.0, core=true, t24Name=NAV.PRICE.DECIMAL)
+		NAV_RNDG_TYPE : MF_Config:MF_ROUNDING_PARAM__NAV_RNDG_TYPE required
+			@i18n:Label (en="NAV Rounding Type")
+			@i18n:Tooltip (en="NAV Rounding Type")
+			@t24:i (align=L, inputBehaviour=I, maxLength=13, sysNumber=9.0, core=true, t24Name=NAV.RNDG.TYPE)
+		RESERVED3 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=10.0, core=true, businessType=A, t24Name=RESERVED3)
+		RESERVED2 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=11.0, core=true, businessType=A, t24Name=RESERVED2)
+		RESERVED1 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=12.0, core=true, businessType=A, t24Name=RESERVED1)
+		RECORD_STATUS : mml:string
+			@i18n:Label (en="Record Status", fr=Statut, es=Estado)
+			@i18n:Tooltip (fr="Statut de l\'enregistrement")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=13.0, core=true, businessType=STAT, t24Name=RECORD.STATUS)
+		CURR_NO : mml:Integer
+			@i18n:Label (en="Curr No", fr="N° version", es="No. Actual")
+			@i18n:Tooltip (fr="Numéro de version")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=14.0, core=true, t24Name=CURR.NO)
+		INPUTTER -> byValue MF_Config:MF_ROUNDING_PARAM__INPUTTER *
+		DATE_TIME -> byValue MF_Config:MF_ROUNDING_PARAM__DATE_TIME *
+		AUTHORISER : mml:string
+			@i18n:Label (en=Authoriser, fr="Validé par", es=Autorizador)
+			@i18n:Tooltip (en="Indicates the User who Authorises the record", fr="Utilisateur de validation", es="El usuario que autorizó el registro")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=17.0, core=true, businessType=A, t24Name=AUTHORISER)
+		CO_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company, fr=Entité, es="Compañía")
+			@i18n:Tooltip (fr="Code établissement ou agence")
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=18.0, core=true, businessType=A, t24Name=CO.CODE)
+		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Dept Code", fr=Service, es=Departamento)
+			@i18n:Tooltip (fr="Code du service")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=19.0, core=true, t24Name=DEPT.CODE)
+		AUDITOR_CODE : mml:string
+			@i18n:Label (en="Auditor Code", fr="Audité par", es="Código de Auditor")
+			@i18n:Tooltip (en="Auditor Code", fr="Utilisateur d\'audit", es="Nombre del auditor")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=20.0, core=true, businessType=A, t24Name=AUDITOR.CODE)
+		AUDIT_DATE_TIME : mml:dateTime
+			@i18n:Label (en="Audit Date Time", fr="Audité le", es="Fecha/Hora de Audit.")
+			@i18n:Tooltip (en="Date and time when record was audited", fr="Date et heure d\'audit", es="Fecha y Hora de Auditoría ")
+			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=21.0, core=true, businessType=RELTIME, t24Name=AUDIT.DATE.TIME)
+	}
+	MF_ROUNDING_PARAM__DESCRIPTION
+	{
+		DESCRIPTION : mml:string required
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, multiLanguage=true, sysNumber=1.0, core=true, businessType=A, t24Name=DESCRIPTION)
+	}
+	MF_ROUNDING_PARAM__INPUTTER
+	{
+		INPUTTER : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=15.0, core=true, businessType=A, t24Name=INPUTTER)
+	}
+	MF_ROUNDING_PARAM__DATE_TIME
+	{
+		DATE_TIME : mml:dateTime
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=16.0, core=true, businessType=RELTIME, t24Name=DATE.TIME)
+	}
+}
+Enumerations {
+	MF_AMORT_MASTER__AMORT_DESC__ACTIVE_CLOSE : mml:string
+		ACTIVE=ACTIVE
+		CLOSE=CLOSE
+	MF_FUND_MASTER__INTERNAL_FUND : mml:string
+		Y=Y
+	MF_FUND_MASTER__FUND_TYPE : mml:string
+		OPEN__ENDED=OPEN-ENDED
+		CLOSED__ENDED=CLOSED-ENDED
+	MF_FUND_MASTER__DFUND_OR_FOF : mml:string
+		DIRECT=DIRECT
+		FOF=FOF
+	MF_FUND_MASTER__MIN_INIT_ACTION : mml:string
+		ERROR=ERROR
+		OVERRIDE=OVERRIDE
+	MF_FUND_MASTER__MIN_ENS_ACTION : mml:string
+		ERROR=ERROR
+		OVERRIDE=OVERRIDE
+	MF_FUND_MASTER__MIN_REDM_PRD_ACTN : mml:string
+		ERROR=ERROR
+		OVERRIDE=OVERRIDE
+	MF_FUND_MASTER__MIN_HLDG_ACTION : mml:string
+		ERROR=ERROR
+		OVERRIDE=OVERRIDE
+	MF_FUND_MASTER__MIN_PERIOD_ACTION : mml:string
+		ERROR=ERROR
+		OVERRIDE=OVERRIDE
+	MF_FUND_MASTER__MIN_REDEM_UNIT_VAL : mml:string
+		UNITS=UNITS
+		VALUE=VALUE
+	MF_FUND_MASTER__MIN_REDEM_ACTION : mml:string
+		ERROR=ERROR
+		OVERRIDE=OVERRIDE
+	MF_FUND_MASTER__PLAN_ALLOWED : mml:string
+		YES=YES
+		NO=NO
+	MF_FUND_MASTER__ALLOW_FUND_SWITCH : mml:string
+		YES=YES
+		NO=NO
+	MF_FUND_MASTER__ALLOW_UNIT_SWITCH : mml:string
+		YES=YES
+		NO=NO
+	MF_FUND_MASTER__PRICING_METHOD : mml:string
+		HISTORICAL=HISTORICAL
+		FORWARD=FORWARD
+	MF_FUND_MASTER__TRANS_TYPE__HOLD_PERIOD__DISC_TYPE : mml:string
+		PERCENTAGE=PERCENTAGE
+		AMOUNT=AMOUNT
+	MF_PARAMETER__BUSINESS_MODEL : mml:string
+		FMC=FMC
+		RETAIL=RETAIL
+		BOTH=BOTH
+	MF_PARAMETER__FUND_GL_REQD : mml:string
+		Y=Y
+	MF_PARAMETER__SETT_ACCT_TYPE : mml:string
+		NOSTRO=NOSTRO
+		INTERNAL=INTERNAL
+	MF_ROUNDING_PARAM__SUBS_RNDG_TYPE : mml:string
+		ROUNDUP=ROUNDUP
+		ROUNDDOWN=ROUNDDOWN
+		APPROXIMATION=APPROXIMATION
+	MF_ROUNDING_PARAM__REDM_AMT_RNDG_TYPE : mml:string
+		ROUNDUP=ROUNDUP
+		ROUNDDOWN=ROUNDDOWN
+		APPROXIMATION=APPROXIMATION
+	MF_ROUNDING_PARAM__REDM_UNT_RNDG_TYPE : mml:string
+		ROUNDUP=ROUNDUP
+		ROUNDDOWN=ROUNDDOWN
+		APPROXIMATION=APPROXIMATION
+	MF_ROUNDING_PARAM__NAV_RNDG_TYPE : mml:string
+		ROUNDUP=ROUNDUP
+		ROUNDDOWN=ROUNDDOWN
+		APPROXIMATION=APPROXIMATION
+}

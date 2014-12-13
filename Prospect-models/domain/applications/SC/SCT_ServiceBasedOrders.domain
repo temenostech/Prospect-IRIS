@@ -1,0 +1,909 @@
+# UTF-8
+/* Service Based Orders */
+Domain SCT_ServiceBasedOrders
+	@t24:i (module=SC)
+	@java:Package (value=com.temenos.t24.datamodel.sc.sct_servicebasedorders)
+namespace "http://www.temenos.com/t24/SCT_ServiceBasedOrders"
+metamodelVersion 4.3.0.20110527
+Classes {
+	AM_SC_BROKER_MOVEMENT
+		@t24:i (t24Name=AM.SC.BROKER.MOVEMENT, level=F, type=L, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		WORK_KEY -> SCT_ServiceBasedOrders:AM_SC_BROKER_MOVEMENT PK required
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=0.0, core=true, businessType=A, t24Name=WORK.KEY)
+		NOMINAL : mml:Integer
+			@i18n:Label (en=Nominal, fr=Nominal, es=Nominales)
+			@i18n:Tooltip (en="No of Units or Amount", fr=Nominal)
+			@t24:i (align=R, inputBehaviour=I, maxLength=35, sysNumber=1.0, core=true, t24Name=NOMINAL)
+		SECURITY_NO -> SCO_SecurityMasterMaintenance:SECURITY_MASTER
+			@i18n:Label (en="Security No", fr="Code valeur", es="No. de Título")
+			@i18n:Tooltip (en="Indicates the security code/number", fr="Code valeur", es="Indica un Título Valor válido")
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=2.0, core=true, businessType=SEC, t24Name=SECURITY.NO)
+		TRANSACTION_CODE -> SC_Config:SC_TRANS_NAME
+			@i18n:Label (en="Transaction Code", fr="Code opération", es="Código Transacción")
+			@i18n:Tooltip (en="Indicates the Transaction Type", fr="Code de l\'opération", es="Indica el Tipo de transacción")
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=3.0, core=true, businessType=A, t24Name=TRANSACTION.CODE)
+		DEPOSITORY -> ST_Customer:CUSTOMER
+			@i18n:Label (en=Depository, fr=Dépositaire, es=Depositario)
+			@i18n:Tooltip (en="Depository the Security to be delivered from/to", fr=Dépositaire, es="Depositario de Título Valor a ser enviado de/a")
+			@t24:i (align=R, inputBehaviour=I, maxLength=35, sysNumber=4.0, core=true, businessType=CUS, t24Name=DEPOSITORY)
+		SERVICE_REF : mml:string
+			@i18n:Label (en="Bulk Order Id", fr="Référence de Service", es="ID Volumen de Orden")
+			@i18n:Tooltip (fr="Référence de Service ")
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=5.0, core=true, businessType=A, t24Name=SERVICE.REF)
+		THREAD_KEY : mml:string
+			@i18n:Label (en="Thread Key", fr="Clé de fil", es="Clave de Canal")
+			@i18n:Tooltip (en="Holds the thread Key for service based orders", fr="Clé de fil ", es="Clave de Canal para Órdenes de servicio")
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=6.0, core=true, businessType=A, t24Name=THREAD.KEY)
+		NOMINEE_CODE -> SC_Config:NOMINEE_CODE
+			@i18n:Label (en="Nominee Code", fr="Code Nominee", es="Código del Nominado")
+			@i18n:Tooltip (en="Identifies the Nominee Company ", fr="Code Nominee", es="Identifica la Compañía Nominada")
+			@t24:i (align=L, inputBehaviour=I, maxLength=5, sysNumber=7.0, core=true, businessType=A, t24Name=NOMINEE.CODE)
+		LOAD_COMPANY : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=11, sysNumber=8.0, core=true, businessType=A, t24Name=LOAD.COMPANY)
+	}
+	SC_OBC_CUST_DETAIL
+		@t24:i (t24Name=SC.OBC.CUST.DETAIL, level=F, type=H, allowedFunctions="A C D E H I L P Q R S", localRefAllowed=true)
+	{
+		REFERENCE_NO -> SCT_ServiceBasedOrders:SC_OBC_CUST_DETAIL PK required
+			@i18n:Label (en="Reference No", fr=Référence, es="No. de Referencia")
+			@i18n:Tooltip (en="Unique reference which identifies the transaction", fr=Référence, es="Ref. única que identifica la transacción")
+			@t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=0.0, core=true, businessType=S, t24Name=REFERENCE.NO)
+		CUSTOMER_NO -> ST_Customer:CUSTOMER required
+			@i18n:Label (en="Customer No", fr="Code client", es="No. de Cliente")
+			@i18n:Tooltip (en="Identifies the Customer for the transaction.", fr="Code client", es="Identifica al Cliente de la transacción")
+			@t24:i (align=R, inputBehaviour=F, maxLength=10, sysNumber=1.0, core=true, businessType=CUS, t24Name=CUSTOMER.NO)
+		SECURITY_NO -> SCO_SecurityMasterMaintenance:SECURITY_MASTER
+			@i18n:Label (en="Security No", fr="Code valeur", es="No. de Título")
+			@i18n:Tooltip (en="Indicates the security code/number", fr="Code valeur", es="Indica un Título Valor válido")
+			@t24:i (align=L, inputBehaviour=F, maxLength=12, sysNumber=2.0, core=true, businessType=SEC, t24Name=SECURITY.NO)
+		SECURITY_ACCOUNT -> SCO_PortfolioMaintenance:SEC_ACC_MASTER
+			@i18n:Label (en=Portfolio, fr=Portefeuille, es="Cuenta de Título")
+			@i18n:Tooltip (fr=Portefeuille)
+			@t24:i (align=L, inputBehaviour=F, maxLength=14, sysNumber=3.0, core=true, businessType=SAM, t24Name=SECURITY.ACCOUNT)
+		RESERVED48 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=4.0, core=true, businessType=A, t24Name=RESERVED48)
+		VALUE : mml:Double
+			@i18n:Label (en=Value, fr=Valeur, es="Fecha Valor")
+			@i18n:Tooltip (en=Value, fr="Date de valeur")
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=5.0, core=true, businessType=AMT, t24Name=VALUE)
+		TRANSACTION_CODE -> SC_Config:SC_TRANS_NAME
+			@i18n:Label (en="Transaction Code", fr="Code opération", es="Código Transacción")
+			@i18n:Tooltip (en="Indicates the Transaction Type", fr="Code de l\'opération", es="Indica el Tipo de transacción")
+			@t24:i (align=L, inputBehaviour=F, maxLength=3, sysNumber=6.0, core=true, businessType=S, t24Name=TRANSACTION.CODE)
+		THEOR_NOM : mml:string
+			@i18n:Label (en="Theor Nom", fr="Nominal théorique", es="Nombre de Teoría")
+			@i18n:Tooltip (fr="Nominal théorique")
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=7.0, core=true, businessType=NOMAMT, t24Name=THEOR.NOM)
+		NOMINAL : mml:string
+			@i18n:Label (en=Nominal, fr=Nominal, es=Nominales)
+			@i18n:Tooltip (en="No of Units or Amount", fr=Nominal)
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=8.0, core=true, businessType=NOMAMT, t24Name=NOMINAL)
+		EXT_CUSTODIAN -> ST_Customer:CUSTOMER
+			@i18n:Label (en="Ext Custodian", fr="Dépositaire externe")
+			@i18n:Tooltip (en="Ext Custodian", fr="Dépositaire externe")
+			@t24:i (align=R, inputBehaviour=N, maxLength=10, sysNumber=9.0, core=true, t24Name=EXT.CUSTODIAN)
+		RESERVED44 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=10.0, core=true, businessType=A, t24Name=RESERVED44)
+		RESERVED43 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=11.0, core=true, businessType=A, t24Name=RESERVED43)
+		RESERVED42 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=12.0, core=true, businessType=A, t24Name=RESERVED42)
+		RESERVED41 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=13.0, core=true, businessType=A, t24Name=RESERVED41)
+		RESERVED40 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=14.0, core=true, businessType=A, t24Name=RESERVED40)
+		RESERVED39 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=15.0, core=true, businessType=A, t24Name=RESERVED39)
+		RESERVED38 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=16.0, core=true, businessType=A, t24Name=RESERVED38)
+		RESERVED37 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=17.0, core=true, businessType=A, t24Name=RESERVED37)
+		RESERVED36 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=18.0, core=true, businessType=A, t24Name=RESERVED36)
+		RESERVED35 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=19.0, core=true, businessType=A, t24Name=RESERVED35)
+		RESERVED34 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=20.0, core=true, businessType=A, t24Name=RESERVED34)
+		RESERVED33 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=21.0, core=true, businessType=A, t24Name=RESERVED33)
+		RESERVED32 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=22.0, core=true, businessType=A, t24Name=RESERVED32)
+		RESERVED31 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=23.0, core=true, businessType=A, t24Name=RESERVED31)
+		RESERVED30 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=24.0, core=true, businessType=A, t24Name=RESERVED30)
+		RESERVED29 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=25.0, core=true, businessType=A, t24Name=RESERVED29)
+		RESERVED28 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=26.0, core=true, businessType=A, t24Name=RESERVED28)
+		MARKET_VALUE : mml:Double
+			@i18n:Label (en="End Market Value", fr="Valeur du marché", es="Valor Fin de Mercado")
+			@i18n:Tooltip (fr="Valeur du marché financier", es="Valor de Fin de Mercado")
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=27.0, core=true, businessType=AMT, t24Name=MARKET.VALUE)
+		PORT_PERCENT : mml:string
+			@i18n:Label (en="Portfolio Percent", fr="Pourcentage Portefeuille", es="Porcentaje Cartera")
+			@i18n:Tooltip (en="Portfolio Percent", fr="Pourcentage Portefeuille ", es="Porcentaje de Cartera ")
+			@t24:i (align=R, inputBehaviour=N, maxLength=6, sysNumber=28.0, core=true, businessType=R, t24Name=PORT.PERCENT)
+		DEPOSITORY -> ST_Customer:CUSTOMER
+			@i18n:Label (en=Depository, fr=Dépositaire, es=Depositario)
+			@i18n:Tooltip (en="Depository the Security to be delivered from/to", fr=Dépositaire, es="Depositario de Título Valor a ser enviado de/a")
+			@t24:i (align=R, inputBehaviour=F, maxLength=11, sysNumber=29.0, core=true, businessType=CUS, t24Name=DEPOSITORY)
+		RESERVED25 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=30.0, core=true, businessType=A, t24Name=RESERVED25)
+		RESERVED24 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=31.0, core=true, businessType=A, t24Name=RESERVED24)
+		RESERVED23 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=32.0, core=true, businessType=A, t24Name=RESERVED23)
+		RESERVED22 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=33.0, core=true, businessType=A, t24Name=RESERVED22)
+		RESERVED21 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=34.0, core=true, businessType=A, t24Name=RESERVED21)
+		SERVICE_REF : mml:string required
+			@i18n:Label (en="Bulk Order Id", fr="Référence de Service", es="ID Volumen de Orden")
+			@i18n:Tooltip (fr="Référence de Service ")
+			@t24:i (align=L, inputBehaviour=F, maxLength=16, sysNumber=35.0, core=true, businessType=A, t24Name=SERVICE.REF)
+		THREAD_KEY : mml:string
+			@i18n:Label (en="Thread Key", fr="Clé de fil", es="Clave de Canal")
+			@i18n:Tooltip (en="Holds the thread Key for service based orders", fr="Clé de fil ", es="Clave de Canal para Órdenes de servicio")
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=36.0, core=true, businessType=A, t24Name=THREAD.KEY)
+		SOO_CUST_DETAIL_ID : mml:string
+			@i18n:Label (en="Soo Cust Detail Id", fr="Id Dét du Clt de SOO", es=IDDet.Clte.Ord.Abie.)
+			@i18n:Tooltip (fr="Id Dét du Clt de SOO")
+			@t24:i (align=L, inputBehaviour=N, maxLength=16, sysNumber=37.0, core=true, businessType=A, t24Name=SOO.CUST.DETAIL.ID)
+		TRADE_CCY -> FIN_CurrencyConfig:CURRENCY
+			@i18n:Label (en="Trade Currency", fr=Devise, es="Moneda de Negocio")
+			@i18n:Tooltip (en="Identifies the currency of the transaction", fr="Code devise", es="Identifica la moneda de la transacción")
+			@t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=38.0, core=true, businessType=CCY, t24Name=TRADE.CCY)
+		RESERVED19 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=39.0, core=true, businessType=A, t24Name=RESERVED19)
+		RESERVED18 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=40.0, core=true, businessType=A, t24Name=RESERVED18)
+		RESERVED17 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=41.0, core=true, businessType=A, t24Name=RESERVED17)
+		RESERVED16 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=42.0, core=true, businessType=A, t24Name=RESERVED16)
+		RESERVED15 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=43.0, core=true, businessType=A, t24Name=RESERVED15)
+		RESERVED14 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=44.0, core=true, businessType=A, t24Name=RESERVED14)
+		RESERVED13 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=45.0, core=true, businessType=A, t24Name=RESERVED13)
+		RESERVED12 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=46.0, core=true, businessType=A, t24Name=RESERVED12)
+		RESERVED11 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=47.0, core=true, businessType=A, t24Name=RESERVED11)
+		RESERVED10 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=48.0, core=true, businessType=A, t24Name=RESERVED10)
+		RESERVED09 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=49.0, core=true, businessType=A, t24Name=RESERVED09)
+		RESERVED08 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=50.0, core=true, businessType=A, t24Name=RESERVED08)
+		RESERVED07 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=51.0, core=true, businessType=A, t24Name=RESERVED07)
+		RESERVED06 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=52.0, core=true, businessType=A, t24Name=RESERVED06)
+		RESERVED05 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=53.0, core=true, businessType=A, t24Name=RESERVED05)
+		RESERVED04 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=54.0, core=true, businessType=A, t24Name=RESERVED04)
+		RESERVED03 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=55.0, core=true, businessType=A, t24Name=RESERVED03)
+		RESERVED02 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=56.0, core=true, businessType=A, t24Name=RESERVED02)
+		RESERVED01 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=57.0, core=true, businessType=A, t24Name=RESERVED01)
+		OVERRIDE -> byValue SCT_ServiceBasedOrders:SC_OBC_CUST_DETAIL__OVERRIDE *
+		RECORD_STATUS : mml:string
+			@i18n:Label (en="Record Status", fr=Statut, es=Estado)
+			@i18n:Tooltip (fr="Statut de l\'enregistrement")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=60.0, core=true, businessType=STAT, t24Name=RECORD.STATUS)
+		CURR_NO : mml:Integer
+			@i18n:Label (en="Curr No", fr="N° version", es="No. Actual")
+			@i18n:Tooltip (fr="Numéro de version")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=61.0, core=true, t24Name=CURR.NO)
+		INPUTTER -> byValue SCT_ServiceBasedOrders:SC_OBC_CUST_DETAIL__INPUTTER *
+		DATE_TIME -> byValue SCT_ServiceBasedOrders:SC_OBC_CUST_DETAIL__DATE_TIME *
+		AUTHORISER : mml:string
+			@i18n:Label (en=Authoriser, fr="Validé par", es=Autorizador)
+			@i18n:Tooltip (en="Indicates the User who Authorises the record", fr="Utilisateur de validation", es="El usuario que autorizó el registro")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=64.0, core=true, businessType=A, t24Name=AUTHORISER)
+		CO_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company, fr=Entité, es="Compañía")
+			@i18n:Tooltip (fr="Code établissement ou agence")
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=65.0, core=true, businessType=A, t24Name=CO.CODE)
+		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Dept Code", fr=Service, es=Departamento)
+			@i18n:Tooltip (fr="Code du service")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=66.0, core=true, t24Name=DEPT.CODE)
+		AUDITOR_CODE : mml:string
+			@i18n:Label (en="Auditor Code", fr="Audité par", es="Código de Auditor")
+			@i18n:Tooltip (en="Auditor Code", fr="Utilisateur d\'audit", es="Nombre del auditor")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=67.0, core=true, businessType=A, t24Name=AUDITOR.CODE)
+		AUDIT_DATE_TIME : mml:dateTime
+			@i18n:Label (en="Audit Date Time", fr="Audité le", es="Fecha/Hora de Audit.")
+			@i18n:Tooltip (en="Date and time when record was audited", fr="Date et heure d\'audit", es="Fecha y Hora de Auditoría ")
+			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=68.0, core=true, businessType=RELTIME, t24Name=AUDIT.DATE.TIME)
+	}
+	SC_OBC_CUST_DETAIL__OVERRIDE
+	{
+		OVERRIDE : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=59.0, core=true, businessType=A, t24Name=OVERRIDE)
+	}
+	SC_OBC_CUST_DETAIL__INPUTTER
+	{
+		INPUTTER : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=62.0, core=true, businessType=A, t24Name=INPUTTER)
+	}
+	SC_OBC_CUST_DETAIL__DATE_TIME
+	{
+		DATE_TIME : mml:dateTime
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=63.0, core=true, businessType=RELTIME, t24Name=DATE.TIME)
+	}
+	SC_SEC_TRADE_CUST_DETAIL
+		@t24:i (t24Name=SC.SEC.TRADE.CUST.DETAIL, level=F, type=H, allowedFunctions="E I L P Q S", localRefAllowed=true)
+	{
+		REFERENCE_NO -> SCT_ServiceBasedOrders:SC_SEC_TRADE_CUST_DETAIL PK required
+			@i18n:Label (en="Reference No", fr=Référence, es="No. de Referencia")
+			@i18n:Tooltip (en="Unique reference which identifies the transaction", fr=Référence, es="Ref. única que identifica la transacción")
+			@t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=0.0, core=true, businessType=S, t24Name=REFERENCE.NO)
+		SECURITY_NO -> SCO_SecurityMasterMaintenance:SECURITY_MASTER
+			@i18n:Label (en="Security No", fr="Code valeur", es="No. de Título")
+			@i18n:Tooltip (en="Indicates the security code/number", fr="Code valeur", es="Indica un Título Valor válido")
+			@t24:i (align=L, inputBehaviour=N, maxLength=12, sysNumber=1.0, core=true, businessType=SEC, t24Name=SECURITY.NO)
+		CUSTOMER_NO -> ST_Customer:CUSTOMER
+			@i18n:Label (en="Customer No", fr="Code client", es="No. de Cliente")
+			@i18n:Tooltip (en="Identifies the Customer for the transaction.", fr="Code client", es="Identifica al Cliente de la transacción")
+			@t24:i (align=R, inputBehaviour=N, maxLength=10, sysNumber=2.0, core=true, businessType=CUS, t24Name=CUSTOMER.NO)
+		TRANS_CODE -> SC_Config:SC_TRANS_NAME
+			@i18n:Label (en="Trans Code", fr="Code opération", es="Código Trs.")
+			@i18n:Tooltip (en="Indicates the Transaction Code", fr="Code opération")
+			@t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=3.0, core=true, businessType=S, t24Name=TRANS.CODE)
+		CUST_SEC_ACC -> SCO_PortfolioMaintenance:SEC_ACC_MASTER
+			@i18n:Label (en="Cust Sec Account", fr="No. du portefeuille", es="Cuenta Título Cliente")
+			@i18n:Tooltip (en="Customer Security Account", fr="Numéro du portefeuille", es="Cuenta Título de Cliente")
+			@t24:i (align=L, inputBehaviour=N, maxLength=14, sysNumber=4.0, core=true, businessType=SAM, t24Name=CUST.SEC.ACC)
+		CUST_ACC_NO -> ACM_AccountOpening:ACCOUNT
+			@i18n:Label (en="Cu Account No", fr="N° de compte", es="No. Cta. de Cliente")
+			@i18n:Tooltip (en="Identifies the customer account", fr="Numéro de compte", es="Especifica la Cuenta del Cliente")
+			@t24:i (align=R, inputBehaviour=I, maxLength=16, sysNumber=5.0, core=true, businessType=ACC, t24Name=CUST.ACC.NO)
+		CUST_NOMINEE -> SC_Config:NOMINEE_CODE
+			@i18n:Label (en="Customer Nominee", fr="Etablisst désigné de Clt", es="Nominado del Cliente")
+			@i18n:Tooltip (fr="Etablisst désigné de Client")
+			@t24:i (align=L, inputBehaviour=N, maxLength=14, sysNumber=6.0, core=true, businessType=A, t24Name=CUST.NOMINEE)
+		SUB_ACCOUNT : mml:Integer
+			@i18n:Label (en="Sub Account", fr=Sous-compte, es="Sub Cuenta")
+			@i18n:Tooltip (fr=Sous-compte)
+			@t24:i (align=R, inputBehaviour=N, maxLength=16, sysNumber=7.0, core=true, t24Name=SUB.ACCOUNT)
+		CUST_NO_NOM -> byValue SCT_ServiceBasedOrders:SC_SEC_TRADE_CUST_DETAIL__CUST_NO_NOM *
+		CUST_TOT_NOM : mml:string
+			@i18n:Label (en="Cust Total Nominal", fr="Nominal total Clt", es="Nominal Total Cliente")
+			@i18n:Tooltip (en="Customer Total Nominal", fr="Nominal total Client", es="Nominal Total Cliente")
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=10.0, core=true, businessType=NOMAMT, t24Name=CUST.TOT.NOM)
+		CU_GROSS_AM_SEC : mml:string
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=11.0, core=true, businessType=BMT, t24Name=CU.GROSS.AM.SEC)
+		CU_GROSS_AM_TRD : mml:string
+			@i18n:Label (en="Cust Gross Amt Trade", fr="Mntt Clt brut de Trans", es="Mto.Bruto Neg.Cliente")
+			@i18n:Tooltip (en="Customer Gross Amount Trade", fr="Montant client brut de l\'opération", es="Monto Bruto de Negocio de Cliente")
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=12.0, core=true, businessType=BMT, t24Name=CU.GROSS.AM.TRD)
+		CU_REALLOWANCE : mml:string
+			@t24:i (align=R, inputBehaviour=N, maxLength=12, sysNumber=13.0, core=true, businessType=R, t24Name=CU.REALLOWANCE)
+		CU_REALLOW_AMT : mml:string
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=14.0, core=true, businessType=BMT, t24Name=CU.REALLOW.AMT)
+		CUST_INTR_AMT : mml:Double
+			@i18n:Label (en="Customer Interest Amount", fr="Montant Intt Clt", es="Monto Interés de Cliente")
+			@i18n:Tooltip (fr="Montant Intérêt Client")
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=15.0, core=true, businessType=AMT, t24Name=CUST.INTR.AMT)
+		CU_GROSS_ACCR : mml:Double
+			@i18n:Label (en="Customer Gross Accrued", fr="Mntt Clt brut avec Intt", es="Devengado Bruto Cliente")
+			@i18n:Tooltip (fr="Montant Client brut avec Intérêts")
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=16.0, core=true, businessType=AMT, t24Name=CU.GROSS.ACCR)
+		CU_BRKR_COMM : mml:string
+			@i18n:Label (en="Customer Broker Commission", fr="Cion de courtage du client", es="Comis. Agente Cliente")
+			@i18n:Tooltip (en="Amount of Broker Commission charged to customer", fr="Commission de courtage du client", es="Comisión de Agente Cliente ")
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=17.0, core=true, businessType=BMT, t24Name=CU.BRKR.COMM)
+		CU_FOREIGN_FEE : mml:string
+			@i18n:Label (en="Cu Fgn Fee", fr="Frais étrangers client", es="Cuota extranjera Clte.")
+			@i18n:Tooltip (en="Foreign Fee amount charged to the Customer ", fr="Frais étrangers client", es="Monto de Cuota Extranjera cobrada al Cliente ")
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=18.0, core=true, businessType=BMT, t24Name=CU.FOREIGN.FEE)
+		CU_COMMISSION : mml:string
+			@i18n:Label (en="Cu Commission", fr="Commission client", es="Comisión de Cliente")
+			@i18n:Tooltip (fr="Commission client")
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=19.0, core=true, businessType=BMT, t24Name=CU.COMMISSION)
+		CU_COMM_TAX : mml:string
+			@i18n:Label (en="Customer Commission Tax", fr="Impôt Cion Clt", es="Impuesto Comisión Cliente")
+			@i18n:Tooltip (fr="Impôt Commission Client")
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=20.0, core=true, businessType=BMT, t24Name=CU.COMM.TAX)
+		CU_STAMP_TAX : mml:string
+			@i18n:Label (en="Cu Stamp Tax", fr="Droit de timbre client", es="Timbre Impuesto Clte.")
+			@i18n:Tooltip (en="Stamp Tax amount charged to the Customer ", fr="Droit de timbre client", es="Monto del Timbre de Impuesto cobrado al Cliente ")
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=21.0, core=true, businessType=BMT, t24Name=CU.STAMP.TAX)
+		CU_EBV_FEES : mml:string
+			@i18n:Label (en="Customer EBV Fees", es="Cuotas EBV de Cliente")
+			@i18n:Tooltip (en="Amount of EBV Fees charged to the Customer", es="Monto de Cuotas EBV cobradas al Cliente ")
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=22.0, core=true, businessType=BMT, t24Name=CU.EBV.FEES)
+		CU_FEES_MISC : mml:string
+			@i18n:Label (en="Customer Miscellaneous Fees", fr="Commissions diverses client", es="Cuo. Varias Cliente")
+			@i18n:Tooltip (en="Indicates the customer miscellaneous fees", fr="Commissions diverses client", es="Cuotas Varias de Cliente ")
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=23.0, core=true, businessType=BMT, t24Name=CU.FEES.MISC)
+		CU_DISC_PCENT : mml:string
+			@i18n:Label (en="Customer Discount Percentage", fr="% escompte de client", es="% de Desc. Cliente")
+			@i18n:Tooltip (en="Customer discount applied to CU.NET.AM.TRD", fr="% escompte de client", es="Porcentaje de Descuento Cliente ")
+			@t24:i (align=R, inputBehaviour=N, maxLength=16, sysNumber=24.0, core=true, businessType=R, t24Name=CU.DISC.PCENT)
+		CU_DISC_AMT : mml:string
+			@i18n:Label (en="Customer Discount Amount", es="Mto. Desc. de Cliente")
+			@i18n:Tooltip (en="Indicates the customer discount amount", es="Monto de Descuento Cliente ")
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=25.0, core=true, businessType=R, t24Name=CU.DISC.AMT)
+		CU_WHT_PERC : mml:Integer
+			@i18n:Label (en="Pourcentage retenu", es="Porcentaje retenido")
+			@t24:i (align=R, inputBehaviour=N, maxLength=5, sysNumber=26.0, core=true, t24Name=CU.WHT.PERC)
+		CU_WHT_TAX -> byValue SCT_ServiceBasedOrders:SC_SEC_TRADE_CUST_DETAIL__CU_WHT_TAX *
+		CU_TAX_CODE -> byValue SCT_ServiceBasedOrders:SC_SEC_TRADE_CUST_DETAIL__CU_TAX_CODE *
+		CU_INT_CTR : mml:string
+			@t24:i (align=R, inputBehaviour=N, maxLength=15, sysNumber=34.0, core=true, businessType=R, t24Name=CU.INT.CTR)
+		CU_ADVICE_REQD : SCT_ServiceBasedOrders:SC_SEC_TRADE_CUST_DETAIL__CU_ADVICE_REQD
+			@i18n:Label (en="Customer Adv Reqd", fr="Avis de client est requis", es="Aviso Cliente Req.")
+			@i18n:Tooltip (en="Customer Advice Required", fr="Avis de client est requis", es="Aviso Requerido Cliente")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=35.0, core=true, t24Name=CU.ADVICE.REQD)
+		CU_NET_AM_TRD : mml:string
+			@i18n:Label (en="Cust Net Amt Trade", fr="Mntt Clt net Trans", es="Mto. Neto Neg.Cliente")
+			@i18n:Tooltip (en="Customer Net Amount Trade", fr="Montant client net de l\'opération", es="Monto Neto de Negocio de Cliente")
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=36.0, core=true, businessType=BMT, t24Name=CU.NET.AM.TRD)
+		CU_EX_RATE_REF : mml:string
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=37.0, core=true, businessType=R, t24Name=CU.EX.RATE.REF)
+		CU_EX_RATE_ACC : mml:string
+			@i18n:Label (en=Exch.Rate, fr="Taux de change client", es="Tipo de Cambio")
+			@i18n:Tooltip (fr="Taux de change client")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=38.0, core=true, businessType=R, t24Name=CU.EX.RATE.ACC)
+		CU_ACCOUNT_CCY -> FIN_CurrencyConfig:CURRENCY
+			@i18n:Label (en="Customer Account Currency", fr="Dev du cpte client", es="Mda. Cta. de Cliente")
+			@i18n:Tooltip (en="Indicates the currency of customer account", fr="Devise du compte client", es="Moneda de Cuenta de Cliente ")
+			@t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=39.0, core=true, businessType=CCY, t24Name=CU.ACCOUNT.CCY)
+		CU_AMOUNT_DUE : mml:string
+			@i18n:Label (en="Customer Amt Due", fr="Montant dû par le client", es="Monto Debido Cliente")
+			@i18n:Tooltip (en="Customer Amount Due", fr="Montant dû par le client", es="Monto Debido Cliente")
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=40.0, core=true, businessType=BMT, t24Name=CU.AMOUNT.DUE)
+		CU_REF_CCY -> FIN_CurrencyConfig:CURRENCY
+			@i18n:Label (en="Customer Reference Currency", es="Moneda Ref. de Cliente")
+			@t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=41.0, core=true, businessType=CCY, t24Name=CU.REF.CCY)
+		CU_DELIV_INSTR -> SC_Config:SC_DEL_INSTR
+			@i18n:Label (en="Customer Del Instr", fr="Instr de livraison Clt", es="Instr.Entrega Cliente")
+			@i18n:Tooltip (en="Customer Delivery Instruction", fr="Instr de livraison Client", es="Instrucción de Entrega de Cliente")
+			@t24:i (align=L, inputBehaviour=I, maxLength=5, sysNumber=42.0, core=true, businessType=S, t24Name=CU.DELIV.INSTR)
+		CU_BEN_BANK_1 -> ST_Customer:CUSTOMER
+			@i18n:Label (en="Customer Beneficiary Bank 1", fr="Bque 1 Clt Bénéficiaire", es="Banco Benef. Cliente 1")
+			@i18n:Tooltip (fr="Banque 1 Client Bénéficiaire")
+			@t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=43.0, core=true, businessType=CUS, t24Name=CU.BEN.BANK.1)
+		CU_BEN_BANK_2 -> ST_Customer:CUSTOMER
+			@i18n:Label (en="Customer Beneficiary Bank 2", fr="Bque 2 Clt Bénéficiaire", es="Banco Benef. Cliente 2")
+			@i18n:Tooltip (fr="Banque 2 Client Bénéficiaire")
+			@t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=44.0, core=true, businessType=CUS, t24Name=CU.BEN.BANK.2)
+		CU_BEN_ADDR -> byValue SCT_ServiceBasedOrders:SC_SEC_TRADE_CUST_DETAIL__CU_BEN_ADDR *
+		CU_BEN_ACCT -> byValue SCT_ServiceBasedOrders:SC_SEC_TRADE_CUST_DETAIL__CU_BEN_ACCT *
+		CU_OVE_ADDR -> byValue SCT_ServiceBasedOrders:SC_SEC_TRADE_CUST_DETAIL__CU_OVE_ADDR *
+		CU_MESS_CONTROL -> EB_Delivery:MESSAGE_CONTROL
+			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=48.0, core=true, t24Name=CU.MESS.CONTROL)
+		CU_DELIV_KEY -> byValue SCT_ServiceBasedOrders:SC_SEC_TRADE_CUST_DETAIL__CU_DELIV_KEY *
+		CU_ORDER_NOS -> byValue SCT_ServiceBasedOrders:SC_SEC_TRADE_CUST_DETAIL__CU_ORDER_NOS *
+		CU_ENTITL_ID : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=51.0, core=true, businessType=A, t24Name=CU.ENTITL.ID)
+		CU_NARRATIVE -> byValue SCT_ServiceBasedOrders:SC_SEC_TRADE_CUST_DETAIL__CU_NARRATIVE *
+		CU_NOTES -> byValue SCT_ServiceBasedOrders:SC_SEC_TRADE_CUST_DETAIL__CU_NOTES *
+		COMM_CODE -> ST_ChargeConfig:FT_COMMISSION_TYPE
+			@i18n:Label (en="Commission Code", fr=Commission, es="Código de Comisión")
+			@i18n:Tooltip (en="Indicates the commission code", fr=Commission, es="Indica el código de comisión ")
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=54.0, core=true, businessType=A, t24Name=COMM.CODE)
+		COMM_PERCENT : mml:string
+			@i18n:Label (en="Commission (%)", fr="% de commission", es="(%) de Comisión")
+			@i18n:Tooltip (fr="Pourcentage de la commission")
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=55.0, core=true, businessType=A, t24Name=COMM.PERCENT)
+		COM_TAX_CODE -> ST_ChargeConfig:TAX
+			@i18n:Label (en="Commission Tax code", es="Cód. Impuesto Comis.")
+			@i18n:Tooltip (en="Indicates the commission tax code", es="Indica el código de impuesto de comisión")
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=56.0, core=true, businessType=A, t24Name=COM.TAX.CODE)
+		COM_TAX_BCUR : mml:Double
+			@i18n:Label (en="Commission Tax Bank Ccy", es="Mda. Impu. Com. Bco.")
+			@i18n:Tooltip (en="Indicates the local currencuy of commission tax", es="Indica la moneda local de Impuesto de comisión ")
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=57.0, core=true, businessType=AMT, t24Name=COM.TAX.BCUR)
+		COM_TAX_XRTE : mml:Integer
+			@i18n:Label (en="Commission Tax Exch Rate", es="Tasa Impuesto Com.")
+			@i18n:Tooltip (en="Indicates the commission Tax Exchange Rate ", es="Indica el Tipo de Cambio del Impuesto de comisión")
+			@t24:i (align=R, inputBehaviour=N, maxLength=15, sysNumber=58.0, core=true, t24Name=COM.TAX.XRTE)
+		CU_CAP_INT_AMT : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=59.0, core=true, businessType=AMT, t24Name=CU.CAP.INT.AMT)
+		CU_UNF_GROSS : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=60.0, core=true, businessType=AMT, t24Name=CU.UNF.GROSS)
+		CU_UNF_SEC_GROS : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=61.0, core=true, businessType=AMT, t24Name=CU.UNF.SEC.GROS)
+		CU_COUP_TAX_AMT : mml:string
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=62.0, core=true, businessType=R, t24Name=CU.COUP.TAX.AMT)
+		CGT_BAMT_CCY : mml:string
+			@i18n:Label (en="CG Base Amount Ccy", fr="Dev. Mntt base GC", es="Mda. Mto. Base de GC")
+			@i18n:Tooltip (en="Capital Gains base amount currency", fr="Devise Montant base GC")
+			@t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=63.0, core=true, businessType=CCY, t24Name=CGT.BAMT.CCY)
+		CGT_BASE_AMT : mml:string
+			@i18n:Label (en="CG Base Amount", fr="Montant base Gain Capital", es="Mto. Base de GC")
+			@i18n:Tooltip (en="Amount on which capital gains tax to be calculated", fr="Montant base Gain Capital")
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=64.0, core=true, businessType=BMT, t24Name=CGT.BASE.AMT)
+		CGT_CODE -> byValue SCT_ServiceBasedOrders:SC_SEC_TRADE_CUST_DETAIL__CGT_CODE *
+		CGT_PARAM_COND -> SCT_CapitalGains:CG_PARAM_CONDITION
+			@i18n:Label (en="CGT Parameter Condition", es="Cond.Parám.Gan.Calc.")
+			@i18n:Tooltip (en="Capital Gains method and tax to be applied", es="Condición Parámetros Impuesto Ganancia Calculada")
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=69.0, core=true, businessType=A, t24Name=CGT.PARAM.COND)
+		CGT_SRC_LCL_TAX : mml:string
+			@i18n:Label (en="CGT Source Local Tax", es=Fuen.Impu.L.Gan.Calc.)
+			@i18n:Tooltip (en="Indicates whether CGT is source or local ", es="Fuente de Impuesto Local de Ganancia Calculada ")
+			@t24:i (align=L, inputBehaviour=N, maxLength=6, sysNumber=70.0, core=true, businessType=A, t24Name=CGT.SRC.LCL.TAX)
+		ODD_RTS_CGT : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=71.0, core=true, businessType=A, t24Name=ODD.RTS.CGT)
+		DISCOUNT_AMOUNT : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=72.0, core=true, businessType=AMT, t24Name=DISCOUNT.AMOUNT)
+		AUTO_CUST_SETT : SCT_ServiceBasedOrders:SC_SEC_TRADE_CUST_DETAIL__AUTO_CUST_SETT
+			@i18n:Label (en="Auto Cust Settle", fr="Réglt Auto Clt", es="Liquid. Auto. Cliente")
+			@i18n:Tooltip (en="Automatic settlement of Customer nominal and cash ", fr="Règlement Automatique Client", es="Liquid. auto. de Cliente de nominal y efectivo")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=73.0, core=true, t24Name=AUTO.CUST.SETT)
+		PORT_CONST_NO -> SCT_Constraints:PORTFOLIO_CONSTRAINT
+			@t24:i (align=L, inputBehaviour=N, maxLength=22, sysNumber=74.0, core=true, businessType=A, t24Name=PORT.CONST.NO)
+		SERVICE_REF : mml:string
+			@i18n:Label (en="Bulk Order Id", fr="Référence de Service", es="ID Volumen de Orden")
+			@i18n:Tooltip (fr="Référence de Service ")
+			@t24:i (align=L, inputBehaviour=N, maxLength=16, sysNumber=75.0, core=true, businessType=A, t24Name=SERVICE.REF)
+		SOO_CUST_DETAIL_ID : mml:string
+			@i18n:Label (en="Soo Cust Detail Id", fr="Id Dét du Clt de SOO", es=IDDet.Clte.Ord.Abie.)
+			@i18n:Tooltip (fr="Id Dét du Clt de SOO")
+			@t24:i (align=L, inputBehaviour=N, maxLength=16, sysNumber=76.0, core=true, businessType=A, t24Name=SOO.CUST.DETAIL.ID)
+		THREAD_KEY : mml:string
+			@i18n:Label (en="Thread Key", fr="Clé de fil", es="Clave de Canal")
+			@i18n:Tooltip (en="Holds the thread Key for service based orders", fr="Clé de fil ", es="Clave de Canal para Órdenes de servicio")
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=77.0, core=true, businessType=A, t24Name=THREAD.KEY)
+		TRADE_CCY -> FIN_CurrencyConfig:CURRENCY
+			@i18n:Label (en="Trade Currency", fr=Devise, es="Moneda de Negocio")
+			@i18n:Tooltip (en="Identifies the currency of the transaction", fr="Code devise", es="Identifica la moneda de la transacción")
+			@t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=78.0, core=true, businessType=CCY, t24Name=TRADE.CCY)
+		SECURITY_CURRENCY -> FIN_CurrencyConfig:CURRENCY
+			@i18n:Label (en="Security Ccy", fr="Devise du titre", es="Moneda de Título")
+			@i18n:Tooltip (en="Currency in which security was issued and quoted", fr="Devise de la valeur mobilière", es="Moneda en la cual el título fue emitido y citado")
+			@t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=79.0, core=true, businessType=CCY, t24Name=SECURITY.CURRENCY)
+		DEPOSITORY -> ST_Customer:CUSTOMER
+			@i18n:Label (en=Depository, fr=Dépositaire, es=Depositario)
+			@i18n:Tooltip (en="Depository the Security to be delivered from/to", fr=Dépositaire, es="Depositario de Título Valor a ser enviado de/a")
+			@t24:i (align=R, inputBehaviour=N, maxLength=10, sysNumber=80.0, core=true, businessType=CUS, t24Name=DEPOSITORY)
+		NET_TRADE : mml:string
+			@i18n:Label (fr="Net de commissions")
+			@i18n:Tooltip (fr="Opération nette de commissions")
+			@t24:i (align=L, inputBehaviour=N, maxLength=7, sysNumber=81.0, core=true, businessType=A, t24Name=NET.TRADE)
+		INTEREST_RATE : mml:string
+			@i18n:Label (en="Interest Rate", fr="Taux d\'intérêts", es="Tasa de Interés")
+			@i18n:Tooltip (en="Indicates interest rate", fr="Taux d\'intérêts")
+			@t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=82.0, core=true, businessType=R, t24Name=INTEREST.RATE)
+		MATURITY_DATE : mml:date
+			@i18n:Label (en="Maturity Date", fr="Date d\'échéance", es="Fecha de Vencimiento")
+			@i18n:Tooltip (en="Indicates the Maturity Date of the Transaction", fr="Date d\'échéance", es="Indica la Fecha de Vencimiento de la Transacción")
+			@t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=83.0, core=true, businessType=D, t24Name=MATURITY.DATE)
+		TRADE_DATE : mml:date
+			@i18n:Label (en="Trade Date", fr="Date transaction", es="Fecha de Transacción")
+			@i18n:Tooltip (fr="Date de la transaction")
+			@t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=84.0, core=true, businessType=D, t24Name=TRADE.DATE)
+		VALUE_DATE : mml:date
+			@i18n:Label (en="Value Date", fr="Date de valeur", es="Fecha Valor")
+			@i18n:Tooltip (en="Indicates the Value date of the Contract", fr="Date de valeur", es="Fecha en que Carteras serán act. por el evento")
+			@t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=85.0, core=true, businessType=D, t24Name=VALUE.DATE)
+		CASH_HOLD_SETTLE : mml:string
+			@i18n:Label (en="Hold Cash?", fr="Règlement immédiat", es="¿Mantener Efectivo?")
+			@i18n:Tooltip (en="Will cash update the SC.SETTLEMENT application", fr="Règlement immédiat")
+			@t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=86.0, core=true, businessType=A, t24Name=CASH.HOLD.SETTLE)
+		SEC_HOLD_SETTLE : mml:string
+			@i18n:Label (en="Hold Stock?", fr="Contient les titres", es="¿Mantener Acciones?")
+			@i18n:Tooltip (en="Stock will update SC.SETTLEMENT application", fr="Contient les titres", es="Acciones actualizará la aplicación SC.SETTLEMENT ")
+			@t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=87.0, core=true, businessType=A, t24Name=SEC.HOLD.SETTLE)
+		CUST_ACT_SUSP_CAT : mml:Integer
+			@i18n:Label (en="Cust Cash Susp", fr="Catégorie suspens client", es=Cat.Cta.Trans.Cliente)
+			@i18n:Tooltip (en="Suspense account to post customer cash amount", fr="Catégorie suspens client", es="Categoría de Cuenta Transitoria de Cliente")
+			@t24:i (align=R, inputBehaviour=N, maxLength=5, sysNumber=88.0, core=true, t24Name=CUST.ACT.SUSP.CAT)
+		BROK_ACT_SUSP_CAT : mml:Integer
+			@i18n:Label (en="Brok Cash Susp", fr="Catégorie suspens courtier", es="Cta. Orden Efec. Corr.")
+			@i18n:Tooltip (en="Broker suspense account to post suspense amount", fr="Catégorie suspens courtier")
+			@t24:i (align=R, inputBehaviour=N, maxLength=5, sysNumber=89.0, core=true, t24Name=BROK.ACT.SUSP.CAT)
+		MISC_ACT_SUSP_CAT : mml:Integer
+			@i18n:Label (en="Misc Cash Susp", fr="Catégorie montant en suspens", es="Cta. Orden Efec. Varias")
+			@i18n:Tooltip (en="Miscellaneous Cash suspense account", fr="Catégorie montant en suspens ", es="Cuenta varias de Orden de Efectivo")
+			@t24:i (align=R, inputBehaviour=N, maxLength=5, sysNumber=90.0, core=true, t24Name=MISC.ACT.SUSP.CAT)
+		PRICE_TYPE -> SCT_PriceTypeUpdateAndProcessing:PRICE_TYPE
+			@i18n:Label (en="Price Type", fr="Calcul du prix", es="Tipo de Precio")
+			@i18n:Tooltip (fr="Méthode de calcul du prix")
+			@t24:i (align=L, inputBehaviour=N, maxLength=5, sysNumber=91.0, core=true, businessType=S, t24Name=PRICE.TYPE)
+		BROKER_NO -> byValue SCT_ServiceBasedOrders:SC_SEC_TRADE_CUST_DETAIL__BROKER_NO *
+		EXT_CUSTODIAN -> ST_Customer:CUSTOMER
+			@i18n:Label (fr="Dépositaire externe")
+			@i18n:Tooltip (fr="Dépositaire externe")
+			@t24:i (align=R, inputBehaviour=N, maxLength=10, sysNumber=97.0, core=true, t24Name=EXT.CUSTODIAN)
+		CU_INCOME_ACC -> ACM_AccountOpening:ACCOUNT
+			@t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=98.0, core=true, businessType=ANT, t24Name=CU.INCOME.ACC)
+		CU_INCOME_CCY -> FIN_CurrencyConfig:CURRENCY
+			@t24:i (align=R, inputBehaviour=N, maxLength=3, sysNumber=99.0, core=true, t24Name=CU.INCOME.CCY)
+		RESERVED06 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=100.0, core=true, businessType=A, t24Name=RESERVED06)
+		RESERVED05 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=101.0, core=true, businessType=A, t24Name=RESERVED05)
+		RESERVED04 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=102.0, core=true, businessType=A, t24Name=RESERVED04)
+		RESERVED03 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=103.0, core=true, businessType=A, t24Name=RESERVED03)
+		RESERVED02 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=104.0, core=true, businessType=A, t24Name=RESERVED02)
+		RESERVED01 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=105.0, core=true, businessType=A, t24Name=RESERVED01)
+		STATEMENT_NOS -> byValue SCT_ServiceBasedOrders:SC_SEC_TRADE_CUST_DETAIL__STATEMENT_NOS *
+		OVERRIDE -> byValue SCT_ServiceBasedOrders:SC_SEC_TRADE_CUST_DETAIL__OVERRIDE *
+		RECORD_STATUS : mml:string
+			@i18n:Label (en="Record Status", fr=Statut, es=Estado)
+			@i18n:Tooltip (fr="Statut de l\'enregistrement")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=109.0, core=true, businessType=STAT, t24Name=RECORD.STATUS)
+		CURR_NO : mml:Integer
+			@i18n:Label (en="Curr No", fr="N° version", es="No. Actual")
+			@i18n:Tooltip (fr="Numéro de version")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=110.0, core=true, t24Name=CURR.NO)
+		INPUTTER -> byValue SCT_ServiceBasedOrders:SC_SEC_TRADE_CUST_DETAIL__INPUTTER *
+		DATE_TIME -> byValue SCT_ServiceBasedOrders:SC_SEC_TRADE_CUST_DETAIL__DATE_TIME *
+		AUTHORISER : mml:string
+			@i18n:Label (en=Authoriser, fr="Validé par", es=Autorizador)
+			@i18n:Tooltip (en="Indicates the User who Authorises the record", fr="Utilisateur de validation", es="El usuario que autorizó el registro")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=113.0, core=true, businessType=A, t24Name=AUTHORISER)
+		CO_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company, fr=Entité, es="Compañía")
+			@i18n:Tooltip (fr="Code établissement ou agence")
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=114.0, core=true, businessType=A, t24Name=CO.CODE)
+		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Dept Code", fr=Service, es=Departamento)
+			@i18n:Tooltip (fr="Code du service")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=115.0, core=true, t24Name=DEPT.CODE)
+		AUDITOR_CODE : mml:string
+			@i18n:Label (en="Auditor Code", fr="Audité par", es="Código de Auditor")
+			@i18n:Tooltip (en="Auditor Code", fr="Utilisateur d\'audit", es="Nombre del auditor")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=116.0, core=true, businessType=A, t24Name=AUDITOR.CODE)
+		AUDIT_DATE_TIME : mml:dateTime
+			@i18n:Label (en="Audit Date Time", fr="Audité le", es="Fecha/Hora de Audit.")
+			@i18n:Tooltip (en="Date and time when record was audited", fr="Date et heure d\'audit", es="Fecha y Hora de Auditoría ")
+			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=117.0, core=true, businessType=RELTIME, t24Name=AUDIT.DATE.TIME)
+	}
+	SC_SEC_TRADE_CUST_DETAIL__CUST_NO_NOM
+	{
+		CUST_NO_NOM : mml:string
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=8.0, core=true, businessType=NOMAMT, t24Name=CUST.NO.NOM)
+		CUST_PRICE : mml:Double
+			@t24:i (align=L, inputBehaviour=N, maxLength=16, sysNumber=9.0, core=true, businessType=PRICE, t24Name=CUST.PRICE)
+	}
+	SC_SEC_TRADE_CUST_DETAIL__CU_WHT_TAX
+	{
+		CU_WHT_TAX : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=27.0, core=true, businessType=AMT, t24Name=CU.WHT.TAX)
+	}
+	SC_SEC_TRADE_CUST_DETAIL__CU_TAX_CODE
+	{
+		CU_TAX_CODE : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=16, sysNumber=28.0, core=true, businessType=A, t24Name=CU.TAX.CODE)
+		CU_TAX_TYPE : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=16, sysNumber=29.0, core=true, businessType=A, t24Name=CU.TAX.TYPE)
+		CU_TAX_TCY : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=30.0, core=true, businessType=AMT, t24Name=CU.TAX.TCY)
+		CU_TAX_LCY : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=31.0, core=true, businessType=AMT, t24Name=CU.TAX.LCY)
+		CU_MANTAXTCY : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=32.0, core=true, businessType=AMT, t24Name=CU.MANTAXTCY)
+		CU_MANTAXLCY : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=33.0, core=true, businessType=AMT, t24Name=CU.MANTAXLCY)
+	}
+	SC_SEC_TRADE_CUST_DETAIL__CU_BEN_ADDR
+	{
+		CU_BEN_ADDR : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=45.0, core=true, businessType=A, t24Name=CU.BEN.ADDR)
+	}
+	SC_SEC_TRADE_CUST_DETAIL__CU_BEN_ACCT
+	{
+		CU_BEN_ACCT : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=46.0, core=true, businessType=A, t24Name=CU.BEN.ACCT)
+	}
+	SC_SEC_TRADE_CUST_DETAIL__CU_OVE_ADDR
+	{
+		CU_OVE_ADDR : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=47.0, core=true, businessType=S, t24Name=CU.OVE.ADDR)
+	}
+	SC_SEC_TRADE_CUST_DETAIL__CU_DELIV_KEY
+	{
+		CU_DELIV_KEY : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=30, sysNumber=49.0, core=true, businessType=A, t24Name=CU.DELIV.KEY)
+	}
+	SC_SEC_TRADE_CUST_DETAIL__CU_ORDER_NOS
+	{
+		CU_ORDER_NOS : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=27, sysNumber=50.0, core=true, businessType=A, t24Name=CU.ORDER.NOS)
+	}
+	SC_SEC_TRADE_CUST_DETAIL__CU_NARRATIVE
+	{
+		CU_NARRATIVE : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=40, sysNumber=52.0, core=true, businessType=A, t24Name=CU.NARRATIVE)
+	}
+	SC_SEC_TRADE_CUST_DETAIL__CU_NOTES
+	{
+		CU_NOTES : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=53.0, core=true, businessType=A, t24Name=CU.NOTES)
+	}
+	SC_SEC_TRADE_CUST_DETAIL__CGT_CODE
+	{
+		CGT_CODE -> ST_ChargeConfig:TAX
+			@t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=65.0, core=true, businessType=TAX, t24Name=CGT.CODE)
+		CGT_TAX_RATE : mml:string
+			@t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=66.0, core=true, businessType=R, t24Name=CGT.TAX.RATE)
+		CGT_TAX_LCL : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=67.0, core=true, businessType=AMT, t24Name=CGT.TAX.LCL)
+		CGT_TAX_AMT : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=68.0, core=true, businessType=AMT, t24Name=CGT.TAX.AMT)
+	}
+	SC_SEC_TRADE_CUST_DETAIL__BROKER_NO
+	{
+		BROKER_NO -> ST_Customer:CUSTOMER
+			@t24:i (align=R, inputBehaviour=N, maxLength=10, sysNumber=92.0, core=true, businessType=CUS, t24Name=BROKER.NO)
+		BR_NO_NOM -> byValue SCT_ServiceBasedOrders:SC_SEC_TRADE_CUST_DETAIL__BROKER_NO__BR_NO_NOM *
+		BR_ACC_NO -> ACM_AccountOpening:ACCOUNT
+			@t24:i (align=L, inputBehaviour=N, maxLength=16, sysNumber=96.0, core=true, businessType=A, t24Name=BR.ACC.NO)
+	}
+	SC_SEC_TRADE_CUST_DETAIL__BROKER_NO__BR_NO_NOM
+	{
+		BR_NO_NOM : mml:string
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=93.0, core=true, businessType=NOMAMT, t24Name=BR.NO.NOM)
+		BR_PRICE : mml:Double
+			@t24:i (align=L, inputBehaviour=N, maxLength=16, sysNumber=94.0, core=true, businessType=PRICE, t24Name=BR.PRICE)
+		BR_TRD_TIME : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=95.0, core=true, businessType=TIME, t24Name=BR.TRD.TIME)
+	}
+	SC_SEC_TRADE_CUST_DETAIL__STATEMENT_NOS
+	{
+		STATEMENT_NOS : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=29, sysNumber=107.0, core=true, businessType=A, t24Name=STATEMENT.NOS)
+	}
+	SC_SEC_TRADE_CUST_DETAIL__OVERRIDE
+	{
+		OVERRIDE : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=108.0, core=true, businessType=A, t24Name=OVERRIDE)
+	}
+	SC_SEC_TRADE_CUST_DETAIL__INPUTTER
+	{
+		INPUTTER : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=111.0, core=true, businessType=A, t24Name=INPUTTER)
+	}
+	SC_SEC_TRADE_CUST_DETAIL__DATE_TIME
+	{
+		DATE_TIME : mml:dateTime
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=112.0, core=true, businessType=RELTIME, t24Name=DATE.TIME)
+	}
+	SC_SOO_CUST_DETAIL
+		@t24:i (t24Name=SC.SOO.CUST.DETAIL, level=F, type=H, allowedFunctions="C E L P Q S", localRefAllowed=true)
+	{
+		REFERENCE_NO -> SCT_ServiceBasedOrders:SC_SOO_CUST_DETAIL PK required
+			@i18n:Label (en="Reference No", fr=Référence, es="No. de Referencia")
+			@i18n:Tooltip (en="Unique reference which identifies the transaction", fr=Référence, es="Ref. única que identifica la transacción")
+			@t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=0.0, core=true, businessType=S, t24Name=REFERENCE.NO)
+		SECURITY_NO -> SCO_SecurityMasterMaintenance:SECURITY_MASTER
+			@i18n:Label (en="Security No", fr="Code valeur", es="No. de Título")
+			@i18n:Tooltip (en="Indicates the security code/number", fr="Code valeur", es="Indica un Título Valor válido")
+			@t24:i (align=L, inputBehaviour=F, maxLength=12, sysNumber=1.0, core=true, businessType=SEC, t24Name=SECURITY.NO)
+		CUST_NUMBER -> ST_Customer:CUSTOMER
+			@i18n:Label (en="Customer No", fr=Client, es="No. de Cliente")
+			@i18n:Tooltip (en="Identifies the Customer for the transaction.", fr="Code du client", es="Identifica al Cliente de la transacción")
+			@t24:i (align=R, inputBehaviour=F, maxLength=10, sysNumber=2.0, core=true, businessType=CUS, t24Name=CUST.NUMBER)
+		TRANSACTION_CODE -> SC_Config:SC_TRANS_NAME
+			@i18n:Label (en="Transaction Code", fr="Code opération", es="Código Transacción")
+			@i18n:Tooltip (en="Indicates the Transaction Type", fr="Code de l\'opération", es="Indica el Tipo de transacción")
+			@t24:i (align=L, inputBehaviour=F, maxLength=3, sysNumber=3.0, core=true, businessType=S, t24Name=TRANSACTION.CODE)
+		SECURITY_ACCNT -> SCO_PortfolioMaintenance:SEC_ACC_MASTER
+			@i18n:Label (en="Portfolio No", fr="Compte titres", es="No. de Cartera")
+			@i18n:Tooltip (en="Indicates the Portfolio Account of the customer", fr="Compte titres", es="Indica la Cuenta de Cartera del Cliente")
+			@t24:i (align=L, inputBehaviour=F, maxLength=14, sysNumber=4.0, core=true, businessType=SAM, t24Name=SECURITY.ACCNT)
+		NO_NOMINAL : mml:string
+			@i18n:Label (en=Nominal, fr=Nominal, es=Nominal)
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=5.0, core=true, businessType=NOMAMT, t24Name=NO.NOMINAL)
+		RESERVED50 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=6.0, core=true, businessType=A, t24Name=RESERVED50)
+		CURR_PRICE : mml:Double
+			@i18n:Label (en="Current Price", fr="Prix actuel", es="Precio Actual")
+			@i18n:Tooltip (fr="Prix actuel")
+			@t24:i (align=L, inputBehaviour=I, maxLength=18, sysNumber=7.0, core=true, businessType=PRICE, t24Name=CURR.PRICE)
+		RESERVED49 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=8.0, core=true, businessType=A, t24Name=RESERVED49)
+		RESERVED48 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=9.0, core=true, businessType=A, t24Name=RESERVED48)
+		RESERVED47 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=10.0, core=true, businessType=A, t24Name=RESERVED47)
+		RESERVED46 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=11.0, core=true, businessType=A, t24Name=RESERVED46)
+		RESERVED45 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=12.0, core=true, businessType=A, t24Name=RESERVED45)
+		RESERVED44 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=13.0, core=true, businessType=A, t24Name=RESERVED44)
+		CUST_ACC_NO -> ACM_AccountOpening:ACCOUNT
+			@i18n:Label (en="Cu Account No", fr="N° de compte", es="No. Cta. de Cliente")
+			@i18n:Tooltip (en="Identifies the customer account", fr="Numéro de compte", es="Especifica la Cuenta del Cliente")
+			@t24:i (align=R, inputBehaviour=I, maxLength=16, sysNumber=14.0, core=true, businessType=ACC, t24Name=CUST.ACC.NO)
+		CU_EX_RATE_ACC : mml:string
+			@i18n:Label (en=Exch.Rate, fr="Taux de change client", es="Tipo de Cambio")
+			@i18n:Tooltip (fr="Taux de change client")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=15.0, core=true, businessType=R, t24Name=CU.EX.RATE.ACC)
+		SETTLEMENT_CCY : mml:string
+			@i18n:Label (en="Settle Ccy", fr="Devise de règlement", es="Mda. de Liquidación")
+			@i18n:Tooltip (fr="Devise de règlement")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=16.0, core=true, businessType=CCY, t24Name=SETTLEMENT.CCY)
+		RESERVED43 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=17.0, core=true, businessType=A, t24Name=RESERVED43)
+		RESERVED42 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=18.0, core=true, businessType=A, t24Name=RESERVED42)
+		RESERVED41 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=19.0, core=true, businessType=A, t24Name=RESERVED41)
+		RESERVED40 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=20.0, core=true, businessType=A, t24Name=RESERVED40)
+		RESERVED39 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=21.0, core=true, businessType=A, t24Name=RESERVED39)
+		RESERVED38 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=22.0, core=true, businessType=A, t24Name=RESERVED38)
+		RESERVED37 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=23.0, core=true, businessType=A, t24Name=RESERVED37)
+		RESERVED36 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=24.0, core=true, businessType=A, t24Name=RESERVED36)
+		RESERVED35 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=25.0, core=true, businessType=A, t24Name=RESERVED35)
+		RESERVED34 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=26.0, core=true, businessType=A, t24Name=RESERVED34)
+		RESERVED33 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=27.0, core=true, businessType=A, t24Name=RESERVED33)
+		RESERVED32 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=28.0, core=true, businessType=A, t24Name=RESERVED32)
+		RESERVED31 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=29.0, core=true, businessType=A, t24Name=RESERVED31)
+		RESERVED30 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=30.0, core=true, businessType=A, t24Name=RESERVED30)
+		RESERVED29 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=31.0, core=true, businessType=A, t24Name=RESERVED29)
+		RESERVED28 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=32.0, core=true, businessType=A, t24Name=RESERVED28)
+		CU_DEPOSITORY -> ST_Customer:CUSTOMER
+			@i18n:Label (en="Customer Depository", fr="Dépositaire client", es="Depositario Cliente")
+			@i18n:Tooltip (fr="Dépositaire client")
+			@t24:i (align=R, inputBehaviour=N, maxLength=10, sysNumber=33.0, core=true, businessType=CUS, t24Name=CU.DEPOSITORY)
+		SUB_ACCOUNT : mml:Integer
+			@i18n:Label (en="Sub Account", fr=Sous-compte, es="Sub Cuenta")
+			@i18n:Tooltip (fr=Sous-compte)
+			@t24:i (align=R, inputBehaviour=N, maxLength=16, sysNumber=34.0, core=true, t24Name=SUB.ACCOUNT)
+		EXT_CUSTODIAN -> ST_Customer:CUSTOMER
+			@i18n:Label (fr="Dépositaire externe")
+			@i18n:Tooltip (fr="Dépositaire externe")
+			@t24:i (align=R, inputBehaviour=N, maxLength=10, sysNumber=35.0, core=true, t24Name=EXT.CUSTODIAN)
+		RESERVED24 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=36.0, core=true, businessType=A, t24Name=RESERVED24)
+		RESERVED23 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=37.0, core=true, businessType=A, t24Name=RESERVED23)
+		RESERVED22 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=38.0, core=true, businessType=A, t24Name=RESERVED22)
+		RESERVED21 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=39.0, core=true, businessType=A, t24Name=RESERVED21)
+		SERVICE_REF : mml:string
+			@i18n:Label (en="Bulk Order Id", fr="Référence de Service", es="ID Volumen de Orden")
+			@i18n:Tooltip (fr="Référence de Service ")
+			@t24:i (align=L, inputBehaviour=F, maxLength=16, sysNumber=40.0, core=true, businessType=A, t24Name=SERVICE.REF)
+		THREAD_KEY : mml:string
+			@i18n:Label (en="Thread Key", fr="Clé de fil", es="Clave de Canal")
+			@i18n:Tooltip (en="Holds the thread Key for service based orders", fr="Clé de fil ", es="Clave de Canal para Órdenes de servicio")
+			@t24:i (align=L, inputBehaviour=F, maxLength=35, sysNumber=41.0, core=true, businessType=A, t24Name=THREAD.KEY)
+		OBC_CUST_DETAIL_ID : mml:string
+			@t24:i (align=L, inputBehaviour=F, maxLength=16, sysNumber=42.0, core=true, businessType=A, t24Name=OBC.CUST.DETAIL.ID)
+		SEC_TRADE_DET_ID : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=16, sysNumber=43.0, core=true, businessType=A, t24Name=SEC.TRADE.DET.ID)
+		TRADED_NOM : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=44.0, core=true, t24Name=TRADED.NOM)
+		OUTSTAND_NOM : mml:Integer
+			@i18n:Label (en="Outstanding Nominal", es="Nominal Pendiente")
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=45.0, core=true, t24Name=OUTSTAND.NOM)
+		ORIGINAL_NOM : mml:Integer
+			@i18n:Label (en="Original Nominal", fr="Nominal d\'origine", es="Nominal Original")
+			@i18n:Tooltip (fr="Nominal d\'origine")
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=46.0, core=true, t24Name=ORIGINAL.NOM)
+		DEPOSITORY : mml:string
+			@i18n:Label (en=Depository, fr=Dépositaire, es=Depositario)
+			@i18n:Tooltip (en="Depository the Security to be delivered from/to", fr=Dépositaire, es="Depositario de Título Valor a ser enviado de/a")
+			@t24:i (align=R, inputBehaviour=F, maxLength=10, sysNumber=47.0, core=true, businessType=CUS, t24Name=DEPOSITORY)
+		RESERVED16 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=48.0, core=true, businessType=A, t24Name=RESERVED16)
+		ORDER_TYPE -> SCT_OrderCapture:SC_ORDER_TYPE
+			@i18n:Label (en="Order Type", fr="Type d\'ordre", es=Tipo)
+			@i18n:Tooltip (fr="Type d\'ordre (unique, lot, )")
+			@t24:i (align=L, inputBehaviour=N, maxLength=10, sysNumber=49.0, core=true, businessType=S, t24Name=ORDER.TYPE)
+		TRADE_CCY -> FIN_CurrencyConfig:CURRENCY
+			@i18n:Label (en="Trade Currency", fr=Devise, es="Moneda de Negocio")
+			@i18n:Tooltip (en="Identifies the currency of the transaction", fr="Code devise", es="Identifica la moneda de la transacción")
+			@t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=50.0, core=true, businessType=CCY, t24Name=TRADE.CCY)
+		LIMIT_PRICE : mml:Double
+			@i18n:Label (en="Limit Price", fr="Prix limite", es="Precio Límite")
+			@i18n:Tooltip (fr="Prix limite d\'exercice de l\'ordre")
+			@t24:i (align=L, inputBehaviour=N, maxLength=16, sysNumber=51.0, core=true, businessType=PRICE, t24Name=LIMIT.PRICE)
+		LIMIT_TYPE : mml:string
+			@i18n:Label (en="Limit Type", fr="Type de limite", es="Tipo de Límite")
+			@i18n:Tooltip (en="Indicates the Limit Type", fr="Type de limite", es="Indica el Tipo de Límite ")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=52.0, core=true, businessType=A, t24Name=LIMIT.TYPE)
+		LIMIT_EXP_DATE : mml:date
+			@i18n:Label (en="Order Expiry Date", fr="Echéance de la limite", es="Fecha Caduc. de Pedido")
+			@i18n:Tooltip (fr="Echéance de la limite", es="Fecha de Caducidad del Pedido")
+			@t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=53.0, core=true, businessType=D, t24Name=LIMIT.EXP.DATE)
+		CU_INCOME_ACC -> ACM_AccountOpening:ACCOUNT
+			@t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=54.0, core=true, businessType=ANT, t24Name=CU.INCOME.ACC)
+		CU_INCOME_CCY -> FIN_CurrencyConfig:CURRENCY
+			@t24:i (align=R, inputBehaviour=N, maxLength=3, sysNumber=55.0, core=true, t24Name=CU.INCOME.CCY)
+		RESERVED08 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=56.0, core=true, businessType=A, t24Name=RESERVED08)
+		RESERVED07 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=57.0, core=true, businessType=A, t24Name=RESERVED07)
+		RESERVED06 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=58.0, core=true, businessType=A, t24Name=RESERVED06)
+		RESERVED05 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=59.0, core=true, businessType=A, t24Name=RESERVED05)
+		RESERVED04 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=60.0, core=true, businessType=A, t24Name=RESERVED04)
+		RESERVED03 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=61.0, core=true, businessType=A, t24Name=RESERVED03)
+		RESERVED02 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=62.0, core=true, businessType=A, t24Name=RESERVED02)
+		RESERVED01 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=63.0, core=true, businessType=A, t24Name=RESERVED01)
+		OVERRIDE -> byValue SCT_ServiceBasedOrders:SC_SOO_CUST_DETAIL__OVERRIDE *
+		RECORD_STATUS : mml:string
+			@i18n:Label (en="Record Status", fr=Statut, es=Estado)
+			@i18n:Tooltip (fr="Statut de l\'enregistrement")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=66.0, core=true, businessType=STAT, t24Name=RECORD.STATUS)
+		CURR_NO : mml:Integer
+			@i18n:Label (en="Curr No", fr="N° version", es="No. Actual")
+			@i18n:Tooltip (fr="Numéro de version")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=67.0, core=true, t24Name=CURR.NO)
+		INPUTTER -> byValue SCT_ServiceBasedOrders:SC_SOO_CUST_DETAIL__INPUTTER *
+		DATE_TIME -> byValue SCT_ServiceBasedOrders:SC_SOO_CUST_DETAIL__DATE_TIME *
+		AUTHORISER : mml:string
+			@i18n:Label (en=Authoriser, fr="Validé par", es=Autorizador)
+			@i18n:Tooltip (en="Indicates the User who Authorises the record", fr="Utilisateur de validation", es="El usuario que autorizó el registro")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=70.0, core=true, businessType=A, t24Name=AUTHORISER)
+		CO_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company, fr=Entité, es="Compañía")
+			@i18n:Tooltip (fr="Code établissement ou agence")
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=71.0, core=true, businessType=A, t24Name=CO.CODE)
+		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Dept Code", fr=Service, es=Departamento)
+			@i18n:Tooltip (fr="Code du service")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=72.0, core=true, t24Name=DEPT.CODE)
+		AUDITOR_CODE : mml:string
+			@i18n:Label (en="Auditor Code", fr="Audité par", es="Código de Auditor")
+			@i18n:Tooltip (en="Auditor Code", fr="Utilisateur d\'audit", es="Nombre del auditor")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=73.0, core=true, businessType=A, t24Name=AUDITOR.CODE)
+		AUDIT_DATE_TIME : mml:dateTime
+			@i18n:Label (en="Audit Date Time", fr="Audité le", es="Fecha/Hora de Audit.")
+			@i18n:Tooltip (en="Date and time when record was audited", fr="Date et heure d\'audit", es="Fecha y Hora de Auditoría ")
+			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=74.0, core=true, businessType=RELTIME, t24Name=AUDIT.DATE.TIME)
+	}
+	SC_SOO_CUST_DETAIL__OVERRIDE
+	{
+		OVERRIDE : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=65.0, core=true, businessType=A, t24Name=OVERRIDE)
+	}
+	SC_SOO_CUST_DETAIL__INPUTTER
+	{
+		INPUTTER : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=68.0, core=true, businessType=A, t24Name=INPUTTER)
+	}
+	SC_SOO_CUST_DETAIL__DATE_TIME
+	{
+		DATE_TIME : mml:dateTime
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=69.0, core=true, businessType=RELTIME, t24Name=DATE.TIME)
+	}
+}
+Enumerations {
+	SC_SEC_TRADE_CUST_DETAIL__CU_ADVICE_REQD : mml:string
+		YES=YES
+		NO=NO
+	SC_SEC_TRADE_CUST_DETAIL__AUTO_CUST_SETT : mml:string
+		YES=YES
+		NO=NO
+}

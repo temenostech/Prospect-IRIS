@@ -1,0 +1,1249 @@
+# UTF-8
+/* Event capture and maintenance of Securities Corporate Actions */
+Domain SCC_EventCapture
+	@t24:i (module=SC)
+	@java:Package (value=com.temenos.t24.datamodel.sc.scc_eventcapture)
+namespace "http://www.temenos.com/t24/SCC_EventCapture"
+metamodelVersion 4.3.0.20110527
+Classes {
+	DIARY
+		@t24:i (t24Name=DIARY, level=F, type=H, additionalInfo=OEU, allowedFunctions="A C D E H I L P Q R S", localRefAllowed=true)
+	{
+		DIARY_ID -> SCC_EventCapture:DIARY PK required
+			@i18n:Label (en="Diary Id", fr="Réf. de journal", es="ID de Diario")
+			@i18n:Tooltip (en="Indicates the diary Id", fr="Référence de journal")
+			@t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=0.0, core=true, businessType=S, t24Name=DIARY.ID)
+		SECURITY_NO -> SCO_SecurityMasterMaintenance:SECURITY_MASTER required
+			@i18n:Label (en="Security No", fr="Code valeur", es="No. de Título")
+			@i18n:Tooltip (en="Indicates the security code/number", fr="Code valeur", es="Indica un Título Valor válido")
+			@t24:i (align=L, inputBehaviour=F, maxLength=12, sysNumber=1.0, core=true, businessType=SEC, t24Name=SECURITY.NO)
+		OLD_MKT_PRC : mml:Double
+			@i18n:Label (en="Old Market Price", es="Precio Mercado Ant.")
+			@i18n:Tooltip (en="Indicates the old market price for the security", es="Indica el precio antiguo de mercado para el título")
+			@t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=2.0, core=true, businessType=PRICE, t24Name=OLD.MKT.PRC)
+		NARRATIVE -> byValue SCC_EventCapture:DIARY__NARRATIVE *
+		EVENT_TYPE -> SCC_EventCapture:DIARY_TYPE required
+			@i18n:Label (en="Event type", fr="Type d\'événement", es="Tipo de Evento")
+			@i18n:Tooltip (en="Type of event - Dividend Payment/Bonus etc.", fr="Type d\'événement", es="\"Tipo de evento - Pago de Dividendo/Prima, etc.\"")
+			@t24:i (align=L, inputBehaviour=F, maxLength=15, sysNumber=4.0, core=true, businessType=A, t24Name=EVENT.TYPE)
+		DEPOSITORY : mml:string
+			@i18n:Label (en=Depository, fr=Dépositaire, es=Depositario)
+			@i18n:Tooltip (en="Depository the Security to be delivered from/to", fr=Dépositaire, es="Depositario de Título Valor a ser enviado de/a")
+			@t24:i (align=L, inputBehaviour=F, maxLength=10, sysNumber=5.0, core=true, businessType=A, t24Name=DEPOSITORY)
+		VAULT_UPDATE : SCC_EventCapture:DIARY__VAULT_UPDATE
+			@i18n:Label (en="Vault Update", es="Actualiz. de Bóveda")
+			@i18n:Tooltip (en="Denotes whether to update vault or not?", es="Indica si se actualiza la bóveda o no")
+			@t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=6.0, core=true, t24Name=VAULT.UPDATE)
+		EX_DATE : mml:date required
+			@i18n:Label (en="Ex Date", fr="Date d\'échange", es="Fecha de Intercambio")
+			@i18n:Tooltip (en="Holds Ex Dividend date of the Diary.", fr="Date d\'échange", es="Fecha de intercambio de dividendos del Diario")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=7.0, core=true, businessType=D, t24Name=EX.DATE)
+		PAY_DATE : mml:date
+			@i18n:Label (en="Pay Date", fr="Date de paiement", es="Fecha de Pago")
+			@i18n:Tooltip (en="Holds the date the Event is Paid or Issued", fr="Date de paiement", es="Fecha en que el Evento es Pagado o Emitido")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=8.0, core=true, businessType=D, t24Name=PAY.DATE)
+		VALUE_DATE : mml:date
+			@i18n:Label (en="Value Date", fr="Date de valeur", es="Fecha Valor")
+			@i18n:Tooltip (en="Indicates the Value date of the Contract", fr="Date de valeur", es="Fecha en que Carteras serán act. por el evento")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=9.0, core=true, businessType=D, t24Name=VALUE.DATE)
+		REPLY_BY_DATE : mml:date
+			@i18n:Label (en="Reply By Date", fr="Date de réponse", es="Responder a Fecha")
+			@i18n:Tooltip (en="Date reply should be sent back to Depository", fr="Date de réponse", es="Fecha en que respuesta debe ser enviada a Depos.")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=10.0, core=true, businessType=D, t24Name=REPLY.BY.DATE)
+		EQUALISATION_DATE : mml:date
+			@i18n:Label (en="Equalisation Date", fr="Date égalisation", es="Fecha de Ecualización")
+			@i18n:Tooltip (en="Start of Equalisation period for the Stock", fr="Date égalisation", es="Inicio periodo de Ecualización para las Acciones")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=11.0, core=true, businessType=D, t24Name=EQUALISATION.DATE)
+		CURRENCY -> FIN_CurrencyConfig:CURRENCY
+			@i18n:Label (en=Ccy, fr=Devise, es=Moneda)
+			@i18n:Tooltip (fr="Code devise ISO")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=12.0, core=true, businessType=CCY, t24Name=CURRENCY)
+		RATE_TYPE : SCC_EventCapture:DIARY__RATE_TYPE
+			@i18n:Label (en="Rate Type", fr="Type de taux", es="Tipo de Tasa")
+			@i18n:Tooltip (en="Is the Rate quoted net of tax or gross of tax", fr="Type de taux", es="Es la Tasa citada neta o bruta de impuesto ")
+			@t24:i (align=L, inputBehaviour=I, maxLength=5, sysNumber=13.0, core=true, t24Name=RATE.TYPE)
+		OPTION_DESC -> byValue SCC_EventCapture:DIARY__OPTION_DESC *
+		SOURCE_TAX_PERC : mml:string
+			@i18n:Label (en="Tax %", fr="% d\'impôt", es="Porcentaje Impuesto")
+			@i18n:Tooltip (fr="% d\'impôt")
+			@t24:i (align=R, inputBehaviour=I, maxLength=15, sysNumber=33.0, core=true, businessType=R, t24Name=SOURCE.TAX.PERC)
+		LOCAL_TAX_PERC -> byValue SCC_EventCapture:DIARY__LOCAL_TAX_PERC *
+		COMMISSION_CODE -> ST_ChargeConfig:FT_COMMISSION_TYPE
+			@i18n:Label (en="Commission Code", fr=Commission, es="Código de Comisión")
+			@i18n:Tooltip (en="Indicates the commission code", fr="Code de la commission", es="Indica el código de comisión ")
+			@t24:i (align=L, inputBehaviour=F, maxLength=11, sysNumber=35.0, core=true, businessType=A, t24Name=COMMISSION.CODE)
+		FOREIGN_CHARGES : mml:string
+			@i18n:Label (en="Foreign Charges", fr="Frais étranger", es="Cargos Extranjeros")
+			@i18n:Tooltip (en="Specifies the foreign charges levied", fr="Frais à l\'étranger", es="Especifica los cargos extranjeros cobrados")
+			@t24:i (align=R, inputBehaviour=F, maxLength=15, sysNumber=36.0, core=true, businessType=R, t24Name=FOREIGN.CHARGES)
+		CHARGES_INDICATOR : SCC_EventCapture:DIARY__CHARGES_INDICATOR
+			@i18n:Label (en="Charges Indicator", fr="Indic. Charges", es="Indicador de Cargos")
+			@i18n:Tooltip (en="Foreign charges in terms of cash or nominal", fr="Indicateur de frais", es="Cargos extranjeros en efectivo o nominal")
+			@t24:i (align=L, inputBehaviour=I, maxLength=7, sysNumber=37.0, core=true, t24Name=CHARGES.INDICATOR)
+		NET_CHARGES : SCC_EventCapture:DIARY__NET_CHARGES
+			@i18n:Label (en="Net Charges", es="Cargos Netos")
+			@t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=38.0, core=true, t24Name=NET.CHARGES)
+		BOND_SHARE_FLAG : mml:Integer
+			@i18n:Label (en="Bond Share Flag", es="Indicador Bono/Acción")
+			@i18n:Tooltip (en="Whether the secuirty is a Share or a Bond", es="Si el título valor es una Acción o un Bono")
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=39.0, core=true, t24Name=BOND.SHARE.FLAG)
+		SOURCE_TAX_CODE : mml:string
+			@i18n:Label (en="Source Tax code", fr="Code retenue à la Source", es="Cód. Fuente Impuesto")
+			@i18n:Tooltip (en="Holds source tax code used to calculate Source Tax", fr="Code retenue à la Source", es="Código de Impu. usado para cálculo de Impu. Fuente")
+			@t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=40.0, core=true, businessType=TAX, t24Name=SOURCE.TAX.CODE)
+		LOCAL_TAX_CODE -> byValue SCC_EventCapture:DIARY__LOCAL_TAX_CODE *
+		AFC_NUMBER -> byValue SCC_EventCapture:DIARY__AFC_NUMBER *
+		CAPITAL_PORTION : mml:Double
+			@i18n:Label (fr=Capital)
+			@i18n:Tooltip (fr=Capital)
+			@t24:i (align=R, inputBehaviour=F, maxLength=16, sysNumber=43.0, core=true, businessType=AMT, t24Name=CAPITAL.PORTION)
+		PREMIUM_PORTION : mml:Double
+			@i18n:Label (fr=Prime)
+			@i18n:Tooltip (fr=Prime)
+			@t24:i (align=R, inputBehaviour=F, maxLength=16, sysNumber=44.0, core=true, businessType=AMT, t24Name=PREMIUM.PORTION)
+		PAYMENT -> byValue SCC_EventCapture:DIARY__PAYMENT *
+		QUOTE_PRICE -> byValue SCC_EventCapture:DIARY__QUOTE_PRICE *
+		DEP_NO -> byValue SCC_EventCapture:DIARY__DEP_NO *
+		OPTION -> byValue SCC_EventCapture:DIARY__OPTION *
+		OPTION1 : mml:string
+			@i18n:Label (en=Option, fr=Option, es="Opción")
+			@i18n:Tooltip (en="First Option available for an optional event", fr=Option, es="Primera Opción disponible para un evento opcional")
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=83.0, core=true, businessType=S, t24Name=OPTION1)
+		OPT1_DEPOT -> byValue SCC_EventCapture:DIARY__OPT1_DEPOT *
+		OPTION2 : mml:string
+			@i18n:Label (en=Option, fr=Option, es="Opción")
+			@i18n:Tooltip (en="The second Option available for an optional event", fr=Option, es="Segunda Opción disponible para un evento opcional")
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=91.0, core=true, businessType=S, t24Name=OPTION2)
+		OPT2_DEPOT -> byValue SCC_EventCapture:DIARY__OPT2_DEPOT *
+		OPTION3 : mml:string
+			@i18n:Label (en=Option, es="Opción")
+			@i18n:Tooltip (en="Third Option available for an optional event", es="Tercera Opción disponible para un evento opcional")
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=99.0, core=true, businessType=S, t24Name=OPTION3)
+		OPT3_DEPOT -> byValue SCC_EventCapture:DIARY__OPT3_DEPOT *
+		OPTION4 : mml:string
+			@i18n:Label (en=Option, es="Opción")
+			@i18n:Tooltip (en="Fourth Option available for an optional event", es="Cuarta Opción disponible para un evento opcional")
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=107.0, core=true, businessType=S, t24Name=OPTION4)
+		OPT4_DEPOT -> byValue SCC_EventCapture:DIARY__OPT4_DEPOT *
+		AUTO_UPDATE : SCC_EventCapture:DIARY__AUTO_UPDATE
+			@i18n:Label (en="Auto Update", fr="Mise à jour automatique", es="Actualización Auto.")
+			@i18n:Tooltip (en="Update from an external source is allowed", fr="Mise à jour automatique", es="Actualización de una fuente externa es permitido")
+			@t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=115.0, core=true, t24Name=AUTO.UPDATE)
+		SOURCE : mml:string
+			@i18n:Label (en=Source, fr=Source, es=Fuente)
+			@i18n:Tooltip (fr=Source)
+			@t24:i (align=L, inputBehaviour=N, maxLength=8, sysNumber=116.0, core=true, businessType=A, t24Name=SOURCE)
+		SEC_TRANS_ID : mml:Integer
+			@i18n:Label (en="Security Transaction ID", fr="Id de trans du titre", es="ID de Trs. de Título")
+			@i18n:Tooltip (en="Number of security transactions records created", fr="Identifiant de trans du titre", es="No. registros de transacciones de título creados")
+			@t24:i (align=R, inputBehaviour=N, maxLength=3, sysNumber=117.0, core=true, t24Name=SEC.TRANS.ID)
+		RESERVED7 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=118.0, core=true, t24Name=RESERVED7)
+		ADVICE_FORMAT -> byValue SCC_EventCapture:DIARY__ADVICE_FORMAT *
+		RERUN : SCC_EventCapture:DIARY__RERUN
+			@i18n:Label (en=Rerun, fr="Ré exécutez", es=Repetir)
+			@i18n:Tooltip (en="Whether to rerun the diary?", fr="Ré exécutez", es="¿Se debe repetir el Diario?")
+			@t24:i (align=L, inputBehaviour=I, maxLength=6, sysNumber=120.0, core=true, t24Name=RERUN)
+		ENTITLEMENT_FLAG : mml:Integer
+			@i18n:Label (en="Entitlement Flag", es="Indicador Titulación")
+			@i18n:Tooltip (en="To generate DX.ENTITLEMENT records or not", es="Si generar registros de DX.ENTITLEMENT o no")
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=121.0, core=true, t24Name=ENTITLEMENT.FLAG)
+		EVENT_STATUS : mml:string
+			@i18n:Label (en="Event Status", fr="Statut d\'événement", es="Estado del Evento")
+			@i18n:Tooltip (en="Identifies the status of the event", fr="Statut d\'événement", es="Identifica el estado del evento")
+			@t24:i (align=L, inputBehaviour=N, maxLength=10, sysNumber=122.0, core=true, businessType=A, t24Name=EVENT.STATUS)
+		ADVICE_TYPE : mml:Integer
+			@i18n:Label (en="Advice Type", fr="Type d\'avis", es="Tipo de Aviso")
+			@i18n:Tooltip (en="Denotes the type of the advice", fr="Type d\'avis", es="Denota el tipo de aviso")
+			@t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=123.0, core=true, t24Name=ADVICE.TYPE)
+		ACCRUAL_START_DATE : mml:date
+			@i18n:Label (en="Accrual Start Date", fr="Date début calcul courus", es="Fecha Inicio Devengo")
+			@i18n:Tooltip (en="The date from which accruals start", fr="Date début calcul courus", es="La fecha desde la cual se inicia el devengo ")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=124.0, core=true, businessType=D, t24Name=ACCRUAL.START.DATE)
+		PRE_ADVICE_REQ : SCC_EventCapture:DIARY__PRE_ADVICE_REQ
+			@i18n:Label (en="Pre Advice Reqd?", fr="Préavis Requis", es="¿Pre Aviso Requerido ?")
+			@i18n:Tooltip (en="Whether pre-confirmation advices required?", fr="Préavis Requis", es="Si se requiere aviso de pre-confirmación o no")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=125.0, core=true, t24Name=PRE.ADVICE.REQ)
+		CONFIRM_REQ : SCC_EventCapture:DIARY__CONFIRM_REQ
+			@i18n:Label (en="Confirmation Reqd?", fr="Confirmation Requise", es="¿Requiere Confirmación?")
+			@i18n:Tooltip (en="Indicates whether confirmation messages required?", fr="Confirmation Requise", es="Indica si mensajes de confirmación son requeridos")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=126.0, core=true, t24Name=CONFIRM.REQ)
+		BLOCK_POSITION : SCC_EventCapture:DIARY__BLOCK_POSITION
+			@i18n:Label (en="Block Position", fr="Blocage de la Position", es="Posición Bloqueada")
+			@i18n:Tooltip (fr="Blocage de la Position")
+			@t24:i (align=L, inputBehaviour=I, maxLength=15, sysNumber=127.0, core=true, t24Name=BLOCK.POSITION)
+		PORTFOLIO_NO -> byValue SCC_EventCapture:DIARY__PORTFOLIO_NO *
+		CASH_HOLD_SETTLE : SCC_EventCapture:DIARY__CASH_HOLD_SETTLE
+			@i18n:Label (en="Hold Cash?", fr="Règlement immédiat", es="¿Mantener Efectivo?")
+			@i18n:Tooltip (en="Will cash update the SC.SETTLEMENT application", fr="Règlement immédiat")
+			@t24:i (align=L, inputBehaviour=F, maxLength=3, sysNumber=129.0, core=true, t24Name=CASH.HOLD.SETTLE)
+		SEC_HOLD_SETTLE : SCC_EventCapture:DIARY__SEC_HOLD_SETTLE
+			@i18n:Label (en="Hold Stock?", fr="Contient les titres", es="¿Mantener Acciones?")
+			@i18n:Tooltip (en="Stock will update SC.SETTLEMENT application", fr="Contient les titres", es="Acciones actualizará la aplicación SC.SETTLEMENT ")
+			@t24:i (align=L, inputBehaviour=F, maxLength=3, sysNumber=130.0, core=true, t24Name=SEC.HOLD.SETTLE)
+		ODD_LOT_SEC -> SCO_SecurityMasterMaintenance:SECURITY_MASTER
+			@i18n:Label (en="Odd Lot Security", es="Tít. Lote Incompleto")
+			@i18n:Tooltip (en="Denote that the security is an odd lot security", es="Indica que el título es título de lote incompleto")
+			@t24:i (align=L, inputBehaviour=I, maxLength=12, sysNumber=131.0, core=true, businessType=SEC, t24Name=ODD.LOT.SEC)
+		REINVEST_PRICE : mml:string
+			@i18n:Label (en="Reinvest Price", fr="Prix de réinvestissement", es="Precio de Reinversión")
+			@i18n:Tooltip (en="Price on transaction from dividend reinvestment", fr="Prix de réinvestissement", es="Precio en transacción de dividendos reinvertidos")
+			@t24:i (align=R, inputBehaviour=I, maxLength=16, sysNumber=132.0, core=true, businessType=R, t24Name=REINVEST.PRICE)
+		DIA_AUTO_AUTH_DATE : mml:date
+			@i18n:Label (en="Diary Auto Authorisation Date", es="Fecha Auto Aut.Diario")
+			@i18n:Tooltip (en="Diary Auto Authorisation Date", es="Fecha de Auto Autorización del Diario ")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=133.0, core=true, businessType=D, t24Name=DIA.AUTO.AUTH.DATE)
+		DEF_INSTR_DATE : mml:date
+			@i18n:Label (en="Default Instrument Date", fr="Date instr par défaut", es="Fecha Pre-est. Instr.")
+			@i18n:Tooltip (en="Date when default instructions apply to entitlmnts", fr="Date instr par défaut", es="Fecha Pre-establecida del Instrumento")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=134.0, core=true, businessType=D, t24Name=DEF.INSTR.DATE)
+		ENT_AUTO_AUTH_DATE : mml:date
+			@i18n:Label (en="Entitlement Auto Authorised Date", es="Fecha Aut.Titulación")
+			@i18n:Tooltip (en="Entitlement Auto Authorised Date", es="Fecha de Auto Autorización de la Titulación")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=135.0, core=true, businessType=D, t24Name=ENT.AUTO.AUTH.DATE)
+		DEF_INS_OPTION : mml:Integer
+			@i18n:Label (en="Default Instruction Option", fr="Instr option par défaut", es="Instr.Pre-est.Opción")
+			@i18n:Tooltip (en="Instruction option to be chosen by default", fr="Instr option par défaut", es="Opción de instrucción a ser elegida por defecto")
+			@t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=136.0, core=true, t24Name=DEF.INS.OPTION)
+		DEF_INS_RIGHTS : SCC_EventCapture:DIARY__DEF_INS_RIGHTS
+			@i18n:Label (en="Default Instruction Rights", es="Instr.Pre-est. Derec.")
+			@i18n:Tooltip (en="Action to be taken for RIGHTS processing", es="Acción a tomarse para el procesamiento de DERECHOS")
+			@t24:i (align=L, inputBehaviour=I, maxLength=10, sysNumber=137.0, core=true, t24Name=DEF.INS.RIGHTS)
+		DEF_INS_STOCK_CASH : SCC_EventCapture:DIARY__DEF_INS_STOCK_CASH
+			@i18n:Label (en="Default Instruction Stock Cash", fr="Instr défaut stock/cash", es="Instr. Stock Efec.")
+			@i18n:Tooltip (en="Default Instruction Stock or Cash Option", fr="Instr défaut stock/cash", es="Instrucción pre-establ. de Opción Efectivo/Stock")
+			@t24:i (align=L, inputBehaviour=I, maxLength=12, sysNumber=138.0, core=true, t24Name=DEF.INS.STOCK.CASH)
+		DEF_INS_REINVEST : SCC_EventCapture:DIARY__DEF_INS_REINVEST
+			@i18n:Label (en="Default Instruction Reinvest", es=Instr.Pre-est.Reinv.)
+			@i18n:Tooltip (en="The cash income should be reinvested or not", es="¿El ingreso en efectivo debe ser reinvertido o no?")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=139.0, core=true, t24Name=DEF.INS.REINVEST)
+		DEF_INS_SELL_LOTS : SCC_EventCapture:DIARY__DEF_INS_SELL_LOTS
+			@i18n:Label (en="Default Instruction Sell Lots", es="Instr. de Venta Lote")
+			@i18n:Tooltip (en="Indicates if the ODD.LOTS should be sold or not", es="Si Lote Nominal incompleto debe ser vendido o no")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=140.0, core=true, t24Name=DEF.INS.SELL.LOTS)
+		SRC_TAX_DEDUCTED : SCC_EventCapture:DIARY__SRC_TAX_DEDUCTED
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=141.0, core=true, t24Name=SRC.TAX.DEDUCTED)
+		TRADE_OR_VALUE : SCC_EventCapture:DIARY__TRADE_OR_VALUE
+			@i18n:Label (en="Trade or Value", fr="Date comptable ou valeur", es="Referencia de Negocio")
+			@i18n:Tooltip (en="Entitlements to be based on trade or value date", fr="Date comptable ou valeur", es="Titulación a ser basada en negociación/fecha valor")
+			@t24:i (align=L, inputBehaviour=I, maxLength=6, sysNumber=142.0, core=true, t24Name=TRADE.OR.VALUE)
+		RCVBL_TAX_CODE : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=143.0, core=true, businessType=TAX, t24Name=RCVBL.TAX.CODE)
+		RCVBL_TAX_PERC : mml:string
+			@t24:i (align=R, inputBehaviour=I, maxLength=15, sysNumber=144.0, core=true, businessType=R, t24Name=RCVBL.TAX.PERC)
+		ADJUST_SOO_ID -> byValue SCC_EventCapture:DIARY__ADJUST_SOO_ID *
+		STAMP_TAX_CALC : SCC_EventCapture:DIARY__STAMP_TAX_CALC
+			@i18n:Label (en="Stamp Tax Calculation", es="Cálculo Impu.Timbre")
+			@i18n:Tooltip (en="Whether stamp tax to be calculated or not", es="Si impuesto de timbre va a ser calculado o no")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=146.0, core=true, t24Name=STAMP.TAX.CALC)
+		SC_PRE_DIARY_ID : mml:string
+			@i18n:Label (en="Security Pre Diary ID", fr="Id transaction Pré-Diary", es="ID Pre Diario Tít.")
+			@i18n:Tooltip (en="Indicates the pre diary ID for the security", fr="Id transaction Pré-Diary", es="Indica la ID pre diario para el título valor")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=147.0, core=true, businessType=S, t24Name=SC.PRE.DIARY.ID)
+		RECORD_DATE : mml:date
+			@i18n:Label (en="Record Date", fr="Date d\'enregistrement", es="Fecha del Registro")
+			@i18n:Tooltip (en="Indicates the record date of the diary", fr="Date d\'enregistrement", es="Indica la fecha de registro del Diario")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=148.0, core=true, businessType=D, t24Name=RECORD.DATE)
+		AUTO_CONVERSION : SCC_EventCapture:DIARY__AUTO_CONVERSION
+			@t24:i (align=L, inputBehaviour=F, maxLength=3, sysNumber=149.0, core=true, t24Name=AUTO.CONVERSION)
+		AUTO_PROC_CONTRA : SCC_EventCapture:DIARY__AUTO_PROC_CONTRA
+			@t24:i (align=L, inputBehaviour=F, maxLength=3, sysNumber=150.0, core=true, t24Name=AUTO.PROC.CONTRA)
+		SC_TAX_CODE -> byValue SCC_EventCapture:DIARY__SC_TAX_CODE *
+		INT_DIST_FACTOR : mml:string
+			@t24:i (align=R, inputBehaviour=I, maxLength=15, sysNumber=154.0, core=true, businessType=R, t24Name=INT.DIST.FACTOR)
+		INT_CTR : mml:string
+			@i18n:Label (en="Interest Counter")
+			@i18n:Tooltip (en="Interest Counter")
+			@t24:i (align=R, inputBehaviour=I, maxLength=15, sysNumber=155.0, core=true, businessType=R, t24Name=INT.CTR)
+		SC_ENT_AUTH_ID -> byValue SCC_EventCapture:DIARY__SC_ENT_AUTH_ID *
+		EARLY_DEADLINE : mml:date
+			@i18n:Label (en="Early Deadline")
+			@i18n:Tooltip (en="Early Deadline date")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=157.0, core=true, businessType=D, t24Name=EARLY.DEADLINE)
+		MARGIN_FACTOR : mml:string
+			@t24:i (align=R, inputBehaviour=I, maxLength=9, sysNumber=158.0, core=true, businessType=R, t24Name=MARGIN.FACTOR)
+		REDEM_PERCENT : mml:string
+			@i18n:Label (en="Redemption %")
+			@i18n:Tooltip (en="What percentage to be redeemed")
+			@t24:i (align=L, inputBehaviour=F, maxLength=6, sysNumber=159.0, core=true, businessType=DEC, t24Name=REDEM.PERCENT)
+		RETAIN_OPTION : SCC_EventCapture:DIARY__RETAIN_OPTION
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=160.0, core=true, t24Name=RETAIN.OPTION)
+		CUT_OFF_TIME : mml:string
+			@i18n:Label (en="Cut off time", fr="Limite de temps")
+			@i18n:Tooltip (en="Cut off time", fr="Limite de temps")
+			@t24:i (align=L, inputBehaviour=I, maxLength=11, sysNumber=161.0, core=true, businessType=TIME, t24Name=CUT.OFF.TIME)
+		STP : SCC_EventCapture:DIARY__STP
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=162.0, core=true, t24Name=STP)
+		LOAN : SCC_EventCapture:DIARY__LOAN
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=163.0, core=true, t24Name=LOAN)
+		RESERVED_2 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=164.0, core=true, t24Name=RESERVED.2)
+		RESERVED_1 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=165.0, core=true, t24Name=RESERVED.1)
+		STMT_NOS -> byValue SCC_EventCapture:DIARY__STMT_NOS *
+		OVERRIDE -> byValue SCC_EventCapture:DIARY__OVERRIDE *
+		RECORD_STATUS : mml:string
+			@i18n:Label (en="Record Status", fr=Statut, es=Estado)
+			@i18n:Tooltip (fr="Statut de l\'enregistrement")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=169.0, core=true, businessType=STAT, t24Name=RECORD.STATUS)
+		CURR_NO : mml:Integer
+			@i18n:Label (en="Curr No", fr="N° version", es="No. Actual")
+			@i18n:Tooltip (fr="Numéro de version")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=170.0, core=true, t24Name=CURR.NO)
+		INPUTTER -> byValue SCC_EventCapture:DIARY__INPUTTER *
+		DATE_TIME -> byValue SCC_EventCapture:DIARY__DATE_TIME *
+		AUTHORISER : mml:string
+			@i18n:Label (en=Authoriser, fr="Validé par", es=Autorizador)
+			@i18n:Tooltip (en="Indicates the User who Authorises the record", fr="Utilisateur de validation", es="El usuario que autorizó el registro")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=173.0, core=true, businessType=A, t24Name=AUTHORISER)
+		CO_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company, fr=Entité, es="Compañía")
+			@i18n:Tooltip (fr="Code établissement ou agence")
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=174.0, core=true, businessType=A, t24Name=CO.CODE)
+		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Dept Code", fr=Service, es=Departamento)
+			@i18n:Tooltip (fr="Code du service")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=175.0, core=true, t24Name=DEPT.CODE)
+		AUDITOR_CODE : mml:string
+			@i18n:Label (en="Auditor Code", fr="Audité par", es="Código de Auditor")
+			@i18n:Tooltip (en="Auditor Code", fr="Utilisateur d\'audit", es="Nombre del auditor")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=176.0, core=true, businessType=A, t24Name=AUDITOR.CODE)
+		AUDIT_DATE_TIME : mml:dateTime
+			@i18n:Label (en="Audit Date Time", fr="Audité le", es="Fecha/Hora de Audit.")
+			@i18n:Tooltip (en="Date and time when record was audited", fr="Date et heure d\'audit", es="Fecha y Hora de Auditoría ")
+			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=177.0, core=true, businessType=RELTIME, t24Name=AUDIT.DATE.TIME)
+	}
+	DIARY__NARRATIVE
+	{
+		NARRATIVE : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=50, sysNumber=3.0, core=true, businessType=A, t24Name=NARRATIVE)
+	}
+	DIARY__OPTION_DESC
+	{
+		OPTION_DESC : mml:string
+			@t24:i (align=L, inputBehaviour=F, maxLength=35, sysNumber=14.0, core=true, businessType=S, t24Name=OPTION.DESC)
+		OPT_EVENT_TYPE -> SCC_EventCapture:DIARY_TYPE
+			@t24:i (align=L, inputBehaviour=F, maxLength=15, sysNumber=15.0, core=true, businessType=A, t24Name=OPT.EVENT.TYPE)
+		RATE : mml:string
+			@t24:i (align=R, inputBehaviour=I, maxLength=15, sysNumber=16.0, core=true, businessType=R, t24Name=RATE)
+		OLD_FACTOR : mml:string
+			@t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=17.0, core=true, businessType=R, t24Name=OLD.FACTOR)
+		NEW_FACTOR : mml:string
+			@t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=18.0, core=true, businessType=R, t24Name=NEW.FACTOR)
+		PERCENTAGE : SCC_EventCapture:DIARY__OPTION_DESC__PERCENTAGE
+			@t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=19.0, core=true, t24Name=PERCENTAGE)
+		NEW_SEC_NO -> byValue SCC_EventCapture:DIARY__OPTION_DESC__NEW_SEC_NO *
+		GROUP2_RATE : mml:string
+			@t24:i (align=R, inputBehaviour=I, maxLength=16, sysNumber=31.0, core=true, businessType=R, t24Name=GROUP2.RATE)
+		EQUALISE_RATE : mml:string
+			@t24:i (align=R, inputBehaviour=I, maxLength=16, sysNumber=32.0, core=true, businessType=R, t24Name=EQUALISE.RATE)
+	}
+	DIARY__OPTION_DESC__NEW_SEC_NO
+	{
+		NEW_SEC_NO -> SCO_SecurityMasterMaintenance:SECURITY_MASTER
+			@t24:i (align=L, inputBehaviour=I, maxLength=12, sysNumber=20.0, core=true, businessType=SEC, t24Name=NEW.SEC.NO)
+		NEW_PRICE : mml:string
+			@t24:i (align=R, inputBehaviour=I, maxLength=16, sysNumber=21.0, core=true, businessType=R, t24Name=NEW.PRICE)
+		NEW_MKT_PRC : mml:Double
+			@t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=22.0, core=true, businessType=PRICE, t24Name=NEW.MKT.PRC)
+		OLD_RATIO : mml:string
+			@t24:i (align=R, inputBehaviour=I, maxLength=15, sysNumber=23.0, core=true, businessType=R, t24Name=OLD.RATIO)
+		NEW_RATIO : mml:string
+			@t24:i (align=R, inputBehaviour=I, maxLength=16, sysNumber=24.0, core=true, businessType=R, t24Name=NEW.RATIO)
+		RIGHTS_NO -> SCO_SecurityMasterMaintenance:SECURITY_MASTER
+			@t24:i (align=L, inputBehaviour=I, maxLength=12, sysNumber=25.0, core=true, businessType=SEC, t24Name=RIGHTS.NO)
+		OLD_TO_RIGHT : mml:string
+			@t24:i (align=R, inputBehaviour=I, maxLength=15, sysNumber=26.0, core=true, businessType=R, t24Name=OLD.TO.RIGHT)
+		RIGHT_TO_NEW : mml:string
+			@t24:i (align=R, inputBehaviour=I, maxLength=15, sysNumber=27.0, core=true, businessType=R, t24Name=RIGHT.TO.NEW)
+		BOOK_COST : mml:string
+			@t24:i (align=R, inputBehaviour=I, maxLength=16, sysNumber=28.0, core=true, businessType=R, t24Name=BOOK.COST)
+		TAX_PRICE : mml:string
+			@t24:i (align=R, inputBehaviour=I, maxLength=16, sysNumber=29.0, core=true, businessType=R, t24Name=TAX.PRICE)
+		SELL_NEW_SEC : SCC_EventCapture:DIARY__OPTION_DESC__NEW_SEC_NO__SELL_NEW_SEC
+			@t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=30.0, core=true, t24Name=SELL.NEW.SEC)
+	}
+	DIARY__LOCAL_TAX_PERC
+	{
+		LOCAL_TAX_PERC : mml:string
+			@t24:i (align=R, inputBehaviour=N, maxLength=15, sysNumber=34.0, core=true, businessType=R, t24Name=LOCAL.TAX.PERC)
+	}
+	DIARY__LOCAL_TAX_CODE
+	{
+		LOCAL_TAX_CODE : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=41.0, core=true, businessType=TAX, t24Name=LOCAL.TAX.CODE)
+	}
+	DIARY__AFC_NUMBER
+	{
+		AFC_NUMBER : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=8, sysNumber=42.0, core=true, businessType=A, t24Name=AFC.NUMBER)
+	}
+	DIARY__PAYMENT
+	{
+		PAYMENT : mml:Double
+			@t24:i (align=R, inputBehaviour=F, maxLength=16, sysNumber=45.0, core=true, businessType=AMT, t24Name=PAYMENT)
+		PAYMENT_DATE : mml:date
+			@t24:i (align=R, inputBehaviour=F, maxLength=11, sysNumber=46.0, core=true, businessType=D, t24Name=PAYMENT.DATE)
+	}
+	DIARY__QUOTE_PRICE
+	{
+		QUOTE_PRICE : mml:string
+			@t24:i (align=R, inputBehaviour=F, maxLength=16, sysNumber=47.0, core=true, businessType=R, t24Name=QUOTE.PRICE)
+		QUOTE_CCY -> FIN_CurrencyConfig:CURRENCY
+			@t24:i (align=L, inputBehaviour=F, maxLength=3, sysNumber=48.0, core=true, businessType=CCY, t24Name=QUOTE.CCY)
+		QUOTE_DATE : mml:date
+			@t24:i (align=R, inputBehaviour=F, maxLength=11, sysNumber=49.0, core=true, businessType=D, t24Name=QUOTE.DATE)
+	}
+	DIARY__DEP_NO
+	{
+		DEP_NO -> SC_Config:CUSTOMER_SECURITY
+			@t24:i (align=R, inputBehaviour=N, maxLength=10, sysNumber=50.0, core=true, businessType=CUS, t24Name=DEP.NO)
+		DEP_TYPE : SCC_EventCapture:DIARY__DEP_NO__DEP_TYPE
+			@t24:i (align=L, inputBehaviour=N, maxLength=12, sysNumber=51.0, core=true, t24Name=DEP.TYPE)
+		DEP_ACCOUNT_NO -> ACM_AccountOpening:ACCOUNT
+			@t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=52.0, core=true, businessType=ANT, t24Name=DEP.ACCOUNT.NO)
+		TOTAL_CASH : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=16, sysNumber=53.0, core=true, businessType=AMT, t24Name=TOTAL.CASH)
+		TOTAL_CASH_CCY -> FIN_CurrencyConfig:CURRENCY
+			@t24:i (align=R, inputBehaviour=N, maxLength=3, sysNumber=54.0, core=true, t24Name=TOTAL.CASH.CCY)
+		TOTAL_CASH_XCH : mml:string
+			@t24:i (align=R, inputBehaviour=I, maxLength=15, sysNumber=55.0, core=true, businessType=R, t24Name=TOTAL.CASH.XCH)
+		TOTAL_CASH_LCCY : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=16, sysNumber=56.0, core=true, businessType=AMT, t24Name=TOTAL.CASH.LCCY)
+		RP_ACCOUNT -> ACM_AccountOpening:ACCOUNT
+			@t24:i (align=L, inputBehaviour=N, maxLength=16, sysNumber=57.0, core=true, businessType=ANT, t24Name=RP.ACCOUNT)
+		RP_TOT_CASH : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=16, sysNumber=58.0, core=true, businessType=AMT, t24Name=RP.TOT.CASH)
+		RP_TOT_CASH_CCY -> FIN_CurrencyConfig:CURRENCY
+			@t24:i (align=R, inputBehaviour=N, maxLength=3, sysNumber=59.0, core=true, t24Name=RP.TOT.CASH.CCY)
+		RP_TOT_CASH_XCH : mml:string
+			@t24:i (align=R, inputBehaviour=N, maxLength=15, sysNumber=60.0, core=true, businessType=R, t24Name=RP.TOT.CASH.XCH)
+		RP_TOT_CASH_LCY : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=16, sysNumber=61.0, core=true, businessType=AMT, t24Name=RP.TOT.CASH.LCY)
+		STATEMENT_NO -> byValue SCC_EventCapture:DIARY__DEP_NO__STATEMENT_NO *
+		REALLOW_AMT : mml:string
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=63.0, core=true, businessType=BMT, t24Name=REALLOW.AMT)
+		REALLOW_XRATE : mml:string
+			@t24:i (align=R, inputBehaviour=I, maxLength=15, sysNumber=64.0, core=true, businessType=R, t24Name=REALLOW.XRATE)
+		REALLOW_LCCY : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=65.0, core=true, businessType=AMT, t24Name=REALLOW.LCCY)
+		ENTL_CREATED : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=66.0, core=true, businessType=AMT, t24Name=ENTL.CREATED)
+		ENTL_AUTHORISED : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=67.0, core=true, businessType=AMT, t24Name=ENTL.AUTHORISED)
+		ENTL_REVERSED : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=68.0, core=true, businessType=AMT, t24Name=ENTL.REVERSED)
+		ENTL_SETTLED : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=69.0, core=true, businessType=AMT, t24Name=ENTL.SETTLED)
+		TOT_CASH_RECD : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=16, sysNumber=70.0, core=true, businessType=AMT, t24Name=TOT.CASH.RECD)
+		RESERVED_12 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=71.0, core=true, t24Name=RESERVED.12)
+		RESERVED_11 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=72.0, core=true, t24Name=RESERVED.11)
+		ACTIVITY_CODE : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=7, sysNumber=73.0, core=true, t24Name=ACTIVITY.CODE)
+		MESSAGE_TYPE : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=74.0, core=true, t24Name=MESSAGE.TYPE)
+		DELIVERY_KEY -> byValue SCC_EventCapture:DIARY__DEP_NO__DELIVERY_KEY *
+		TOT_SECURITY -> byValue SCC_EventCapture:DIARY__DEP_NO__TOT_SECURITY *
+	}
+	DIARY__DEP_NO__STATEMENT_NO
+	{
+		STATEMENT_NO : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=29, sysNumber=62.0, core=true, businessType=A, t24Name=STATEMENT.NO)
+	}
+	DIARY__DEP_NO__DELIVERY_KEY
+	{
+		DELIVERY_KEY : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=16, sysNumber=75.0, core=true, t24Name=DELIVERY.KEY)
+	}
+	DIARY__DEP_NO__TOT_SECURITY
+	{
+		TOT_SECURITY -> SCO_SecurityMasterMaintenance:SECURITY_MASTER
+			@t24:i (align=R, inputBehaviour=N, maxLength=15, sysNumber=76.0, core=true, t24Name=TOT.SECURITY)
+		TOTAL_CREDIT : mml:string
+			@t24:i (align=R, inputBehaviour=N, maxLength=25, sysNumber=77.0, core=true, businessType=NOMAMT, t24Name=TOTAL.CREDIT)
+		TOTAL_DEBIT : mml:string
+			@t24:i (align=R, inputBehaviour=N, maxLength=16, sysNumber=78.0, core=true, businessType=NOMAMT, t24Name=TOTAL.DEBIT)
+		LAPSED_RIGHT : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=16, sysNumber=79.0, core=true, businessType=AMT, t24Name=LAPSED.RIGHT)
+		RIGHTS_COST : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=16, sysNumber=80.0, core=true, businessType=AMT, t24Name=RIGHTS.COST)
+	}
+	DIARY__OPTION
+	{
+		OPTION : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=81.0, core=true, businessType=S, t24Name=OPTION)
+		OPTION_NOMINAL : mml:string
+			@t24:i (align=R, inputBehaviour=N, maxLength=16, sysNumber=82.0, core=true, businessType=NOMAMT, t24Name=OPTION.NOMINAL)
+	}
+	DIARY__OPT1_DEPOT
+	{
+		OPT1_DEPOT -> SC_Config:CUSTOMER_SECURITY
+			@t24:i (align=R, inputBehaviour=N, maxLength=10, sysNumber=84.0, core=true, businessType=CUS, t24Name=OPT1.DEPOT)
+		OPT1_NOMINAL : mml:string
+			@t24:i (align=R, inputBehaviour=N, maxLength=16, sysNumber=85.0, core=true, businessType=NOMAMT, t24Name=OPT1.NOMINAL)
+		OPT1_CASH : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=16, sysNumber=86.0, core=true, businessType=AMT, t24Name=OPT1.CASH)
+		OPT1_CASH_CCY -> FIN_CurrencyConfig:CURRENCY
+			@t24:i (align=R, inputBehaviour=N, maxLength=3, sysNumber=87.0, core=true, t24Name=OPT1.CASH.CCY)
+		OPT1_SEC -> byValue SCC_EventCapture:DIARY__OPT1_DEPOT__OPT1_SEC *
+	}
+	DIARY__OPT1_DEPOT__OPT1_SEC
+	{
+		OPT1_SEC -> SCO_SecurityMasterMaintenance:SECURITY_MASTER
+			@t24:i (align=R, inputBehaviour=N, maxLength=15, sysNumber=88.0, core=true, t24Name=OPT1.SEC)
+		OPT1_CREDIT : mml:string
+			@t24:i (align=R, inputBehaviour=N, maxLength=25, sysNumber=89.0, core=true, businessType=NOMAMT, t24Name=OPT1.CREDIT)
+		OPT1_DEBIT : mml:string
+			@t24:i (align=R, inputBehaviour=N, maxLength=16, sysNumber=90.0, core=true, businessType=NOMAMT, t24Name=OPT1.DEBIT)
+	}
+	DIARY__OPT2_DEPOT
+	{
+		OPT2_DEPOT -> SC_Config:CUSTOMER_SECURITY
+			@t24:i (align=R, inputBehaviour=N, maxLength=10, sysNumber=92.0, core=true, businessType=CUS, t24Name=OPT2.DEPOT)
+		OPT2_NOMINAL : mml:string
+			@t24:i (align=R, inputBehaviour=N, maxLength=16, sysNumber=93.0, core=true, businessType=NOMAMT, t24Name=OPT2.NOMINAL)
+		OPT2_CASH : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=16, sysNumber=94.0, core=true, businessType=AMT, t24Name=OPT2.CASH)
+		OPT2_CASH_CCY -> FIN_CurrencyConfig:CURRENCY
+			@t24:i (align=R, inputBehaviour=N, maxLength=3, sysNumber=95.0, core=true, t24Name=OPT2.CASH.CCY)
+		OPT2_SEC -> byValue SCC_EventCapture:DIARY__OPT2_DEPOT__OPT2_SEC *
+	}
+	DIARY__OPT2_DEPOT__OPT2_SEC
+	{
+		OPT2_SEC -> SCO_SecurityMasterMaintenance:SECURITY_MASTER
+			@t24:i (align=R, inputBehaviour=N, maxLength=15, sysNumber=96.0, core=true, t24Name=OPT2.SEC)
+		OPT2_CREDIT : mml:string
+			@t24:i (align=R, inputBehaviour=N, maxLength=25, sysNumber=97.0, core=true, businessType=NOMAMT, t24Name=OPT2.CREDIT)
+		OPT2_DEBIT : mml:string
+			@t24:i (align=R, inputBehaviour=N, maxLength=16, sysNumber=98.0, core=true, businessType=NOMAMT, t24Name=OPT2.DEBIT)
+	}
+	DIARY__OPT3_DEPOT
+	{
+		OPT3_DEPOT -> SC_Config:CUSTOMER_SECURITY
+			@t24:i (align=R, inputBehaviour=N, maxLength=10, sysNumber=100.0, core=true, businessType=CUS, t24Name=OPT3.DEPOT)
+		OPT3_NOMINAL : mml:string
+			@t24:i (align=R, inputBehaviour=N, maxLength=16, sysNumber=101.0, core=true, businessType=NOMAMT, t24Name=OPT3.NOMINAL)
+		OPT3_CASH : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=16, sysNumber=102.0, core=true, businessType=AMT, t24Name=OPT3.CASH)
+		OPT3_CASH_CCY -> FIN_CurrencyConfig:CURRENCY
+			@t24:i (align=R, inputBehaviour=N, maxLength=3, sysNumber=103.0, core=true, t24Name=OPT3.CASH.CCY)
+		OPT3_SEC -> byValue SCC_EventCapture:DIARY__OPT3_DEPOT__OPT3_SEC *
+	}
+	DIARY__OPT3_DEPOT__OPT3_SEC
+	{
+		OPT3_SEC -> SCO_SecurityMasterMaintenance:SECURITY_MASTER
+			@t24:i (align=R, inputBehaviour=N, maxLength=15, sysNumber=104.0, core=true, t24Name=OPT3.SEC)
+		OPT3_CREDIT : mml:string
+			@t24:i (align=R, inputBehaviour=N, maxLength=25, sysNumber=105.0, core=true, businessType=NOMAMT, t24Name=OPT3.CREDIT)
+		OPT3_DEBIT : mml:string
+			@t24:i (align=R, inputBehaviour=N, maxLength=16, sysNumber=106.0, core=true, businessType=NOMAMT, t24Name=OPT3.DEBIT)
+	}
+	DIARY__OPT4_DEPOT
+	{
+		OPT4_DEPOT -> SC_Config:CUSTOMER_SECURITY
+			@t24:i (align=R, inputBehaviour=N, maxLength=10, sysNumber=108.0, core=true, businessType=CUS, t24Name=OPT4.DEPOT)
+		OPT4_NOMINAL : mml:string
+			@t24:i (align=R, inputBehaviour=N, maxLength=16, sysNumber=109.0, core=true, businessType=NOMAMT, t24Name=OPT4.NOMINAL)
+		OPT4_CASH : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=16, sysNumber=110.0, core=true, businessType=AMT, t24Name=OPT4.CASH)
+		OPT4_CASH_CCY -> FIN_CurrencyConfig:CURRENCY
+			@t24:i (align=R, inputBehaviour=N, maxLength=3, sysNumber=111.0, core=true, t24Name=OPT4.CASH.CCY)
+		OPT4_SEC -> byValue SCC_EventCapture:DIARY__OPT4_DEPOT__OPT4_SEC *
+	}
+	DIARY__OPT4_DEPOT__OPT4_SEC
+	{
+		OPT4_SEC -> SCO_SecurityMasterMaintenance:SECURITY_MASTER
+			@t24:i (align=R, inputBehaviour=N, maxLength=15, sysNumber=112.0, core=true, t24Name=OPT4.SEC)
+		OPT4_CREDIT : mml:string
+			@t24:i (align=R, inputBehaviour=N, maxLength=25, sysNumber=113.0, core=true, businessType=NOMAMT, t24Name=OPT4.CREDIT)
+		OPT4_DEBIT : mml:string
+			@t24:i (align=R, inputBehaviour=N, maxLength=16, sysNumber=114.0, core=true, businessType=NOMAMT, t24Name=OPT4.DEBIT)
+	}
+	DIARY__ADVICE_FORMAT
+	{
+		ADVICE_FORMAT : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=4, sysNumber=119.0, core=true, t24Name=ADVICE.FORMAT)
+	}
+	DIARY__PORTFOLIO_NO
+	{
+		PORTFOLIO_NO -> SCO_PortfolioMaintenance:SEC_ACC_MASTER
+			@t24:i (align=L, inputBehaviour=I, maxLength=18, sysNumber=128.0, core=true, businessType=A, t24Name=PORTFOLIO.NO)
+	}
+	DIARY__ADJUST_SOO_ID
+	{
+		ADJUST_SOO_ID : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=145.0, core=true, t24Name=ADJUST.SOO.ID)
+	}
+	DIARY__SC_TAX_CODE
+	{
+		SC_TAX_CODE -> SCT_Taxes:TXN_TAX_CODE
+			@t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=151.0, core=true, businessType=A, t24Name=SC.TAX.CODE)
+		SC_TAX_TYPE : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=152.0, core=true, businessType=TAX, t24Name=SC.TAX.TYPE)
+		SOURCE_OR_LOCAL : SCC_EventCapture:DIARY__SC_TAX_CODE__SOURCE_OR_LOCAL
+			@t24:i (align=L, inputBehaviour=I, maxLength=6, sysNumber=153.0, core=true, t24Name=SOURCE.OR.LOCAL)
+	}
+	DIARY__SC_ENT_AUTH_ID
+	{
+		SC_ENT_AUTH_ID : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=156.0, core=true, t24Name=SC.ENT.AUTH.ID)
+	}
+	DIARY__STMT_NOS
+	{
+		STMT_NOS : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=10, sysNumber=167.0, core=true, t24Name=STMT.NOS)
+	}
+	DIARY__OVERRIDE
+	{
+		OVERRIDE : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=168.0, core=true, t24Name=OVERRIDE)
+	}
+	DIARY__INPUTTER
+	{
+		INPUTTER : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=171.0, core=true, businessType=A, t24Name=INPUTTER)
+	}
+	DIARY__DATE_TIME
+	{
+		DATE_TIME : mml:dateTime
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=172.0, core=true, businessType=RELTIME, t24Name=DATE.TIME)
+	}
+	DIARY_TYPE
+		@t24:i (t24Name=DIARY.TYPE, level=I, type=H, additionalInfo="UNP OEU", allowedFunctions="A C D E H I L P Q R S", localRefAllowed=true)
+	{
+		DIARY_TYPE_ID -> SCC_EventCapture:DIARY_TYPE PK required
+			@t24:i (align=L, inputBehaviour=I, maxLength=15, sysNumber=0.0, core=true, businessType=SS, t24Name=DIARY.TYPE.ID)
+		EVENT_DESC -> byValue SCC_EventCapture:DIARY_TYPE__EVENT_DESC *
+		CASH : SCC_EventCapture:DIARY_TYPE__CASH required
+			@i18n:Label (en=Cash, fr=Espèces, es=Efectivo)
+			@i18n:Tooltip (fr=Espèces)
+			@t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=2.0, core=true, t24Name=CASH)
+		SECURITY_UPDATE : SCC_EventCapture:DIARY_TYPE__SECURITY_UPDATE required
+			@i18n:Label (en="Update Holding", fr="Màj des valeurs", es="Actualización de Valores")
+			@i18n:Tooltip (fr="Màj des valeurs")
+			@t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=3.0, core=true, t24Name=SECURITY.UPDATE)
+		NEW_SECURITIES : SCC_EventCapture:DIARY_TYPE__NEW_SECURITIES required
+			@i18n:Label (en="New Security", fr="Nouveau titre", es="Nuevo Título")
+			@i18n:Tooltip (fr="Nouveau titre")
+			@t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=4.0, core=true, t24Name=NEW.SECURITIES)
+		OPTIONS : SCC_EventCapture:DIARY_TYPE__OPTIONS required
+			@i18n:Label (en=Choices, fr=Options, es=Opciones)
+			@i18n:Tooltip (fr=Options)
+			@t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=5.0, core=true, t24Name=OPTIONS)
+		REINVEST : SCC_EventCapture:DIARY_TYPE__REINVEST required
+			@i18n:Label (en=Reinvest, fr=Réinvestir, es=Reinvertir)
+			@i18n:Tooltip (fr=Réinvestir)
+			@t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=6.0, core=true, t24Name=REINVEST)
+		RIGHTS : SCC_EventCapture:DIARY_TYPE__RIGHTS required
+			@i18n:Label (en=Rights, fr=Droits, es=Derechos)
+			@i18n:Tooltip (fr=Droits)
+			@t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=7.0, core=true, t24Name=RIGHTS)
+		FREE_SECURITIES : SCC_EventCapture:DIARY_TYPE__FREE_SECURITIES required
+			@i18n:Label (en="Free Securities", fr="Titres libres", es="Valores Libres")
+			@i18n:Tooltip (fr="Titres libres")
+			@t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=8.0, core=true, t24Name=FREE.SECURITIES)
+		RETAIN_ORIGINAL : SCC_EventCapture:DIARY_TYPE__RETAIN_ORIGINAL required
+			@i18n:Label (en="Retain Original", fr="Retenir l\'Original", es="Retener el Original")
+			@i18n:Tooltip (fr="Retenir l\'Original")
+			@t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=9.0, core=true, t24Name=RETAIN.ORIGINAL)
+		ADVICE -> byValue SCC_EventCapture:DIARY_TYPE__ADVICE *
+		OVERDUE_DAYS : mml:Integer required
+			@i18n:Label (en="Overdue Days", fr="Jours des arriérés", es="Días de Atraso")
+			@i18n:Tooltip (fr="Jours des arriérés")
+			@t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=12.0, core=true, t24Name=OVERDUE.DAYS)
+		OVERDUE_DATE : SCC_EventCapture:DIARY_TYPE__OVERDUE_DATE
+			@t24:i (align=L, inputBehaviour=I, maxLength=15, sysNumber=13.0, core=true, t24Name=OVERDUE.DATE)
+		COMMISSION_TYPE -> ST_ChargeConfig:FT_COMMISSION_TYPE required
+			@i18n:Label (en="Commission Type", fr="Type de commission", es="Tipo de Comisión")
+			@i18n:Tooltip (fr="Type de commission")
+			@t24:i (align=L, inputBehaviour=I, maxLength=11, sysNumber=14.0, core=true, businessType=A, t24Name=COMMISSION.TYPE)
+		TRANSACTION_TYPE -> SC_Config:SC_TRANS_TYPE required
+			@i18n:Label (en="Transaction Type", fr="Type d\'opération", es="Tipo de Transacción")
+			@i18n:Tooltip (en="Indicates the Transaction Type", fr="Type d\'opération", es="Indica el Tipo de transacción")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=15.0, core=true, businessType=A, t24Name=TRANSACTION.TYPE)
+		TRANSACTION_BOND -> SC_Config:SC_TRANS_TYPE required
+			@i18n:Label (en="Transaction Bond", fr="Obligtn de Trans", es="Transacción de Bonos")
+			@i18n:Tooltip (fr="Obligtn de Trans")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=16.0, core=true, businessType=A, t24Name=TRANSACTION.BOND)
+		TRANSACTION_SHARE -> SC_Config:SC_TRANS_TYPE required
+			@i18n:Label (en="Transaction Share", fr="Action de Trans", es="Transacción de Acciones")
+			@i18n:Tooltip (fr="Action de Trans")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=17.0, core=true, businessType=A, t24Name=TRANSACTION.SHARE)
+		EXCHANGE_PL_CAT -> ST_Config:CATEGORY required
+			@t24:i (align=R, inputBehaviour=I, maxLength=6, sysNumber=18.0, core=true, t24Name=EXCHANGE.PL.CAT)
+		EXCHANGE_PL_CR_CD -> ST_Config:TRANSACTION required
+			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=19.0, core=true, t24Name=EXCHANGE.PL.CR.CD)
+		EXCHANGE_PL_DB_CD -> ST_Config:TRANSACTION required
+			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=20.0, core=true, t24Name=EXCHANGE.PL.DB.CD)
+		FGN_CHGES_CAT -> ST_Config:CATEGORY
+			@t24:i (align=R, inputBehaviour=I, maxLength=6, sysNumber=21.0, core=true, t24Name=FGN.CHGES.CAT)
+		FGN_CHGES_CR_CODE -> ST_Config:TRANSACTION
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=22.0, core=true, businessType=S, t24Name=FGN.CHGES.CR.CODE)
+		ROUNDING : SCC_EventCapture:DIARY_TYPE__ROUNDING
+			@i18n:Label (en=Rounding, fr=Arrondi, es=Redondeo)
+			@i18n:Tooltip (fr=Arrondi)
+			@t24:i (align=L, inputBehaviour=I, maxLength=8, sysNumber=23.0, core=true, t24Name=ROUNDING)
+		CASH_REMAIN : SCC_EventCapture:DIARY_TYPE__CASH_REMAIN required
+			@i18n:Label (en="Cash Remain", fr="Cash restant", es="Efectivo Sobrante")
+			@i18n:Tooltip (fr="Cash restant")
+			@t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=24.0, core=true, t24Name=CASH.REMAIN)
+		SUSPENSE_ACCOUNT -> ST_Config:CATEGORY required
+			@t24:i (align=R, inputBehaviour=I, maxLength=6, sysNumber=25.0, core=true, t24Name=SUSPENSE.ACCOUNT)
+		UPDATE_NOSTRO : SCC_EventCapture:DIARY_TYPE__UPDATE_NOSTRO required
+			@i18n:Label (en="Update Nostro", fr="Màj Nostro", es="Actualización de Nostro")
+			@i18n:Tooltip (fr="Màj Nostro")
+			@t24:i (align=L, inputBehaviour=F, maxLength=3, sysNumber=26.0, core=true, t24Name=UPDATE.NOSTRO)
+		VERIFY_REQUIRED : SCC_EventCapture:DIARY_TYPE__VERIFY_REQUIRED
+			@i18n:Label (en="Verify Required", fr="Vérification requise", es="Verificación Requerida")
+			@i18n:Tooltip (fr="Vérification requise")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=27.0, core=true, t24Name=VERIFY.REQUIRED)
+		XT_PROCESS -> byValue SCC_EventCapture:DIARY_TYPE__XT_PROCESS *
+		ADVICE_TYPES -> byValue SCC_EventCapture:DIARY_TYPE__ADVICE_TYPES *
+		TAXABLE : SCC_EventCapture:DIARY_TYPE__TAXABLE required
+			@i18n:Label (en=Taxable, fr="Taux d\'impôt", es=Gravable)
+			@i18n:Tooltip (fr="Taux d\'impôt")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=30.0, core=true, t24Name=TAXABLE)
+		DEMERGE_BOOK_COST : SCC_EventCapture:DIARY_TYPE__DEMERGE_BOOK_COST
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=31.0, core=true, t24Name=DEMERGE.BOOK.COST)
+		FGN_CHG_TAX_CODE : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=32.0, core=true, businessType=TAX, t24Name=FGN.CHG.TAX.CODE)
+		DP_FOR_CATEGORY : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=6, sysNumber=33.0, core=true, t24Name=DP.FOR.CATEGORY)
+		DP_FOR_DR_CODE -> ST_Config:TRANSACTION
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=34.0, core=true, businessType=S, t24Name=DP.FOR.DR.CODE)
+		REALLOWANCE_PL_CAT -> ST_Config:CATEGORY
+			@t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=35.0, core=true, t24Name=REALLOWANCE.PL.CAT)
+		REALLOWANCE_PL_CR -> ST_Config:TRANSACTION
+			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=36.0, core=true, t24Name=REALLOWANCE.PL.CR)
+		REALLOWANCE_PL_DB -> ST_Config:TRANSACTION
+			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=37.0, core=true, t24Name=REALLOWANCE.PL.DB)
+		REDENOMINATION : SCC_EventCapture:DIARY_TYPE__REDENOMINATION
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=38.0, core=true, t24Name=REDENOMINATION)
+		COPY_ISIN : SCC_EventCapture:DIARY_TYPE__COPY_ISIN
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=39.0, core=true, t24Name=COPY.ISIN)
+		DENOM_LEVEL : SCC_EventCapture:DIARY_TYPE__DENOM_LEVEL
+			@t24:i (align=L, inputBehaviour=I, maxLength=9, sysNumber=40.0, core=true, t24Name=DENOM.LEVEL)
+		NOM_ROUNDING_METHD : SCC_EventCapture:DIARY_TYPE__NOM_ROUNDING_METHD
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=41.0, core=true, t24Name=NOM.ROUNDING.METHD)
+		FACTOR_PAYMENT : SCC_EventCapture:DIARY_TYPE__FACTOR_PAYMENT required
+			@i18n:Label (en="Factor Payment", fr="Paiement de facteur", es="Factor de Pago")
+			@i18n:Tooltip (fr="Paiement de facteur")
+			@t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=42.0, core=true, t24Name=FACTOR.PAYMENT)
+		PRE_ADVICE_REQ : SCC_EventCapture:DIARY_TYPE__PRE_ADVICE_REQ
+			@i18n:Label (en="Pre Advice", fr="Préavis Requis", es="Pre Aviso")
+			@i18n:Tooltip (fr="Préavis Requis")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=43.0, core=true, t24Name=PRE.ADVICE.REQ)
+		CONFIRM_REQ : SCC_EventCapture:DIARY_TYPE__CONFIRM_REQ
+			@i18n:Label (en="Confirmation Reqd?", fr="Confirmation Requise", es="¿Requiere Confirmación?")
+			@i18n:Tooltip (en="Indicates whether confirmation messages required?", fr="Confirmation Requise", es="Indica si mensajes de confirmación son requeridos")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=44.0, core=true, t24Name=CONFIRM.REQ)
+		SWIFT_CAEV : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=10, sysNumber=45.0, core=true, businessType=A, t24Name=SWIFT.CAEV)
+		BLOCK_POSITION : SCC_EventCapture:DIARY_TYPE__BLOCK_POSITION
+			@i18n:Label (en="Block Position", fr="Blocage de la Position", es="Posición Bloqueada")
+			@i18n:Tooltip (fr="Blocage de la Position")
+			@t24:i (align=L, inputBehaviour=I, maxLength=15, sysNumber=46.0, core=true, t24Name=BLOCK.POSITION)
+		ALLOW_SHORT_POSN : SCC_EventCapture:DIARY_TYPE__ALLOW_SHORT_POSN
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=47.0, core=true, t24Name=ALLOW.SHORT.POSN)
+		EQUALISATION : SCC_EventCapture:DIARY_TYPE__EQUALISATION
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=48.0, core=true, t24Name=EQUALISATION)
+		EQUALISATION_CODE -> SC_Config:SC_TRANS_TYPE
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=49.0, core=true, businessType=S, t24Name=EQUALISATION.CODE)
+		DIARY_CREATE : SCC_EventCapture:DIARY_TYPE__DIARY_CREATE required
+			@i18n:Label (en="Diary Create", fr="Création d\' OST", es="Crear Diario")
+			@i18n:Tooltip (fr="Création d\' OST")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=50.0, core=true, t24Name=DIARY.CREATE)
+		AUTO_ENTITLE : SCC_EventCapture:DIARY_TYPE__AUTO_ENTITLE required
+			@i18n:Label (en="Auto ent create", fr="Droit automatique", es="Crear Auto Titulación")
+			@i18n:Tooltip (fr="Droit automatique")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=51.0, core=true, t24Name=AUTO.ENTITLE)
+		ROUNDING_LEVEL : SCC_EventCapture:DIARY_TYPE__ROUNDING_LEVEL
+			@i18n:Label (en="Rounding Level", fr="Niveau d\'arrondi", es="Nivel de Redondeo")
+			@i18n:Tooltip (fr="Niveau d\'arrondi")
+			@t24:i (align=L, inputBehaviour=I, maxLength=10, sysNumber=52.0, core=true, t24Name=ROUNDING.LEVEL)
+		REINVEST_PARAM -> SCC_Config:SC_REINVEST_PARAM
+			@t24:i (align=L, inputBehaviour=I, maxLength=12, sysNumber=53.0, core=true, businessType=S, t24Name=REINVEST.PARAM)
+		DEF_INSTR_APPLY : SCC_EventCapture:DIARY_TYPE__DEF_INSTR_APPLY
+			@i18n:Label (en="Apply def instructions", fr="Différer l\'instr", es="Aplicar Instruc.Pre-est.")
+			@i18n:Tooltip (fr="Différer l\'instr")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=54.0, core=true, t24Name=DEF.INSTR.APPLY)
+		DEF_NB_OF_DAYS : mml:Integer
+			@i18n:Label (en="No of days", fr="Nbre de jours", es="No. de Días")
+			@i18n:Tooltip (fr="Nbre de jours")
+			@t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=55.0, core=true, t24Name=DEF.NB.OF.DAYS)
+		DEF_PRI_AFT : SCC_EventCapture:DIARY_TYPE__DEF_PRI_AFT
+			@i18n:Label (en="Prior / After", fr="Avant / Après", es="Antes / Después")
+			@i18n:Tooltip (fr="Avant / Après")
+			@t24:i (align=L, inputBehaviour=I, maxLength=5, sysNumber=56.0, core=true, t24Name=DEF.PRI.AFT)
+		DEF_INSTR_SEL_DATE : SCC_EventCapture:DIARY_TYPE__DEF_INSTR_SEL_DATE
+			@i18n:Label (en="Select date", fr="Sélectionner la date", es="Seleccionar Fecha")
+			@i18n:Tooltip (fr="Sélectionner la date")
+			@t24:i (align=L, inputBehaviour=I, maxLength=14, sysNumber=57.0, core=true, t24Name=DEF.INSTR.SEL.DATE)
+		DIA_AUTO_AUTHORISE : SCC_EventCapture:DIARY_TYPE__DIA_AUTO_AUTHORISE
+			@i18n:Label (en="Diary auto auth", fr="Autorisation auto d\'OST", es="Auto Autoriz. Diario")
+			@i18n:Tooltip (fr="Autorisation auto d\'OST")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=58.0, core=true, t24Name=DIA.AUTO.AUTHORISE)
+		DIA_AUT_NB_OF_DAYS : mml:Integer
+			@i18n:Label (en="No of days", fr="Nbre de jours", es="No. de Días")
+			@i18n:Tooltip (fr="Nbre de jours")
+			@t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=59.0, core=true, t24Name=DIA.AUT.NB.OF.DAYS)
+		DIA_AUT_PRI_AFT : SCC_EventCapture:DIARY_TYPE__DIA_AUT_PRI_AFT
+			@i18n:Label (en="Prior / After", fr="Avant / Après", es="Antes / Después")
+			@i18n:Tooltip (fr="Avant / Après")
+			@t24:i (align=L, inputBehaviour=I, maxLength=5, sysNumber=60.0, core=true, t24Name=DIA.AUT.PRI.AFT)
+		DIA_AUT_SEL_DATE : SCC_EventCapture:DIARY_TYPE__DIA_AUT_SEL_DATE
+			@i18n:Label (en="Select date", fr="Sélectionner la date", es="Seleccionar Fecha")
+			@i18n:Tooltip (fr="Sélectionner la date")
+			@t24:i (align=L, inputBehaviour=I, maxLength=14, sysNumber=61.0, core=true, t24Name=DIA.AUT.SEL.DATE)
+		ENT_AUTO_AUTHORISE : SCC_EventCapture:DIARY_TYPE__ENT_AUTO_AUTHORISE
+			@i18n:Label (en="Entitlement auto auth", fr="Autorisation auto droit", es="Auto Autoriz. Titulación")
+			@i18n:Tooltip (fr="Autorisation auto droit")
+			@t24:i (align=L, inputBehaviour=I, maxLength=6, sysNumber=62.0, core=true, t24Name=ENT.AUTO.AUTHORISE)
+		ENT_AUT_NB_OF_DAYS : mml:Integer
+			@i18n:Label (en="No of days", fr="Nbre de jours", es="No. de Días")
+			@i18n:Tooltip (fr="Nbre de jours")
+			@t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=63.0, core=true, t24Name=ENT.AUT.NB.OF.DAYS)
+		ENT_AUT_PRI_AFT : SCC_EventCapture:DIARY_TYPE__ENT_AUT_PRI_AFT
+			@i18n:Label (en="Prior / After", fr="Avant / Après", es="Antes / Después")
+			@i18n:Tooltip (fr="Avant / Après")
+			@t24:i (align=L, inputBehaviour=I, maxLength=5, sysNumber=64.0, core=true, t24Name=ENT.AUT.PRI.AFT)
+		ENT_AUT_SEL_DATE : SCC_EventCapture:DIARY_TYPE__ENT_AUT_SEL_DATE
+			@i18n:Label (en="Select date", fr="Sélectionner la date", es="Seleccionar Fecha")
+			@i18n:Tooltip (fr="Sélectionner la date")
+			@t24:i (align=L, inputBehaviour=I, maxLength=14, sysNumber=65.0, core=true, t24Name=ENT.AUT.SEL.DATE)
+		FWD_ACCT : SCC_EventCapture:DIARY_TYPE__FWD_ACCT
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=66.0, core=true, t24Name=FWD.ACCT)
+		DAYS_FWD : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=67.0, core=true, t24Name=DAYS.FWD)
+		ACCRUE_DIV : SCC_EventCapture:DIARY_TYPE__ACCRUE_DIV
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=68.0, core=true, t24Name=ACCRUE.DIV)
+		DEF_OPT_EVT : SCC_EventCapture:DIARY_TYPE__DEF_OPT_EVT
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=69.0, core=true, t24Name=DEF.OPT.EVT)
+		ACCUM_INCOME : SCC_EventCapture:DIARY_TYPE__ACCUM_INCOME
+			@i18n:Label (en="Accum Income", fr="Intérêts ajoutés", es="Ingreso Acumulado")
+			@i18n:Tooltip (fr="Intérêts ajoutés")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=70.0, core=true, t24Name=ACCUM.INCOME)
+		STAMP_CALC_RTN : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=71.0, core=true, businessType=A, t24Name=STAMP.CALC.RTN)
+		STAMP_MIN_AMT : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=72.0, core=true, businessType=AMT, t24Name=STAMP.MIN.AMT)
+		STAMP_CAT_BK -> ST_Config:CATEGORY
+			@t24:i (align=R, inputBehaviour=I, maxLength=6, sysNumber=73.0, core=true, t24Name=STAMP.CAT.BK)
+		CUM_MARKER -> byValue SCC_EventCapture:DIARY_TYPE__CUM_MARKER *
+		CUM_TIME_SCALE : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=10, sysNumber=75.0, core=true, businessType=A, t24Name=CUM.TIME.SCALE)
+		EX_MARKER -> byValue SCC_EventCapture:DIARY_TYPE__EX_MARKER *
+		EX_TIME_SCALE : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=10, sysNumber=77.0, core=true, businessType=A, t24Name=EX.TIME.SCALE)
+		INSTAL_DISTR : SCC_EventCapture:DIARY_TYPE__INSTAL_DISTR
+			@t24:i (align=L, inputBehaviour=I, maxLength=12, sysNumber=78.0, core=true, t24Name=INSTAL.DISTR)
+		AM_INCOME_TYPE : SCC_EventCapture:DIARY_TYPE__AM_INCOME_TYPE
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=79.0, core=true, t24Name=AM.INCOME.TYPE)
+		AM_FLOW_IMPACT : SCC_EventCapture:DIARY_TYPE__AM_FLOW_IMPACT
+			@t24:i (align=L, inputBehaviour=I, maxLength=6, sysNumber=80.0, core=true, t24Name=AM.FLOW.IMPACT)
+		AM_CAPTURE_DATE : SCC_EventCapture:DIARY_TYPE__AM_CAPTURE_DATE
+			@t24:i (align=L, inputBehaviour=I, maxLength=10, sysNumber=81.0, core=true, t24Name=AM.CAPTURE.DATE)
+		DERIVATIVES : SCC_EventCapture:DIARY_TYPE__DERIVATIVES
+			@t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=82.0, core=true, t24Name=DERIVATIVES)
+		EOD_DEF_ACT_SETT : SCC_EventCapture:DIARY_TYPE__EOD_DEF_ACT_SETT
+			@t24:i (align=L, inputBehaviour=I, maxLength=6, sysNumber=83.0, core=true, t24Name=EOD.DEF.ACT.SETT)
+		SBL_DIV_PROC : SCC_EventCapture:DIARY_TYPE__SBL_DIV_PROC
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=84.0, core=true, t24Name=SBL.DIV.PROC)
+		DIV_CONTROL_CAT -> ST_Config:CATEGORY
+			@t24:i (align=R, inputBehaviour=I, maxLength=6, sysNumber=85.0, core=true, t24Name=DIV.CONTROL.CAT)
+		DIV_TRANS_TYPE -> SC_Config:SC_TRANS_TYPE
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=86.0, core=true, businessType=A, t24Name=DIV.TRANS.TYPE)
+		CUST_OR_BANK : SCC_EventCapture:DIARY_TYPE__CUST_OR_BANK
+			@t24:i (align=L, inputBehaviour=I, maxLength=8, sysNumber=87.0, core=true, t24Name=CUST.OR.BANK)
+		PL_CATEGORY -> ST_Config:CATEGORY
+			@i18n:Label (en="PL Category", fr="Compte de PP", es="Categoría")
+			@i18n:Tooltip (fr="Compte de Charge/Produit")
+			@t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=88.0, core=true, t24Name=PL.CATEGORY)
+		DRIPS : SCC_EventCapture:DIARY_TYPE__DRIPS
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=89.0, core=true, t24Name=DRIPS)
+		REINVEST_SUSP -> ST_Config:CATEGORY
+			@t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=90.0, core=true, t24Name=REINVEST.SUSP)
+		TAX_ADJ_CATEGORY -> ST_Config:CATEGORY
+			@t24:i (align=R, inputBehaviour=I, maxLength=6, sysNumber=91.0, core=true, t24Name=TAX.ADJ.CATEGORY)
+		TOLERANCE_CATEG -> ST_Config:CATEGORY
+			@t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=92.0, core=true, t24Name=TOLERANCE.CATEG)
+		TOLERANCE_PCT : mml:string
+			@t24:i (align=R, inputBehaviour=I, maxLength=15, sysNumber=93.0, core=true, businessType=R, t24Name=TOLERANCE.PCT)
+		TOLERANCE_CCY -> byValue SCC_EventCapture:DIARY_TYPE__TOLERANCE_CCY *
+		PARTIAL_STP : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=5, sysNumber=96.0, core=true, businessType=A, t24Name=PARTIAL.STP)
+		RECORD_STATUS : mml:string
+			@i18n:Label (en="Record Status", fr=Statut, es=Estado)
+			@i18n:Tooltip (fr="Statut de l\'enregistrement")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=98.0, core=true, businessType=STAT, t24Name=RECORD.STATUS)
+		CURR_NO : mml:Integer
+			@i18n:Label (en="Curr No", fr="N° version", es="No. Actual")
+			@i18n:Tooltip (fr="Numéro de version")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=99.0, core=true, t24Name=CURR.NO)
+		INPUTTER -> byValue SCC_EventCapture:DIARY_TYPE__INPUTTER *
+		DATE_TIME -> byValue SCC_EventCapture:DIARY_TYPE__DATE_TIME *
+		AUTHORISER : mml:string
+			@i18n:Label (en=Authoriser, fr="Validé par", es=Autorizador)
+			@i18n:Tooltip (en="Indicates the User who Authorises the record", fr="Utilisateur de validation", es="El usuario que autorizó el registro")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=102.0, core=true, businessType=A, t24Name=AUTHORISER)
+		CO_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company, fr=Entité, es="Compañía")
+			@i18n:Tooltip (fr="Code établissement ou agence")
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=103.0, core=true, businessType=A, t24Name=CO.CODE)
+		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Dept Code", fr=Service, es=Departamento)
+			@i18n:Tooltip (fr="Code du service")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=104.0, core=true, t24Name=DEPT.CODE)
+		AUDITOR_CODE : mml:string
+			@i18n:Label (en="Auditor Code", fr="Audité par", es="Código de Auditor")
+			@i18n:Tooltip (en="Auditor Code", fr="Utilisateur d\'audit", es="Nombre del auditor")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=105.0, core=true, businessType=A, t24Name=AUDITOR.CODE)
+		AUDIT_DATE_TIME : mml:dateTime
+			@i18n:Label (en="Audit Date Time", fr="Audité le", es="Fecha/Hora de Audit.")
+			@i18n:Tooltip (en="Date and time when record was audited", fr="Date et heure d\'audit", es="Fecha y Hora de Auditoría ")
+			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=106.0, core=true, businessType=RELTIME, t24Name=AUDIT.DATE.TIME)
+	}
+	DIARY_TYPE__EVENT_DESC
+	{
+		EVENT_DESC : mml:string required
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, multiLanguage=true, sysNumber=1.0, core=true, businessType=A, t24Name=EVENT.DESC)
+	}
+	DIARY_TYPE__ADVICE
+	{
+		ADVICE -> DE_Config:DE_MESSAGE
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=10.0, core=true, t24Name=ADVICE)
+		ADVICE_FORMAT : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=11.0, core=true, t24Name=ADVICE.FORMAT)
+	}
+	DIARY_TYPE__XT_PROCESS
+	{
+		XT_PROCESS : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=5, sysNumber=28.0, core=true, businessType=A, t24Name=XT.PROCESS)
+	}
+	DIARY_TYPE__ADVICE_TYPES
+	{
+		ADVICE_TYPES : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=29.0, core=true, t24Name=ADVICE.TYPES)
+	}
+	DIARY_TYPE__CUM_MARKER
+	{
+		CUM_MARKER : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=10, sysNumber=74.0, core=true, businessType=A, t24Name=CUM.MARKER)
+	}
+	DIARY_TYPE__EX_MARKER
+	{
+		EX_MARKER : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=10, sysNumber=76.0, core=true, businessType=A, t24Name=EX.MARKER)
+	}
+	DIARY_TYPE__TOLERANCE_CCY
+	{
+		TOLERANCE_CCY -> FIN_CurrencyConfig:CURRENCY
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=94.0, core=true, businessType=CCY, t24Name=TOLERANCE.CCY)
+		TOLERANCE_AMT : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=15, sysNumber=95.0, core=true, businessType=AMT, t24Name=TOLERANCE.AMT)
+	}
+	DIARY_TYPE__INPUTTER
+	{
+		INPUTTER : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=100.0, core=true, businessType=A, t24Name=INPUTTER)
+	}
+	DIARY_TYPE__DATE_TIME
+	{
+		DATE_TIME : mml:dateTime
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=101.0, core=true, businessType=RELTIME, t24Name=DATE.TIME)
+	}
+	SC_EX_DATE_MTR
+		@t24:i (t24Name=SC.EX.DATE.MTR, level=F, type=L, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		REFERENCE_NUMBER -> SCC_EventCapture:SC_EX_DATE_MTR PK required
+			@i18n:Label (en=Reference, fr="No. de référence", es=Referencia)
+			@i18n:Tooltip (fr="Numéro de référence")
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=0.0, core=true, businessType=A, t24Name=REFERENCE.NUMBER)
+		TRADE_DATE : mml:date
+			@i18n:Label (en="Trade Date", fr="Date transaction", es="Fecha de Transacción")
+			@i18n:Tooltip (fr="Date de la transaction")
+			@t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=1.0, core=true, businessType=D, t24Name=TRADE.DATE)
+		VALUE_DATE : mml:date
+			@i18n:Label (en="Value Date", fr="Date de valeur", es="Fecha Valor")
+			@i18n:Tooltip (en="Indicates the Value date of the Contract", fr="Date de valeur", es="Fecha en que Carteras serán act. por el evento")
+			@t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=2.0, core=true, businessType=D, t24Name=VALUE.DATE)
+		SECURITY_NUMBER : mml:string
+			@i18n:Label (en="Security No", fr="Code valeur", es="No. de Título")
+			@i18n:Tooltip (en="Indicates the security number", fr="Code de la valeur mobilière", es="Indica un Título Valor válido")
+			@t24:i (align=L, inputBehaviour=N, maxLength=12, sysNumber=3.0, core=true, businessType=SEC, t24Name=SECURITY.NUMBER)
+		NARRATIVE -> byValue SCC_EventCapture:SC_EX_DATE_MTR__NARRATIVE *
+		DATE : mml:date
+			@i18n:Label (en=Date, fr=Date, es=Fecha)
+			@i18n:Tooltip (fr=Date)
+			@t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=5.0, core=true, businessType=D, t24Name=DATE)
+		TIME : mml:string
+			@i18n:Label (en=Time, fr=Heure, es=Hora)
+			@i18n:Tooltip (fr=Heure)
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=6.0, core=true, businessType=TIME, t24Name=TIME)
+		DIARY_ID : mml:Integer
+			@i18n:Label (en="Diary Id", fr="Réf. de journal", es="ID de Diario")
+			@i18n:Tooltip (en="Indicates the diary Id", fr="Référence de journal")
+			@t24:i (align=R, inputBehaviour=I, maxLength=25, core=false, t24Name=DIARY.ID, genOperation="SUBR(\"E.GET.DIARYID\",NARRATIVE,\'\')")
+		STRIP_REFERENCE : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=25, core=false, t24Name=STRIP.REFERENCE, genOperation="FIELD(REFERENCE.NUMBER,\'.\',0)")
+	}
+	SC_EX_DATE_MTR__NARRATIVE
+	{
+		NARRATIVE : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=4.0, core=true, businessType=A, t24Name=NARRATIVE)
+	}
+}
+Enumerations {
+	DIARY__VAULT_UPDATE : mml:string
+		Y=Y
+		NO=NO
+	DIARY__RATE_TYPE : mml:string
+		GROSS=GROSS
+		NET=NET
+	DIARY__OPTION_DESC__PERCENTAGE : mml:string
+		Y=Y
+		NO=NO
+	DIARY__OPTION_DESC__NEW_SEC_NO__SELL_NEW_SEC : mml:string
+		Y=Y
+		NO=NO
+	DIARY__CHARGES_INDICATOR : mml:string
+		CASH=CASH
+		NOMINAL=NOMINAL
+	DIARY__NET_CHARGES : mml:string
+		Y=Y
+		NO=NO
+	DIARY__DEP_NO__DEP_TYPE : mml:string
+		DEPOSITORY=DEPOSITORY
+		BROKER=BROKER
+	DIARY__AUTO_UPDATE : mml:string
+		Y=Y
+		NO=NO
+	DIARY__RERUN : mml:string
+		YES=YES
+		NO=NO
+	DIARY__PRE_ADVICE_REQ : mml:string
+		YES=YES
+		NO=NO
+	DIARY__CONFIRM_REQ : mml:string
+		YES=YES
+		NO=NO
+	DIARY__BLOCK_POSITION : mml:string
+		DIARY=DIARY
+		ENTITLEMENT=ENTITLEMENT
+		NONE=NONE
+	DIARY__CASH_HOLD_SETTLE : mml:string
+		YES=YES
+		NO=NO
+	DIARY__SEC_HOLD_SETTLE : mml:string
+		YES=YES
+		NO=NO
+	DIARY__DEF_INS_RIGHTS : mml:string
+		TAKE__UP=TAKE-UP
+		SELL=SELL
+		BUY_MORE=BUY.MORE
+	DIARY__DEF_INS_STOCK_CASH : mml:string
+		RECOMMEND=RECOMMEND
+		STOCK=STOCK
+		CASH=CASH
+	DIARY__DEF_INS_REINVEST : mml:string
+		YES=YES
+		NO=NO
+	DIARY__DEF_INS_SELL_LOTS : mml:string
+		YES=YES
+		NO=NO
+	DIARY__SRC_TAX_DEDUCTED : mml:string
+		YES=YES
+		NO=NO
+	DIARY__TRADE_OR_VALUE : mml:string
+		TRADE=TRADE
+		VALUE=VALUE
+	DIARY__STAMP_TAX_CALC : mml:string
+		YES=YES
+		NO=NO
+	DIARY__AUTO_CONVERSION : mml:string
+		YES=YES
+		NO=NO
+	DIARY__AUTO_PROC_CONTRA : mml:string
+		YES=YES
+		NO=NO
+	DIARY__SC_TAX_CODE__SOURCE_OR_LOCAL : mml:string
+		SOURCE=SOURCE
+		LOCAL=LOCAL
+	DIARY__RETAIN_OPTION : mml:string
+		YES=YES
+	DIARY__STP : mml:string
+		YES=YES
+	DIARY__LOAN : mml:string
+		YES=YES
+	DIARY_TYPE__CASH : mml:string
+		Y=Y
+		NO=NO
+	DIARY_TYPE__SECURITY_UPDATE : mml:string
+		Y=Y
+		NO=NO
+	DIARY_TYPE__NEW_SECURITIES : mml:string
+		Y=Y
+		NO=NO
+	DIARY_TYPE__OPTIONS : mml:string
+		Y=Y
+		NO=NO
+	DIARY_TYPE__REINVEST : mml:string
+		Y=Y
+		NO=NO
+	DIARY_TYPE__RIGHTS : mml:string
+		Y=Y
+		NO=NO
+	DIARY_TYPE__FREE_SECURITIES : mml:string
+		Y=Y
+		NO=NO
+	DIARY_TYPE__RETAIN_ORIGINAL : mml:string
+		Y=Y
+		NO=NO
+	DIARY_TYPE__OVERDUE_DATE : mml:string
+		PAY_DATE=PAY.DATE
+		EX_DATE=EX.DATE
+		REPLY_BY_DATE=REPLY.BY.DATE
+		VALUE_DATE=VALUE.DATE
+	DIARY_TYPE__ROUNDING : mml:string
+		DOWN=DOWN
+		UP=UP
+		STANDARD=STANDARD
+		FRACTION=FRACTION
+	DIARY_TYPE__CASH_REMAIN : mml:string
+		Y=Y
+		NO=NO
+	DIARY_TYPE__UPDATE_NOSTRO : mml:string
+		YES=YES
+		NO=NO
+	DIARY_TYPE__VERIFY_REQUIRED : mml:string
+		YES=YES
+		NO=NO
+	DIARY_TYPE__TAXABLE : mml:string
+		YES=YES
+		NO=NO
+	DIARY_TYPE__DEMERGE_BOOK_COST : mml:string
+		YES=YES
+		NO=NO
+	DIARY_TYPE__REDENOMINATION : mml:string
+		YES=YES
+		NO=NO
+	DIARY_TYPE__COPY_ISIN : mml:string
+		YES=YES
+		NO=NO
+	DIARY_TYPE__DENOM_LEVEL : mml:string
+		UNIT=UNIT
+		HOLDING=HOLDING
+	DIARY_TYPE__NOM_ROUNDING_METHD : mml:string
+		UP=UP
+		DN=DN
+		LG=LG
+		LOT=LOT
+		DEC=DEC
+	DIARY_TYPE__FACTOR_PAYMENT : mml:string
+		Y=Y
+		NO=NO
+	DIARY_TYPE__PRE_ADVICE_REQ : mml:string
+		YES=YES
+		NO=NO
+	DIARY_TYPE__CONFIRM_REQ : mml:string
+		YES=YES
+		NO=NO
+	DIARY_TYPE__BLOCK_POSITION : mml:string
+		DIARY=DIARY
+		ENTITLEMENT=ENTITLEMENT
+	DIARY_TYPE__ALLOW_SHORT_POSN : mml:string
+		YES=YES
+		NO=NO
+	DIARY_TYPE__EQUALISATION : mml:string
+		YES=YES
+		NO=NO
+	DIARY_TYPE__DIARY_CREATE : mml:string
+		AUT=AUT
+		NAU=NAU
+		HLD=HLD
+	DIARY_TYPE__AUTO_ENTITLE : mml:string
+		YES=YES
+		NO=NO
+	DIARY_TYPE__ROUNDING_LEVEL : mml:string
+		CUSTOMER=CUSTOMER
+		DEPOSITORY=DEPOSITORY
+	DIARY_TYPE__DEF_INSTR_APPLY : mml:string
+		YES=YES
+		NO=NO
+	DIARY_TYPE__DEF_PRI_AFT : mml:string
+		PRIOR=PRIOR
+		AFTER=AFTER
+	DIARY_TYPE__DEF_INSTR_SEL_DATE : mml:string
+		EX_DATE=EX.DATE
+		REPLY_BY_DATE=REPLY.BY.DATE
+		PAY_DATE=PAY.DATE
+		VALUE_DATE=VALUE.DATE
+	DIARY_TYPE__DIA_AUTO_AUTHORISE : mml:string
+		YES=YES
+		NO=NO
+	DIARY_TYPE__DIA_AUT_PRI_AFT : mml:string
+		PRIOR=PRIOR
+		AFTER=AFTER
+	DIARY_TYPE__DIA_AUT_SEL_DATE : mml:string
+		EX_DATE=EX.DATE
+		REPLY_BY_DATE=REPLY.BY.DATE
+		PAY_DATE=PAY.DATE
+		VALUE_DATE=VALUE.DATE
+	DIARY_TYPE__ENT_AUTO_AUTHORISE : mml:string
+		YES=YES
+		NO=NO
+		ONLINE=ONLINE
+	DIARY_TYPE__ENT_AUT_PRI_AFT : mml:string
+		PRIOR=PRIOR
+		AFTER=AFTER
+	DIARY_TYPE__ENT_AUT_SEL_DATE : mml:string
+		EX_DATE=EX.DATE
+		REPLY_BY_DATE=REPLY.BY.DATE
+		PAY_DATE=PAY.DATE
+		VALUE_DATE=VALUE.DATE
+	DIARY_TYPE__FWD_ACCT : mml:string
+		YES=YES
+		NO=NO
+	DIARY_TYPE__ACCRUE_DIV : mml:string
+		YES=YES
+		NO=NO
+	DIARY_TYPE__DEF_OPT_EVT : mml:string
+		Y=Y
+		N=N
+	DIARY_TYPE__ACCUM_INCOME : mml:string
+		YES=YES
+		NO=NO
+	DIARY_TYPE__INSTAL_DISTR : mml:string
+		DISTRIBUTION=DISTRIBUTION
+		INSTALMENT=INSTALMENT
+	DIARY_TYPE__AM_INCOME_TYPE : mml:string
+		YES=YES
+		NO=NO
+	DIARY_TYPE__AM_FLOW_IMPACT : mml:string
+		NCF=NCF
+		WCF=WCF
+		NONE=NONE
+		BOTH=BOTH
+	DIARY_TYPE__AM_CAPTURE_DATE : mml:string
+		EX_DATE=EX.DATE
+		BK_DATE=BK.DATE
+	DIARY_TYPE__DERIVATIVES : mml:string
+		YES=YES
+		NO=NO
+	DIARY_TYPE__EOD_DEF_ACT_SETT : mml:string
+		CASH=CASH
+		STOCK=STOCK
+		BOTH=BOTH
+	DIARY_TYPE__SBL_DIV_PROC : mml:string
+		YES=YES
+		NO=NO
+	DIARY_TYPE__CUST_OR_BANK : mml:string
+		CUSTOMER=CUSTOMER
+		BANK=BANK
+	DIARY_TYPE__DRIPS : mml:string
+		YES=YES
+		NO=NO
+}

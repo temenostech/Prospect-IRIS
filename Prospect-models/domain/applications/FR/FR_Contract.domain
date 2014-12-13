@@ -1,0 +1,509 @@
+# UTF-8
+/* Template Servicing of Future Rate Agreement updates */
+Domain FR_Contract
+	@t24:i (module=FR)
+	@java:Package (value=com.temenos.t24.datamodel.fr.fr_contract)
+namespace "http://www.temenos.com/t24/FR_Contract"
+metamodelVersion 4.3.0.20110527
+Classes {
+	FRA_DEAL
+		@t24:i (t24Name=FRA.DEAL, level=F, type=H, additionalInfo="NOH OEU UNP OEU", allowedFunctions="A C D E H I L P Q R S V", localRefAllowed=true)
+	{
+		KEY -> FR_Contract:FRA_DEAL PK required
+			@i18n:Label (en=Key, fr=Clé, es=Clave)
+			@i18n:Tooltip (en="Indicates th transaction key", fr=Clé)
+			@t24:i (align=L, inputBehaviour=I, maxLength=14, sysNumber=0.0, core=true, businessType=A, t24Name=KEY)
+		PURCHASE_SALE : FR_Contract:FRA_DEAL__PURCHASE_SALE required
+			@i18n:Label (en="Purchase Sale", fr="Vente d\'Achat", es="Compra /Venta")
+			@i18n:Tooltip (fr="Vente d\'Achat", es="Especifica si es una compra o venta de FRA")
+			@t24:i (align=L, inputBehaviour=I, maxLength=8, sysNumber=1.0, core=true, t24Name=PURCHASE.SALE)
+		DEALER_DESK -> ST_Config:DEALER_DESK
+			@i18n:Label (en="Dealer Desk", fr="Table cambiste", es="Unidad de Negocios")
+			@i18n:Tooltip (en="Specifies the Dealer Desk handling the transaction", fr="Table cambiste", es="Especifica mesa de Agente gestionando transacción")
+			@t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=2.0, core=true, businessType=A, t24Name=DEALER.DESK)
+		COUNTERPARTY -> ST_Customer:CUSTOMER required
+			@i18n:Label (en=Counterparty, fr=Contrepartie, es=Contraparte)
+			@i18n:Tooltip (en="Counterparty with whom the deal is made", fr=Contrepartie)
+			@t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=3.0, core=true, businessType=CUS, t24Name=COUNTERPARTY)
+		FRA_CURRENCY -> FIN_CurrencyConfig:CURRENCY
+			@i18n:Label (en="FRA Currency", fr="Monnaie FRA", es=Moneda)
+			@i18n:Tooltip (fr="Monnaie FRA", es="Indica la Moneda del contrato FRA ")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=4.0, core=true, businessType=CCY, t24Name=FRA.CURRENCY)
+		FRA_AMOUNT : mml:Double required
+			@i18n:Label (en="FRA Amount", fr="Montant FRA", es=Monto)
+			@i18n:Tooltip (fr="Montant FRA", es="Indica el monto del contrato FRA ")
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=5.0, core=true, businessType=AMT, t24Name=FRA.AMOUNT)
+		FRA_PERIOD : mml:string
+			@i18n:Label (en="FRA Period", fr="Période FRA", es="Periodo del FRA")
+			@i18n:Tooltip (fr="Période FRA ", es="Indica período de inicio y tenencia del contrato")
+			@t24:i (align=L, inputBehaviour=I, maxLength=7, sysNumber=6.0, core=true, businessType=A, t24Name=FRA.PERIOD)
+		TRADE_DATE : mml:date
+			@i18n:Label (en="Trade Date", fr="Date transaction", es="Fecha de Transacción")
+			@i18n:Tooltip (fr="Date de la transaction")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=7.0, core=true, businessType=D, t24Name=TRADE.DATE)
+		SPOT_DATE : mml:date
+			@i18n:Label (en="Spot Date", fr="Date taux", es="Fecha Spot")
+			@i18n:Tooltip (en="The start date for calculation of Profit and Loss", fr="Date du taux")
+			@t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=8.0, core=true, businessType=D, t24Name=SPOT.DATE)
+		START_DATE : mml:string
+			@i18n:Label (en="Start Date", fr="Date de début", es="Fecha de Inicio")
+			@i18n:Tooltip (en="Start Date", fr="Date de début", es="Fecha de Inicio del Acuerdo")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=9.0, core=true, businessType=MATLMM, t24Name=START.DATE)
+		MATURITY_DATE : mml:string
+			@i18n:Label (en="Maturity Date", fr="Date d\'échéance", es="Fecha de Vencimiento")
+			@i18n:Tooltip (en="Indicates the Maturity Date of the Transaction", fr="Date d\'échéance", es="Indica la Fecha de Vencimiento de la Transacción")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=10.0, core=true, businessType=MATLMM, t24Name=MATURITY.DATE)
+		REFERENCE_RATE : mml:Integer
+			@i18n:Label (en="Reference Rate", fr="Taux de référence", es="Tasa de Referencia")
+			@i18n:Tooltip (fr="Taux de référence", es="Tasa de Referencia")
+			@t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=11.0, core=true, t24Name=REFERENCE.RATE)
+		INTEREST_RATE : mml:string required
+			@i18n:Label (en="Interest Rate", fr="Taux d\'intérêts", es="Tasa de Interés")
+			@i18n:Tooltip (en="Indicates interest rate", fr="Taux d\'intérêts")
+			@t24:i (align=R, inputBehaviour=I, maxLength=9, sysNumber=12.0, core=true, businessType=R, t24Name=INTEREST.RATE)
+		REFERENCE_PRICE : mml:string
+			@i18n:Label (en="Ref Price", fr="Prix de référence", es="Precio de Referencia")
+			@i18n:Tooltip (fr="Prix de référence", es="Tasas de interés contra las cuales FRA es cubierto")
+			@t24:i (align=R, inputBehaviour=I, maxLength=9, sysNumber=13.0, core=true, businessType=R, t24Name=REFERENCE.PRICE)
+		INTEREST_BASIS : FR_Contract:FRA_DEAL__INTEREST_BASIS
+			@i18n:Label (en="Interest Basis", fr="Base de calcul", es="Base de Interés")
+			@i18n:Tooltip (en="Indicates the interest day basis", fr="Base de calcul des intérêts")
+			@t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=14.0, core=true, t24Name=INTEREST.BASIS)
+		TREASURY_CUSTOMER : FR_Contract:FRA_DEAL__TREASURY_CUSTOMER
+			@i18n:Label (en="Treasury Customer", fr="Client salle des marchés", es="Cliente de Tesorería")
+			@i18n:Tooltip (en="Indicates whether treasury customer?", fr="Client de la salle des marchés", es="Indica si es cliente de tesorería")
+			@t24:i (align=L, inputBehaviour=F, maxLength=3, sysNumber=15.0, core=true, t24Name=TREASURY.CUSTOMER)
+		TREASURY_RATE : mml:string
+			@i18n:Label (en="Treasury Rate", fr="Cours trésorerie", es="Tasa de Tesorería")
+			@i18n:Tooltip (en="Exchange rate quoted by the Treasury Department", fr="Cours de trésorerie")
+			@t24:i (align=R, inputBehaviour=F, maxLength=9, sysNumber=16.0, core=true, businessType=R, t24Name=TREASURY.RATE)
+		RATE_FIXING_DATE : mml:date
+			@i18n:Label (en="Rate Fixing Date", fr="Date du fixing", es="Fecha Fijada")
+			@i18n:Tooltip (fr="Date du fixing", es="Fecha en que tasa interés vigente es determinado")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=17.0, core=true, businessType=D, t24Name=RATE.FIXING.DATE)
+		NUMBER_OF_DAYS : mml:Integer
+			@i18n:Label (en="Number of days", fr="Nombre de jours", es="Número de días")
+			@i18n:Tooltip (fr="Nombre de jours")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=18.0, core=true, t24Name=NUMBER.OF.DAYS)
+		LIMIT_REFERENCE : mml:Integer
+			@i18n:Label (en="Limit Reference", fr="Référence limite", es="Ref. de Límite")
+			@i18n:Tooltip (en="Indicates the limit that will be updated", fr="Référence de la limite")
+			@t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=19.0, core=true, t24Name=LIMIT.REFERENCE)
+		FRA_TYPE : FR_Contract:FRA_DEAL__FRA_TYPE required
+			@i18n:Label (en="FRA Type", fr="Type de FRA", es="Tipo de FRA")
+			@i18n:Tooltip (fr="Type de FRA ", es="Identifica el tipo de contrato FRA")
+			@t24:i (align=L, inputBehaviour=I, maxLength=5, sysNumber=20.0, core=true, t24Name=FRA.TYPE)
+		HEDGE_TRANS_IDS -> byValue FR_Contract:FRA_DEAL__HEDGE_TRANS_IDS *
+		POSITION_OPN_CLOSE : FR_Contract:FRA_DEAL__POSITION_OPN_CLOSE
+			@i18n:Label (en="Position O/C", fr="Position O/F", es="Posición Abierta/Cerrada")
+			@i18n:Tooltip (fr="Position Ouverte ou Fermée")
+			@t24:i (align=L, inputBehaviour=I, maxLength=5, sysNumber=22.0, core=true, t24Name=POSITION.OPN.CLOSE)
+		CLOSED_FRA_IDS -> byValue FR_Contract:FRA_DEAL__CLOSED_FRA_IDS *
+		BROKER_DEAL_METH : mml:string
+			@i18n:Label (en="Deal Method", fr="Nom du courtier", es="Método Corr./Contrato")
+			@i18n:Tooltip (en="Specify Broker code or Deal Method", fr="Nom du courtier", es="No. de corredor/método de contrato de transacción")
+			@t24:i (align=L, inputBehaviour=I, maxLength=10, sysNumber=24.0, core=true, businessType=A, t24Name=BROKER.DEAL.METH)
+		BROKERAGE : mml:Double
+			@i18n:Label (en=Brokerage, fr="Montant en devises", es="Corredu. Mda. Contra.")
+			@i18n:Tooltip (fr="Montant en devises", es="Correduría (Moneda de Contrato)")
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=25.0, core=true, businessType=AMT, t24Name=BROKERAGE)
+		BROKERAGE_CCY -> FIN_CurrencyConfig:CURRENCY
+			@i18n:Label (en="Brokerage Currency", fr="Devise courtage", es="Correduría Moneda")
+			@i18n:Tooltip (en="Currency in which Brokerage is taken", fr="Devise courtage")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=26.0, core=true, businessType=CCY, t24Name=BROKERAGE.CCY)
+		BROKERAGE_AMT : mml:Double
+			@i18n:Label (en="Brokerage Amount", fr="Montant de courtage", es="Monto de Correduría")
+			@i18n:Tooltip (en="Specifies the brokerage amount", fr="Montant de courtage", es="Corrreduría a abonar la cuenta del corredor")
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=27.0, core=true, businessType=AMT, t24Name=BROKERAGE.AMT)
+		CHG_COM_ACCT -> ACM_AccountOpening:ACCOUNT
+			@i18n:Label (en="Charge Commission Account", es="Cuenta Comisión Cargo")
+			@t24:i (align=R, inputBehaviour=I, maxLength=15, sysNumber=28.0, core=true, businessType=ACC, t24Name=CHG.COM.ACCT)
+		CHG_COM_CCY -> FIN_CurrencyConfig:CURRENCY
+			@i18n:Label (en="Charge Commission Currency", es="Moneda Comisión Cargo")
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=29.0, core=true, t24Name=CHG.COM.CCY)
+		CHG_COM_CODE -> byValue FR_Contract:FRA_DEAL__CHG_COM_CODE *
+		TOTAL_CHARGES : mml:Double
+			@i18n:Label (en="Total Charges", fr="Total des frais", es="Cargos Totales")
+			@i18n:Tooltip (fr="Total des frais")
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=34.0, core=true, businessType=AMT, t24Name=TOTAL.CHARGES)
+		CATEGORY_CODE -> ST_Config:CATEGORY
+			@i18n:Label (en="Category Code", fr=Produit, es="Categoría")
+			@i18n:Tooltip (fr="Code du produit")
+			@t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=35.0, core=true, t24Name=CATEGORY.CODE)
+		COUNTRY_RISK -> ST_Config:COUNTRY
+			@i18n:Label (en="Country Risk", fr="Risque pays", es="Riesgo de País")
+			@i18n:Tooltip (en="The country risk involved in contract", fr="Risque pays")
+			@t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=36.0, core=true, businessType=AAA, t24Name=COUNTRY.RISK)
+		CONF_NARRATIVE -> byValue FR_Contract:FRA_DEAL__CONF_NARRATIVE *
+		INT_NARRATIVE -> byValue FR_Contract:FRA_DEAL__INT_NARRATIVE *
+		SWIFT_REF : mml:Integer
+			@i18n:Label (en="Swift Reference", es="Referencia Swift")
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=39.0, core=true, t24Name=SWIFT.REF)
+		MIS_ACCT_OFF -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="MIS Account Officer", es="Gestor de Cuenta MIS")
+			@t24:i (align=L, inputBehaviour=I, maxLength=4, sysNumber=40.0, core=true, businessType=A, t24Name=MIS.ACCT.OFF)
+		CORR_AMEND_MKR : FR_Contract:FRA_DEAL__CORR_AMEND_MKR
+			@i18n:Label (en="Correction or Amendment", es="Corrección o Modif.")
+			@i18n:Tooltip (en="Indicates if it is a Correction or Amendment", es="Corrección o Modificación")
+			@t24:i (align=L, inputBehaviour=I, maxLength=7, sysNumber=41.0, core=true, t24Name=CORR.AMEND.MKR)
+		REPL_DEAL_NO : mml:string
+			@i18n:Label (en="Replacement Deal No", es="No. Contrato Sustituido")
+			@i18n:Tooltip (en="Specify Replacement Deal No", es="Identifica un contrato previo que ha sido invertido")
+			@t24:i (align=L, inputBehaviour=I, maxLength=12, sysNumber=42.0, core=true, businessType=AA, t24Name=REPL.DEAL.NO)
+		CONF_BY_BROKER : FR_Contract:FRA_DEAL__CONF_BY_BROKER
+			@i18n:Label (en="Confirmation By Broker", fr="Confirmation par courtier", es="Conf. por Agente")
+			@i18n:Tooltip (en="Records broker confirmation details", fr="Confirmation par courtier", es="Confirmación por Agente")
+			@t24:i (align=L, inputBehaviour=F, maxLength=60, sysNumber=43.0, core=true, t24Name=CONF.BY.BROKER)
+		CONF_BY_CUSTOMER : FR_Contract:FRA_DEAL__CONF_BY_CUSTOMER
+			@t24:i (align=L, inputBehaviour=F, maxLength=60, sysNumber=44.0, core=true, t24Name=CONF.BY.CUSTOMER)
+		CCY_MARKET -> FIN_CurrencyConfig:CURRENCY_MARKET
+			@i18n:Label (en="Ccy Market", fr=Cotation, es="Mercado de Moneda")
+			@i18n:Tooltip (fr=Cotation, es="Mercado de Divisas")
+			@t24:i (align=R, inputBehaviour=I, maxLength=1, sysNumber=45.0, core=true, t24Name=CCY.MARKET)
+		POSITION_TYPE -> ST_Config:FX_POS_TYPE
+			@i18n:Label (en="Position Type", fr="Type de position", es="Tipo de Posición")
+			@i18n:Tooltip (en="Position Type", fr="Type de position")
+			@t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=46.0, core=true, businessType=AA, t24Name=POSITION.TYPE)
+		PORTFOLIO_NO : mml:string
+			@i18n:Label (en="Portfoio No", fr="N° du portefeuille", es="No. de Cartera")
+			@i18n:Tooltip (en="Indicates the Portfolio Account of the customer", fr="Numéro du portefeuille", es="Indica la Cuenta de Cartera del Cliente")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=47.0, core=true, businessType=A, t24Name=PORTFOLIO.NO)
+		SETTLEMENT_RATE : mml:string
+			@i18n:Label (en="Settlement Rate", fr="Taux de Règlt", es="Tasa de Liquidación")
+			@i18n:Tooltip (fr="Taux de Règlement")
+			@t24:i (align=R, inputBehaviour=I, maxLength=9, sysNumber=49.0, core=true, businessType=R, t24Name=SETTLEMENT.RATE)
+		SETTLEMENT_CCY -> FIN_CurrencyConfig:CURRENCY
+			@i18n:Label (en="Settle Ccy", fr="Devise de règlement", es="Mda. de Liquidación")
+			@i18n:Tooltip (fr="Devise de règlement")
+			@t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=50.0, core=true, businessType=CCY, t24Name=SETTLEMENT.CCY)
+		SETTLEMENT_AMT : mml:Double
+			@i18n:Label (en="Settlement Amount", fr="Montant du règlement", es="Monto de Liquidación")
+			@i18n:Tooltip (fr="Montant du règlement", es="Monto de Liquidación")
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=51.0, core=true, businessType=AMT, t24Name=SETTLEMENT.AMT)
+		MKT_EXCH_PL_AMT : mml:Double
+			@i18n:Label (en=Mkt.Exch.Pl.Amt, fr="Profit de change Mktg", es="Mto. P/G Merc. Camb.")
+			@i18n:Tooltip (fr="Profit de change Mktg")
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=52.0, core=true, businessType=AMT, t24Name=MKT.EXCH.PL.AMT)
+		RECALC_MKT_PL_AMT : mml:Double
+			@i18n:Label (en="Market Exchg Profit", fr="Recalc P/L Maktg", es="Ganan. Mercado Cambiario")
+			@i18n:Tooltip (fr="Recalc P/L Maktg ")
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=53.0, core=true, businessType=AMT, t24Name=RECALC.MKT.PL.AMT)
+		REC_SETTLEMENT_ACT -> ACM_AccountOpening:ACCOUNT
+			@i18n:Label (en="Rec Settle Acc", fr="Cpte de Réglt Recevoir", es="Registro Liquid. Cta.")
+			@i18n:Tooltip (fr="Cpte de Réglt Recevoir")
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=54.0, core=true, businessType=SETACC, t24Name=REC.SETTLEMENT.ACT)
+		PAY_SETTLEMENT_ACT -> ACM_AccountOpening:ACCOUNT
+			@i18n:Label (en="Pay Settle Acc", fr="Cpte de Réglt Payer", es="Cuenta Liquidación Pago")
+			@i18n:Tooltip (fr="Cpte de Réglt Payer")
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=55.0, core=true, businessType=SETACC, t24Name=PAY.SETTLEMENT.ACT)
+		BEN_BANK_1 : mml:string
+			@i18n:Label (en="Cpty Agent1", fr="Agent Cpartie 1", es="Agente Contraparte 1")
+			@i18n:Tooltip (fr="Agent Cpartie 1")
+			@t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=56.0, core=true, businessType=CUS, t24Name=BEN.BANK.1)
+		BEN_BANK_2 : mml:string
+			@i18n:Label (en="Cpty Agent2", fr="Banque Bénéficiaire 2", es="Agente Contraparte 2")
+			@i18n:Tooltip (fr="Banque Bénéficiaire 2")
+			@t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=57.0, core=true, businessType=CUS, t24Name=BEN.BANK.2)
+		BANK_ADDR -> byValue FR_Contract:FRA_DEAL__BANK_ADDR *
+		BEN_ACCT_NO : mml:string
+			@i18n:Label (en="Cpty Acct Num", fr="N° de compte bénéficiaire", es="No. Cta. Contraparte")
+			@i18n:Tooltip (fr="Numéro de compte du bénéficiaire")
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=59.0, core=true, businessType=A, t24Name=BEN.ACCT.NO)
+		SETL_ADV_NARR -> byValue FR_Contract:FRA_DEAL__SETL_ADV_NARR *
+		INTERNAL_NARR -> byValue FR_Contract:FRA_DEAL__INTERNAL_NARR *
+		CONF_ADV_SENT : mml:Integer
+			@i18n:Label (en="Conf Adv Sent", fr="Avis confirmation envoyé", es="Conf. Liquidación Enviada")
+			@i18n:Tooltip (fr="Avis confirmation envoyé")
+			@t24:i (align=R, inputBehaviour=N, maxLength=20, sysNumber=62.0, core=true, t24Name=CONF.ADV.SENT)
+		SETL_ADV_SENT -> byValue FR_Contract:FRA_DEAL__SETL_ADV_SENT *
+		PAYMENT_SENT : mml:Integer
+			@i18n:Label (en="Payment Sent", fr="Message Paiement envoyé", es="Pago Enviado")
+			@i18n:Tooltip (en="Time and Date when the payment details were sent", fr="Message de paiement envoyé")
+			@t24:i (align=R, inputBehaviour=N, maxLength=20, sysNumber=64.0, core=true, t24Name=PAYMENT.SENT)
+		ACCRUAL_CCY : mml:string
+			@i18n:Label (en="Accrual Currency", es="Moneda de Devengo")
+			@i18n:Tooltip (en="Accrual Currency", es="Moneda de Devengo")
+			@t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=65.0, core=true, businessType=CCY, t24Name=ACCRUAL.CCY)
+		DAILY_ACCRUAL : mml:Double
+			@i18n:Label (en="Daily Accrual", es="Devengo Diario")
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=66.0, core=true, businessType=AMT, t24Name=DAILY.ACCRUAL)
+		TOT_ACCRUAL : mml:Double
+			@i18n:Label (en="Total Accrual", es="Devengo Total")
+			@i18n:Tooltip (en="Total Accrual Amount", es="Monto Total Devengado")
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=67.0, core=true, businessType=AMT, t24Name=TOT.ACCRUAL)
+		ACCR_TODATE : mml:Double
+			@i18n:Label (en="Accrual To Date", es="Devengo hasta Fecha")
+			@i18n:Tooltip (en="Accrual To Date", es="Devengo a Fecha")
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=68.0, core=true, businessType=AMT, t24Name=ACCR.TODATE)
+		ACCR_TODATE_EQUIV : mml:Double
+			@i18n:Label (en="Accrual To Date Equivalent", es="Devengo hasta Fech Equiv.")
+			@i18n:Tooltip (en="Accrual To Date Equivalent", es="Equivalente de Devengo a Fecha ")
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=69.0, core=true, businessType=AMT, t24Name=ACCR.TODATE.EQUIV)
+		MKT_EX_PL_DLY_ACCR : mml:Double
+			@i18n:Label (en="Daily Accrual Amount", es="Deven. Diario G/P")
+			@i18n:Tooltip (en="Daily accrual amount in Market Exchange Profit", es="Devengo Diario de Pérdida y Ganancia del Tipo de Cambio del Mercado ")
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=70.0, core=true, businessType=AMT, t24Name=MKT.EX.PL.DLY.ACCR)
+		MKT_EX_PL_TOT_ACCR : mml:Double
+			@i18n:Label (en="Total Accrual Amount", es="Deven. Total G/P")
+			@i18n:Tooltip (en="Total accrual Amount of Market Exchange Profit", es="Devengo Total de Pérdida y Ganancia del Tipo de Cambio del Mercado ")
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=71.0, core=true, businessType=AMT, t24Name=MKT.EX.PL.TOT.ACCR)
+		MKT_EX_PL_AC_TODAT : mml:Double
+			@i18n:Label (en="Acrd Mkt.Exch.profit", es="Dev.Hasta Fecha G/P")
+			@i18n:Tooltip (en="Market Exchange Profit accrued as of today", es="Devengo A Fecha de Pérdida y Ganancia del Tipo de Cambio del Mercado ")
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=72.0, core=true, businessType=AMT, t24Name=MKT.EX.PL.AC.TODAT)
+		MKT_EX_PL_AC_EQUIV : mml:Double
+			@i18n:Label (en="Acrd.Mkt Ex.Profit in Lcy", es="Deven. Equival. G/P")
+			@i18n:Tooltip (en="Market Exchange profit accured as of date in Lcy", es="Equivalente de Devengo de Pérdida y Ganancia del Tipo de Cambio del Mercado ")
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=73.0, core=true, businessType=AMT, t24Name=MKT.EX.PL.AC.EQUIV)
+		DEAL_EQUIV : mml:Double
+			@i18n:Label (en="Deal Equivalent", es="Equivalente de Contrato")
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=74.0, core=true, businessType=AMT, t24Name=DEAL.EQUIV)
+		BROK_EQUIV : mml:Double
+			@i18n:Label (en="Brokerage in LCY", es="Correduría Equival.")
+			@i18n:Tooltip (en="Brokerage in Local Currency Equivalent", es="Equivalente de moneda local al monto de correduría")
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=75.0, core=true, businessType=AMT, t24Name=BROK.EQUIV)
+		CHG_COM_EQUIV -> byValue FR_Contract:FRA_DEAL__CHG_COM_EQUIV *
+		TAX_EQUIV -> byValue FR_Contract:FRA_DEAL__TAX_EQUIV *
+		SETTLEMENT_EQUIV : mml:Double
+			@i18n:Label (en="Settlement Amt.in Lcy", es="Liquid. Equivalente")
+			@i18n:Tooltip (en="Settlement Amount in Local Currency equivalent", es="Equivalente de moneda local al monto de liquidación")
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=78.0, core=true, businessType=AMT, t24Name=SETTLEMENT.EQUIV)
+		MKT_EXCH_PL_EQUIV : mml:Double
+			@i18n:Label (en="Mkt.Exch.Profit in Lcy", es="Equivalente G/P")
+			@i18n:Tooltip (en="Market Exchange profit in Local Currency Equivalent", es="Equivalente de Pérdida y Ganancia del Tipo de Cambio del Mercado ")
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=79.0, core=true, businessType=AMT, t24Name=MKT.EXCH.PL.EQUIV)
+		NON_SETL_NARR -> byValue FR_Contract:FRA_DEAL__NON_SETL_NARR *
+		BROK_CHG_BOOKING : mml:Integer
+			@i18n:Label (es="Reserva Cargo Corr.")
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=81.0, core=true, t24Name=BROK.CHG.BOOKING)
+		LINK_REFERENCE : mml:Integer
+			@i18n:Label (en="Link Reference", fr="Réf. de lien", es="Referencia de Enlace")
+			@i18n:Tooltip (en="Transaction link reference of the contract", fr="Référence de lien", es="Ref. vínculo actualizado a nivel de transacción ")
+			@t24:i (align=R, inputBehaviour=N, maxLength=12, sysNumber=82.0, core=true, t24Name=LINK.REFERENCE)
+		SOD_MAT : FR_Contract:FRA_DEAL__SOD_MAT
+			@i18n:Label (en="Sod Mat", fr="Trt échéance début journée", es="Vencim.Al Inicio Día")
+			@i18n:Tooltip (fr="Traitement de l\'échéance en début de journée")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=83.0, core=true, t24Name=SOD.MAT)
+		AGREEMENT_TYPE -> FR_Config:FRA_AGREEMENT_TYPE required
+			@i18n:Label (en="Agreement Type", fr="Type de contrat", es=Acuerdo)
+			@i18n:Tooltip (en="Agreement Type Eg. ISDA, FRABBA, etc.", fr="Type de contrat")
+			@t24:i (align=L, inputBehaviour=I, maxLength=21, sysNumber=84.0, core=true, businessType=A, t24Name=AGREEMENT.TYPE)
+		BUS_CENTRES -> byValue FR_Contract:FRA_DEAL__BUS_CENTRES *
+		CALC_OR_BOOK : mml:string
+			@i18n:Label (en="Calculate or Book", es="Calcular o Registrar")
+			@t24:i (align=L, inputBehaviour=F, maxLength=4, sysNumber=86.0, core=true, businessType=A, t24Name=CALC.OR.BOOK)
+		AMORT_HEDGE : mml:string
+			@i18n:Label (en="Accrual for Hedge Deal", es="Cobertura Amortiza.")
+			@i18n:Tooltip (en="Whether Interest on Hedge Deal needs to be Accrued?", es="Si liquidación de Pérdida /Ganancia en contrato de cobertura será devengado")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=87.0, core=true, businessType=A, t24Name=AMORT.HEDGE)
+		TR_DEAL_WISE_REVAL : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=6, sysNumber=88.0, core=true, businessType=A, t24Name=TR.DEAL.WISE.REVAL)
+		RESERVED_4 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=89.0, core=true, businessType=A, t24Name=RESERVED.4)
+		RESERVED_3 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=90.0, core=true, businessType=A, t24Name=RESERVED.3)
+		RESERVED_2 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=91.0, core=true, businessType=A, t24Name=RESERVED.2)
+		RESERVED_1 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=92.0, core=true, businessType=A, t24Name=RESERVED.1)
+		CONSOL_KEY : mml:string
+			@i18n:Label (en="Consol Key", fr="Clé de consolidation", es="Clave Consolidación")
+			@i18n:Tooltip (fr="Clé de consolidation")
+			@t24:i (align=L, inputBehaviour=N, maxLength=50, sysNumber=93.0, core=true, businessType=A, t24Name=CONSOL.KEY)
+		STMT_NO -> byValue FR_Contract:FRA_DEAL__STMT_NO *
+		OVERRIDE -> byValue FR_Contract:FRA_DEAL__OVERRIDE *
+		RECORD_STATUS : mml:string
+			@i18n:Label (en="Record Status", fr=Statut, es=Estado)
+			@i18n:Tooltip (fr="Statut de l\'enregistrement")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=96.0, core=true, businessType=STAT, t24Name=RECORD.STATUS)
+		CURR_NO : mml:Integer
+			@i18n:Label (en="Curr No", fr="N° version", es="No. Actual")
+			@i18n:Tooltip (fr="Numéro de version")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=97.0, core=true, t24Name=CURR.NO)
+		INPUTTER -> byValue FR_Contract:FRA_DEAL__INPUTTER *
+		DATE_TIME -> byValue FR_Contract:FRA_DEAL__DATE_TIME *
+		AUTHORISER : mml:string
+			@i18n:Label (en=Authoriser, fr="Validé par", es=Autorizador)
+			@i18n:Tooltip (en="Indicates the User who Authorises the record", fr="Utilisateur de validation", es="El usuario que autorizó el registro")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=100.0, core=true, businessType=A, t24Name=AUTHORISER)
+		CO_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company, fr=Entité, es="Compañía")
+			@i18n:Tooltip (fr="Code établissement ou agence")
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=101.0, core=true, businessType=A, t24Name=CO.CODE)
+		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Dept Code", fr=Service, es=Departamento)
+			@i18n:Tooltip (fr="Code du service")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=102.0, core=true, t24Name=DEPT.CODE)
+		AUDITOR_CODE : mml:string
+			@i18n:Label (en="Auditor Code", fr="Audité par", es="Código de Auditor")
+			@i18n:Tooltip (en="Auditor Code", fr="Utilisateur d\'audit", es="Nombre del auditor")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=103.0, core=true, businessType=A, t24Name=AUDITOR.CODE)
+		AUDIT_DATE_TIME : mml:dateTime
+			@i18n:Label (en="Audit Date Time", fr="Audité le", es="Fecha/Hora de Audit.")
+			@i18n:Tooltip (en="Date and time when record was audited", fr="Date et heure d\'audit", es="Fecha y Hora de Auditoría ")
+			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=104.0, core=true, businessType=RELTIME, t24Name=AUDIT.DATE.TIME)
+		SOURCE_ID : mml:Integer
+			@i18n:Label (en="Source Id", fr="No. de transaction", es="ID de Fuente")
+			@i18n:Tooltip (fr="Numéro de transaction")
+			@t24:i (align=R, inputBehaviour=I, maxLength=12, core=false, t24Name=SOURCE.ID, genOperation="@ID")
+		RESIDENCE : mml:Integer
+			@i18n:Label (en=Residence, fr=Résidence, es=Residencia)
+			@i18n:Tooltip (fr="Pays de résidence")
+			@t24:i (align=L, inputBehaviour=I, maxLength=2, core=false, t24Name=RESIDENCE, genOperation="CUSTOMER.NO>CUSTOMER>RESIDENCE")
+		SOURCE_FILE : mml:Integer
+			@i18n:Label (en="Source File", es="Archivo Fuente")
+			@t24:i (align=L, inputBehaviour=I, maxLength=8, core=false, t24Name=SOURCE.FILE, genOperation="\"FRA.DEAL\"")
+		PRODCCY : mml:Integer
+			@i18n:Label (en="Product Currency", es="Moneda del Producto")
+			@i18n:Tooltip (es="Moneda del Producto ")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, core=false, t24Name=PRODCCY, genOperation=FRA.CURRENCY)
+		PRODCAT : mml:Integer
+			@i18n:Label (en="Deal Type", fr="Catégorie du produit", es="Tipo de Contrato")
+			@i18n:Tooltip (fr="Catégorie du produit")
+			@t24:i (align=R, inputBehaviour=I, maxLength=6, core=false, t24Name=PRODCAT, genOperation=CATEGORY.CODE)
+		CUSTOMER_NO : mml:Integer
+			@i18n:Label (en="Customer No", fr="Code client", es="No. de Cliente")
+			@i18n:Tooltip (en="Identifies the Customer for the transaction.", fr="Code client", es="Identifica al Cliente de la transacción")
+			@t24:i (align=R, inputBehaviour=I, maxLength=10, core=false, t24Name=CUSTOMER.NO, genOperation=COUNTERPARTY)
+		SECTOR : mml:Integer
+			@i18n:Label (en=Sector, fr=Catégorie, es=Sector)
+			@i18n:Tooltip (en="Indicates the sector", fr="Catégorie de client")
+			@t24:i (align=R, inputBehaviour=I, maxLength=4, core=false, t24Name=SECTOR, genOperation="CUSTOMER.NO>CUSTOMER>SECTOR")
+		INDUSTRY : mml:Integer
+			@i18n:Label (en=Industry, fr=Activité, es=Industria)
+			@i18n:Tooltip (en="Indicates the Industry", fr="Secteur d\'activité")
+			@t24:i (align=R, inputBehaviour=I, maxLength=4, core=false, t24Name=INDUSTRY, genOperation="CUSTOMER.NO>CUSTOMER>INDUSTRY")
+		TARGET : mml:Integer
+			@i18n:Label (en=Target, fr=Cible, es="Transacción de T24")
+			@i18n:Tooltip (fr=Cible)
+			@t24:i (align=R, inputBehaviour=I, maxLength=4, core=false, t24Name=TARGET, genOperation="CUSTOMER.NO>CUSTOMER>TARGET")
+		ACCOUNT_OFFICER : mml:Integer
+			@i18n:Label (en="Account Officer", fr=Gestionnaire, es="Gestor de Cuenta")
+			@i18n:Tooltip (en="Indicates Account Officer responsible", fr="Gestionnaire responsable du compte ou du client")
+			@t24:i (align=R, inputBehaviour=I, maxLength=4, core=false, t24Name=ACCOUNT.OFFICER, genOperation=MIS.ACCT.OFF)
+		CATEGORY : mml:Integer
+			@i18n:Label (en=Category, fr=Produit, es="Categoría")
+			@i18n:Tooltip (en="Specifies the Category", fr="Code du produit")
+			@t24:i (align=L, inputBehaviour=I, maxLength=6, core=false, t24Name=CATEGORY, genOperation=CATEGORY.CODE)
+	}
+	FRA_DEAL__HEDGE_TRANS_IDS
+	{
+		HEDGE_TRANS_IDS : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=21.0, core=true, businessType=AA, t24Name=HEDGE.TRANS.IDS)
+	}
+	FRA_DEAL__CLOSED_FRA_IDS
+	{
+		CLOSED_FRA_IDS : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=12, sysNumber=23.0, core=true, businessType=A, t24Name=CLOSED.FRA.IDS)
+	}
+	FRA_DEAL__CHG_COM_CODE
+	{
+		CHG_COM_CODE : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=11, sysNumber=30.0, core=true, businessType=A, t24Name=CHG.COM.CODE)
+		CHG_COM_AMT : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=31.0, core=true, businessType=AMT, t24Name=CHG.COM.AMT)
+		TAX_CODE -> ST_ChargeConfig:TAX
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=32.0, core=true, t24Name=TAX.CODE)
+		TAX_AMT : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=33.0, core=true, businessType=AMT, t24Name=TAX.AMT)
+	}
+	FRA_DEAL__CONF_NARRATIVE
+	{
+		CONF_NARRATIVE : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=37.0, core=true, businessType=A, t24Name=CONF.NARRATIVE)
+	}
+	FRA_DEAL__INT_NARRATIVE
+	{
+		INT_NARRATIVE : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=38.0, core=true, businessType=A, t24Name=INT.NARRATIVE)
+	}
+	FRA_DEAL__BANK_ADDR
+	{
+		BANK_ADDR : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=58.0, core=true, businessType=A, t24Name=BANK.ADDR)
+	}
+	FRA_DEAL__SETL_ADV_NARR
+	{
+		SETL_ADV_NARR : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=60.0, core=true, businessType=A, t24Name=SETL.ADV.NARR)
+	}
+	FRA_DEAL__INTERNAL_NARR
+	{
+		INTERNAL_NARR : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=61.0, core=true, businessType=A, t24Name=INTERNAL.NARR)
+	}
+	FRA_DEAL__SETL_ADV_SENT
+	{
+		SETL_ADV_SENT : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=20, sysNumber=63.0, core=true, t24Name=SETL.ADV.SENT)
+	}
+	FRA_DEAL__CHG_COM_EQUIV
+	{
+		CHG_COM_EQUIV : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=76.0, core=true, businessType=AMT, t24Name=CHG.COM.EQUIV)
+	}
+	FRA_DEAL__TAX_EQUIV
+	{
+		TAX_EQUIV : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=77.0, core=true, businessType=AMT, t24Name=TAX.EQUIV)
+	}
+	FRA_DEAL__NON_SETL_NARR
+	{
+		NON_SETL_NARR : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=80.0, core=true, businessType=A, t24Name=NON.SETL.NARR)
+	}
+	FRA_DEAL__BUS_CENTRES
+	{
+		BUS_CENTRES : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=4, sysNumber=85.0, core=true, businessType=A, t24Name=BUS.CENTRES)
+	}
+	FRA_DEAL__STMT_NO
+	{
+		STMT_NO : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=12, sysNumber=94.0, core=true, businessType=MNE, t24Name=STMT.NO)
+	}
+	FRA_DEAL__OVERRIDE
+	{
+		OVERRIDE : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=95.0, core=true, businessType=A, t24Name=OVERRIDE)
+	}
+	FRA_DEAL__INPUTTER
+	{
+		INPUTTER : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=98.0, core=true, businessType=A, t24Name=INPUTTER)
+	}
+	FRA_DEAL__DATE_TIME
+	{
+		DATE_TIME : mml:dateTime
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=99.0, core=true, businessType=RELTIME, t24Name=DATE.TIME)
+	}
+}
+Enumerations {
+	FRA_DEAL__PURCHASE_SALE : mml:string
+		PURCHASE=PURCHASE
+		SALE=SALE
+	FRA_DEAL__INTEREST_BASIS : mml:string
+		A=A
+		B=B
+		E=E
+		F=F
+		A3=A3
+	FRA_DEAL__TREASURY_CUSTOMER : mml:string
+		NO=NO
+	FRA_DEAL__FRA_TYPE : mml:string
+		TRADE=TRADE
+		HEDGE=HEDGE
+	FRA_DEAL__POSITION_OPN_CLOSE : mml:string
+		CLOSE=CLOSE
+		OPEN=OPEN
+	FRA_DEAL__CORR_AMEND_MKR : mml:string
+		AMEND=AMEND
+		CORRECT=CORRECT
+	FRA_DEAL__CONF_BY_BROKER : mml:string
+		ONESIDED=ONESIDED
+	FRA_DEAL__CONF_BY_CUSTOMER : mml:string
+		ONESIDED=ONESIDED
+	FRA_DEAL__SOD_MAT : mml:string
+		YES=YES
+		NO=NO
+}

@@ -1,0 +1,2005 @@
+# UTF-8
+/* Valuation Updates */
+Domain SCV_ValuationUpdates
+	@t24:i (module=SC)
+	@java:Package (value=com.temenos.t24.datamodel.sc.scv_valuationupdates)
+namespace "http://www.temenos.com/t24/SCV_ValuationUpdates"
+metamodelVersion 4.3.0.20110527
+Classes {
+	ALL_PORTFOLIO_COMPARE
+		@t24:i (t24Name=ALL.PORTFOLIO.COMPARE, level=F, type=L, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		ACC_OFF_PORTFOLIO -> SCV_ValuationUpdates:ALL_PORTFOLIO_COMPARE PK required
+			@t24:i (align=L, inputBehaviour=I, maxLength=18, sysNumber=0.0, core=true, businessType=A, t24Name=ACC.OFF.PORTFOLIO)
+		ACCOUNT_OFFICER -> byValue SCV_ValuationUpdates:ALL_PORTFOLIO_COMPARE__ACCOUNT_OFFICER *
+	}
+	ALL_PORTFOLIO_COMPARE__ACCOUNT_OFFICER
+	{
+		ACCOUNT_OFFICER : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=1.0, core=true, t24Name=ACCOUNT.OFFICER)
+		MODEL : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=10, sysNumber=2.0, core=true, t24Name=MODEL)
+		ASSET_DETAIL -> byValue SCV_ValuationUpdates:ALL_PORTFOLIO_COMPARE__ACCOUNT_OFFICER__ASSET_DETAIL *
+	}
+	ALL_PORTFOLIO_COMPARE__ACCOUNT_OFFICER__ASSET_DETAIL
+	{
+		ASSET_DETAIL : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=15, sysNumber=3.0, core=true, t24Name=ASSET.DETAIL)
+		VARIATION : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=4.0, core=true, businessType=AMT, t24Name=VARIATION)
+	}
+	SC_HIST_VAL_UPDATE
+		@t24:i (t24Name=SC.HIST.VAL.UPDATE, level=F, type=L, additionalInfo="TO UPDATE CASH FLOW FILE", allowedFunctions="L S", localRefAllowed=false)
+	{
+		HIST_VAL_UPDATE -> SCV_ValuationUpdates:SC_HIST_VAL_UPDATE PK required
+			@t24:i (align=R, inputBehaviour=I, maxLength=6, sysNumber=0.0, core=true, t24Name=HIST.VAL.UPDATE)
+		SECURITY_CODE -> byValue SCV_ValuationUpdates:SC_HIST_VAL_UPDATE__SECURITY_CODE *
+	}
+	SC_HIST_VAL_UPDATE__SECURITY_CODE
+	{
+		SECURITY_CODE -> SCO_SecurityMasterMaintenance:SECURITY_MASTER
+			@t24:i (align=L, inputBehaviour=I, maxLength=12, sysNumber=1.0, core=true, businessType=SEC, t24Name=SECURITY.CODE)
+		MARKET_PRICE : mml:string required
+			@t24:i (align=R, inputBehaviour=I, maxLength=16, sysNumber=2.0, core=true, businessType=R, t24Name=MARKET.PRICE)
+		START_DATE : mml:date
+			@t24:i (align=R, inputBehaviour=I, maxLength=8, sysNumber=3.0, core=true, businessType=D, t24Name=START.DATE)
+		END_DATE : mml:date
+			@t24:i (align=R, inputBehaviour=I, maxLength=8, sysNumber=4.0, core=true, businessType=D, t24Name=END.DATE)
+	}
+	SC_PERF_DETAIL
+		@t24:i (t24Name=SC.PERF.DETAIL, level=F, type=L, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		SELECTION_ID -> SCV_ValuationUpdates:SC_PERF_DETAIL PK required
+			@t24:i (align=L, inputBehaviour=I, maxLength=30, sysNumber=0.0, core=true, businessType=A, t24Name=SELECTION.ID)
+		BEGIN_VALUE : mml:Double
+			@i18n:Label (en="Begin Value", fr="Valeur au début", es="Valor de Inicio")
+			@i18n:Tooltip (fr="Valeur au début")
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=1.0, core=true, businessType=AMT, t24Name=BEGIN.VALUE)
+		PERF_DATE -> byValue SCV_ValuationUpdates:SC_PERF_DETAIL__PERF_DATE *
+		VALUE_END_MONTH : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=17.0, core=true, businessType=AMT, t24Name=VALUE.END.MONTH)
+		PERF_END_MONTH : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=18.0, core=true, businessType=AMT, t24Name=PERF.END.MONTH)
+		MONTH_END_DATE : mml:date required
+			@i18n:Label (fr="Date fin de Mois")
+			@i18n:Tooltip (fr="Date fin de Mois ")
+			@t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=19.0, core=true, businessType=D, t24Name=MONTH.END.DATE)
+		PORTFOLIO_ID : mml:Integer
+			@i18n:Label (en="Portfolio Id", fr="N° du portefeuille", es="ID de Cartera")
+			@i18n:Tooltip (fr="Numéro du portefeuille")
+			@t24:i (align=L, inputBehaviour=I, maxLength=8, core=false, t24Name=PORTFOLIO.ID, genOperation="FIELD(@ID,\'.\',1)")
+	}
+	SC_PERF_DETAIL__PERF_DATE
+	{
+		PERF_DATE : mml:date required
+			@t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=2.0, core=true, businessType=D, t24Name=PERF.DATE)
+		IN_FLOW : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=3.0, core=true, businessType=AMT, t24Name=IN.FLOW)
+		OUT_FLOW : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=4.0, core=true, businessType=AMT, t24Name=OUT.FLOW)
+		SFKFEE_OUTFLOW : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=5.0, core=true, businessType=AMT, t24Name=SFKFEE.OUTFLOW)
+		MGTFEE_OUTFLOW : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=6.0, core=true, businessType=AMT, t24Name=MGTFEE.OUTFLOW)
+		DIV_ACC_AMT : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=7.0, core=true, businessType=AMT, t24Name=DIV.ACC.AMT)
+		REC_TAX_AMT : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=8.0, core=true, businessType=AMT, t24Name=REC.TAX.AMT)
+		STATUS : mml:Character
+			@t24:i (align=L, inputBehaviour=N, maxLength=1, sysNumber=9.0, core=true, businessType=A, t24Name=STATUS)
+		VALUE_END_DAY : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=10.0, core=true, businessType=AMT, t24Name=VALUE.END.DAY)
+		PERF_END_DAY : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=11.0, core=true, businessType=AMT, t24Name=PERF.END.DAY)
+		P_PERF_END_DAY : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=12.0, core=true, businessType=AMT, t24Name=P.PERF.END.DAY)
+		GROSS_DIVISOR : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=13.0, core=true, businessType=AMT, t24Name=GROSS.DIVISOR)
+		NET_DIVISOR : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=14.0, core=true, businessType=AMT, t24Name=NET.DIVISOR)
+		GROSS_C_PERF : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=15.0, core=true, businessType=AMT, t24Name=GROSS.C.PERF)
+		NET_C_PERF : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=16.0, core=true, businessType=AMT, t24Name=NET.C.PERF)
+	}
+	SC_PERF_DETAIL_CUSTOM
+		@t24:i (t24Name=SC.PERF.DETAIL.CUSTOM, level=F, type=L, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		SPD_CUST_ID -> SCV_ValuationUpdates:SC_PERF_DETAIL_CUSTOM PK required
+			@t24:i (align=L, inputBehaviour=I, maxLength=30, sysNumber=0.0, core=true, businessType=A, t24Name=SPD.CUST.ID)
+		BEGIN_VALUE : mml:Double
+			@i18n:Label (en="Begin Value", fr="Valeur au début", es="Valor de Inicio")
+			@i18n:Tooltip (fr="Valeur au début")
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=1.0, core=true, businessType=AMT, t24Name=BEGIN.VALUE)
+		PERF_DATE -> byValue SCV_ValuationUpdates:SC_PERF_DETAIL_CUSTOM__PERF_DATE *
+		VALUE_END_MONTH : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=13.0, core=true, businessType=AMT, t24Name=VALUE.END.MONTH)
+		PERF_END_MONTH : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=14.0, core=true, businessType=AMT, t24Name=PERF.END.MONTH)
+		MONTH_END_DATE : mml:date required
+			@i18n:Label (fr="Date fin de Mois")
+			@i18n:Tooltip (fr="Date fin de Mois ")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=15.0, core=true, businessType=D, t24Name=MONTH.END.DATE)
+	}
+	SC_PERF_DETAIL_CUSTOM__PERF_DATE
+	{
+		PERF_DATE : mml:date required
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=2.0, core=true, businessType=D, t24Name=PERF.DATE)
+		IN_FLOW : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=3.0, core=true, businessType=AMT, t24Name=IN.FLOW)
+		OUT_FLOW : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=4.0, core=true, businessType=AMT, t24Name=OUT.FLOW)
+		SFKFEE_OUTFLOW : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=5.0, core=true, businessType=AMT, t24Name=SFKFEE.OUTFLOW)
+		MGTFEE_OUTFLOW : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=6.0, core=true, businessType=AMT, t24Name=MGTFEE.OUTFLOW)
+		DIV_ACC_AMT : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=7.0, core=true, businessType=AMT, t24Name=DIV.ACC.AMT)
+		REC_TAX_AMT : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=8.0, core=true, businessType=AMT, t24Name=REC.TAX.AMT)
+		STATUS : mml:Character
+			@t24:i (align=L, inputBehaviour=I, maxLength=1, sysNumber=9.0, core=true, businessType=A, t24Name=STATUS)
+		VALUE_END_DAY : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=10.0, core=true, businessType=AMT, t24Name=VALUE.END.DAY)
+		PERF_END_DAY : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=11.0, core=true, businessType=AMT, t24Name=PERF.END.DAY)
+		P_PERF_END_DAY : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=12.0, core=true, businessType=AMT, t24Name=P.PERF.END.DAY)
+	}
+	SC_POS_ADJUSTMENT
+		@t24:i (t24Name=SC.POS.ADJUSTMENT, level=F, type=L, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		POSITION_KEY -> SCV_ValuationUpdates:SC_POS_ADJUSTMENT PK required
+			@t24:i (align=L, inputBehaviour=I, maxLength=50, sysNumber=0.0, core=true, businessType=A, t24Name=POSITION.KEY)
+		SECURITY_CCY -> FIN_CurrencyConfig:CURRENCY required
+			@i18n:Label (en=Ccy, fr="Devise du titre", es=Moneda)
+			@i18n:Tooltip (fr="Devise de la valeur mobilière")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=1.0, core=true, businessType=CCY, t24Name=SECURITY.CCY)
+		TRADE_KEY -> byValue SCV_ValuationUpdates:SC_POS_ADJUSTMENT__TRADE_KEY *
+		TOT_REAL_ADJ : mml:Double required
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=7.0, core=true, businessType=AMT, t24Name=TOT.REAL.ADJ)
+		TOT_UNRL_ADJ : mml:Double required
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=8.0, core=true, businessType=AMT, t24Name=TOT.UNRL.ADJ)
+		TOT_DISC_ADJ : mml:Double required
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=9.0, core=true, businessType=AMT, t24Name=TOT.DISC.ADJ)
+		STATEMENT_NOS -> byValue SCV_ValuationUpdates:SC_POS_ADJUSTMENT__STATEMENT_NOS *
+		OVERRIDE -> byValue SCV_ValuationUpdates:SC_POS_ADJUSTMENT__OVERRIDE *
+	}
+	SC_POS_ADJUSTMENT__TRADE_KEY
+	{
+		TRADE_KEY : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=2.0, core=true, businessType=A, t24Name=TRADE.KEY)
+		TRANS_CODE : mml:string required
+			@t24:i (align=L, inputBehaviour=I, maxLength=18, sysNumber=3.0, core=true, businessType=A, t24Name=TRANS.CODE)
+		TXN_KEY -> byValue SCV_ValuationUpdates:SC_POS_ADJUSTMENT__TRADE_KEY__TXN_KEY *
+		ADJ_AMOUNT : mml:Double required
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=6.0, core=true, businessType=AMT, t24Name=ADJ.AMOUNT)
+	}
+	SC_POS_ADJUSTMENT__TRADE_KEY__TXN_KEY
+	{
+		TXN_KEY : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=4.0, core=true, businessType=A, t24Name=TXN.KEY)
+		TXN_AMOUNT : mml:Double required
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=5.0, core=true, businessType=AMT, t24Name=TXN.AMOUNT)
+	}
+	SC_POS_ADJUSTMENT__STATEMENT_NOS
+	{
+		STATEMENT_NOS : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=29, sysNumber=10.0, core=true, businessType=A, t24Name=STATEMENT.NOS)
+	}
+	SC_POS_ADJUSTMENT__OVERRIDE
+	{
+		OVERRIDE : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=11.0, core=true, businessType=A, t24Name=OVERRIDE)
+	}
+	SC_POS_ASSET
+		@t24:i (t24Name=SC.POS.ASSET, level=I, type=L, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		POS_ASSET_KEY -> SCV_ValuationUpdates:SC_POS_ASSET PK required
+			@t24:i (align=L, inputBehaviour=I, maxLength=30, sysNumber=0.0, core=true, businessType=A, t24Name=POS.ASSET.KEY)
+		SECURITY_NO -> byValue SCV_ValuationUpdates:SC_POS_ASSET__SECURITY_NO *
+		PORTFOLIO_NO : mml:Integer
+			@i18n:Label (en="Portfoio No", fr="N° du portefeuille", es="No. de Cartera")
+			@i18n:Tooltip (en="Indicates the Portfolio Account of the customer", fr="Numéro du portefeuille", es="Indica la Cuenta de Cartera del Cliente")
+			@t24:i (align=L, inputBehaviour=I, maxLength=10, core=false, t24Name=PORTFOLIO.NO, genOperation="@ID[\".\",1,1]")
+		SEC_ACC_NO : mml:Integer
+			@i18n:Label (en="Portfolio Number", fr="No portefeuille", es="No. de Cartera")
+			@i18n:Tooltip (en="Indicates the Portfolio Account of the customer", fr="Numéro du portefeuille", es="Indica la Cuenta de Cartera del Cliente")
+			@t24:i (align=L, inputBehaviour=I, maxLength=10, core=false, t24Name=SEC.ACC.NO, genOperation="FIELD(@ID,\'.\',1)")
+		SEC_ACC_SUFFIX : mml:Integer
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, core=false, t24Name=SEC.ACC.SUFFIX, genOperation="FIELD(SEC.ACC.NO,\"-\",2)")
+		SUB_ASSET_TYPE : mml:Integer
+			@i18n:Label (en="Sub Asset Type", fr="Classe d\'actif", es="Sub Activo")
+			@i18n:Tooltip (fr="Classe d\'actif")
+			@t24:i (align=R, inputBehaviour=I, maxLength=5, core=false, t24Name=SUB.ASSET.TYPE, genOperation="@ID[\".\",2,1]")
+		ASSET_TYPE : mml:Integer
+			@i18n:Label (en="Asset Type", fr="Type d\'avoir", es="Tipo de Activo")
+			@i18n:Tooltip (en="Indicates the asset type", fr="Type d\'avoir", es="Indica el tipo de activo")
+			@t24:i (align=R, inputBehaviour=I, maxLength=3, core=false, t24Name=ASSET.TYPE, genOperation="@ID[\".\",3,1]")
+		CUSTOMER_NO : mml:Integer
+			@i18n:Label (en="Customer No", fr="Code client", es="No. de Cliente")
+			@i18n:Tooltip (en="Identifies the Customer for the transaction.", fr="Code client", es="Identifica al Cliente de la transacción")
+			@t24:i (align=R, inputBehaviour=I, maxLength=10, core=false, t24Name=CUSTOMER.NO, genOperation="@ID[\'-\',1,1]")
+		SEDOL_NO : mml:Integer
+			@i18n:Label (en="Sedol No", fr="Numéro Sedol", es="No. Sedol")
+			@i18n:Tooltip (fr="Numéro Sedol")
+			@t24:i (align=L, inputBehaviour=I, maxLength=7, core=false, t24Name=SEDOL.NO, genOperation="SECURITY.NO>SECURITY.MASTER>SEDOL.NO")
+	}
+	SC_POS_ASSET__SECURITY_NO
+	{
+		SECURITY_NO : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=15, sysNumber=1.0, core=true, t24Name=SECURITY.NO)
+		SHORT_NAME : mml:string required
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=2.0, core=true, businessType=A, t24Name=SHORT.NAME)
+		SECURITY_CCY -> FIN_CurrencyConfig:CURRENCY required
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=3.0, core=true, businessType=CCY, t24Name=SECURITY.CCY)
+		NO_NOMINAL : mml:string required
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=4.0, core=true, businessType=NOMAMT, t24Name=NO.NOMINAL)
+		COST_PRICE : mml:string required
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=5.0, core=true, businessType=R, t24Name=COST.PRICE)
+		MARKET_PRICE : mml:string required
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=6.0, core=true, businessType=R, t24Name=MARKET.PRICE)
+		ESTIMATION : mml:Double required
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=7.0, core=true, businessType=AMT, t24Name=ESTIMATION)
+		MARGIN_VALUE : mml:Double required
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=8.0, core=true, businessType=AMT, t24Name=MARGIN.VALUE)
+		ACCRUED_INT : mml:Double required
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=9.0, core=true, businessType=AMT, t24Name=ACCRUED.INT)
+		YIELD : mml:Double required
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=10.0, core=true, businessType=AMT, t24Name=YIELD)
+		ESTIMTED_INCOME : mml:Double required
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=11.0, core=true, businessType=AMT, t24Name=ESTIMTED.INCOME)
+		HELD_SINCE : mml:string required
+			@t24:i (align=L, inputBehaviour=I, maxLength=25, sysNumber=12.0, core=true, businessType=A, t24Name=HELD.SINCE)
+		UNRL_MKT_TDATE : mml:Double required
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=13.0, core=true, businessType=AMT, t24Name=UNRL.MKT.TDATE)
+		UNREAL_MKT_YTD : mml:Double required
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=14.0, core=true, businessType=AMT, t24Name=UNREAL.MKT.YTD)
+		UNRL_CCY_TDATE : mml:Double required
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=15.0, core=true, businessType=AMT, t24Name=UNRL.CCY.TDATE)
+		UNREAL_CCY_YTD : mml:Double required
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=16.0, core=true, businessType=AMT, t24Name=UNREAL.CCY.YTD)
+		INTEREST_DATE : mml:date required
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=17.0, core=true, businessType=D, t24Name=INTEREST.DATE)
+		NAME_DATE : mml:date required
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=18.0, core=true, businessType=D, t24Name=NAME.DATE)
+		COST_REF_CCY : mml:string required
+			@t24:i (align=L, inputBehaviour=I, maxLength=18, sysNumber=19.0, core=true, businessType=CCY, t24Name=COST.REF.CCY)
+		COST_BASE_CCY : mml:string required
+			@t24:i (align=L, inputBehaviour=I, maxLength=18, sysNumber=20.0, core=true, businessType=LCCY, t24Name=COST.BASE.CCY)
+		GR_COST_PRICE : mml:Double required
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=21.0, core=true, businessType=AMT, t24Name=GR.COST.PRICE)
+		GR_YIELD : mml:Double required
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=22.0, core=true, businessType=AMT, t24Name=GR.YIELD)
+		NOM_AMT_BLOCKED : mml:string required
+			@t24:i (align=R, inputBehaviour=I, maxLength=53, sysNumber=23.0, core=true, businessType=NOMAMT, t24Name=NOM.AMT.BLOCKED)
+		SEC_LENT_AMT : mml:Double required
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=24.0, core=true, businessType=AMT, t24Name=SEC.LENT.AMT)
+		FORWARD_ACC_AMT : mml:Double required
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=25.0, core=true, businessType=AMT, t24Name=FORWARD.ACC.AMT)
+		V_DATE_NOMINAL : mml:string required
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=26.0, core=true, businessType=NOMAMT, t24Name=V.DATE.NOMINAL)
+		V_DATE_COST : mml:Double required
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=27.0, core=true, businessType=AMT, t24Name=V.DATE.COST)
+		V_DT_ESTIMATION : mml:Double required
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=28.0, core=true, businessType=AMT, t24Name=V.DT.ESTIMATION)
+		V_DATE_MARGIN : mml:Double required
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=29.0, core=true, businessType=AMT, t24Name=V.DATE.MARGIN)
+		V_DATE_COST_REF : mml:string required
+			@t24:i (align=L, inputBehaviour=I, maxLength=18, sysNumber=30.0, core=true, businessType=CCY, t24Name=V.DATE.COST.REF)
+		V_DATE_COST_BSE : mml:string required
+			@t24:i (align=L, inputBehaviour=I, maxLength=18, sysNumber=31.0, core=true, businessType=LCCY, t24Name=V.DATE.COST.BSE)
+		TOT_UNRL_MKT : mml:Double required
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=32.0, core=true, businessType=AMT, t24Name=TOT.UNRL.MKT)
+		TOT_UNRL_CCY : mml:Double required
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=33.0, core=true, businessType=AMT, t24Name=TOT.UNRL.CCY)
+		GR_COST_REF_CCY : mml:Double required
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=34.0, core=true, businessType=AMT, t24Name=GR.COST.REF.CCY)
+		DEPOSITORY : mml:string required
+			@t24:i (align=L, inputBehaviour=I, maxLength=18, sysNumber=35.0, core=true, businessType=CCY, t24Name=DEPOSITORY)
+		APPLICATION : mml:string required
+			@t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=36.0, core=true, businessType=A, t24Name=APPLICATION)
+		CASH_FLOW_INT : mml:Double required
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=37.0, core=true, businessType=AMT, t24Name=CASH.FLOW.INT)
+		CHECK_FIELD : mml:Integer required
+			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=38.0, core=true, t24Name=CHECK.FIELD)
+		OLD_COST_PRICE : mml:Integer required
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=39.0, core=true, t24Name=OLD.COST.PRICE)
+		CG_POSITION : mml:Integer required
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=40.0, core=true, t24Name=CG.POSITION)
+		CG_COSTOFPOSN : mml:Double required
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=41.0, core=true, businessType=AMT, t24Name=CG.COSTOFPOSN)
+		BOOK_PRICE : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=42.0, core=true, businessType=AMT, t24Name=BOOK.PRICE)
+		BK_COST_REF_CCY : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=43.0, core=true, businessType=AMT, t24Name=BK.COST.REF.CCY)
+		BK_COST_BSE_CCY : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=44.0, core=true, businessType=AMT, t24Name=BK.COST.BSE.CCY)
+		GR_BOOK_COST : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=45.0, core=true, businessType=AMT, t24Name=GR.BOOK.COST)
+		V_DATE_BK_COST : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=46.0, core=true, businessType=AMT, t24Name=V.DATE.BK.COST)
+		V_DATE_BOOK_REF : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=47.0, core=true, businessType=AMT, t24Name=V.DATE.BOOK.REF)
+		V_DATE_BOOK_BSE : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=48.0, core=true, businessType=AMT, t24Name=V.DATE.BOOK.BSE)
+		GR_BOOK_REF_CCY : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=49.0, core=true, businessType=AMT, t24Name=GR.BOOK.REF.CCY)
+		COST_PRICE_ALPHA : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=19, sysNumber=50.0, core=true, businessType=DEC, t24Name=COST.PRICE.ALPHA)
+		MARKET_PRICE_ALPHA : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=19, sysNumber=51.0, core=true, businessType=DEC, t24Name=MARKET.PRICE.ALPHA)
+		INTERNAL_PRICE : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=52.0, core=true, t24Name=INTERNAL.PRICE)
+		REPLACT_VALUE : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=19, sysNumber=53.0, core=true, businessType=DEC, t24Name=REPLACT.VALUE)
+		NET_ACCR_DIV : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=54.0, core=true, businessType=AMT, t24Name=NET.ACCR.DIV)
+		ORIG_ACCR_DIV : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=55.0, core=true, businessType=AMT, t24Name=ORIG.ACCR.DIV)
+		CALL_PUT : SCV_ValuationUpdates:SC_POS_ASSET__SECURITY_NO__CALL_PUT
+			@t24:i (align=L, inputBehaviour=I, maxLength=4, sysNumber=56.0, core=true, businessType=A, t24Name=CALL.PUT)
+		BUY_SELL : SCV_ValuationUpdates:SC_POS_ASSET__SECURITY_NO__BUY_SELL
+			@t24:i (align=L, inputBehaviour=I, maxLength=4, sysNumber=57.0, core=true, businessType=A, t24Name=BUY.SELL)
+		UNDER_SHORTNAME : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=19, sysNumber=58.0, core=true, businessType=A, t24Name=UNDER.SHORTNAME)
+		UNDER_ID : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=19, sysNumber=59.0, core=true, businessType=A, t24Name=UNDER.ID)
+		EXT_STRIKE : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=60.0, core=true, businessType=AMT, t24Name=EXT.STRIKE)
+		INT_STRIKE : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=61.0, core=true, businessType=AMT, t24Name=INT.STRIKE)
+		EXT_CT_PRICE : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=62.0, core=true, businessType=AMT, t24Name=EXT.CT.PRICE)
+		INT_CT_PRICE : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=63.0, core=true, businessType=AMT, t24Name=INT.CT.PRICE)
+		BETA : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=64.0, core=true, businessType=AMT, t24Name=BETA)
+		DELTA : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=65.0, core=true, businessType=AMT, t24Name=DELTA)
+		GAMMA : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=66.0, core=true, businessType=AMT, t24Name=GAMMA)
+		VEGA : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=67.0, core=true, businessType=AMT, t24Name=VEGA)
+		RHO : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=68.0, core=true, businessType=AMT, t24Name=RHO)
+		THETA : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=69.0, core=true, businessType=AMT, t24Name=THETA)
+		TIME_PERIOD : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=10, sysNumber=70.0, core=true, businessType=A, t24Name=TIME.PERIOD)
+		ADD_ON_KEY -> AC_CurrencyPosition:REVAL_ADDON_PERCEN required
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=71.0, core=true, businessType=A, t24Name=ADD.ON.KEY)
+		REPLACE_COST : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=72.0, core=true, businessType=AMT, t24Name=REPLACE.COST)
+		REG_PERCENTAGE : mml:string
+			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=73.0, core=true, businessType=R, t24Name=REG.PERCENTAGE)
+		REG_CR_EXPOSURE : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=74.0, core=true, businessType=AMT, t24Name=REG.CR.EXPOSURE)
+		INT_PERCENTAGE : mml:string
+			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=75.0, core=true, businessType=R, t24Name=INT.PERCENTAGE)
+		INT_CR_EXPOSURE : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=76.0, core=true, businessType=AMT, t24Name=INT.CR.EXPOSURE)
+		CONTRACT_SIZE : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=77.0, core=true, businessType=AMT, t24Name=CONTRACT.SIZE)
+		SOURCE_ID -> byValue SCV_ValuationUpdates:SC_POS_ASSET__SECURITY_NO__SOURCE_ID *
+		LAST_FIELD : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=79.0, core=true, businessType=AMT, t24Name=LAST.FIELD)
+		REC_TAX_CUM_AMT : mml:Double required
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=80.0, core=true, businessType=AMT, t24Name=REC.TAX.CUM.AMT)
+		NET_OPN_ORD_NOM : mml:string
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=81.0, core=true, businessType=NOMAMT, t24Name=NET.OPN.ORD.NOM)
+		NET_OPN_ORD_EST : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=82.0, core=true, businessType=AMT, t24Name=NET.OPN.ORD.EST)
+		NET_OPN_ORD_AI : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=83.0, core=true, businessType=AMT, t24Name=NET.OPN.ORD.AI)
+		POS_COST_REF_CCY : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=84.0, core=true, businessType=AMT, t24Name=POS.COST.REF.CCY)
+		TOP_UP_MARGIN_AMT : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=85.0, core=true, businessType=AMT, t24Name=TOP.UP.MARGIN.AMT)
+		SELL_OUT_MARGN_AMT : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=86.0, core=true, businessType=AMT, t24Name=SELL.OUT.MARGN.AMT)
+		EXT_CUSTODIAN : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=87.0, core=true, businessType=A, t24Name=EXT.CUSTODIAN)
+		ADJ_MARGIN_AMT : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=88.0, core=true, businessType=AMT, t24Name=ADJ.MARGIN.AMT)
+		CAP_MARGIN_AMT : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=89.0, core=true, businessType=AMT, t24Name=CAP.MARGIN.AMT)
+		SAM_MARGIN : SCV_ValuationUpdates:SC_POS_ASSET__SECURITY_NO__SAM_MARGIN
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=90.0, core=true, businessType=A, t24Name=SAM.MARGIN)
+		INIT_MGN_VALUE : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=91.0, core=true, businessType=AMT, t24Name=INIT.MGN.VALUE)
+		MV_MARGIN_AMT : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=92.0, core=true, businessType=AMT, t24Name=MV.MARGIN.AMT)
+		EQ_MARGIN_AMT : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=93.0, core=true, businessType=AMT, t24Name=EQ.MARGIN.AMT)
+		SECOND_MKRT_VALUE : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=94.0, core=true, businessType=AMT, t24Name=SECOND.MKRT.VALUE)
+	}
+	SC_POS_ASSET__SECURITY_NO__SOURCE_ID
+	{
+		SOURCE_ID : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=78.0, core=true, businessType=A, t24Name=SOURCE.ID)
+	}
+	SC_POS_ASSET_EXERCISE_PRC
+		@t24:i (t24Name=SC.POS.ASSET.EXERCISE.PRC, level=I, type=L, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		REFERENCE -> SCV_ValuationUpdates:SC_POS_ASSET_EXERCISE_PRC PK required
+			@i18n:Label (en="Search by Referece", fr=Référence, es="Descripción")
+			@i18n:Tooltip (fr=Référence)
+			@t24:i (align=L, inputBehaviour=I, maxLength=40, sysNumber=0.0, core=true, businessType=A, t24Name=REFERENCE)
+		VAL_NO_NOM -> byValue SCV_ValuationUpdates:SC_POS_ASSET_EXERCISE_PRC__VAL_NO_NOM *
+	}
+	SC_POS_ASSET_EXERCISE_PRC__VAL_NO_NOM
+	{
+		VAL_NO_NOM : mml:string
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=1.0, core=true, businessType=NOMAMT, t24Name=VAL.NO.NOM)
+		VAL_PRICE : mml:string
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=2.0, core=true, businessType=R, t24Name=VAL.PRICE)
+		VAL_ESTIMATION : mml:string
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=3.0, core=true, businessType=R, t24Name=VAL.ESTIMATION)
+	}
+	SC_POS_ASSET_EXERCISE_WORK
+		@t24:i (t24Name=SC.POS.ASSET.EXERCISE.WORK, level=I, type=L, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		REFERENCE -> SCV_ValuationUpdates:SC_POS_ASSET_EXERCISE_WORK PK required
+			@i18n:Label (en="Search by Referece", fr=Référence, es="Descripción")
+			@i18n:Tooltip (fr=Référence)
+			@t24:i (align=L, inputBehaviour=I, maxLength=40, sysNumber=0.0, core=true, businessType=A, t24Name=REFERENCE)
+		SECURITY_ACC : mml:Integer
+			@i18n:Label (en="Portfolio No", fr="No. de portefeuille", es="No. de Cartera")
+			@i18n:Tooltip (en="Indicates the Portfolio Account of the customer", fr="Numéro de portefeuille", es="Indica la Cuenta de Cartera del Cliente")
+			@t24:i (align=R, inputBehaviour=I, maxLength=15, sysNumber=1.0, core=true, t24Name=SECURITY.ACC)
+		SECURITY_NO : mml:Integer
+			@i18n:Label (en="Security No", fr="Code valeur", es="No. de Título")
+			@i18n:Tooltip (en="Indicates the security code/number", fr="Code valeur", es="Indica un Título Valor válido")
+			@t24:i (align=R, inputBehaviour=I, maxLength=15, sysNumber=2.0, core=true, t24Name=SECURITY.NO)
+		ASSET_TYPE : mml:Integer
+			@i18n:Label (en="Asset Type", fr="Type d\'avoir", es="Tipo de Activo")
+			@i18n:Tooltip (en="Indicates the asset type", fr="Type d\'avoir", es="Indica el tipo de activo")
+			@t24:i (align=R, inputBehaviour=I, maxLength=9, sysNumber=3.0, core=true, t24Name=ASSET.TYPE)
+		SUB_ASSET_TYPE : mml:Integer
+			@i18n:Label (en="Sub Asset Type", fr="Classe d\'actif", es="Sub Activo")
+			@i18n:Tooltip (fr="Classe d\'actif")
+			@t24:i (align=R, inputBehaviour=I, maxLength=9, sysNumber=4.0, core=true, t24Name=SUB.ASSET.TYPE)
+		SHORT_NAME : mml:Integer required
+			@i18n:Label (en="Short name", fr="Nom abrégé", es=Nombre)
+			@i18n:Tooltip (fr="Nom abrégé")
+			@t24:i (align=R, inputBehaviour=I, maxLength=35, sysNumber=5.0, core=true, t24Name=SHORT.NAME)
+		SECURITY_CCY -> FIN_CurrencyConfig:CURRENCY required
+			@i18n:Label (en=Ccy, fr="Devise du titre", es=Moneda)
+			@i18n:Tooltip (fr="Devise de la valeur mobilière")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=6.0, core=true, businessType=CCY, t24Name=SECURITY.CCY)
+		NO_NOMINAL -> byValue SCV_ValuationUpdates:SC_POS_ASSET_EXERCISE_WORK__NO_NOMINAL *
+		MARGIN_VALUE : mml:Double required
+			@i18n:Label (en="Margin Value", fr="Valeur de marge", es="Valor de Margen")
+			@i18n:Tooltip (fr="Valeur de marge")
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=11.0, core=true, businessType=AMT, t24Name=MARGIN.VALUE)
+		ACCRUED_INT : mml:Double required
+			@i18n:Label (en="Accrued Int", fr="Intérêt courus", es="Interés Devengado")
+			@i18n:Tooltip (fr="Intérêt courus")
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=12.0, core=true, businessType=AMT, t24Name=ACCRUED.INT)
+		YIELD : mml:Double required
+			@i18n:Label (en=Yield, fr=Rendement, es=Rendimiento)
+			@i18n:Tooltip (fr=Rendement)
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=13.0, core=true, businessType=AMT, t24Name=YIELD)
+		ESTIMTED_INCOME : mml:Double required
+			@i18n:Label (en="Estimated Income", fr="Estimation du revenu", es="Ingresos Estimados")
+			@i18n:Tooltip (fr="Estimation du revenu")
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=14.0, core=true, businessType=AMT, t24Name=ESTIMTED.INCOME)
+		HELD_SINCE : mml:string required
+			@t24:i (align=L, inputBehaviour=I, maxLength=25, sysNumber=15.0, core=true, businessType=A, t24Name=HELD.SINCE)
+		UNRL_MKT_TDATE : mml:Double required
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=16.0, core=true, businessType=AMT, t24Name=UNRL.MKT.TDATE)
+		UNREAL_MKT_YTD : mml:Double required
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=17.0, core=true, businessType=AMT, t24Name=UNREAL.MKT.YTD)
+		UNRL_CCY_TDATE : mml:Double required
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=18.0, core=true, businessType=AMT, t24Name=UNRL.CCY.TDATE)
+		UNREAL_CCY_YTD : mml:Double required
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=19.0, core=true, businessType=AMT, t24Name=UNREAL.CCY.YTD)
+		INTEREST_DATE : mml:date required
+			@i18n:Label (en="Coupon Date", fr="Date de coupon", es="Fecha de Cupón")
+			@i18n:Tooltip (fr="Date de coupon")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=20.0, core=true, businessType=D, t24Name=INTEREST.DATE)
+		NAME_DATE : mml:date required
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=21.0, core=true, businessType=D, t24Name=NAME.DATE)
+		COST_REF_CCY : mml:string required
+			@i18n:Label (en="Cost In Ref CCY", es="Costo en Mda. Refe.")
+			@i18n:Tooltip (es="Costo en Moneda de Referencia")
+			@t24:i (align=L, inputBehaviour=I, maxLength=18, sysNumber=22.0, core=true, businessType=CCY, t24Name=COST.REF.CCY)
+		COST_BASE_CCY : mml:string required
+			@t24:i (align=L, inputBehaviour=I, maxLength=18, sysNumber=23.0, core=true, businessType=LCCY, t24Name=COST.BASE.CCY)
+		GR_COST_PRICE : mml:Double required
+			@i18n:Label (en="Gr Cost Price", fr="Prix coûtant brut", es="Precio Costo Bruto")
+			@i18n:Tooltip (fr="Prix coûtant brut")
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=24.0, core=true, businessType=AMT, t24Name=GR.COST.PRICE)
+		GR_YIELD : mml:Double required
+			@i18n:Label (en="Gr Yield", fr="Rendement brut", es="Rendimiento Bruto")
+			@i18n:Tooltip (fr="Rendement brut")
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=25.0, core=true, businessType=AMT, t24Name=GR.YIELD)
+		NOM_AMT_BLOCKED : mml:string required
+			@i18n:Label (en="Total Units Blocked", fr="Unités boquées", es="Total Unidades Bloq.")
+			@i18n:Tooltip (fr="Unités boquées")
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=26.0, core=true, businessType=NOMAMT, t24Name=NOM.AMT.BLOCKED)
+		SEC_LENT_AMT : mml:Double required
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=27.0, core=true, businessType=AMT, t24Name=SEC.LENT.AMT)
+		FORWARD_ACC_AMT : mml:Double required
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=28.0, core=true, businessType=AMT, t24Name=FORWARD.ACC.AMT)
+		V_DATE_NOMINAL : mml:string required
+			@i18n:Label (en="V Date Nominal", es="Nominal Fecha Valor")
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=29.0, core=true, businessType=NOMAMT, t24Name=V.DATE.NOMINAL)
+		V_DATE_COST : mml:Double required
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=30.0, core=true, businessType=AMT, t24Name=V.DATE.COST)
+		V_DT_ESTIMATION : mml:Double required
+			@i18n:Label (en="V Dt Estimation", es="Estimado Fecha Valor")
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=31.0, core=true, businessType=AMT, t24Name=V.DT.ESTIMATION)
+		V_DATE_MARGIN : mml:Double required
+			@i18n:Label (en=V.Dt.Margin, es="Margen Fecha Valor")
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=32.0, core=true, businessType=AMT, t24Name=V.DATE.MARGIN)
+		V_DATE_COST_REF : mml:string required
+			@i18n:Label (fr="Coût")
+			@i18n:Tooltip (fr="Coût")
+			@t24:i (align=L, inputBehaviour=I, maxLength=18, sysNumber=33.0, core=true, businessType=CCY, t24Name=V.DATE.COST.REF)
+		V_DATE_COST_BSE : mml:string required
+			@t24:i (align=L, inputBehaviour=I, maxLength=18, sysNumber=34.0, core=true, businessType=LCCY, t24Name=V.DATE.COST.BSE)
+		TOT_UNRL_MKT : mml:Double required
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=35.0, core=true, businessType=AMT, t24Name=TOT.UNRL.MKT)
+		TOT_UNRL_CCY : mml:Double required
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=36.0, core=true, businessType=AMT, t24Name=TOT.UNRL.CCY)
+		GR_COST_REF_CCY : mml:Double required
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=37.0, core=true, businessType=AMT, t24Name=GR.COST.REF.CCY)
+		DEPOSITORY : mml:string required
+			@i18n:Label (en=Depository, fr=Dépositaire, es=Depositario)
+			@i18n:Tooltip (en="Depository the Security to be delivered from/to", fr=Dépositaire, es="Depositario de Título Valor a ser enviado de/a")
+			@t24:i (align=L, inputBehaviour=I, maxLength=18, sysNumber=38.0, core=true, businessType=CCY, t24Name=DEPOSITORY)
+		APPLICATION : mml:string required
+			@i18n:Label (en=Application, fr=Application, es="Aplicación")
+			@i18n:Tooltip (fr="Application ")
+			@t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=39.0, core=true, businessType=A, t24Name=APPLICATION)
+		CASH_FLOW_INT : mml:Double required
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=40.0, core=true, businessType=AMT, t24Name=CASH.FLOW.INT)
+		CHECK_FIELD : mml:Integer required
+			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=41.0, core=true, t24Name=CHECK.FIELD)
+		OLD_COST_PRICE : mml:Integer required
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=42.0, core=true, t24Name=OLD.COST.PRICE)
+		CG_POSITION : mml:Integer required
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=43.0, core=true, t24Name=CG.POSITION)
+		CG_COSTOFPOSN : mml:Double required
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=44.0, core=true, businessType=AMT, t24Name=CG.COSTOFPOSN)
+		BOOK_PRICE : mml:Double
+			@i18n:Label (en="Book Price", fr="Prix de livre", es="Precio de Libro")
+			@i18n:Tooltip (fr="Prix de livre")
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=45.0, core=true, businessType=AMT, t24Name=BOOK.PRICE)
+		BK_COST_REF_CCY : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=46.0, core=true, businessType=AMT, t24Name=BK.COST.REF.CCY)
+		BK_COST_BSE_CCY : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=47.0, core=true, businessType=AMT, t24Name=BK.COST.BSE.CCY)
+		GR_BOOK_COST : mml:Double
+			@i18n:Label (en="Gr Book Cost", fr="Coût Livre brut", es="Libro Costo Bruto")
+			@i18n:Tooltip (fr="Coût Livre brut")
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=48.0, core=true, businessType=AMT, t24Name=GR.BOOK.COST)
+		V_DATE_BK_COST : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=49.0, core=true, businessType=AMT, t24Name=V.DATE.BK.COST)
+		V_DATE_BOOK_REF : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=50.0, core=true, businessType=AMT, t24Name=V.DATE.BOOK.REF)
+		V_DATE_BOOK_BSE : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=51.0, core=true, businessType=AMT, t24Name=V.DATE.BOOK.BSE)
+		GR_BOOK_REF_CCY : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=52.0, core=true, businessType=AMT, t24Name=GR.BOOK.REF.CCY)
+	}
+	SC_POS_ASSET_EXERCISE_WORK__NO_NOMINAL
+	{
+		NO_NOMINAL : mml:string required
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=7.0, core=true, businessType=NOMAMT, t24Name=NO.NOMINAL)
+		COST_PRICE : mml:string required
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=8.0, core=true, businessType=R, t24Name=COST.PRICE)
+		MARKET_PRICE : mml:string required
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=9.0, core=true, businessType=R, t24Name=MARKET.PRICE)
+		ESTIMATION : mml:Double required
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=10.0, core=true, businessType=AMT, t24Name=ESTIMATION)
+	}
+	SC_POS_ASSET_WHILE_COB
+		@t24:i (t24Name=SC.POS.ASSET.WHILE.COB, level=I, type=L, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		POS_ASSET_KEY -> SCV_ValuationUpdates:SC_POS_ASSET_WHILE_COB PK required
+			@t24:i (align=L, inputBehaviour=I, maxLength=30, sysNumber=0.0, core=true, businessType=A, t24Name=POS.ASSET.KEY)
+		SECURITY_NO -> byValue SCV_ValuationUpdates:SC_POS_ASSET_WHILE_COB__SECURITY_NO *
+		PORTFOLIO_NO : mml:Integer
+			@i18n:Label (en="Portfoio No", fr="N° du portefeuille", es="No. de Cartera")
+			@i18n:Tooltip (en="Indicates the Portfolio Account of the customer", fr="Numéro du portefeuille", es="Indica la Cuenta de Cartera del Cliente")
+			@t24:i (align=L, inputBehaviour=I, maxLength=10, core=false, t24Name=PORTFOLIO.NO, genOperation="@ID[\".\",1,1]")
+		SEC_ACC_NO : mml:Integer
+			@i18n:Label (en="Portfolio Number", fr="No portefeuille", es="No. de Cartera")
+			@i18n:Tooltip (en="Indicates the Portfolio Account of the customer", fr="Numéro du portefeuille", es="Indica la Cuenta de Cartera del Cliente")
+			@t24:i (align=L, inputBehaviour=I, maxLength=10, core=false, t24Name=SEC.ACC.NO, genOperation="FIELD(@ID,\'.\',1)")
+		SEC_ACC_SUFFIX : mml:Integer
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, core=false, t24Name=SEC.ACC.SUFFIX, genOperation="FIELD(SEC.ACC.NO,\"-\",2)")
+		SUB_ASSET_TYPE : mml:Integer
+			@i18n:Label (en="Sub Asset Type", fr="Classe d\'actif", es="Sub Activo")
+			@i18n:Tooltip (fr="Classe d\'actif")
+			@t24:i (align=R, inputBehaviour=I, maxLength=5, core=false, t24Name=SUB.ASSET.TYPE, genOperation="@ID[\".\",2,1]")
+		ASSET_TYPE : mml:Integer
+			@i18n:Label (en="Asset Type", fr="Type d\'avoir", es="Tipo de Activo")
+			@i18n:Tooltip (en="Indicates the asset type", fr="Type d\'avoir", es="Indica el tipo de activo")
+			@t24:i (align=R, inputBehaviour=I, maxLength=3, core=false, t24Name=ASSET.TYPE, genOperation="@ID[\".\",3,1]")
+		CUSTOMER_NO : mml:Integer
+			@i18n:Label (en="Customer No", fr="Code client", es="No. de Cliente")
+			@i18n:Tooltip (en="Identifies the Customer for the transaction.", fr="Code client", es="Identifica al Cliente de la transacción")
+			@t24:i (align=R, inputBehaviour=I, maxLength=10, core=false, t24Name=CUSTOMER.NO, genOperation="@ID[\'-\',1,1]")
+		SEDOL_NO : mml:Integer
+			@i18n:Label (en="Sedol No", fr="Numéro Sedol", es="No. Sedol")
+			@i18n:Tooltip (fr="Numéro Sedol")
+			@t24:i (align=L, inputBehaviour=I, maxLength=7, core=false, t24Name=SEDOL.NO, genOperation="SECURITY.NO>SECURITY.MASTER>SEDOL.NO")
+	}
+	SC_POS_ASSET_WHILE_COB__SECURITY_NO
+	{
+		SECURITY_NO : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=15, sysNumber=1.0, core=true, t24Name=SECURITY.NO)
+		SHORT_NAME : mml:string required
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=2.0, core=true, businessType=A, t24Name=SHORT.NAME)
+		SECURITY_CCY -> FIN_CurrencyConfig:CURRENCY required
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=3.0, core=true, businessType=CCY, t24Name=SECURITY.CCY)
+		NO_NOMINAL : mml:string required
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=4.0, core=true, businessType=NOMAMT, t24Name=NO.NOMINAL)
+		COST_PRICE : mml:string required
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=5.0, core=true, businessType=R, t24Name=COST.PRICE)
+		MARKET_PRICE : mml:string required
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=6.0, core=true, businessType=R, t24Name=MARKET.PRICE)
+		ESTIMATION : mml:Double required
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=7.0, core=true, businessType=AMT, t24Name=ESTIMATION)
+		MARGIN_VALUE : mml:Double required
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=8.0, core=true, businessType=AMT, t24Name=MARGIN.VALUE)
+		ACCRUED_INT : mml:Double required
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=9.0, core=true, businessType=AMT, t24Name=ACCRUED.INT)
+		YIELD : mml:Double required
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=10.0, core=true, businessType=AMT, t24Name=YIELD)
+		ESTIMTED_INCOME : mml:Double required
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=11.0, core=true, businessType=AMT, t24Name=ESTIMTED.INCOME)
+		HELD_SINCE : mml:string required
+			@t24:i (align=L, inputBehaviour=I, maxLength=25, sysNumber=12.0, core=true, businessType=A, t24Name=HELD.SINCE)
+		UNRL_MKT_TDATE : mml:Double required
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=13.0, core=true, businessType=AMT, t24Name=UNRL.MKT.TDATE)
+		UNREAL_MKT_YTD : mml:Double required
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=14.0, core=true, businessType=AMT, t24Name=UNREAL.MKT.YTD)
+		UNRL_CCY_TDATE : mml:Double required
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=15.0, core=true, businessType=AMT, t24Name=UNRL.CCY.TDATE)
+		UNREAL_CCY_YTD : mml:Double required
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=16.0, core=true, businessType=AMT, t24Name=UNREAL.CCY.YTD)
+		INTEREST_DATE : mml:date required
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=17.0, core=true, businessType=D, t24Name=INTEREST.DATE)
+		NAME_DATE : mml:date required
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=18.0, core=true, businessType=D, t24Name=NAME.DATE)
+		COST_REF_CCY : mml:string required
+			@t24:i (align=L, inputBehaviour=I, maxLength=18, sysNumber=19.0, core=true, businessType=CCY, t24Name=COST.REF.CCY)
+		COST_BASE_CCY : mml:string required
+			@t24:i (align=L, inputBehaviour=I, maxLength=18, sysNumber=20.0, core=true, businessType=LCCY, t24Name=COST.BASE.CCY)
+		GR_COST_PRICE : mml:Double required
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=21.0, core=true, businessType=AMT, t24Name=GR.COST.PRICE)
+		GR_YIELD : mml:Double required
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=22.0, core=true, businessType=AMT, t24Name=GR.YIELD)
+		NOM_AMT_BLOCKED : mml:string required
+			@t24:i (align=R, inputBehaviour=I, maxLength=53, sysNumber=23.0, core=true, businessType=NOMAMT, t24Name=NOM.AMT.BLOCKED)
+		SEC_LENT_AMT : mml:Double required
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=24.0, core=true, businessType=AMT, t24Name=SEC.LENT.AMT)
+		FORWARD_ACC_AMT : mml:Double required
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=25.0, core=true, businessType=AMT, t24Name=FORWARD.ACC.AMT)
+		V_DATE_NOMINAL : mml:string required
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=26.0, core=true, businessType=NOMAMT, t24Name=V.DATE.NOMINAL)
+		V_DATE_COST : mml:Double required
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=27.0, core=true, businessType=AMT, t24Name=V.DATE.COST)
+		V_DT_ESTIMATION : mml:Double required
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=28.0, core=true, businessType=AMT, t24Name=V.DT.ESTIMATION)
+		V_DATE_MARGIN : mml:Double required
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=29.0, core=true, businessType=AMT, t24Name=V.DATE.MARGIN)
+		V_DATE_COST_REF : mml:string required
+			@t24:i (align=L, inputBehaviour=I, maxLength=18, sysNumber=30.0, core=true, businessType=CCY, t24Name=V.DATE.COST.REF)
+		V_DATE_COST_BSE : mml:string required
+			@t24:i (align=L, inputBehaviour=I, maxLength=18, sysNumber=31.0, core=true, businessType=LCCY, t24Name=V.DATE.COST.BSE)
+		TOT_UNRL_MKT : mml:Double required
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=32.0, core=true, businessType=AMT, t24Name=TOT.UNRL.MKT)
+		TOT_UNRL_CCY : mml:Double required
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=33.0, core=true, businessType=AMT, t24Name=TOT.UNRL.CCY)
+		GR_COST_REF_CCY : mml:Double required
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=34.0, core=true, businessType=AMT, t24Name=GR.COST.REF.CCY)
+		DEPOSITORY : mml:string required
+			@t24:i (align=L, inputBehaviour=I, maxLength=18, sysNumber=35.0, core=true, businessType=CCY, t24Name=DEPOSITORY)
+		APPLICATION : mml:string required
+			@t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=36.0, core=true, businessType=A, t24Name=APPLICATION)
+		CASH_FLOW_INT : mml:Double required
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=37.0, core=true, businessType=AMT, t24Name=CASH.FLOW.INT)
+		CHECK_FIELD : mml:Integer required
+			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=38.0, core=true, t24Name=CHECK.FIELD)
+		OLD_COST_PRICE : mml:Integer required
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=39.0, core=true, t24Name=OLD.COST.PRICE)
+		CG_POSITION : mml:Integer required
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=40.0, core=true, t24Name=CG.POSITION)
+		CG_COSTOFPOSN : mml:Double required
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=41.0, core=true, businessType=AMT, t24Name=CG.COSTOFPOSN)
+		BOOK_PRICE : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=42.0, core=true, businessType=AMT, t24Name=BOOK.PRICE)
+		BK_COST_REF_CCY : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=43.0, core=true, businessType=AMT, t24Name=BK.COST.REF.CCY)
+		BK_COST_BSE_CCY : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=44.0, core=true, businessType=AMT, t24Name=BK.COST.BSE.CCY)
+		GR_BOOK_COST : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=45.0, core=true, businessType=AMT, t24Name=GR.BOOK.COST)
+		V_DATE_BK_COST : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=46.0, core=true, businessType=AMT, t24Name=V.DATE.BK.COST)
+		V_DATE_BOOK_REF : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=47.0, core=true, businessType=AMT, t24Name=V.DATE.BOOK.REF)
+		V_DATE_BOOK_BSE : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=48.0, core=true, businessType=AMT, t24Name=V.DATE.BOOK.BSE)
+		GR_BOOK_REF_CCY : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=49.0, core=true, businessType=AMT, t24Name=GR.BOOK.REF.CCY)
+		COST_PRICE_ALPHA : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=19, sysNumber=50.0, core=true, businessType=DEC, t24Name=COST.PRICE.ALPHA)
+		MARKET_PRICE_ALPHA : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=19, sysNumber=51.0, core=true, businessType=DEC, t24Name=MARKET.PRICE.ALPHA)
+		INTERNAL_PRICE : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=52.0, core=true, t24Name=INTERNAL.PRICE)
+		REPLACT_VALUE : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=19, sysNumber=53.0, core=true, businessType=DEC, t24Name=REPLACT.VALUE)
+		NET_ACCR_DIV : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=54.0, core=true, businessType=AMT, t24Name=NET.ACCR.DIV)
+		ORIG_ACCR_DIV : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=55.0, core=true, businessType=AMT, t24Name=ORIG.ACCR.DIV)
+		CALL_PUT : SCV_ValuationUpdates:SC_POS_ASSET_WHILE_COB__SECURITY_NO__CALL_PUT
+			@t24:i (align=L, inputBehaviour=I, maxLength=4, sysNumber=56.0, core=true, businessType=A, t24Name=CALL.PUT)
+		BUY_SELL : SCV_ValuationUpdates:SC_POS_ASSET_WHILE_COB__SECURITY_NO__BUY_SELL
+			@t24:i (align=L, inputBehaviour=I, maxLength=4, sysNumber=57.0, core=true, businessType=A, t24Name=BUY.SELL)
+		UNDER_SHORTNAME : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=19, sysNumber=58.0, core=true, businessType=A, t24Name=UNDER.SHORTNAME)
+		UNDER_ID : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=19, sysNumber=59.0, core=true, businessType=A, t24Name=UNDER.ID)
+		EXT_STRIKE : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=60.0, core=true, businessType=AMT, t24Name=EXT.STRIKE)
+		INT_STRIKE : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=61.0, core=true, businessType=AMT, t24Name=INT.STRIKE)
+		EXT_CT_PRICE : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=62.0, core=true, businessType=AMT, t24Name=EXT.CT.PRICE)
+		INT_CT_PRICE : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=63.0, core=true, businessType=AMT, t24Name=INT.CT.PRICE)
+		BETA : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=64.0, core=true, businessType=AMT, t24Name=BETA)
+		DELTA : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=65.0, core=true, businessType=AMT, t24Name=DELTA)
+		GAMMA : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=66.0, core=true, businessType=AMT, t24Name=GAMMA)
+		VEGA : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=67.0, core=true, businessType=AMT, t24Name=VEGA)
+		RHO : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=68.0, core=true, businessType=AMT, t24Name=RHO)
+		THETA : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=69.0, core=true, businessType=AMT, t24Name=THETA)
+		TIME_PERIOD : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=10, sysNumber=70.0, core=true, businessType=A, t24Name=TIME.PERIOD)
+		ADD_ON_KEY -> AC_CurrencyPosition:REVAL_ADDON_PERCEN required
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=71.0, core=true, businessType=A, t24Name=ADD.ON.KEY)
+		REPLACE_COST : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=72.0, core=true, businessType=AMT, t24Name=REPLACE.COST)
+		REG_PERCENTAGE : mml:string
+			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=73.0, core=true, businessType=R, t24Name=REG.PERCENTAGE)
+		REG_CR_EXPOSURE : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=74.0, core=true, businessType=AMT, t24Name=REG.CR.EXPOSURE)
+		INT_PERCENTAGE : mml:string
+			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=75.0, core=true, businessType=R, t24Name=INT.PERCENTAGE)
+		INT_CR_EXPOSURE : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=76.0, core=true, businessType=AMT, t24Name=INT.CR.EXPOSURE)
+		CONTRACT_SIZE : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=77.0, core=true, businessType=AMT, t24Name=CONTRACT.SIZE)
+		SOURCE_ID -> byValue SCV_ValuationUpdates:SC_POS_ASSET_WHILE_COB__SECURITY_NO__SOURCE_ID *
+		LAST_FIELD : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=79.0, core=true, businessType=AMT, t24Name=LAST.FIELD)
+		REC_TAX_CUM_AMT : mml:Double required
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=80.0, core=true, businessType=AMT, t24Name=REC.TAX.CUM.AMT)
+		NET_OPN_ORD_NOM : mml:string
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=81.0, core=true, businessType=NOMAMT, t24Name=NET.OPN.ORD.NOM)
+		NET_OPN_ORD_EST : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=82.0, core=true, businessType=AMT, t24Name=NET.OPN.ORD.EST)
+		NET_OPN_ORD_AI : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=83.0, core=true, businessType=AMT, t24Name=NET.OPN.ORD.AI)
+		POS_COST_REF_CCY : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=84.0, core=true, businessType=AMT, t24Name=POS.COST.REF.CCY)
+		TOP_UP_MARGIN_AMT : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=85.0, core=true, businessType=AMT, t24Name=TOP.UP.MARGIN.AMT)
+		SELL_OUT_MARGN_AMT : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=86.0, core=true, businessType=AMT, t24Name=SELL.OUT.MARGN.AMT)
+		EXT_CUSTODIAN : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=87.0, core=true, businessType=A, t24Name=EXT.CUSTODIAN)
+		ADJ_MARGIN_AMT : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=88.0, core=true, businessType=AMT, t24Name=ADJ.MARGIN.AMT)
+		CAP_MARGIN_AMT : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=89.0, core=true, businessType=AMT, t24Name=CAP.MARGIN.AMT)
+		SAM_MARGIN : SCV_ValuationUpdates:SC_POS_ASSET_WHILE_COB__SECURITY_NO__SAM_MARGIN
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=90.0, core=true, businessType=A, t24Name=SAM.MARGIN)
+		INIT_MGN_VALUE : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=91.0, core=true, businessType=AMT, t24Name=INIT.MGN.VALUE)
+		MV_MARGIN_AMT : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=92.0, core=true, businessType=AMT, t24Name=MV.MARGIN.AMT)
+		EQ_MARGIN_AMT : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=93.0, core=true, businessType=AMT, t24Name=EQ.MARGIN.AMT)
+		SECOND_MKRT_VALUE : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=94.0, core=true, businessType=AMT, t24Name=SECOND.MKRT.VALUE)
+	}
+	SC_POS_ASSET_WHILE_COB__SECURITY_NO__SOURCE_ID
+	{
+		SOURCE_ID : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=78.0, core=true, businessType=A, t24Name=SOURCE.ID)
+	}
+	SC_POS_ASSET_WORK_HIS
+		@t24:i (t24Name=SC.POS.ASSET.WORK.HIS, level=F, type=L, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		POS_ASSET_WORK_KEY -> SCV_ValuationUpdates:SC_POS_ASSET_WORK_HIS PK required
+			@t24:i (align=L, inputBehaviour=I, maxLength=40, sysNumber=0.0, core=true, businessType=A, t24Name=POS.ASSET.WORK.KEY)
+		SECURITY_NO : mml:Integer
+			@i18n:Label (en="Security No", fr="Code valeur", es="No. de Título")
+			@i18n:Tooltip (en="Indicates the security code/number", fr="Code valeur", es="Indica un Título Valor válido")
+			@t24:i (align=R, inputBehaviour=I, maxLength=15, sysNumber=1.0, core=true, t24Name=SECURITY.NO)
+		SHORT_NAME : mml:Integer required
+			@i18n:Label (en="Short name", fr="Nom abrégé", es=Nombre)
+			@i18n:Tooltip (fr="Nom abrégé")
+			@t24:i (align=R, inputBehaviour=I, maxLength=35, sysNumber=2.0, core=true, t24Name=SHORT.NAME)
+		SECURITY_CCY -> FIN_CurrencyConfig:CURRENCY required
+			@i18n:Label (en=Ccy, fr="Devise du titre", es=Moneda)
+			@i18n:Tooltip (fr="Devise de la valeur mobilière")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=3.0, core=true, businessType=CCY, t24Name=SECURITY.CCY)
+		REFERENCE_CCY -> FIN_CurrencyConfig:CURRENCY required
+			@i18n:Label (en="Ref Ccy", fr="Devise de référence", es="Moneda de Ref.")
+			@i18n:Tooltip (fr="Devise de référence")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=4.0, core=true, businessType=CCY, t24Name=REFERENCE.CCY)
+		COUNTRY -> ST_Config:COUNTRY
+			@i18n:Label (en=Country, fr=Pays, es="País")
+			@i18n:Tooltip (en="Holds the country code", fr="Code Pays ISO")
+			@t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=5.0, core=true, businessType=SSS, t24Name=COUNTRY)
+		BOND_OR_SHARE : SCV_ValuationUpdates:SC_POS_ASSET_WORK_HIS__BOND_OR_SHARE
+			@i18n:Label (en="Bond or Share", fr="Obligation ou action", es="Bono/Acción")
+			@i18n:Tooltip (fr="Obligation ou action")
+			@t24:i (align=L, inputBehaviour=I, maxLength=1, sysNumber=6.0, core=true, t24Name=BOND.OR.SHARE)
+		ASSET_TYPE -> SC_Config:ASSET_TYPE required
+			@i18n:Label (en="Asset Type", fr="Type d\'avoir", es="Tipo de Activo")
+			@i18n:Tooltip (en="Indicates the asset type", fr="Type d\'avoir", es="Indica el tipo de activo")
+			@t24:i (align=L, inputBehaviour=I, maxLength=5, sysNumber=7.0, core=true, businessType=S, t24Name=ASSET.TYPE)
+		SUB_ASSET_TYPE -> SC_Config:SUB_ASSET_TYPE required
+			@i18n:Label (en="Sub Asset Type", fr="Classe d\'actif", es="Sub Activo")
+			@i18n:Tooltip (fr="Classe d\'actif")
+			@t24:i (align=L, inputBehaviour=I, maxLength=5, sysNumber=8.0, core=true, businessType=S, t24Name=SUB.ASSET.TYPE)
+		PRICE_TYPE -> SCT_PriceTypeUpdateAndProcessing:PRICE_TYPE required
+			@i18n:Label (en="Price Type", fr="Calcul du prix", es="Tipo de Precio")
+			@i18n:Tooltip (fr="Méthode de calcul du prix")
+			@t24:i (align=L, inputBehaviour=I, maxLength=5, sysNumber=9.0, core=true, businessType=S, t24Name=PRICE.TYPE)
+		INDUSTRY_CODE -> SC_Config:SC_INDUSTRY required
+			@i18n:Label (en="Industry Code", fr="Code d\'industrie", es="Código de Industria")
+			@i18n:Tooltip (fr="Code d\'industrie")
+			@t24:i (align=L, inputBehaviour=I, maxLength=4, sysNumber=10.0, core=true, businessType=S, t24Name=INDUSTRY.CODE)
+		INDUSTRY_DESC : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=20, sysNumber=11.0, core=true, businessType=S, t24Name=INDUSTRY.DESC)
+		INTEREST_RATE : mml:string
+			@i18n:Label (en="Interest Rate", fr="Taux d\'intérêts", es="Tasa de Interés")
+			@i18n:Tooltip (en="Indicates interest rate", fr="Taux d\'intérêts")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=12.0, core=true, businessType=R, t24Name=INTEREST.RATE)
+		ISSUE_DATE : mml:date
+			@i18n:Label (en="Issue Date", fr="Date d\'émission", es="Fecha de Emisión")
+			@i18n:Tooltip (en="Indicates the date of issue ", fr="Date d\'émission", es="Especifica la Fecha de Emisión del Título")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=13.0, core=true, businessType=D, t24Name=ISSUE.DATE)
+		MATURITY_DATE : mml:date
+			@i18n:Label (en="Maturity Date", fr="Date d\'échéance", es="Fecha de Vencimiento")
+			@i18n:Tooltip (en="Indicates the Maturity Date of the Transaction", fr="Date d\'échéance", es="Indica la Fecha de Vencimiento de la Transacción")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=14.0, core=true, businessType=D, t24Name=MATURITY.DATE)
+		NO_NOMINAL : mml:string required
+			@i18n:Label (en=Nominal, fr="Quantité ou nominal", es=Nominal)
+			@i18n:Tooltip (fr="Quantité ou nominal", es="Especifica el Nominal")
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=15.0, core=true, businessType=NOMAMT, t24Name=NO.NOMINAL)
+		COST_PRICE : mml:Double required
+			@i18n:Label (en="Cost Price", fr="Prix coûtant", es="Precio de Costo")
+			@i18n:Tooltip (fr="Prix coûtant")
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=16.0, core=true, businessType=AMT, t24Name=COST.PRICE)
+		MARKET_PRICE : mml:Double required
+			@i18n:Label (en="Market Price", fr="Prix de marché", es="Precio de Mercado")
+			@i18n:Tooltip (en="Indicates the Market Price", fr="Prix de marché")
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=17.0, core=true, businessType=AMT, t24Name=MARKET.PRICE)
+		PRESENTATION : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=18.0, core=true, t24Name=PRESENTATION)
+		PRESENT_DESC : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=20, sysNumber=19.0, core=true, businessType=SSS, t24Name=PRESENT.DESC)
+		ESTIMATION : mml:Double required
+			@i18n:Label (en=Estimation, fr="Valeur estimée", es="Estimación")
+			@i18n:Tooltip (fr="Valeur estimée")
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=20.0, core=true, businessType=AMT, t24Name=ESTIMATION)
+		MARGIN_VALUE : mml:Double required
+			@i18n:Label (en="Margin Value", fr="Valeur de marge", es="Valor de Margen")
+			@i18n:Tooltip (fr="Valeur de marge")
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=21.0, core=true, businessType=AMT, t24Name=MARGIN.VALUE)
+		ACCRUED_INT : mml:Double required
+			@i18n:Label (en="Accrued Int", fr="Intérêt courus", es="Interés Devengado")
+			@i18n:Tooltip (fr="Intérêt courus")
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=22.0, core=true, businessType=AMT, t24Name=ACCRUED.INT)
+		INTEREST_DATE : mml:date required
+			@i18n:Label (en="Coupon Date", fr="Date de coupon", es="Fecha de Cupón")
+			@i18n:Tooltip (fr="Date de coupon")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=23.0, core=true, businessType=D, t24Name=INTEREST.DATE)
+		V_DATE_NOMINAL : mml:string required
+			@i18n:Label (en="V Date Nominal", es="Nominal Fecha Valor")
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=24.0, core=true, businessType=NOMAMT, t24Name=V.DATE.NOMINAL)
+		V_DATE_COST : mml:Double required
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=25.0, core=true, businessType=AMT, t24Name=V.DATE.COST)
+		V_DT_ESTIMATION : mml:Double required
+			@i18n:Label (en="V Dt Estimation", es="Estimado Fecha Valor")
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=26.0, core=true, businessType=AMT, t24Name=V.DT.ESTIMATION)
+		V_DATE_MARGIN : mml:Double required
+			@i18n:Label (en=V.Dt.Margin, es="Margen Fecha Valor")
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=27.0, core=true, businessType=AMT, t24Name=V.DATE.MARGIN)
+		YLD_TO_MATURITY : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=8, sysNumber=28.0, core=true, t24Name=YLD.TO.MATURITY)
+		CUR_YIELD : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=15, sysNumber=29.0, core=true, t24Name=CUR.YIELD)
+		EXCHANGE_RATE : mml:Integer
+			@i18n:Label (en="Exchange Rate", fr="Taux de Change", es="Tipo de Cambio")
+			@i18n:Tooltip (fr="Taux de Change")
+			@t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=30.0, core=true, t24Name=EXCHANGE.RATE)
+		SC_FOR_ACC_AMT : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=31.0, core=true, businessType=AMT, t24Name=SC.FOR.ACC.AMT)
+		DEPOSITORY -> ST_Customer:CUSTOMER
+			@i18n:Label (en=Depository, fr=Dépositaire, es=Depositario)
+			@i18n:Tooltip (en="Depository the Security to be delivered from/to", fr=Dépositaire, es="Depositario de Título Valor a ser enviado de/a")
+			@t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=32.0, core=true, businessType=CUS, t24Name=DEPOSITORY)
+		DURATION : mml:Integer
+			@i18n:Label (en=Duration, fr=Durée, es="Duración")
+			@i18n:Tooltip (en="Duration of that opportunity to be active", fr=Durée)
+			@t24:i (align=R, inputBehaviour=I, maxLength=15, sysNumber=33.0, core=true, t24Name=DURATION)
+		DUR_MODIFY : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=15, sysNumber=34.0, core=true, t24Name=DUR.MODIFY)
+		CONVEXITY : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=15, sysNumber=35.0, core=true, t24Name=CONVEXITY)
+	}
+	SC_POS_ASSET_WORK_SUM
+		@t24:i (t24Name=SC.POS.ASSET.WORK.SUM, level=F, type=L, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		POS_ASSET_SUM_KEY -> SCV_ValuationUpdates:SC_POS_ASSET_WORK_SUM PK required
+			@t24:i (align=L, inputBehaviour=I, maxLength=25, sysNumber=0.0, core=true, businessType=A, t24Name=POS.ASSET.SUM.KEY)
+		ASSET_TYPE -> byValue SCV_ValuationUpdates:SC_POS_ASSET_WORK_SUM__ASSET_TYPE *
+	}
+	SC_POS_ASSET_WORK_SUM__ASSET_TYPE
+	{
+		ASSET_TYPE -> SC_Config:ASSET_TYPE
+			@t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=1.0, core=true, t24Name=ASSET.TYPE)
+		PR_ESTIMATION : mml:Double required
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=2.0, core=true, businessType=AMT, t24Name=PR.ESTIMATION)
+		PR_MARGIN_VALUE : mml:Double required
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=3.0, core=true, businessType=AMT, t24Name=PR.MARGIN.VALUE)
+		PR_PERCENTAGE : mml:Double required
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=4.0, core=true, businessType=AMT, t24Name=PR.PERCENTAGE)
+		RE_ESTIMATION : mml:Double required
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=5.0, core=true, businessType=AMT, t24Name=RE.ESTIMATION)
+		RE_MARGIN_VALUE : mml:Double required
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=6.0, core=true, businessType=AMT, t24Name=RE.MARGIN.VALUE)
+		RE_PERCENTAGE : mml:Double required
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=7.0, core=true, businessType=AMT, t24Name=RE.PERCENTAGE)
+		PRESENT_CODE -> byValue SCV_ValuationUpdates:SC_POS_ASSET_WORK_SUM__ASSET_TYPE__PRESENT_CODE *
+	}
+	SC_POS_ASSET_WORK_SUM__ASSET_TYPE__PRESENT_CODE
+	{
+		PRESENT_CODE -> SCV_Config:SC_PM_PRESENT required
+			@t24:i (align=R, inputBehaviour=I, maxLength=8, sysNumber=8.0, core=true, t24Name=PRESENT.CODE)
+		PR_ESTIM : mml:Double required
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=9.0, core=true, businessType=AMT, t24Name=PR.ESTIM)
+		PR_MARGIN : mml:Double required
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=10.0, core=true, businessType=AMT, t24Name=PR.MARGIN)
+		PR_PERCENT : mml:Double required
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=11.0, core=true, businessType=AMT, t24Name=PR.PERCENT)
+		RE_ESTIM : mml:Double required
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=12.0, core=true, businessType=AMT, t24Name=RE.ESTIM)
+		RE_MARGIN : mml:Double required
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=13.0, core=true, businessType=AMT, t24Name=RE.MARGIN)
+		RE_PERCENT : mml:Double required
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=14.0, core=true, businessType=AMT, t24Name=RE.PERCENT)
+	}
+	SC_SEC_ACC_PL
+		@t24:i (t24Name=SC.SEC.ACC.PL, level=F, type=L, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		SEC_ACC_NO -> SCV_ValuationUpdates:SC_SEC_ACC_PL PK required
+			@i18n:Label (en="Portfolio Number", fr="No portefeuille", es="No. de Cartera")
+			@i18n:Tooltip (en="Indicates the Portfolio Account of the customer", fr="Numéro du portefeuille", es="Indica la Cuenta de Cartera del Cliente")
+			@t24:i (align=L, inputBehaviour=I, maxLength=18, sysNumber=0.0, core=true, businessType=A, t24Name=SEC.ACC.NO)
+		REAL_PL_COMM : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=10, sysNumber=1.0, core=true, t24Name=REAL.PL.COMM)
+		REAL_PL_INC : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=10, sysNumber=2.0, core=true, t24Name=REAL.PL.INC)
+		REAL_PL_MKT : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=10, sysNumber=3.0, core=true, t24Name=REAL.PL.MKT)
+		REAL_PL_CHG : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=10, sysNumber=4.0, core=true, t24Name=REAL.PL.CHG)
+		UNREAL_PL_ACCR : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=10, sysNumber=5.0, core=true, t24Name=UNREAL.PL.ACCR)
+		UNREAL_PL_MKT : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=10, sysNumber=6.0, core=true, t24Name=UNREAL.PL.MKT)
+		UNREAL_PL_CHG : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=10, sysNumber=7.0, core=true, t24Name=UNREAL.PL.CHG)
+	}
+	SC_VAL_SUM
+		@t24:i (t24Name=SC.VAL.SUM, level=I, type=L, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		SEC_ACC_NO -> SCV_ValuationUpdates:SC_VAL_SUM PK required
+			@i18n:Label (en="Portfolio Number", fr="No portefeuille", es="No. de Cartera")
+			@i18n:Tooltip (en="Indicates the Portfolio Account of the customer", fr="Numéro du portefeuille", es="Indica la Cuenta de Cartera del Cliente")
+			@t24:i (align=L, inputBehaviour=I, maxLength=18, sysNumber=0.0, core=true, businessType=A, t24Name=SEC.ACC.NO)
+		AST_NO -> byValue SCV_ValuationUpdates:SC_VAL_SUM__AST_NO *
+		GRAND_TOTAL : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=8.0, core=true, t24Name=GRAND.TOTAL)
+		REP_AST_NO -> byValue SCV_ValuationUpdates:SC_VAL_SUM__REP_AST_NO *
+		REP_DESCRIPT -> byValue SCV_ValuationUpdates:SC_VAL_SUM__REP_DESCRIPT *
+		TOT_CCY1 -> byValue SCV_ValuationUpdates:SC_VAL_SUM__TOT_CCY1 *
+		TOT_CCY2 -> byValue SCV_ValuationUpdates:SC_VAL_SUM__TOT_CCY2 *
+		TOT_CCY3 -> byValue SCV_ValuationUpdates:SC_VAL_SUM__TOT_CCY3 *
+		TOT_CCY4 -> byValue SCV_ValuationUpdates:SC_VAL_SUM__TOT_CCY4 *
+		TOT_CCY5 -> byValue SCV_ValuationUpdates:SC_VAL_SUM__TOT_CCY5 *
+		TOT_CCY6 -> byValue SCV_ValuationUpdates:SC_VAL_SUM__TOT_CCY6 *
+		TOT_CCY7 -> byValue SCV_ValuationUpdates:SC_VAL_SUM__TOT_CCY7 *
+		TOT_CCY8 -> byValue SCV_ValuationUpdates:SC_VAL_SUM__TOT_CCY8 *
+		TOT_CCY9 -> byValue SCV_ValuationUpdates:SC_VAL_SUM__TOT_CCY9 *
+		TOT_CCY10 -> byValue SCV_ValuationUpdates:SC_VAL_SUM__TOT_CCY10 *
+		TOT_CCY11 -> byValue SCV_ValuationUpdates:SC_VAL_SUM__TOT_CCY11 *
+		TOT_CCY12 -> byValue SCV_ValuationUpdates:SC_VAL_SUM__TOT_CCY12 *
+		TOT_CCY13 -> byValue SCV_ValuationUpdates:SC_VAL_SUM__TOT_CCY13 *
+		TOT_CCY14 -> byValue SCV_ValuationUpdates:SC_VAL_SUM__TOT_CCY14 *
+		TOT_CCY15 -> byValue SCV_ValuationUpdates:SC_VAL_SUM__TOT_CCY15 *
+		TOT_CCY16 -> byValue SCV_ValuationUpdates:SC_VAL_SUM__TOT_CCY16 *
+		TOT_CCY17 -> byValue SCV_ValuationUpdates:SC_VAL_SUM__TOT_CCY17 *
+		TOT_CCY18 -> byValue SCV_ValuationUpdates:SC_VAL_SUM__TOT_CCY18 *
+		TOT_CCY19 -> byValue SCV_ValuationUpdates:SC_VAL_SUM__TOT_CCY19 *
+		TOT_TOT_CCY -> byValue SCV_ValuationUpdates:SC_VAL_SUM__TOT_TOT_CCY *
+		PCENT_CCY1 -> byValue SCV_ValuationUpdates:SC_VAL_SUM__PCENT_CCY1 *
+		PCENT_CCY2 -> byValue SCV_ValuationUpdates:SC_VAL_SUM__PCENT_CCY2 *
+		PCENT_CCY3 -> byValue SCV_ValuationUpdates:SC_VAL_SUM__PCENT_CCY3 *
+		PCENT_CCY4 -> byValue SCV_ValuationUpdates:SC_VAL_SUM__PCENT_CCY4 *
+		PCENT_CCY5 -> byValue SCV_ValuationUpdates:SC_VAL_SUM__PCENT_CCY5 *
+		PCENT_CCY6 -> byValue SCV_ValuationUpdates:SC_VAL_SUM__PCENT_CCY6 *
+		PCENT_CCY7 -> byValue SCV_ValuationUpdates:SC_VAL_SUM__PCENT_CCY7 *
+		PCENT_CCY8 -> byValue SCV_ValuationUpdates:SC_VAL_SUM__PCENT_CCY8 *
+		PCENT_CCY9 -> byValue SCV_ValuationUpdates:SC_VAL_SUM__PCENT_CCY9 *
+		PCENT_CCY10 -> byValue SCV_ValuationUpdates:SC_VAL_SUM__PCENT_CCY10 *
+		PCENT_CCY11 -> byValue SCV_ValuationUpdates:SC_VAL_SUM__PCENT_CCY11 *
+		PCENT_CCY12 -> byValue SCV_ValuationUpdates:SC_VAL_SUM__PCENT_CCY12 *
+		PCENT_CCY13 -> byValue SCV_ValuationUpdates:SC_VAL_SUM__PCENT_CCY13 *
+		PCENT_CCY14 -> byValue SCV_ValuationUpdates:SC_VAL_SUM__PCENT_CCY14 *
+		PCENT_CCY15 -> byValue SCV_ValuationUpdates:SC_VAL_SUM__PCENT_CCY15 *
+		PCENT_CCY16 -> byValue SCV_ValuationUpdates:SC_VAL_SUM__PCENT_CCY16 *
+		PCENT_CCY17 -> byValue SCV_ValuationUpdates:SC_VAL_SUM__PCENT_CCY17 *
+		PCENT_CCY18 -> byValue SCV_ValuationUpdates:SC_VAL_SUM__PCENT_CCY18 *
+		PCENT_CCY19 -> byValue SCV_ValuationUpdates:SC_VAL_SUM__PCENT_CCY19 *
+		RANKED_CCYS -> byValue SCV_ValuationUpdates:SC_VAL_SUM__RANKED_CCYS *
+		PERF_EOM : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=80.0, core=true, t24Name=PERF.EOM)
+		PERF_LAST_3M : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=81.0, core=true, t24Name=PERF.LAST.3M)
+		PERF_LAST_12M : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=82.0, core=true, t24Name=PERF.LAST.12M)
+		PERF_EOY : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=83.0, core=true, t24Name=PERF.EOY)
+		PERF_START : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=84.0, core=true, t24Name=PERF.START)
+		PERFORM_DATE -> byValue SCV_ValuationUpdates:SC_VAL_SUM__PERFORM_DATE *
+		EQU_COUNTRY -> byValue SCV_ValuationUpdates:SC_VAL_SUM__EQU_COUNTRY *
+		EQU_INDUSTRY -> byValue SCV_ValuationUpdates:SC_VAL_SUM__EQU_INDUSTRY *
+		LIQUIDITY_TXT -> byValue SCV_ValuationUpdates:SC_VAL_SUM__LIQUIDITY_TXT *
+		FIXED_SEC_TXT -> byValue SCV_ValuationUpdates:SC_VAL_SUM__FIXED_SEC_TXT *
+		OUTST_ORDER -> byValue SCV_ValuationUpdates:SC_VAL_SUM__OUTST_ORDER *
+		MATRIX1 -> byValue SCV_ValuationUpdates:SC_VAL_SUM__MATRIX1 *
+		MATRIX2 -> byValue SCV_ValuationUpdates:SC_VAL_SUM__MATRIX2 *
+		MATRIX3 -> byValue SCV_ValuationUpdates:SC_VAL_SUM__MATRIX3 *
+		MATRIX4 -> byValue SCV_ValuationUpdates:SC_VAL_SUM__MATRIX4 *
+		MATRIX5 -> byValue SCV_ValuationUpdates:SC_VAL_SUM__MATRIX5 *
+		MATRIX6 -> byValue SCV_ValuationUpdates:SC_VAL_SUM__MATRIX6 *
+		MATRIX7 -> byValue SCV_ValuationUpdates:SC_VAL_SUM__MATRIX7 *
+		MATRIX8 -> byValue SCV_ValuationUpdates:SC_VAL_SUM__MATRIX8 *
+		MATRIXPCT2 -> byValue SCV_ValuationUpdates:SC_VAL_SUM__MATRIXPCT2 *
+		MATRIXPCT3 -> byValue SCV_ValuationUpdates:SC_VAL_SUM__MATRIXPCT3 *
+		MATRIXPCT4 -> byValue SCV_ValuationUpdates:SC_VAL_SUM__MATRIXPCT4 *
+		MATRIXPCT5 -> byValue SCV_ValuationUpdates:SC_VAL_SUM__MATRIXPCT5 *
+		MATRIXPCT6 -> byValue SCV_ValuationUpdates:SC_VAL_SUM__MATRIXPCT6 *
+		MATRIXPCT7 -> byValue SCV_ValuationUpdates:SC_VAL_SUM__MATRIXPCT7 *
+		MATRIXPCT8 -> byValue SCV_ValuationUpdates:SC_VAL_SUM__MATRIXPCT8 *
+	}
+	SC_VAL_SUM__AST_NO
+	{
+		AST_NO : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=1.0, core=true, t24Name=AST.NO)
+		SHORT_DESC : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=2.0, core=true, t24Name=SHORT.DESC)
+		AST_CCYS -> byValue SCV_ValuationUpdates:SC_VAL_SUM__AST_NO__AST_CCYS *
+	}
+	SC_VAL_SUM__AST_NO__AST_CCYS
+	{
+		AST_CCYS : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=3.0, core=true, t24Name=AST.CCYS)
+		CCY_VALS : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=4.0, core=true, t24Name=CCY.VALS)
+		TOT_NOM : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=5.0, core=true, t24Name=TOT.NOM)
+		TOT_MAR : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=6.0, core=true, t24Name=TOT.MAR)
+		TOT_INT : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=7.0, core=true, t24Name=TOT.INT)
+	}
+	SC_VAL_SUM__REP_AST_NO
+	{
+		REP_AST_NO : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=9.0, core=true, t24Name=REP.AST.NO)
+	}
+	SC_VAL_SUM__REP_DESCRIPT
+	{
+		REP_DESCRIPT : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=10.0, core=true, t24Name=REP.DESCRIPT)
+		REP_TOT_NOM -> byValue SCV_ValuationUpdates:SC_VAL_SUM__REP_DESCRIPT__REP_TOT_NOM *
+		REP_CCYS -> byValue SCV_ValuationUpdates:SC_VAL_SUM__REP_DESCRIPT__REP_CCYS *
+	}
+	SC_VAL_SUM__REP_DESCRIPT__REP_TOT_NOM
+	{
+		REP_TOT_NOM : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=11.0, core=true, t24Name=REP.TOT.NOM)
+		REP_TOT_INT : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=12.0, core=true, t24Name=REP.TOT.INT)
+		REP_TOT_MKT : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=13.0, core=true, t24Name=REP.TOT.MKT)
+		REP_TOT_CCY : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=14.0, core=true, t24Name=REP.TOT.CCY)
+	}
+	SC_VAL_SUM__REP_DESCRIPT__REP_CCYS
+	{
+		REP_CCYS : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=3, sysNumber=15.0, core=true, t24Name=REP.CCYS)
+		REP_CCY_VALS : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=16.0, core=true, t24Name=REP.CCY.VALS)
+	}
+	SC_VAL_SUM__TOT_CCY1
+	{
+		TOT_CCY1 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=17.0, core=true, t24Name=TOT.CCY1)
+	}
+	SC_VAL_SUM__TOT_CCY2
+	{
+		TOT_CCY2 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=18.0, core=true, t24Name=TOT.CCY2)
+	}
+	SC_VAL_SUM__TOT_CCY3
+	{
+		TOT_CCY3 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=19.0, core=true, t24Name=TOT.CCY3)
+	}
+	SC_VAL_SUM__TOT_CCY4
+	{
+		TOT_CCY4 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=20.0, core=true, t24Name=TOT.CCY4)
+	}
+	SC_VAL_SUM__TOT_CCY5
+	{
+		TOT_CCY5 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=21.0, core=true, t24Name=TOT.CCY5)
+	}
+	SC_VAL_SUM__TOT_CCY6
+	{
+		TOT_CCY6 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=22.0, core=true, t24Name=TOT.CCY6)
+	}
+	SC_VAL_SUM__TOT_CCY7
+	{
+		TOT_CCY7 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=23.0, core=true, t24Name=TOT.CCY7)
+	}
+	SC_VAL_SUM__TOT_CCY8
+	{
+		TOT_CCY8 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=24.0, core=true, t24Name=TOT.CCY8)
+	}
+	SC_VAL_SUM__TOT_CCY9
+	{
+		TOT_CCY9 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=25.0, core=true, t24Name=TOT.CCY9)
+	}
+	SC_VAL_SUM__TOT_CCY10
+	{
+		TOT_CCY10 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=26.0, core=true, t24Name=TOT.CCY10)
+	}
+	SC_VAL_SUM__TOT_CCY11
+	{
+		TOT_CCY11 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=27.0, core=true, t24Name=TOT.CCY11)
+	}
+	SC_VAL_SUM__TOT_CCY12
+	{
+		TOT_CCY12 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=28.0, core=true, t24Name=TOT.CCY12)
+	}
+	SC_VAL_SUM__TOT_CCY13
+	{
+		TOT_CCY13 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=29.0, core=true, t24Name=TOT.CCY13)
+	}
+	SC_VAL_SUM__TOT_CCY14
+	{
+		TOT_CCY14 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=30.0, core=true, t24Name=TOT.CCY14)
+	}
+	SC_VAL_SUM__TOT_CCY15
+	{
+		TOT_CCY15 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=31.0, core=true, t24Name=TOT.CCY15)
+	}
+	SC_VAL_SUM__TOT_CCY16
+	{
+		TOT_CCY16 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=32.0, core=true, t24Name=TOT.CCY16)
+	}
+	SC_VAL_SUM__TOT_CCY17
+	{
+		TOT_CCY17 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=33.0, core=true, t24Name=TOT.CCY17)
+	}
+	SC_VAL_SUM__TOT_CCY18
+	{
+		TOT_CCY18 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=34.0, core=true, t24Name=TOT.CCY18)
+	}
+	SC_VAL_SUM__TOT_CCY19
+	{
+		TOT_CCY19 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=35.0, core=true, t24Name=TOT.CCY19)
+	}
+	SC_VAL_SUM__TOT_TOT_CCY
+	{
+		TOT_TOT_CCY : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=36.0, core=true, t24Name=TOT.TOT.CCY)
+	}
+	SC_VAL_SUM__PCENT_CCY1
+	{
+		PCENT_CCY1 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=37.0, core=true, t24Name=PCENT.CCY1)
+	}
+	SC_VAL_SUM__PCENT_CCY2
+	{
+		PCENT_CCY2 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=38.0, core=true, t24Name=PCENT.CCY2)
+	}
+	SC_VAL_SUM__PCENT_CCY3
+	{
+		PCENT_CCY3 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=39.0, core=true, t24Name=PCENT.CCY3)
+	}
+	SC_VAL_SUM__PCENT_CCY4
+	{
+		PCENT_CCY4 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=40.0, core=true, t24Name=PCENT.CCY4)
+	}
+	SC_VAL_SUM__PCENT_CCY5
+	{
+		PCENT_CCY5 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=41.0, core=true, t24Name=PCENT.CCY5)
+	}
+	SC_VAL_SUM__PCENT_CCY6
+	{
+		PCENT_CCY6 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=42.0, core=true, t24Name=PCENT.CCY6)
+	}
+	SC_VAL_SUM__PCENT_CCY7
+	{
+		PCENT_CCY7 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=43.0, core=true, t24Name=PCENT.CCY7)
+	}
+	SC_VAL_SUM__PCENT_CCY8
+	{
+		PCENT_CCY8 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=44.0, core=true, t24Name=PCENT.CCY8)
+	}
+	SC_VAL_SUM__PCENT_CCY9
+	{
+		PCENT_CCY9 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=45.0, core=true, t24Name=PCENT.CCY9)
+	}
+	SC_VAL_SUM__PCENT_CCY10
+	{
+		PCENT_CCY10 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=46.0, core=true, t24Name=PCENT.CCY10)
+	}
+	SC_VAL_SUM__PCENT_CCY11
+	{
+		PCENT_CCY11 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=47.0, core=true, t24Name=PCENT.CCY11)
+	}
+	SC_VAL_SUM__PCENT_CCY12
+	{
+		PCENT_CCY12 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=48.0, core=true, t24Name=PCENT.CCY12)
+	}
+	SC_VAL_SUM__PCENT_CCY13
+	{
+		PCENT_CCY13 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=49.0, core=true, t24Name=PCENT.CCY13)
+	}
+	SC_VAL_SUM__PCENT_CCY14
+	{
+		PCENT_CCY14 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=50.0, core=true, t24Name=PCENT.CCY14)
+	}
+	SC_VAL_SUM__PCENT_CCY15
+	{
+		PCENT_CCY15 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=51.0, core=true, t24Name=PCENT.CCY15)
+	}
+	SC_VAL_SUM__PCENT_CCY16
+	{
+		PCENT_CCY16 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=52.0, core=true, t24Name=PCENT.CCY16)
+	}
+	SC_VAL_SUM__PCENT_CCY17
+	{
+		PCENT_CCY17 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=53.0, core=true, t24Name=PCENT.CCY17)
+	}
+	SC_VAL_SUM__PCENT_CCY18
+	{
+		PCENT_CCY18 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=54.0, core=true, t24Name=PCENT.CCY18)
+	}
+	SC_VAL_SUM__PCENT_CCY19
+	{
+		PCENT_CCY19 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=55.0, core=true, t24Name=PCENT.CCY19)
+	}
+	SC_VAL_SUM__RANKED_CCYS
+	{
+		RANKED_CCYS : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=56.0, core=true, t24Name=RANKED.CCYS)
+		EXCH_RATE : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=57.0, core=true, t24Name=EXCH.RATE)
+		CURR_RATE : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=58.0, core=true, t24Name=CURR.RATE)
+		DIFF_RATE : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=59.0, core=true, t24Name=DIFF.RATE)
+		POLICY_CCY1 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=60.0, core=true, t24Name=POLICY.CCY1)
+		POLICY_CCY2 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=61.0, core=true, t24Name=POLICY.CCY2)
+		POLICY_CCY3 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=62.0, core=true, t24Name=POLICY.CCY3)
+		POLICY_CCY4 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=63.0, core=true, t24Name=POLICY.CCY4)
+		POLICY_CCY5 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=64.0, core=true, t24Name=POLICY.CCY5)
+		POLICY_CCY6 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=65.0, core=true, t24Name=POLICY.CCY6)
+		POLICY_CCY7 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=66.0, core=true, t24Name=POLICY.CCY7)
+		POLICY_CCY8 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=67.0, core=true, t24Name=POLICY.CCY8)
+		POLICY_CCY9 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=68.0, core=true, t24Name=POLICY.CCY9)
+		POLICY_CCY10 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=69.0, core=true, t24Name=POLICY.CCY10)
+		POLICY_CCY11 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=70.0, core=true, t24Name=POLICY.CCY11)
+		POLICY_CCY12 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=71.0, core=true, t24Name=POLICY.CCY12)
+		POLICY_CCY13 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=72.0, core=true, t24Name=POLICY.CCY13)
+		POLICY_CCY14 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=73.0, core=true, t24Name=POLICY.CCY14)
+		POLICY_CCY15 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=74.0, core=true, t24Name=POLICY.CCY15)
+		POLICY_CCY16 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=75.0, core=true, t24Name=POLICY.CCY16)
+		POLICY_CCY17 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=76.0, core=true, t24Name=POLICY.CCY17)
+		POLICY_CCY18 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=77.0, core=true, t24Name=POLICY.CCY18)
+		POLICY_CCY19 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=78.0, core=true, t24Name=POLICY.CCY19)
+		POLICY_CCY_TOT : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=79.0, core=true, t24Name=POLICY.CCY.TOT)
+	}
+	SC_VAL_SUM__PERFORM_DATE
+	{
+		PERFORM_DATE : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=85.0, core=true, t24Name=PERFORM.DATE)
+		COMPARE_VALUE : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=86.0, core=true, t24Name=COMPARE.VALUE)
+		FUND_FLOW : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=87.0, core=true, t24Name=FUND.FLOW)
+		HIST_NETT : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=88.0, core=true, t24Name=HIST.NETT)
+		HIST_CHARGE : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=89.0, core=true, t24Name=HIST.CHARGE)
+		HIST_INCOME : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=90.0, core=true, t24Name=HIST.INCOME)
+		HIST_MARKET : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=91.0, core=true, t24Name=HIST.MARKET)
+		HIST_CURRENCY : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=92.0, core=true, t24Name=HIST.CURRENCY)
+		HIST_UN_INCOME : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=93.0, core=true, t24Name=HIST.UN.INCOME)
+		HIST_UN_MARKET : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=94.0, core=true, t24Name=HIST.UN.MARKET)
+		HIST_UN_CURR : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=95.0, core=true, t24Name=HIST.UN.CURR)
+		HIST_PAST_YEAR : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=96.0, core=true, t24Name=HIST.PAST.YEAR)
+	}
+	SC_VAL_SUM__EQU_COUNTRY
+	{
+		EQU_COUNTRY : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=97.0, core=true, t24Name=EQU.COUNTRY)
+		EQU_CTY_TOTAL : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=98.0, core=true, t24Name=EQU.CTY.TOTAL)
+		EQU_CTY_PCENT : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=99.0, core=true, t24Name=EQU.CTY.PCENT)
+	}
+	SC_VAL_SUM__EQU_INDUSTRY
+	{
+		EQU_INDUSTRY : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=100.0, core=true, t24Name=EQU.INDUSTRY)
+		EQU_IND_TOTAL : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=101.0, core=true, t24Name=EQU.IND.TOTAL)
+		EQU_IND_PCENT : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=102.0, core=true, t24Name=EQU.IND.PCENT)
+	}
+	SC_VAL_SUM__LIQUIDITY_TXT
+	{
+		LIQUIDITY_TXT : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=103.0, core=true, businessType=A, t24Name=LIQUIDITY.TXT)
+		LIQUIDITY_MAT : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=104.0, core=true, t24Name=LIQUIDITY.MAT)
+		LIQ_MAT_PCENT : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=105.0, core=true, t24Name=LIQ.MAT.PCENT)
+	}
+	SC_VAL_SUM__FIXED_SEC_TXT
+	{
+		FIXED_SEC_TXT : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=106.0, core=true, businessType=A, t24Name=FIXED.SEC.TXT)
+		FIXED_SEC_MAT : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=107.0, core=true, t24Name=FIXED.SEC.MAT)
+		FIXED_SEC_PCT : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=108.0, core=true, t24Name=FIXED.SEC.PCT)
+	}
+	SC_VAL_SUM__OUTST_ORDER
+	{
+		OUTST_ORDER : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=109.0, core=true, t24Name=OUTST.ORDER)
+	}
+	SC_VAL_SUM__MATRIX1
+	{
+		MATRIX1 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=110.0, core=true, t24Name=MATRIX1)
+	}
+	SC_VAL_SUM__MATRIX2
+	{
+		MATRIX2 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=111.0, core=true, t24Name=MATRIX2)
+	}
+	SC_VAL_SUM__MATRIX3
+	{
+		MATRIX3 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=112.0, core=true, t24Name=MATRIX3)
+	}
+	SC_VAL_SUM__MATRIX4
+	{
+		MATRIX4 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=113.0, core=true, t24Name=MATRIX4)
+	}
+	SC_VAL_SUM__MATRIX5
+	{
+		MATRIX5 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=114.0, core=true, t24Name=MATRIX5)
+	}
+	SC_VAL_SUM__MATRIX6
+	{
+		MATRIX6 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=115.0, core=true, t24Name=MATRIX6)
+	}
+	SC_VAL_SUM__MATRIX7
+	{
+		MATRIX7 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=116.0, core=true, t24Name=MATRIX7)
+	}
+	SC_VAL_SUM__MATRIX8
+	{
+		MATRIX8 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=117.0, core=true, t24Name=MATRIX8)
+	}
+	SC_VAL_SUM__MATRIXPCT2
+	{
+		MATRIXPCT2 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=118.0, core=true, t24Name=MATRIXPCT2)
+	}
+	SC_VAL_SUM__MATRIXPCT3
+	{
+		MATRIXPCT3 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=119.0, core=true, t24Name=MATRIXPCT3)
+	}
+	SC_VAL_SUM__MATRIXPCT4
+	{
+		MATRIXPCT4 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=120.0, core=true, t24Name=MATRIXPCT4)
+	}
+	SC_VAL_SUM__MATRIXPCT5
+	{
+		MATRIXPCT5 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=121.0, core=true, t24Name=MATRIXPCT5)
+	}
+	SC_VAL_SUM__MATRIXPCT6
+	{
+		MATRIXPCT6 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=122.0, core=true, t24Name=MATRIXPCT6)
+	}
+	SC_VAL_SUM__MATRIXPCT7
+	{
+		MATRIXPCT7 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=123.0, core=true, t24Name=MATRIXPCT7)
+	}
+	SC_VAL_SUM__MATRIXPCT8
+	{
+		MATRIXPCT8 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=124.0, core=true, t24Name=MATRIXPCT8)
+	}
+	SC_VALUATION_EXTRACT
+		@t24:i (t24Name=SC.VALUATION.EXTRACT, level=F, type=L, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		SC_VAL_KEY -> SCV_ValuationUpdates:SC_VALUATION_EXTRACT PK required
+			@t24:i (align=L, inputBehaviour=I, maxLength=60, sysNumber=0.0, core=true, businessType=A, t24Name=SC.VAL.KEY)
+		SECURITY_NO : mml:Integer
+			@i18n:Label (en="Security No", fr="Code valeur", es="No. de Título")
+			@i18n:Tooltip (en="Indicates the security code/number", fr="Code valeur", es="Indica un Título Valor válido")
+			@t24:i (align=R, inputBehaviour=I, maxLength=35, sysNumber=1.0, core=true, t24Name=SECURITY.NO)
+		SHORT_NAME : mml:string required
+			@i18n:Label (en="Short name", fr="Nom abrégé", es=Nombre)
+			@i18n:Tooltip (fr="Nom abrégé")
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=2.0, core=true, businessType=A, t24Name=SHORT.NAME)
+		SECURITY_CCY : mml:string required
+			@i18n:Label (en=Ccy, fr="Devise du titre", es=Moneda)
+			@i18n:Tooltip (fr="Devise de la valeur mobilière")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=3.0, core=true, businessType=CCY, t24Name=SECURITY.CCY)
+		NO_NOMINAL : mml:Double required
+			@i18n:Label (en=Nominal, fr="Quantité ou nominal", es=Nominal)
+			@i18n:Tooltip (fr="Quantité ou nominal", es="Especifica el Nominal")
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=4.0, core=true, businessType=AMT, t24Name=NO.NOMINAL)
+		COST_PRICE : mml:Double required
+			@i18n:Label (en="Cost Price", fr="Prix coûtant", es="Precio de Costo")
+			@i18n:Tooltip (fr="Prix coûtant")
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=5.0, core=true, businessType=AMT, t24Name=COST.PRICE)
+		MARKET_PRICE : mml:Double required
+			@i18n:Label (en="Market Price", fr="Prix de marché", es="Precio de Mercado")
+			@i18n:Tooltip (en="Indicates the Market Price", fr="Prix de marché")
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=6.0, core=true, businessType=AMT, t24Name=MARKET.PRICE)
+		ESTIMATION : mml:Double required
+			@i18n:Label (en=Estimation, fr="Valeur estimée", es="Estimación")
+			@i18n:Tooltip (fr="Valeur estimée")
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=7.0, core=true, businessType=AMT, t24Name=ESTIMATION)
+		MARGIN_VALUE : mml:Double required
+			@i18n:Label (en="Margin Value", fr="Valeur de marge", es="Valor de Margen")
+			@i18n:Tooltip (fr="Valeur de marge")
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=8.0, core=true, businessType=AMT, t24Name=MARGIN.VALUE)
+		ACCRUED_INT : mml:Double required
+			@i18n:Label (en="Accrued Int", fr="Intérêt courus", es="Interés Devengado")
+			@i18n:Tooltip (fr="Intérêt courus")
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=9.0, core=true, businessType=AMT, t24Name=ACCRUED.INT)
+		YIELD : mml:Double required
+			@i18n:Label (en=Yield, fr=Rendement, es=Rendimiento)
+			@i18n:Tooltip (fr=Rendement)
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=10.0, core=true, businessType=AMT, t24Name=YIELD)
+		ESTIMTED_INCOME : mml:Double required
+			@i18n:Label (en="Estimated Income", fr="Estimation du revenu", es="Ingresos Estimados")
+			@i18n:Tooltip (fr="Estimation du revenu")
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=11.0, core=true, businessType=AMT, t24Name=ESTIMTED.INCOME)
+		HELD_SINCE : mml:string required
+			@t24:i (align=L, inputBehaviour=I, maxLength=25, sysNumber=12.0, core=true, businessType=A, t24Name=HELD.SINCE)
+		UNRL_MKT_TDATE : mml:Double required
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=13.0, core=true, businessType=AMT, t24Name=UNRL.MKT.TDATE)
+		UNREAL_MKT_YTD : mml:Double required
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=14.0, core=true, businessType=AMT, t24Name=UNREAL.MKT.YTD)
+		UNRL_CCY_TDATE : mml:Double required
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=15.0, core=true, businessType=AMT, t24Name=UNRL.CCY.TDATE)
+		UNREAL_CCY_YTD : mml:Double required
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=16.0, core=true, businessType=AMT, t24Name=UNREAL.CCY.YTD)
+		INTEREST_DATE : mml:date required
+			@i18n:Label (en="Coupon Date", fr="Date de coupon", es="Fecha de Cupón")
+			@i18n:Tooltip (fr="Date de coupon")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=17.0, core=true, businessType=D, t24Name=INTEREST.DATE)
+		NAME_DATE : mml:date required
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=18.0, core=true, businessType=D, t24Name=NAME.DATE)
+		COST_REF_CCY : mml:string required
+			@i18n:Label (en="Cost In Ref CCY", es="Costo en Mda. Refe.")
+			@i18n:Tooltip (es="Costo en Moneda de Referencia")
+			@t24:i (align=L, inputBehaviour=I, maxLength=18, sysNumber=19.0, core=true, businessType=CCY, t24Name=COST.REF.CCY)
+		COST_BASE_CCY : mml:string required
+			@t24:i (align=L, inputBehaviour=I, maxLength=18, sysNumber=20.0, core=true, businessType=LCCY, t24Name=COST.BASE.CCY)
+		GR_COST_PRICE : mml:Double required
+			@i18n:Label (en="Gr Cost Price", fr="Prix coûtant brut", es="Precio Costo Bruto")
+			@i18n:Tooltip (fr="Prix coûtant brut")
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=21.0, core=true, businessType=AMT, t24Name=GR.COST.PRICE)
+		GR_YIELD : mml:Double required
+			@i18n:Label (en="Gr Yield", fr="Rendement brut", es="Rendimiento Bruto")
+			@i18n:Tooltip (fr="Rendement brut")
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=22.0, core=true, businessType=AMT, t24Name=GR.YIELD)
+		NOM_AMT_BLOCKED : mml:Double required
+			@i18n:Label (en="Total Units Blocked", fr="Unités boquées", es="Total Unidades Bloq.")
+			@i18n:Tooltip (fr="Unités boquées")
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=23.0, core=true, businessType=AMT, t24Name=NOM.AMT.BLOCKED)
+		SEC_LENT_AMT : mml:Double required
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=24.0, core=true, businessType=AMT, t24Name=SEC.LENT.AMT)
+		FORWARD_ACC_AMT : mml:Double required
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=25.0, core=true, businessType=AMT, t24Name=FORWARD.ACC.AMT)
+		V_DATE_NOMINAL : mml:Double required
+			@i18n:Label (en="V Date Nominal", es="Nominal Fecha Valor")
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=26.0, core=true, businessType=AMT, t24Name=V.DATE.NOMINAL)
+		V_DATE_COST : mml:Double required
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=27.0, core=true, businessType=AMT, t24Name=V.DATE.COST)
+		V_DT_ESTIMATION : mml:Double required
+			@i18n:Label (en="V Dt Estimation", es="Estimado Fecha Valor")
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=28.0, core=true, businessType=AMT, t24Name=V.DT.ESTIMATION)
+		V_DATE_MARGIN : mml:Double required
+			@i18n:Label (en=V.Dt.Margin, es="Margen Fecha Valor")
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=29.0, core=true, businessType=AMT, t24Name=V.DATE.MARGIN)
+		V_DATE_COST_REF : mml:string required
+			@i18n:Label (fr="Coût")
+			@i18n:Tooltip (fr="Coût")
+			@t24:i (align=L, inputBehaviour=I, maxLength=18, sysNumber=30.0, core=true, businessType=CCY, t24Name=V.DATE.COST.REF)
+		V_DATE_COST_BSE : mml:string required
+			@t24:i (align=L, inputBehaviour=I, maxLength=18, sysNumber=31.0, core=true, businessType=LCCY, t24Name=V.DATE.COST.BSE)
+		TOT_UNRL_MKT : mml:Double required
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=32.0, core=true, businessType=AMT, t24Name=TOT.UNRL.MKT)
+		TOT_UNRL_CCY : mml:Double required
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=33.0, core=true, businessType=AMT, t24Name=TOT.UNRL.CCY)
+		GR_COST_REF_CCY : mml:Double required
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=34.0, core=true, businessType=AMT, t24Name=GR.COST.REF.CCY)
+		DEPOSITORY : mml:string required
+			@i18n:Label (en=Depository, fr=Dépositaire, es=Depositario)
+			@i18n:Tooltip (en="Depository the Security to be delivered from/to", fr=Dépositaire, es="Depositario de Título Valor a ser enviado de/a")
+			@t24:i (align=L, inputBehaviour=I, maxLength=18, sysNumber=35.0, core=true, businessType=CCY, t24Name=DEPOSITORY)
+		APPLICATION : mml:string required
+			@i18n:Label (en=Application, fr=Application, es="Aplicación")
+			@i18n:Tooltip (fr="Application ")
+			@t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=36.0, core=true, businessType=A, t24Name=APPLICATION)
+		CASH_FLOW_INT : mml:Double required
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=37.0, core=true, businessType=AMT, t24Name=CASH.FLOW.INT)
+		CHECK_FIELD : mml:Integer required
+			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=38.0, core=true, t24Name=CHECK.FIELD)
+		OLD_COST_PRICE : mml:Integer required
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=39.0, core=true, t24Name=OLD.COST.PRICE)
+		CG_POSITION : mml:Integer required
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=40.0, core=true, t24Name=CG.POSITION)
+		CG_COSTOFPOSN : mml:Double required
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=41.0, core=true, businessType=AMT, t24Name=CG.COSTOFPOSN)
+		PRICE_PR_CCY : mml:Double required
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=42.0, core=true, businessType=AMT, t24Name=PRICE.PR.CCY)
+		VALUE_PR_CCY : mml:Double required
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=43.0, core=true, businessType=AMT, t24Name=VALUE.PR.CCY)
+		VALUE_REF_CCY : mml:Double required
+			@i18n:Label (en="Amount In Val CCY", fr=Valeur, es="Mto. Valor Mda. Actual")
+			@i18n:Tooltip (fr=Valeur, es="Monto en Valor de Moneda Actual")
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=44.0, core=true, businessType=AMT, t24Name=VALUE.REF.CCY)
+		EX_RATE_PR_REF : mml:string required
+			@i18n:Label (en="Ex Rate Pr Ref", fr="Dev de Réf de Prix", es="Moneda Ref. Precio")
+			@i18n:Tooltip (fr="Devise de Référencede Prix")
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=45.0, core=true, businessType=R, t24Name=EX.RATE.PR.REF)
+		EX_RATE_PR_SEC : mml:string required
+			@i18n:Label (en="Ex Rate Pr Sec", fr="Dev de Titre de Prix", es="Mda. Precio Título")
+			@i18n:Tooltip (fr="Devise de Titre de Prix")
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=46.0, core=true, businessType=R, t24Name=EX.RATE.PR.SEC)
+		EX_RATE_SEC_REF : mml:string required
+			@i18n:Label (en="Ex Rate Sec Ref", fr="Titre de tx change", es="Ref.Tipo Cambio Tít.")
+			@i18n:Tooltip (fr="Titre de tx change")
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=47.0, core=true, businessType=R, t24Name=EX.RATE.SEC.REF)
+		UNREAL_PL_REF_CCY : mml:Double required
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=48.0, core=true, businessType=AMT, t24Name=UNREAL.PL.REF.CCY)
+		UN_CCY_PL_REF_CCY : mml:Double required
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=49.0, core=true, businessType=AMT, t24Name=UN.CCY.PL.REF.CCY)
+		ACCR_INT_REF_CCY : mml:Double required
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=50.0, core=true, businessType=AMT, t24Name=ACCR.INT.REF.CCY)
+		INT_AT_MATURITY : mml:Double required
+			@i18n:Label (en=Int.At.Maturity, es="Interés A Vencim.")
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=51.0, core=true, businessType=AMT, t24Name=INT.AT.MATURITY)
+		INT_AT_MAT_REF_CCY : mml:Double required
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=52.0, core=true, businessType=AMT, t24Name=INT.AT.MAT.REF.CCY)
+		AC_CREDIT_INT_RATE : mml:Double required
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=53.0, core=true, businessType=AMT, t24Name=AC.CREDIT.INT.RATE)
+		AC_DEBIT_INT_RATE : mml:Double required
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=54.0, core=true, businessType=AMT, t24Name=AC.DEBIT.INT.RATE)
+		BANK_OF_DEPOSIT : mml:string required
+			@t24:i (align=L, inputBehaviour=I, maxLength=19, sysNumber=55.0, core=true, businessType=A, t24Name=BANK.OF.DEPOSIT)
+		BEGIN_DATE : mml:date required
+			@i18n:Label (en="Begin Date", fr="Date de début", es="Fecha de Inicio")
+			@i18n:Tooltip (fr="Date de début")
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=56.0, core=true, businessType=D, t24Name=BEGIN.DATE)
+		COUNTRY : mml:string required
+			@i18n:Label (en=Country, fr=Pays, es="País")
+			@i18n:Tooltip (en="Holds the country code", fr="Code Pays ISO")
+			@t24:i (align=L, inputBehaviour=I, maxLength=19, sysNumber=57.0, core=true, businessType=A, t24Name=COUNTRY)
+		COUP_PR_YEAR : mml:string required
+			@i18n:Label (en="Coup Pr Year", es="Cupón por Año")
+			@t24:i (align=L, inputBehaviour=I, maxLength=19, sysNumber=58.0, core=true, businessType=A, t24Name=COUP.PR.YEAR)
+		DURATION : mml:string required
+			@i18n:Label (en=Duration, fr=Durée, es="Duración")
+			@i18n:Tooltip (en="Duration of that opportunity to be active", fr=Durée)
+			@t24:i (align=L, inputBehaviour=I, maxLength=19, sysNumber=59.0, core=true, businessType=A, t24Name=DURATION)
+		MATURITY_DATE : mml:date required
+			@i18n:Label (en="Maturity Date", fr="Date d\'échéance", es="Fecha de Vencimiento")
+			@i18n:Tooltip (en="Indicates the Maturity Date of the Transaction", fr="Date d\'échéance", es="Indica la Fecha de Vencimiento de la Transacción")
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=60.0, core=true, businessType=D, t24Name=MATURITY.DATE)
+		FIDUCIARY_TYPE : mml:string required
+			@i18n:Label (en="Fiduciary Type", fr="Type de fiduciaire", es="Tipo Fiduciario")
+			@i18n:Tooltip (fr="Type de fiduciaire")
+			@t24:i (align=L, inputBehaviour=I, maxLength=19, sysNumber=61.0, core=true, businessType=A, t24Name=FIDUCIARY.TYPE)
+		FORWARD_RATE : mml:Double required
+			@i18n:Label (en="Forward Rate", fr="Cours à terme", es="Tasa Futura")
+			@i18n:Tooltip (fr="Cours à terme")
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=62.0, core=true, businessType=AMT, t24Name=FORWARD.RATE)
+		MKT_PRICE_DTE : mml:date required
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=63.0, core=true, businessType=D, t24Name=MKT.PRICE.DTE)
+		COMPANY_NAME : mml:string required
+			@i18n:Label (en="Company Name", fr="Nom de la société", es="Nombre de Compañía")
+			@i18n:Tooltip (fr="Nom de la société")
+			@t24:i (align=L, inputBehaviour=I, maxLength=19, sysNumber=64.0, core=true, businessType=A, t24Name=COMPANY.NAME)
+		RATING : mml:string required
+			@i18n:Label (en=Rating, fr=Notation, es="Clasificación")
+			@i18n:Tooltip (fr=Notation)
+			@t24:i (align=L, inputBehaviour=I, maxLength=19, sysNumber=65.0, core=true, businessType=A, t24Name=RATING)
+		BOOK_COST_SEC_CCY : mml:Double required
+			@i18n:Label (en="Book Cost Sec Ccy", fr="Prix cmpte dev sec", es="Mda.Tít.Costo Libro")
+			@i18n:Tooltip (fr="Prix compte devise sec")
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=66.0, core=true, businessType=AMT, t24Name=BOOK.COST.SEC.CCY)
+		BOOK_CST_EXC_RATE : mml:Double required
+			@i18n:Label (en="Book Cst Exc Rate", es="Tasa Costo Libro")
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=67.0, core=true, businessType=AMT, t24Name=BOOK.CST.EXC.RATE)
+		VAL_FREQUENCY : mml:string required
+			@t24:i (align=L, inputBehaviour=I, maxLength=10, sysNumber=68.0, core=true, businessType=A, t24Name=VAL.FREQUENCY)
+		PRINT_Y_N : SCV_ValuationUpdates:SC_VALUATION_EXTRACT__PRINT_Y_N
+			@t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=69.0, core=true, t24Name=PRINT.Y.N)
+		BOOK_PRICE : mml:Double required
+			@i18n:Label (en="Book Price", fr="Prix de livre", es="Precio de Libro")
+			@i18n:Tooltip (fr="Prix de livre")
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=70.0, core=true, businessType=AMT, t24Name=BOOK.PRICE)
+		BK_COST_REF_CCY : mml:Double required
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=71.0, core=true, businessType=AMT, t24Name=BK.COST.REF.CCY)
+		BK_COST_BSE_CCY : mml:Double required
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=72.0, core=true, businessType=AMT, t24Name=BK.COST.BSE.CCY)
+		GR_BOOK_COST : mml:Double required
+			@i18n:Label (en="Gr Book Cost", fr="Coût Livre brut", es="Libro Costo Bruto")
+			@i18n:Tooltip (fr="Coût Livre brut")
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=73.0, core=true, businessType=AMT, t24Name=GR.BOOK.COST)
+		V_DATE_BK_COST : mml:Double required
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=74.0, core=true, businessType=AMT, t24Name=V.DATE.BK.COST)
+		V_DATE_BOOK_REF : mml:Double required
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=75.0, core=true, businessType=AMT, t24Name=V.DATE.BOOK.REF)
+		V_DATE_BOOK_BSE : mml:Double required
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=76.0, core=true, businessType=AMT, t24Name=V.DATE.BOOK.BSE)
+		GR_BOOK_REF_CCY : mml:Double required
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=77.0, core=true, businessType=AMT, t24Name=GR.BOOK.REF.CCY)
+		GR_BOOK_REF_BSE : mml:Double required
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=78.0, core=true, businessType=AMT, t24Name=GR.BOOK.REF.BSE)
+		DAYS_ACCRUED_INT : mml:Integer
+			@i18n:Label (en="Days Accrued Int", fr="Intt couru des J", es="Días Int. Devengado")
+			@i18n:Tooltip (fr="Intérêts couru des J")
+			@t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=79.0, core=true, t24Name=DAYS.ACCRUED.INT)
+		CURRENT_YIELD : mml:Double required
+			@i18n:Label (en="Current Yield", fr="Rendement actuel", es="Rendimiento Actual")
+			@i18n:Tooltip (fr="Rendement actuel")
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=80.0, core=true, businessType=AMT, t24Name=CURRENT.YIELD)
+		COUNTERPART_NOMINAL : mml:Double required
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=81.0, core=true, businessType=AMT, t24Name=COUNTERPART.NOMINAL)
+		ESTIMATION_REF_CCY : mml:Double required
+			@i18n:Label (en="Est Valuation RefCcy", fr="Devise d\'évaluation", es=Mda.Ref.Val.Estima.)
+			@i18n:Tooltip (fr="Devise d\'évaluation")
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=82.0, core=true, businessType=AMT, t24Name=ESTIMATION.REF.CCY)
+		COST_PRICE_ALPHA : mml:string required
+			@t24:i (align=L, inputBehaviour=I, maxLength=19, sysNumber=83.0, core=true, businessType=DEC, t24Name=COST.PRICE.ALPHA)
+		MARKET_PRICE_ALPHA : mml:string required
+			@t24:i (align=L, inputBehaviour=I, maxLength=19, sysNumber=84.0, core=true, businessType=DEC, t24Name=MARKET.PRICE.ALPHA)
+		INTERNAL_PRICE : mml:Integer required
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=85.0, core=true, t24Name=INTERNAL.PRICE)
+		REPLACT_VALUE : mml:string required
+			@t24:i (align=L, inputBehaviour=I, maxLength=19, sysNumber=86.0, core=true, businessType=DEC, t24Name=REPLACT.VALUE)
+		CALL_PUT : SCV_ValuationUpdates:SC_VALUATION_EXTRACT__CALL_PUT
+			@i18n:Label (en=Call/Put, fr=Call/Put, es="Compra Venta")
+			@i18n:Tooltip (fr="Call ou Put")
+			@t24:i (align=L, inputBehaviour=I, maxLength=4, sysNumber=87.0, core=true, businessType=A, t24Name=CALL.PUT)
+		BUY_SELL : SCV_ValuationUpdates:SC_VALUATION_EXTRACT__BUY_SELL
+			@i18n:Label (en=Buy/Sell, fr=Achat/Vente, es=Compra/venta)
+			@i18n:Tooltip (en="Buy or Sell?", fr="Achat ou Vente")
+			@t24:i (align=L, inputBehaviour=I, maxLength=4, sysNumber=88.0, core=true, businessType=A, t24Name=BUY.SELL)
+		UNDER_SHORTNAME : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=89.0, core=true, businessType=AMT, t24Name=UNDER.SHORTNAME)
+		UNDER_ID : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=90.0, core=true, businessType=AMT, t24Name=UNDER.ID)
+		EXT_STRIKE : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=91.0, core=true, businessType=AMT, t24Name=EXT.STRIKE)
+		INT_STRIKE : mml:Double
+			@i18n:Label (fr="Prix d\'exercice interne")
+			@i18n:Tooltip (fr="Prix d\'exercice interne")
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=92.0, core=true, businessType=AMT, t24Name=INT.STRIKE)
+		EXT_CT_PRICE : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=93.0, core=true, businessType=AMT, t24Name=EXT.CT.PRICE)
+		INT_CT_PRICE : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=94.0, core=true, businessType=AMT, t24Name=INT.CT.PRICE)
+		BETA : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=95.0, core=true, businessType=AMT, t24Name=BETA)
+		DELTA : mml:Double
+			@i18n:Label (en=Delta, fr=Delta, es=Delta)
+			@i18n:Tooltip (fr=Delta)
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=96.0, core=true, businessType=AMT, t24Name=DELTA)
+		GAMMA : mml:Double
+			@i18n:Label (en=Gamma, fr="age bill-bill", es=Gama)
+			@i18n:Tooltip (fr="age bill-bill")
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=97.0, core=true, businessType=AMT, t24Name=GAMMA)
+		VEGA : mml:Double
+			@i18n:Label (en=Vega, es=Vega)
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=98.0, core=true, businessType=AMT, t24Name=VEGA)
+		RHO : mml:Double
+			@i18n:Label (en=Rho, es=Rho)
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=99.0, core=true, businessType=AMT, t24Name=RHO)
+		THETA : mml:Double
+			@i18n:Label (en=Theta, fr="Thêta", es=Theta)
+			@i18n:Tooltip (fr="Thêta")
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=100.0, core=true, businessType=AMT, t24Name=THETA)
+		CONTRACT_SIZE : mml:Double
+			@i18n:Label (en="Contract Size", fr="Taille du contrat", es="Tamaño de Contrato")
+			@i18n:Tooltip (en="Specifies the size of the contract", fr="Taille du contrat", es="Especifica el tamaño del contrato")
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=101.0, core=true, businessType=AMT, t24Name=CONTRACT.SIZE)
+		SOURCE_ID : mml:string
+			@i18n:Label (en="Source Id", fr="No. de transaction", es="ID de Fuente")
+			@i18n:Tooltip (fr="Numéro de transaction")
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=102.0, core=true, businessType=A, t24Name=SOURCE.ID)
+		ORIG_ACCR_DIV : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=103.0, core=true, businessType=AMT, t24Name=ORIG.ACCR.DIV)
+		NET_ACCR_DIV : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=104.0, core=true, businessType=AMT, t24Name=NET.ACCR.DIV)
+		RESERVED_1 : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=105.0, core=true, businessType=A, t24Name=RESERVED.1)
+		BACKVALUE_DATE -> byValue SCV_ValuationUpdates:SC_VALUATION_EXTRACT__BACKVALUE_DATE *
+		REPORT_FLD1 : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=40, sysNumber=107.0, core=true, businessType=A, t24Name=REPORT.FLD1)
+		REPORT_FLD2 : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=40, sysNumber=108.0, core=true, businessType=A, t24Name=REPORT.FLD2)
+		REPORT_FLD3 : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=40, sysNumber=109.0, core=true, businessType=A, t24Name=REPORT.FLD3)
+		REPORT_FLD4 : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=40, sysNumber=110.0, core=true, businessType=A, t24Name=REPORT.FLD4)
+		REPORT_FLD5 : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=40, sysNumber=111.0, core=true, businessType=A, t24Name=REPORT.FLD5)
+		REC_TAX_CUM_AMT : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=112.0, core=true, businessType=AMT, t24Name=REC.TAX.CUM.AMT)
+		REC_TAX_CUM_RESET : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=113.0, core=true, businessType=AMT, t24Name=REC.TAX.CUM.RESET)
+		NET_OPN_ORD_NOM : mml:string
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=114.0, core=true, businessType=NOMAMT, t24Name=NET.OPN.ORD.NOM)
+		NET_OPN_ORD_EST : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=115.0, core=true, businessType=AMT, t24Name=NET.OPN.ORD.EST)
+		NET_OPN_ORD_AI : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=116.0, core=true, businessType=AMT, t24Name=NET.OPN.ORD.AI)
+		CUSTOMER_NUMBER : mml:string required
+			@i18n:Label (en="Customer No", fr=Client, es="No. de Cliente")
+			@i18n:Tooltip (en="Identifies the Customer for the transaction.", fr="Numéro du client", es="Identifica al Cliente de la transacción")
+			@t24:i (align=R, inputBehaviour=N, maxLength=10, sysNumber=117.0, core=true, businessType=CUS, t24Name=CUSTOMER.NUMBER)
+		RESERVED09 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=16, sysNumber=118.0, core=true, businessType=A, t24Name=RESERVED09)
+		RESERVED08 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=16, sysNumber=119.0, core=true, businessType=A, t24Name=RESERVED08)
+		RESERVED07 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=16, sysNumber=120.0, core=true, businessType=A, t24Name=RESERVED07)
+		RESERVED06 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=16, sysNumber=121.0, core=true, businessType=A, t24Name=RESERVED06)
+		TOT_VAL : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=122.0, core=true, businessType=AMT, t24Name=TOT.VAL)
+		TOT_VAL_CCY : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=123.0, core=true, businessType=CCY, t24Name=TOT.VAL.CCY)
+		TOT_VAL_LCCY : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=124.0, core=true, businessType=AMT, t24Name=TOT.VAL.LCCY)
+		TOT_VAL_CCY_LCCY : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=125.0, core=true, businessType=CCY, t24Name=TOT.VAL.CCY.LCCY)
+		GROUP_CODE : mml:string
+			@i18n:Label (en="Group Code", fr="Code de grpe", es="Código de Grupo")
+			@i18n:Tooltip (fr="Code de grpe")
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=126.0, core=true, businessType=A, t24Name=GROUP.CODE)
+		GROUP_ORDER : mml:string
+			@i18n:Label (en="Group Order", fr="Groupe ordre", es="Pedido de Grupo")
+			@i18n:Tooltip (en="Indicates the group order", fr="Groupe ordre")
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=127.0, core=true, businessType=A, t24Name=GROUP.ORDER)
+		GROUP_NAME : mml:string
+			@i18n:Label (en="Group Name", fr="Nom du groupe", es="Nombre de Grupo")
+			@i18n:Tooltip (fr="Nom du groupe")
+			@t24:i (align=L, inputBehaviour=I, maxLength=60, sysNumber=128.0, core=true, businessType=A, t24Name=GROUP.NAME)
+		RESERVED05 : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=75, sysNumber=129.0, core=true, businessType=A, t24Name=RESERVED05)
+		RESERVED04 : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=75, sysNumber=130.0, core=true, businessType=A, t24Name=RESERVED04)
+		DESIGNATION : mml:string
+			@i18n:Label (en=Designation, fr=Service, es="Designación")
+			@i18n:Tooltip (fr="Code du service")
+			@t24:i (align=L, inputBehaviour=I, maxLength=75, sysNumber=131.0, core=true, businessType=A, t24Name=DESIGNATION)
+		RESERVED03 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=16, sysNumber=132.0, core=true, businessType=A, t24Name=RESERVED03)
+		RESERVED02 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=16, sysNumber=133.0, core=true, businessType=A, t24Name=RESERVED02)
+		RESERVED01 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=16, sysNumber=134.0, core=true, businessType=A, t24Name=RESERVED01)
+		POS_COST_REF_CCY : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=135.0, core=true, businessType=AMT, t24Name=POS.COST.REF.CCY)
+		LTDATE : mml:Integer
+			@t24:i (align=L, inputBehaviour=I, maxLength=10, core=false, t24Name=LTDATE, genOperation="FIELD(@ID,\'.\',4)")
+		SAM_NO : mml:Integer
+			@i18n:Label (en="Portfolio No", fr="No. de portefeuille", es="No. de Cartera")
+			@i18n:Tooltip (fr="Numéro de portefeuille")
+			@t24:i (align=L, inputBehaviour=I, maxLength=10, core=false, t24Name=SAM.NO, genOperation="@ID[\'.\',1,1]")
+		ACC_OFF : mml:Integer
+			@i18n:Label (en="Account officer", es="Ejecutivo de Cuenta")
+			@i18n:Tooltip (en="The Officer who will take care of this account")
+			@t24:i (align=L, inputBehaviour=I, maxLength=4, core=false, t24Name=ACC.OFF, genOperation="FIELD(@ID,\'.\',1); SUBR(\'ENQ.TRANS\',\'SEC.ACC.MASTER\',@1, \"ACCOUNT.OFFICER\")")
+		ASSET_TYPE : mml:Integer
+			@i18n:Label (en="Asset Type", fr="Type d\'avoir", es="Tipo de Activo")
+			@i18n:Tooltip (en="Indicates the asset type", fr="Type d\'avoir", es="Indica el tipo de activo")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, core=false, t24Name=ASSET.TYPE, genOperation="FIELD(@ID,\'.\',6)")
+		SEC_CCY_DESC : mml:Integer
+			@t24:i (align=L, inputBehaviour=I, maxLength=20, core=false, t24Name=SEC.CCY.DESC, genOperation="SUBR(\"ENQ.TRANS\",\"CURRENCY\", SECURITY.CCY,\"CCY.NAME\")")
+		ASSET_DESC : mml:Integer
+			@i18n:Label (en="Asset Description", fr="Description d\'actif", es="Descripción de Activo")
+			@i18n:Tooltip (en="Describes the asset type", fr="Description d\'actif")
+			@t24:i (align=L, inputBehaviour=I, maxLength=30, core=false, t24Name=ASSET.DESC, genOperation="SUBR(\"ENQ.TRANS\",\"ASSET.TYPE\", ASSET.TYPE,\"ASSET.DESC\")")
+		FX_DEAL_DATE : mml:Integer
+			@t24:i (align=L, inputBehaviour=I, maxLength=10, core=false, t24Name=FX.DEAL.DATE, genOperation="SECURITY.NO>FOREX>DEAL.DATE")
+		DEPOS : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=10, core=false, t24Name=DEPOS, genOperation="FIELD(@ID,\'.\',3)")
+		VAL_DATE : mml:Integer
+			@i18n:Label (en="Value date", fr="Date de valeur", es="Fecha Valor")
+			@i18n:Tooltip (fr="Date de valeur")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, core=false, t24Name=VAL.DATE, genOperation="FIELD(@ID,\'.\',4)")
+		ISIN : mml:Integer
+			@i18n:Label (en=ISIN, fr="Code ISIN", es=ISIN)
+			@i18n:Tooltip (fr="Code ISIN de la valeur")
+			@t24:i (align=L, inputBehaviour=I, maxLength=15, core=false, t24Name=ISIN, genOperation="SECURITY.NO>SECURITY.MASTER>I.S.I.N.")
+	}
+	SC_VALUATION_EXTRACT__BACKVALUE_DATE
+	{
+		BACKVALUE_DATE : mml:date required
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=106.0, core=true, businessType=D, t24Name=BACKVALUE.DATE)
+	}
+	SCM_SUB_ASSET_CHG_TODAY
+		@t24:i (t24Name=SCM.SUB.ASSET.CHG.TODAY, level=I, type=L, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		SECURITY_NO -> SCV_ValuationUpdates:SCM_SUB_ASSET_CHG_TODAY PK required
+			@i18n:Label (en="Security No", fr="Code valeur", es="No. de Título")
+			@i18n:Tooltip (en="Indicates the security code/number", fr="Code valeur", es="Indica un Título Valor válido")
+			@t24:i (align=L, inputBehaviour=I, maxLength=12, sysNumber=0.0, core=true, businessType=SEC, t24Name=SECURITY.NO)
+		OLD_SUB_ASSET_TYPE : mml:string required
+			@t24:i (align=L, inputBehaviour=E, maxLength=5, sysNumber=1.0, core=true, businessType=S, t24Name=OLD.SUB.ASSET.TYPE)
+		NEW_SUB_ASSET_TYPE : mml:string required
+			@t24:i (align=L, inputBehaviour=E, maxLength=5, sysNumber=2.0, core=true, businessType=S, t24Name=NEW.SUB.ASSET.TYPE)
+	}
+}
+Enumerations {
+	SC_POS_ASSET__SECURITY_NO__CALL_PUT : mml:string
+		CALL=CALL
+		PUT=PUT
+	SC_POS_ASSET__SECURITY_NO__BUY_SELL : mml:string
+		BUY=BUY
+		SELL=SELL
+	SC_POS_ASSET__SECURITY_NO__SAM_MARGIN : mml:string
+		ADJ=ADJ
+		STD=STD
+	SC_POS_ASSET_WHILE_COB__SECURITY_NO__CALL_PUT : mml:string
+		CALL=CALL
+		PUT=PUT
+	SC_POS_ASSET_WHILE_COB__SECURITY_NO__BUY_SELL : mml:string
+		BUY=BUY
+		SELL=SELL
+	SC_POS_ASSET_WHILE_COB__SECURITY_NO__SAM_MARGIN : mml:string
+		ADJ=ADJ
+		STD=STD
+	SC_POS_ASSET_WORK_HIS__BOND_OR_SHARE : mml:string
+		B=B
+		S=S
+	SC_VALUATION_EXTRACT__PRINT_Y_N : mml:string
+		Y=Y
+		N=N
+	SC_VALUATION_EXTRACT__CALL_PUT : mml:string
+		CALL=CALL
+		PUT=PUT
+	SC_VALUATION_EXTRACT__BUY_SELL : mml:string
+		BUY=BUY
+		SELL=SELL
+}

@@ -1,0 +1,823 @@
+# UTF-8
+/* Parameter Definition for Structured Products */
+Domain SY_Config
+	@t24:i (module=SY)
+	@java:Package (value=com.temenos.t24.datamodel.sy.sy_config)
+namespace "http://www.temenos.com/t24/SY_Config"
+metamodelVersion 4.3.0.20110527
+Classes {
+	SY_DSP
+		@t24:i (t24Name=SY.DSP, level=F, type=D, additionalInfo=NOH, allowedFunctions="A C D E H I L P Q R S", localRefAllowed=false)
+	{
+	}
+	SY_PRODUCT
+		@t24:i (t24Name=SY.PRODUCT, level=F, type=H, allowedFunctions="A C D E H I L P Q R S", localRefAllowed=true)
+	{
+		PRODUCT_ID -> SY_Config:SY_PRODUCT PK required
+			@t24:i (align=L, inputBehaviour=I, maxLength=32, sysNumber=0.0, core=true, businessType=A, t24Name=PRODUCT.ID)
+		PRODUCT_DEFINITION : mml:string
+			@i18n:Label (en="Product Definition", fr="Définition de Produit", es="Definición Producto")
+			@i18n:Tooltip (en="The SY Product Definition ID", fr="Définition de Produit")
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=1.0, core=true, businessType=A, t24Name=PRODUCT.DEFINITION)
+		TRANSACTION : mml:string
+			@i18n:Label (en=Transaction, fr=Opération, es="Transacción")
+			@i18n:Tooltip (en="The reference number of the Transaction", fr=Opération)
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=2.0, core=true, businessType=A, t24Name=TRANSACTION)
+		PUBLISHED : SY_Config:SY_PRODUCT__PUBLISHED required
+			@i18n:Label (en=Published, fr=Publié, es=Publicado)
+			@i18n:Tooltip (fr=Publié)
+			@t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=3.0, core=true, t24Name=PUBLISHED)
+		COMPLETE : SY_Config:SY_PRODUCT__COMPLETE
+			@t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=4.0, core=true, t24Name=COMPLETE)
+		SHORT_NAME -> byValue SY_Config:SY_PRODUCT__SHORT_NAME *
+		DESCRIPTION -> byValue SY_Config:SY_PRODUCT__DESCRIPTION *
+		TRACKING : SY_Config:SY_PRODUCT__TRACKING required
+			@i18n:Label (en=Tracking, fr=Suivi, es=Rastreo)
+			@i18n:Tooltip (en="Does the record Track from the Parent record", fr=Suivi)
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=7.0, core=true, t24Name=TRACKING)
+		VALUATION_ROUTINE -> EB_SystemTables:PGM_FILE
+			@i18n:Label (en="Valuation Routine", fr="Routine d\'évaluation", es="Rutina de Valoración")
+			@i18n:Tooltip (en="Valuation Routine", fr="Routine d\'évaluation", es="Rutina de Valoración")
+			@t24:i (align=L, inputBehaviour=N, maxLength=60, sysNumber=8.0, core=true, businessType=PG, t24Name=VALUATION.ROUTINE)
+		SWEEP_ACCT : SY_Config:SY_PRODUCT__SWEEP_ACCT
+			@i18n:Label (en="Sweep Acct", fr="Cpte de sweep", es="Cuenta Sweep")
+			@i18n:Tooltip (en="Sweep Acct", fr="Cpte de sweep", es="Cuenta Sweep")
+			@t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=9.0, core=true, t24Name=SWEEP.ACCT)
+		DEPOSIT : SY_Config:SY_PRODUCT__DEPOSIT
+			@i18n:Label (en=Deposit)
+			@i18n:Tooltip (en=Deposit)
+			@t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=10.0, core=true, t24Name=DEPOSIT)
+		PRODUCT_CCY -> FIN_CurrencyConfig:CURRENCY
+			@i18n:Label (fr=Devise)
+			@i18n:Tooltip (fr="Devise du produit")
+			@t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=11.0, core=true, businessType=CCY, t24Name=PRODUCT.CCY)
+		SY_EXCLUDE_VALUATION : SY_Config:SY_PRODUCT__SY_EXCLUDE_VALUATION required
+			@i18n:Label (fr="Evaluation exclut du système")
+			@i18n:Tooltip (fr="Evaluation exclut du système")
+			@t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=12.0, core=true, t24Name=SY.EXCLUDE.VALUATION)
+		SWEEP_TXNS -> byValue SY_Config:SY_PRODUCT__SWEEP_TXNS *
+		EVENT -> byValue SY_Config:SY_PRODUCT__EVENT *
+		SUB_ASSET_TYPE -> SC_Config:SUB_ASSET_TYPE
+			@i18n:Label (en="Sub Asset Type", fr="Classe d\'actif", es="Sub Activo")
+			@i18n:Tooltip (fr="Classe d\'actif")
+			@t24:i (align=L, inputBehaviour=N, maxLength=5, sysNumber=26.0, core=true, businessType=S, t24Name=SUB.ASSET.TYPE)
+		RESERVED_12 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=27.0, core=true, t24Name=RESERVED.12)
+		RESERVED_11 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=28.0, core=true, t24Name=RESERVED.11)
+		TERMINATED : SY_Config:SY_PRODUCT__TERMINATED
+			@i18n:Label (en="Terminated?", fr=Terminé, es="¿Finalizado,?")
+			@i18n:Tooltip (en="Has the product/item been terminated", fr=Terminé)
+			@t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=29.0, core=true, t24Name=TERMINATED)
+		INTERNAL_USE : mml:string
+			@i18n:Label (fr="Usage interne")
+			@i18n:Tooltip (fr="Usage interne")
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=30.0, core=true, businessType=A, t24Name=INTERNAL.USE)
+		PROD_INTERFACE -> EB_SystemTables:PGM_FILE
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=31.0, core=true, businessType=PG, t24Name=PROD.INTERFACE)
+		FIRST_DATE : mml:date required
+			@i18n:Label (fr="Prémière date")
+			@i18n:Tooltip (fr="Prémière date")
+			@t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=32.0, core=true, businessType=D, t24Name=FIRST.DATE)
+		LAST_DATE : mml:date
+			@i18n:Label (fr="Dernière date")
+			@i18n:Tooltip (fr="Dernière date")
+			@t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=33.0, core=true, businessType=D, t24Name=LAST.DATE)
+		PRODUCT_CATEGORY -> ST_Config:CATEGORY required
+			@i18n:Label (en="Product Category", fr=Produit, es="Código de Categoría")
+			@i18n:Tooltip (fr="Code du produit")
+			@t24:i (align=L, inputBehaviour=N, maxLength=6, sysNumber=34.0, core=true, businessType=CAT, t24Name=PRODUCT.CATEGORY)
+		VALUE_UNIT -> byValue SY_Config:SY_PRODUCT__VALUE_UNIT *
+		RESERVED_5 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=36.0, core=true, t24Name=RESERVED.5)
+		RESERVED_4 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=37.0, core=true, t24Name=RESERVED.4)
+		RESERVED_3 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=38.0, core=true, t24Name=RESERVED.3)
+		RESERVED_2 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=39.0, core=true, t24Name=RESERVED.2)
+		RESERVED_1 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=40.0, core=true, t24Name=RESERVED.1)
+		OVERRIDE -> byValue SY_Config:SY_PRODUCT__OVERRIDE *
+		RECORD_STATUS : mml:string
+			@i18n:Label (en="Record Status", fr=Statut, es=Estado)
+			@i18n:Tooltip (fr="Statut de l\'enregistrement")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=43.0, core=true, businessType=STAT, t24Name=RECORD.STATUS)
+		CURR_NO : mml:Integer
+			@i18n:Label (en="Curr No", fr="N° version", es="No. Actual")
+			@i18n:Tooltip (fr="Numéro de version")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=44.0, core=true, t24Name=CURR.NO)
+		INPUTTER -> byValue SY_Config:SY_PRODUCT__INPUTTER *
+		DATE_TIME -> byValue SY_Config:SY_PRODUCT__DATE_TIME *
+		AUTHORISER : mml:string
+			@i18n:Label (en=Authoriser, fr="Validé par", es=Autorizador)
+			@i18n:Tooltip (en="Indicates the User who Authorises the record", fr="Utilisateur de validation", es="El usuario que autorizó el registro")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=47.0, core=true, businessType=A, t24Name=AUTHORISER)
+		CO_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company, fr=Entité, es="Compañía")
+			@i18n:Tooltip (fr="Code établissement ou agence")
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=48.0, core=true, businessType=A, t24Name=CO.CODE)
+		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Dept Code", fr=Service, es=Departamento)
+			@i18n:Tooltip (fr="Code du service")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=49.0, core=true, t24Name=DEPT.CODE)
+		AUDITOR_CODE : mml:string
+			@i18n:Label (en="Auditor Code", fr="Audité par", es="Código de Auditor")
+			@i18n:Tooltip (en="Auditor Code", fr="Utilisateur d\'audit", es="Nombre del auditor")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=50.0, core=true, businessType=A, t24Name=AUDITOR.CODE)
+		AUDIT_DATE_TIME : mml:dateTime
+			@i18n:Label (en="Audit Date Time", fr="Audité le", es="Fecha/Hora de Audit.")
+			@i18n:Tooltip (en="Date and time when record was audited", fr="Date et heure d\'audit", es="Fecha y Hora de Auditoría ")
+			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=51.0, core=true, businessType=RELTIME, t24Name=AUDIT.DATE.TIME)
+	}
+	SY_PRODUCT__SHORT_NAME
+	{
+		SHORT_NAME : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, multiLanguage=true, sysNumber=5.0, core=true, businessType=A, t24Name=SHORT.NAME)
+	}
+	SY_PRODUCT__DESCRIPTION
+	{
+		DESCRIPTION : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=50, sysNumber=6.0, core=true, businessType=A, t24Name=DESCRIPTION)
+	}
+	SY_PRODUCT__SWEEP_TXNS
+	{
+		SWEEP_TXNS -> ST_Config:TRANSACTION
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=13.0, core=true, businessType=A, t24Name=SWEEP.TXNS)
+	}
+	SY_PRODUCT__EVENT
+	{
+		EVENT -> SY_Event:SY_EVENT_DEFINITION
+			@t24:i (align=L, inputBehaviour=I, maxLength=25, sysNumber=14.0, core=true, businessType=A, t24Name=EVENT)
+		DEPENDENCY -> byValue SY_Config:SY_PRODUCT__EVENT__DEPENDENCY *
+		ACTIVE : SY_Config:SY_PRODUCT__EVENT__ACTIVE
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=16.0, core=true, t24Name=ACTIVE)
+		EB_ACTIVITY -> byValue SY_Config:SY_PRODUCT__EVENT__EB_ACTIVITY *
+		EB_EVENT_TYPE -> EB_SystemTables:EB_EVENT_TYPE
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=18.0, core=true, businessType=A, t24Name=EB.EVENT.TYPE)
+		RESERVED_17 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=19.0, core=true, t24Name=RESERVED.17)
+		OPERATION -> byValue SY_Config:SY_PRODUCT__EVENT__OPERATION *
+	}
+	SY_PRODUCT__EVENT__DEPENDENCY
+	{
+		DEPENDENCY -> SY_Event:SY_EVENT_DEFINITION
+			@t24:i (align=L, inputBehaviour=I, maxLength=25, sysNumber=15.0, core=true, businessType=A, t24Name=DEPENDENCY)
+	}
+	SY_PRODUCT__EVENT__EB_ACTIVITY
+	{
+		EB_ACTIVITY -> EB_Delivery:EB_ACTIVITY
+			@t24:i (align=L, inputBehaviour=I, maxLength=7, sysNumber=17.0, core=true, businessType=A, t24Name=EB.ACTIVITY)
+	}
+	SY_PRODUCT__EVENT__OPERATION
+	{
+		OPERATION : SY_Config:SY_PRODUCT__EVENT__OPERATION__OPERATION
+			@t24:i (align=L, inputBehaviour=I, maxLength=9, sysNumber=20.0, core=true, t24Name=OPERATION)
+		UNIT_DEF -> SY_Unit:SY_UNIT_DEFINITION
+			@t24:i (align=L, inputBehaviour=I, maxLength=31, sysNumber=21.0, core=true, businessType=A, t24Name=UNIT.DEF)
+		INSTANCE : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=65, sysNumber=22.0, core=true, businessType=A, t24Name=INSTANCE)
+		RESERVED_16 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=23.0, core=true, t24Name=RESERVED.16)
+		RESERVED_15 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=24.0, core=true, t24Name=RESERVED.15)
+		RESERVED_14 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=25.0, core=true, t24Name=RESERVED.14)
+	}
+	SY_PRODUCT__VALUE_UNIT
+	{
+		VALUE_UNIT -> SY_Unit:SY_UNIT_DEFINITION
+			@t24:i (align=L, inputBehaviour=N, maxLength=31, sysNumber=35.0, core=true, businessType=A, t24Name=VALUE.UNIT)
+	}
+	SY_PRODUCT__OVERRIDE
+	{
+		OVERRIDE : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=42.0, core=true, t24Name=OVERRIDE)
+	}
+	SY_PRODUCT__INPUTTER
+	{
+		INPUTTER : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=45.0, core=true, businessType=A, t24Name=INPUTTER)
+	}
+	SY_PRODUCT__DATE_TIME
+	{
+		DATE_TIME : mml:dateTime
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=46.0, core=true, businessType=RELTIME, t24Name=DATE.TIME)
+	}
+	SY_PRODUCT_DEFINITION
+		@t24:i (t24Name=SY.PRODUCT.DEFINITION, level=I, type=H, allowedFunctions="A C D E H I L P Q R S", localRefAllowed=true)
+	{
+		PROD_DEF_ID -> SY_Config:SY_PRODUCT_DEFINITION PK required
+			@i18n:Label (en="Prod Def Id", fr="Id p/défaut de prodt", es="ID Pre-est. Producto")
+			@i18n:Tooltip (fr="Identifiant p/défaut de prodt")
+			@t24:i (align=L, inputBehaviour=I, maxLength=15, sysNumber=0.0, core=true, businessType=A, t24Name=PROD.DEF.ID)
+		PRODUCT_DEFINITION : mml:string
+			@i18n:Label (en="Product Definition", fr="Définition de Produit", es="Definición Producto")
+			@i18n:Tooltip (en="The SY Product Definition ID", fr="Définition de Produit")
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=1.0, core=true, businessType=A, t24Name=PRODUCT.DEFINITION)
+		TRANSACTION : mml:string
+			@i18n:Label (en=Transaction, fr=Opération, es="Transacción")
+			@i18n:Tooltip (en="The reference number of the Transaction", fr=Opération)
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=2.0, core=true, businessType=A, t24Name=TRANSACTION)
+		PUBLISHED : SY_Config:SY_PRODUCT_DEFINITION__PUBLISHED required
+			@i18n:Label (en=Published, fr=Publié, es=Publicado)
+			@i18n:Tooltip (fr=Publié)
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=3.0, core=true, t24Name=PUBLISHED)
+		COMPLETE : SY_Config:SY_PRODUCT_DEFINITION__COMPLETE
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=4.0, core=true, t24Name=COMPLETE)
+		SHORT_NAME -> byValue SY_Config:SY_PRODUCT_DEFINITION__SHORT_NAME *
+		DESCRIPTION -> byValue SY_Config:SY_PRODUCT_DEFINITION__DESCRIPTION *
+		TRACKING : SY_Config:SY_PRODUCT_DEFINITION__TRACKING required
+			@i18n:Label (en=Tracking, fr=Suivi, es=Rastreo)
+			@i18n:Tooltip (en="Does the record Track from the Parent record", fr=Suivi)
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=7.0, core=true, t24Name=TRACKING)
+		VALUATION_ROUTINE -> EB_SystemTables:PGM_FILE
+			@i18n:Label (en="Valuation Routine", fr="Routine d\'évaluation", es="Rutina de Valoración")
+			@i18n:Tooltip (en="Valuation Routine", fr="Routine d\'évaluation", es="Rutina de Valoración")
+			@t24:i (align=L, inputBehaviour=I, maxLength=60, sysNumber=8.0, core=true, businessType=PG, t24Name=VALUATION.ROUTINE)
+		SWEEP_ACCT : SY_Config:SY_PRODUCT_DEFINITION__SWEEP_ACCT
+			@i18n:Label (en="Sweep Acct", fr="Cpte de sweep", es="Cuenta Sweep")
+			@i18n:Tooltip (en="Sweep Acct", fr="Cpte de sweep", es="Cuenta Sweep")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=9.0, core=true, t24Name=SWEEP.ACCT)
+		DEPOSIT : SY_Config:SY_PRODUCT_DEFINITION__DEPOSIT required
+			@i18n:Label (en=Deposit)
+			@i18n:Tooltip (en=Deposit)
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=10.0, core=true, t24Name=DEPOSIT)
+		PRODUCT_CCY -> FIN_CurrencyConfig:CURRENCY
+			@i18n:Label (fr=Devise)
+			@i18n:Tooltip (fr="Devise du produit")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=11.0, core=true, businessType=CCY, t24Name=PRODUCT.CCY)
+		SY_EXCLUDE_VALUATION : SY_Config:SY_PRODUCT_DEFINITION__SY_EXCLUDE_VALUATION required
+			@i18n:Label (en="Sy Exclude Valuation", fr="Evaluation exclut du système", es="Avalúo Excl. en Sist.")
+			@i18n:Tooltip (en="Sy Exclude Valuation", fr="Evaluation exclut du système", es="Avalúo Excluído en Sistema")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=12.0, core=true, t24Name=SY.EXCLUDE.VALUATION)
+		SWEEP_TXNS -> byValue SY_Config:SY_PRODUCT_DEFINITION__SWEEP_TXNS *
+		EVENT -> byValue SY_Config:SY_PRODUCT_DEFINITION__EVENT *
+		SUB_ASSET_TYPE -> SC_Config:SUB_ASSET_TYPE
+			@i18n:Label (en="Sub Asset Type", fr="Classe d\'actif", es="Sub Activo")
+			@i18n:Tooltip (fr="Classe d\'actif")
+			@t24:i (align=L, inputBehaviour=I, maxLength=5, sysNumber=26.0, core=true, businessType=S, t24Name=SUB.ASSET.TYPE)
+		RESERVED_12 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=27.0, core=true, t24Name=RESERVED.12)
+		RESERVED_11 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=28.0, core=true, t24Name=RESERVED.11)
+		TERMINATED : SY_Config:SY_PRODUCT_DEFINITION__TERMINATED
+			@i18n:Label (en="Terminated?", fr=Terminé, es="¿Finalizado,?")
+			@i18n:Tooltip (en="Has the product/item been terminated", fr=Terminé)
+			@t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=29.0, core=true, t24Name=TERMINATED)
+		INTERNAL_USE : mml:string
+			@i18n:Label (fr="Usage interne")
+			@i18n:Tooltip (fr="Usage interne")
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=30.0, core=true, businessType=A, t24Name=INTERNAL.USE)
+		PROD_INTERFACE -> EB_SystemTables:PGM_FILE
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=31.0, core=true, businessType=PG, t24Name=PROD.INTERFACE)
+		FIRST_DATE : mml:date required
+			@i18n:Label (en="First Date", fr="Prémière date", es="Primera Fecha")
+			@i18n:Tooltip (en="First Date", fr="Prémière date", es="Primera Fecha ")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=32.0, core=true, businessType=D, t24Name=FIRST.DATE)
+		LAST_DATE : mml:date
+			@i18n:Label (en="Last Date", fr="Dernière date", es="Última Fecha")
+			@i18n:Tooltip (en="Last Date", fr="Dernière date", es="Última Fecha ")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=33.0, core=true, businessType=D, t24Name=LAST.DATE)
+		PRODUCT_CATEGORY -> ST_Config:CATEGORY required
+			@i18n:Label (en="Product Category", fr=Produit, es="Código de Categoría")
+			@i18n:Tooltip (fr="Code du produit")
+			@t24:i (align=L, inputBehaviour=I, maxLength=6, sysNumber=34.0, core=true, businessType=CAT, t24Name=PRODUCT.CATEGORY)
+		VALUE_UNIT -> byValue SY_Config:SY_PRODUCT_DEFINITION__VALUE_UNIT *
+		RESERVED_5 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=36.0, core=true, t24Name=RESERVED.5)
+		RESERVED_4 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=37.0, core=true, t24Name=RESERVED.4)
+		RESERVED_3 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=38.0, core=true, t24Name=RESERVED.3)
+		RESERVED_2 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=39.0, core=true, t24Name=RESERVED.2)
+		RESERVED_1 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=40.0, core=true, t24Name=RESERVED.1)
+		OVERRIDE -> byValue SY_Config:SY_PRODUCT_DEFINITION__OVERRIDE *
+		RECORD_STATUS : mml:string
+			@i18n:Label (en="Record Status", fr=Statut, es=Estado)
+			@i18n:Tooltip (fr="Statut de l\'enregistrement")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=43.0, core=true, businessType=STAT, t24Name=RECORD.STATUS)
+		CURR_NO : mml:Integer
+			@i18n:Label (en="Curr No", fr="N° version", es="No. Actual")
+			@i18n:Tooltip (fr="Numéro de version")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=44.0, core=true, t24Name=CURR.NO)
+		INPUTTER -> byValue SY_Config:SY_PRODUCT_DEFINITION__INPUTTER *
+		DATE_TIME -> byValue SY_Config:SY_PRODUCT_DEFINITION__DATE_TIME *
+		AUTHORISER : mml:string
+			@i18n:Label (en=Authoriser, fr="Validé par", es=Autorizador)
+			@i18n:Tooltip (en="Indicates the User who Authorises the record", fr="Utilisateur de validation", es="El usuario que autorizó el registro")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=47.0, core=true, businessType=A, t24Name=AUTHORISER)
+		CO_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company, fr=Entité, es="Compañía")
+			@i18n:Tooltip (fr="Code établissement ou agence")
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=48.0, core=true, businessType=A, t24Name=CO.CODE)
+		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Dept Code", fr=Service, es=Departamento)
+			@i18n:Tooltip (fr="Code du service")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=49.0, core=true, t24Name=DEPT.CODE)
+		AUDITOR_CODE : mml:string
+			@i18n:Label (en="Auditor Code", fr="Audité par", es="Código de Auditor")
+			@i18n:Tooltip (en="Auditor Code", fr="Utilisateur d\'audit", es="Nombre del auditor")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=50.0, core=true, businessType=A, t24Name=AUDITOR.CODE)
+		AUDIT_DATE_TIME : mml:dateTime
+			@i18n:Label (en="Audit Date Time", fr="Audité le", es="Fecha/Hora de Audit.")
+			@i18n:Tooltip (en="Date and time when record was audited", fr="Date et heure d\'audit", es="Fecha y Hora de Auditoría ")
+			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=51.0, core=true, businessType=RELTIME, t24Name=AUDIT.DATE.TIME)
+	}
+	SY_PRODUCT_DEFINITION__SHORT_NAME
+	{
+		SHORT_NAME : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, multiLanguage=true, sysNumber=5.0, core=true, businessType=A, t24Name=SHORT.NAME)
+	}
+	SY_PRODUCT_DEFINITION__DESCRIPTION
+	{
+		DESCRIPTION : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=50, sysNumber=6.0, core=true, businessType=A, t24Name=DESCRIPTION)
+	}
+	SY_PRODUCT_DEFINITION__SWEEP_TXNS
+	{
+		SWEEP_TXNS -> ST_Config:TRANSACTION
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=13.0, core=true, businessType=A, t24Name=SWEEP.TXNS)
+	}
+	SY_PRODUCT_DEFINITION__EVENT
+	{
+		EVENT -> SY_Event:SY_EVENT_DEFINITION
+			@t24:i (align=L, inputBehaviour=I, maxLength=25, sysNumber=14.0, core=true, businessType=A, t24Name=EVENT)
+		DEPENDENCY -> byValue SY_Config:SY_PRODUCT_DEFINITION__EVENT__DEPENDENCY *
+		ACTIVE : SY_Config:SY_PRODUCT_DEFINITION__EVENT__ACTIVE
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=16.0, core=true, t24Name=ACTIVE)
+		EB_ACTIVITY -> byValue SY_Config:SY_PRODUCT_DEFINITION__EVENT__EB_ACTIVITY *
+		EB_EVENT_TYPE -> EB_SystemTables:EB_EVENT_TYPE
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=18.0, core=true, businessType=A, t24Name=EB.EVENT.TYPE)
+		RESERVED_17 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=19.0, core=true, t24Name=RESERVED.17)
+		OPERATION -> byValue SY_Config:SY_PRODUCT_DEFINITION__EVENT__OPERATION *
+	}
+	SY_PRODUCT_DEFINITION__EVENT__DEPENDENCY
+	{
+		DEPENDENCY -> SY_Event:SY_EVENT_DEFINITION
+			@t24:i (align=L, inputBehaviour=I, maxLength=25, sysNumber=15.0, core=true, businessType=A, t24Name=DEPENDENCY)
+	}
+	SY_PRODUCT_DEFINITION__EVENT__EB_ACTIVITY
+	{
+		EB_ACTIVITY -> EB_Delivery:EB_ACTIVITY
+			@t24:i (align=L, inputBehaviour=I, maxLength=7, sysNumber=17.0, core=true, businessType=A, t24Name=EB.ACTIVITY)
+	}
+	SY_PRODUCT_DEFINITION__EVENT__OPERATION
+	{
+		OPERATION : SY_Config:SY_PRODUCT_DEFINITION__EVENT__OPERATION__OPERATION
+			@t24:i (align=L, inputBehaviour=I, maxLength=9, sysNumber=20.0, core=true, t24Name=OPERATION)
+		UNIT_DEF -> SY_Unit:SY_UNIT_DEFINITION
+			@t24:i (align=L, inputBehaviour=I, maxLength=31, sysNumber=21.0, core=true, businessType=A, t24Name=UNIT.DEF)
+		INSTANCE : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=65, sysNumber=22.0, core=true, businessType=A, t24Name=INSTANCE)
+		RESERVED_16 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=23.0, core=true, t24Name=RESERVED.16)
+		RESERVED_15 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=24.0, core=true, t24Name=RESERVED.15)
+		RESERVED_14 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=25.0, core=true, t24Name=RESERVED.14)
+	}
+	SY_PRODUCT_DEFINITION__VALUE_UNIT
+	{
+		VALUE_UNIT -> SY_Unit:SY_UNIT_DEFINITION
+			@t24:i (align=L, inputBehaviour=I, maxLength=31, sysNumber=35.0, core=true, businessType=A, t24Name=VALUE.UNIT)
+	}
+	SY_PRODUCT_DEFINITION__OVERRIDE
+	{
+		OVERRIDE : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=42.0, core=true, t24Name=OVERRIDE)
+	}
+	SY_PRODUCT_DEFINITION__INPUTTER
+	{
+		INPUTTER : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=45.0, core=true, businessType=A, t24Name=INPUTTER)
+	}
+	SY_PRODUCT_DEFINITION__DATE_TIME
+	{
+		DATE_TIME : mml:dateTime
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=46.0, core=true, businessType=RELTIME, t24Name=DATE.TIME)
+	}
+	SY_PRODUCT_DESCRIPTION
+		@t24:i (t24Name=SY.PRODUCT.DESCRIPTION, level=I, type=H, allowedFunctions="A C D E H I L P Q S", localRefAllowed=true)
+	{
+		PROD_DES_ID -> SY_Config:SY_PRODUCT_DESCRIPTION PK required
+			@i18n:Label (en="Prod Des Id", fr="ID de Desc de prodt", es="ID Descuento Prod.")
+			@i18n:Tooltip (fr="Identifiant de Description de prodt")
+			@t24:i (align=L, inputBehaviour=I, maxLength=15, sysNumber=0.0, core=true, businessType=A, t24Name=PROD.DES.ID)
+		PRODUCT_DESCRIPTION -> SY_Config:SY_PRODUCT_DESCRIPTION
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=1.0, core=true, businessType=A, t24Name=PRODUCT.DESCRIPTION)
+		PRODUCT_DEFINITION -> SY_Config:SY_PRODUCT_DEFINITION
+			@i18n:Label (en="Product Definition", fr="Définition de Produit", es="Definición Producto")
+			@i18n:Tooltip (en="The SY Product Definition ID", fr="Définition de Produit")
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=2.0, core=true, businessType=A, t24Name=PRODUCT.DEFINITION)
+		SHORT_NAME -> byValue SY_Config:SY_PRODUCT_DESCRIPTION__SHORT_NAME *
+		DESCRIPTION -> byValue SY_Config:SY_PRODUCT_DESCRIPTION__DESCRIPTION *
+		RESERVED_10 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=5.0, core=true, t24Name=RESERVED.10)
+		RESERVED_9 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=6.0, core=true, t24Name=RESERVED.9)
+		RESERVED_8 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=7.0, core=true, t24Name=RESERVED.8)
+		RESERVED_7 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=8.0, core=true, t24Name=RESERVED.7)
+		RESERVED_6 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=9.0, core=true, t24Name=RESERVED.6)
+		RESERVED_5 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=10.0, core=true, t24Name=RESERVED.5)
+		RESERVED_4 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=11.0, core=true, t24Name=RESERVED.4)
+		RESERVED_3 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=12.0, core=true, t24Name=RESERVED.3)
+		RESERVED_2 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=13.0, core=true, t24Name=RESERVED.2)
+		RESERVED_1 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=14.0, core=true, t24Name=RESERVED.1)
+		OVERRIDE -> byValue SY_Config:SY_PRODUCT_DESCRIPTION__OVERRIDE *
+		RECORD_STATUS : mml:string
+			@i18n:Label (en="Record Status", fr=Statut, es=Estado)
+			@i18n:Tooltip (fr="Statut de l\'enregistrement")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=17.0, core=true, businessType=STAT, t24Name=RECORD.STATUS)
+		CURR_NO : mml:Integer
+			@i18n:Label (en="Curr No", fr="N° version", es="No. Actual")
+			@i18n:Tooltip (fr="Numéro de version")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=18.0, core=true, t24Name=CURR.NO)
+		INPUTTER -> byValue SY_Config:SY_PRODUCT_DESCRIPTION__INPUTTER *
+		DATE_TIME -> byValue SY_Config:SY_PRODUCT_DESCRIPTION__DATE_TIME *
+		AUTHORISER : mml:string
+			@i18n:Label (en=Authoriser, fr="Validé par", es=Autorizador)
+			@i18n:Tooltip (en="Indicates the User who Authorises the record", fr="Utilisateur de validation", es="El usuario que autorizó el registro")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=21.0, core=true, businessType=A, t24Name=AUTHORISER)
+		CO_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company, fr=Entité, es="Compañía")
+			@i18n:Tooltip (fr="Code établissement ou agence")
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=22.0, core=true, businessType=A, t24Name=CO.CODE)
+		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Dept Code", fr=Service, es=Departamento)
+			@i18n:Tooltip (fr="Code du service")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=23.0, core=true, t24Name=DEPT.CODE)
+		AUDITOR_CODE : mml:string
+			@i18n:Label (en="Auditor Code", fr="Audité par", es="Código de Auditor")
+			@i18n:Tooltip (en="Auditor Code", fr="Utilisateur d\'audit", es="Nombre del auditor")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=24.0, core=true, businessType=A, t24Name=AUDITOR.CODE)
+		AUDIT_DATE_TIME : mml:dateTime
+			@i18n:Label (en="Audit Date Time", fr="Audité le", es="Fecha/Hora de Audit.")
+			@i18n:Tooltip (en="Date and time when record was audited", fr="Date et heure d\'audit", es="Fecha y Hora de Auditoría ")
+			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=25.0, core=true, businessType=RELTIME, t24Name=AUDIT.DATE.TIME)
+	}
+	SY_PRODUCT_DESCRIPTION__SHORT_NAME
+	{
+		SHORT_NAME : mml:string required
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, multiLanguage=true, sysNumber=3.0, core=true, businessType=A, t24Name=SHORT.NAME)
+	}
+	SY_PRODUCT_DESCRIPTION__DESCRIPTION
+	{
+		DESCRIPTION : mml:string required
+			@t24:i (align=L, inputBehaviour=I, maxLength=50, sysNumber=4.0, core=true, businessType=A, t24Name=DESCRIPTION)
+	}
+	SY_PRODUCT_DESCRIPTION__OVERRIDE
+	{
+		OVERRIDE : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=16.0, core=true, t24Name=OVERRIDE)
+	}
+	SY_PRODUCT_DESCRIPTION__INPUTTER
+	{
+		INPUTTER : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=19.0, core=true, businessType=A, t24Name=INPUTTER)
+	}
+	SY_PRODUCT_DESCRIPTION__DATE_TIME
+	{
+		DATE_TIME : mml:dateTime
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=20.0, core=true, businessType=RELTIME, t24Name=DATE.TIME)
+	}
+	SY_PRODUCT_INTERFACE
+		@t24:i (t24Name=SY.PRODUCT.INTERFACE, level=I, type=H, allowedFunctions="A C D E H I L P Q R S", localRefAllowed=true)
+	{
+		PRODUCT_APP_ID -> SY_Config:SY_PRODUCT_INTERFACE PK required
+			@i18n:Label (en="Product App Id", fr="Id d\'appli de prodt", es="ID Aplicación Prod.")
+			@i18n:Tooltip (fr="Identifiant d\'appli de prodt")
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=0.0, core=true, businessType=PG, t24Name=PRODUCT.APP.ID)
+		USER_APPLICATION -> EB_SystemTables:PGM_FILE
+			@i18n:Label (en="User Application", fr=Application, es="Solicitud de Usuario")
+			@i18n:Tooltip (en="User Application", fr=Application, es="Solicitud de Usuario")
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=1.0, core=true, businessType=PG, t24Name=USER.APPLICATION)
+		RESERVED_21 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=2.0, core=true, businessType=N, t24Name=RESERVED.21)
+		PRODUCT_DEFINITION -> SY_Config:SY_PRODUCT_DESCRIPTION
+			@i18n:Label (en="Product Definition", fr="Définition de Produit", es="Definición Producto")
+			@i18n:Tooltip (en="The SY Product Definition ID", fr="Définition de Produit")
+			@t24:i (align=L, inputBehaviour=I, maxLength=15, sysNumber=3.0, core=true, businessType=A, t24Name=PRODUCT.DEFINITION)
+		RESERVED_20 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=4.0, core=true, businessType=N, t24Name=RESERVED.20)
+		CUSTOMER_MAND : SY_Config:SY_PRODUCT_INTERFACE__CUSTOMER_MAND
+			@i18n:Label (en="Customer Mand", fr="Mandat de client", es="Mandatorio Cliente")
+			@i18n:Tooltip (en="Customer Mand", fr="Mandat de client", es="Obligatorio de Cliente")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=5.0, core=true, t24Name=CUSTOMER.MAND)
+		CUSTOMER_FIELD : mml:string
+			@i18n:Label (en="Customer Field", fr=Client, es="Campo de Cliente")
+			@i18n:Tooltip (en="Valid field in application holding customer code", fr="Client ")
+			@t24:i (align=L, inputBehaviour=I, maxLength=18, sysNumber=6.0, core=true, businessType=A, t24Name=CUSTOMER.FIELD)
+		RESERVED_19 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=7.0, core=true, businessType=N, t24Name=RESERVED.19)
+		PORTFOLIO_MAND : SY_Config:SY_PRODUCT_INTERFACE__PORTFOLIO_MAND
+			@i18n:Label (en="Portfolio Mand", fr="Mandat de portefeuille", es="Mandato de Cartera")
+			@i18n:Tooltip (en="Portfolio Mand", fr="Mandat de portefeuille", es="Mandato de Cartera ")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=8.0, core=true, t24Name=PORTFOLIO.MAND)
+		PORTFOLIO_FIELD : mml:string
+			@i18n:Label (en="Portfolio Field", fr="Champ de portefeuille", es="Campo de Cartera")
+			@i18n:Tooltip (en="Portfolio Field", fr="Champ de portefeuille ", es="Campo de Cartera ")
+			@t24:i (align=L, inputBehaviour=I, maxLength=18, sysNumber=9.0, core=true, businessType=A, t24Name=PORTFOLIO.FIELD)
+		RESERVED_18 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=10.0, core=true, businessType=N, t24Name=RESERVED.18)
+		COUNTERPARTY_MAND : SY_Config:SY_PRODUCT_INTERFACE__COUNTERPARTY_MAND
+			@i18n:Label (en="Counterparty Mand", fr="Mandat de C/partie", es="Mandato Contraparte")
+			@i18n:Tooltip (en="Counterparty Mand", fr="Mandat de C/partie", es="Mandato de Contraparte")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=11.0, core=true, t24Name=COUNTERPARTY.MAND)
+		COUNTERPARTY_FIELD : mml:string
+			@i18n:Label (en="Counterparty Field", fr="Champ de contrepartie", es="Campo de Contraparte")
+			@i18n:Tooltip (en="Counterparty Field", fr="Champ de contrepartie", es="Campo de Contraparte")
+			@t24:i (align=L, inputBehaviour=I, maxLength=18, sysNumber=12.0, core=true, businessType=A, t24Name=COUNTERPARTY.FIELD)
+		RESERVED_17 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=13.0, core=true, businessType=N, t24Name=RESERVED.17)
+		COUNTER_PTFO_MAND : SY_Config:SY_PRODUCT_INTERFACE__COUNTER_PTFO_MAND
+			@i18n:Label (en="Counter Ptfo Mand", fr="Mandat du porteflle contre", es=Mand.CarteraMostrador)
+			@i18n:Tooltip (en="Counter Ptfo Mand", fr="Mandat du porteflle contre", es="Mandato de Cartera de Mostrador")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=14.0, core=true, t24Name=COUNTER.PTFO.MAND)
+		COUNTER_PTFO_FIELD : mml:string
+			@i18n:Label (en="Counter Ptfo Field", fr="Champ de porteflle contre", es=CampoCarteraMostrador)
+			@i18n:Tooltip (en="Counter Ptfo Field", fr="Champ de porteflle contre", es="Campo de Cartera de Mostrador")
+			@t24:i (align=L, inputBehaviour=I, maxLength=18, sysNumber=15.0, core=true, businessType=A, t24Name=COUNTER.PTFO.FIELD)
+		RESERVED_16 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=16.0, core=true, businessType=N, t24Name=RESERVED.16)
+		DEPOSIT_MAND : SY_Config:SY_PRODUCT_INTERFACE__DEPOSIT_MAND
+			@i18n:Label (en="Deposit Mand", fr="Mandat de dépôt", es="Mandato Depósito")
+			@i18n:Tooltip (en="Deposit Mand", fr="Mandat de dépôt", es="Mandato Depósito")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=17.0, core=true, t24Name=DEPOSIT.MAND)
+		DEPOSIT_AMT_FIELD : mml:string
+			@i18n:Label (en="Deposit Amt Field", fr="Champ de montant du dépôt", es="Campo Mto. Depósito")
+			@i18n:Tooltip (en="Deposit Amt Field", fr="Champ de montant du dépôt", es="Campo Monto de Depósito")
+			@t24:i (align=L, inputBehaviour=I, maxLength=18, sysNumber=18.0, core=true, businessType=A, t24Name=DEPOSIT.AMT.FIELD)
+		DEPOSIT_CCY_FIELD : mml:string
+			@i18n:Label (en="Deposit Ccy Field", fr="Champ de Dev du dépôt", es="Campo Mda. Depósito")
+			@i18n:Tooltip (en="Deposit Ccy Field", fr="Champ de Dev du dépôt", es="Campo Moneda de Depósito")
+			@t24:i (align=L, inputBehaviour=I, maxLength=18, sysNumber=19.0, core=true, businessType=A, t24Name=DEPOSIT.CCY.FIELD)
+		RESERVED_15 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=20.0, core=true, businessType=N, t24Name=RESERVED.15)
+		ACCOUNT_MAND : SY_Config:SY_PRODUCT_INTERFACE__ACCOUNT_MAND
+			@i18n:Label (en="Account Mand", fr="Mandat de cpte", es="Cuenta Obligatoria")
+			@i18n:Tooltip (en="Account Mand", fr="Mandat de cpte", es="Cuenta Obligatoria")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=21.0, core=true, t24Name=ACCOUNT.MAND)
+		ACCOUNT_FIELD : mml:string
+			@i18n:Label (en="Account Field", fr="Champ de compte", es="Campo de Cuenta")
+			@i18n:Tooltip (en="Valid field in application which holds account no", fr="Champ de compte ")
+			@t24:i (align=L, inputBehaviour=I, maxLength=18, sysNumber=22.0, core=true, businessType=A, t24Name=ACCOUNT.FIELD)
+		RESERVED_13 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=23.0, core=true, businessType=N, t24Name=RESERVED.13)
+		TRADE_DATE_MAND : SY_Config:SY_PRODUCT_INTERFACE__TRADE_DATE_MAND
+			@i18n:Label (en="Trade Date Mand", fr="Date de trans obligatoire", es="Fecha Mandato Negocio")
+			@i18n:Tooltip (en="Trade Date Mand", fr="Date de trans obligatoire", es="Fecha de Mandato de Negocio")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=24.0, core=true, t24Name=TRADE.DATE.MAND)
+		TRADE_DATE_FIELD : mml:string
+			@i18n:Label (en="Trade Date Field", fr="Champ de date de trans", es="Campo Fecha Negocio")
+			@i18n:Tooltip (en="Trade Date Field", fr="Champ de date de trans", es="Campo de Fecha de Negocio")
+			@t24:i (align=L, inputBehaviour=I, maxLength=18, sysNumber=25.0, core=true, businessType=A, t24Name=TRADE.DATE.FIELD)
+		RESERVED_12 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=26.0, core=true, businessType=N, t24Name=RESERVED.12)
+		VALUE_DATE_MAND : SY_Config:SY_PRODUCT_INTERFACE__VALUE_DATE_MAND
+			@i18n:Label (en="Value Date Mand", fr="Date valeur obligatoire", es="Mandato Fecha Valor")
+			@i18n:Tooltip (en="Value Date Mand", fr="Date valeur obligatoire", es="Mandato de Fecha Valor")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=27.0, core=true, t24Name=VALUE.DATE.MAND)
+		VALUE_DATE_FIELD : mml:string
+			@i18n:Label (en="Value Date Field", fr="Champ de date de valeur", es="Campo de Fecha Valor")
+			@i18n:Tooltip (en="Value Date Field", fr="Champ de date de valeur", es="Campo de Fecha Valor")
+			@t24:i (align=L, inputBehaviour=I, maxLength=18, sysNumber=28.0, core=true, businessType=A, t24Name=VALUE.DATE.FIELD)
+		RESERVED_11 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=29.0, core=true, businessType=N, t24Name=RESERVED.11)
+		CURRENCY_MARKET_MAND : SY_Config:SY_PRODUCT_INTERFACE__CURRENCY_MARKET_MAND
+			@i18n:Label (en="Ccy Market Mand", fr="Mandat du marché de Dev", es="Mandato Merc. Divisas")
+			@i18n:Tooltip (en="Ccy Market Mand", fr="Mandat du marché de Dev", es="Mandato de Mercado de Divisas")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=30.0, core=true, t24Name=CURRENCY.MARKET.MAND)
+		CURRENCY_MARKET_FIELD : mml:string
+			@i18n:Label (en="Ccy Market Field", fr="Champ de marché de Dev", es="Campo Merc. Divisas")
+			@i18n:Tooltip (en="Ccy Market Field", fr="Champ de marché de Dev", es="Campo de Mercado de Divisas ")
+			@t24:i (align=L, inputBehaviour=I, maxLength=18, sysNumber=31.0, core=true, businessType=A, t24Name=CURRENCY.MARKET.FIELD)
+		RESERVED_10 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=32.0, core=true, businessType=N, t24Name=RESERVED.10)
+		DEALER_DESK_MAND : SY_Config:SY_PRODUCT_INTERFACE__DEALER_DESK_MAND
+			@i18n:Label (en="Dealer Desk Mand", fr="Mandat d\'opérateur", es="Mand. Mesa de Gestor")
+			@i18n:Tooltip (en="Dealer Desk Mand", fr="Mandat d\'opérateur", es="Mandato Mesa de Gestor")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=33.0, core=true, t24Name=DEALER.DESK.MAND)
+		DEALER_DESK_FIELD : mml:string
+			@i18n:Label (en="Dealer Desk Field", fr="Champ d\'opérateur", es="Campo Mesa de Gestor")
+			@i18n:Tooltip (en="Dealer Desk Field", fr="Champ d\'opérateur", es="Campo Mesa de Gestor")
+			@t24:i (align=L, inputBehaviour=I, maxLength=18, sysNumber=34.0, core=true, businessType=A, t24Name=DEALER.DESK.FIELD)
+		RESERVED_9 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=35.0, core=true, businessType=N, t24Name=RESERVED.9)
+		ACCOUNT_OFFICER_MAND : SY_Config:SY_PRODUCT_INTERFACE__ACCOUNT_OFFICER_MAND
+			@i18n:Label (en="Acc Officer Mand", fr="Gestionnaire obligatoire", es="Gestor Cta.Oblig.")
+			@i18n:Tooltip (en="Acc Officer Mand", fr="Gestionnaire obligatoire", es="Gestor de Cuenta Obligatorio ")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=36.0, core=true, t24Name=ACCOUNT.OFFICER.MAND)
+		ACCOUNT_OFFICER_FIELD : mml:string
+			@i18n:Label (en="Acc Officer Field", fr="Champ de Gestionnaire", es="Campo Gestor Cta.")
+			@i18n:Tooltip (en="Acc Officer Field", fr="Champ de Gestionnaire", es="Campo de Gestor de Cuenta")
+			@t24:i (align=L, inputBehaviour=I, maxLength=18, sysNumber=37.0, core=true, businessType=A, t24Name=ACCOUNT.OFFICER.FIELD)
+		RESERVED_8 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=38.0, core=true, businessType=N, t24Name=RESERVED.8)
+		RESERVED_7 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=39.0, core=true, t24Name=RESERVED.7)
+		RESERVED_6 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=40.0, core=true, t24Name=RESERVED.6)
+		RESERVED_5 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=41.0, core=true, t24Name=RESERVED.5)
+		RESERVED_4 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=42.0, core=true, t24Name=RESERVED.4)
+		RESERVED_3 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=43.0, core=true, t24Name=RESERVED.3)
+		VERSION_NEW -> EB_Versions:VERSION
+			@i18n:Label (en="Version New", fr="Nouvelle version", es="Nueva Versión")
+			@i18n:Tooltip (en="Version New", fr="Nouvelle version", es="Nueva Versión")
+			@t24:i (align=L, inputBehaviour=I, maxLength=54, sysNumber=44.0, core=true, businessType=A, t24Name=VERSION.NEW)
+		VERSION_SEE -> EB_Versions:VERSION
+			@i18n:Label (en="Version See", fr="Vue de version", es="Ver Versión")
+			@i18n:Tooltip (en="Version See", fr="Vue de version", es="Ver Versión")
+			@t24:i (align=L, inputBehaviour=I, maxLength=54, sysNumber=45.0, core=true, businessType=A, t24Name=VERSION.SEE)
+		VERSION_DELETE -> EB_Versions:VERSION
+			@i18n:Label (en="Version Delete", fr="Suppression de version", es="Borrar Versión")
+			@i18n:Tooltip (en="Version Delete", fr="Suppression de version ", es="Borrar Versión")
+			@t24:i (align=L, inputBehaviour=I, maxLength=54, sysNumber=46.0, core=true, businessType=A, t24Name=VERSION.DELETE)
+		VERSION_REVERSE -> EB_Versions:VERSION
+			@i18n:Label (en="Version Reverse", fr="Renversion de version", es="Versión Inversa")
+			@i18n:Tooltip (en="Version Reverse", fr="Renversion de version", es="Versión Inversa")
+			@t24:i (align=L, inputBehaviour=I, maxLength=54, sysNumber=47.0, core=true, businessType=A, t24Name=VERSION.REVERSE)
+		VERSION_EDIT -> EB_Versions:VERSION
+			@i18n:Label (en="Version Edit", fr="Edition de version", es="Editar Versión")
+			@i18n:Tooltip (en="Version Edit", fr="Edition de version ", es="Editar Versión")
+			@t24:i (align=L, inputBehaviour=I, maxLength=54, sysNumber=48.0, core=true, businessType=A, t24Name=VERSION.EDIT)
+		VERSION_AUTH -> EB_Versions:VERSION
+			@i18n:Label (en="Version Auth", fr="Autorisation de version", es="Autorizar Versión")
+			@i18n:Tooltip (en="Version Auth", fr="Autorisation de version ", es="Autorizar Versión")
+			@t24:i (align=L, inputBehaviour=I, maxLength=54, sysNumber=49.0, core=true, businessType=A, t24Name=VERSION.AUTH)
+		MAT_DATE_MAND : SY_Config:SY_PRODUCT_INTERFACE__MAT_DATE_MAND
+			@i18n:Label (en="Mat Date Mand", fr="Mandat de date d\'échéance", es="Fecha Vencim. Oblig.")
+			@i18n:Tooltip (en="Mat Date Mand", fr="Mandat de date d\'échéance", es="Fecha de Vencimiento Obligatoria")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=50.0, core=true, t24Name=MAT.DATE.MAND)
+		MAT_DATE_FIELD : mml:string
+			@i18n:Label (en="Mat Date Field", fr="Champ de date d\'échéance", es="Campo Fecha Vencim.")
+			@i18n:Tooltip (en="Mat Date Field", fr="Champ de date d\'échéance", es="Campo de Fecha de Vencimiento ")
+			@t24:i (align=L, inputBehaviour=I, maxLength=18, sysNumber=51.0, core=true, businessType=A, t24Name=MAT.DATE.FIELD)
+		RESERVED_2 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=52.0, core=true, t24Name=RESERVED.2)
+		RESERVED_1 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=53.0, core=true, t24Name=RESERVED.1)
+		OVERRIDE -> byValue SY_Config:SY_PRODUCT_INTERFACE__OVERRIDE *
+		RECORD_STATUS : mml:string
+			@i18n:Label (en="Record Status", fr=Statut, es=Estado)
+			@i18n:Tooltip (fr="Statut de l\'enregistrement")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=56.0, core=true, businessType=STAT, t24Name=RECORD.STATUS)
+		CURR_NO : mml:Integer
+			@i18n:Label (en="Curr No", fr="N° version", es="No. Actual")
+			@i18n:Tooltip (fr="Numéro de version")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=57.0, core=true, t24Name=CURR.NO)
+		INPUTTER -> byValue SY_Config:SY_PRODUCT_INTERFACE__INPUTTER *
+		DATE_TIME -> byValue SY_Config:SY_PRODUCT_INTERFACE__DATE_TIME *
+		AUTHORISER : mml:string
+			@i18n:Label (en=Authoriser, fr="Validé par", es=Autorizador)
+			@i18n:Tooltip (en="Indicates the User who Authorises the record", fr="Utilisateur de validation", es="El usuario que autorizó el registro")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=60.0, core=true, businessType=A, t24Name=AUTHORISER)
+		CO_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company, fr=Entité, es="Compañía")
+			@i18n:Tooltip (fr="Code établissement ou agence")
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=61.0, core=true, businessType=A, t24Name=CO.CODE)
+		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Dept Code", fr=Service, es=Departamento)
+			@i18n:Tooltip (fr="Code du service")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=62.0, core=true, t24Name=DEPT.CODE)
+		AUDITOR_CODE : mml:string
+			@i18n:Label (en="Auditor Code", fr="Audité par", es="Código de Auditor")
+			@i18n:Tooltip (en="Auditor Code", fr="Utilisateur d\'audit", es="Nombre del auditor")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=63.0, core=true, businessType=A, t24Name=AUDITOR.CODE)
+		AUDIT_DATE_TIME : mml:dateTime
+			@i18n:Label (en="Audit Date Time", fr="Audité le", es="Fecha/Hora de Audit.")
+			@i18n:Tooltip (en="Date and time when record was audited", fr="Date et heure d\'audit", es="Fecha y Hora de Auditoría ")
+			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=64.0, core=true, businessType=RELTIME, t24Name=AUDIT.DATE.TIME)
+	}
+	SY_PRODUCT_INTERFACE__OVERRIDE
+	{
+		OVERRIDE : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=55.0, core=true, t24Name=OVERRIDE)
+	}
+	SY_PRODUCT_INTERFACE__INPUTTER
+	{
+		INPUTTER : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=58.0, core=true, businessType=A, t24Name=INPUTTER)
+	}
+	SY_PRODUCT_INTERFACE__DATE_TIME
+	{
+		DATE_TIME : mml:dateTime
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=59.0, core=true, businessType=RELTIME, t24Name=DATE.TIME)
+	}
+}
+Enumerations {
+	SY_PRODUCT__PUBLISHED : mml:string
+		YES=YES
+		NO=NO
+	SY_PRODUCT__COMPLETE : mml:string
+		YES=YES
+		NULL=NULL
+	SY_PRODUCT__TRACKING : mml:string
+		YES=YES
+		NO=NO
+	SY_PRODUCT__SWEEP_ACCT : mml:string
+		YES=YES
+		NULL=NULL
+	SY_PRODUCT__DEPOSIT : mml:string
+		YES=YES
+		NO=NO
+	SY_PRODUCT__SY_EXCLUDE_VALUATION : mml:string
+		YES=YES
+		NO=NO
+	SY_PRODUCT__EVENT__ACTIVE : mml:string
+		YES=YES
+		NO=NO
+	SY_PRODUCT__EVENT__OPERATION__OPERATION : mml:string
+		New=New
+		Input=Input
+		Reverse=Reverse
+		Authorise=Authorise
+		Delete=Delete
+		Verify=Verify
+		Run=Run
+	SY_PRODUCT__TERMINATED : mml:string
+		YES=YES
+		NULL=NULL
+	SY_PRODUCT_DEFINITION__PUBLISHED : mml:string
+		YES=YES
+		NO=NO
+	SY_PRODUCT_DEFINITION__COMPLETE : mml:string
+		YES=YES
+		NULL=NULL
+	SY_PRODUCT_DEFINITION__TRACKING : mml:string
+		YES=YES
+		NO=NO
+	SY_PRODUCT_DEFINITION__SWEEP_ACCT : mml:string
+		YES=YES
+		NULL=NULL
+	SY_PRODUCT_DEFINITION__DEPOSIT : mml:string
+		YES=YES
+		NO=NO
+	SY_PRODUCT_DEFINITION__SY_EXCLUDE_VALUATION : mml:string
+		YES=YES
+		NO=NO
+	SY_PRODUCT_DEFINITION__EVENT__ACTIVE : mml:string
+		YES=YES
+		NO=NO
+	SY_PRODUCT_DEFINITION__EVENT__OPERATION__OPERATION : mml:string
+		New=New
+		Input=Input
+		Reverse=Reverse
+		Authorise=Authorise
+		Delete=Delete
+		Verify=Verify
+		Run=Run
+	SY_PRODUCT_DEFINITION__TERMINATED : mml:string
+		YES=YES
+		NULL=NULL
+	SY_PRODUCT_INTERFACE__CUSTOMER_MAND : mml:string
+		YES=YES
+		NULL=NULL
+	SY_PRODUCT_INTERFACE__PORTFOLIO_MAND : mml:string
+		YES=YES
+		NULL=NULL
+	SY_PRODUCT_INTERFACE__COUNTERPARTY_MAND : mml:string
+		YES=YES
+		NULL=NULL
+	SY_PRODUCT_INTERFACE__COUNTER_PTFO_MAND : mml:string
+		YES=YES
+		NULL=NULL
+	SY_PRODUCT_INTERFACE__DEPOSIT_MAND : mml:string
+		YES=YES
+		NULL=NULL
+	SY_PRODUCT_INTERFACE__ACCOUNT_MAND : mml:string
+		YES=YES
+		NULL=NULL
+	SY_PRODUCT_INTERFACE__TRADE_DATE_MAND : mml:string
+		YES=YES
+		NULL=NULL
+	SY_PRODUCT_INTERFACE__VALUE_DATE_MAND : mml:string
+		YES=YES
+		NULL=NULL
+	SY_PRODUCT_INTERFACE__CURRENCY_MARKET_MAND : mml:string
+		YES=YES
+		NULL=NULL
+	SY_PRODUCT_INTERFACE__DEALER_DESK_MAND : mml:string
+		YES=YES
+		NULL=NULL
+	SY_PRODUCT_INTERFACE__ACCOUNT_OFFICER_MAND : mml:string
+		YES=YES
+		NULL=NULL
+	SY_PRODUCT_INTERFACE__MAT_DATE_MAND : mml:string
+		YES=YES
+		NULL=NULL
+}

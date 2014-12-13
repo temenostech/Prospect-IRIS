@@ -1,0 +1,951 @@
+# UTF-8
+/* Template Servicing of Repo Contracts */
+Domain RP_Contract
+	@t24:i (module=RP)
+	@java:Package (value=com.temenos.t24.datamodel.rp.rp_contract)
+namespace "http://www.temenos.com/t24/RP_Contract"
+metamodelVersion 4.3.0.20110527
+Classes {
+	CUST_REPO_CONCAT
+		@t24:i (t24Name=CUST.REPO.CONCAT, level=F, type=T, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		CUSTOMER_CCY_TYPE -> RP_Contract:CUST_REPO_CONCAT PK required
+			@t24:i (align=L, inputBehaviour=I, maxLength=20, sysNumber=0.0, core=true, businessType=A, t24Name=CUSTOMER.CCY.TYPE)
+		CONTRACT_NUMBER -> RP_Contract:REPO
+			@i18n:Label (en="Contract Number", fr="Réf. contrat", es="Ref. de Contrato")
+			@i18n:Tooltip (fr="Référence du contrat")
+			@t24:i (align=L, inputBehaviour=I, maxLength=30, sysNumber=1.0, core=true, businessType=A, t24Name=CONTRACT.NUMBER)
+		CONTRACT_NOS : mml:Integer
+			@t24:i (align=L, inputBehaviour=I, maxLength=30, core=false, t24Name=CONTRACT.NOS, genOperation="LOWER(@RECORD)")
+	}
+	CUSTOMER_REPO
+		@t24:i (t24Name=CUSTOMER.REPO, level=F, type=L, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		CUSTOMER_CODE -> RP_Contract:CUSTOMER_REPO PK required
+			@i18n:Label (en=Customer, fr=Client, es=Cliente)
+			@i18n:Tooltip (fr=Client)
+			@t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=0.0, core=true, businessType=CUS, t24Name=CUSTOMER.CODE)
+		REPO_IM_CCY -> byValue RP_Contract:CUSTOMER_REPO__REPO_IM_CCY *
+		RESO_IM_CCY -> byValue RP_Contract:CUSTOMER_REPO__RESO_IM_CCY *
+	}
+	CUSTOMER_REPO__REPO_IM_CCY
+	{
+		REPO_IM_CCY -> FIN_CurrencyConfig:CURRENCY
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=1.0, core=true, businessType=CCY, t24Name=REPO.IM.CCY)
+		REPO_IM_AMT : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=2.0, core=true, businessType=AMT, t24Name=REPO.IM.AMT)
+	}
+	CUSTOMER_REPO__RESO_IM_CCY
+	{
+		RESO_IM_CCY -> FIN_CurrencyConfig:CURRENCY
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=3.0, core=true, businessType=CCY, t24Name=RESO.IM.CCY)
+		RESO_IM_AMT : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=4.0, core=true, businessType=AMT, t24Name=RESO.IM.AMT)
+	}
+	REPO
+		@t24:i (t24Name=REPO, level=F, type=H, additionalInfo="NOH UNP OEU ANI", allowedFunctions="A C D E H I L P Q R S", localRefAllowed=true)
+	{
+		CONTRACT_ID -> RP_Contract:REPO PK required
+			@i18n:Label (en="Contract Id", fr="N° de contrat", es="ID de Transacción")
+			@i18n:Tooltip (fr="Numéro de contrat")
+			@t24:i (align=L, inputBehaviour=I, maxLength=30, sysNumber=0.0, core=true, businessType=A, t24Name=CONTRACT.ID)
+		REPO_TYPE -> RP_Config:REPO_TYPE required
+			@i18n:Label (en="Repo Type", fr="Type de pension", es="Tipo de Repo")
+			@i18n:Tooltip (en="Repo Type", fr="Type de pension livrée", es="Determina el tipo de contrato Repo")
+			@t24:i (align=L, inputBehaviour=F, maxLength=12, sysNumber=1.0, core=true, businessType=A, t24Name=REPO.TYPE)
+		COUNTERPARTY -> ST_Customer:CUSTOMER
+			@i18n:Label (en=Counterparty, fr=Contrepartie, es=Contraparte)
+			@i18n:Tooltip (en="Counterparty with whom the deal is made", fr=Contrepartie)
+			@t24:i (align=R, inputBehaviour=F, maxLength=10, sysNumber=2.0, core=true, businessType=CUS, t24Name=COUNTERPARTY)
+		CURRENCY -> FIN_CurrencyConfig:CURRENCY
+			@i18n:Label (en=Ccy, fr=Devise, es=Moneda)
+			@i18n:Tooltip (fr="Code devise ISO")
+			@t24:i (align=L, inputBehaviour=F, maxLength=3, sysNumber=3.0, core=true, businessType=CCY, t24Name=CURRENCY)
+		BUSINESS_CENTRE -> byValue RP_Contract:REPO__BUSINESS_CENTRE *
+		TRADE_DATE : mml:date
+			@i18n:Label (en="Trade Date", fr="Date transaction", es="Fecha de Transacción")
+			@i18n:Tooltip (fr="Date de la transaction")
+			@t24:i (align=R, inputBehaviour=F, maxLength=11, sysNumber=5.0, core=true, businessType=D, t24Name=TRADE.DATE)
+		VALUE_DATE : mml:date
+			@i18n:Label (en="Value Date", fr="Date de valeur", es="Fecha Valor")
+			@i18n:Tooltip (en="Indicates the Value date of the Contract", fr="Date de valeur", es="Fecha en que Carteras serán act. por el evento")
+			@t24:i (align=R, inputBehaviour=F, maxLength=11, sysNumber=6.0, core=true, businessType=D, t24Name=VALUE.DATE)
+		MATURITY_DATE : mml:string
+			@i18n:Label (en="Maturity Date", fr="Date d\'échéance", es="Fecha de Vencimiento")
+			@i18n:Tooltip (en="Indicates the Maturity Date of the Transaction", fr="Date d\'échéance", es="Indica la Fecha de Vencimiento de la Transacción")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=7.0, core=true, businessType=MATLMM, t24Name=MATURITY.DATE)
+		PRINCIPAL_AMOUNT_1 : mml:Double
+			@i18n:Label (en=Investment, fr="Montant du capital", es="Inversión")
+			@i18n:Tooltip (en="Principal Amount of the Repo Deal", fr="Montant du capital", es="Monto de Capital del contrato Repo")
+			@t24:i (align=R, inputBehaviour=F, maxLength=19, sysNumber=8.0, core=true, businessType=AMT, t24Name=PRINCIPAL.AMOUNT.1)
+		PRINCIPAL_AMOUNT_2 : mml:Double
+			@i18n:Label (en="Repurchase Price", fr="Mnt rachat à l\'échéance", es="Precio de Recompra")
+			@i18n:Tooltip (en="Maturity Amount/Repurchase Amount of the Deal", fr="Montant de rachat à l\'échéance", es="Monto Vencimiento /Monto Recompra del Contrato ")
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=9.0, core=true, businessType=AMT, t24Name=PRINCIPAL.AMOUNT.2)
+		INTEREST_BASIS -> ST_RateParameters:INTEREST_BASIS
+			@i18n:Label (en="Interest Basis", fr="Base de calcul", es="Base de Interés")
+			@i18n:Tooltip (en="Indicates the interest day basis", fr="Base de calcul des intérêts")
+			@t24:i (align=L, inputBehaviour=F, maxLength=2, sysNumber=10.0, core=true, t24Name=INTEREST.BASIS)
+		REPO_RATE : mml:string
+			@i18n:Label (en=Rate, fr="Taux de la pension", es=Tasa)
+			@i18n:Tooltip (en="Rate of Interest for the Repo Contract", fr="Taux de la pension", es="Tasa de Interés para el Contrato Repo")
+			@t24:i (align=R, inputBehaviour=I, maxLength=12, sysNumber=11.0, core=true, businessType=R, t24Name=REPO.RATE)
+		PRODUCT_CATEGORY -> ST_Config:CATEGORY
+			@i18n:Label (en="Product Category", fr=Produit, es="Código de Categoría")
+			@i18n:Tooltip (fr="Code du produit")
+			@t24:i (align=R, inputBehaviour=F, maxLength=5, sysNumber=12.0, core=true, t24Name=PRODUCT.CATEGORY)
+		AGREEMENT_TYPE -> RP_Config:REPO_AGREEMENT_TYPE
+			@i18n:Label (en="Agreement Type", fr="Type de contrat", es=Acuerdo)
+			@i18n:Tooltip (en="Agreement Type Eg. ISDA, FRABBA, etc.", fr="Type de contrat")
+			@t24:i (align=L, inputBehaviour=F, maxLength=8, sysNumber=13.0, core=true, businessType=A, t24Name=AGREEMENT.TYPE)
+		CONDITION -> byValue RP_Contract:REPO__CONDITION *
+		LIMIT_REFERENCE : mml:Integer
+			@i18n:Label (en="Limit Reference", fr="Référence limite", es="Ref. de Límite")
+			@i18n:Tooltip (en="Indicates the limit that will be updated", fr="Référence de la limite")
+			@t24:i (align=R, inputBehaviour=F, maxLength=10, sysNumber=15.0, core=true, t24Name=LIMIT.REFERENCE)
+		DEAL_TYPE : RP_Contract:REPO__DEAL_TYPE
+			@i18n:Label (en="Deal Type", fr="Type d\'ordre", es="Tipo de Contrato")
+			@i18n:Tooltip (en="Type of Repo deal", fr="Type d\'ordre", es="Tipo de contrato Repo")
+			@t24:i (align=L, inputBehaviour=F, maxLength=15, sysNumber=16.0, core=true, t24Name=DEAL.TYPE)
+		THIRD_PARTY -> SC_Config:CUSTOMER_SECURITY
+			@i18n:Label (en="Third Party", fr="Banque de remboursement", es=Terceros)
+			@i18n:Tooltip (fr="Banque de remboursement")
+			@t24:i (align=R, inputBehaviour=F, maxLength=10, sysNumber=17.0, core=true, businessType=CUS, t24Name=THIRD.PARTY)
+		PRIN_INCREASE : mml:Double
+			@i18n:Label (en="Principal Increase", fr=Capital, es="Aumento de Capital")
+			@i18n:Tooltip (en="Indicates the increase / decrease in principal", fr=Capital)
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=18.0, core=true, businessType=AMT, t24Name=PRIN.INCREASE)
+		PRIN_INCREASE_INT : mml:Double
+			@i18n:Label (en="Principal Increase Interest", fr="Intérêt d\'augmentation principale", es="Int. Aumento Capital")
+			@i18n:Tooltip (fr="Intérêt d\'augmentation principale")
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=19.0, core=true, businessType=AMT, t24Name=PRIN.INCREASE.INT)
+		MGN_CALL_EFF_DATE : mml:date
+			@i18n:Label (en="Substitution Eff Date", fr="Date effective de substitution", es="Sustit. Fecha Efec.")
+			@i18n:Tooltip (en="Margin Call Effective Date", fr="Date effective de substitution", es="Fecha Efectiva de la Opción de Margen")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=20.0, core=true, businessType=D, t24Name=MGN.CALL.EFF.DATE)
+		SEND_PAYMENT : RP_Contract:REPO__SEND_PAYMENT
+			@i18n:Label (en="Send Payment", fr="Envoi du paiement", es="Enviar Pago")
+			@i18n:Tooltip (en="Send payment - Y/N ?", fr="Envoi du paiement", es="Enviar Pago")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=21.0, core=true, t24Name=SEND.PAYMENT)
+		PROJ_CASH_AMT : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=22.0, core=true, businessType=AMT, t24Name=PROJ.CASH.AMT)
+		NEW_SEC_CODE -> byValue RP_Contract:REPO__NEW_SEC_CODE *
+		BANK_PORTFOLIO -> SCO_PortfolioMaintenance:SEC_ACC_MASTER
+			@i18n:Label (en="Own Book Portfolio", fr="Portefeuille Banque", es="Portaf. Libro Propio")
+			@i18n:Tooltip (en="Own Book Portfolio from which security is repo\'d", fr="Portefeuille de la Banque", es="Portafolio de Libro Propio del cual el título es repo\'d")
+			@t24:i (align=L, inputBehaviour=I, maxLength=14, sysNumber=54.0, core=true, businessType=SAM, t24Name=BANK.PORTFOLIO)
+		MARGIN_PORTFOLIO -> SCO_PortfolioMaintenance:SEC_ACC_MASTER
+			@i18n:Label (en="Margin Portfolio", fr="Portefeuille de Marge", es="Cartera de Margen")
+			@i18n:Tooltip (en="Margin Portfolio of the Deal for Valuation", fr="Portefeuille de Marge ", es="Portafolio de Margen del Contrato para Valuación ")
+			@t24:i (align=L, inputBehaviour=I, maxLength=14, sysNumber=55.0, core=true, businessType=SAM, t24Name=MARGIN.PORTFOLIO)
+		INIT_MARGIN_RATE : mml:string
+			@i18n:Label (en="Initial Margin Rate", es="Tasa Margen Inicial")
+			@t24:i (align=R, inputBehaviour=F, maxLength=11, sysNumber=56.0, core=true, businessType=R, t24Name=INIT.MARGIN.RATE)
+		DRAWDOWN_ACCOUNT -> ACM_AccountOpening:ACCOUNT
+			@i18n:Label (en="Drawdown Account", fr="Compte débité", es="Cuenta de Retiros")
+			@i18n:Tooltip (en="Drawdown account of the deal", fr="Compte débité", es="Cuenta de Retiros del contrato ")
+			@t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=57.0, core=true, businessType=ANT, t24Name=DRAWDOWN.ACCOUNT)
+		PRIN_LIQ_ACCT -> ACM_AccountOpening:ACCOUNT
+			@i18n:Label (en="Prin Liq Acct", fr="Compte remb. capital", es="Cta. Liquid.Capital")
+			@i18n:Tooltip (en="Principal Liquidation account of the deal", fr="Compte de remboursement du capital", es="Cuenta de Liquidación de Capital del contrato ")
+			@t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=58.0, core=true, businessType=ANT, t24Name=PRIN.LIQ.ACCT)
+		PRIN_BEN_BANK_1 -> ST_Customer:CUSTOMER
+			@i18n:Label (en="Prin Ben Bank", fr="Banque bénéficiaire", es="Bco. Benef.Capital")
+			@i18n:Tooltip (en="Principal Beneficiary Bank for payment", fr="Banque bénéficiaire pour le capital", es="Banco Beneficiario del Capital para pago")
+			@t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=59.0, core=true, businessType=CUS, t24Name=PRIN.BEN.BANK.1)
+		PRIN_BEN_BANK_2 -> ST_Customer:CUSTOMER
+			@i18n:Label (en="Prin Ben Bank.2", fr="Corresp. Banque bénéficiaire", es="Banco Benef. Prin. 2")
+			@i18n:Tooltip (en="2nd bank involved in 4 party transfer of principal", fr="Correspondant de la Banque bénéficiaire", es="Banco Beneficiario Principal 2")
+			@t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=60.0, core=true, businessType=CUS, t24Name=PRIN.BEN.BANK.2)
+		PRIN_ADDRESS -> byValue RP_Contract:REPO__PRIN_ADDRESS *
+		BENEF_PRIN_ACCT -> byValue RP_Contract:REPO__BENEF_PRIN_ACCT *
+		INT_LIQ_ACCT -> ACM_AccountOpening:ACCOUNT
+			@i18n:Label (en="Interest Liq Acct", fr="Compte des intérêts", es="Cta. Liquid. de Int.")
+			@i18n:Tooltip (en="Indicates Interest Liquidation Account", fr="Compte de perception ou paiement des intérêts", es="Cuenta de Liquidación de Interés ")
+			@t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=63.0, core=true, businessType=ANT, t24Name=INT.LIQ.ACCT)
+		INT_BEN_BANK_1 -> ST_Customer:CUSTOMER
+			@i18n:Label (en="Interest Beneficiary Bank", fr="Banque bénéf d\'Intérêt", es="Bco. Benef. Int.")
+			@i18n:Tooltip (fr="Banque bénéf d\'Intérêt")
+			@t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=64.0, core=true, businessType=CUS, t24Name=INT.BEN.BANK.1)
+		INT_BEN_BANK_2 -> ST_Customer:CUSTOMER
+			@i18n:Label (fr="Banque du bénéf 2")
+			@i18n:Tooltip (fr="Banque du bénéf 2")
+			@t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=65.0, core=true, businessType=CUS, t24Name=INT.BEN.BANK.2)
+		INT_ADDRESS -> byValue RP_Contract:REPO__INT_ADDRESS *
+		BEN_INT_ACCT -> byValue RP_Contract:REPO__BEN_INT_ACCT *
+		OLD_SEC_CODE -> byValue RP_Contract:REPO__OLD_SEC_CODE *
+		CUST_PORTFOLIO -> SCO_PortfolioMaintenance:SEC_ACC_MASTER
+			@i18n:Label (en="Customer Portfolio", es="Cartera de Cliente")
+			@t24:i (align=L, inputBehaviour=F, maxLength=14, sysNumber=98.0, core=true, businessType=SAM, t24Name=CUST.PORTFOLIO)
+		BROKER_DEPO -> SC_Config:CUSTOMER_SECURITY
+			@i18n:Label (en="Broker Depository", fr="Dépositaire courtier", es="Depositario Corredor")
+			@i18n:Tooltip (en="Identifies the broker depository", fr="Dépositaire courtier", es="Identifica el Depositorio del corredor")
+			@t24:i (align=R, inputBehaviour=F, maxLength=14, sysNumber=99.0, core=true, businessType=CUS, t24Name=BROKER.DEPO)
+		BANK_INT_RATE : mml:string
+			@i18n:Label (en="Bank Int Rate", es="Tasa de Interés de Banco")
+			@i18n:Tooltip (en="Indicates the bank interest rate", es="Indica la tasa de interés del banco")
+			@t24:i (align=L, inputBehaviour=F, maxLength=11, sysNumber=100.0, core=true, businessType=A, t24Name=BANK.INT.RATE)
+		BANK_SPREAD_RATE : mml:string
+			@i18n:Label (en="Bank Spread Rate", es="Tasa Margen de Banco")
+			@i18n:Tooltip (en="Indicates the bank spread rate", es="Indica la tasa de margen del banco")
+			@t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=101.0, core=true, businessType=R, t24Name=BANK.SPREAD.RATE)
+		BANK_SPREAD : mml:Double
+			@i18n:Label (en="Bank Spread", es="Margen de Banco")
+			@i18n:Tooltip (en="Specifies the bank spread amount", es="Especifica el monto de margen del banco")
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=102.0, core=true, businessType=AMT, t24Name=BANK.SPREAD)
+		SEND_NOTICE -> byValue RP_Contract:REPO__SEND_NOTICE *
+		TRADE_TIME : mml:string
+			@i18n:Label (en="Trade Time", fr="Heure transaction", es="Hora del Negocio")
+			@i18n:Tooltip (en="Records the time when the contract has taken place", fr="Heure transaction", es="Registra la hora cuando se realizó el contrato")
+			@t24:i (align=L, inputBehaviour=I, maxLength=11, sysNumber=104.0, core=true, businessType=TIME, t24Name=TRADE.TIME)
+		DAYS_DELIVERY : mml:Integer
+			@i18n:Label (en="Delivery Days", fr="Jours ouvrables de livraison", es="Días de Entrega")
+			@i18n:Tooltip (fr="Jours ouvrables de livraison")
+			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=105.0, core=true, t24Name=DAYS.DELIVERY)
+		BR_ACCOUNT_NO -> ACM_AccountOpening:ACCOUNT
+			@i18n:Label (en="Br Sett Acc", fr="Compte de la donation de courtier", es="Cta. Liquid. Corredor")
+			@i18n:Tooltip (en="Broker Settlement Account Number", fr="Compte de la donation de courtier", es="Número de Cuenta de Liquidación de Corredor")
+			@t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=106.0, core=true, businessType=ANT, t24Name=BR.ACCOUNT.NO)
+		BR_ACCOUNT_CCY -> FIN_CurrencyConfig:CURRENCY
+			@i18n:Label (en="Br Sett Acc Ccy", fr=Devise, es="Mda.Cta. Liquid. Corr.")
+			@i18n:Tooltip (en="Currency of the broker account number", fr=Devise, es="Moneda del número de cuenta del corredor")
+			@t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=107.0, core=true, businessType=CCY, t24Name=BR.ACCOUNT.CCY)
+		TAX_CODE : mml:string
+			@i18n:Label (en="Tax Code", fr=Taxe, es="Código de Impuesto")
+			@i18n:Tooltip (fr="Code taxe")
+			@t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=108.0, core=true, businessType=TAX, t24Name=TAX.CODE)
+		TAX_AMT : mml:Double
+			@i18n:Label (en="Tax Amount", fr="Montant des taxes", es="Monto de Impuesto")
+			@i18n:Tooltip (en="Indicates the tax amount", fr="Montant des taxes")
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=109.0, core=true, businessType=AMT, t24Name=TAX.AMT)
+		TAX_AMT_LCY : mml:Double
+			@i18n:Label (en="Tax Amount Local", fr="Mntt d\'impôt en monnaie", es="Monto de Impuesto Local")
+			@i18n:Tooltip (fr="Montant d\'impôt en monnaie")
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=110.0, core=true, businessType=AMT, t24Name=TAX.AMT.LCY)
+		CAPITALISATION : mml:Integer
+			@i18n:Label (en=Capitalisation, fr="Capitalisation Int.", es="Capitalización")
+			@i18n:Tooltip (en="Capitalisation of interest", fr="Capitalisation des intérêts", es="Capitalización del Interés")
+			@t24:i (align=R, inputBehaviour=N, maxLength=3, sysNumber=111.0, core=true, t24Name=CAPITALISATION)
+		MM_INT_DUE_DATE : mml:string
+			@i18n:Label (en="Money Market Interest Due Date", es="Fecha Vencim. Int. Merc.Divi.")
+			@i18n:Tooltip (en="Money Market Interest Due Date", es="Fecha de Vencimiento de Interés de Mercado de Divisas")
+			@t24:i (align=L, inputBehaviour=N, maxLength=19, sysNumber=112.0, core=true, businessType=FQU, t24Name=MM.INT.DUE.DATE)
+		CALCULATION_LINK : RP_Contract:REPO__CALCULATION_LINK
+			@i18n:Label (en="Calculation Link", fr="Lien de calcul", es="vínculo de Cálculo")
+			@i18n:Tooltip (fr="Lien de calcul")
+			@t24:i (align=L, inputBehaviour=F, maxLength=3, sysNumber=113.0, core=true, t24Name=CALCULATION.LINK)
+		SC_INIT_MGN_METHOD : RP_Contract:REPO__SC_INIT_MGN_METHOD
+			@i18n:Label (en="Interest Margin Method", es="Método Margen Int.")
+			@i18n:Tooltip (en="Interest Margin Method", es="Método de Margen de Interés")
+			@t24:i (align=L, inputBehaviour=F, maxLength=8, sysNumber=114.0, core=true, t24Name=SC.INIT.MGN.METHOD)
+		TRANS_TYPE : RP_Contract:REPO__TRANS_TYPE
+			@i18n:Label (en="Trans Type", fr="Type d\'opération", es="Ref. de Trs.")
+			@i18n:Tooltip (en="Indicates the Transaction Type", fr="Type d\'opération", es="Indica el Tipo de transacción")
+			@t24:i (align=L, inputBehaviour=F, maxLength=8, sysNumber=115.0, core=true, t24Name=TRANS.TYPE)
+		MM_LOCREF_NAME -> byValue RP_Contract:REPO__MM_LOCREF_NAME *
+		STR_LOCREF_NAME -> byValue RP_Contract:REPO__STR_LOCREF_NAME *
+		MATURE_AT_SOD : mml:Integer
+			@i18n:Label (en="Mature at Start Of Day", fr="Trt échéance début journée", es="Vence al Inicio de Día")
+			@i18n:Tooltip (en="Whether to mature at Start Of Day or not", fr="Trt échéance début journée", es="Vence al Inicio del Día")
+			@t24:i (align=R, inputBehaviour=N, maxLength=3, sysNumber=120.0, core=true, t24Name=MATURE.AT.SOD)
+		COUNTRY_RISK -> ST_Config:COUNTRY
+			@i18n:Label (en="Country Risk", fr="Risque pays", es="Riesgo de País")
+			@i18n:Tooltip (en="The country risk involved in contract", fr="Risque pays")
+			@t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=121.0, core=true, businessType=S, t24Name=COUNTRY.RISK)
+		GROUP_STATUS : RP_Contract:REPO__GROUP_STATUS
+			@i18n:Label (en="Group Status", fr="Statut de groupe", es="Estado del Grupo")
+			@i18n:Tooltip (en="Etat de groupe", fr="Statut de groupe", es="Estado de grupo")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=122.0, core=true, t24Name=GROUP.STATUS)
+		BR_AGENT -> byValue RP_Contract:REPO__BR_AGENT *
+		COUNTERPARTY_DEPO : mml:string
+			@i18n:Label (en="Counterparty Depository", fr="Dépôt C/partie", es="Depositario Contraparte")
+			@i18n:Tooltip (fr="Dépôt contrepartie")
+			@t24:i (align=L, inputBehaviour=F, maxLength=35, sysNumber=125.0, core=true, businessType=S, t24Name=COUNTERPARTY.DEPO)
+		CPTY_SEC_DEPO_AC : mml:string
+			@i18n:Label (en="Counterparty Depo Acc", fr="Contrepartie Depo Acc", es="Cta. Depositario Contrap.")
+			@i18n:Tooltip (fr="Contrepartie Depo Acc")
+			@t24:i (align=L, inputBehaviour=F, maxLength=35, sysNumber=126.0, core=true, businessType=S, t24Name=CPTY.SEC.DEPO.AC)
+		NEGATIVE_RATE : RP_Contract:REPO__NEGATIVE_RATE
+			@i18n:Label (en="Negative Rate", fr="Taux négatif", es="Tasa Negativa")
+			@i18n:Tooltip (fr="Taux négatif autorisé")
+			@t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=127.0, core=true, t24Name=NEGATIVE.RATE)
+		PSET : mml:string
+			@i18n:Label (en="Place of Settlement", es="Lugar de Liquidación")
+			@i18n:Tooltip (en="Place of settlement", es="Lugar de Liquidación")
+			@t24:i (align=L, inputBehaviour=F, maxLength=15, sysNumber=128.0, core=true, businessType=A, t24Name=PSET)
+		CANCEL_MAT_CALL : mml:string
+			@i18n:Label (en="Cancel Mat Call")
+			@i18n:Tooltip (en="Cancel Mat Call")
+			@t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=129.0, core=true, businessType=S, t24Name=CANCEL.MAT.CALL)
+		FT_TRANS_TYPE : mml:Integer
+			@i18n:Label (en="FT Transaction Type", fr="FT Type de Transaction", es="Tipo de Trs. FT")
+			@i18n:Tooltip (en="FT Transaction Type", fr="FT Type de Transaction ", es="Tipo de Transacción de Transferencia de Fondos")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=130.0, core=true, t24Name=FT.TRANS.TYPE)
+		ACTIVITY_CODE -> byValue RP_Contract:REPO__ACTIVITY_CODE *
+		INIT_MARGIN_AMT : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=135.0, core=true, businessType=AMT, t24Name=INIT.MARGIN.AMT)
+		MARGIN_PORT_SUFFIX : mml:Integer
+			@i18n:Label (en="Margin Port Suffix", fr="Margin Port Suffix", es="Sufijo Portaf. Margen")
+			@i18n:Tooltip (en="Margin Port Suffix", fr="Margin Port Suffix", es="Sufijo de Portafolio del Margen ")
+			@t24:i (align=R, inputBehaviour=N, maxLength=3, sysNumber=136.0, core=true, t24Name=MARGIN.PORT.SUFFIX)
+		BROKER_NO -> SC_Config:CUSTOMER_SECURITY
+			@i18n:Label (en=Broker/Contrepartie, fr=Courtier, es=Corredor/Contraparte)
+			@i18n:Tooltip (en="Broker/Contrepartie of the Repo Deal", fr="Code courtier", es="Corrredor/Contraparte del Contrato Repo")
+			@t24:i (align=R, inputBehaviour=N, maxLength=10, sysNumber=137.0, core=true, businessType=CUS, t24Name=BROKER.NO)
+		TRANSACTION_INDEX : RP_Contract:REPO__TRANSACTION_INDEX
+			@i18n:Label (en="Transaction Index", fr=Code, es="Indice Transacción")
+			@i18n:Tooltip (en="Identifies the transaction either as Repo or Reso", fr=Code, es="Identifica la transacción como Repo o Reso")
+			@t24:i (align=L, inputBehaviour=N, maxLength=7, sysNumber=138.0, core=true, t24Name=TRANSACTION.INDEX)
+		TRANSFER_CHARGES : mml:Double
+			@i18n:Label (en="Transfer Charges", es="Cargos de Transf.")
+			@i18n:Tooltip (en="Transfer Charges", es="Cargos de Transferencia ")
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=139.0, core=true, businessType=AMT, t24Name=TRANSFER.CHARGES)
+		DELIVERY_INSTR -> SC_Config:SC_DEL_INSTR
+			@i18n:Label (en="Delivery Instruction", fr=Instructions, es="Instrucción Entrega")
+			@i18n:Tooltip (en="Delivery Instruction for the Repo trades", fr=Instructions, es="Instrucción de Entrega para los negocios Repo")
+			@t24:i (align=L, inputBehaviour=I, maxLength=5, sysNumber=140.0, core=true, businessType=A, t24Name=DELIVERY.INSTR)
+		SC_TRANS_TYPE -> SC_Config:SC_TRANS_NAME
+			@i18n:Label (en="Security Transfer Type", es="Tipo Transf. de Tít.")
+			@i18n:Tooltip (en="Security Transfer Type", es="Tipo de Transferencia de Título Valor")
+			@t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=141.0, core=true, businessType=S, t24Name=SC.TRANS.TYPE)
+		SC_REV_TRANS_TYPE -> SC_Config:SC_TRANS_NAME
+			@i18n:Label (en="Security Reverse Transfer Type", es="Tipo Transf. Rev Tít.")
+			@i18n:Tooltip (en="Used for removing the security from repo contract", es="Usado para remover el título del contrato Repo")
+			@t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=142.0, core=true, businessType=S, t24Name=SC.REV.TRANS.TYPE)
+		INTEREST_AMOUNT : mml:Double
+			@i18n:Label (en="Interest Amt", fr="Montant d\'intérêt", es="Monto de Interés")
+			@i18n:Tooltip (fr="Montant d\'intérêt")
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=143.0, core=true, businessType=AMT, t24Name=INTEREST.AMOUNT)
+		MM_INT_BASIS : mml:string
+			@i18n:Label (en="Money Market Interest Basis", es="Base Int. Merc. Divis.")
+			@i18n:Tooltip (en="Money Market Interest Basis", es="Base de Interés del Mercado de Divisas")
+			@t24:i (align=L, inputBehaviour=N, maxLength=2, sysNumber=144.0, core=true, businessType=A, t24Name=MM.INT.BASIS)
+		MM_CONTRACT_ID : mml:string
+			@i18n:Label (en="MM Ref", fr="Réf. MM", es="No. Ref.Mercado Divis.")
+			@i18n:Tooltip (en="Reference of MM contract created by system", fr="Référence MM", es="Referencia de Contrato de Mercado de Divisas")
+			@t24:i (align=L, inputBehaviour=N, maxLength=14, sysNumber=145.0, core=true, businessType=A, t24Name=MM.CONTRACT.ID)
+		ST_CONTRACT_ID -> byValue RP_Contract:REPO__ST_CONTRACT_ID *
+		ST_REVERSE_ID -> byValue RP_Contract:REPO__ST_REVERSE_ID *
+		ST_HISTORY_ID -> byValue RP_Contract:REPO__ST_HISTORY_ID *
+		ST_UNAU_CONT_ID -> byValue RP_Contract:REPO__ST_UNAU_CONT_ID *
+		ST_UNAU_REV_ID -> byValue RP_Contract:REPO__ST_UNAU_REV_ID *
+		CONTRACT_STATUS : mml:string
+			@i18n:Label (en="Contract Status", fr="Statut du contrat", es=Estado)
+			@i18n:Tooltip (fr="Statut du contrat")
+			@t24:i (align=L, inputBehaviour=N, maxLength=5, sysNumber=151.0, core=true, businessType=SSS, t24Name=CONTRACT.STATUS)
+		FT_LOCREF_NAME -> byValue RP_Contract:REPO__FT_LOCREF_NAME *
+		FT_UNAU_MGN_ID -> byValue RP_Contract:REPO__FT_UNAU_MGN_ID *
+		FT_MARGIN_ID -> byValue RP_Contract:REPO__FT_MARGIN_ID *
+		RT_DEAL_TYPE : mml:string
+			@i18n:Label (en="RT Deal Type", es="Tipo de Contrato RT")
+			@i18n:Tooltip (en="System populated, no input", es="\"Poblado por Sistema, sin entrada\"")
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=156.0, core=true, businessType=A, t24Name=RT.DEAL.TYPE)
+		CASH_HOLD_SETTLE : RP_Contract:REPO__CASH_HOLD_SETTLE
+			@i18n:Label (en="Settle Cash?", fr="Règlement immédiat", es="¿Liquidar Efectivo?")
+			@i18n:Tooltip (en="If to be cash settled", fr="Règlement immédiat", es="Si va ser liquidado en efectivo")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=157.0, core=true, t24Name=CASH.HOLD.SETTLE)
+		SEC_HOLD_SETTLE : RP_Contract:REPO__SEC_HOLD_SETTLE
+			@i18n:Label (en="Settle Stock?", fr="Contient les titres", es="¿Liquidar valores?")
+			@i18n:Tooltip (en="If to be stock settled", fr="Contient les titres", es="Si va ser liquidado en valores")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=158.0, core=true, t24Name=SEC.HOLD.SETTLE)
+		CUST_ACT_SUSP_CAT -> ST_Config:CATEGORY
+			@i18n:Label (en="Cust Cash Susp", fr="Catégorie suspens client", es=Cat.Cta.Trans.Cliente)
+			@i18n:Tooltip (en="Suspense account to post customer cash amount", fr="Catégorie suspens client", es="Categoría de Cuenta Transitoria de Cliente")
+			@t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=159.0, core=true, t24Name=CUST.ACT.SUSP.CAT)
+		BROK_ACT_SUSP_CAT -> ST_Config:CATEGORY
+			@i18n:Label (en="Broker Acc Suspense Category", fr="Catégorie suspens courtier", es="Cat. Transi.Cta.Corr.")
+			@i18n:Tooltip (en="The suspense amount of the broker is posted to it", fr="Catégorie suspens courtier", es="El monto transitorio del corredor es registrado a ella")
+			@t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=160.0, core=true, t24Name=BROK.ACT.SUSP.CAT)
+		MISC_ACT_SUSP_CAT -> ST_Config:CATEGORY
+			@i18n:Label (en="Misc Acc Suspense Category", fr="Catégorie montant en suspens", es="Cat.Transitoria Cta Misc.")
+			@i18n:Tooltip (en="Miscellaneous Account Suspense Category", fr="Catégorie montant en suspens ", es="Categoría Transitoria de Cuentas Varias ")
+			@t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=161.0, core=true, t24Name=MISC.ACT.SUSP.CAT)
+		AUTO_CUST_SETT : RP_Contract:REPO__AUTO_CUST_SETT
+			@i18n:Label (en="Auto Cust Settle", fr="Réglt Auto Clt", es="Liquid. Auto. Cliente")
+			@i18n:Tooltip (en="Automatic settlement of Customer nominal and cash ", fr="Règlement Automatique Client", es="Liquid. auto. de Cliente de nominal y efectivo")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=162.0, core=true, t24Name=AUTO.CUST.SETT)
+		AUTO_BROK_SETT : RP_Contract:REPO__AUTO_BROK_SETT
+			@i18n:Label (en="Settlement type", fr="Régler Courtier Auto", es="Tipo de liquidación")
+			@i18n:Tooltip (fr="Régler Courtier Auto")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=163.0, core=true, t24Name=AUTO.BROK.SETT)
+		MGN_CALL_TRD_DATE : mml:date
+			@i18n:Label (en="Margin Call Trade Date", es="Fecha Neg.Opción Mar.")
+			@i18n:Tooltip (en="Margin Call Trade Date", es="Fecha de Negocio de Opción de Margen")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=164.0, core=true, businessType=D, t24Name=MGN.CALL.TRD.DATE)
+		EFF_INT_BASIS : RP_Contract:REPO__EFF_INT_BASIS
+			@t24:i (align=L, inputBehaviour=F, maxLength=2, sysNumber=165.0, core=true, t24Name=EFF.INT.BASIS)
+		EFFECTIVE_RATE : mml:string
+			@i18n:Label (fr="Taux effectif")
+			@i18n:Tooltip (fr="Taux effectif")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=166.0, core=true, businessType=R, t24Name=EFFECTIVE.RATE)
+		PI_INT_KEY : mml:string
+			@i18n:Label (fr="Id. Taux périodique")
+			@i18n:Tooltip (fr="Identifiant du taux périodique")
+			@t24:i (align=L, inputBehaviour=F, maxLength=13, sysNumber=167.0, core=true, businessType=S, t24Name=PI.INT.KEY)
+		RATE_CH_DATE : mml:date
+			@i18n:Label (fr="Date changement de taux")
+			@i18n:Tooltip (fr="Date changement de taux")
+			@t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=168.0, core=true, businessType=D, t24Name=RATE.CH.DATE)
+		INT_TERM : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=11, sysNumber=169.0, core=true, businessType=A, t24Name=INT.TERM)
+		INT_SPREAD : mml:string
+			@i18n:Label (en="Interest Spread", fr=Marge, es="Margen de Interés")
+			@i18n:Tooltip (fr=Marge)
+			@t24:i (align=L, inputBehaviour=I, maxLength=11, sysNumber=170.0, core=true, businessType=DEC, t24Name=INT.SPREAD)
+		RATE_SELECTION : RP_Contract:REPO__RATE_SELECTION
+			@i18n:Label (fr="Type taux (bid/offer)")
+			@i18n:Tooltip (fr="Type taux (bid/offer)")
+			@t24:i (align=L, inputBehaviour=F, maxLength=5, sysNumber=171.0, core=true, t24Name=RATE.SELECTION)
+		NEXT_RATE_CH_DATE : mml:string
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=172.0, core=true, businessType=MATLMM, t24Name=NEXT.RATE.CH.DATE)
+		CAP_INT : RP_Contract:REPO__CAP_INT
+			@i18n:Label (en="Capitalise Interest", es="Capitalizar Interés")
+			@i18n:Tooltip (en="Indicate whether to capitalise interest schedules?")
+			@t24:i (align=L, inputBehaviour=F, maxLength=1, sysNumber=173.0, core=true, t24Name=CAP.INT)
+		AUTO_ROLLOVER : mml:Integer
+			@i18n:Label (fr="Renouvellement auto.")
+			@i18n:Tooltip (fr="Renouvellement automatique")
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=174.0, core=true, t24Name=AUTO.ROLLOVER)
+		RESERVED_4 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=175.0, core=true, t24Name=RESERVED.4)
+		RESERVED_3 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=176.0, core=true, t24Name=RESERVED.3)
+		RESERVED_2 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=177.0, core=true, t24Name=RESERVED.2)
+		RESERVED_1 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=178.0, core=true, t24Name=RESERVED.1)
+		STATEMENT_NOS -> byValue RP_Contract:REPO__STATEMENT_NOS *
+		OVERRIDE -> byValue RP_Contract:REPO__OVERRIDE *
+		RECORD_STATUS : mml:string
+			@i18n:Label (en="Record Status", fr=Statut, es=Estado)
+			@i18n:Tooltip (fr="Statut de l\'enregistrement")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=182.0, core=true, businessType=STAT, t24Name=RECORD.STATUS)
+		CURR_NO : mml:Integer
+			@i18n:Label (en="Curr No", fr="N° version", es="No. Actual")
+			@i18n:Tooltip (fr="Numéro de version")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=183.0, core=true, t24Name=CURR.NO)
+		INPUTTER -> byValue RP_Contract:REPO__INPUTTER *
+		DATE_TIME -> byValue RP_Contract:REPO__DATE_TIME *
+		AUTHORISER : mml:string
+			@i18n:Label (en=Authoriser, fr="Validé par", es=Autorizador)
+			@i18n:Tooltip (en="Indicates the User who Authorises the record", fr="Utilisateur de validation", es="El usuario que autorizó el registro")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=186.0, core=true, businessType=A, t24Name=AUTHORISER)
+		CO_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company, fr=Entité, es="Compañía")
+			@i18n:Tooltip (fr="Code établissement ou agence")
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=187.0, core=true, businessType=A, t24Name=CO.CODE)
+		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Dept Code", fr=Service, es=Departamento)
+			@i18n:Tooltip (fr="Code du service")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=188.0, core=true, t24Name=DEPT.CODE)
+		AUDITOR_CODE : mml:string
+			@i18n:Label (en="Auditor Code", fr="Audité par", es="Código de Auditor")
+			@i18n:Tooltip (en="Auditor Code", fr="Utilisateur d\'audit", es="Nombre del auditor")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=189.0, core=true, businessType=A, t24Name=AUDITOR.CODE)
+		AUDIT_DATE_TIME : mml:dateTime
+			@i18n:Label (en="Audit Date Time", fr="Audité le", es="Fecha/Hora de Audit.")
+			@i18n:Tooltip (en="Date and time when record was audited", fr="Date et heure d\'audit", es="Fecha y Hora de Auditoría ")
+			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=190.0, core=true, businessType=RELTIME, t24Name=AUDIT.DATE.TIME)
+	}
+	REPO__BUSINESS_CENTRE
+	{
+		BUSINESS_CENTRE -> ST_Config:COUNTRY
+			@t24:i (align=L, inputBehaviour=F, maxLength=4, sysNumber=4.0, core=true, businessType=A, t24Name=BUSINESS.CENTRE)
+	}
+	REPO__CONDITION
+	{
+		CONDITION : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=14.0, core=true, businessType=S, t24Name=CONDITION)
+	}
+	REPO__NEW_SEC_CODE
+	{
+		NEW_SEC_CODE -> SCO_SecurityMasterMaintenance:SECURITY_MASTER
+			@t24:i (align=L, inputBehaviour=I, maxLength=12, sysNumber=23.0, core=true, businessType=SEC, t24Name=NEW.SEC.CODE)
+		NEW_NOMINAL : mml:string
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=24.0, core=true, businessType=NOMAMT, t24Name=NEW.NOMINAL)
+		CLEAN_PRICE : mml:string
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=25.0, core=true, businessType=R, t24Name=CLEAN.PRICE)
+		GROSS_AMOUNT : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=26.0, core=true, businessType=AMT, t24Name=GROSS.AMOUNT)
+		DIRTY_PRICE : mml:string
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=27.0, core=true, businessType=R, t24Name=DIRTY.PRICE)
+		ACCRUED_INT_AMT : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=28.0, core=true, businessType=AMT, t24Name=ACCRUED.INT.AMT)
+		NEW_DEPO -> SC_Config:CUSTOMER_SECURITY
+			@t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=29.0, core=true, businessType=CUS, t24Name=NEW.DEPO)
+		SUB_ACCOUNT : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=16, sysNumber=30.0, core=true, t24Name=SUB.ACCOUNT)
+		NEW_CU_ACCT_NO -> ACM_AccountOpening:ACCOUNT
+			@t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=31.0, core=true, businessType=ANT, t24Name=NEW.CU.ACCT.NO)
+		SC_INIT_MGN_RTE : mml:string
+			@t24:i (align=R, inputBehaviour=F, maxLength=11, sysNumber=32.0, core=true, businessType=R, t24Name=SC.INIT.MGN.RTE)
+		SC_INIT_MGN_AMT : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=33.0, core=true, businessType=AMT, t24Name=SC.INIT.MGN.AMT)
+		TOTAL_SETTLEMNT : mml:Double
+			@t24:i (align=R, inputBehaviour=F, maxLength=18, sysNumber=34.0, core=true, businessType=AMT, t24Name=TOTAL.SETTLEMNT)
+		REPO_INTEREST : mml:Double
+			@t24:i (align=R, inputBehaviour=F, maxLength=18, sysNumber=35.0, core=true, businessType=AMT, t24Name=REPO.INTEREST)
+		FWD_SETTLEMNT : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=36.0, core=true, businessType=AMT, t24Name=FWD.SETTLEMNT)
+		FWD_PRICE : mml:string
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=37.0, core=true, businessType=R, t24Name=FWD.PRICE)
+		BND_RND_METH : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=10, sysNumber=38.0, core=true, t24Name=BND.RND.METH)
+		FWD_ACCR_INT : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=39.0, core=true, businessType=AMT, t24Name=FWD.ACCR.INT)
+		CPN_AMT : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=40.0, core=true, businessType=AMT, t24Name=CPN.AMT)
+		CPN_INVST_RATE : mml:string
+			@t24:i (align=R, inputBehaviour=F, maxLength=11, sysNumber=41.0, core=true, businessType=R, t24Name=CPN.INVST.RATE)
+		CPN_INVST_AMT : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=42.0, core=true, businessType=AMT, t24Name=CPN.INVST.AMT)
+		GRP_TRD_ID -> byValue RP_Contract:REPO__NEW_SEC_CODE__GRP_TRD_ID *
+		FX_RATE : mml:string
+			@t24:i (align=R, inputBehaviour=I, maxLength=15, sysNumber=45.0, core=true, businessType=R, t24Name=FX.RATE)
+		GROSS_AMT_SEC : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=46.0, core=true, businessType=AMT, t24Name=GROSS.AMT.SEC)
+		MGN_DELIV_INSTR -> SC_Config:SC_DEL_INSTR
+			@t24:i (align=L, inputBehaviour=I, maxLength=5, sysNumber=47.0, core=true, businessType=A, t24Name=MGN.DELIV.INSTR)
+		SUPP_DELIVERY : RP_Contract:REPO__NEW_SEC_CODE__SUPP_DELIVERY
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=48.0, core=true, t24Name=SUPP.DELIVERY)
+		NEW_CU_ACCT_CCY -> FIN_CurrencyConfig:CURRENCY
+			@t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=49.0, core=true, businessType=CCY, t24Name=NEW.CU.ACCT.CCY)
+		NEW_CU_BR_XRATE : mml:string
+			@t24:i (align=R, inputBehaviour=I, maxLength=15, sysNumber=50.0, core=true, businessType=R, t24Name=NEW.CU.BR.XRATE)
+		SBL_DIV_RATE -> byValue RP_Contract:REPO__NEW_SEC_CODE__SBL_DIV_RATE *
+		RESERVEDX1 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=53.0, core=true, t24Name=RESERVEDX1)
+	}
+	REPO__NEW_SEC_CODE__GRP_TRD_ID
+	{
+		GRP_TRD_ID : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=43.0, core=true, t24Name=GRP.TRD.ID)
+		GRP_TRD_PROC : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=44.0, core=true, t24Name=GRP.TRD.PROC)
+	}
+	REPO__NEW_SEC_CODE__SBL_DIV_RATE
+	{
+		SBL_DIV_RATE : mml:string
+			@t24:i (align=R, inputBehaviour=I, maxLength=15, sysNumber=51.0, core=true, businessType=R, t24Name=SBL.DIV.RATE)
+		SBL_EFF_DATE : mml:date
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=52.0, core=true, businessType=D, t24Name=SBL.EFF.DATE)
+	}
+	REPO__PRIN_ADDRESS
+	{
+		PRIN_ADDRESS : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=61.0, core=true, businessType=S, t24Name=PRIN.ADDRESS)
+	}
+	REPO__BENEF_PRIN_ACCT
+	{
+		BENEF_PRIN_ACCT : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=62.0, core=true, businessType=S, t24Name=BENEF.PRIN.ACCT)
+	}
+	REPO__INT_ADDRESS
+	{
+		INT_ADDRESS : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=66.0, core=true, businessType=S, t24Name=INT.ADDRESS)
+	}
+	REPO__BEN_INT_ACCT
+	{
+		BEN_INT_ACCT : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=67.0, core=true, businessType=S, t24Name=BEN.INT.ACCT)
+	}
+	REPO__OLD_SEC_CODE
+	{
+		OLD_SEC_CODE -> SCO_SecurityMasterMaintenance:SECURITY_MASTER
+			@t24:i (align=L, inputBehaviour=N, maxLength=12, sysNumber=68.0, core=true, businessType=SEC, t24Name=OLD.SEC.CODE)
+		OLD_NOMINAL : mml:string
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=69.0, core=true, businessType=NOMAMT, t24Name=OLD.NOMINAL)
+		OLD_CLEAN_PRICE : mml:string
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=70.0, core=true, businessType=R, t24Name=OLD.CLEAN.PRICE)
+		OLD_GROSS_AMT : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=71.0, core=true, businessType=AMT, t24Name=OLD.GROSS.AMT)
+		OLD_DIRTY_PRICE : mml:string
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=72.0, core=true, businessType=R, t24Name=OLD.DIRTY.PRICE)
+		OLD_ACC_INT_AMT : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=73.0, core=true, businessType=AMT, t24Name=OLD.ACC.INT.AMT)
+		OLD_DEPO -> SC_Config:CUSTOMER_SECURITY
+			@t24:i (align=R, inputBehaviour=N, maxLength=10, sysNumber=74.0, core=true, businessType=CUS, t24Name=OLD.DEPO)
+		OLD_SUB_ACCOUNT : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=16, sysNumber=75.0, core=true, t24Name=OLD.SUB.ACCOUNT)
+		OLD_CU_ACCT_NO -> ACM_AccountOpening:ACCOUNT
+			@t24:i (align=L, inputBehaviour=N, maxLength=16, sysNumber=76.0, core=true, businessType=ANT, t24Name=OLD.CU.ACCT.NO)
+		OLD_MGN_RTE : mml:string
+			@t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=77.0, core=true, businessType=R, t24Name=OLD.MGN.RTE)
+		OLD_MGN_AMT : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=78.0, core=true, businessType=AMT, t24Name=OLD.MGN.AMT)
+		OLD_TOTAL_SMNT : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=79.0, core=true, businessType=AMT, t24Name=OLD.TOTAL.SMNT)
+		OLD_REPO_INT : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=80.0, core=true, businessType=AMT, t24Name=OLD.REPO.INT)
+		OLD_FWD_SMNT : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=81.0, core=true, businessType=AMT, t24Name=OLD.FWD.SMNT)
+		OLD_FWD_PRICE : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=82.0, core=true, businessType=AMT, t24Name=OLD.FWD.PRICE)
+		OLD_BND_RND_MTH : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=10, sysNumber=83.0, core=true, t24Name=OLD.BND.RND.MTH)
+		OLD_FWD_ACC_INT : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=84.0, core=true, businessType=AMT, t24Name=OLD.FWD.ACC.INT)
+		OLD_CPN_AMT : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=85.0, core=true, businessType=AMT, t24Name=OLD.CPN.AMT)
+		OLD_CPN_INV_RTE : mml:string
+			@t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=86.0, core=true, businessType=R, t24Name=OLD.CPN.INV.RTE)
+		OLD_CPN_INV_AMT : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=87.0, core=true, businessType=AMT, t24Name=OLD.CPN.INV.AMT)
+		OLD_GP_TD_ID -> byValue RP_Contract:REPO__OLD_SEC_CODE__OLD_GP_TD_ID *
+		OLD_GRS_AMT_SEC : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=90.0, core=true, businessType=AMT, t24Name=OLD.GRS.AMT.SEC)
+		OLD_MGN_DEL_INS : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=5, sysNumber=91.0, core=true, t24Name=OLD.MGN.DEL.INS)
+		OLD_SUPP_DEL : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=3, sysNumber=92.0, core=true, t24Name=OLD.SUPP.DEL)
+		OLD_CU_ACCT_CCY -> FIN_CurrencyConfig:CURRENCY
+			@t24:i (align=R, inputBehaviour=N, maxLength=3, sysNumber=93.0, core=true, t24Name=OLD.CU.ACCT.CCY)
+		OLD_CU_BR_XRATE : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=15, sysNumber=94.0, core=true, t24Name=OLD.CU.BR.XRATE)
+		OLD_SBL_RTE -> byValue RP_Contract:REPO__OLD_SEC_CODE__OLD_SBL_RTE *
+		RESERVEDXX1 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=97.0, core=true, t24Name=RESERVEDXX1)
+	}
+	REPO__OLD_SEC_CODE__OLD_GP_TD_ID
+	{
+		OLD_GP_TD_ID : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=88.0, core=true, t24Name=OLD.GP.TD.ID)
+		OLD_GP_TD_PR : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=89.0, core=true, t24Name=OLD.GP.TD.PR)
+	}
+	REPO__OLD_SEC_CODE__OLD_SBL_RTE
+	{
+		OLD_SBL_RTE : mml:string
+			@t24:i (align=R, inputBehaviour=N, maxLength=15, sysNumber=95.0, core=true, businessType=R, t24Name=OLD.SBL.RTE)
+		OLD_SBL_DTE : mml:date
+			@t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=96.0, core=true, businessType=D, t24Name=OLD.SBL.DTE)
+	}
+	REPO__SEND_NOTICE
+	{
+		SEND_NOTICE : RP_Contract:REPO__SEND_NOTICE__SEND_NOTICE
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=103.0, core=true, t24Name=SEND.NOTICE)
+	}
+	REPO__MM_LOCREF_NAME
+	{
+		MM_LOCREF_NAME : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=25, sysNumber=116.0, core=true, businessType=T, t24Name=MM.LOCREF.NAME)
+		MM_LOCREF_DATA : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=30, sysNumber=117.0, core=true, businessType=A, t24Name=MM.LOCREF.DATA)
+	}
+	REPO__STR_LOCREF_NAME
+	{
+		STR_LOCREF_NAME : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=25, sysNumber=118.0, core=true, businessType=T, t24Name=STR.LOCREF.NAME)
+		STR_LOCREF_DATA : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=30, sysNumber=119.0, core=true, businessType=A, t24Name=STR.LOCREF.DATA)
+	}
+	REPO__BR_AGENT
+	{
+		BR_AGENT : mml:string
+			@t24:i (align=L, inputBehaviour=F, maxLength=15, sysNumber=123.0, core=true, businessType=A, t24Name=BR.AGENT)
+		BR_AGENT_AC : mml:string
+			@t24:i (align=L, inputBehaviour=F, maxLength=15, sysNumber=124.0, core=true, businessType=A, t24Name=BR.AGENT.AC)
+	}
+	REPO__ACTIVITY_CODE
+	{
+		ACTIVITY_CODE -> EB_Delivery:EB_ACTIVITY
+			@t24:i (align=R, inputBehaviour=N, maxLength=7, sysNumber=131.0, core=true, t24Name=ACTIVITY.CODE)
+		ACTIVITY_DATE : mml:date
+			@t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=132.0, core=true, businessType=D, t24Name=ACTIVITY.DATE)
+		MAPPING_KEY -> byValue RP_Contract:REPO__ACTIVITY_CODE__MAPPING_KEY *
+	}
+	REPO__ACTIVITY_CODE__MAPPING_KEY
+	{
+		MAPPING_KEY -> DE_Config:DE_MAPPING
+			@t24:i (align=R, inputBehaviour=N, maxLength=13, sysNumber=133.0, core=true, t24Name=MAPPING.KEY)
+		MSG_REF : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=16, sysNumber=134.0, core=true, t24Name=MSG.REF)
+	}
+	REPO__ST_CONTRACT_ID
+	{
+		ST_CONTRACT_ID : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=16, sysNumber=146.0, core=true, businessType=S, t24Name=ST.CONTRACT.ID)
+	}
+	REPO__ST_REVERSE_ID
+	{
+		ST_REVERSE_ID : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=16, sysNumber=147.0, core=true, businessType=S, t24Name=ST.REVERSE.ID)
+	}
+	REPO__ST_HISTORY_ID
+	{
+		ST_HISTORY_ID : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=16, sysNumber=148.0, core=true, businessType=S, t24Name=ST.HISTORY.ID)
+	}
+	REPO__ST_UNAU_CONT_ID
+	{
+		ST_UNAU_CONT_ID : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=16, sysNumber=149.0, core=true, businessType=S, t24Name=ST.UNAU.CONT.ID)
+	}
+	REPO__ST_UNAU_REV_ID
+	{
+		ST_UNAU_REV_ID : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=16, sysNumber=150.0, core=true, businessType=S, t24Name=ST.UNAU.REV.ID)
+	}
+	REPO__FT_LOCREF_NAME
+	{
+		FT_LOCREF_NAME : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=25, sysNumber=152.0, core=true, businessType=T, t24Name=FT.LOCREF.NAME)
+		FT_LOCREF_DATA : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=30, sysNumber=153.0, core=true, businessType=A, t24Name=FT.LOCREF.DATA)
+	}
+	REPO__FT_UNAU_MGN_ID
+	{
+		FT_UNAU_MGN_ID : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=154.0, core=true, businessType=A, t24Name=FT.UNAU.MGN.ID)
+	}
+	REPO__FT_MARGIN_ID
+	{
+		FT_MARGIN_ID : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=155.0, core=true, businessType=A, t24Name=FT.MARGIN.ID)
+	}
+	REPO__STATEMENT_NOS
+	{
+		STATEMENT_NOS : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=29, sysNumber=180.0, core=true, businessType=A, t24Name=STATEMENT.NOS)
+	}
+	REPO__OVERRIDE
+	{
+		OVERRIDE : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=181.0, core=true, businessType=A, t24Name=OVERRIDE)
+	}
+	REPO__INPUTTER
+	{
+		INPUTTER : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=184.0, core=true, businessType=A, t24Name=INPUTTER)
+	}
+	REPO__DATE_TIME
+	{
+		DATE_TIME : mml:dateTime
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=185.0, core=true, businessType=RELTIME, t24Name=DATE.TIME)
+	}
+	REPO_POSITION
+		@t24:i (t24Name=REPO.POSITION, level=F, type=L, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		POSITION_KEY -> RP_Contract:REPO_POSITION PK required
+			@t24:i (align=L, inputBehaviour=I, maxLength=80, sysNumber=0.0, core=true, businessType=S, t24Name=POSITION.KEY)
+		SECURITY_ACCOUNT -> SCO_PortfolioMaintenance:SEC_ACC_MASTER
+			@i18n:Label (en=Portfolio, fr=Portefeuille, es="Cuenta de Título")
+			@i18n:Tooltip (fr=Portefeuille)
+			@t24:i (align=L, inputBehaviour=I, maxLength=14, sysNumber=1.0, core=true, businessType=S, t24Name=SECURITY.ACCOUNT)
+		SECURITY_NUMBER -> SCO_SecurityMasterMaintenance:SECURITY_MASTER
+			@i18n:Label (en="Security No", fr="Code valeur", es="No. de Título")
+			@i18n:Tooltip (en="Indicates the security number", fr="Code de la valeur mobilière", es="Indica un Título Valor válido")
+			@t24:i (align=L, inputBehaviour=I, maxLength=12, sysNumber=2.0, core=true, businessType=SEC, t24Name=SECURITY.NUMBER)
+		DEPOSITORY -> ST_Customer:CUSTOMER
+			@i18n:Label (en=Depository, fr=Dépositaire, es=Depositario)
+			@i18n:Tooltip (en="Depository the Security to be delivered from/to", fr=Dépositaire, es="Depositario de Título Valor a ser enviado de/a")
+			@t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=3.0, core=true, businessType=CUS, t24Name=DEPOSITORY)
+		NOMINEE_CODE -> SC_Config:NOMINEE_CODE
+			@i18n:Label (en="Nominee Code", fr="Code Nominee", es="Código del Nominado")
+			@i18n:Tooltip (en="Identifies the Nominee Company ", fr="Code Nominee", es="Identifica la Compañía Nominada")
+			@t24:i (align=L, inputBehaviour=I, maxLength=5, sysNumber=4.0, core=true, businessType=S, t24Name=NOMINEE.CODE)
+		MATURITY_DATE : mml:date
+			@i18n:Label (en="Maturity Date", fr="Date d\'échéance", es="Fecha de Vencimiento")
+			@i18n:Tooltip (en="Indicates the Maturity Date of the Transaction", fr="Date d\'échéance", es="Indica la Fecha de Vencimiento de la Transacción")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=5.0, core=true, businessType=D, t24Name=MATURITY.DATE)
+		INTEREST_RATE : mml:string
+			@i18n:Label (en="Interest Rate", fr="Taux d\'intérêts", es="Tasa de Interés")
+			@i18n:Tooltip (en="Indicates interest rate", fr="Taux d\'intérêts")
+			@t24:i (align=R, inputBehaviour=I, maxLength=16, sysNumber=6.0, core=true, businessType=R, t24Name=INTEREST.RATE)
+		SUB_ACCOUNT : mml:Integer
+			@i18n:Label (en="Sub Account", fr=Sous-compte, es="Sub Cuenta")
+			@i18n:Tooltip (fr=Sous-compte)
+			@t24:i (align=R, inputBehaviour=I, maxLength=16, sysNumber=7.0, core=true, t24Name=SUB.ACCOUNT)
+		DATE_LAST_TRADED : mml:date
+			@i18n:Label (en=Active, fr=Active, es=Activo)
+			@i18n:Tooltip (fr=Active)
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=8.0, core=true, businessType=D, t24Name=DATE.LAST.TRADED)
+		CLOSING_BAL_NO_NOM : mml:string
+			@i18n:Label (en="Closing Balance", fr=Nominal, es="Saldo de Cierre")
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=9.0, core=true, businessType=NOMAMT, t24Name=CLOSING.BAL.NO.NOM)
+		OPENING_BAL_NO_NOM : mml:string
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=10.0, core=true, businessType=NOMAMT, t24Name=OPENING.BAL.NO.NOM)
+		ISSUE_DATE : mml:date
+			@i18n:Label (en="Issue Date", fr="Date d\'émission", es="Fecha de Emisión")
+			@i18n:Tooltip (en="Indicates the date of issue ", fr="Date d\'émission", es="Especifica la Fecha de Emisión del Título")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=11.0, core=true, businessType=D, t24Name=ISSUE.DATE)
+		COST_PRICE -> byValue RP_Contract:REPO_POSITION__COST_PRICE *
+	}
+	REPO_POSITION__COST_PRICE
+	{
+		COST_PRICE : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=12.0, core=true, businessType=AMT, t24Name=COST.PRICE)
+		NOMINAL : mml:string
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=13.0, core=true, businessType=NOMAMT, t24Name=NOMINAL)
+		CONTRACT_ID : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=30, sysNumber=14.0, core=true, businessType=A, t24Name=CONTRACT.ID)
+		COUNTERPARTY -> SCO_PortfolioMaintenance:SEC_ACC_MASTER
+			@t24:i (align=L, inputBehaviour=I, maxLength=14, sysNumber=15.0, core=true, businessType=S, t24Name=COUNTERPARTY)
+	}
+	RESO_POSITION
+		@t24:i (t24Name=RESO.POSITION, level=F, type=L, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		POSITION_KEY -> RP_Contract:RESO_POSITION PK required
+			@t24:i (align=L, inputBehaviour=I, maxLength=80, sysNumber=0.0, core=true, businessType=S, t24Name=POSITION.KEY)
+		SECURITY_ACCOUNT -> SCO_PortfolioMaintenance:SEC_ACC_MASTER
+			@i18n:Label (en=Portfolio, fr=Portefeuille, es="Cuenta de Título")
+			@i18n:Tooltip (fr=Portefeuille)
+			@t24:i (align=L, inputBehaviour=I, maxLength=14, sysNumber=1.0, core=true, businessType=S, t24Name=SECURITY.ACCOUNT)
+		SECURITY_NUMBER -> SCO_SecurityMasterMaintenance:SECURITY_MASTER
+			@i18n:Label (en="Security No", fr="Code valeur", es="No. de Título")
+			@i18n:Tooltip (en="Indicates the security number", fr="Code de la valeur mobilière", es="Indica un Título Valor válido")
+			@t24:i (align=L, inputBehaviour=I, maxLength=12, sysNumber=2.0, core=true, businessType=SEC, t24Name=SECURITY.NUMBER)
+		DEPOSITORY -> ST_Customer:CUSTOMER
+			@i18n:Label (en=Depository, fr=Dépositaire, es=Depositario)
+			@i18n:Tooltip (en="Depository the Security to be delivered from/to", fr=Dépositaire, es="Depositario de Título Valor a ser enviado de/a")
+			@t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=3.0, core=true, businessType=CUS, t24Name=DEPOSITORY)
+		NOMINEE_CODE -> SC_Config:NOMINEE_CODE
+			@i18n:Label (en="Nominee Code", fr="Code Nominee", es="Código del Nominado")
+			@i18n:Tooltip (en="Identifies the Nominee Company ", fr="Code Nominee", es="Identifica la Compañía Nominada")
+			@t24:i (align=L, inputBehaviour=I, maxLength=5, sysNumber=4.0, core=true, businessType=S, t24Name=NOMINEE.CODE)
+		MATURITY_DATE : mml:date
+			@i18n:Label (en="Maturity Date", fr="Date d\'échéance", es="Fecha de Vencimiento")
+			@i18n:Tooltip (en="Indicates the Maturity Date of the Transaction", fr="Date d\'échéance", es="Indica la Fecha de Vencimiento de la Transacción")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=5.0, core=true, businessType=D, t24Name=MATURITY.DATE)
+		INTEREST_RATE : mml:string
+			@i18n:Label (en="Interest Rate", fr="Taux d\'intérêts", es="Tasa de Interés")
+			@i18n:Tooltip (en="Indicates interest rate", fr="Taux d\'intérêts")
+			@t24:i (align=R, inputBehaviour=I, maxLength=16, sysNumber=6.0, core=true, businessType=R, t24Name=INTEREST.RATE)
+		SUB_ACCOUNT : mml:Integer
+			@i18n:Label (en="Sub Account", fr=Sous-compte, es="Sub Cuenta")
+			@i18n:Tooltip (fr=Sous-compte)
+			@t24:i (align=R, inputBehaviour=I, maxLength=16, sysNumber=7.0, core=true, t24Name=SUB.ACCOUNT)
+		DATE_LAST_TRADED : mml:date
+			@i18n:Label (en=Active, fr=Active, es=Activo)
+			@i18n:Tooltip (fr=Active)
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=8.0, core=true, businessType=D, t24Name=DATE.LAST.TRADED)
+		CLOSING_BAL_NO_NOM : mml:string
+			@i18n:Label (en=Nominal, fr=Nominal, es=Nominal)
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=9.0, core=true, businessType=NOMAMT, t24Name=CLOSING.BAL.NO.NOM)
+		OPENING_BAL_NO_NOM : mml:string
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=10.0, core=true, businessType=NOMAMT, t24Name=OPENING.BAL.NO.NOM)
+		ISSUE_DATE : mml:date
+			@i18n:Label (en="Issue Date", fr="Date d\'émission", es="Fecha de Emisión")
+			@i18n:Tooltip (en="Indicates the date of issue ", fr="Date d\'émission", es="Especifica la Fecha de Emisión del Título")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=11.0, core=true, businessType=D, t24Name=ISSUE.DATE)
+		COST_PRICE -> byValue RP_Contract:RESO_POSITION__COST_PRICE *
+	}
+	RESO_POSITION__COST_PRICE
+	{
+		COST_PRICE : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=12.0, core=true, businessType=AMT, t24Name=COST.PRICE)
+		NOMINAL : mml:string
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=13.0, core=true, businessType=NOMAMT, t24Name=NOMINAL)
+		CONTRACT_ID : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=30, sysNumber=14.0, core=true, businessType=A, t24Name=CONTRACT.ID)
+		COUNTERPARTY -> SCO_PortfolioMaintenance:SEC_ACC_MASTER
+			@t24:i (align=L, inputBehaviour=I, maxLength=14, sysNumber=15.0, core=true, businessType=S, t24Name=COUNTERPARTY)
+	}
+	RP_ALT_NOSTRO
+		@t24:i (t24Name=RP.ALT.NOSTRO, level=F, type=L, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		DIARY_ID -> RP_Contract:RP_ALT_NOSTRO PK required
+			@i18n:Label (en="Diary Id", fr="Réf. de journal", es="ID de Diario")
+			@i18n:Tooltip (en="Indicates the diary Id", fr="Référence de journal")
+			@t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=0.0, core=true, businessType=S, t24Name=DIARY.ID)
+		DEP_NO -> byValue RP_Contract:RP_ALT_NOSTRO__DEP_NO *
+	}
+	RP_ALT_NOSTRO__DEP_NO
+	{
+		DEP_NO -> SC_Config:CUSTOMER_SECURITY
+			@t24:i (align=R, inputBehaviour=N, maxLength=10, sysNumber=1.0, core=true, businessType=CUS, t24Name=DEP.NO)
+		RP_ACCOUNT -> ACM_AccountOpening:ACCOUNT
+			@t24:i (align=L, inputBehaviour=N, maxLength=16, sysNumber=2.0, core=true, businessType=ANT, t24Name=RP.ACCOUNT)
+		COUNTERPARTY -> byValue RP_Contract:RP_ALT_NOSTRO__DEP_NO__COUNTERPARTY *
+	}
+	RP_ALT_NOSTRO__DEP_NO__COUNTERPARTY
+	{
+		COUNTERPARTY -> SCO_PortfolioMaintenance:SEC_ACC_MASTER
+			@t24:i (align=L, inputBehaviour=N, maxLength=14, sysNumber=3.0, core=true, businessType=S, t24Name=COUNTERPARTY)
+		RP_NOMINAL : mml:string
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=4.0, core=true, businessType=NOMAMT, t24Name=RP.NOMINAL)
+		RP_GROSS_AMT : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=16, sysNumber=5.0, core=true, businessType=AMT, t24Name=RP.GROSS.AMT)
+		RP_SRC_TAX : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=16, sysNumber=6.0, core=true, businessType=AMT, t24Name=RP.SRC.TAX)
+		RP_TOT_CHGS : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=16, sysNumber=7.0, core=true, businessType=AMT, t24Name=RP.TOT.CHGS)
+		RP_NET_AMT : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=16, sysNumber=8.0, core=true, businessType=AMT, t24Name=RP.NET.AMT)
+		RP_CASH_CCY -> FIN_CurrencyConfig:CURRENCY
+			@t24:i (align=R, inputBehaviour=N, maxLength=3, sysNumber=9.0, core=true, t24Name=RP.CASH.CCY)
+		RP_CASH_XCH : mml:string
+			@t24:i (align=R, inputBehaviour=N, maxLength=15, sysNumber=10.0, core=true, businessType=R, t24Name=RP.CASH.XCH)
+		RP_NET_LCY : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=16, sysNumber=11.0, core=true, businessType=AMT, t24Name=RP.NET.LCY)
+		RP_ENTL_AMT : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=16, sysNumber=12.0, core=true, businessType=AMT, t24Name=RP.ENTL.AMT)
+		RP_MBS_AMT : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=16, sysNumber=13.0, core=true, businessType=AMT, t24Name=RP.MBS.AMT)
+	}
+}
+Enumerations {
+	REPO__DEAL_TYPE : mml:string
+		BILATERAL=BILATERAL
+		TRILATERAL=TRILATERAL
+		BUY_SELL_BACK=BUY/SELL.BACK
+		SELL_BUY_BACK=SELL/BUY.BACK
+	REPO__SEND_PAYMENT : mml:string
+		NO=NO
+		YES=YES
+	REPO__NEW_SEC_CODE__SUPP_DELIVERY : mml:string
+		YES=YES
+		NO=NO
+		NULL=NULL
+	REPO__SEND_NOTICE__SEND_NOTICE : mml:string
+		YES=YES
+		NO=NO
+	REPO__CALCULATION_LINK : mml:string
+		YES=YES
+		NO=NO
+	REPO__SC_INIT_MGN_METHOD : mml:string
+		STANDARD=STANDARD
+		GMRA=GMRA
+		NULL=NULL
+	REPO__TRANS_TYPE : mml:string
+		CASH=CASH
+		SECURITY=SECURITY
+	REPO__GROUP_STATUS : mml:string
+		NET=NET
+		NO=NO
+	REPO__NEGATIVE_RATE : mml:string
+		YES=YES
+		NO=NO
+	REPO__TRANSACTION_INDEX : mml:string
+		LOAN=LOAN
+		DEPOSIT=DEPOSIT
+	REPO__CASH_HOLD_SETTLE : mml:string
+		YES=YES
+		NO=NO
+	REPO__SEC_HOLD_SETTLE : mml:string
+		YES=YES
+		NO=NO
+	REPO__AUTO_CUST_SETT : mml:string
+		YES=YES
+		NO=NO
+	REPO__AUTO_BROK_SETT : mml:string
+		YES=YES
+		NO=NO
+	REPO__EFF_INT_BASIS : mml:string
+		A=A
+		B=B
+		C=C
+		D=D
+		E=E
+		F=F
+		E1=E1
+		W=W
+		W1=W1
+	REPO__RATE_SELECTION : mml:string
+		BID=BID
+		OFFER=OFFER
+	REPO__CAP_INT : mml:string
+		Y=Y
+		N=N
+}

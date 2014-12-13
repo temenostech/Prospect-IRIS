@@ -1,0 +1,257 @@
+# UTF-8
+/* Loan Trade Processing for Syndicated Loans */
+Domain SL_BuySell
+	@t24:i (module=SL)
+	@java:Package (value=com.temenos.t24.datamodel.sl.sl_buysell)
+namespace "http://www.temenos.com/t24/SL_BuySell"
+metamodelVersion 4.3.0.20110527
+Classes {
+	SL_BS_NC_LIST
+		@t24:i (t24Name=SL.BS.NC.LIST, level=F, type=L, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		BS_NC_LIST -> SL_BuySell:SL_BS_NC_LIST PK required
+			@t24:i (align=L, inputBehaviour=I, maxLength=18, sysNumber=0.0, core=true, businessType=A, t24Name=BS.NC.LIST)
+		NC_ID -> byValue SL_BuySell:SL_BS_NC_LIST__NC_ID *
+	}
+	SL_BS_NC_LIST__NC_ID
+	{
+		NC_ID : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=15, sysNumber=1.0, core=true, t24Name=NC.ID)
+	}
+	SL_BUY_SELL
+		@t24:i (t24Name=SL.BUY.SELL, level=F, type=H, additionalInfo="UNP OEU", allowedFunctions="A C D E H I L P Q R S", localRefAllowed=true)
+	{
+		ID -> SL_BuySell:SL_BUY_SELL PK required
+			@i18n:Label (en="Transaction Ref", fr=Code, es="Ref. de Transacción")
+			@i18n:Tooltip (en="Transaction Reference", fr=Identifiant)
+			@t24:i (align=L, inputBehaviour=I, maxLength=24, sysNumber=0.0, core=true, businessType=A, t24Name=ID)
+		VALUE_DATE : mml:date
+			@i18n:Label (en="Value Date", fr="Date de valeur", es="Fecha Valor")
+			@i18n:Tooltip (en="Indicates the Value date of the Contract", fr="Date de valeur", es="Fecha en que Carteras serán act. por el evento")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=1.0, core=true, businessType=D, t24Name=VALUE.DATE)
+		TXN_TYPE : SL_BuySell:SL_BUY_SELL__TXN_TYPE required
+			@i18n:Label (en="Transaction Type", fr="Type d\'opération", es="Tipo de Transacción")
+			@i18n:Tooltip (en="Transaction Type", fr="Type d\'opération")
+			@t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=2.0, core=true, t24Name=TXN.TYPE)
+		SELL_TYPE : SL_BuySell:SL_BUY_SELL__SELL_TYPE
+			@i18n:Label (en="Sell Type", fr="Type de vente", es="Tipo de Venta")
+			@i18n:Tooltip (en="If Buy/Sell is for Contingent portion or not", fr="Type de vente", es="Si compra/venta es para porción Contingente o no")
+			@t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=3.0, core=true, t24Name=SELL.TYPE)
+		SELL_PARTICIPANT -> ST_Customer:CUSTOMER
+			@i18n:Label (en="Sell Participant", fr="Participant vendeur", es="Participante Venta")
+			@i18n:Tooltip (en="Participant selling either Contingent portion ", fr="Participant vendeur", es="Participante vendiendo alguna porción contingente")
+			@t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=4.0, core=true, businessType=CUS, t24Name=SELL.PARTICIPANT)
+		BUY_PARTICIPANT -> ST_Customer:CUSTOMER
+			@i18n:Label (en="Buy Participant", fr="Participant acheteur", es="Participante Compra")
+			@i18n:Tooltip (en="Participant buying a portion", fr="Participant acheteur", es="Participante comprando una porción")
+			@t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=5.0, core=true, businessType=CUS, t24Name=BUY.PARTICIPANT)
+		TRANCHE_CODE : mml:Integer
+			@i18n:Label (en="Tranche Code", fr=Tranche, es="Código de Tramo")
+			@i18n:Tooltip (fr=Tranche)
+			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=6.0, core=true, t24Name=TRANCHE.CODE)
+		SL_REF_NO -> byValue SL_BuySell:SL_BUY_SELL__SL_REF_NO *
+		TOTAL_SL_AMT : mml:Double
+			@i18n:Label (en="Buy/Sell Amount", fr="Montant acheté/vendu", es="Mto. de Compra/Venta")
+			@i18n:Tooltip (en="Amount involved in princiapaL movement or buysell ", fr="Montant acheté/vendu", es="Monto involucrado en movim. capital o compra/venta")
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=12.0, core=true, businessType=AMT, t24Name=TOTAL.SL.AMT)
+		TOT_CONSIDERATION : mml:Double
+			@i18n:Label (en="Consideration Amount", fr="Montant négocié", es="Mto. de Consideración")
+			@i18n:Tooltip (en="Consideration for contingent buy/sell transaction", fr="Montant négocié", es="Consideración para trs. contingente compra/venta ")
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=13.0, core=true, businessType=AMT, t24Name=TOT.CONSIDERATION)
+		PREM_DISC : mml:Integer
+			@i18n:Label (en="Premium / Discount", fr="Prime / Escompte", es=Prima/Descuento)
+			@i18n:Tooltip (en="Indicates the premium or discount on a transaction", fr="Prime / Escompte", es="Indica la prima o descuento en una transacción")
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=14.0, core=true, t24Name=PREM.DISC)
+		AMORTISE_PREM_DISC : SL_BuySell:SL_BUY_SELL__AMORTISE_PREM_DISC
+			@i18n:Label (en="Amortise Prem/Disc", fr="Amortir Prime/Escpte", es="Amortizar Prima/Desc.")
+			@i18n:Tooltip (en="If recognised in the Profit & Loss or amortised ", fr="Amortir Prime/Escpte", es="Si reconocido en Pérdidas & Ganancias o amortizado")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=15.0, core=true, t24Name=AMORTISE.PREM.DISC)
+		LIMIT_REF : mml:Integer
+			@i18n:Label (en="Limit Ref", fr="N° de limite", es="Ref. de Límite")
+			@i18n:Tooltip (en="Limit Reference", fr="Identifiant de la limite")
+			@t24:i (align=R, inputBehaviour=N, maxLength=10, sysNumber=16.0, core=true, t24Name=LIMIT.REF)
+		TR_CODE -> byValue SL_BuySell:SL_BUY_SELL__TR_CODE *
+		DELIVERY_CUST -> byValue SL_BuySell:SL_BUY_SELL__DELIVERY_CUST *
+		DELIVERY_REF -> byValue SL_BuySell:SL_BUY_SELL__DELIVERY_REF *
+		NEW_DD_END_DATE : mml:date
+			@i18n:Label (en="New Drawmat Date", fr="Nlle date fin déblocage", es="Nueva Fecha Reducción")
+			@i18n:Tooltip (en="Indicates the new drawdown end date", fr="Nlle date fin déblocage", es="Indica la nueva fecha final de retiro ")
+			@t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=32.0, core=true, businessType=D, t24Name=NEW.DD.END.DATE)
+		AMORTISE_FREQ : mml:string
+			@i18n:Label (en="Amortise Frequency", fr="Fréquence d\'amortisst", es="Frec. de Amortización")
+			@i18n:Tooltip (en="Amortisation frequency if amount is carried", fr="Fréquence d\'amortisst", es="Frecuencia de amortización si monto es llevado")
+			@t24:i (align=L, inputBehaviour=I, maxLength=13, sysNumber=33.0, core=true, businessType=FQU, t24Name=AMORTISE.FREQ)
+		PART_INT_AMOUNT : mml:Double
+			@i18n:Label (en="Participant\'s Int.Amount")
+			@i18n:Tooltip (en="Participant\'s Int.Amount")
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=34.0, core=true, businessType=AMT, t24Name=PART.INT.AMOUNT)
+		PRODUCT_TYPE -> byValue SL_BuySell:SL_BUY_SELL__PRODUCT_TYPE *
+		NEW_PART_ACCOUNT -> ACM_AccountOpening:ACCOUNT
+			@t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=39.0, core=true, businessType=ANT, t24Name=NEW.PART.ACCOUNT)
+		RESERVED_FIELDS_5 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=40.0, core=true, businessType=A, t24Name=RESERVED.FIELDS.5)
+		RESERVED_FIELDS_4 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=41.0, core=true, businessType=A, t24Name=RESERVED.FIELDS.4)
+		RESERVED_FIELDS_3 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=42.0, core=true, businessType=A, t24Name=RESERVED.FIELDS.3)
+		RESERVED_FIELDS_2 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=43.0, core=true, businessType=A, t24Name=RESERVED.FIELDS.2)
+		RESERVED_FIELDS_1 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=44.0, core=true, businessType=A, t24Name=RESERVED.FIELDS.1)
+		STMT_NO -> byValue SL_BuySell:SL_BUY_SELL__STMT_NO *
+		OVERRIDE -> byValue SL_BuySell:SL_BUY_SELL__OVERRIDE *
+		RECORD_STATUS : mml:string
+			@i18n:Label (en="Record Status", fr=Statut, es=Estado)
+			@i18n:Tooltip (fr="Statut de l\'enregistrement")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=48.0, core=true, businessType=STAT, t24Name=RECORD.STATUS)
+		CURR_NO : mml:Integer
+			@i18n:Label (en="Curr No", fr="N° version", es="No. Actual")
+			@i18n:Tooltip (fr="Numéro de version")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=49.0, core=true, t24Name=CURR.NO)
+		INPUTTER -> byValue SL_BuySell:SL_BUY_SELL__INPUTTER *
+		DATE_TIME -> byValue SL_BuySell:SL_BUY_SELL__DATE_TIME *
+		AUTHORISER : mml:string
+			@i18n:Label (en=Authoriser, fr="Validé par", es=Autorizador)
+			@i18n:Tooltip (en="Indicates the User who Authorises the record", fr="Utilisateur de validation", es="El usuario que autorizó el registro")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=52.0, core=true, businessType=A, t24Name=AUTHORISER)
+		CO_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company, fr=Entité, es="Compañía")
+			@i18n:Tooltip (fr="Code établissement ou agence")
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=53.0, core=true, businessType=A, t24Name=CO.CODE)
+		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Dept Code", fr=Service, es=Departamento)
+			@i18n:Tooltip (fr="Code du service")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=54.0, core=true, t24Name=DEPT.CODE)
+		AUDITOR_CODE : mml:string
+			@i18n:Label (en="Auditor Code", fr="Audité par", es="Código de Auditor")
+			@i18n:Tooltip (en="Auditor Code", fr="Utilisateur d\'audit", es="Nombre del auditor")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=55.0, core=true, businessType=A, t24Name=AUDITOR.CODE)
+		AUDIT_DATE_TIME : mml:dateTime
+			@i18n:Label (en="Audit Date Time", fr="Audité le", es="Fecha/Hora de Audit.")
+			@i18n:Tooltip (en="Date and time when record was audited", fr="Date et heure d\'audit", es="Fecha y Hora de Auditoría ")
+			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=56.0, core=true, businessType=RELTIME, t24Name=AUDIT.DATE.TIME)
+		LINKED_TFDR_REF : mml:string
+			@i18n:Label (fr="Réf de retrait TF")
+			@i18n:Tooltip (fr="Référence de retrait TF")
+			@t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=45.1, core=false, businessType=A, t24Name=LINKED.TFDR.REF)
+	}
+	SL_BUY_SELL__SL_REF_NO
+	{
+		SL_REF_NO : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=21, sysNumber=7.0, core=true, businessType=A, t24Name=SL.REF.NO)
+		SL_AMOUNT : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=8.0, core=true, businessType=AMT, t24Name=SL.AMOUNT)
+		INT_SETTLE_AMT : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=9.0, core=true, businessType=AMT, t24Name=INT.SETTLE.AMT)
+		CONSIDERATION : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=10.0, core=true, businessType=AMT, t24Name=CONSIDERATION)
+		CONS_PERC : mml:string
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=11.0, core=true, businessType=R, t24Name=CONS.PERC)
+	}
+	SL_BUY_SELL__TR_CODE
+	{
+		TR_CODE : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=17.0, core=true, t24Name=TR.CODE)
+		TR_AMOUNT : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=18.0, core=true, businessType=AMT, t24Name=TR.AMOUNT)
+		PM_PRORATA : SL_BuySell:SL_BUY_SELL__TR_CODE__PM_PRORATA
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=19.0, core=true, t24Name=PM.PRORATA)
+		PARTICIPANT -> byValue SL_BuySell:SL_BUY_SELL__TR_CODE__PARTICIPANT *
+	}
+	SL_BUY_SELL__TR_CODE__PARTICIPANT
+	{
+		PARTICIPANT -> ST_Customer:CUSTOMER
+			@t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=20.0, core=true, businessType=CUS, t24Name=PARTICIPANT)
+		PART_AMOUNT : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=21.0, core=true, businessType=AMT, t24Name=PART.AMOUNT)
+	}
+	SL_BUY_SELL__DELIVERY_CUST
+	{
+		DELIVERY_CUST -> ST_Customer:CUSTOMER
+			@t24:i (align=R, inputBehaviour=N, maxLength=10, sysNumber=22.0, core=true, businessType=CUS, t24Name=DELIVERY.CUST)
+		ACTIVITY_CODE -> EB_Delivery:EB_ACTIVITY
+			@t24:i (align=L, inputBehaviour=N, maxLength=7, sysNumber=23.0, core=true, businessType=A, t24Name=ACTIVITY.CODE)
+		ACTIVITY_DATE : mml:date
+			@t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=24.0, core=true, businessType=D, t24Name=ACTIVITY.DATE)
+		PRIOR_DAYS : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=3, sysNumber=25.0, core=true, t24Name=PRIOR.DAYS)
+		MSG_TYPE -> byValue SL_BuySell:SL_BUY_SELL__DELIVERY_CUST__MSG_TYPE *
+	}
+	SL_BUY_SELL__DELIVERY_CUST__MSG_TYPE
+	{
+		MSG_TYPE -> DE_Config:DE_MESSAGE
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=26.0, core=true, businessType=A, t24Name=MSG.TYPE)
+		MSG_CLASS -> EB_Delivery:EB_MESSAGE_CLASS
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=27.0, core=true, businessType=A, t24Name=MSG.CLASS)
+		OVR_CARRIER -> DE_Config:DE_CARRIER
+			@t24:i (align=L, inputBehaviour=N, maxLength=8, sysNumber=28.0, core=true, businessType=A, t24Name=OVR.CARRIER)
+		SEND_MSG : SL_BuySell:SL_BUY_SELL__DELIVERY_CUST__MSG_TYPE__SEND_MSG
+			@t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=29.0, core=true, t24Name=SEND.MSG)
+		MSG_DATE : mml:date
+			@t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=30.0, core=true, businessType=D, t24Name=MSG.DATE)
+	}
+	SL_BUY_SELL__DELIVERY_REF
+	{
+		DELIVERY_REF : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=46, sysNumber=31.0, core=true, businessType=A, t24Name=DELIVERY.REF)
+	}
+	SL_BUY_SELL__PRODUCT_TYPE
+	{
+		PRODUCT_TYPE : SL_BuySell:SL_BUY_SELL__PRODUCT_TYPE__PRODUCT_TYPE
+			@t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=35.0, core=true, t24Name=PRODUCT.TYPE)
+		PRODUCT_AMT : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=36.0, core=true, businessType=AMT, t24Name=PRODUCT.AMT)
+		PROD_TR_CODE -> byValue SL_BuySell:SL_BUY_SELL__PRODUCT_TYPE__PROD_TR_CODE *
+	}
+	SL_BUY_SELL__PRODUCT_TYPE__PROD_TR_CODE
+	{
+		PROD_TR_CODE : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=3, sysNumber=37.0, core=true, t24Name=PROD.TR.CODE)
+		PROD_TR_AMT : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=38.0, core=true, businessType=AMT, t24Name=PROD.TR.AMT)
+	}
+	SL_BUY_SELL__STMT_NO
+	{
+		STMT_NO : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=29, sysNumber=46.0, core=true, businessType=A, t24Name=STMT.NO)
+	}
+	SL_BUY_SELL__OVERRIDE
+	{
+		OVERRIDE : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=47.0, core=true, t24Name=OVERRIDE)
+	}
+	SL_BUY_SELL__INPUTTER
+	{
+		INPUTTER : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=50.0, core=true, businessType=A, t24Name=INPUTTER)
+	}
+	SL_BUY_SELL__DATE_TIME
+	{
+		DATE_TIME : mml:dateTime
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=51.0, core=true, businessType=RELTIME, t24Name=DATE.TIME)
+	}
+}
+Enumerations {
+	SL_BUY_SELL__TXN_TYPE : mml:string
+		BS=BS
+		PM=PM
+		TT=TT
+	SL_BUY_SELL__SELL_TYPE : mml:string
+		NC=NC
+		C=C
+	SL_BUY_SELL__AMORTISE_PREM_DISC : mml:string
+		YES=YES
+		NO=NO
+	SL_BUY_SELL__TR_CODE__PM_PRORATA : mml:string
+		YES=YES
+		NULL=NULL
+	SL_BUY_SELL__DELIVERY_CUST__MSG_TYPE__SEND_MSG : mml:string
+		NO=NO
+		NULL=NULL
+	SL_BUY_SELL__PRODUCT_TYPE__PRODUCT_TYPE : mml:string
+		SC=SC
+		GT=GT
+		LN=LN
+		LCI=LCI
+		LCE=LCE
+}

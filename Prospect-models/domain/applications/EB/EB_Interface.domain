@@ -1,0 +1,774 @@
+# UTF-8
+/* Interface to T24 */
+Domain EB_Interface
+	@t24:i (module=EB)
+	@java:Package (value=com.temenos.t24.datamodel.eb.eb_interface)
+namespace "http://www.temenos.com/t24/EB_Interface"
+metamodelVersion 4.3.0.20110527
+Classes {
+	EB_EXTRACT
+		@t24:i (t24Name=EB.EXTRACT, level=I, type=L, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		EXTRACT_KEY -> EB_Interface:EB_EXTRACT PK required
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=0.0, core=true, businessType=A, t24Name=EXTRACT.KEY)
+		EXTRACT_DATA : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=50, sysNumber=1.0, core=true, businessType=A, t24Name=EXTRACT.DATA)
+		FILE_NAME : mml:Integer
+			@i18n:Label (en="File Name", fr="Nom de fichier", es="Nombre de Archivo")
+			@i18n:Tooltip (fr="Nom de fichier")
+			@t24:i (align=L, inputBehaviour=I, maxLength=20, core=false, t24Name=FILE.NAME, genOperation="FIELD(EXTRACT.DATA,\' \',1)")
+		RECORD_KEY : mml:Integer
+			@i18n:Label (en="Record Key", fr="Réf. d\'enreg", es="Clave de Registro")
+			@i18n:Tooltip (fr="Référence d\'enreg")
+			@t24:i (align=L, inputBehaviour=I, maxLength=30, core=false, t24Name=RECORD.KEY, genOperation="FIELD(EXTRACT.DATA,\' \',2)")
+	}
+	EB_EXTRACT_PARAMETER
+		@t24:i (t24Name=EB.EXTRACT.PARAMETER, level=I, type=H, allowedFunctions="A C D E I L P Q R S", localRefAllowed=false)
+	{
+		EXTRACT_TYPE -> EB_Interface:EB_EXTRACT_PARAMETER PK required
+			@t24:i (align=L, inputBehaviour=I, maxLength=10, sysNumber=0.0, core=true, businessType=A, t24Name=EXTRACT.TYPE)
+		DESCRIPTION -> byValue EB_Interface:EB_EXTRACT_PARAMETER__DESCRIPTION *
+		FILE_NAME -> byValue EB_Interface:EB_EXTRACT_PARAMETER__FILE_NAME *
+		DELIMITER : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=6.0, core=true, businessType=A, t24Name=DELIMITER)
+		RESERVED_5 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=7.0, core=true, t24Name=RESERVED.5)
+		RESERVED_4 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=8.0, core=true, t24Name=RESERVED.4)
+		RESERVED_3 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=9.0, core=true, t24Name=RESERVED.3)
+		RESERVED_2 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=10.0, core=true, t24Name=RESERVED.2)
+		RESERVED_1 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=11.0, core=true, t24Name=RESERVED.1)
+		RECORD_STATUS : mml:string
+			@i18n:Label (en="Record Status", fr=Statut, es=Estado)
+			@i18n:Tooltip (fr="Statut de l\'enregistrement")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=12.0, core=true, businessType=STAT, t24Name=RECORD.STATUS)
+		CURR_NO : mml:Integer
+			@i18n:Label (en="Curr No", fr="N° version", es="No. Actual")
+			@i18n:Tooltip (fr="Numéro de version")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=13.0, core=true, t24Name=CURR.NO)
+		INPUTTER -> byValue EB_Interface:EB_EXTRACT_PARAMETER__INPUTTER *
+		DATE_TIME -> byValue EB_Interface:EB_EXTRACT_PARAMETER__DATE_TIME *
+		AUTHORISER : mml:string
+			@i18n:Label (en=Authoriser, fr="Validé par", es=Autorizador)
+			@i18n:Tooltip (en="Indicates the User who Authorises the record", fr="Utilisateur de validation", es="El usuario que autorizó el registro")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=16.0, core=true, businessType=A, t24Name=AUTHORISER)
+		CO_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company, fr=Entité, es="Compañía")
+			@i18n:Tooltip (fr="Code établissement ou agence")
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=17.0, core=true, businessType=A, t24Name=CO.CODE)
+		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Dept Code", fr=Service, es=Departamento)
+			@i18n:Tooltip (fr="Code du service")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=18.0, core=true, t24Name=DEPT.CODE)
+		AUDITOR_CODE : mml:string
+			@i18n:Label (en="Auditor Code", fr="Audité par", es="Código de Auditor")
+			@i18n:Tooltip (en="Auditor Code", fr="Utilisateur d\'audit", es="Nombre del auditor")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=19.0, core=true, businessType=A, t24Name=AUDITOR.CODE)
+		AUDIT_DATE_TIME : mml:dateTime
+			@i18n:Label (en="Audit Date Time", fr="Audité le", es="Fecha/Hora de Audit.")
+			@i18n:Tooltip (en="Date and time when record was audited", fr="Date et heure d\'audit", es="Fecha y Hora de Auditoría ")
+			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=20.0, core=true, businessType=RELTIME, t24Name=AUDIT.DATE.TIME)
+	}
+	EB_EXTRACT_PARAMETER__DESCRIPTION
+	{
+		DESCRIPTION : mml:string required
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, multiLanguage=true, sysNumber=1.0, core=true, businessType=A, t24Name=DESCRIPTION)
+	}
+	EB_EXTRACT_PARAMETER__FILE_NAME
+	{
+		FILE_NAME -> EB_SystemTables:FILE_CONTROL
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=2.0, core=true, businessType=A, t24Name=FILE.NAME)
+		FILE_SUFFIX -> byValue EB_Interface:EB_EXTRACT_PARAMETER__FILE_NAME__FILE_SUFFIX *
+		FIELD_NAME -> byValue EB_Interface:EB_EXTRACT_PARAMETER__FILE_NAME__FIELD_NAME *
+		EXTRACT_RTN : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=5.0, core=true, businessType=A, t24Name=EXTRACT.RTN)
+	}
+	EB_EXTRACT_PARAMETER__FILE_NAME__FILE_SUFFIX
+	{
+		FILE_SUFFIX : EB_Interface:EB_EXTRACT_PARAMETER__FILE_NAME__FILE_SUFFIX__FILE_SUFFIX
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=3.0, core=true, t24Name=FILE.SUFFIX)
+	}
+	EB_EXTRACT_PARAMETER__FILE_NAME__FIELD_NAME
+	{
+		FIELD_NAME : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=4.0, core=true, businessType=A, t24Name=FIELD.NAME)
+	}
+	EB_EXTRACT_PARAMETER__INPUTTER
+	{
+		INPUTTER : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=14.0, core=true, businessType=A, t24Name=INPUTTER)
+	}
+	EB_EXTRACT_PARAMETER__DATE_TIME
+	{
+		DATE_TIME : mml:dateTime
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=15.0, core=true, businessType=RELTIME, t24Name=DATE.TIME)
+	}
+	OCR_PARAMETERS
+		@t24:i (t24Name=OCR.PARAMETERS, level=I, type=H, allowedFunctions="A C D E H I L P Q R S", localRefAllowed=false)
+	{
+		OCR_APPLICATION -> EB_Interface:OCR_PARAMETERS PK required
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=0.0, core=true, businessType=A, t24Name=OCR.APPLICATION)
+		DATA_STRUCT -> byValue EB_Interface:OCR_PARAMETERS__DATA_STRUCT *
+		FULL_STRUCTURES -> byValue EB_Interface:OCR_PARAMETERS__FULL_STRUCTURES *
+		RECORD_STATUS : mml:string
+			@i18n:Label (en="Record Status", fr=Statut, es=Estado)
+			@i18n:Tooltip (fr="Statut de l\'enregistrement")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=7.0, core=true, businessType=STAT, t24Name=RECORD.STATUS)
+		CURR_NO : mml:Integer
+			@i18n:Label (en="Curr No", fr="N° version", es="No. Actual")
+			@i18n:Tooltip (fr="Numéro de version")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=8.0, core=true, t24Name=CURR.NO)
+		INPUTTER -> byValue EB_Interface:OCR_PARAMETERS__INPUTTER *
+		DATE_TIME -> byValue EB_Interface:OCR_PARAMETERS__DATE_TIME *
+		AUTHORISER : mml:string
+			@i18n:Label (en=Authoriser, fr="Validé par", es=Autorizador)
+			@i18n:Tooltip (en="Indicates the User who Authorises the record", fr="Utilisateur de validation", es="El usuario que autorizó el registro")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=11.0, core=true, businessType=A, t24Name=AUTHORISER)
+		CO_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company, fr=Entité, es="Compañía")
+			@i18n:Tooltip (fr="Code établissement ou agence")
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=12.0, core=true, businessType=A, t24Name=CO.CODE)
+		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Dept Code", fr=Service, es=Departamento)
+			@i18n:Tooltip (fr="Code du service")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=13.0, core=true, t24Name=DEPT.CODE)
+		AUDITOR_CODE : mml:string
+			@i18n:Label (en="Auditor Code", fr="Audité par", es="Código de Auditor")
+			@i18n:Tooltip (en="Auditor Code", fr="Utilisateur d\'audit", es="Nombre del auditor")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=14.0, core=true, businessType=A, t24Name=AUDITOR.CODE)
+		AUDIT_DATE_TIME : mml:dateTime
+			@i18n:Label (en="Audit Date Time", fr="Audité le", es="Fecha/Hora de Audit.")
+			@i18n:Tooltip (en="Date and time when record was audited", fr="Date et heure d\'audit", es="Fecha y Hora de Auditoría ")
+			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=15.0, core=true, businessType=RELTIME, t24Name=AUDIT.DATE.TIME)
+	}
+	OCR_PARAMETERS__DATA_STRUCT
+	{
+		DATA_STRUCT -> byValue EB_Interface:OCR_PARAMETERS__DATA_STRUCT__DATA_STRUCT *
+		FIELD_NUMBER -> byValue EB_Interface:OCR_PARAMETERS__DATA_STRUCT__FIELD_NUMBER *
+	}
+	OCR_PARAMETERS__DATA_STRUCT__DATA_STRUCT
+	{
+		DATA_STRUCT : mml:string required
+			@t24:i (align=L, inputBehaviour=I, maxLength=50, sysNumber=1.0, core=true, businessType=A, t24Name=DATA.STRUCT)
+	}
+	OCR_PARAMETERS__DATA_STRUCT__FIELD_NUMBER
+	{
+		FIELD_NUMBER : mml:string required
+			@t24:i (align=L, inputBehaviour=I, maxLength=8, sysNumber=2.0, core=true, businessType=A, t24Name=FIELD.NUMBER)
+		START_POS : mml:Integer required
+			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=3.0, core=true, t24Name=START.POS)
+		FIELD_LEN : mml:Integer required
+			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=4.0, core=true, t24Name=FIELD.LEN)
+		NO_DECIMALS : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=5.0, core=true, t24Name=NO.DECIMALS)
+	}
+	OCR_PARAMETERS__FULL_STRUCTURES
+	{
+		FULL_STRUCTURES : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=6.0, core=true, t24Name=FULL.STRUCTURES)
+	}
+	OCR_PARAMETERS__INPUTTER
+	{
+		INPUTTER : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=9.0, core=true, businessType=A, t24Name=INPUTTER)
+	}
+	OCR_PARAMETERS__DATE_TIME
+	{
+		DATE_TIME : mml:dateTime
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=10.0, core=true, businessType=RELTIME, t24Name=DATE.TIME)
+	}
+	OFS_DECRYPT_KEY
+		@t24:i (t24Name=OFS.DECRYPT.KEY, level=I, type=H, allowedFunctions="A C D E H I L P Q R S", localRefAllowed=true)
+	{
+		DECR_KEY_ID -> EB_Interface:OFS_DECRYPT_KEY PK required
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=0.0, core=true, businessType=A, t24Name=DECR.KEY.ID)
+		DESCRIPTION -> byValue EB_Interface:OFS_DECRYPT_KEY__DESCRIPTION *
+		MSG_DECRYPT_KEY : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=100, sysNumber=2.0, core=true, businessType=A, t24Name=MSG.DECRYPT.KEY)
+		CIPHER_METHOD : EB_Interface:OFS_DECRYPT_KEY__CIPHER_METHOD
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=3.0, core=true, t24Name=CIPHER.METHOD)
+		RESERVED_10 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=4.0, core=true, businessType=A, t24Name=RESERVED.10)
+		RESERVED_9 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=5.0, core=true, businessType=A, t24Name=RESERVED.9)
+		RESERVED_8 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=6.0, core=true, businessType=A, t24Name=RESERVED.8)
+		RESERVED_7 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=7.0, core=true, businessType=A, t24Name=RESERVED.7)
+		RESERVED_6 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=8.0, core=true, businessType=A, t24Name=RESERVED.6)
+		RESERVED_5 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=9.0, core=true, businessType=A, t24Name=RESERVED.5)
+		RESERVED_4 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=10.0, core=true, businessType=A, t24Name=RESERVED.4)
+		RESERVED_3 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=11.0, core=true, businessType=A, t24Name=RESERVED.3)
+		RESERVED_2 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=12.0, core=true, businessType=A, t24Name=RESERVED.2)
+		RESERVED_1 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=13.0, core=true, businessType=A, t24Name=RESERVED.1)
+		OVERRIDE -> byValue EB_Interface:OFS_DECRYPT_KEY__OVERRIDE *
+		RECORD_STATUS : mml:string
+			@i18n:Label (en="Record Status", fr=Statut, es=Estado)
+			@i18n:Tooltip (fr="Statut de l\'enregistrement")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=16.0, core=true, businessType=STAT, t24Name=RECORD.STATUS)
+		CURR_NO : mml:Integer
+			@i18n:Label (en="Curr No", fr="N° version", es="No. Actual")
+			@i18n:Tooltip (fr="Numéro de version")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=17.0, core=true, t24Name=CURR.NO)
+		INPUTTER -> byValue EB_Interface:OFS_DECRYPT_KEY__INPUTTER *
+		DATE_TIME -> byValue EB_Interface:OFS_DECRYPT_KEY__DATE_TIME *
+		AUTHORISER : mml:string
+			@i18n:Label (en=Authoriser, fr="Validé par", es=Autorizador)
+			@i18n:Tooltip (en="Indicates the User who Authorises the record", fr="Utilisateur de validation", es="El usuario que autorizó el registro")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=20.0, core=true, businessType=A, t24Name=AUTHORISER)
+		CO_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company, fr=Entité, es="Compañía")
+			@i18n:Tooltip (fr="Code établissement ou agence")
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=21.0, core=true, businessType=A, t24Name=CO.CODE)
+		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Dept Code", fr=Service, es=Departamento)
+			@i18n:Tooltip (fr="Code du service")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=22.0, core=true, t24Name=DEPT.CODE)
+		AUDITOR_CODE : mml:string
+			@i18n:Label (en="Auditor Code", fr="Audité par", es="Código de Auditor")
+			@i18n:Tooltip (en="Auditor Code", fr="Utilisateur d\'audit", es="Nombre del auditor")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=23.0, core=true, businessType=A, t24Name=AUDITOR.CODE)
+		AUDIT_DATE_TIME : mml:dateTime
+			@i18n:Label (en="Audit Date Time", fr="Audité le", es="Fecha/Hora de Audit.")
+			@i18n:Tooltip (en="Date and time when record was audited", fr="Date et heure d\'audit", es="Fecha y Hora de Auditoría ")
+			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=24.0, core=true, businessType=RELTIME, t24Name=AUDIT.DATE.TIME)
+	}
+	OFS_DECRYPT_KEY__DESCRIPTION
+	{
+		DESCRIPTION : mml:string required
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, multiLanguage=true, sysNumber=1.0, core=true, businessType=A, t24Name=DESCRIPTION)
+	}
+	OFS_DECRYPT_KEY__OVERRIDE
+	{
+		OVERRIDE : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=15.0, core=true, businessType=A, t24Name=OVERRIDE)
+	}
+	OFS_DECRYPT_KEY__INPUTTER
+	{
+		INPUTTER : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=18.0, core=true, businessType=A, t24Name=INPUTTER)
+	}
+	OFS_DECRYPT_KEY__DATE_TIME
+	{
+		DATE_TIME : mml:dateTime
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=19.0, core=true, businessType=RELTIME, t24Name=DATE.TIME)
+	}
+	OFS_OFFLINE_QUEUE
+		@t24:i (t24Name=OFS.OFFLINE.QUEUE, level=I, type=L, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		SERVICE_MSG_KEY -> EB_Interface:OFS_OFFLINE_QUEUE PK required
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=0.0, core=true, businessType=A, t24Name=SERVICE-MSG.KEY)
+		OFS_SOURCE_ID : mml:Integer
+			@i18n:Label (en="OFS Source Id", fr="Code Source OFS", es="ID de Fuente OFS")
+			@i18n:Tooltip (en="Ofs Source Id", fr="Code Source OFS")
+			@t24:i (align=L, inputBehaviour=I, maxLength=12, core=false, t24Name=OFS.SOURCE.ID, genOperation="FIELD(@ID,\'-\',1,1)")
+	}
+	OFS_REQUEST_DETAIL
+		@t24:i (t24Name=OFS.REQUEST.DETAIL, level=I, type=L, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		MESSAGE_KEY -> EB_Interface:OFS_REQUEST_DETAIL PK required
+			@i18n:Label (en="Message Key", fr="Réf. de message", es="Clave de Mensaje")
+			@i18n:Tooltip (fr="Référence de message")
+			@t24:i (align=L, inputBehaviour=I, maxLength=80, sysNumber=0.0, core=true, businessType=ANY, t24Name=MESSAGE.KEY)
+		APPLICATION : mml:string
+			@i18n:Label (en=Application, fr=Application, es="Aplicación")
+			@i18n:Tooltip (fr="Application ")
+			@t24:i (align=L, inputBehaviour=I, maxLength=25, sysNumber=1.0, core=true, businessType=A, t24Name=APPLICATION)
+		VERSION : mml:string
+			@i18n:Label (en=Version, fr=Version, es="Versión")
+			@i18n:Tooltip (fr=Version)
+			@t24:i (align=L, inputBehaviour=I, maxLength=30, sysNumber=2.0, core=true, businessType=A, t24Name=VERSION)
+		FUNCTION : mml:string
+			@i18n:Label (en="Function Allowed", fr=Fonction, es="Función Permitida")
+			@i18n:Tooltip (fr=Fonction)
+			@t24:i (align=L, inputBehaviour=I, maxLength=10, sysNumber=3.0, core=true, businessType=A, t24Name=FUNCTION)
+		TRANS_REFERENCE : mml:string
+			@i18n:Label (en="Transaction Ref", fr=Référence, es="Ref. de Transacción")
+			@i18n:Tooltip (fr=Référence)
+			@t24:i (align=L, inputBehaviour=I, maxLength=30, sysNumber=4.0, core=true, businessType=A, t24Name=TRANS.REFERENCE)
+		USER_NAME : mml:string
+			@i18n:Label (en="User Name", fr=Utilisateur, es="Nombre de Usuario")
+			@i18n:Tooltip (fr=Utilisateur)
+			@t24:i (align=L, inputBehaviour=I, maxLength=25, sysNumber=5.0, core=true, businessType=A, t24Name=USER.NAME)
+		COMPANY : mml:string
+			@i18n:Label (en=Company, fr=Entité, es="Código de Compañía")
+			@i18n:Tooltip (fr=Entité)
+			@t24:i (align=L, inputBehaviour=I, maxLength=15, sysNumber=6.0, core=true, businessType=A, t24Name=COMPANY)
+		DATE_TIME_RECD : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=20, sysNumber=7.0, core=true, businessType=A, t24Name=DATE.TIME.RECD)
+		DATE_TIME_QUEUE : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=20, sysNumber=8.0, core=true, businessType=A, t24Name=DATE.TIME.QUEUE)
+		DATE_TIME_PROC : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=20, sysNumber=9.0, core=true, businessType=A, t24Name=DATE.TIME.PROC)
+		STATUS : EB_Interface:OFS_REQUEST_DETAIL__STATUS
+			@i18n:Label (en=Status, fr=Statut, es=Estado)
+			@i18n:Tooltip (fr=Statut)
+			@t24:i (align=L, inputBehaviour=I, maxLength=10, sysNumber=10.0, core=true, t24Name=STATUS)
+		MSG_IN : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=30, sysNumber=11.0, core=true, businessType=A, t24Name=MSG.IN)
+		MSG_OUT : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=30, sysNumber=12.0, core=true, businessType=A, t24Name=MSG.OUT)
+		ACTION : mml:string
+			@i18n:Label (en=Action)
+			@t24:i (align=L, inputBehaviour=I, maxLength=25, sysNumber=13.0, core=true, businessType=A, t24Name=ACTION)
+		GTS_CONTROL : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=1, sysNumber=14.0, core=true, t24Name=GTS.CONTROL)
+		NO_OF_AUTH : mml:Integer
+			@i18n:Label (fr="Nombre de validations")
+			@i18n:Tooltip (fr="Nombre de validations")
+			@t24:i (align=R, inputBehaviour=I, maxLength=1, sysNumber=15.0, core=true, t24Name=NO.OF.AUTH)
+		T24_SESSION_NO : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=15, sysNumber=16.0, core=true, t24Name=T24.SESSION.NO)
+		PARENT_ID : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=20, sysNumber=17.0, core=true, businessType=ANY, t24Name=PARENT.ID)
+		CACHE_LOAD : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=20, sysNumber=18.0, core=true, t24Name=CACHE.LOAD)
+		CACHE_HITS : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=19.0, core=true, t24Name=CACHE.HITS)
+		NO_OF_READ : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=20.0, core=true, t24Name=NO.OF.READ)
+		NO_OF_WRITE : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=21.0, core=true, t24Name=NO.OF.WRITE)
+		NO_OF_SELECT : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=22.0, core=true, t24Name=NO.OF.SELECT)
+		SUCCESSFUL_LOCK : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=23.0, core=true, t24Name=SUCCESSFUL.LOCK)
+		LOCK_COLLISION : mml:Integer
+			@i18n:Label (en=Collisions, fr=Collisions, es=Colisiones)
+			@i18n:Tooltip (fr=Collisions)
+			@t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=24.0, core=true, t24Name=LOCK.COLLISION)
+		NO_API_CALL : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=25.0, core=true, t24Name=NO.API.CALL)
+		DATE_TIME_RECD_LOC : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=20, sysNumber=26.0, core=true, businessType=A, t24Name=DATE.TIME.RECD.LOC)
+		DATE_TIME_PROC_LOC : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=20, sysNumber=27.0, core=true, businessType=A, t24Name=DATE.TIME.PROC.LOC)
+	}
+	OFS_SOURCE
+		@t24:i (t24Name=OFS.SOURCE, level=I, type=H, allowedFunctions="A C D E H I L P Q R S", localRefAllowed=true)
+	{
+		SOURCE_NAME -> EB_Interface:OFS_SOURCE PK required
+			@t24:i (align=L, inputBehaviour=I, maxLength=20, sysNumber=0.0, core=true, businessType=A, t24Name=SOURCE.NAME)
+		DESCRIPTION : mml:string required
+			@i18n:Label (en=Description, fr=Libellé, es="Descripción")
+			@i18n:Tooltip (en=Description, fr=Libellé)
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=1.0, core=true, businessType=A, t24Name=DESCRIPTION)
+		SOURCE_TYPE : EB_Interface:OFS_SOURCE__SOURCE_TYPE required
+			@i18n:Label (fr="Type de source")
+			@i18n:Tooltip (fr="Type de source")
+			@t24:i (align=L, inputBehaviour=I, maxLength=7, sysNumber=2.0, core=true, t24Name=SOURCE.TYPE)
+		LOGIN_ID -> byValue EB_Interface:OFS_SOURCE__LOGIN_ID *
+		MAX_CONNECTIONS : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=5.0, core=true, t24Name=MAX.CONNECTIONS)
+		RESTRICT_LINK : EB_Interface:OFS_SOURCE__RESTRICT_LINK
+			@t24:i (align=L, inputBehaviour=I, maxLength=5, sysNumber=6.0, core=true, t24Name=RESTRICT.LINK)
+		INITIAL_ROUTINE -> EB_SystemTables:PGM_FILE
+			@t24:i (align=L, inputBehaviour=I, maxLength=25, sysNumber=7.0, core=true, businessType=PG, t24Name=INITIAL.ROUTINE)
+		CLOSE_ROUTINE -> EB_SystemTables:PGM_FILE
+			@t24:i (align=L, inputBehaviour=I, maxLength=25, sysNumber=8.0, core=true, businessType=PG, t24Name=CLOSE.ROUTINE)
+		IN_MSG_RTN -> EB_SystemTables:PGM_FILE
+			@t24:i (align=L, inputBehaviour=I, maxLength=25, sysNumber=9.0, core=true, businessType=PG, t24Name=IN.MSG.RTN)
+		OUT_MSG_RTN -> EB_SystemTables:PGM_FILE
+			@t24:i (align=L, inputBehaviour=I, maxLength=25, sysNumber=10.0, core=true, businessType=PG, t24Name=OUT.MSG.RTN)
+		MSG_PRE_RTN -> EB_SystemTables:PGM_FILE
+			@t24:i (align=L, inputBehaviour=I, maxLength=25, sysNumber=11.0, core=true, businessType=PG, t24Name=MSG.PRE.RTN)
+		MSG_POST_RTN -> EB_SystemTables:PGM_FILE
+			@t24:i (align=L, inputBehaviour=I, maxLength=25, sysNumber=12.0, core=true, businessType=PG, t24Name=MSG.POST.RTN)
+		LOG_FILE_DIR : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=50, sysNumber=13.0, core=true, businessType=A, t24Name=LOG.FILE.DIR)
+		LOG_DETAIL_LEVEL : EB_Interface:OFS_SOURCE__LOG_DETAIL_LEVEL required
+			@t24:i (align=L, inputBehaviour=I, maxLength=6, sysNumber=14.0, core=true, t24Name=LOG.DETAIL.LEVEL)
+		OFFLINE_QUEUE : EB_Interface:OFS_SOURCE__OFFLINE_QUEUE
+			@t24:i (align=L, inputBehaviour=I, maxLength=1, sysNumber=15.0, core=true, t24Name=OFFLINE.QUEUE)
+		MAINT_MSG_DETS : EB_Interface:OFS_SOURCE__MAINT_MSG_DETS
+			@t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=16.0, core=true, t24Name=MAINT.MSG.DETS)
+		DET_PREFIX : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=6, sysNumber=17.0, core=true, businessType=A, t24Name=DET.PREFIX)
+		IN_QUEUE_DIR : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=50, sysNumber=18.0, core=true, businessType=ANY, t24Name=IN.QUEUE.DIR)
+		IN_QUEUE_NAME : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=12, sysNumber=19.0, core=true, businessType=A, t24Name=IN.QUEUE.NAME)
+		OUT_QUEUE_DIR : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=50, sysNumber=20.0, core=true, businessType=A, t24Name=OUT.QUEUE.DIR)
+		OUT_QUEUE_NAME : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=12, sysNumber=21.0, core=true, businessType=A, t24Name=OUT.QUEUE.NAME)
+		QUEUE_INIT_RTN : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=25, sysNumber=22.0, core=true, businessType=A, t24Name=QUEUE.INIT.RTN)
+		QUEUE_CLOSE_RTN : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=25, sysNumber=23.0, core=true, businessType=A, t24Name=QUEUE.CLOSE.RTN)
+		SYNTAX_TYPE : EB_Interface:OFS_SOURCE__SYNTAX_TYPE required
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=24.0, core=true, t24Name=SYNTAX.TYPE)
+		GENERIC_USER -> EB_Security:USER
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=26.0, core=true, businessType=A, t24Name=GENERIC.USER)
+		IN_DIR_RTN -> EB_SystemTables:PGM_FILE
+			@t24:i (align=L, inputBehaviour=I, maxLength=25, sysNumber=27.0, core=true, businessType=PG, t24Name=IN.DIR.RTN)
+		VERSION -> EB_Versions:VERSION
+			@i18n:Label (en=Version, fr=Version, es="Versión")
+			@i18n:Tooltip (fr=Version)
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=28.0, core=true, businessType=ANY, t24Name=VERSION)
+		IB_USER_CHECK : EB_Interface:OFS_SOURCE__IB_USER_CHECK
+			@t24:i (align=L, inputBehaviour=I, maxLength=1, sysNumber=29.0, core=true, t24Name=IB.USER.CHECK)
+		EOD_VALIDATE : EB_Interface:OFS_SOURCE__EOD_VALIDATE
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=30.0, core=true, t24Name=EOD.VALIDATE)
+		FIELD_VAL : EB_Interface:OFS_SOURCE__FIELD_VAL
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=31.0, core=true, t24Name=FIELD.VAL)
+		ATTRIBUTES -> byValue EB_Interface:OFS_SOURCE__ATTRIBUTES *
+		SAME_AUTHORISER : EB_Interface:OFS_SOURCE__SAME_AUTHORISER
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=33.0, core=true, t24Name=SAME.AUTHORISER)
+		CHANNEL -> EB_ARC:EB_CHANNEL
+			@i18n:Label (en=Channel, fr=Canal, es=Canal)
+			@i18n:Tooltip (fr=Canal)
+			@t24:i (align=L, inputBehaviour=I, maxLength=20, sysNumber=34.0, core=true, businessType=A, t24Name=CHANNEL)
+		PSWD_ENCRYPTED : EB_Interface:OFS_SOURCE__PSWD_ENCRYPTED
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=35.0, core=true, t24Name=PSWD.ENCRYPTED)
+		OFS_MESSAGE_DECRYPT : EB_Interface:OFS_SOURCE__OFS_MESSAGE_DECRYPT
+			@t24:i (align=L, inputBehaviour=I, maxLength=17, sysNumber=36.0, core=true, t24Name=OFS.MESSAGE.DECRYPT)
+		DECRYPT_KEY -> EB_Interface:OFS_DECRYPT_KEY
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=37.0, core=true, businessType=A, t24Name=DECRYPT.KEY)
+		RESERVED3 : mml:Character
+			@t24:i (align=L, inputBehaviour=N, maxLength=1, sysNumber=38.0, core=true, businessType=A, t24Name=RESERVED3)
+		RESERVED4 : mml:Character
+			@t24:i (align=L, inputBehaviour=N, maxLength=1, sysNumber=39.0, core=true, businessType=A, t24Name=RESERVED4)
+		OVERRIDE -> byValue EB_Interface:OFS_SOURCE__OVERRIDE *
+		RECORD_STATUS : mml:string
+			@i18n:Label (en="Record Status", fr=Statut, es=Estado)
+			@i18n:Tooltip (fr="Statut de l\'enregistrement")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=41.0, core=true, businessType=STAT, t24Name=RECORD.STATUS)
+		CURR_NO : mml:Integer
+			@i18n:Label (en="Curr No", fr="N° version", es="No. Actual")
+			@i18n:Tooltip (fr="Numéro de version")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=42.0, core=true, t24Name=CURR.NO)
+		INPUTTER -> byValue EB_Interface:OFS_SOURCE__INPUTTER *
+		DATE_TIME -> byValue EB_Interface:OFS_SOURCE__DATE_TIME *
+		AUTHORISER : mml:string
+			@i18n:Label (en=Authoriser, fr="Validé par", es=Autorizador)
+			@i18n:Tooltip (en="Indicates the User who Authorises the record", fr="Utilisateur de validation", es="El usuario que autorizó el registro")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=45.0, core=true, businessType=A, t24Name=AUTHORISER)
+		CO_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company, fr=Entité, es="Compañía")
+			@i18n:Tooltip (fr="Code établissement ou agence")
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=46.0, core=true, businessType=A, t24Name=CO.CODE)
+		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Dept Code", fr=Service, es=Departamento)
+			@i18n:Tooltip (fr="Code du service")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=47.0, core=true, t24Name=DEPT.CODE)
+		AUDITOR_CODE : mml:string
+			@i18n:Label (en="Auditor Code", fr="Audité par", es="Código de Auditor")
+			@i18n:Tooltip (en="Auditor Code", fr="Utilisateur d\'audit", es="Nombre del auditor")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=48.0, core=true, businessType=A, t24Name=AUDITOR.CODE)
+		AUDIT_DATE_TIME : mml:dateTime
+			@i18n:Label (en="Audit Date Time", fr="Audité le", es="Fecha/Hora de Audit.")
+			@i18n:Tooltip (en="Date and time when record was audited", fr="Date et heure d\'audit", es="Fecha y Hora de Auditoría ")
+			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=49.0, core=true, businessType=RELTIME, t24Name=AUDIT.DATE.TIME)
+	}
+	OFS_SOURCE__LOGIN_ID
+	{
+		LOGIN_ID : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=3.0, core=true, businessType=A, t24Name=LOGIN.ID)
+		EB_PHANT_ID : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=15, sysNumber=4.0, core=true, businessType=A, t24Name=EB.PHANT.ID)
+	}
+	OFS_SOURCE__ATTRIBUTES
+	{
+		ATTRIBUTES : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=20, sysNumber=32.0, core=true, businessType=A, t24Name=ATTRIBUTES)
+	}
+	OFS_SOURCE__OVERRIDE
+	{
+		OVERRIDE : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=40.0, core=true, businessType=A, t24Name=OVERRIDE)
+	}
+	OFS_SOURCE__INPUTTER
+	{
+		INPUTTER : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=43.0, core=true, businessType=A, t24Name=INPUTTER)
+	}
+	OFS_SOURCE__DATE_TIME
+	{
+		DATE_TIME : mml:dateTime
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=44.0, core=true, businessType=RELTIME, t24Name=DATE.TIME)
+	}
+	OFS_STATUS_FLAG
+		@t24:i (t24Name=OFS.STATUS.FLAG, level=I, type=L, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		ID -> EB_Interface:OFS_STATUS_FLAG PK required
+			@i18n:Label (en="Transaction Ref", fr=Code, es="Ref. de Transacción")
+			@i18n:Tooltip (en="Transaction Reference", fr=Identifiant)
+			@t24:i (align=L, inputBehaviour=I, maxLength=40, sysNumber=0.0, core=true, businessType=A, t24Name=ID)
+		PROGRESS : mml:string
+			@i18n:Label (en=Progress, fr=Progrès, es=Progreso)
+			@i18n:Tooltip (fr=Progrès)
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=1.0, core=true, businessType=A, t24Name=PROGRESS)
+		FIRST_TIME : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=2.0, core=true, businessType=A, t24Name=FIRST.TIME)
+		TXN_FAILED : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=3.0, core=true, businessType=A, t24Name=TXN.FAILED)
+		TXN_SUCCESSFUL : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=4.0, core=true, businessType=A, t24Name=TXN.SUCCESSFUL)
+		GETTING_ID : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=5.0, core=true, businessType=A, t24Name=GETTING.ID)
+		READ_CHECK_RECORD : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=6.0, core=true, businessType=A, t24Name=READ.CHECK.RECORD)
+		MODIFY_MULTI_VALUE : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=7.0, core=true, businessType=A, t24Name=MODIFY.MULTI.VALUE)
+		TXN_INPUT_XML : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=1000, sysNumber=8.0, core=true, businessType=A, t24Name=TXN.INPUT.XML)
+		RESERVED7 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=9.0, core=true, t24Name=RESERVED7)
+		RESERVED8 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=10.0, core=true, t24Name=RESERVED8)
+		RESERVED9 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=11.0, core=true, t24Name=RESERVED9)
+		RESERVED10 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=12.0, core=true, t24Name=RESERVED10)
+	}
+	OFS_TRANSACTION_STORE
+		@t24:i (t24Name=OFS.TRANSACTION.STORE, level=I, type=L, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		OFS_MESSAGE_ID -> EB_Interface:OFS_TRANSACTION_STORE PK required
+			@t24:i (align=L, inputBehaviour=I, maxLength=50, sysNumber=0.0, core=true, businessType=A, t24Name=OFS.MESSAGE.ID)
+		TXN_REFERENCE : mml:string
+			@i18n:Label (fr="Réf. opération")
+			@i18n:Tooltip (fr="Référence de l\'opération")
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=1.0, core=true, businessType=A, t24Name=TXN.REFERENCE)
+		ORIG_MESSAGE : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=2.0, core=true, businessType=A, t24Name=ORIG.MESSAGE)
+		CRITICAL_FIELDS : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=3.0, core=true, businessType=A, t24Name=CRITICAL.FIELDS)
+	}
+	OFS_XML_HEADER
+		@t24:i (t24Name=OFS.XML.HEADER, level=I, type=H, allowedFunctions="A C D E H I L P Q R S", localRefAllowed=false)
+	{
+		XML_NAME -> EB_Interface:OFS_XML_HEADER PK required
+			@t24:i (align=L, inputBehaviour=I, maxLength=20, sysNumber=0.0, core=true, businessType=A, t24Name=XML.NAME)
+		VERSION -> byValue EB_Interface:OFS_XML_HEADER__VERSION *
+		RESERVED12 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=20, sysNumber=3.0, core=true, businessType=A, t24Name=RESERVED12)
+		RESERVED11 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=20, sysNumber=4.0, core=true, businessType=A, t24Name=RESERVED11)
+		RESERVED10 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=20, sysNumber=5.0, core=true, businessType=A, t24Name=RESERVED10)
+		RESERVED9 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=20, sysNumber=6.0, core=true, businessType=A, t24Name=RESERVED9)
+		RESERVED8 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=20, sysNumber=7.0, core=true, businessType=A, t24Name=RESERVED8)
+		RESERVED7 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=20, sysNumber=8.0, core=true, businessType=A, t24Name=RESERVED7)
+		RESERVED6 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=20, sysNumber=9.0, core=true, businessType=A, t24Name=RESERVED6)
+		RESERVED5 : mml:string
+			@i18n:Label (fr="Propriété saisie avec activité paimt")
+			@i18n:Tooltip (fr="Propriété saisie avec activité paimt ")
+			@t24:i (align=L, inputBehaviour=N, maxLength=20, sysNumber=10.0, core=true, businessType=A, t24Name=RESERVED5)
+		RESERVED4 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=20, sysNumber=11.0, core=true, businessType=A, t24Name=RESERVED4)
+		RESERVED3 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=20, sysNumber=12.0, core=true, businessType=A, t24Name=RESERVED3)
+		RESERVED2 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=20, sysNumber=13.0, core=true, businessType=A, t24Name=RESERVED2)
+		RESERVED1 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=20, sysNumber=14.0, core=true, businessType=A, t24Name=RESERVED1)
+		RECORD_STATUS : mml:string
+			@i18n:Label (en="Record Status", fr=Statut, es=Estado)
+			@i18n:Tooltip (fr="Statut de l\'enregistrement")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=15.0, core=true, businessType=STAT, t24Name=RECORD.STATUS)
+		CURR_NO : mml:Integer
+			@i18n:Label (en="Curr No", fr="N° version", es="No. Actual")
+			@i18n:Tooltip (fr="Numéro de version")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=16.0, core=true, t24Name=CURR.NO)
+		INPUTTER -> byValue EB_Interface:OFS_XML_HEADER__INPUTTER *
+		DATE_TIME -> byValue EB_Interface:OFS_XML_HEADER__DATE_TIME *
+		AUTHORISER : mml:string
+			@i18n:Label (en=Authoriser, fr="Validé par", es=Autorizador)
+			@i18n:Tooltip (en="Indicates the User who Authorises the record", fr="Utilisateur de validation", es="El usuario que autorizó el registro")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=19.0, core=true, businessType=A, t24Name=AUTHORISER)
+		CO_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company, fr=Entité, es="Compañía")
+			@i18n:Tooltip (fr="Code établissement ou agence")
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=20.0, core=true, businessType=A, t24Name=CO.CODE)
+		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Dept Code", fr=Service, es=Departamento)
+			@i18n:Tooltip (fr="Code du service")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=21.0, core=true, t24Name=DEPT.CODE)
+		AUDITOR_CODE : mml:string
+			@i18n:Label (en="Auditor Code", fr="Audité par", es="Código de Auditor")
+			@i18n:Tooltip (en="Auditor Code", fr="Utilisateur d\'audit", es="Nombre del auditor")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=22.0, core=true, businessType=A, t24Name=AUDITOR.CODE)
+		AUDIT_DATE_TIME : mml:dateTime
+			@i18n:Label (en="Audit Date Time", fr="Audité le", es="Fecha/Hora de Audit.")
+			@i18n:Tooltip (en="Date and time when record was audited", fr="Date et heure d\'audit", es="Fecha y Hora de Auditoría ")
+			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=23.0, core=true, businessType=RELTIME, t24Name=AUDIT.DATE.TIME)
+	}
+	OFS_XML_HEADER__VERSION
+	{
+		VERSION : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=70, sysNumber=1.0, core=true, businessType=A, t24Name=VERSION)
+		GLOBAL_SCHEMA : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=70, sysNumber=2.0, core=true, businessType=A, t24Name=GLOBAL.SCHEMA)
+	}
+	OFS_XML_HEADER__INPUTTER
+	{
+		INPUTTER : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=17.0, core=true, businessType=A, t24Name=INPUTTER)
+	}
+	OFS_XML_HEADER__DATE_TIME
+	{
+		DATE_TIME : mml:dateTime
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=18.0, core=true, businessType=RELTIME, t24Name=DATE.TIME)
+	}
+	OFS_XML_TAGS
+		@t24:i (t24Name=OFS.XML.TAGS, level=I, type=H, allowedFunctions="A C D E H I L P Q R S", localRefAllowed=false)
+	{
+		XML_NAME -> EB_Interface:OFS_XML_TAGS PK required
+			@t24:i (align=L, inputBehaviour=I, maxLength=40, sysNumber=0.0, core=true, businessType=A, t24Name=XML.NAME)
+		TAG -> byValue EB_Interface:OFS_XML_TAGS__TAG *
+		RESERVED12 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=20, sysNumber=3.0, core=true, businessType=A, t24Name=RESERVED12)
+		RESERVED11 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=20, sysNumber=4.0, core=true, businessType=A, t24Name=RESERVED11)
+		RESERVED10 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=20, sysNumber=5.0, core=true, businessType=A, t24Name=RESERVED10)
+		RESERVED9 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=20, sysNumber=6.0, core=true, businessType=A, t24Name=RESERVED9)
+		RESERVED8 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=20, sysNumber=7.0, core=true, businessType=A, t24Name=RESERVED8)
+		RESERVED7 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=20, sysNumber=8.0, core=true, businessType=A, t24Name=RESERVED7)
+		RESERVED6 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=20, sysNumber=9.0, core=true, businessType=A, t24Name=RESERVED6)
+		RESERVED5 : mml:string
+			@i18n:Label (fr="Propriété saisie avec activité paimt")
+			@i18n:Tooltip (fr="Propriété saisie avec activité paimt ")
+			@t24:i (align=L, inputBehaviour=N, maxLength=20, sysNumber=10.0, core=true, businessType=A, t24Name=RESERVED5)
+		RESERVED4 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=20, sysNumber=11.0, core=true, businessType=A, t24Name=RESERVED4)
+		RESERVED3 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=20, sysNumber=12.0, core=true, businessType=A, t24Name=RESERVED3)
+		RESERVED2 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=20, sysNumber=13.0, core=true, businessType=A, t24Name=RESERVED2)
+		RESERVED1 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=20, sysNumber=14.0, core=true, businessType=A, t24Name=RESERVED1)
+		RECORD_STATUS : mml:string
+			@i18n:Label (en="Record Status", fr=Statut, es=Estado)
+			@i18n:Tooltip (fr="Statut de l\'enregistrement")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=15.0, core=true, businessType=STAT, t24Name=RECORD.STATUS)
+		CURR_NO : mml:Integer
+			@i18n:Label (en="Curr No", fr="N° version", es="No. Actual")
+			@i18n:Tooltip (fr="Numéro de version")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=16.0, core=true, t24Name=CURR.NO)
+		INPUTTER -> byValue EB_Interface:OFS_XML_TAGS__INPUTTER *
+		DATE_TIME -> byValue EB_Interface:OFS_XML_TAGS__DATE_TIME *
+		AUTHORISER : mml:string
+			@i18n:Label (en=Authoriser, fr="Validé par", es=Autorizador)
+			@i18n:Tooltip (en="Indicates the User who Authorises the record", fr="Utilisateur de validation", es="El usuario que autorizó el registro")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=19.0, core=true, businessType=A, t24Name=AUTHORISER)
+		CO_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company, fr=Entité, es="Compañía")
+			@i18n:Tooltip (fr="Code établissement ou agence")
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=20.0, core=true, businessType=A, t24Name=CO.CODE)
+		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Dept Code", fr=Service, es=Departamento)
+			@i18n:Tooltip (fr="Code du service")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=21.0, core=true, t24Name=DEPT.CODE)
+		AUDITOR_CODE : mml:string
+			@i18n:Label (en="Auditor Code", fr="Audité par", es="Código de Auditor")
+			@i18n:Tooltip (en="Auditor Code", fr="Utilisateur d\'audit", es="Nombre del auditor")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=22.0, core=true, businessType=A, t24Name=AUDITOR.CODE)
+		AUDIT_DATE_TIME : mml:dateTime
+			@i18n:Label (en="Audit Date Time", fr="Audité le", es="Fecha/Hora de Audit.")
+			@i18n:Tooltip (en="Date and time when record was audited", fr="Date et heure d\'audit", es="Fecha y Hora de Auditoría ")
+			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=23.0, core=true, businessType=RELTIME, t24Name=AUDIT.DATE.TIME)
+	}
+	OFS_XML_TAGS__TAG
+	{
+		TAG : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=20, sysNumber=1.0, core=true, businessType=A, t24Name=TAG)
+		MAPPING : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=20, sysNumber=2.0, core=true, businessType=A, t24Name=MAPPING)
+	}
+	OFS_XML_TAGS__INPUTTER
+	{
+		INPUTTER : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=17.0, core=true, businessType=A, t24Name=INPUTTER)
+	}
+	OFS_XML_TAGS__DATE_TIME
+	{
+		DATE_TIME : mml:dateTime
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=18.0, core=true, businessType=RELTIME, t24Name=DATE.TIME)
+	}
+}
+Enumerations {
+	EB_EXTRACT_PARAMETER__FILE_NAME__FILE_SUFFIX__FILE_SUFFIX : mml:string
+		LVE=LVE
+		NAU=NAU
+		HIS=HIS
+		ARC=ARC
+	OFS_DECRYPT_KEY__CIPHER_METHOD : mml:string
+		JBASE_CRYPT_GENERAL=JBASE.CRYPT.GENERAL
+		JBASE_CRYPT_ROT13=JBASE.CRYPT.ROT13
+		JBASE_CRYPT_XOR11=JBASE.CRYPT.XOR11
+		JBASE_CRYPT_RC2=JBASE.CRYPT.RC2
+		JBASE_CRYPT_BASE64=JBASE.CRYPT.BASE64
+		JBASE_CRYPT_DES=JBASE.CRYPT.DES
+		JBASE_CRYPT_3DES=JBASE.CRYPT.3DES
+		JBASE_CRYPT_BLOWFISH=JBASE.CRYPT.BLOWFISH
+		JBASE_CRYPT_BASE64_MASK=JBASE.CRYPT.BASE64.MASK
+		JBASE_CRYPT_RC2_BASE64=JBASE.CRYPT.RC2.BASE64
+		JBASE_CRYPT_DES_BASE64=JBASE.CRYPT.DES.BASE64
+		JBASE_CRYPT_3DES_BASE64=JBASE.CRYPT.3DES.BASE64
+		JBASE_CRYPT_BLOWFISH_BASE64=JBASE.CRYPT.BLOWFISH.BASE64
+	OFS_REQUEST_DETAIL__STATUS : mml:string
+		RECEIVED=RECEIVED
+		QUEUED=QUEUED
+		ERROR=ERROR
+		VALIDATED=VALIDATED
+		PROCESSED=PROCESSED
+		SUSPENDED=SUSPENDED
+	OFS_SOURCE__SOURCE_TYPE : mml:string
+		BATCH=BATCH
+		TELNET=TELNET
+		GLOBUS=GLOBUS
+		SESSION=SESSION
+	OFS_SOURCE__RESTRICT_LINK : mml:string
+		ENQ=ENQ
+		CLOSE=CLOSE
+	OFS_SOURCE__LOG_DETAIL_LEVEL : mml:string
+		FULL=FULL
+		OPEN=OPEN
+		EXCEPT=EXCEPT
+		NONE=NONE
+	OFS_SOURCE__OFFLINE_QUEUE : mml:string
+		Y=Y
+	OFS_SOURCE__MAINT_MSG_DETS : mml:string
+		Y=Y
+	OFS_SOURCE__SYNTAX_TYPE : mml:string
+		GTS=GTS
+		OFS=OFS
+		XML=XML
+	OFS_SOURCE__IB_USER_CHECK : mml:string
+		Y=Y
+		N=N
+	OFS_SOURCE__EOD_VALIDATE : mml:string
+		YES=YES
+	OFS_SOURCE__FIELD_VAL : mml:string
+		YES=YES
+		NO=NO
+	OFS_SOURCE__SAME_AUTHORISER : mml:string
+		YES=YES
+		NULL=NULL
+	OFS_SOURCE__PSWD_ENCRYPTED : mml:string
+		YES=YES
+		NO=NO
+	OFS_SOURCE__OFS_MESSAGE_DECRYPT : mml:string
+		NO=NO
+		YES=YES
+}

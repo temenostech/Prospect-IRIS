@@ -1,0 +1,615 @@
+# UTF-8
+/* Parameter definitions for Loans and Deposits */
+Domain LD_Config
+	@t24:i (module=LD)
+	@java:Package (value=com.temenos.t24.datamodel.ld.ld_config)
+namespace "http://www.temenos.com/t24/LD_Config"
+metamodelVersion 4.3.0.20110527
+Classes {
+	LD_GROUP_CONDITION
+		@t24:i (t24Name=LD.GROUP.CONDITION, level=C, type=H, allowedFunctions="A C D E H I L P Q R S", localRefAllowed=false)
+	{
+		GROUP_ID -> LD_Config:LD_GROUP_CONDITION PK required
+			@i18n:Label (en="Group Id", fr=Groupe, es="ID de Grupo")
+			@i18n:Tooltip (fr=Groupe)
+			@t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=0.0, core=true, businessType=A, t24Name=GROUP.ID)
+		INT_SPREAD_LOAN : mml:string
+			@i18n:Label (en="Interest Spread For Loan")
+			@t24:i (align=R, inputBehaviour=I, maxLength=12, sysNumber=1.0, core=true, businessType=R, t24Name=INT.SPREAD.LOAN)
+		INT_SPREAD_DEP : mml:string
+			@i18n:Label (en="Interest Spread For Deposits")
+			@t24:i (align=R, inputBehaviour=I, maxLength=12, sysNumber=2.0, core=true, businessType=R, t24Name=INT.SPREAD.DEP)
+		FIXED_CONTRACT : LD_Config:LD_GROUP_CONDITION__FIXED_CONTRACT
+			@i18n:Label (en="Fixed Contract")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=3.0, core=true, t24Name=FIXED.CONTRACT)
+		EXCHANGE_SPREAD : mml:Integer
+			@i18n:Label (en="Exchange Spread")
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=4.0, core=true, t24Name=EXCHANGE.SPREAD)
+		CHARGE_TYPE -> byValue LD_Config:LD_GROUP_CONDITION__CHARGE_TYPE *
+		APPLY_CURR_LOANS : LD_Config:LD_GROUP_CONDITION__APPLY_CURR_LOANS
+			@i18n:Label (en="Apply Curr Loans")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=9.0, core=true, t24Name=APPLY.CURR.LOANS)
+		RESERVED6 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=10.0, core=true, t24Name=RESERVED6)
+		RESERVED5 : mml:Integer
+			@i18n:Label (fr="Propriété saisie avec activité paimt")
+			@i18n:Tooltip (fr="Propriété saisie avec activité paimt ")
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=11.0, core=true, t24Name=RESERVED5)
+		RESERVED4 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=12.0, core=true, t24Name=RESERVED4)
+		RESERVED3 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=13.0, core=true, t24Name=RESERVED3)
+		RESERVED2 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=14.0, core=true, t24Name=RESERVED2)
+		RESERVED1 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=15.0, core=true, t24Name=RESERVED1)
+		RECORD_STATUS : mml:string
+			@i18n:Label (en="Record Status", fr=Statut, es=Estado)
+			@i18n:Tooltip (fr="Statut de l\'enregistrement")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=16.0, core=true, businessType=STAT, t24Name=RECORD.STATUS)
+		CURR_NO : mml:Integer
+			@i18n:Label (en="Curr No", fr="N° version", es="No. Actual")
+			@i18n:Tooltip (fr="Numéro de version")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=17.0, core=true, t24Name=CURR.NO)
+		INPUTTER -> byValue LD_Config:LD_GROUP_CONDITION__INPUTTER *
+		DATE_TIME -> byValue LD_Config:LD_GROUP_CONDITION__DATE_TIME *
+		AUTHORISER : mml:string
+			@i18n:Label (en=Authoriser, fr="Validé par", es=Autorizador)
+			@i18n:Tooltip (en="Indicates the User who Authorises the record", fr="Utilisateur de validation", es="El usuario que autorizó el registro")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=20.0, core=true, businessType=A, t24Name=AUTHORISER)
+		CO_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company, fr=Entité, es="Compañía")
+			@i18n:Tooltip (fr="Code établissement ou agence")
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=21.0, core=true, businessType=A, t24Name=CO.CODE)
+		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Department Code", fr=Service, es=Departamento)
+			@i18n:Tooltip (fr="Code du service")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=22.0, core=true, t24Name=DEPT.CODE)
+		AUDITOR_CODE : mml:string
+			@i18n:Label (en="Auditor Code", fr="Audité par", es="Código de Auditor")
+			@i18n:Tooltip (en="Auditor Code", fr="Utilisateur d\'audit", es="Nombre del auditor")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=23.0, core=true, businessType=A, t24Name=AUDITOR.CODE)
+		AUDIT_DATE_TIME : mml:dateTime
+			@i18n:Label (en="Audit Date Time", fr="Audité le", es="Fecha/Hora de Audit.")
+			@i18n:Tooltip (en="Date and time when record was audited", fr="Date et heure d\'audit", es="Fecha y Hora de Auditoría ")
+			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=24.0, core=true, businessType=RELTIME, t24Name=AUDIT.DATE.TIME)
+	}
+	LD_GROUP_CONDITION__CHARGE_TYPE
+	{
+		CHARGE_TYPE -> LM_Fees:LMM_CHARGE_CONDITIONS
+			@t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=5.0, core=true, t24Name=CHARGE.TYPE)
+		CHARGE_CCY -> byValue LD_Config:LD_GROUP_CONDITION__CHARGE_TYPE__CHARGE_CCY *
+	}
+	LD_GROUP_CONDITION__CHARGE_TYPE__CHARGE_CCY
+	{
+		CHARGE_CCY : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=4, sysNumber=6.0, core=true, businessType=A, t24Name=CHARGE.CCY)
+		CHARGE_PERC : mml:string
+			@t24:i (align=R, inputBehaviour=I, maxLength=4, sysNumber=7.0, core=true, businessType=R, t24Name=CHARGE.PERC)
+		CHRG_FLT_AMT : mml:string
+			@t24:i (align=R, inputBehaviour=I, maxLength=6, sysNumber=8.0, core=true, businessType=R, t24Name=CHRG.FLT.AMT)
+	}
+	LD_GROUP_CONDITION__INPUTTER
+	{
+		INPUTTER : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=18.0, core=true, businessType=A, t24Name=INPUTTER)
+	}
+	LD_GROUP_CONDITION__DATE_TIME
+	{
+		DATE_TIME : mml:dateTime
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=19.0, core=true, businessType=RELTIME, t24Name=DATE.TIME)
+	}
+	LD_GRP_CONDN_CHANGE
+		@t24:i (t24Name=LD.GRP.CONDN.CHANGE, level=F, type=L, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		GROUP_ID -> LD_Config:LD_GRP_CONDN_CHANGE PK required
+			@i18n:Label (en="Group Id", fr=Groupe, es="ID de Grupo")
+			@i18n:Tooltip (fr=Groupe)
+			@t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=0.0, core=true, businessType=A, t24Name=GROUP.ID)
+		NEW_SPREAD_LOAN : mml:string
+			@i18n:Label (en="New Spread Or Rate Defined For Loan Contracts")
+			@t24:i (align=R, inputBehaviour=N, maxLength=3, sysNumber=1.0, core=true, businessType=R, t24Name=NEW.SPREAD.LOAN)
+		OLD_SPREAD_LOAN : mml:string
+			@i18n:Label (en="Existing Spread Or Rate For Loan Contracts")
+			@t24:i (align=R, inputBehaviour=N, maxLength=3, sysNumber=2.0, core=true, businessType=R, t24Name=OLD.SPREAD.LOAN)
+		NEW_SPREAD_DEP : mml:string
+			@i18n:Label (en="New Spread Or Rate Defined For Deposit Contracts")
+			@t24:i (align=R, inputBehaviour=N, maxLength=3, sysNumber=3.0, core=true, businessType=R, t24Name=NEW.SPREAD.DEP)
+		OLD_SPREAD_DEP : mml:string
+			@i18n:Label (en="Existing Spread Or Rate For Deposit Contracts")
+			@t24:i (align=R, inputBehaviour=N, maxLength=3, sysNumber=4.0, core=true, businessType=R, t24Name=OLD.SPREAD.DEP)
+		SPREAD_CHANGE_DATE : mml:date
+			@i18n:Label (en="Date On Which The New Spread Or Rate Is To Be Applied To The Contracts")
+			@t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=5.0, core=true, businessType=D, t24Name=SPREAD.CHANGE.DATE)
+	}
+	LD_PARTICIPANT
+		@t24:i (t24Name=LD.PARTICIPANT, level=F, type=T, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		PARTICIPANT_NO -> LD_Config:LD_PARTICIPANT PK required
+			@i18n:Label (en="Participant Number")
+			@t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=0.0, core=true, businessType=CUS, t24Name=PARTICIPANT.NO)
+		CONTRACT_NO : mml:string
+			@i18n:Label (en="Contract Number", fr="Réf. de contrat", es="No. de Contrato")
+			@i18n:Tooltip (fr="Référence de contrat")
+			@t24:i (align=L, inputBehaviour=I, maxLength=14, sysNumber=1.0, core=true, businessType=A, t24Name=CONTRACT.NO)
+	}
+	LD_TXN_CODES
+		@t24:i (t24Name=LD.TXN.CODES, level=I, type=H, allowedFunctions="A C D E H I L P Q R S", localRefAllowed=true)
+	{
+		ID -> LD_Config:LD_TXN_CODES PK required
+			@i18n:Label (en="Transaction Ref", fr=Code, es="Ref. de Transacción")
+			@i18n:Tooltip (en="Transaction Reference", fr=Identifiant)
+			@t24:i (align=L, inputBehaviour=I, maxLength=6, sysNumber=0.0, core=true, t24Name=ID)
+		OPEN_DEPOSIT -> ST_Config:TRANSACTION
+			@i18n:Label (en="Transaction Code Used For Statement Entry When A Deposit Is Placed")
+			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=1.0, core=true, t24Name=OPEN.DEPOSIT)
+		OPEN_LOAN -> ST_Config:TRANSACTION
+			@i18n:Label (en="Transaction Code Used For Statement Entry When A Loan Is Issued")
+			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=2.0, core=true, t24Name=OPEN.LOAN)
+		OPEN_PLACEMENT -> ST_Config:TRANSACTION
+			@i18n:Label (en="Transaction Code Used For Statement Entry When A Placement Is Made")
+			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=3.0, core=true, t24Name=OPEN.PLACEMENT)
+		OPEN_ACC_REC -> ST_Config:TRANSACTION
+			@i18n:Tooltip (en="Transaction record for STMT entry")
+			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=4.0, core=true, t24Name=OPEN.ACC.REC)
+		OPEN_SUNDRY -> ST_Config:TRANSACTION
+			@i18n:Tooltip (en="Transaction code for Sundry deposits")
+			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=5.0, core=true, t24Name=OPEN.SUNDRY)
+		OPEN_COMMT -> ST_Config:TRANSACTION
+			@i18n:Label (en=Open.Commt)
+			@i18n:Tooltip (en="Field For Future Use")
+			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=6.0, core=true, t24Name=OPEN.COMMT)
+		PRIN_INCREASE -> ST_Config:TRANSACTION
+			@i18n:Label (en="Transaction Code For Statement Entry When A Principal Decrease Is Effected", fr=Capital, es="Aumento de Capital")
+			@i18n:Tooltip (fr=Capital)
+			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=7.0, core=true, t24Name=PRIN.INCREASE)
+		OPEN_LIAB_COMMT -> ST_Config:TRANSACTION
+			@i18n:Label (en=Open.Liab.Commt)
+			@i18n:Tooltip (en="Field For Future Use")
+			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=8.0, core=true, t24Name=OPEN.LIAB.COMMT)
+		PRIN_REPAYMENT -> ST_Config:TRANSACTION
+			@i18n:Label (en="Transaction Code For Statement Entry When Principal Is Repaid")
+			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=9.0, core=true, t24Name=PRIN.REPAYMENT)
+		INT_PAY -> ST_Config:TRANSACTION
+			@i18n:Label (en="Transaction Code For Statement Entry When Interest Is Paid")
+			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=10.0, core=true, t24Name=INT.PAY)
+		COM_PAY -> ST_Config:TRANSACTION
+			@i18n:Label (en="Transaction Code For Statement Entry When Commission Is Paid")
+			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=11.0, core=true, t24Name=COM.PAY)
+		COM_REC -> ST_Config:TRANSACTION
+			@i18n:Label (en="Transaction Code Used For Statement Entry When Commission Is Received")
+			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=12.0, core=true, t24Name=COM.REC)
+		CAP_CHG -> ST_Config:TRANSACTION
+			@i18n:Label (en="Transaction Code For Charge Capitalisation")
+			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=13.0, core=true, t24Name=CAP.CHG)
+		INT_REC -> ST_Config:TRANSACTION
+			@i18n:Label (en="Transaction Code Used For Statement Entry When Interest Is Received")
+			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=14.0, core=true, t24Name=INT.REC)
+		COM_ADJ -> ST_Config:TRANSACTION
+			@i18n:Label (en="Transaction Code For Statement Entry When Commission Is Adjusted")
+			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=15.0, core=true, t24Name=COM.ADJ)
+		INT_ADJ -> ST_Config:TRANSACTION
+			@i18n:Label (en="Transaction Code For Category Entry When Interest Is Adjusted")
+			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=16.0, core=true, t24Name=INT.ADJ)
+		INT_ACCRUAL -> ST_Config:TRANSACTION
+			@i18n:Label (en="Transaction Code For Category Entry When Interest Is Accrued")
+			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=17.0, core=true, t24Name=INT.ACCRUAL)
+		COM_ACCRUAL -> ST_Config:TRANSACTION
+			@i18n:Label (en="Transaction Code For Commission Accrual")
+			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=18.0, core=true, t24Name=COM.ACCRUAL)
+		PRIN_DECREASE -> ST_Config:TRANSACTION
+			@i18n:Label (en="Transaction Code For Statement Entry When A Principal Decrease Is Effected")
+			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=19.0, core=true, t24Name=PRIN.DECREASE)
+		CHRG_REC -> ST_Config:TRANSACTION
+			@i18n:Label (en="Transaction Code For Charge Received")
+			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=20.0, core=true, t24Name=CHRG.REC)
+		CHRG_PAY -> ST_Config:TRANSACTION
+			@i18n:Label (en="Transaction Code For Charge To Be Paid")
+			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=21.0, core=true, t24Name=CHRG.PAY)
+		REVERSAL_DEPOSIT -> ST_Config:TRANSACTION
+			@i18n:Label (en="Transaction Code For Statement Entry When A Deposit Contract Is Reversed")
+			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=22.0, core=true, t24Name=REVERSAL.DEPOSIT)
+		REVERSAL_LOAN -> ST_Config:TRANSACTION
+			@i18n:Label (en="Transaction Code For Statement Entry When A Loan Contract Is Reversed")
+			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=23.0, core=true, t24Name=REVERSAL.LOAN)
+		REVERSAL_PLACEMENT -> ST_Config:TRANSACTION
+			@i18n:Label (en="Transaction Code For Statement Entry When A Placement Contract Is Reversed")
+			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=24.0, core=true, t24Name=REVERSAL.PLACEMENT)
+		REV_ACC_REC -> ST_Config:TRANSACTION
+			@i18n:Label (en="Transaction Code For Reversal Of Account Receivable Type Loan")
+			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=25.0, core=true, t24Name=REV.ACC.REC)
+		REVERSAL_SUNDRY -> ST_Config:TRANSACTION
+			@i18n:Label (en="Transaction Entry For Reversal Of Sundry Deposit")
+			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=26.0, core=true, t24Name=REVERSAL.SUNDRY)
+		REVERSAL_COMMT -> ST_Config:TRANSACTION
+			@i18n:Label (en=Reversal.Commt)
+			@i18n:Tooltip (en="Field For Future Use")
+			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=27.0, core=true, t24Name=REVERSAL.COMMT)
+		REV_LIAB_COMMT -> ST_Config:TRANSACTION
+			@i18n:Label (en=Rev.Liab.Commt)
+			@i18n:Tooltip (en="Field For Future Use")
+			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=28.0, core=true, t24Name=REV.LIAB.COMMT)
+		TAX_DEB -> ST_Config:TRANSACTION
+			@i18n:Tooltip (en="Transaction code for deposit entry reversed")
+			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=29.0, core=true, t24Name=TAX.DEB)
+		RESERVED_10 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=31.0, core=true, t24Name=RESERVED.10)
+		RESERVED_9 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=32.0, core=true, t24Name=RESERVED.9)
+		RESERVED_8 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=33.0, core=true, t24Name=RESERVED.8)
+		RESERVED_7 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=34.0, core=true, t24Name=RESERVED.7)
+		RESERVED_6 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=35.0, core=true, t24Name=RESERVED.6)
+		RESERVED_5 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=36.0, core=true, t24Name=RESERVED.5)
+		RESERVED_4 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=37.0, core=true, t24Name=RESERVED.4)
+		RESERVED_3 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=38.0, core=true, t24Name=RESERVED.3)
+		RESERVED_2 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=39.0, core=true, t24Name=RESERVED.2)
+		RESERVED_1 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=40.0, core=true, t24Name=RESERVED.1)
+		OVERRIDE -> byValue LD_Config:LD_TXN_CODES__OVERRIDE *
+		RECORD_STATUS : mml:string
+			@i18n:Label (en="Record Status", fr=Statut, es=Estado)
+			@i18n:Tooltip (fr="Statut de l\'enregistrement")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=42.0, core=true, businessType=STAT, t24Name=RECORD.STATUS)
+		CURR_NO : mml:Integer
+			@i18n:Label (en="Curr No", fr="N° version", es="No. Actual")
+			@i18n:Tooltip (fr="Numéro de version")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=43.0, core=true, t24Name=CURR.NO)
+		INPUTTER -> byValue LD_Config:LD_TXN_CODES__INPUTTER *
+		DATE_TIME -> byValue LD_Config:LD_TXN_CODES__DATE_TIME *
+		AUTHORISER : mml:string
+			@i18n:Label (en=Authoriser, fr="Validé par", es=Autorizador)
+			@i18n:Tooltip (en="Indicates the User who Authorises the record", fr="Utilisateur de validation", es="El usuario que autorizó el registro")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=46.0, core=true, businessType=A, t24Name=AUTHORISER)
+		CO_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company, fr=Entité, es="Compañía")
+			@i18n:Tooltip (fr="Code établissement ou agence")
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=47.0, core=true, businessType=A, t24Name=CO.CODE)
+		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Department Code", fr=Service, es=Departamento)
+			@i18n:Tooltip (fr="Code du service")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=48.0, core=true, t24Name=DEPT.CODE)
+		AUDITOR_CODE : mml:string
+			@i18n:Label (en="Auditor Code", fr="Audité par", es="Código de Auditor")
+			@i18n:Tooltip (en="Auditor Code", fr="Utilisateur d\'audit", es="Nombre del auditor")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=49.0, core=true, businessType=A, t24Name=AUDITOR.CODE)
+		AUDIT_DATE_TIME : mml:dateTime
+			@i18n:Label (en="Audit Date Time", fr="Audité le", es="Fecha/Hora de Audit.")
+			@i18n:Tooltip (en="Date and time when record was audited", fr="Date et heure d\'audit", es="Fecha y Hora de Auditoría ")
+			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=50.0, core=true, businessType=RELTIME, t24Name=AUDIT.DATE.TIME)
+	}
+	LD_TXN_CODES__OVERRIDE
+	{
+		OVERRIDE : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=41.0, core=true, t24Name=OVERRIDE)
+	}
+	LD_TXN_CODES__INPUTTER
+	{
+		INPUTTER : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=44.0, core=true, businessType=A, t24Name=INPUTTER)
+	}
+	LD_TXN_CODES__DATE_TIME
+	{
+		DATE_TIME : mml:dateTime
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=45.0, core=true, businessType=RELTIME, t24Name=DATE.TIME)
+	}
+	LD_TXN_TYPE_CONDITION
+		@t24:i (t24Name=LD.TXN.TYPE.CONDITION, level=F, type=H, allowedFunctions="A C D E H I L P Q R S", localRefAllowed=true)
+	{
+		CATEGORY -> LD_Config:LD_TXN_TYPE_CONDITION PK required
+			@i18n:Label (en=Category, fr=Produit, es="Categoría")
+			@i18n:Tooltip (fr="Code du produit")
+			@t24:i (align=R, inputBehaviour=I, maxLength=6, sysNumber=0.0, core=true, t24Name=CATEGORY)
+		DESCRIPTION -> byValue LD_Config:LD_TXN_TYPE_CONDITION__DESCRIPTION *
+		MATURE_AT_SOD : LD_Config:LD_TXN_TYPE_CONDITION__MATURE_AT_SOD
+			@i18n:Label (fr="Trt échéance début journée", es="Vence al Inicio de Día")
+			@i18n:Tooltip (en="maturing a LD contract during Start of Day", fr="Trt échéance début journée", es="Vence al Inicio del Día")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=2.0, core=true, t24Name=MATURE.AT.SOD)
+		CURRENCY -> byValue LD_Config:LD_TXN_TYPE_CONDITION__CURRENCY *
+		SETTLEMENT_MARKET -> FIN_CurrencyConfig:CURRENCY_MARKET
+			@i18n:Label (en="Settlement Market", fr="Marché du règlement")
+			@i18n:Tooltip (fr="Marché du règlement")
+			@t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=23.0, core=true, businessType=A, t24Name=SETTLEMENT.MARKET)
+		CONVERSION_TYPE : LD_Config:LD_TXN_TYPE_CONDITION__CONVERSION_TYPE
+			@i18n:Label (en="Conversion Type", fr="Type de conversion")
+			@i18n:Tooltip (fr="Type de conversion")
+			@t24:i (align=L, inputBehaviour=I, maxLength=4, sysNumber=24.0, core=true, t24Name=CONVERSION.TYPE)
+		ACCRUAL_PARAM -> AC_Fees:EB_ACCRUAL_PARAM
+			@i18n:Label (en="Accrual Parameter", fr="Intérêts courus", es="Método Devengo Interés")
+			@i18n:Tooltip (fr="Intérêts courus")
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=26.0, core=true, businessType=A, t24Name=ACCRUAL.PARAM)
+		INTEREST_FREQ : mml:string
+			@i18n:Label (en="Interest Frequency")
+			@t24:i (align=L, inputBehaviour=I, maxLength=5, sysNumber=27.0, core=true, businessType=A, t24Name=INTEREST.FREQ)
+		FWD_BWD_KEY : LD_Config:LD_TXN_TYPE_CONDITION__FWD_BWD_KEY
+			@i18n:Label (en="Forward Or Backward Key For The Generay Deposit", fr="Trait. des jours fériés", es="Clave Fut. Retroactiva")
+			@i18n:Tooltip (fr="Traitement des jours fériés", es="Clave Futura Retroactiva")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=28.0, core=true, t24Name=FWD.BWD.KEY)
+		BASE_DATE_KEY : LD_Config:LD_TXN_TYPE_CONDITION__BASE_DATE_KEY
+			@i18n:Label (en="Base Date Key", fr="Date de référence", es="Clave de Fecha Base")
+			@i18n:Tooltip (fr="Date de référence")
+			@t24:i (align=L, inputBehaviour=I, maxLength=4, sysNumber=29.0, core=true, t24Name=BASE.DATE.KEY)
+		COMMISSION_FREQ : mml:string
+			@i18n:Label (en="Commission Frequency", fr="Fréquence de commission")
+			@i18n:Tooltip (fr="Fréquence de commission")
+			@t24:i (align=L, inputBehaviour=I, maxLength=5, sysNumber=30.0, core=true, businessType=A, t24Name=COMMISSION.FREQ)
+		ROUNDING_RULE -> EB_SystemTables:EB_ROUNDING_RULE
+			@i18n:Label (en="Rounding Rule", fr="Règle d\'arrondi", es="Regla de Redondeo")
+			@i18n:Tooltip (fr="Règle d\'arrondi")
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=31.0, core=true, businessType=A, t24Name=ROUNDING.RULE)
+		RESERVED5 : mml:string
+			@i18n:Label (fr="Propriété saisie avec activité paimt")
+			@i18n:Tooltip (fr="Propriété saisie avec activité paimt ")
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=32.0, core=true, businessType=A, t24Name=RESERVED5)
+		RESERVED4 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=33.0, core=true, businessType=A, t24Name=RESERVED4)
+		RESERVED3 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=34.0, core=true, businessType=A, t24Name=RESERVED3)
+		RESERVED2 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=35.0, core=true, businessType=A, t24Name=RESERVED2)
+		RESERVED1 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=36.0, core=true, businessType=A, t24Name=RESERVED1)
+		OVERRIDE -> byValue LD_Config:LD_TXN_TYPE_CONDITION__OVERRIDE *
+		RECORD_STATUS : mml:string
+			@i18n:Label (en="Record Status", fr=Statut, es=Estado)
+			@i18n:Tooltip (fr="Statut de l\'enregistrement")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=38.0, core=true, businessType=STAT, t24Name=RECORD.STATUS)
+		CURR_NO : mml:Integer
+			@i18n:Label (en="Curr No", fr="N° version", es="No. Actual")
+			@i18n:Tooltip (fr="Numéro de version")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=39.0, core=true, t24Name=CURR.NO)
+		INPUTTER -> byValue LD_Config:LD_TXN_TYPE_CONDITION__INPUTTER *
+		DATE_TIME -> byValue LD_Config:LD_TXN_TYPE_CONDITION__DATE_TIME *
+		AUTHORISER : mml:string
+			@i18n:Label (en=Authoriser, fr="Validé par", es=Autorizador)
+			@i18n:Tooltip (en="Indicates the User who Authorises the record", fr="Utilisateur de validation", es="El usuario que autorizó el registro")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=42.0, core=true, businessType=A, t24Name=AUTHORISER)
+		CO_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company, fr=Entité, es="Compañía")
+			@i18n:Tooltip (fr="Code établissement ou agence")
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=43.0, core=true, businessType=A, t24Name=CO.CODE)
+		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Department Code", fr=Service, es=Departamento)
+			@i18n:Tooltip (fr="Code du service")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=44.0, core=true, t24Name=DEPT.CODE)
+		AUDITOR_CODE : mml:string
+			@i18n:Label (en="Auditor Code", fr="Audité par", es="Código de Auditor")
+			@i18n:Tooltip (en="Auditor Code", fr="Utilisateur d\'audit", es="Nombre del auditor")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=45.0, core=true, businessType=A, t24Name=AUDITOR.CODE)
+		AUDIT_DATE_TIME : mml:dateTime
+			@i18n:Label (en="Audit Date Time", fr="Audité le", es="Fecha/Hora de Audit.")
+			@i18n:Tooltip (en="Date and time when record was audited", fr="Date et heure d\'audit", es="Fecha y Hora de Auditoría ")
+			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=46.0, core=true, businessType=RELTIME, t24Name=AUDIT.DATE.TIME)
+	}
+	LD_TXN_TYPE_CONDITION__DESCRIPTION
+	{
+		DESCRIPTION : mml:string required
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, multiLanguage=true, sysNumber=1.0, core=true, businessType=A, t24Name=DESCRIPTION)
+	}
+	LD_TXN_TYPE_CONDITION__CURRENCY
+	{
+		CURRENCY -> FIN_CurrencyConfig:CURRENCY
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=3.0, core=true, businessType=DEF, t24Name=CURRENCY)
+		INTEREST_RATE : mml:string
+			@t24:i (align=R, inputBehaviour=I, maxLength=12, sysNumber=4.0, core=true, businessType=R, t24Name=INTEREST.RATE)
+		INTEREST_KEY -> ST_RateParameters:BASIC_RATE_TEXT
+			@t24:i (align=R, inputBehaviour=I, maxLength=4, sysNumber=5.0, core=true, t24Name=INTEREST.KEY)
+		INTEREST_SPREAD : mml:string
+			@t24:i (align=R, inputBehaviour=I, maxLength=12, sysNumber=6.0, core=true, businessType=R, t24Name=INTEREST.SPREAD)
+		MAX_INIT_AMT : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=7.0, core=true, businessType=AMT, t24Name=MAX.INIT.AMT)
+		MIN_INIT_AMT : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=8.0, core=true, businessType=AMT, t24Name=MIN.INIT.AMT)
+		CHARGE_CODE -> byValue LD_Config:LD_TXN_TYPE_CONDITION__CURRENCY__CHARGE_CODE *
+		COMM_RATE : mml:string
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=10.0, core=true, businessType=R, t24Name=COMM.RATE)
+		MAX_TERM : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=11.0, core=true, businessType=A, t24Name=MAX.TERM)
+		MIN_TERM : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=12.0, core=true, businessType=A, t24Name=MIN.TERM)
+		MAX_PR_AMT_TOL : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=13.0, core=true, businessType=AMT, t24Name=MAX.PR.AMT.TOL)
+		MIN_PR_AMT_TOL : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=14.0, core=true, businessType=AMT, t24Name=MIN.PR.AMT.TOL)
+		MAX_PR_PER_TOL : mml:string
+			@t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=15.0, core=true, businessType=R, t24Name=MAX.PR.PER.TOL)
+		MIN_PR_PER_TOL : mml:string
+			@t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=16.0, core=true, businessType=R, t24Name=MIN.PR.PER.TOL)
+		IAS_CLASSIFICATION -> IA_Config:IAS_CLASSIFICATION
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=17.0, core=true, businessType=A, t24Name=IAS.CLASSIFICATION)
+		IAS_SUBTYPE : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=18.0, core=true, businessType=IFRSSUBTYP, t24Name=IAS.SUBTYPE)
+		MARKET_KEY : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=19.0, core=true, businessType=A, t24Name=MARKET.KEY)
+		MARKET_MARGIN : mml:string
+			@t24:i (align=R, inputBehaviour=I, maxLength=12, sysNumber=20.0, core=true, businessType=R, t24Name=MARKET.MARGIN)
+		COMPOUND_TYPE : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=5, sysNumber=21.0, core=true, businessType=COMPFQU, t24Name=COMPOUND.TYPE)
+		COMPOUND_YIELD_METHOD : LD_Config:LD_TXN_TYPE_CONDITION__CURRENCY__COMPOUND_YIELD_METHOD
+			@t24:i (align=L, inputBehaviour=I, maxLength=8, sysNumber=22.0, core=true, t24Name=COMPOUND.YIELD.METHOD)
+	}
+	LD_TXN_TYPE_CONDITION__CURRENCY__CHARGE_CODE
+	{
+		CHARGE_CODE -> LM_Fees:LMM_CHARGE_CONDITIONS
+			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=9.0, core=true, t24Name=CHARGE.CODE)
+	}
+	LD_TXN_TYPE_CONDITION__OVERRIDE
+	{
+		OVERRIDE : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=37.0, core=true, t24Name=OVERRIDE)
+	}
+	LD_TXN_TYPE_CONDITION__INPUTTER
+	{
+		INPUTTER : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=40.0, core=true, businessType=A, t24Name=INPUTTER)
+	}
+	LD_TXN_TYPE_CONDITION__DATE_TIME
+	{
+		DATE_TIME : mml:dateTime
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=41.0, core=true, businessType=RELTIME, t24Name=DATE.TIME)
+	}
+	PM_LD_PARAM
+		@t24:i (t24Name=PM.LD.PARAM, level=I, type=H, allowedFunctions="A C D E H I L P Q R S", localRefAllowed=false)
+	{
+		PM_LD_PARAM_ID -> LD_Config:PM_LD_PARAM PK required
+			@t24:i (align=L, inputBehaviour=I, maxLength=10, sysNumber=0.0, core=true, t24Name=PM.LD.PARAM.ID)
+		DESCRIPTION -> byValue LD_Config:PM_LD_PARAM__DESCRIPTION *
+		CATEG_DEP_ST -> byValue LD_Config:PM_LD_PARAM__CATEG_DEP_ST *
+		NO_OF_ROWS : mml:string required
+			@t24:i (align=L, inputBehaviour=F, maxLength=2, sysNumber=26.0, core=true, businessType=DEF, t24Name=NO.OF.ROWS)
+		GM_DATE_SFX : LD_Config:PM_LD_PARAM__GM_DATE_SFX
+			@t24:i (align=R, inputBehaviour=F, maxLength=1, sysNumber=27.0, core=true, t24Name=GM.DATE.SFX)
+		SHOW_FWD_INT : LD_Config:PM_LD_PARAM__SHOW_FWD_INT
+			@i18n:Label (en="Show Fwd Int", fr="Intérêt à terme", es="Mostrar Int. Futuro")
+			@i18n:Tooltip (en="Show Forward Interest", fr="Intérêt à terme", es="Mostrar Interés Futuro")
+			@t24:i (align=L, inputBehaviour=I, maxLength=8, sysNumber=28.0, core=true, t24Name=SHOW.FWD.INT)
+		PM_MAX_PERIOD : mml:Integer
+			@i18n:Label (en="Maximum Period", fr="Période maximum", es="Periodo Máximo")
+			@i18n:Tooltip (fr="Période maximum")
+			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=29.0, core=true, t24Name=PM.MAX.PERIOD)
+		RESERVED2 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=30.0, core=true, t24Name=RESERVED2)
+		OVERRIDE -> byValue LD_Config:PM_LD_PARAM__OVERRIDE *
+		RECORD_STATUS : mml:string
+			@i18n:Label (en="Record Status", fr=Statut, es=Estado)
+			@i18n:Tooltip (fr="Statut de l\'enregistrement")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=32.0, core=true, businessType=STAT, t24Name=RECORD.STATUS)
+		CURR_NO : mml:Integer
+			@i18n:Label (en="Curr No", fr="N° version", es="No. Actual")
+			@i18n:Tooltip (fr="Numéro de version")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=33.0, core=true, t24Name=CURR.NO)
+		INPUTTER -> byValue LD_Config:PM_LD_PARAM__INPUTTER *
+		DATE_TIME -> byValue LD_Config:PM_LD_PARAM__DATE_TIME *
+		AUTHORISER : mml:string
+			@i18n:Label (en=Authoriser, fr="Validé par", es=Autorizador)
+			@i18n:Tooltip (en="Indicates the User who Authorises the record", fr="Utilisateur de validation", es="El usuario que autorizó el registro")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=36.0, core=true, businessType=A, t24Name=AUTHORISER)
+		CO_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company, fr=Entité, es="Compañía")
+			@i18n:Tooltip (fr="Code établissement ou agence")
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=37.0, core=true, businessType=A, t24Name=CO.CODE)
+		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Dept Code", fr=Service, es=Departamento)
+			@i18n:Tooltip (fr="Code du service")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=38.0, core=true, t24Name=DEPT.CODE)
+		AUDITOR_CODE : mml:string
+			@i18n:Label (en="Auditor Code", fr="Audité par", es="Código de Auditor")
+			@i18n:Tooltip (en="Auditor Code", fr="Utilisateur d\'audit", es="Nombre del auditor")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=39.0, core=true, businessType=A, t24Name=AUDITOR.CODE)
+		AUDIT_DATE_TIME : mml:dateTime
+			@i18n:Label (en="Audit Date Time", fr="Audité le", es="Fecha/Hora de Audit.")
+			@i18n:Tooltip (en="Date and time when record was audited", fr="Date et heure d\'audit", es="Fecha y Hora de Auditoría ")
+			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=40.0, core=true, businessType=RELTIME, t24Name=AUDIT.DATE.TIME)
+	}
+	PM_LD_PARAM__DESCRIPTION
+	{
+		DESCRIPTION : mml:string required
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, multiLanguage=true, sysNumber=1.0, core=true, businessType=A, t24Name=DESCRIPTION)
+	}
+	PM_LD_PARAM__CATEG_DEP_ST
+	{
+		CATEG_DEP_ST : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=6, sysNumber=2.0, core=true, t24Name=CATEG.DEP.ST)
+		CATEG_DEP_END : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=6, sysNumber=3.0, core=true, t24Name=CATEG.DEP.END)
+		CATEG_LOAN_ST : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=6, sysNumber=4.0, core=true, t24Name=CATEG.LOAN.ST)
+		CATEG_LOAN_END : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=6, sysNumber=5.0, core=true, t24Name=CATEG.LOAN.END)
+		POS_START -> PM_Config:PM_POSN_CLASS required
+			@t24:i (align=L, inputBehaviour=I, maxLength=5, sysNumber=6.0, core=true, businessType=A, t24Name=POS.START)
+		POS_MAT_CASH -> PM_Config:PM_POSN_CLASS
+			@t24:i (align=L, inputBehaviour=N, maxLength=5, sysNumber=7.0, core=true, businessType=A, t24Name=POS.MAT.CASH)
+		POS_MAT_GAP -> PM_Config:PM_POSN_CLASS required
+			@t24:i (align=L, inputBehaviour=I, maxLength=5, sysNumber=8.0, core=true, businessType=A, t24Name=POS.MAT.GAP)
+		POS_FWD_FIX_CAP -> PM_Config:PM_POSN_CLASS required
+			@t24:i (align=L, inputBehaviour=I, maxLength=5, sysNumber=9.0, core=true, businessType=A, t24Name=POS.FWD.FIX.CAP)
+		POS_FWD_VAR_CAP -> PM_Config:PM_POSN_CLASS required
+			@t24:i (align=L, inputBehaviour=I, maxLength=5, sysNumber=10.0, core=true, businessType=A, t24Name=POS.FWD.VAR.CAP)
+		POS_INT_CAP -> PM_Config:PM_POSN_CLASS required
+			@t24:i (align=L, inputBehaviour=I, maxLength=5, sysNumber=11.0, core=true, businessType=A, t24Name=POS.INT.CAP)
+		POS_CHARGE_CAP -> PM_Config:PM_POSN_CLASS required
+			@t24:i (align=L, inputBehaviour=I, maxLength=5, sysNumber=12.0, core=true, businessType=A, t24Name=POS.CHARGE.CAP)
+		POS_FEE -> PM_Config:PM_POSN_CLASS
+			@t24:i (align=L, inputBehaviour=N, maxLength=5, sysNumber=13.0, core=true, businessType=A, t24Name=POS.FEE)
+		POS_FWD_COMM -> PM_Config:PM_POSN_CLASS
+			@t24:i (align=L, inputBehaviour=I, maxLength=5, sysNumber=14.0, core=true, businessType=A, t24Name=POS.FWD.COMM)
+		POS_PPL_INC -> PM_Config:PM_POSN_CLASS required
+			@t24:i (align=L, inputBehaviour=I, maxLength=5, sysNumber=15.0, core=true, businessType=A, t24Name=POS.PPL.INC)
+		POS_PPL_DEC_CSH -> PM_Config:PM_POSN_CLASS
+			@t24:i (align=L, inputBehaviour=N, maxLength=5, sysNumber=16.0, core=true, businessType=A, t24Name=POS.PPL.DEC.CSH)
+		POS_PPL_DEC_GAP -> PM_Config:PM_POSN_CLASS required
+			@t24:i (align=L, inputBehaviour=I, maxLength=5, sysNumber=17.0, core=true, businessType=A, t24Name=POS.PPL.DEC.GAP)
+		POS_PRIN_CASH -> PM_Config:PM_POSN_CLASS
+			@t24:i (align=L, inputBehaviour=N, maxLength=5, sysNumber=18.0, core=true, businessType=A, t24Name=POS.PRIN.CASH)
+		POS_PRIN_GAP -> PM_Config:PM_POSN_CLASS required
+			@t24:i (align=L, inputBehaviour=I, maxLength=5, sysNumber=19.0, core=true, businessType=A, t24Name=POS.PRIN.GAP)
+		POS_TAX_PRIN -> PM_Config:PM_POSN_CLASS required
+			@t24:i (align=L, inputBehaviour=I, maxLength=5, sysNumber=20.0, core=true, businessType=A, t24Name=POS.TAX.PRIN)
+		POS_TAX_INT -> PM_Config:PM_POSN_CLASS required
+			@t24:i (align=L, inputBehaviour=I, maxLength=5, sysNumber=21.0, core=true, businessType=A, t24Name=POS.TAX.INT)
+		POS_TAX_COMM -> PM_Config:PM_POSN_CLASS required
+			@t24:i (align=L, inputBehaviour=I, maxLength=5, sysNumber=22.0, core=true, businessType=A, t24Name=POS.TAX.COMM)
+		POS_FWD_FIX_INT -> PM_Config:PM_POSN_CLASS
+			@t24:i (align=L, inputBehaviour=I, maxLength=5, sysNumber=23.0, core=true, businessType=A, t24Name=POS.FWD.FIX.INT)
+		POS_FWD_VAR_INT -> PM_Config:PM_POSN_CLASS
+			@t24:i (align=L, inputBehaviour=I, maxLength=5, sysNumber=24.0, core=true, businessType=A, t24Name=POS.FWD.VAR.INT)
+		INT_TYPE_TO_USE : LD_Config:PM_LD_PARAM__CATEG_DEP_ST__INT_TYPE_TO_USE
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=25.0, core=true, t24Name=INT.TYPE.TO.USE)
+	}
+	PM_LD_PARAM__OVERRIDE
+	{
+		OVERRIDE : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=31.0, core=true, businessType=A, t24Name=OVERRIDE)
+	}
+	PM_LD_PARAM__INPUTTER
+	{
+		INPUTTER : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=34.0, core=true, businessType=A, t24Name=INPUTTER)
+	}
+	PM_LD_PARAM__DATE_TIME
+	{
+		DATE_TIME : mml:dateTime
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=35.0, core=true, businessType=RELTIME, t24Name=DATE.TIME)
+	}
+}
+Enumerations {
+	LD_GROUP_CONDITION__FIXED_CONTRACT : mml:string
+		YES=YES
+		NO=NO
+	LD_GROUP_CONDITION__APPLY_CURR_LOANS : mml:string
+		YES=YES
+		NO=NO
+	LD_TXN_TYPE_CONDITION__MATURE_AT_SOD : mml:string
+		YES=YES
+		NULL=NULL
+	LD_TXN_TYPE_CONDITION__CURRENCY__COMPOUND_YIELD_METHOD : mml:string
+		YIELD=YIELD
+		NULL=NULL
+	LD_TXN_TYPE_CONDITION__CONVERSION_TYPE : mml:string
+		BUY=BUY
+		SELL=SELL
+		MID=MID
+	LD_TXN_TYPE_CONDITION__FWD_BWD_KEY : mml:string
+		FWD=FWD
+		BWD=BWD
+		FSM=FSM
+		CAL=CAL
+	LD_TXN_TYPE_CONDITION__BASE_DATE_KEY : mml:string
+		BASE=BASE
+		PREV=PREV
+	PM_LD_PARAM__CATEG_DEP_ST__INT_TYPE_TO_USE : mml:string
+		MIS=MIS
+	PM_LD_PARAM__GM_DATE_SFX : mml:string
+		n8=8
+	PM_LD_PARAM__SHOW_FWD_INT : mml:string
+		BOTH=BOTH
+		FIXED=FIXED
+		VARIABLE=VARIABLE
+}

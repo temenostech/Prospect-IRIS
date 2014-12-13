@@ -1,0 +1,629 @@
+# UTF-8
+/* Loans Drawdown Processing for Syndicated Loans */
+Domain SL_Loans
+	@t24:i (module=SL)
+	@java:Package (value=com.temenos.t24.datamodel.sl.sl_loans)
+namespace "http://www.temenos.com/t24/SL_Loans"
+metamodelVersion 4.3.0.20110527
+Classes {
+	SL_LOANS
+		@t24:i (t24Name=SL.LOANS, level=F, type=H, additionalInfo="NOH UNP OEU", allowedFunctions="A C D E H I L P Q R S", localRefAllowed=true)
+	{
+		CONTRACT_NO -> SL_Loans:SL_LOANS PK required
+			@i18n:Label (en="Contract No", fr="Réf. de contrat", es="No. de Contrato")
+			@i18n:Tooltip (fr="Référence de contrat")
+			@t24:i (align=L, inputBehaviour=I, maxLength=25, sysNumber=0.0, core=true, businessType=A, t24Name=CONTRACT.NO)
+		CUSTOMER -> ST_Customer:CUSTOMER required
+			@i18n:Label (en="Nom client", fr=Client, es=Cliente)
+			@i18n:Tooltip (en="Nom du client", fr="Code du client", es="Pasivo de Cliente")
+			@t24:i (align=R, inputBehaviour=F, maxLength=10, sysNumber=1.0, core=true, businessType=CUS, t24Name=CUSTOMER)
+		DEAL_CURRENCY -> FIN_CurrencyConfig:CURRENCY required
+			@i18n:Label (en=Ccy, fr=Devise, es="Moneda del Préstamo")
+			@i18n:Tooltip (fr=Devise, es="Moneda en la que préstamos son denominados")
+			@t24:i (align=L, inputBehaviour=F, maxLength=3, sysNumber=2.0, core=true, businessType=CCY, t24Name=DEAL.CURRENCY)
+		AMOUNT : mml:Double
+			@i18n:Label (en=Amount, fr=Montant, es="Monto del Préstamo")
+			@i18n:Tooltip (en="Indicates the Amount", fr=Montant, es="Indica el monto del préstamo girado")
+			@t24:i (align=R, inputBehaviour=F, maxLength=19, sysNumber=3.0, core=true, businessType=AMT, t24Name=AMOUNT)
+		OWN_AMOUNT : mml:Double
+			@i18n:Label (en="Own Amount", fr="Notre part", es="Monto Propio")
+			@i18n:Tooltip (fr="Notre part")
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=4.0, core=true, businessType=AMT, t24Name=OWN.AMOUNT)
+		BUS_DAY_DEFN -> byValue SL_Loans:SL_LOANS__BUS_DAY_DEFN *
+		BASE_CCY_CONV : mml:string
+			@i18n:Label (en="Base Currency Conversion", fr="Cours de conversion", es="Conversión de Moneda Base")
+			@i18n:Tooltip (fr="Cours de conversion")
+			@t24:i (align=R, inputBehaviour=F, maxLength=11, sysNumber=6.0, core=true, businessType=R, t24Name=BASE.CCY.CONV)
+		BASE_CCY_AMT : mml:Double
+			@i18n:Label (en="Base CCY Amount", fr=Contrevaleur, es="Mto. de Mda. Base")
+			@i18n:Tooltip (fr=Contrevaleur, es="Monto de facilidad reducido del giro")
+			@t24:i (align=R, inputBehaviour=F, maxLength=19, sysNumber=7.0, core=true, businessType=AMT, t24Name=BASE.CCY.AMT)
+		DRAW_CURRENCY -> FIN_CurrencyConfig:CURRENCY
+			@i18n:Label (en="Draw Currency", fr="Devise des documents", es="Moneda del Giro")
+			@i18n:Tooltip (fr="Devise des documents", es="Indica la moneda en la que el préstamo es girado")
+			@t24:i (align=L, inputBehaviour=F, maxLength=3, sysNumber=8.0, core=true, businessType=CCY, t24Name=DRAW.CURRENCY)
+		DRAW_EXCG_RATE : mml:string
+			@t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=9.0, core=true, businessType=R, t24Name=DRAW.EXCG.RATE)
+		VALUE_DATE : mml:date
+			@i18n:Label (en="Value Date", fr="Date de valeur", es="Fecha Valor")
+			@i18n:Tooltip (en="Indicates the Value date of the Contract", fr="Date de valeur", es="Fecha en que Carteras serán act. por el evento")
+			@t24:i (align=R, inputBehaviour=F, maxLength=11, sysNumber=10.0, core=true, businessType=D, t24Name=VALUE.DATE)
+		MATURITY_DATE : mml:string required
+			@i18n:Label (en="Maturity Date", fr="Date d\'échéance", es="Fecha de Vencimiento")
+			@i18n:Tooltip (en="Indicates the Maturity Date of the Transaction", fr="Date d\'échéance", es="Indica la Fecha de Vencimiento de la Transacción")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=11.0, core=true, businessType=MATLMM, t24Name=MATURITY.DATE)
+		LIMIT_REF : mml:Integer
+			@i18n:Label (en="Limit Ref", fr="N° de limite", es="Ref. de Límite")
+			@i18n:Tooltip (en="Limit Reference", fr="Identifiant de la limite")
+			@t24:i (align=R, inputBehaviour=N, maxLength=10, sysNumber=12.0, core=true, t24Name=LIMIT.REF)
+		CUSTOMER_REF : mml:string
+			@i18n:Label (en="Customer Ref", fr="Référence client", es="Referencia Cliente")
+			@i18n:Tooltip (fr="Référence du client")
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=13.0, core=true, businessType=A, t24Name=CUSTOMER.REF)
+		ACCRUAL_ID -> AC_Fees:EB_ACCRUAL_PARAM
+			@i18n:Label (en="Accrual Method", fr="Calcul des bornes", es="Método de Devengo")
+			@i18n:Tooltip (en="Indicates the method by which accrual is to happen", fr="Calcul des bornes", es="Indica el método de devengo")
+			@t24:i (align=L, inputBehaviour=F, maxLength=35, sysNumber=14.0, core=true, businessType=A, t24Name=ACCRUAL.ID)
+		CATEGORY -> ST_Config:CATEGORY
+			@i18n:Label (en=Category, fr=Produit, es="Categoría de Producto")
+			@i18n:Tooltip (en="Specifies the Category", fr="Code du produit", es="Indica el código de categoría de producto")
+			@t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=15.0, core=true, businessType=PRODCAT, t24Name=CATEGORY)
+		SL_PURPOSE -> SL_Config:SL_PURPOSE
+			@i18n:Label (en="Loan Purpose", fr="Objet du prêt", es="Próposito del Préstamo")
+			@i18n:Tooltip (fr="Objet du prêt")
+			@t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=16.0, core=true, t24Name=SL.PURPOSE)
+		DRAWDOWN_ACCOUNT -> ACM_AccountOpening:ACCOUNT
+			@i18n:Label (en="Drawdown Acct", fr="Compte débité", es="Cuenta de Retiro")
+			@i18n:Tooltip (fr="Compte débité", es="Cuenta para el retiro a usar en la fecha valor")
+			@t24:i (align=L, inputBehaviour=I, maxLength=14, sysNumber=17.0, core=true, businessType=ANT, t24Name=DRAWDOWN.ACCOUNT)
+		MIS_INT_KEY -> ST_RateParameters:BASIC_RATE_TEXT
+			@i18n:Label (en="MIS Int Key", fr="Taux de réf. statistique", es="Clave de Interés MIS")
+			@i18n:Tooltip (fr="Taux de référence statistique")
+			@t24:i (align=R, inputBehaviour=I, maxLength=4, sysNumber=18.0, core=true, t24Name=MIS.INT.KEY)
+		MIS_INT_RATE : mml:string
+			@i18n:Label (en="MIS Intt Rate", fr="Taux fixe statistique", es="Tasa Interés MIS")
+			@i18n:Tooltip (fr="Taux fixe statistique")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=19.0, core=true, businessType=R, t24Name=MIS.INT.RATE)
+		MIS_FUNDING_DEPT -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="MIS Funding Dept", fr="Centre de profit-service", es="Dep. Financiero MI")
+			@i18n:Tooltip (fr="Centre de profit-service")
+			@t24:i (align=R, inputBehaviour=I, maxLength=4, sysNumber=20.0, core=true, businessType=DAO, t24Name=MIS.FUNDING.DEPT)
+		MIS_ACCT_OFFICER -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Acct Officer", fr="Gestionnaire MIS", es="Gestor de Cuenta")
+			@i18n:Tooltip (fr="Gestionnaire MIS")
+			@t24:i (align=R, inputBehaviour=I, maxLength=4, sysNumber=21.0, core=true, businessType=DAO, t24Name=MIS.ACCT.OFFICER)
+		PRIN_BEN_BANK -> ST_Customer:CUSTOMER
+			@i18n:Label (en="Beneficiary\'s Bank")
+			@i18n:Tooltip (en="Bank to whom principal payments are to be made")
+			@t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=22.0, core=true, businessType=CUS, t24Name=PRIN.BEN.BANK)
+		INT_RATE_TYPE : SL_Loans:SL_LOANS__INT_RATE_TYPE
+			@i18n:Label (en="Interest Rate Type", fr="Type de taux", es="Tipo de Tasa de Int.")
+			@i18n:Tooltip (en="Indicates the type of interest rate to be used", fr="Type de taux", es="Tipo de Tasa de Interés ")
+			@t24:i (align=R, inputBehaviour=I, maxLength=1, sysNumber=23.0, core=true, t24Name=INT.RATE.TYPE)
+		INTEREST_BASIS -> ST_RateParameters:INTEREST_BASIS
+			@i18n:Label (en="Interest Basis", fr="Base de calcul", es="Base Diaria de Int.")
+			@i18n:Tooltip (en="Indicates the interest day basis", fr="Base de calcul des intérêts", es="Método de cálculo de interés")
+			@t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=24.0, core=true, t24Name=INTEREST.BASIS)
+		INT_PYMT_METHOD : SL_Loans:SL_LOANS__INT_PYMT_METHOD
+			@i18n:Label (en="Intt Payment Method", fr="Pré ou postcomptés", es="Método de Pago Interés")
+			@i18n:Tooltip (fr="Pré ou postcomptés")
+			@t24:i (align=R, inputBehaviour=I, maxLength=1, sysNumber=25.0, core=true, t24Name=INT.PYMT.METHOD)
+		INTEREST_RATE : mml:string
+			@i18n:Label (en="Interest Rate", fr="Taux d\'intérêts", es="Tasa de Interés Fija")
+			@i18n:Tooltip (en="Indicates interest rate", fr="Taux d\'intérêts", es="Tasa de Interés anual aplicable si el tipo es fijo")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=26.0, core=true, businessType=R, t24Name=INTEREST.RATE)
+		INTEREST_KEY : mml:Integer
+			@i18n:Label (en="Interest Key", fr="Taux de référence", es="Clave de Interés")
+			@i18n:Tooltip (en="Indicates key to apply floating rate of interest", fr="Taux de référence")
+			@t24:i (align=R, inputBehaviour=I, maxLength=4, sysNumber=27.0, core=true, t24Name=INTEREST.KEY)
+		CUSTOMER_SPREAD : mml:string
+			@i18n:Label (en="Customer Spread", fr="Marge client", es="Margen de Interés")
+			@i18n:Tooltip (fr="Marge sur le cours client", es="Indica el margen en tasa variable")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=28.0, core=true, businessType=R, t24Name=CUSTOMER.SPREAD)
+		CAP_SPREAD : mml:string
+			@i18n:Label (en="Int.Spread Capitalisation")
+			@i18n:Tooltip (en="Define Capitalisation of accrued Interest Spread in percentage")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=29.0, core=true, businessType=R, t24Name=CAP.SPREAD)
+		SPECIAL_SPREAD -> byValue SL_Loans:SL_LOANS__SPECIAL_SPREAD *
+		EFF_RATE : mml:string
+			@i18n:Label (en="Interest Rate", fr="Taux d\'intérêt", es="Tasa de Interés")
+			@i18n:Tooltip (fr="Taux d\'intérêt")
+			@t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=32.0, core=true, businessType=R, t24Name=EFF.RATE)
+		EFF_CAP_RATE : mml:string
+			@i18n:Label (en="Eff.Capitalisation Rate")
+			@i18n:Tooltip (en="Effective Capitalisation Rate")
+			@t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=33.0, core=true, businessType=R, t24Name=EFF.CAP.RATE)
+		CAPITALISATION : SL_Loans:SL_LOANS__CAPITALISATION
+			@i18n:Label (en="Capitalise Interest", fr="Capitalisation Int.", es="Capitalizar Interés")
+			@i18n:Tooltip (en="To Capitalise the interest or not", fr="Capitalisation des intérêts")
+			@t24:i (align=L, inputBehaviour=F, maxLength=3, sysNumber=34.0, core=true, businessType=DEF, t24Name=CAPITALISATION)
+		CAP_PERC : mml:string
+			@i18n:Label (en="Interest Capitalisation")
+			@i18n:Tooltip (en="Define Capitalisation accrued interest in Percentage")
+			@t24:i (align=R, inputBehaviour=F, maxLength=11, sysNumber=35.0, core=true, businessType=R, t24Name=CAP.PERC)
+		TOTAL_INT_AMOUNT : mml:Double
+			@i18n:Label (en="Total Interest Amount")
+			@i18n:Tooltip (en="Total Interest Amount of Loan")
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=36.0, core=true, businessType=AMT, t24Name=TOTAL.INT.AMOUNT)
+		RESERVED55 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=37.0, core=true, businessType=A, t24Name=RESERVED55)
+		LIQUIDATION_MODE : SL_Loans:SL_LOANS__LIQUIDATION_MODE
+			@i18n:Label (en="Liquidation Mode", fr="Mode de traitement", es="Forma de Liquidación")
+			@i18n:Tooltip (en="Indicates how overdue payments are handled.", fr="Mode de traitement")
+			@t24:i (align=L, inputBehaviour=I, maxLength=14, sysNumber=38.0, core=true, businessType=DEF, t24Name=LIQUIDATION.MODE)
+		INT_PAY_FQY -> byValue SL_Loans:SL_LOANS__INT_PAY_FQY *
+		INT_BASE_DATE : SL_Loans:SL_LOANS__INT_BASE_DATE
+			@i18n:Label (en="Int Base Date", fr="Date de base", es="Fecha Base Interés")
+			@i18n:Tooltip (fr="Date de base")
+			@t24:i (align=L, inputBehaviour=I, maxLength=4, sysNumber=40.0, core=true, t24Name=INT.BASE.DATE)
+		INT_FWD_BKD : SL_Loans:SL_LOANS__INT_FWD_BKD
+			@i18n:Label (en="Int Fwd/Bkwd", fr="Traitement jours fériés", es="Interés Retroact. Futuro")
+			@i18n:Tooltip (fr="Traitement des jours fériés")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=41.0, core=true, t24Name=INT.FWD.BKD)
+		NEW_INT_RATE : mml:string
+			@i18n:Label (en="New Interest Rate", fr="Nouveau taux", es="Nueva Tasa de Interés")
+			@i18n:Tooltip (fr="Nouveau taux d\'intérêts", es="Nueva Tasa de Interés")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=42.0, core=true, businessType=R, t24Name=NEW.INT.RATE)
+		NEW_INT_SPREAD : mml:string
+			@i18n:Label (en="New Interest Spread")
+			@i18n:Tooltip (en="New Interest Spread")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=43.0, core=true, businessType=R, t24Name=NEW.INT.SPREAD)
+		NEW_INT_EFFECT : mml:date
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=44.0, core=true, businessType=D, t24Name=NEW.INT.EFFECT)
+		PRINCIPAL_CHANGE : mml:Double
+			@i18n:Label (en="Principal Inc/Dec", fr="Capital: augm/dimin", es="Aumento/Dismin. Capital")
+			@i18n:Tooltip (fr="Capital: augm/dimin")
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=45.0, core=true, businessType=AMT, t24Name=PRINCIPAL.CHANGE)
+		AMT_VAL_DATE : mml:date
+			@i18n:Label (en="Principal Eff Date", fr="Date modif du capital", es="Fecha Efectiva Capital")
+			@i18n:Tooltip (fr="Date modif du capital")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=46.0, core=true, businessType=D, t24Name=AMT.VAL.DATE)
+		MNEMONIC : mml:string
+			@i18n:Label (en=Mnemonic, fr=Mnémonique, es="Mnemónico")
+			@i18n:Tooltip (en="The alternate short way of calling the record", fr=Mnémonique)
+			@t24:i (align=L, inputBehaviour=F, maxLength=20, sysNumber=47.0, core=true, businessType=MNE, t24Name=MNEMONIC)
+		EXCG_FIX_DT : mml:date
+			@i18n:Label (en="Exchange Rate Date")
+			@i18n:Tooltip (en="Define date on exchange rate between facility ccy and Loan Ccy is determined")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=48.0, core=true, businessType=D, t24Name=EXCG.FIX.DT)
+		FIN_BCCY_RATE : mml:string
+			@i18n:Label (en="Exchange Rate")
+			@i18n:Tooltip (en="Define Exhange rate if exchange Rate date and system date are same")
+			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=49.0, core=true, businessType=R, t24Name=FIN.BCCY.RATE)
+		PARTICIPANT -> byValue SL_Loans:SL_LOANS__PARTICIPANT *
+		INT_TAX_KEY -> ST_ChargeConfig:TAX
+			@i18n:Label (en="Intt Tax Key", fr="Type de taxe", es="Clave Impuesto Interés")
+			@i18n:Tooltip (fr="Type de taxe")
+			@t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=57.0, core=true, businessType=A, t24Name=INT.TAX.KEY)
+		WHT_TAX_KEY -> ST_ChargeConfig:TAX
+			@i18n:Label (en="WHT Tax Key")
+			@i18n:Tooltip (en="Define Withholding Tax Key")
+			@t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=58.0, core=true, businessType=A, t24Name=WHT.TAX.KEY)
+		CONTRACT_GRP : mml:string
+			@i18n:Label (en="Contract Group", fr="Groupe de contrat", es="Grupo de Contrato")
+			@i18n:Tooltip (en="Contract group based on a set of conditions", fr="Groupe de contrat")
+			@t24:i (align=L, inputBehaviour=I, maxLength=5, sysNumber=59.0, core=true, businessType=A, t24Name=CONTRACT.GRP)
+		HOLDING_RATE : mml:string
+			@i18n:Label (en="Holding Rate", fr="Taux intermédiaire", es="Tasa Mantenida")
+			@i18n:Tooltip (fr="Taux intermédiaire")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=60.0, core=true, businessType=R, t24Name=HOLDING.RATE)
+		INT_RT_FIX_DT : mml:date
+			@i18n:Label (en="Intt Rate Fix Dt", fr="Date de fixation", es="Fecha Fija Tasa Interés")
+			@i18n:Tooltip (fr="Date de fixation")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=61.0, core=true, businessType=D, t24Name=INT.RT.FIX.DT)
+		MATURED_ONLINE : mml:string
+			@i18n:Label (en="Online Maturity")
+			@i18n:Tooltip (en="Whether Online Maturity is required$")
+			@t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=62.0, core=true, businessType=A, t24Name=MATURED.ONLINE)
+		BENF_PRIN_ACCOUNT : mml:string
+			@i18n:Label (en="Beneficiary\'s Account No")
+			@i18n:Tooltip (en="Beneficiary\'s Account No")
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=63.0, core=true, businessType=S, t24Name=BENF.PRIN.ACCOUNT)
+		PRIN_LIQ_ACCT -> ACM_AccountOpening:ACCOUNT
+			@i18n:Label (en="Principal Liq Acct", fr="Compte remb. capital", es="Cta. Liquid. de Cap.")
+			@i18n:Tooltip (en="Indicates principal liqudation account", fr="Compte de remboursement du capital", es="Cuenta de Liquidación de Capital")
+			@t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=64.0, core=true, businessType=ANT, t24Name=PRIN.LIQ.ACCT)
+		PRIN_REPAY_CCY -> FIN_CurrencyConfig:CURRENCY
+			@i18n:Label (en="Prin Repay Ccy", fr="Dev. Remb. Capital", es="Moneda Amortiz. Capital")
+			@i18n:Tooltip (fr="Devise de remboursement du capital")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=65.0, core=true, businessType=CCY, t24Name=PRIN.REPAY.CCY)
+		PRIN_REPAY_RATE : mml:string
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=66.0, core=true, businessType=R, t24Name=PRIN.REPAY.RATE)
+		INT_LIQ_ACCT -> ACM_AccountOpening:ACCOUNT
+			@i18n:Label (en="Interest Liq Acct", fr="Compte des intérêts", es="Cta. Liquid. de Int.")
+			@i18n:Tooltip (en="Indicates Interest Liquidation Account", fr="Compte de perception ou paiement des intérêts", es="Cuenta de Liquidación de Interés ")
+			@t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=67.0, core=true, businessType=ANT, t24Name=INT.LIQ.ACCT)
+		INT_REPAY_CCY -> FIN_CurrencyConfig:CURRENCY
+			@i18n:Label (en="Interest Repay Ccy", fr="Dev. Rembst Int", es="Moneda Amortiz. Interés")
+			@i18n:Tooltip (fr="Devise de Remboursement des intérêts")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=68.0, core=true, businessType=CCY, t24Name=INT.REPAY.CCY)
+		INT_REPAY_RATE : mml:string
+			@i18n:Label (en="Interest Repayment Date")
+			@i18n:Tooltip (en="Specify Interest Date")
+			@t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=69.0, core=true, businessType=R, t24Name=INT.REPAY.RATE)
+		OVERDUE_STATUS : mml:string
+			@i18n:Label (en="Overdue Status", fr="Statut impayé", es=Pendiente)
+			@i18n:Tooltip (en="Overdue or aging status of the contract", fr="Statut impayé")
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=70.0, core=true, businessType=A, t24Name=OVERDUE.STATUS)
+		COUNTRY_OF_RISK -> ST_Config:COUNTRY
+			@i18n:Label (en="Country of Risk", fr="Pays du risque", es="País de Riesgo")
+			@i18n:Tooltip (fr="Pays du risque")
+			@t24:i (align=L, inputBehaviour=I, maxLength=10, sysNumber=71.0, core=true, businessType=S, t24Name=COUNTRY.OF.RISK)
+		COUNTRY_OF_EXPOS -> ST_Config:COUNTRY
+			@i18n:Label (en="Country of Exposure", fr="Pays d\'exposition", es="País de Exposición")
+			@i18n:Tooltip (fr="Pays d\'exposition")
+			@t24:i (align=L, inputBehaviour=I, maxLength=10, sysNumber=72.0, core=true, businessType=S, t24Name=COUNTRY.OF.EXPOS)
+		BK_TO_BK_INFO -> byValue SL_Loans:SL_LOANS__BK_TO_BK_INFO *
+		CONSOL_KEY : mml:Integer
+			@i18n:Label (en="Consol Key", fr="Clé de consolidation", es="Clave Consolidación")
+			@i18n:Tooltip (fr="Clé de consolidation")
+			@t24:i (align=R, inputBehaviour=N, maxLength=70, sysNumber=74.0, core=true, t24Name=CONSOL.KEY)
+		PENDING_TRANS -> byValue SL_Loans:SL_LOANS__PENDING_TRANS *
+		DELIVERY_CUST -> byValue SL_Loans:SL_LOANS__DELIVERY_CUST *
+		DELIVERY_REF -> byValue SL_Loans:SL_LOANS__DELIVERY_REF *
+		CONTRACT_STATUS : mml:string
+			@i18n:Label (en="Contract Status", fr="Statut du contrat", es=Estado)
+			@i18n:Tooltip (fr="Statut du contrat")
+			@t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=86.0, core=true, businessType=A, t24Name=CONTRACT.STATUS)
+		WHT_RESERVED_ACCT -> ACM_AccountOpening:ACCOUNT
+			@i18n:Label (en="WHT Reserved Account")
+			@i18n:Tooltip (en="Define Witholding Tax Reserve Account")
+			@t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=87.0, core=true, businessType=INT, t24Name=WHT.RESERVED.ACCT)
+		WHT_CERT_ACCT -> ACM_AccountOpening:ACCOUNT
+			@i18n:Label (en="WHT certificate Account")
+			@i18n:Tooltip (en="Define Withholding Tax Account")
+			@t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=88.0, core=true, businessType=INT, t24Name=WHT.CERT.ACCT)
+		TAX_AMOUNT : mml:Double
+			@i18n:Label (en="Tax Amount", es="Impu. en Mto. de Cargo")
+			@i18n:Tooltip (es="Impuesto en Monto de Cargo")
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=89.0, core=true, businessType=AMT, t24Name=TAX.AMOUNT)
+		ROLLOVER_LOANS -> byValue SL_Loans:SL_LOANS__ROLLOVER_LOANS *
+		ROLLOVER_AMT : mml:Double
+			@i18n:Label (en="Rollover Amount", es="Monto de Renovación")
+			@i18n:Tooltip (en="Indicates rollover amount")
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=91.0, core=true, businessType=AMT, t24Name=ROLLOVER.AMT)
+		EXPIRY_DATE : mml:date
+			@i18n:Label (en="Expiry Date", fr="Date d\'échéance", es="Fecha de Vencimiento")
+			@i18n:Tooltip (en="Indicates the Expiry Date of the Transaction", fr="Date d\'échéance", es="Indica la Fecha de Vencimiento de la transacción")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=92.0, core=true, businessType=D, t24Name=EXPIRY.DATE)
+		BS_CONSIDERATION : mml:Double
+			@i18n:Label (en="Consideration Amount", fr="Montant négocié", es="Monto de Consideración")
+			@i18n:Tooltip (fr="Montant négocié")
+			@t24:i (align=R, inputBehaviour=N, maxLength=16, sysNumber=93.0, core=true, businessType=AMT, t24Name=BS.CONSIDERATION)
+		BS_AMORTISATION : SL_Loans:SL_LOANS__BS_AMORTISATION
+			@i18n:Label (en="Amortise Prem/Disc", fr="Amortir prime/escpte", es="Amortizar Prima/Desc.")
+			@i18n:Tooltip (fr="Amortir prime/escompte")
+			@t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=94.0, core=true, t24Name=BS.AMORTISATION)
+		BS_SETTLE_ACCOUNT -> ACM_AccountOpening:ACCOUNT
+			@i18n:Label (en="BS Settlement Account", fr="Cpte de Règlt", es="Cuenta de Liquidación")
+			@i18n:Tooltip (en="Buy Sell Settlement Account", fr="Compte de Règlement", es="Cuenta usada para el pago de consideración")
+			@t24:i (align=L, inputBehaviour=N, maxLength=16, sysNumber=95.0, core=true, businessType=ANT, t24Name=BS.SETTLE.ACCOUNT)
+		BNK_OP_CODE : SL_Loans:SL_LOANS__BNK_OP_CODE
+			@i18n:Label (en="Bank Operation Code", fr="Code opération bancaire", es="Código Operación de Banco")
+			@i18n:Tooltip (en="Bank operation code mapped to field 23-B of MT-103", fr="Code opération bancaire", es="Código de operación de banco mapeado al campo 23-B de MT -103")
+			@t24:i (align=L, inputBehaviour=I, maxLength=4, sysNumber=96.0, core=true, businessType=DEF, t24Name=BNK.OP.CODE)
+		DTLS_OF_CHRG : SL_Loans:SL_LOANS__DTLS_OF_CHRG
+			@i18n:Label (en="Details Of Chgs", fr="Détails des Cions", es="Detalles de Cargos")
+			@i18n:Tooltip (fr="Détails des Cions")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=97.0, core=true, businessType=DEF, t24Name=DTLS.OF.CHRG)
+		RETURN_INT : SL_Loans:SL_LOANS__RETURN_INT
+			@i18n:Label (en="Return interest", fr="Rétrocession intérêts", es="Interés de Ingreso")
+			@i18n:Tooltip (en="Whether to return interest or not?", fr="Rétrocession des intérêts")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=98.0, core=true, t24Name=RETURN.INT)
+		ROUNDING_RULE -> EB_SystemTables:EB_ROUNDING_RULE
+			@i18n:Label (en="Rounding Rule", fr="Règle d\'arrondi", es="Regla de Redondeo")
+			@i18n:Tooltip (en="Indicates the rounding rule", fr="Règle d\'arrondi")
+			@t24:i (align=L, inputBehaviour=F, maxLength=35, sysNumber=99.0, core=true, businessType=A, t24Name=ROUNDING.RULE)
+		ALLOW_SKIMMING : SL_Loans:SL_LOANS__ALLOW_SKIMMING
+			@t24:i (align=L, inputBehaviour=F, maxLength=3, sysNumber=100.0, core=true, t24Name=ALLOW.SKIMMING)
+		AMORTISE_FREQ : mml:string
+			@i18n:Label (en="Amortize Frequency", fr="Fréquence d\'amortisst")
+			@i18n:Tooltip (en="Frequency for Amortisation", fr="Fréquence d\'amortisst")
+			@t24:i (align=L, inputBehaviour=I, maxLength=13, sysNumber=101.0, core=true, businessType=FQU, t24Name=AMORTISE.FREQ)
+		BS_INT_SETTLE_AMT : mml:Double
+			@i18n:Label (en="BS Interest Settlement Amount")
+			@i18n:Tooltip (en="Buy Sell Interest Settlement Amount")
+			@t24:i (align=R, inputBehaviour=N, maxLength=16, sysNumber=102.0, core=true, businessType=AMT, t24Name=BS.INT.SETTLE.AMT)
+		R_SCHED_DT -> byValue SL_Loans:SL_LOANS__R_SCHED_DT *
+		PROCESS_AT_SOD : SL_Loans:SL_LOANS__PROCESS_AT_SOD
+			@t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=104.0, core=true, t24Name=PROCESS.AT.SOD)
+		ONLINE_PAY_DATE : mml:date
+			@i18n:Label (en="Online Pay Date", fr="Date rembourst en ligne", es="Fecha Pago Online")
+			@i18n:Tooltip (fr="Date rembourst en ligne")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=105.0, core=true, businessType=D, t24Name=ONLINE.PAY.DATE)
+		ONLINE_PAY_TYPE -> byValue SL_Loans:SL_LOANS__ONLINE_PAY_TYPE *
+		IAS_CLASSIFICATION -> IA_Config:IAS_CLASSIFICATION
+			@i18n:Label (en="IFRS Classification", fr="Classification IFRS", es="Clasificación IFRS")
+			@i18n:Tooltip (en="Indicates the IFRS category", fr="Classification IFRS")
+			@t24:i (align=L, inputBehaviour=F, maxLength=35, sysNumber=108.0, core=true, businessType=A, t24Name=IAS.CLASSIFICATION)
+		IAS_SUBTYPE : mml:string
+			@i18n:Label (en="IFRS Subtype", fr="Sous-type IFRS", es="Subtipo IFRS")
+			@i18n:Tooltip (en="Indicates the IFRS subtype", fr="Sous-type IFRS")
+			@t24:i (align=L, inputBehaviour=F, maxLength=35, sysNumber=109.0, core=true, businessType=IFRSSUBTYP, t24Name=IAS.SUBTYPE)
+		MARKET_KEY : mml:string
+			@i18n:Label (en="Market Key", fr="Référence marché", es="Clave de Mercado")
+			@i18n:Tooltip (en="Indicates a valid PI key or a market rate", fr="Référence du marché")
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=110.0, core=true, businessType=A, t24Name=MARKET.KEY)
+		MARKET_MARGIN : mml:string
+			@i18n:Label (en="Market Margin", fr="Marge de marché", es="Margen de Mercado")
+			@i18n:Tooltip (en="Indicates the margin on the market rate", fr="Marge de marché")
+			@t24:i (align=R, inputBehaviour=I, maxLength=12, sysNumber=111.0, core=true, businessType=R, t24Name=MARKET.MARGIN)
+		PIK_REFERENCE -> byValue SL_Loans:SL_LOANS__PIK_REFERENCE *
+		INT_ON_REPAY : SL_Loans:SL_LOANS__INT_ON_REPAY
+			@i18n:Label (en="Interest on Repay")
+			@i18n:Tooltip (en="Whether interest amount to be adjusted during Online Partial Repayment")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=117.0, core=true, t24Name=INT.ON.REPAY)
+		COMP_METHOD : SL_Loans:SL_LOANS__COMP_METHOD
+			@i18n:Label (en="Method of Calculation")
+			@i18n:Tooltip (en="Define method of calculation in Brazil Method")
+			@t24:i (align=L, inputBehaviour=F, maxLength=5, sysNumber=118.0, core=true, t24Name=COMP.METHOD)
+		COMP_FQY : mml:string
+			@i18n:Label (en="Frequency componding Accrual")
+			@i18n:Tooltip (en="Define frequency for Compound Accruals of Loan in Brazil Method")
+			@t24:i (align=L, inputBehaviour=F, maxLength=5, sysNumber=119.0, core=true, businessType=COMPFQU, t24Name=COMP.FQY)
+		RECALC_ANNUITY : SL_Loans:SL_LOANS__RECALC_ANNUITY
+			@i18n:Label (en="Recalcuate Annunity")
+			@i18n:Tooltip (en="Whether Recalculation is required for Annunity Contracts")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=120.0, core=true, t24Name=RECALC.ANNUITY)
+		RESERVED_07 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=121.0, core=true, businessType=A, t24Name=RESERVED.07)
+		RESERVED_06 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=122.0, core=true, businessType=A, t24Name=RESERVED.06)
+		RESERVED_05 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=123.0, core=true, businessType=A, t24Name=RESERVED.05)
+		RESERVED_04 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=124.0, core=true, businessType=A, t24Name=RESERVED.04)
+		RESERVED_03 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=125.0, core=true, businessType=A, t24Name=RESERVED.03)
+		RESERVED_02 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=126.0, core=true, businessType=A, t24Name=RESERVED.02)
+		RESERVED_01 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=127.0, core=true, businessType=A, t24Name=RESERVED.01)
+		STMT_NO -> byValue SL_Loans:SL_LOANS__STMT_NO *
+		OVERRIDE -> byValue SL_Loans:SL_LOANS__OVERRIDE *
+		RECORD_STATUS : mml:string
+			@i18n:Label (en="Record Status", fr=Statut, es=Estado)
+			@i18n:Tooltip (fr="Statut de l\'enregistrement")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=131.0, core=true, businessType=STAT, t24Name=RECORD.STATUS)
+		CURR_NO : mml:Integer
+			@i18n:Label (en="Curr No", fr="N° version", es="No. Actual")
+			@i18n:Tooltip (fr="Numéro de version")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=132.0, core=true, t24Name=CURR.NO)
+		INPUTTER -> byValue SL_Loans:SL_LOANS__INPUTTER *
+		DATE_TIME -> byValue SL_Loans:SL_LOANS__DATE_TIME *
+		AUTHORISER : mml:string
+			@i18n:Label (en=Authoriser, fr="Validé par", es=Autorizador)
+			@i18n:Tooltip (en="Indicates the User who Authorises the record", fr="Utilisateur de validation", es="El usuario que autorizó el registro")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=135.0, core=true, businessType=A, t24Name=AUTHORISER)
+		CO_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company, fr=Entité, es="Compañía")
+			@i18n:Tooltip (fr="Code établissement ou agence")
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=136.0, core=true, businessType=A, t24Name=CO.CODE)
+		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Dept Code", fr=Service, es=Departamento)
+			@i18n:Tooltip (fr="Code du service")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=137.0, core=true, t24Name=DEPT.CODE)
+		AUDITOR_CODE : mml:string
+			@i18n:Label (en="Auditor Code", fr="Audité par", es="Código de Auditor")
+			@i18n:Tooltip (en="Auditor Code", fr="Utilisateur d\'audit", es="Nombre del auditor")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=138.0, core=true, businessType=A, t24Name=AUDITOR.CODE)
+		AUDIT_DATE_TIME : mml:dateTime
+			@i18n:Label (en="Audit Date Time", fr="Audité le", es="Fecha/Hora de Audit.")
+			@i18n:Tooltip (en="Date and time when record was audited", fr="Date et heure d\'audit", es="Fecha y Hora de Auditoría ")
+			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=139.0, core=true, businessType=RELTIME, t24Name=AUDIT.DATE.TIME)
+		PRE_SYND_ID : mml:Integer
+			@i18n:Label (en="Pre Syndication Id", fr="Réf. de transaction", es="Ref. de Transacción")
+			@i18n:Tooltip (fr="Référence de transaction")
+			@t24:i (align=L, inputBehaviour=I, maxLength=12, core=false, t24Name=PRE.SYND.ID, genOperation="@ID[1,12]")
+		SL_FUNCTION : mml:Integer
+			@i18n:Label (fr="Rôle de la banque")
+			@i18n:Tooltip (fr="Rôle de la banque")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, core=false, t24Name=SL.FUNCTION, genOperation="PRE.SYND.ID>PRE.SYNDICATION.FILE>SL.FUNCTION")
+		PRODCCY : mml:Integer
+			@i18n:Label (en="Product Currency", es="Moneda del Producto")
+			@i18n:Tooltip (es="Moneda del Producto ")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, core=false, t24Name=PRODCCY, genOperation=DEAL.CURRENCY)
+		PRODCAT : mml:Integer
+			@i18n:Label (en="Deal Type", fr="Catégorie du produit", es="Tipo de Contrato")
+			@i18n:Tooltip (fr="Catégorie du produit")
+			@t24:i (align=L, inputBehaviour=I, maxLength=5, core=false, t24Name=PRODCAT, genOperation=CATEGORY)
+		CUSTOMER_NO : mml:Integer
+			@i18n:Label (en="Customer No", fr="Code client", es="No. de Cliente")
+			@i18n:Tooltip (en="Identifies the Customer for the transaction.", fr="Code client", es="Identifica al Cliente de la transacción")
+			@t24:i (align=L, inputBehaviour=I, maxLength=30, core=false, t24Name=CUSTOMER.NO, genOperation=CUSTOMER)
+		ACCOUNT_OFFICER : mml:Integer
+			@i18n:Label (en="Account Officer", fr=Gestionnaire, es="Gestor de Cuenta")
+			@i18n:Tooltip (en="Indicates Account Officer responsible", fr="Gestionnaire responsable du compte ou du client")
+			@t24:i (align=L, inputBehaviour=I, maxLength=20, core=false, t24Name=ACCOUNT.OFFICER, genOperation=MIS.ACCT.OFFICER)
+	}
+	SL_LOANS__BUS_DAY_DEFN
+	{
+		BUS_DAY_DEFN : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=4, sysNumber=5.0, core=true, businessType=S, t24Name=BUS.DAY.DEFN)
+	}
+	SL_LOANS__SPECIAL_SPREAD
+	{
+		SPECIAL_SPREAD : mml:string
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=30.0, core=true, businessType=R, t24Name=SPECIAL.SPREAD)
+		SPL_CAP_SPREAD : mml:string
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=31.0, core=true, businessType=R, t24Name=SPL.CAP.SPREAD)
+	}
+	SL_LOANS__INT_PAY_FQY
+	{
+		INT_PAY_FQY : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=13, sysNumber=39.0, core=true, businessType=FQO, t24Name=INT.PAY.FQY)
+	}
+	SL_LOANS__PARTICIPANT
+	{
+		PARTICIPANT -> ST_Customer:CUSTOMER
+			@t24:i (align=R, inputBehaviour=F, maxLength=10, sysNumber=50.0, core=true, businessType=CUS, t24Name=PARTICIPANT)
+		PART_AMT : mml:Double
+			@t24:i (align=R, inputBehaviour=F, maxLength=19, sysNumber=51.0, core=true, businessType=AMT, t24Name=PART.AMT)
+		PART_AMT_B_CCY : mml:Double
+			@t24:i (align=R, inputBehaviour=F, maxLength=19, sysNumber=52.0, core=true, businessType=AMT, t24Name=PART.AMT.B.CCY)
+		PART_INT_AMOUNT : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=53.0, core=true, businessType=AMT, t24Name=PART.INT.AMOUNT)
+		PART_INT_CAP : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=54.0, core=true, businessType=AMT, t24Name=PART.INT.CAP)
+		PART_PIK_CAP : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=55.0, core=true, businessType=AMT, t24Name=PART.PIK.CAP)
+		SEND_RECE_INFO -> byValue SL_Loans:SL_LOANS__PARTICIPANT__SEND_RECE_INFO *
+	}
+	SL_LOANS__PARTICIPANT__SEND_RECE_INFO
+	{
+		SEND_RECE_INFO : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=65, sysNumber=56.0, core=true, businessType=SW, t24Name=SEND.RECE.INFO)
+	}
+	SL_LOANS__BK_TO_BK_INFO
+	{
+		BK_TO_BK_INFO : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=73.0, core=true, businessType=A, t24Name=BK.TO.BK.INFO)
+	}
+	SL_LOANS__PENDING_TRANS
+	{
+		PENDING_TRANS : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=30, sysNumber=75.0, core=true, t24Name=PENDING.TRANS)
+	}
+	SL_LOANS__DELIVERY_CUST
+	{
+		DELIVERY_CUST -> ST_Customer:CUSTOMER
+			@t24:i (align=R, inputBehaviour=N, maxLength=10, sysNumber=76.0, core=true, businessType=CUS, t24Name=DELIVERY.CUST)
+		ACTIVITY_CODE -> EB_Delivery:EB_ACTIVITY
+			@t24:i (align=L, inputBehaviour=N, maxLength=7, sysNumber=77.0, core=true, businessType=A, t24Name=ACTIVITY.CODE)
+		ACTIVITY_DATE : mml:date
+			@t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=78.0, core=true, businessType=D, t24Name=ACTIVITY.DATE)
+		PRIOR_DAYS : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=3, sysNumber=79.0, core=true, t24Name=PRIOR.DAYS)
+		MSG_TYPE -> byValue SL_Loans:SL_LOANS__DELIVERY_CUST__MSG_TYPE *
+	}
+	SL_LOANS__DELIVERY_CUST__MSG_TYPE
+	{
+		MSG_TYPE -> DE_Config:DE_MESSAGE
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=80.0, core=true, businessType=A, t24Name=MSG.TYPE)
+		MSG_CLASS -> EB_Delivery:EB_MESSAGE_CLASS
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=81.0, core=true, businessType=A, t24Name=MSG.CLASS)
+		OVR_CARRIER -> DE_Config:DE_CARRIER
+			@t24:i (align=L, inputBehaviour=N, maxLength=8, sysNumber=82.0, core=true, businessType=A, t24Name=OVR.CARRIER)
+		SEND_MSG : SL_Loans:SL_LOANS__DELIVERY_CUST__MSG_TYPE__SEND_MSG
+			@t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=83.0, core=true, t24Name=SEND.MSG)
+		MSG_DATE : mml:date
+			@t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=84.0, core=true, businessType=D, t24Name=MSG.DATE)
+	}
+	SL_LOANS__DELIVERY_REF
+	{
+		DELIVERY_REF : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=46, sysNumber=85.0, core=true, businessType=A, t24Name=DELIVERY.REF)
+	}
+	SL_LOANS__ROLLOVER_LOANS
+	{
+		ROLLOVER_LOANS : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=21, sysNumber=90.0, core=true, businessType=A, t24Name=ROLLOVER.LOANS)
+	}
+	SL_LOANS__R_SCHED_DT
+	{
+		R_SCHED_DT : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=13, sysNumber=103.0, core=true, businessType=FQO, t24Name=R.SCHED.DT)
+	}
+	SL_LOANS__ONLINE_PAY_TYPE
+	{
+		ONLINE_PAY_TYPE : SL_Loans:SL_LOANS__ONLINE_PAY_TYPE__ONLINE_PAY_TYPE
+			@t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=106.0, core=true, t24Name=ONLINE.PAY.TYPE)
+		ONLINE_PAY_AMT : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=107.0, core=true, businessType=AMT, t24Name=ONLINE.PAY.AMT)
+	}
+	SL_LOANS__PIK_REFERENCE
+	{
+		PIK_REFERENCE : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=10, sysNumber=112.0, core=true, businessType=A, t24Name=PIK.REFERENCE)
+		PIK_RATE : mml:string
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=113.0, core=true, businessType=R, t24Name=PIK.RATE)
+		PIK_START_DATE : mml:date
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=114.0, core=true, businessType=D, t24Name=PIK.START.DATE)
+		PIK_END_DATE : mml:date
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=115.0, core=true, businessType=D, t24Name=PIK.END.DATE)
+		PIK_INT_FQY : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=13, sysNumber=116.0, core=true, businessType=FQU, t24Name=PIK.INT.FQY)
+	}
+	SL_LOANS__STMT_NO
+	{
+		STMT_NO : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=29, sysNumber=129.0, core=true, businessType=A, t24Name=STMT.NO)
+	}
+	SL_LOANS__OVERRIDE
+	{
+		OVERRIDE : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=130.0, core=true, businessType=A, t24Name=OVERRIDE)
+	}
+	SL_LOANS__INPUTTER
+	{
+		INPUTTER : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=133.0, core=true, businessType=A, t24Name=INPUTTER)
+	}
+	SL_LOANS__DATE_TIME
+	{
+		DATE_TIME : mml:dateTime
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=134.0, core=true, businessType=RELTIME, t24Name=DATE.TIME)
+	}
+}
+Enumerations {
+	SL_LOANS__INT_RATE_TYPE : mml:string
+		n1=1
+		n2=2
+		n3=3
+	SL_LOANS__INT_PYMT_METHOD : mml:string
+		n1=1
+		n2=2
+		NULL=NULL
+	SL_LOANS__CAPITALISATION : mml:string
+		NO=NO
+		YES=YES
+	SL_LOANS__LIQUIDATION_MODE : mml:string
+		AUTOMATIC=AUTOMATIC
+		INTERNAL=INTERNAL
+	SL_LOANS__INT_BASE_DATE : mml:string
+		BASE=BASE
+		PREV=PREV
+		NAM=NAM
+	SL_LOANS__INT_FWD_BKD : mml:string
+		FWD=FWD
+		BWD=BWD
+		FSM=FSM
+		CAL=CAL
+		NAM=NAM
+	SL_LOANS__DELIVERY_CUST__MSG_TYPE__SEND_MSG : mml:string
+		NO=NO
+		NULL=NULL
+	SL_LOANS__BS_AMORTISATION : mml:string
+		YES=YES
+		NO=NO
+	SL_LOANS__BNK_OP_CODE : mml:string
+		CRED=CRED
+		CRTS=CRTS
+		SPAY=SPAY
+		SPRI=SPRI
+		SSTD=SSTD
+	SL_LOANS__DTLS_OF_CHRG : mml:string
+		OUR=OUR
+		BEN=BEN
+		SHA=SHA
+	SL_LOANS__RETURN_INT : mml:string
+		NO=NO
+		YES=YES
+	SL_LOANS__ALLOW_SKIMMING : mml:string
+		NO=NO
+	SL_LOANS__PROCESS_AT_SOD : mml:string
+		YES=YES
+		NULL=NULL
+	SL_LOANS__ONLINE_PAY_TYPE__ONLINE_PAY_TYPE : mml:string
+		P=P
+		PI=PI
+		I=I
+	SL_LOANS__INT_ON_REPAY : mml:string
+		YES=YES
+	SL_LOANS__COMP_METHOD : mml:string
+		YIELD=YIELD
+		NULL=NULL
+	SL_LOANS__RECALC_ANNUITY : mml:string
+		YES=YES
+		NULL=NULL
+}

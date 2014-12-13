@@ -1,0 +1,346 @@
+# UTF-8
+/* Balance Updates for Accounts */
+Domain AC_BalanceUpdates
+	@t24:i (module=AC)
+	@java:Package (value=com.temenos.t24.datamodel.ac.ac_balanceupdates)
+namespace "http://www.temenos.com/t24/AC_BalanceUpdates"
+metamodelVersion 4.3.0.20110527
+Classes {
+	AC_FWD_UNAU_ENTRY
+		@t24:i (t24Name=AC.FWD.UNAU.ENTRY, level=F, type=T, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		ACCOUNT_NO -> AC_BalanceUpdates:AC_FWD_UNAU_ENTRY PK required
+			@i18n:Label (en=Account, fr="N° de compte", es=Cuenta)
+			@i18n:Tooltip (en="Indicates Customer Account Number", fr="Numéro de compte")
+			@t24:i (align=L, inputBehaviour=I, maxLength=19, sysNumber=0.0, core=true, businessType=ANT, t24Name=ACCOUNT.NO)
+		ENTRY_KEY : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=1.0, core=true, businessType=A, t24Name=ENTRY.KEY)
+	}
+	AC_FWD_UNAU_TRANSACTION
+		@t24:i (t24Name=AC.FWD.UNAU.TRANSACTION, level=F, type=T, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		TRANSACTION_REF -> AC_BalanceUpdates:AC_FWD_UNAU_TRANSACTION PK required
+			@i18n:Label (en="Transaction Ref", fr="Réf. opération", es="Ref. de Transacción")
+			@i18n:Tooltip (en="Transaction Reference", fr="Référence de l\'opération")
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=0.0, core=true, businessType=A, t24Name=TRANSACTION.REF)
+		ACCOUNT_ID : mml:string
+			@i18n:Label (en="Account No", fr=Compte, es="Número de Cuenta")
+			@i18n:Tooltip (en="Indicates the Account Number", fr=Compte)
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=1.0, core=true, businessType=A, t24Name=ACCOUNT.ID)
+	}
+	AC_REBUILD_EXPOSURE
+		@t24:i (t24Name=AC.REBUILD.EXPOSURE, level=F, type=H, allowedFunctions="A D E I L P Q S", localRefAllowed=true)
+	{
+		AC_REBUILD_EXP_ID -> AC_BalanceUpdates:AC_REBUILD_EXPOSURE PK required
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=0.0, core=true, businessType=A, t24Name=AC.REBUILD.EXP.ID)
+		CREDIT_ACCT_NO -> ACM_AccountOpening:ACCOUNT required
+			@i18n:Label (en="Credit Account", fr="Compte à créditer", es="Cuenta de Crédito")
+			@i18n:Tooltip (fr="Compte à créditer")
+			@t24:i (align=L, inputBehaviour=I, maxLength=15, sysNumber=1.0, core=true, businessType=ALLACCVAL, t24Name=CREDIT.ACCT.NO)
+		ACTION_NOTES -> byValue AC_BalanceUpdates:AC_REBUILD_EXPOSURE__ACTION_NOTES *
+		ADJUST_METHOD : AC_BalanceUpdates:AC_REBUILD_EXPOSURE__ADJUST_METHOD required
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=3.0, core=true, t24Name=ADJUST.METHOD)
+		EXP_DATE -> byValue AC_BalanceUpdates:AC_REBUILD_EXPOSURE__EXP_DATE *
+		ORG_EXP_DATE -> byValue AC_BalanceUpdates:AC_REBUILD_EXPOSURE__ORG_EXP_DATE *
+		ONLINE_ACTUAL_BAL : mml:Integer
+			@i18n:Label (en="Online Actual Bal", fr="Solde minute", es="Saldo Actual Online")
+			@i18n:Tooltip (fr="Solde minute")
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=8.0, core=true, t24Name=ONLINE.ACTUAL.BAL)
+		ONLINE_CLEAR_BAL : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=9.0, core=true, t24Name=ONLINE.CLEAR.BAL)
+		RESERVED_5 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=10.0, core=true, businessType=A, t24Name=RESERVED.5)
+		RESERVED_4 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=11.0, core=true, businessType=A, t24Name=RESERVED.4)
+		RESERVED_3 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=12.0, core=true, businessType=A, t24Name=RESERVED.3)
+		RESERVED_2 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=13.0, core=true, businessType=A, t24Name=RESERVED.2)
+		RESERVED_1 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=14.0, core=true, businessType=A, t24Name=RESERVED.1)
+		STMT_NOS -> byValue AC_BalanceUpdates:AC_REBUILD_EXPOSURE__STMT_NOS *
+		OVERRIDE -> byValue AC_BalanceUpdates:AC_REBUILD_EXPOSURE__OVERRIDE *
+		RECORD_STATUS : mml:string
+			@i18n:Label (en="Record Status", fr=Statut, es=Estado)
+			@i18n:Tooltip (fr="Statut de l\'enregistrement")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=18.0, core=true, businessType=STAT, t24Name=RECORD.STATUS)
+		CURR_NO : mml:Integer
+			@i18n:Label (en="Curr No", fr="N° version", es="No. Actual")
+			@i18n:Tooltip (fr="Numéro de version")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=19.0, core=true, t24Name=CURR.NO)
+		INPUTTER -> byValue AC_BalanceUpdates:AC_REBUILD_EXPOSURE__INPUTTER *
+		DATE_TIME -> byValue AC_BalanceUpdates:AC_REBUILD_EXPOSURE__DATE_TIME *
+		AUTHORISER : mml:string
+			@i18n:Label (en=Authoriser, fr="Validé par", es=Autorizador)
+			@i18n:Tooltip (en="Indicates the User who Authorises the record", fr="Utilisateur de validation", es="El usuario que autorizó el registro")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=22.0, core=true, businessType=A, t24Name=AUTHORISER)
+		CO_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company, fr=Entité, es="Compañía")
+			@i18n:Tooltip (fr="Code établissement ou agence")
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=23.0, core=true, businessType=A, t24Name=CO.CODE)
+		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Dept Code", fr=Service, es=Departamento)
+			@i18n:Tooltip (fr="Code du service")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=24.0, core=true, t24Name=DEPT.CODE)
+		AUDITOR_CODE : mml:string
+			@i18n:Label (en="Auditor Code", fr="Audité par", es="Código de Auditor")
+			@i18n:Tooltip (en="Auditor Code", fr="Utilisateur d\'audit", es="Nombre del auditor")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=25.0, core=true, businessType=A, t24Name=AUDITOR.CODE)
+		AUDIT_DATE_TIME : mml:dateTime
+			@i18n:Label (en="Audit Date Time", fr="Audité le", es="Fecha/Hora de Audit.")
+			@i18n:Tooltip (en="Date and time when record was audited", fr="Date et heure d\'audit", es="Fecha y Hora de Auditoría ")
+			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=26.0, core=true, businessType=RELTIME, t24Name=AUDIT.DATE.TIME)
+	}
+	AC_REBUILD_EXPOSURE__ACTION_NOTES
+	{
+		ACTION_NOTES : mml:string required
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, multiLanguage=true, sysNumber=2.0, core=true, businessType=ANY, t24Name=ACTION.NOTES)
+	}
+	AC_REBUILD_EXPOSURE__EXP_DATE
+	{
+		EXP_DATE : mml:date
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=4.0, core=true, businessType=D, t24Name=EXP.DATE)
+		AMT_TO_CLEAR : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=5.0, core=true, businessType=AMT, t24Name=AMT.TO.CLEAR)
+	}
+	AC_REBUILD_EXPOSURE__ORG_EXP_DATE
+	{
+		ORG_EXP_DATE : mml:date
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=6.0, core=true, businessType=D, t24Name=ORG.EXP.DATE)
+		NEW_EXP_DATE : mml:date
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=7.0, core=true, businessType=D, t24Name=NEW.EXP.DATE)
+	}
+	AC_REBUILD_EXPOSURE__STMT_NOS
+	{
+		STMT_NOS : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=16.0, core=true, businessType=A, t24Name=STMT.NOS)
+	}
+	AC_REBUILD_EXPOSURE__OVERRIDE
+	{
+		OVERRIDE : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=17.0, core=true, businessType=A, t24Name=OVERRIDE)
+	}
+	AC_REBUILD_EXPOSURE__INPUTTER
+	{
+		INPUTTER : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=20.0, core=true, businessType=A, t24Name=INPUTTER)
+	}
+	AC_REBUILD_EXPOSURE__DATE_TIME
+	{
+		DATE_TIME : mml:dateTime
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=21.0, core=true, businessType=RELTIME, t24Name=DATE.TIME)
+	}
+	AC_UNAUTH_ENTRY
+		@t24:i (t24Name=AC.UNAUTH.ENTRY, level=F, type=T, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		ACCOUNT_NO -> AC_BalanceUpdates:AC_UNAUTH_ENTRY PK required
+			@i18n:Label (en=Account, fr="N° de compte", es=Cuenta)
+			@i18n:Tooltip (en="Indicates Customer Account Number", fr="Numéro de compte")
+			@t24:i (align=L, inputBehaviour=I, maxLength=19, sysNumber=0.0, core=true, businessType=ANT, t24Name=ACCOUNT.NO)
+		ENTRY_KEY : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=1.0, core=true, businessType=A, t24Name=ENTRY.KEY)
+	}
+	AC_UNAUTH_TRANSACTION
+		@t24:i (t24Name=AC.UNAUTH.TRANSACTION, level=F, type=T, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		TRANSACTION_REF -> AC_BalanceUpdates:AC_UNAUTH_TRANSACTION PK required
+			@i18n:Label (en="Transaction Ref", fr="Réf. opération", es="Ref. de Transacción")
+			@i18n:Tooltip (en="Transaction Reference", fr="Référence de l\'opération")
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=0.0, core=true, businessType=A, t24Name=TRANSACTION.REF)
+		ACCOUNT_ID : mml:string
+			@i18n:Label (en="Account No", fr=Compte, es="Número de Cuenta")
+			@i18n:Tooltip (en="Indicates the Account Number", fr=Compte)
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=1.0, core=true, businessType=A, t24Name=ACCOUNT.ID)
+	}
+	ACCOUNT_OVERDRAWN
+		@t24:i (t24Name=ACCOUNT.OVERDRAWN, level=F, type=L, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		LIMIT_ACCOUNT -> AC_BalanceUpdates:ACCOUNT_OVERDRAWN PK required
+			@t24:i (align=L, inputBehaviour=I, maxLength=32, sysNumber=0.0, core=true, businessType=A, t24Name=LIMIT.ACCOUNT)
+		LIMIT_NARRATIVE -> byValue AC_BalanceUpdates:ACCOUNT_OVERDRAWN__LIMIT_NARRATIVE *
+	}
+	ACCOUNT_OVERDRAWN__LIMIT_NARRATIVE
+	{
+		LIMIT_NARRATIVE : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=15, sysNumber=1.0, core=true, businessType=AAA, t24Name=LIMIT.NARRATIVE)
+		ACCOUNT_OFFICER -> ST_Config:DEPT_ACCT_OFFICER
+			@t24:i (align=L, inputBehaviour=I, maxLength=4, sysNumber=2.0, core=true, businessType=A, t24Name=ACCOUNT.OFFICER)
+		CUSTOMER -> ST_Customer:CUSTOMER required
+			@t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=3.0, core=true, businessType=CUS, t24Name=CUSTOMER)
+		CURRENCY -> FIN_CurrencyConfig:CURRENCY
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=4.0, core=true, businessType=CCY, t24Name=CURRENCY)
+		CLRD_BAL_LIMIT : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=5.0, core=true, businessType=AMT, t24Name=CLRD.BAL.LIMIT)
+		ACT_BAL_TOT_OUT : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=6.0, core=true, businessType=AMT, t24Name=ACT.BAL.TOT.OUT)
+		DATE_FIRST_OD : mml:date
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=7.0, core=true, businessType=D, t24Name=DATE.FIRST.OD)
+		DATE_LAST_MOVE : mml:date
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=8.0, core=true, businessType=D, t24Name=DATE.LAST.MOVE)
+		OD_EXCESS_NARR : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=9.0, core=true, businessType=AAA, t24Name=OD.EXCESS.NARR)
+		MOVED_NARR : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=9, sysNumber=10.0, core=true, businessType=AAA, t24Name=MOVED.NARR)
+	}
+	ACCT_ACTIVITY
+		@t24:i (t24Name=ACCT.ACTIVITY, level=F, type=L, allowedFunctions="L S", localRefAllowed=false)
+	{
+		ACCT_NO_YEAR_MONTH -> AC_BalanceUpdates:ACCT_ACTIVITY PK required
+			@t24:i (align=L, inputBehaviour=I, maxLength=50, sysNumber=0.0, core=true, businessType=A, t24Name=ACCT.NO.YEAR.MONTH)
+		DAY_NO -> byValue AC_BalanceUpdates:ACCT_ACTIVITY__DAY_NO *
+		TRANSACT_CODE -> byValue AC_BalanceUpdates:ACCT_ACTIVITY__TRANSACT_CODE *
+		VALUE_DAY -> byValue AC_BalanceUpdates:ACCT_ACTIVITY__VALUE_DAY *
+		BK_DAY_NO -> byValue AC_BalanceUpdates:ACCT_ACTIVITY__BK_DAY_NO *
+		BOOKING_DAY -> byValue AC_BalanceUpdates:ACCT_ACTIVITY__BOOKING_DAY *
+	}
+	ACCT_ACTIVITY__DAY_NO
+	{
+		DAY_NO : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=1.0, core=true, t24Name=DAY.NO)
+		TURNOVER_CREDIT : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=2.0, core=true, businessType=AMT, t24Name=TURNOVER.CREDIT)
+		TURNOVER_DEBIT : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=3.0, core=true, businessType=AMT, t24Name=TURNOVER.DEBIT)
+		BALANCE : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=4.0, core=true, businessType=AMT, t24Name=BALANCE)
+	}
+	ACCT_ACTIVITY__TRANSACT_CODE
+	{
+		TRANSACT_CODE -> ST_Config:TRANSACTION
+			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=5.0, core=true, t24Name=TRANSACT.CODE)
+		NO_OF_TRANSACT : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=6, sysNumber=6.0, core=true, t24Name=NO.OF.TRANSACT)
+		TRANSACT_AMT : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=7.0, core=true, businessType=AMT, t24Name=TRANSACT.AMT)
+	}
+	ACCT_ACTIVITY__VALUE_DAY
+	{
+		VALUE_DAY : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=8.0, core=true, t24Name=VALUE.DAY)
+		BOOKING_DATE -> byValue AC_BalanceUpdates:ACCT_ACTIVITY__VALUE_DAY__BOOKING_DATE *
+		TRADE_DATE -> byValue AC_BalanceUpdates:ACCT_ACTIVITY__VALUE_DAY__TRADE_DATE *
+	}
+	ACCT_ACTIVITY__VALUE_DAY__BOOKING_DATE
+	{
+		BOOKING_DATE : mml:date
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=9.0, core=true, businessType=D, t24Name=BOOKING.DATE)
+		BOOK_TOVR_CR : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=10.0, core=true, businessType=AMT, t24Name=BOOK.TOVR.CR)
+		BOOK_TOVR_DB : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=11.0, core=true, businessType=AMT, t24Name=BOOK.TOVR.DB)
+	}
+	ACCT_ACTIVITY__VALUE_DAY__TRADE_DATE
+	{
+		TRADE_DATE : mml:date
+			@t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=12.0, core=true, businessType=D, t24Name=TRADE.DATE)
+		TRADE_TOVR_CR : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=13.0, core=true, businessType=AMT, t24Name=TRADE.TOVR.CR)
+		TRADE_TOVR_DB : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=14.0, core=true, businessType=AMT, t24Name=TRADE.TOVR.DB)
+	}
+	ACCT_ACTIVITY__BK_DAY_NO
+	{
+		BK_DAY_NO : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=15.0, core=true, t24Name=BK.DAY.NO)
+		BK_BALANCE : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=16.0, core=true, businessType=AMT, t24Name=BK.BALANCE)
+		BK_CREDIT_MVMT : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=17.0, core=true, businessType=AMT, t24Name=BK.CREDIT.MVMT)
+		BK_DEBIT_MVMT : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=18.0, core=true, businessType=AMT, t24Name=BK.DEBIT.MVMT)
+	}
+	ACCT_ACTIVITY__BOOKING_DAY
+	{
+		BOOKING_DAY : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=19.0, core=true, t24Name=BOOKING.DAY)
+		BK_TRADE_DATE -> byValue AC_BalanceUpdates:ACCT_ACTIVITY__BOOKING_DAY__BK_TRADE_DATE *
+	}
+	ACCT_ACTIVITY__BOOKING_DAY__BK_TRADE_DATE
+	{
+		BK_TRADE_DATE : mml:date
+			@t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=20.0, core=true, businessType=D, t24Name=BK.TRADE.DATE)
+		BK_TRADE_TOVR_CR : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=21.0, core=true, businessType=AMT, t24Name=BK.TRADE.TOVR.CR)
+		BK_TRADE_TOVR_DB : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=22.0, core=true, businessType=AMT, t24Name=BK.TRADE.TOVR.DB)
+	}
+	ACCT_AVAILABILITY
+		@t24:i (t24Name=ACCT.AVAILABILITY, level=F, type=L, allowedFunctions="L S", localRefAllowed=false)
+	{
+		ACCOUNT_NUMBER -> AC_BalanceUpdates:ACCT_AVAILABILITY PK required
+			@i18n:Label (en="Account Number", fr="Numéro de compte", es="Número de Cuenta")
+			@i18n:Tooltip (fr="Numéro de compte")
+			@t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=0.0, core=true, businessType=ANT, t24Name=ACCOUNT.NUMBER)
+		VALUE_DATE -> byValue AC_BalanceUpdates:ACCT_AVAILABILITY__VALUE_DATE *
+	}
+	ACCT_AVAILABILITY__VALUE_DATE
+	{
+		VALUE_DATE : mml:date
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=1.0, core=true, businessType=D, t24Name=VALUE.DATE)
+		TOT_AMT_DEPS : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=2.0, core=true, businessType=AMT, t24Name=TOT.AMT.DEPS)
+		TOT_AMT_WDLS : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=3.0, core=true, businessType=AMT, t24Name=TOT.AMT.WDLS)
+		AVAILABLE_AMT : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=4.0, core=true, businessType=AMT, t24Name=AVAILABLE.AMT)
+		REV_MARKER -> byValue AC_BalanceUpdates:ACCT_AVAILABILITY__VALUE_DATE__REV_MARKER *
+	}
+	ACCT_AVAILABILITY__VALUE_DATE__REV_MARKER
+	{
+		REV_MARKER : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=17, sysNumber=5.0, core=true, t24Name=REV.MARKER)
+		TXN_AMT : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=6.0, core=true, businessType=AMT, t24Name=TXN.AMT)
+		TXN_CODE -> ST_Config:TRANSACTION
+			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=7.0, core=true, t24Name=TXN.CODE)
+		MATURITY_DTE : mml:date
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=8.0, core=true, businessType=D, t24Name=MATURITY.DTE)
+	}
+	ACCT_BALANCE_ACTIVITY
+		@t24:i (t24Name=ACCT.BALANCE.ACTIVITY, level=F, type=L, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		ACCT_NO_YEAR_MONTH -> AC_BalanceUpdates:ACCT_BALANCE_ACTIVITY PK required
+			@t24:i (align=L, inputBehaviour=I, maxLength=50, sysNumber=0.0, core=true, businessType=A, t24Name=ACCT.NO.YEAR.MONTH)
+		BAL_TYPE -> byValue AC_BalanceUpdates:ACCT_BALANCE_ACTIVITY__BAL_TYPE *
+	}
+	ACCT_BALANCE_ACTIVITY__BAL_TYPE
+	{
+		BAL_TYPE : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=50, sysNumber=1.0, core=true, businessType=A, t24Name=BAL.TYPE)
+		ACTIVITY_DATA : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=50, sysNumber=2.0, core=true, businessType=A, t24Name=ACTIVITY.DATA)
+	}
+	OD_ACCT_ACTIVITY
+		@t24:i (t24Name=OD.ACCT.ACTIVITY, level=F, type=L, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		ACCT_NO_YM -> AC_BalanceUpdates:OD_ACCT_ACTIVITY PK required
+			@t24:i (align=L, inputBehaviour=I, maxLength=41, sysNumber=0.0, core=true, businessType=A, t24Name=ACCT.NO.YM)
+		DAY_NO -> byValue AC_BalanceUpdates:OD_ACCT_ACTIVITY__DAY_NO *
+		ACCT_NUMBER : mml:Integer
+			@t24:i (align=L, inputBehaviour=I, maxLength=16, core=false, t24Name=ACCT.NUMBER, genOperation="FIELD(ACCT.NO.YM,\'-\',1)")
+		YEAR_MON : mml:Integer
+			@t24:i (align=L, inputBehaviour=I, maxLength=11, core=false, t24Name=YEAR.MON, genOperation="FIELD(ACCT.NO.YM,\'-\',2)")
+	}
+	OD_ACCT_ACTIVITY__DAY_NO
+	{
+		DAY_NO : mml:string required
+			@t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=1.0, core=true, businessType=A, t24Name=DAY.NO)
+		BALANCE : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=2.0, core=true, businessType=AMT, t24Name=BALANCE)
+		LIMIT_AMT : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=3.0, core=true, businessType=AMT, t24Name=LIMIT.AMT)
+		OVERDRAWN_AMT : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=4.0, core=true, businessType=AMT, t24Name=OVERDRAWN.AMT)
+		OD_IN_AC_CCY : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=5.0, core=true, businessType=AMT, t24Name=OD.IN.AC.CCY)
+		INCR_AMT : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=6.0, core=true, businessType=AMT, t24Name=INCR.AMT)
+		DATE_FIRST_OD : mml:date
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=7.0, core=true, businessType=D, t24Name=DATE.FIRST.OD)
+	}
+}
+Enumerations {
+	AC_REBUILD_EXPOSURE__ADJUST_METHOD : mml:string
+		REDEFINE_LADDER=REDEFINE.LADDER
+		ADJUST_DATES=ADJUST.DATES
+}

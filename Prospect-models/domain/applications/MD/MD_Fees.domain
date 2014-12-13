@@ -1,0 +1,98 @@
+# UTF-8
+/* Fee Calculation for Miscellaneous Deals */
+Domain MD_Fees
+	@t24:i (module=MD)
+	@java:Package (value=com.temenos.t24.datamodel.md.md_fees)
+namespace "http://www.temenos.com/t24/MD_Fees"
+metamodelVersion 4.3.0.20110527
+Classes {
+	MD_CSN_RATE_CHANGE
+		@t24:i (t24Name=MD.CSN.RATE.CHANGE, level=F, type=H, allowedFunctions="A C D E H I L P Q R S", localRefAllowed=true)
+	{
+		REVISION_DATE -> MD_Fees:MD_CSN_RATE_CHANGE PK required
+			@t24:i (align=R, inputBehaviour=I, maxLength=8, sysNumber=0.0, core=true, businessType=D, t24Name=REVISION.DATE)
+		EFFECTIVE_FROM : mml:date required
+			@t24:i (align=R, inputBehaviour=I, maxLength=8, sysNumber=1.0, core=true, businessType=D, t24Name=EFFECTIVE.FROM)
+		DEAL_SUB_TYPE -> byValue MD_Fees:MD_CSN_RATE_CHANGE__DEAL_SUB_TYPE *
+		RETRO_EFFECT : MD_Fees:MD_CSN_RATE_CHANGE__RETRO_EFFECT
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=5.0, core=true, t24Name=RETRO.EFFECT)
+		DEAL_ID -> byValue MD_Fees:MD_CSN_RATE_CHANGE__DEAL_ID *
+		RESERVED3 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=9.0, core=true, businessType=A, t24Name=RESERVED3)
+		RESERVED2 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=10.0, core=true, businessType=A, t24Name=RESERVED2)
+		RESERVED1 : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=11.0, core=true, businessType=A, t24Name=RESERVED1)
+		OVERRIDE -> byValue MD_Fees:MD_CSN_RATE_CHANGE__OVERRIDE *
+		RECORD_STATUS : mml:string
+			@i18n:Label (en="Record Status", fr=Statut, es=Estado)
+			@i18n:Tooltip (fr="Statut de l\'enregistrement")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=13.0, core=true, businessType=STAT, t24Name=RECORD.STATUS)
+		CURR_NO : mml:Integer
+			@i18n:Label (en="Curr No", fr="N° version", es="No. Actual")
+			@i18n:Tooltip (fr="Numéro de version")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=14.0, core=true, t24Name=CURR.NO)
+		INPUTTER -> byValue MD_Fees:MD_CSN_RATE_CHANGE__INPUTTER *
+		DATE_TIME -> byValue MD_Fees:MD_CSN_RATE_CHANGE__DATE_TIME *
+		AUTHORISER : mml:string
+			@i18n:Label (en=Authoriser, fr="Validé par", es=Autorizador)
+			@i18n:Tooltip (en="Indicates the User who Authorises the record", fr="Utilisateur de validation", es="El usuario que autorizó el registro")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=17.0, core=true, businessType=A, t24Name=AUTHORISER)
+		CO_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company, fr=Entité, es="Compañía")
+			@i18n:Tooltip (fr="Code établissement ou agence")
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=18.0, core=true, businessType=A, t24Name=CO.CODE)
+		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Dept Code", fr=Service, es=Departamento)
+			@i18n:Tooltip (fr="Code du service")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=19.0, core=true, t24Name=DEPT.CODE)
+		AUDITOR_CODE : mml:string
+			@i18n:Label (en="Auditor Code", fr="Audité par", es="Código de Auditor")
+			@i18n:Tooltip (en="Auditor Code", fr="Utilisateur d\'audit", es="Nombre del auditor")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=20.0, core=true, businessType=A, t24Name=AUDITOR.CODE)
+		AUDIT_DATE_TIME : mml:dateTime
+			@i18n:Label (en="Audit Date Time", fr="Audité le", es="Fecha/Hora de Audit.")
+			@i18n:Tooltip (en="Date and time when record was audited", fr="Date et heure d\'audit", es="Fecha y Hora de Auditoría ")
+			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=21.0, core=true, businessType=RELTIME, t24Name=AUDIT.DATE.TIME)
+	}
+	MD_CSN_RATE_CHANGE__DEAL_SUB_TYPE
+	{
+		DEAL_SUB_TYPE : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=10, sysNumber=2.0, core=true, businessType=A, t24Name=DEAL.SUB.TYPE)
+		CATEGORY -> byValue MD_Fees:MD_CSN_RATE_CHANGE__DEAL_SUB_TYPE__CATEGORY *
+	}
+	MD_CSN_RATE_CHANGE__DEAL_SUB_TYPE__CATEGORY
+	{
+		CATEGORY -> ST_Config:CATEGORY
+			@t24:i (align=L, inputBehaviour=I, maxLength=5, sysNumber=3.0, core=true, businessType=A, t24Name=CATEGORY)
+		COMM_RATE : mml:string
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=4.0, core=true, businessType=R, t24Name=COMM.RATE)
+	}
+	MD_CSN_RATE_CHANGE__DEAL_ID
+	{
+		DEAL_ID -> MD_Contract:MD_DEAL
+			@t24:i (align=L, inputBehaviour=I, maxLength=17, sysNumber=6.0, core=true, businessType=A, t24Name=DEAL.ID)
+		DEAL_COMM_RATE : mml:string
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=7.0, core=true, businessType=R, t24Name=DEAL.COMM.RATE)
+	}
+	MD_CSN_RATE_CHANGE__OVERRIDE
+	{
+		OVERRIDE : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=12.0, core=true, businessType=A, t24Name=OVERRIDE)
+	}
+	MD_CSN_RATE_CHANGE__INPUTTER
+	{
+		INPUTTER : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=15.0, core=true, businessType=A, t24Name=INPUTTER)
+	}
+	MD_CSN_RATE_CHANGE__DATE_TIME
+	{
+		DATE_TIME : mml:dateTime
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=16.0, core=true, businessType=RELTIME, t24Name=DATE.TIME)
+	}
+}
+Enumerations {
+	MD_CSN_RATE_CHANGE__RETRO_EFFECT : mml:string
+		YES=YES
+		NO=NO
+}

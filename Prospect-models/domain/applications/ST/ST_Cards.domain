@@ -1,0 +1,461 @@
+# UTF-8
+/* Card Processing */
+Domain ST_Cards
+	@t24:i (module=ST)
+	@java:Package (value=com.temenos.t24.datamodel.st.st_cards)
+namespace "http://www.temenos.com/t24/ST_Cards"
+metamodelVersion 4.3.0.20110527
+Classes {
+	CARD_BILL_CLOSE_DATE
+		@t24:i (t24Name=CARD.BILL.CLOSE.DATE, level=F, type=T, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		BILLING_DATE_ID -> ST_Cards:CARD_BILL_CLOSE_DATE PK required
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=0.0, core=true, businessType=A, t24Name=BILLING.DATE.ID)
+		ACCOUNT_NO : mml:string
+			@i18n:Label (en=Account, fr="N° de compte", es=Cuenta)
+			@i18n:Tooltip (en="Indicates Customer Account Number", fr="Numéro de compte")
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=1.0, core=true, businessType=A, t24Name=ACCOUNT.NO)
+	}
+	CARD_BILL_CLOSE_DATE_WORK
+		@t24:i (t24Name=CARD.BILL.CLOSE.DATE.WORK, level=F, type=T, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		REPAY_DATE_ID -> ST_Cards:CARD_BILL_CLOSE_DATE_WORK PK required
+			@t24:i (align=L, inputBehaviour=I, maxLength=15, sysNumber=0.0, core=true, businessType=A, t24Name=REPAY.DATE.ID)
+		ACCOUNT_NO : mml:string
+			@i18n:Label (en=Account, fr="N° de compte", es=Cuenta)
+			@i18n:Tooltip (en="Indicates Customer Account Number", fr="Numéro de compte")
+			@t24:i (align=R, inputBehaviour=I, maxLength=16, sysNumber=1.0, core=true, businessType=ACC, t24Name=ACCOUNT.NO)
+	}
+	CARD_CHARGE
+		@t24:i (t24Name=CARD.CHARGE, level=F, type=H, allowedFunctions="A C D E H I L P Q R S", localRefAllowed=false)
+	{
+		CARD_TYPE -> ST_Cards:CARD_CHARGE PK required
+			@i18n:Label (en="Card Type", fr="Type de carte", es="Tipo de Tarjeta")
+			@i18n:Tooltip (fr="Type de carte")
+			@t24:i (align=L, inputBehaviour=I, maxLength=4, sysNumber=0.0, core=true, businessType=A, t24Name=CARD.TYPE)
+		PL_CATEGORY -> ST_Config:CATEGORY required
+			@i18n:Label (en="PL Category", fr="Compte de PP", es="Categoría")
+			@i18n:Tooltip (fr="Compte de Charge/Produit")
+			@t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=1.0, core=true, t24Name=PL.CATEGORY)
+		TRANSACTION_DR -> ST_Config:TRANSACTION required
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=2.0, core=true, businessType=A, t24Name=TRANSACTION.DR)
+		TRANSACTION_CR -> ST_Config:TRANSACTION required
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=3.0, core=true, businessType=A, t24Name=TRANSACTION.CR)
+		ISSUE_CHARGE : mml:Double
+			@i18n:Label (en="Issue Charge", fr="Cion à prendre", es="Emitir Cargo")
+			@i18n:Tooltip (en="Indicates the charge to be applied ", fr="Commission à prendre")
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=4.0, core=true, businessType=AMT, t24Name=ISSUE.CHARGE)
+		PERIODIC_CHARGE : mml:Double
+			@i18n:Label (en="Periodic Charge", fr="Cion périodique", es="Cargo Periódico")
+			@i18n:Tooltip (en="Defines the periodic charge ", fr="Commission périodique")
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=5.0, core=true, businessType=AMT, t24Name=PERIODIC.CHARGE)
+		CHARGE_CYCLE : mml:string
+			@i18n:Label (en="Charge Cycle", fr="Cycle de Cion", es="Ciclo de Cargo")
+			@i18n:Tooltip (en="Frequency at which periodic charges will be raised", fr="Cycle de Commission")
+			@t24:i (align=L, inputBehaviour=I, maxLength=17, sysNumber=6.0, core=true, businessType=FQU, t24Name=CHARGE.CYCLE)
+		CHARGE_FQU : mml:string
+			@i18n:Label (en="Charge Fqy", fr="Fréquence de Cion", es="Frecuencia de Cargo")
+			@i18n:Tooltip (en="Indicates chargeable period for usage ", fr="Fréquence de Commission")
+			@t24:i (align=L, inputBehaviour=I, maxLength=5, sysNumber=7.0, core=true, businessType=A, t24Name=CHARGE.FQU)
+		RECORD_STATUS : mml:string
+			@i18n:Label (en="Record Status", fr=Statut, es=Estado)
+			@i18n:Tooltip (fr="Statut de l\'enregistrement")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=8.0, core=true, businessType=STAT, t24Name=RECORD.STATUS)
+		CURR_NO : mml:Integer
+			@i18n:Label (en="Curr No", fr="N° version", es="No. Actual")
+			@i18n:Tooltip (fr="Numéro de version")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=9.0, core=true, t24Name=CURR.NO)
+		INPUTTER -> byValue ST_Cards:CARD_CHARGE__INPUTTER *
+		DATE_TIME -> byValue ST_Cards:CARD_CHARGE__DATE_TIME *
+		AUTHORISER : mml:string
+			@i18n:Label (en=Authoriser, fr="Validé par", es=Autorizador)
+			@i18n:Tooltip (en="Indicates the User who Authorises the record", fr="Utilisateur de validation", es="El usuario que autorizó el registro")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=12.0, core=true, businessType=A, t24Name=AUTHORISER)
+		CO_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company, fr=Entité, es="Compañía")
+			@i18n:Tooltip (fr="Code établissement ou agence")
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=13.0, core=true, businessType=A, t24Name=CO.CODE)
+		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Dept Code", fr=Service, es=Departamento)
+			@i18n:Tooltip (fr="Code du service")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=14.0, core=true, t24Name=DEPT.CODE)
+		AUDITOR_CODE : mml:string
+			@i18n:Label (en="Auditor Code", fr="Audité par", es="Código de Auditor")
+			@i18n:Tooltip (en="Auditor Code", fr="Utilisateur d\'audit", es="Nombre del auditor")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=15.0, core=true, businessType=A, t24Name=AUDITOR.CODE)
+		AUDIT_DATE_TIME : mml:dateTime
+			@i18n:Label (en="Audit Date Time", fr="Audité le", es="Fecha/Hora de Audit.")
+			@i18n:Tooltip (en="Date and time when record was audited", fr="Date et heure d\'audit", es="Fecha y Hora de Auditoría ")
+			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=16.0, core=true, businessType=RELTIME, t24Name=AUDIT.DATE.TIME)
+	}
+	CARD_CHARGE__INPUTTER
+	{
+		INPUTTER : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=10.0, core=true, businessType=A, t24Name=INPUTTER)
+	}
+	CARD_CHARGE__DATE_TIME
+	{
+		DATE_TIME : mml:dateTime
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=11.0, core=true, businessType=RELTIME, t24Name=DATE.TIME)
+	}
+	CARD_ISSUE
+		@t24:i (t24Name=CARD.ISSUE, level=F, type=H, allowedFunctions="A C D E H I L P Q R S", localRefAllowed=true)
+	{
+		CARD_TYPE_NO -> ST_Cards:CARD_ISSUE PK required
+			@t24:i (align=L, inputBehaviour=I, maxLength=24, sysNumber=0.0, core=true, businessType=A, t24Name=CARD.TYPE.NO)
+		CARD_STATUS -> ST_Cards:CARD_STATUS
+			@i18n:Label (en="Card Status (Input 90)", fr="Statut de la carte", es="Est.Tarj.(Ingreso 90)")
+			@i18n:Tooltip (en="Card Status (Input 90)", fr="Status de la carte", es="Estado de Tarjeta (Entrada 90)")
+			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=1.0, core=true, t24Name=CARD.STATUS)
+		ACCOUNT -> byValue ST_Cards:CARD_ISSUE__ACCOUNT *
+		CURRENCY : mml:string
+			@i18n:Label (en=Ccy, fr=Devise, es=Moneda)
+			@i18n:Tooltip (fr="Code devise ISO")
+			@t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=3.0, core=true, businessType=CCY, t24Name=CURRENCY)
+		ISSUE_DATE : mml:date
+			@i18n:Label (en="Issue Date", fr="Date d\'émission", es="Fecha de Emisión")
+			@i18n:Tooltip (en="Indicates the date of issue ", fr="Date d\'émission", es="Especifica la Fecha de Emisión del Título")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=4.0, core=true, businessType=D, t24Name=ISSUE.DATE)
+		EXPIRY_DATE : mml:date
+			@i18n:Label (en="Expiry Date", fr="Date d\'échéance", es="Fecha de Vencimiento")
+			@i18n:Tooltip (en="Indicates the Expiry Date of the Transaction", fr="Date d\'échéance", es="Indica la Fecha de Vencimiento de la transacción")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=5.0, core=true, businessType=D, t24Name=EXPIRY.DATE)
+		NAME -> byValue ST_Cards:CARD_ISSUE__NAME *
+		PIN_ISSUE_DATE : mml:date
+			@i18n:Label (en="Pin Issue Date", fr="PIN créé le", es="Fecha Emisión de NPI")
+			@i18n:Tooltip (en="Pin Issue Date", fr="Date de création du PIN", es="Fecha de Emisión de NPI")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=7.0, core=true, businessType=D, t24Name=PIN.ISSUE.DATE)
+		LIMIT : mml:Double
+			@i18n:Label (fr=Limite)
+			@i18n:Tooltip (fr=Limite)
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=8.0, core=true, businessType=AMT, t24Name=LIMIT)
+		CANCELLATION_DATE : mml:date
+			@i18n:Label (en="Cancellation Date", fr="Date d\'annulation", es="Fecha de Cancelación")
+			@i18n:Tooltip (en="Value date for cancellation", fr="Date d\'annulation")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=9.0, core=true, businessType=D, t24Name=CANCELLATION.DATE)
+		CAN_REASON -> CHQ_PaymentStop:PAYMENT_STOP_TYPE
+			@i18n:Label (en="Cancellation Reason", fr="Motif d\'annulation", es="Motivo Cancelación")
+			@i18n:Tooltip (en="Cancellation Reason", fr="Motif d\'annulation", es="Motivo por Cancelación")
+			@t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=10.0, core=true, t24Name=CAN.REASON)
+		CHARGES : mml:Double
+			@i18n:Label (en="Charge Amt", fr=Commissions, es="Monto del Cargo")
+			@i18n:Tooltip (fr=Commissions)
+			@t24:i (align=R, inputBehaviour=F, maxLength=19, sysNumber=11.0, core=true, businessType=AMT, t24Name=CHARGES)
+		CHARGE_DATE : mml:date
+			@i18n:Label (en="Charge Date", fr="Date des commissions", es="Fecha de Cargo")
+			@i18n:Tooltip (en="Indicates value date for online charges raised", fr="Date de perception des commissions")
+			@t24:i (align=R, inputBehaviour=F, maxLength=11, sysNumber=12.0, core=true, businessType=D, t24Name=CHARGE.DATE)
+		NOTES -> byValue ST_Cards:CARD_ISSUE__NOTES *
+		STOCK_REG_ID : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=20, sysNumber=15.0, core=true, businessType=A, t24Name=STOCK.REG.ID)
+		STOCK_SERIERS_ID : mml:string
+			@t24:i (align=L, inputBehaviour=F, maxLength=35, sysNumber=16.0, core=true, businessType=A, t24Name=STOCK.SERIERS.ID)
+		LST_REPAY_DATE : mml:date
+			@t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=17.0, core=true, businessType=D, t24Name=LST.REPAY.DATE)
+		LST_BILLING_CLOSE : mml:date
+			@t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=18.0, core=true, businessType=D, t24Name=LST.BILLING.CLOSE)
+		REPAY_DATE : mml:string
+			@i18n:Label (en="Repay Date", fr="Date de Remboursement", es="Fecha de Reembolso")
+			@i18n:Tooltip (fr="Date de Remboursement ")
+			@t24:i (align=L, inputBehaviour=I, maxLength=17, sysNumber=19.0, core=true, businessType=FQU, t24Name=REPAY.DATE)
+		BILLING_CLOSE : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=17, sysNumber=20.0, core=true, businessType=A, t24Name=BILLING.CLOSE)
+		NEW_REPAY_DATE : mml:date
+			@t24:i (align=R, inputBehaviour=I, maxLength=17, sysNumber=21.0, core=true, businessType=D, t24Name=NEW.REPAY.DATE)
+		NEW_BILLING_CLOSE : mml:date
+			@t24:i (align=R, inputBehaviour=I, maxLength=17, sysNumber=22.0, core=true, businessType=D, t24Name=NEW.BILLING.CLOSE)
+		ORIG_REPAY_DATE : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=17, sysNumber=23.0, core=true, t24Name=ORIG.REPAY.DATE)
+		ORIG_BILLING_CLOSE : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=17, sysNumber=24.0, core=true, t24Name=ORIG.BILLING.CLOSE)
+		CARD_START_NO : mml:Integer
+			@t24:i (align=R, inputBehaviour=F, maxLength=20, sysNumber=25.0, core=true, t24Name=CARD.START.NO)
+		RESERVED10 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=26.0, core=true, t24Name=RESERVED10)
+		RESERVED9 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=27.0, core=true, t24Name=RESERVED9)
+		RESERVED8 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=28.0, core=true, t24Name=RESERVED8)
+		RESERVED7 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=29.0, core=true, t24Name=RESERVED7)
+		RESERVED6 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=30.0, core=true, t24Name=RESERVED6)
+		RESERVED5 : mml:Integer
+			@i18n:Label (fr="Propriété saisie avec activité paimt")
+			@i18n:Tooltip (fr="Propriété saisie avec activité paimt ")
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=31.0, core=true, t24Name=RESERVED5)
+		RESERVED4 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=32.0, core=true, t24Name=RESERVED4)
+		RESERVED3 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=33.0, core=true, t24Name=RESERVED3)
+		RESERVED2 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=34.0, core=true, t24Name=RESERVED2)
+		RESERVED1 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=35.0, core=true, t24Name=RESERVED1)
+		STMT_NO -> byValue ST_Cards:CARD_ISSUE__STMT_NO *
+		OVERRIDE -> byValue ST_Cards:CARD_ISSUE__OVERRIDE *
+		RECORD_STATUS : mml:string
+			@i18n:Label (en="Record Status", fr=Statut, es=Estado)
+			@i18n:Tooltip (fr="Statut de l\'enregistrement")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=38.0, core=true, businessType=STAT, t24Name=RECORD.STATUS)
+		CURR_NO : mml:Integer
+			@i18n:Label (en="Curr No", fr="N° version", es="No. Actual")
+			@i18n:Tooltip (fr="Numéro de version")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=39.0, core=true, t24Name=CURR.NO)
+		INPUTTER -> byValue ST_Cards:CARD_ISSUE__INPUTTER *
+		DATE_TIME -> byValue ST_Cards:CARD_ISSUE__DATE_TIME *
+		AUTHORISER : mml:string
+			@i18n:Label (en=Authoriser, fr="Validé par", es=Autorizador)
+			@i18n:Tooltip (en="Indicates the User who Authorises the record", fr="Utilisateur de validation", es="El usuario que autorizó el registro")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=42.0, core=true, businessType=A, t24Name=AUTHORISER)
+		CO_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company, fr=Entité, es="Compañía")
+			@i18n:Tooltip (fr="Code établissement ou agence")
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=43.0, core=true, businessType=A, t24Name=CO.CODE)
+		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Dept Code", fr=Service, es=Departamento)
+			@i18n:Tooltip (fr="Code du service")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=44.0, core=true, t24Name=DEPT.CODE)
+		AUDITOR_CODE : mml:string
+			@i18n:Label (en="Auditor Code", fr="Audité par", es="Código de Auditor")
+			@i18n:Tooltip (en="Auditor Code", fr="Utilisateur d\'audit", es="Nombre del auditor")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=45.0, core=true, businessType=A, t24Name=AUDITOR.CODE)
+		AUDIT_DATE_TIME : mml:dateTime
+			@i18n:Label (en="Audit Date Time", fr="Audité le", es="Fecha/Hora de Audit.")
+			@i18n:Tooltip (en="Date and time when record was audited", fr="Date et heure d\'audit", es="Fecha y Hora de Auditoría ")
+			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=46.0, core=true, businessType=RELTIME, t24Name=AUDIT.DATE.TIME)
+	}
+	CARD_ISSUE__ACCOUNT
+	{
+		ACCOUNT -> ACM_AccountOpening:ACCOUNT required
+			@t24:i (align=R, inputBehaviour=I, maxLength=16, sysNumber=2.0, core=true, businessType=ACC, t24Name=ACCOUNT)
+	}
+	CARD_ISSUE__NAME
+	{
+		NAME : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=6.0, core=true, businessType=A, t24Name=NAME)
+	}
+	CARD_ISSUE__NOTES
+	{
+		NOTES : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=13.0, core=true, businessType=A, t24Name=NOTES)
+	}
+	CARD_ISSUE__STMT_NO
+	{
+		STMT_NO : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=36.0, core=true, businessType=A, t24Name=STMT.NO)
+	}
+	CARD_ISSUE__OVERRIDE
+	{
+		OVERRIDE : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=37.0, core=true, businessType=A, t24Name=OVERRIDE)
+	}
+	CARD_ISSUE__INPUTTER
+	{
+		INPUTTER : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=40.0, core=true, businessType=A, t24Name=INPUTTER)
+	}
+	CARD_ISSUE__DATE_TIME
+	{
+		DATE_TIME : mml:dateTime
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=41.0, core=true, businessType=RELTIME, t24Name=DATE.TIME)
+	}
+	CARD_ISSUE_ACCOUNT
+		@t24:i (t24Name=CARD.ISSUE.ACCOUNT, level=F, type=T, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		ACCOUNT -> ST_Cards:CARD_ISSUE_ACCOUNT PK required
+			@i18n:Label (en=Account, fr=Compte, es="Número de Cuenta")
+			@i18n:Tooltip (en="Identifies the customer account", fr=Compte, es="Identifica la cuenta del Cliente ")
+			@t24:i (align=R, inputBehaviour=I, maxLength=16, sysNumber=0.0, core=true, businessType=ACC, t24Name=ACCOUNT)
+		CARD_ISSUE_ID : mml:string required
+			@t24:i (align=L, inputBehaviour=I, maxLength=24, sysNumber=1.0, core=true, businessType=A, t24Name=CARD.ISSUE.ID)
+	}
+	CARD_REPAYMENT_DATE
+		@t24:i (t24Name=CARD.REPAYMENT.DATE, level=F, type=T, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		REPAY_DATE_ID -> ST_Cards:CARD_REPAYMENT_DATE PK required
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=0.0, core=true, businessType=A, t24Name=REPAY.DATE.ID)
+		ACCOUNT_NO : mml:string
+			@i18n:Label (en=Account, fr="N° de compte", es=Cuenta)
+			@i18n:Tooltip (en="Indicates Customer Account Number", fr="Numéro de compte")
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=1.0, core=true, businessType=A, t24Name=ACCOUNT.NO)
+	}
+	CARD_REPAYMENT_DATE_WORK
+		@t24:i (t24Name=CARD.REPAYMENT.DATE.WORK, level=F, type=T, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		REPAY_DATE_ID -> ST_Cards:CARD_REPAYMENT_DATE_WORK PK required
+			@t24:i (align=L, inputBehaviour=I, maxLength=15, sysNumber=0.0, core=true, businessType=A, t24Name=REPAY.DATE.ID)
+		ACCOUNT_NO : mml:string
+			@i18n:Label (en=Account, fr="N° de compte", es=Cuenta)
+			@i18n:Tooltip (en="Indicates Customer Account Number", fr="Numéro de compte")
+			@t24:i (align=R, inputBehaviour=I, maxLength=16, sysNumber=1.0, core=true, businessType=ACC, t24Name=ACCOUNT.NO)
+	}
+	CARD_STATUS
+		@t24:i (t24Name=CARD.STATUS, level=I, type=H, allowedFunctions="A C D E H I L P Q R S", localRefAllowed=true)
+	{
+		STATUS_ID -> ST_Cards:CARD_STATUS PK required
+			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=0.0, core=true, t24Name=STATUS.ID)
+		CRD_STS_DES -> byValue ST_Cards:CARD_STATUS__CRD_STS_DES *
+		RESERVED10 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=2.0, core=true, t24Name=RESERVED10)
+		RESERVED9 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=3.0, core=true, t24Name=RESERVED9)
+		RESERVED8 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=4.0, core=true, t24Name=RESERVED8)
+		RESERVED7 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=5.0, core=true, t24Name=RESERVED7)
+		RESERVED6 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=6.0, core=true, t24Name=RESERVED6)
+		RESERVED5 : mml:Integer
+			@i18n:Label (fr="Propriété saisie avec activité paimt")
+			@i18n:Tooltip (fr="Propriété saisie avec activité paimt ")
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=7.0, core=true, t24Name=RESERVED5)
+		RESERVED4 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=8.0, core=true, t24Name=RESERVED4)
+		RESERVED3 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=9.0, core=true, t24Name=RESERVED3)
+		RESERVED2 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=10.0, core=true, t24Name=RESERVED2)
+		RESERVED1 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=11.0, core=true, t24Name=RESERVED1)
+		RECORD_STATUS : mml:string
+			@i18n:Label (en="Record Status", fr=Statut, es=Estado)
+			@i18n:Tooltip (fr="Statut de l\'enregistrement")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=13.0, core=true, businessType=STAT, t24Name=RECORD.STATUS)
+		CURR_NO : mml:Integer
+			@i18n:Label (en="Curr No", fr="N° version", es="No. Actual")
+			@i18n:Tooltip (fr="Numéro de version")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=14.0, core=true, t24Name=CURR.NO)
+		INPUTTER -> byValue ST_Cards:CARD_STATUS__INPUTTER *
+		DATE_TIME -> byValue ST_Cards:CARD_STATUS__DATE_TIME *
+		AUTHORISER : mml:string
+			@i18n:Label (en=Authoriser, fr="Validé par", es=Autorizador)
+			@i18n:Tooltip (en="Indicates the User who Authorises the record", fr="Utilisateur de validation", es="El usuario que autorizó el registro")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=17.0, core=true, businessType=A, t24Name=AUTHORISER)
+		CO_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company, fr=Entité, es="Compañía")
+			@i18n:Tooltip (fr="Code établissement ou agence")
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=18.0, core=true, businessType=A, t24Name=CO.CODE)
+		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Dept Code", fr=Service, es=Departamento)
+			@i18n:Tooltip (fr="Code du service")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=19.0, core=true, t24Name=DEPT.CODE)
+		AUDITOR_CODE : mml:string
+			@i18n:Label (en="Auditor Code", fr="Audité par", es="Código de Auditor")
+			@i18n:Tooltip (en="Auditor Code", fr="Utilisateur d\'audit", es="Nombre del auditor")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=20.0, core=true, businessType=A, t24Name=AUDITOR.CODE)
+		AUDIT_DATE_TIME : mml:dateTime
+			@i18n:Label (en="Audit Date Time", fr="Audité le", es="Fecha/Hora de Audit.")
+			@i18n:Tooltip (en="Date and time when record was audited", fr="Date et heure d\'audit", es="Fecha y Hora de Auditoría ")
+			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=21.0, core=true, businessType=RELTIME, t24Name=AUDIT.DATE.TIME)
+	}
+	CARD_STATUS__CRD_STS_DES
+	{
+		CRD_STS_DES : mml:string required
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, multiLanguage=true, sysNumber=1.0, core=true, businessType=A, t24Name=CRD.STS.DES)
+	}
+	CARD_STATUS__INPUTTER
+	{
+		INPUTTER : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=15.0, core=true, businessType=A, t24Name=INPUTTER)
+	}
+	CARD_STATUS__DATE_TIME
+	{
+		DATE_TIME : mml:dateTime
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=16.0, core=true, businessType=RELTIME, t24Name=DATE.TIME)
+	}
+	CARD_TYPE
+		@t24:i (t24Name=CARD.TYPE, level=I, type=H, allowedFunctions="A C D E H I L P Q R S", localRefAllowed=true)
+	{
+		CARD_TYPE -> ST_Cards:CARD_TYPE PK required
+			@i18n:Label (en="Card Type", fr="Type de carte", es="Tipo de Tarjeta")
+			@i18n:Tooltip (fr="Type de carte")
+			@t24:i (align=L, inputBehaviour=I, maxLength=4, sysNumber=0.0, core=true, businessType=A, t24Name=CARD.TYPE)
+		DESCRIPTION -> byValue ST_Cards:CARD_TYPE__DESCRIPTION *
+		RENEWAL_DATE : mml:date
+			@i18n:Label (en="Renewal Date", fr="Date de Renouvellement", es="Fecha de Renovación")
+			@i18n:Tooltip (en="Defines default renewal date", fr="Date de Renouvellement")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=2.0, core=true, businessType=D, t24Name=RENEWAL.DATE)
+		RENEWAL_FQU : mml:string
+			@i18n:Label (en="Renewal Fqy", fr="Fréquence de Renouvellement", es="Frec. de Renovación")
+			@i18n:Tooltip (en="Default renewal frequency ", fr="Fréquence de Renouvellement", es="Frecuencia de Renovación")
+			@t24:i (align=L, inputBehaviour=I, maxLength=5, sysNumber=3.0, core=true, businessType=A, t24Name=RENEWAL.FQU)
+		CATEGORY -> byValue ST_Cards:CARD_TYPE__CATEGORY *
+		ALLOW_FCY_ACCT : ST_Cards:CARD_TYPE__ALLOW_FCY_ACCT
+			@i18n:Label (en="Allow Fcy Acct", fr="Autoriser cpte en dev", es="Permite ME. en Cta.")
+			@i18n:Tooltip (en="Indicates issuance to foreign currency account", fr="Autoriser compte en devises", es="Permite Moneda Extranjera en Cuenta")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=5.0, core=true, t24Name=ALLOW.FCY.ACCT)
+		AZ_PRODUCT -> byValue ST_Cards:CARD_TYPE__AZ_PRODUCT *
+		BILLING_DAY : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=5, sysNumber=7.0, core=true, businessType=A, t24Name=BILLING.DAY)
+		FORWARD_BACKWARD : ST_Cards:CARD_TYPE__FORWARD_BACKWARD
+			@i18n:Label (en="Forward Backward Key", fr="Trait. jours fériés", es="Clave Fut. Retroactiva")
+			@i18n:Tooltip (en="Indicates the forward backward key", fr="Traitement des jours fériés", es="Clave Futura Retroactiva")
+			@t24:i (align=R, inputBehaviour=I, maxLength=15, sysNumber=8.0, core=true, t24Name=FORWARD.BACKWARD)
+		RESERVED1 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=9.0, core=true, t24Name=RESERVED1)
+		RECORD_STATUS : mml:string
+			@i18n:Label (en="Record Status", fr=Statut, es=Estado)
+			@i18n:Tooltip (fr="Statut de l\'enregistrement")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=11.0, core=true, businessType=STAT, t24Name=RECORD.STATUS)
+		CURR_NO : mml:Integer
+			@i18n:Label (en="Curr No", fr="N° version", es="No. Actual")
+			@i18n:Tooltip (fr="Numéro de version")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=12.0, core=true, t24Name=CURR.NO)
+		INPUTTER -> byValue ST_Cards:CARD_TYPE__INPUTTER *
+		DATE_TIME -> byValue ST_Cards:CARD_TYPE__DATE_TIME *
+		AUTHORISER : mml:string
+			@i18n:Label (en=Authoriser, fr="Validé par", es=Autorizador)
+			@i18n:Tooltip (en="Indicates the User who Authorises the record", fr="Utilisateur de validation", es="El usuario que autorizó el registro")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=15.0, core=true, businessType=A, t24Name=AUTHORISER)
+		CO_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company, fr=Entité, es="Compañía")
+			@i18n:Tooltip (fr="Code établissement ou agence")
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=16.0, core=true, businessType=A, t24Name=CO.CODE)
+		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Dept Code", fr=Service, es=Departamento)
+			@i18n:Tooltip (fr="Code du service")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=17.0, core=true, t24Name=DEPT.CODE)
+		AUDITOR_CODE : mml:string
+			@i18n:Label (en="Auditor Code", fr="Audité par", es="Código de Auditor")
+			@i18n:Tooltip (en="Auditor Code", fr="Utilisateur d\'audit", es="Nombre del auditor")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=18.0, core=true, businessType=A, t24Name=AUDITOR.CODE)
+		AUDIT_DATE_TIME : mml:dateTime
+			@i18n:Label (en="Audit Date Time", fr="Audité le", es="Fecha/Hora de Audit.")
+			@i18n:Tooltip (en="Date and time when record was audited", fr="Date et heure d\'audit", es="Fecha y Hora de Auditoría ")
+			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=19.0, core=true, businessType=RELTIME, t24Name=AUDIT.DATE.TIME)
+	}
+	CARD_TYPE__DESCRIPTION
+	{
+		DESCRIPTION : mml:string required
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, multiLanguage=true, sysNumber=1.0, core=true, businessType=A, t24Name=DESCRIPTION)
+	}
+	CARD_TYPE__CATEGORY
+	{
+		CATEGORY -> ST_Config:CATEGORY
+			@t24:i (align=R, inputBehaviour=I, maxLength=4, sysNumber=4.0, core=true, t24Name=CATEGORY)
+	}
+	CARD_TYPE__AZ_PRODUCT
+	{
+	}
+	CARD_TYPE__INPUTTER
+	{
+		INPUTTER : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=13.0, core=true, businessType=A, t24Name=INPUTTER)
+	}
+	CARD_TYPE__DATE_TIME
+	{
+		DATE_TIME : mml:dateTime
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=14.0, core=true, businessType=RELTIME, t24Name=DATE.TIME)
+	}
+}
+Enumerations {
+	CARD_TYPE__ALLOW_FCY_ACCT : mml:string
+		YES=YES
+		NO=NO
+	CARD_TYPE__FORWARD_BACKWARD : mml:string
+		n1=1
+		n2=2
+		n3=3
+		n4=4
+}

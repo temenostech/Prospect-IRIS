@@ -1,0 +1,1352 @@
+# UTF-8
+/* Termplate Servicing of Swaps */
+Domain SW_Contract
+	@t24:i (module=SW)
+	@java:Package (value=com.temenos.t24.datamodel.sw.sw_contract)
+namespace "http://www.temenos.com/t24/SW_Contract"
+metamodelVersion 4.3.0.20110527
+Classes {
+	SWAP
+		@t24:i (t24Name=SWAP, level=F, type=H, additionalInfo="NOH OEU UNP OEU", allowedFunctions="A C D E H I L P Q R S V", localRefAllowed=true)
+	{
+		CONTRACT_NUMBER -> SW_Contract:SWAP PK required
+			@i18n:Label (en="Contract Number", fr="Réf. contrat", es="Ref. de Contrato")
+			@i18n:Tooltip (fr="Référence du contrat")
+			@t24:i (align=L, inputBehaviour=I, maxLength=30, sysNumber=0.0, core=true, businessType=A, t24Name=CONTRACT.NUMBER)
+		SWAP_TYPE -> SW_Config:SWAP_TYPE required
+			@i18n:Label (en="Swap Type", fr="Type de swap", es=Tipo)
+			@i18n:Tooltip (fr="Type de swap")
+			@t24:i (align=L, inputBehaviour=F, maxLength=7, sysNumber=1.0, core=true, businessType=A, t24Name=SWAP.TYPE)
+		CUSTOMER -> ST_Customer:CUSTOMER required
+			@i18n:Label (en=Counterparty, fr=Client, es=Contraparte)
+			@i18n:Tooltip (en=Counterparty, fr="Code du client")
+			@t24:i (align=R, inputBehaviour=F, maxLength=10, sysNumber=2.0, core=true, businessType=CUS, t24Name=CUSTOMER)
+		DEALER_DESK -> ST_Config:DEALER_DESK
+			@i18n:Label (en="Dealer Desk", fr="Table cambiste", es="Unidad de Negocios")
+			@i18n:Tooltip (en="Specifies the Dealer Desk handling the transaction", fr="Table cambiste", es="Especifica mesa de Agente gestionando transacción")
+			@t24:i (align=L, inputBehaviour=F, maxLength=2, sysNumber=3.0, core=true, businessType=A, t24Name=DEALER.DESK)
+		CURRENCY_MARKET -> FIN_CurrencyConfig:CURRENCY_MARKET
+			@i18n:Label (en="Currency Market", fr=Marché, es="Mercado de Divisas")
+			@i18n:Tooltip (en="Identifies Currency Market for the transaction", fr="Marché des changes", es="Identifica el Mercado de Divisas para la Transacción")
+			@t24:i (align=R, inputBehaviour=F, maxLength=1, sysNumber=4.0, core=true, t24Name=CURRENCY.MARKET)
+		POSITION_TYPE : mml:string
+			@i18n:Label (en="Position Type", fr="Type de position", es="Tipo de Posición")
+			@i18n:Tooltip (en="Position Type", fr="Type de position")
+			@t24:i (align=L, inputBehaviour=N, maxLength=2, sysNumber=5.0, core=true, businessType=A, t24Name=POSITION.TYPE)
+		TRADE_DATE : mml:date
+			@i18n:Label (en="Trade Date", fr="Date transaction", es="Fecha de Transacción")
+			@i18n:Tooltip (fr="Date de la transaction")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=6.0, core=true, businessType=D, t24Name=TRADE.DATE)
+		VALUE_DATE : mml:date
+			@i18n:Label (en="Value Date", fr="Date de valeur", es="Fecha Valor")
+			@i18n:Tooltip (en="Indicates the Value date of the Contract", fr="Date de valeur", es="Fecha en que Carteras serán act. por el evento")
+			@t24:i (align=R, inputBehaviour=F, maxLength=11, sysNumber=7.0, core=true, businessType=D, t24Name=VALUE.DATE)
+		MATURITY_DATE : mml:string required
+			@i18n:Label (en="Maturity Date", fr="Date d\'échéance", es="Fecha de Vencimiento")
+			@i18n:Tooltip (en="Indicates the Maturity Date of the Transaction", fr="Date d\'échéance", es="Indica la Fecha de Vencimiento de la Transacción")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=8.0, core=true, businessType=MATLMM, t24Name=MATURITY.DATE)
+		REVALUATION_TYPE : SW_Contract:SWAP__REVALUATION_TYPE
+			@i18n:Label (en="Revaluation Type", fr="Méthode réévaluation", es="Tipo de Revaluación")
+			@i18n:Tooltip (en="Revaluation method to be used on forward contracts", fr="Méthode de réévaluation")
+			@t24:i (align=L, inputBehaviour=I, maxLength=13, sysNumber=9.0, core=true, t24Name=REVALUATION.TYPE)
+		TRADE_TYPE : SW_Contract:SWAP__TRADE_TYPE
+			@i18n:Label (en="Trade Type", fr="Type d\'opération", es="Tipo de Negocio")
+			@i18n:Tooltip (en="If the deal is a Trade deal or Hedge deal", fr="Type d\'opération", es="Si el contrato es de Negocio o Cobertura")
+			@t24:i (align=L, inputBehaviour=I, maxLength=5, sysNumber=10.0, core=true, t24Name=TRADE.TYPE)
+		CUSTOMER_REF : mml:string
+			@i18n:Label (en="Customer Ref", fr="Référence client", es="Referencia Cliente")
+			@i18n:Tooltip (fr="Référence du client")
+			@t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=11.0, core=true, businessType=S, t24Name=CUSTOMER.REF)
+		LIMIT_REFERENCE : mml:Integer
+			@i18n:Label (en="Limit Reference", fr="Référence limite", es="Ref. de Límite")
+			@i18n:Tooltip (en="Indicates the limit that will be updated", fr="Référence de la limite")
+			@t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=12.0, core=true, t24Name=LIMIT.REFERENCE)
+		NET_PAYMENTS : SW_Contract:SWAP__NET_PAYMENTS
+			@i18n:Label (en=Netting, fr=Netting, es=Neteo)
+			@i18n:Tooltip (en="Whether to Net Asset and Liability payments", fr=Netting, es="Si Pagos de Activos y Pasivo son Netos ")
+			@t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=13.0, core=true, t24Name=NET.PAYMENTS)
+		LINK_REFERENCE : mml:string
+			@i18n:Label (en="Link Reference", fr="Réf. de lien", es="Referencia de Enlace")
+			@i18n:Tooltip (en="Transaction link reference of the contract", fr="Référence de lien", es="Ref. vínculo actualizado a nivel de transacción ")
+			@t24:i (align=L, inputBehaviour=I, maxLength=12, sysNumber=14.0, core=true, businessType=A, t24Name=LINK.REFERENCE)
+		ACCOUNT_OFFICER -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Account Officer", fr=Gestionnaire, es="Gestor de Cuenta")
+			@i18n:Tooltip (en="Indicates Account Officer responsible", fr="Gestionnaire responsable du compte ou du client")
+			@t24:i (align=R, inputBehaviour=I, maxLength=4, sysNumber=15.0, core=true, businessType=DAO, t24Name=ACCOUNT.OFFICER)
+		PORTFOLIO_NUMBER : mml:Integer
+			@i18n:Label (en="Portfolio Number", fr=Portefeuille, es="Número de Portfolio")
+			@i18n:Tooltip (en="Portfolio Number", fr="Numéro de portefeuille")
+			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=16.0, core=true, t24Name=PORTFOLIO.NUMBER)
+		AGREEMENT_TYPE -> SW_Config:SWAP_AGREEMENT_TYPE required
+			@i18n:Label (en="Agreement Type", fr="Type de contrat", es=Acuerdo)
+			@i18n:Tooltip (en="Agreement Type Eg. ISDA, FRABBA, etc.", fr="Type de contrat")
+			@t24:i (align=L, inputBehaviour=I, maxLength=22, sysNumber=17.0, core=true, businessType=SWAG, t24Name=AGREEMENT.TYPE)
+		CONDITIONS -> byValue SW_Contract:SWAP__CONDITIONS *
+		PRODUCT_CATEGORY -> ST_Config:CATEGORY
+			@i18n:Label (en="Product Category", fr=Produit, es="Código de Categoría")
+			@i18n:Tooltip (fr="Code du produit")
+			@t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=19.0, core=true, t24Name=PRODUCT.CATEGORY)
+		BANK_INFO -> byValue SW_Contract:SWAP__BANK_INFO *
+		TREASURY_CUSTOMER : SW_Contract:SWAP__TREASURY_CUSTOMER
+			@i18n:Label (en="Treasury Customer", fr="Client salle des marchés", es="Cliente de Tesorería")
+			@i18n:Tooltip (en="Indicates whether treasury customer?", fr="Client de la salle des marchés", es="Indica si es cliente de tesorería")
+			@t24:i (align=L, inputBehaviour=F, maxLength=2, sysNumber=21.0, core=true, t24Name=TREASURY.CUSTOMER)
+		AS_CURRENCY -> FIN_CurrencyConfig:CURRENCY
+			@i18n:Label (en=Currency, fr="Devise d\'actif", es=Moneda)
+			@i18n:Tooltip (en="Currency in the asset side of the swap contract.", fr="Devise d\'actif", es="Mda. del lado del activo del contrato swap")
+			@t24:i (align=L, inputBehaviour=F, maxLength=3, sysNumber=22.0, core=true, businessType=CCY, t24Name=AS.CURRENCY)
+		AS_PRINCIPAL : mml:Double
+			@i18n:Label (en=Principal, fr="Principal actif", es=Capital)
+			@i18n:Tooltip (en="Principal amount in Asset side of swap contract", fr="Principal actif", es="Mto. de Capital de lado de activo de contrato swap")
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=23.0, core=true, businessType=AMT, t24Name=AS.PRINCIPAL)
+		AS_INT_EFFECTIVE : mml:date
+			@i18n:Label (en="Effective Date", fr="Date Effective", es="Fecha Efectiva")
+			@i18n:Tooltip (en="Identifies start date of the first interest period", fr="Date Effective", es="Identifica fecha inicio del primer período de Int.")
+			@t24:i (align=R, inputBehaviour=F, maxLength=11, sysNumber=24.0, core=true, businessType=D, t24Name=AS.INT.EFFECTIVE)
+		AS_FIXED_RATE : mml:Integer
+			@i18n:Label (en="Fixed Rate", fr="Taux fixe de client", es="Tasa Fija")
+			@i18n:Tooltip (en="Fixed interest rate- interest accrued on the Asset", fr="Taux fixe de client", es="Tasa de int. fija - Int. devengado en el Activo")
+			@t24:i (align=R, inputBehaviour=F, maxLength=11, sysNumber=25.0, core=true, t24Name=AS.FIXED.RATE)
+		AS_TRSY_FIXED_RATE : mml:Integer
+			@i18n:Label (en="Treasury Fixed Rate", fr="Taux trésorerie", es="Tasa de Cambio Fija")
+			@i18n:Tooltip (en="Treasury interest rate for the Asset leg", fr="Taux trésorerie", es="Tasa de Cambio de interés para parte de activo")
+			@t24:i (align=R, inputBehaviour=F, maxLength=11, sysNumber=26.0, core=true, t24Name=AS.TRSY.FIXED.RATE)
+		AS_RATE_KEY -> ST_RateParameters:MARKET_RATE_TEXT
+			@i18n:Label (en="Floating Interest", fr="Intérêt variable", es="Interés variable")
+			@i18n:Tooltip (en="Underlying market rate - asset side floating", fr="Intérêt variable", es="Tasa mercado Subyacente - lado de activo variable")
+			@t24:i (align=L, inputBehaviour=I, maxLength=6, sysNumber=27.0, core=true, businessType=A, t24Name=AS.RATE.KEY)
+		AS_SPREAD : mml:Integer
+			@i18n:Label (en=Spread, fr=Marge, es=Margen)
+			@i18n:Tooltip (en="Spread, interest rate related to interest key", fr=Marge, es="\"Margen, tasa interés relacionada a clave de int.\"")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=28.0, core=true, t24Name=AS.SPREAD)
+		AS_CAP_RATE : mml:Integer
+			@i18n:Label (en="Asset Capt Rate", es="Tasa Cap. de Activo")
+			@i18n:Tooltip (en="Maximum interest rate can be for the Asset leg", es="Tasa de interés máxima para entrada de Activo")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=29.0, core=true, t24Name=AS.CAP.RATE)
+		AS_FLOOR_RATE : mml:Integer
+			@i18n:Label (en="Asset Floor Rate", es="Tasa Mín. de Activo")
+			@i18n:Tooltip (en="Minimum interest rate can be for the Asset leg", es="Tasa de interés mínima para entrada de Activo")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=30.0, core=true, t24Name=AS.FLOOR.RATE)
+		AS_OPTION_DATE : mml:date
+			@i18n:Label (en="Asset option Date", es="Fecha Opción Activo")
+			@i18n:Tooltip (en="The date of a call option", es="La fecha de una opción de compra")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=31.0, core=true, businessType=D, t24Name=AS.OPTION.DATE)
+		AS_OPTION_NOTICE : mml:Integer
+			@i18n:Label (en="Asset option Notice", es="Aviso opción Activo")
+			@i18n:Tooltip (en="Number of days notice for call option on Asset leg", es="Número de días de aviso para opción de compra en entrada de Activo")
+			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=32.0, core=true, t24Name=AS.OPTION.NOTICE)
+		AS_CURRENT_RATE : mml:Integer
+			@i18n:Label (en="Asset current Rate", fr="Taux d\'actifs", es="Tasa Actual Activo")
+			@i18n:Tooltip (en="Interest rate for the current period - asset leg", fr="Taux d\'actifs", es="Tasa de interés para período actual - entrada de activo")
+			@t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=33.0, core=true, t24Name=AS.CURRENT.RATE)
+		AS_CUR_TRSRY_RATE : mml:Integer
+			@i18n:Label (en="Asset Current Treasury Rate", es="Tasa Cambio Actual")
+			@i18n:Tooltip (en="Treasury rate for current period-asset leg", es="Tasa de tesorería para período actual- entrada de activo")
+			@t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=34.0, core=true, t24Name=AS.CUR.TRSRY.RATE)
+		AS_FIXED_INTEREST : SW_Contract:SWAP__AS_FIXED_INTEREST
+			@i18n:Label (en="Asset Fixed Interest", fr="Intérêt fixe", es="Int. Fijo de Activo")
+			@i18n:Tooltip (en="Current interest on asset leg-fixed or floating ", fr="Intérêt fixe", es="Interés actual en entrada e activo - fijo o flotante")
+			@t24:i (align=L, inputBehaviour=N, maxLength=2, sysNumber=35.0, core=true, t24Name=AS.FIXED.INTEREST)
+		AS_BASIS -> ST_RateParameters:INTEREST_BASIS
+			@i18n:Label (en="Interest Basis", fr="Base d\'intérêt", es="Base de Interés")
+			@i18n:Tooltip (en="Interest Day Basis", fr="Base d\'intérêt", es="Base Diaria de Interés ")
+			@t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=36.0, core=true, businessType=A, t24Name=AS.BASIS)
+		AS_DAY_CONVENTION : SW_Contract:SWAP__AS_DAY_CONVENTION
+			@i18n:Label (en=Convention, fr=Convention, es="Convención")
+			@i18n:Tooltip (en="Defines the Day Convention to follow", fr=Convention, es="Define la Convención del Día a seguir")
+			@t24:i (align=L, inputBehaviour=I, maxLength=10, sysNumber=37.0, core=true, t24Name=AS.DAY.CONVENTION)
+		AS_DATE_ADJUSTMENT : SW_Contract:SWAP__AS_DATE_ADJUSTMENT
+			@i18n:Label (en=Adjustment, fr=Ajustement, es=Ajuste)
+			@i18n:Tooltip (en="Type of date adjustments followed on the Asset leg", fr=Ajustement, es="Tipo de ajustes fecha seguidos en la parte activo")
+			@t24:i (align=L, inputBehaviour=I, maxLength=6, sysNumber=38.0, core=true, t24Name=AS.DATE.ADJUSTMENT)
+		AS_COUNTRY_RISK -> ST_Config:COUNTRY
+			@i18n:Label (en="Asset Country Risk", es="Riesgo País Activo")
+			@i18n:Tooltip (en="Indicates the country specific risk on asset side", es="Indica el riesgo específico de país en lado de activo")
+			@t24:i (align=L, inputBehaviour=I, maxLength=9, sysNumber=39.0, core=true, businessType=S, t24Name=AS.COUNTRY.RISK)
+		AS_BUS_CENTRES -> byValue SW_Contract:SWAP__AS_BUS_CENTRES *
+		AS_TYPE -> byValue SW_Contract:SWAP__AS_TYPE *
+		LB_CURRENCY -> FIN_CurrencyConfig:CURRENCY
+			@i18n:Label (en=Currency, fr="Dette en monnaie", es=Moneda)
+			@i18n:Tooltip (en="Currency in the asset side of the swap contract.", fr="Dette en monnaie", es="La moneda del lado del pasivo del swap")
+			@t24:i (align=L, inputBehaviour=F, maxLength=3, sysNumber=52.0, core=true, businessType=CCY, t24Name=LB.CURRENCY)
+		LB_PRINCIPAL : mml:Double
+			@i18n:Label (en=Principal, fr="Dette principale", es=Capital)
+			@i18n:Tooltip (en="Principal amount in Asset side of swap contract", fr="Dette principale", es="Capital del lado del pasivo del swap")
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=53.0, core=true, businessType=AMT, t24Name=LB.PRINCIPAL)
+		LB_INT_EFFECTIVE : mml:date
+			@i18n:Label (en="Effective Date", fr="Date Effective", es="Fecha Efectiva")
+			@i18n:Tooltip (en="Start date of the first liability interest period", fr="Date Effective", es="Fecha inicio de primer período de interés pasivo")
+			@t24:i (align=R, inputBehaviour=F, maxLength=11, sysNumber=54.0, core=true, businessType=D, t24Name=LB.INT.EFFECTIVE)
+		LB_FIXED_RATE : mml:Integer
+			@i18n:Label (en="Fixed Rate", fr="Taux fixe de client", es="Tasa Fija")
+			@i18n:Tooltip (en="Fixed interest rate- interest accrued on the Liability", fr="Taux fixe de client", es="\"Tasa de interés, intereses a devengar sobre pasivo\"")
+			@t24:i (align=R, inputBehaviour=F, maxLength=11, sysNumber=55.0, core=true, t24Name=LB.FIXED.RATE)
+		LB_TRSY_FIXED_RATE : mml:Integer
+			@i18n:Label (en="Treasury Rate", fr="Taux trésorerie", es="Tasa de cambio")
+			@i18n:Tooltip (en="Treasury interest rate for the Asset leg", fr="Taux trésorerie", es="Tasa de Cambio de interés para parte de pasivo")
+			@t24:i (align=R, inputBehaviour=F, maxLength=11, sysNumber=56.0, core=true, t24Name=LB.TRSY.FIXED.RATE)
+		LB_RATE_KEY -> ST_RateParameters:MARKET_RATE_TEXT
+			@i18n:Label (en="Floating Interest", fr="Intérêt variable", es="Clave Int. Variable")
+			@i18n:Tooltip (en="Underlying market rate - liability side floating", fr="Intérêt variable", es="Tasa mercado Subyacente - lado de activo variable")
+			@t24:i (align=L, inputBehaviour=I, maxLength=6, sysNumber=57.0, core=true, businessType=A, t24Name=LB.RATE.KEY)
+		LB_SPREAD : mml:Integer
+			@i18n:Label (en=Spread, fr=Marge, es=Margen)
+			@i18n:Tooltip (en="Spread, interest rate related to interest key", fr=Marge, es="Margen de tasa interés relacionada a INTEREST.KEY")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=58.0, core=true, t24Name=LB.SPREAD)
+		LB_CAP_RATE : mml:Integer
+			@i18n:Label (en="Liability Cap Rate", es="Tasa Máxima de Pasivo")
+			@i18n:Tooltip (en="Maximum interest rate on the Liability leg", es="Tasa de interés máximo en la entrada de Pasivo")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=59.0, core=true, t24Name=LB.CAP.RATE)
+		LB_FLOOR_RATE : mml:Integer
+			@i18n:Label (en="Liability Floor Rate", es="Tasa Mínima de Pasivo")
+			@i18n:Tooltip (en="Minimum interest rate on the Liability leg", es="Tasa de interés máximo en la entrada de Pasivo")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=60.0, core=true, t24Name=LB.FLOOR.RATE)
+		LB_OPTION_DATE : mml:date
+			@i18n:Label (en="Liability Option Date", es="Fecha Opción de Pasivo")
+			@i18n:Tooltip (en="The date of a call option", es="La fecha de una opción de compra")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=61.0, core=true, businessType=D, t24Name=LB.OPTION.DATE)
+		LB_OPTION_NOTICE : mml:Integer
+			@i18n:Label (en="Liability Option Notice", es="Aviso Opción Pasivo")
+			@i18n:Tooltip (en="Number of days notice-call option on Liability leg", es="Número de días de aviso- opción de compra en entrada de Pasivo")
+			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=62.0, core=true, t24Name=LB.OPTION.NOTICE)
+		LB_CURRENT_RATE : mml:Integer
+			@i18n:Label (en="Liability Current Rate", fr="Taux de responsabilité", es="Tasa Actual de Pasivo")
+			@i18n:Tooltip (en="Interest rate for the current period-liability leg", fr="Taux de responsabilité", es="Tasa de interés para el período actual - entrada de Pasivo")
+			@t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=63.0, core=true, t24Name=LB.CURRENT.RATE)
+		LB_CUR_TRSRY_RATE : mml:Integer
+			@i18n:Label (en="Liability Current Treasury Rate", es="Tasa Cambio Actual")
+			@i18n:Tooltip (en="Treasury rate for current period-Liability leg", es="Tasa de tesorería para periodo actual- entrada de Pasivo")
+			@t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=64.0, core=true, t24Name=LB.CUR.TRSRY.RATE)
+		LB_FIXED_INTEREST : SW_Contract:SWAP__LB_FIXED_INTEREST
+			@i18n:Label (en="Liability Fixed Interest", es="Int. Fijo de Pasivo")
+			@i18n:Tooltip (en="Current interest on liability leg-fixed/floating", es="Interés actual en la entrada de pasivo- fijo o flotante")
+			@t24:i (align=L, inputBehaviour=N, maxLength=2, sysNumber=65.0, core=true, t24Name=LB.FIXED.INTEREST)
+		LB_BASIS -> ST_RateParameters:INTEREST_BASIS
+			@i18n:Label (en="Interest Basis", fr="Base d\'intérêt", es="Base de Interés")
+			@i18n:Tooltip (en="Interest Day Basis", fr="Base d\'intérêt", es="Base Diaria de Interés para interés pasivo")
+			@t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=66.0, core=true, businessType=A, t24Name=LB.BASIS)
+		LB_DAY_CONVENTION : SW_Contract:SWAP__LB_DAY_CONVENTION
+			@i18n:Label (en=Convention, fr=Convention, es="Convención")
+			@i18n:Tooltip (en="Defines the Day Convention to follow", fr=Convention, es="Define el Día de la Convención a seguir")
+			@t24:i (align=L, inputBehaviour=I, maxLength=10, sysNumber=67.0, core=true, t24Name=LB.DAY.CONVENTION)
+		LB_DATE_ADJUSTMENT : SW_Contract:SWAP__LB_DATE_ADJUSTMENT
+			@i18n:Label (en=Adjustment, fr=Ajustement, es=Ajuste)
+			@i18n:Tooltip (en="Type of date adjustments followed on the Asset leg", fr=Ajustement, es="Ajustes de fecha a ser seguidos en la parte pasivo")
+			@t24:i (align=L, inputBehaviour=I, maxLength=6, sysNumber=68.0, core=true, t24Name=LB.DATE.ADJUSTMENT)
+		LB_COUNTRY_RISK -> ST_Config:COUNTRY
+			@i18n:Label (en="Liability Country Risk", es="Riesgo País Pasivo")
+			@i18n:Tooltip (en="Country specific risk on liability side", es="Riesgo específico de país en lado de activo")
+			@t24:i (align=L, inputBehaviour=I, maxLength=9, sysNumber=69.0, core=true, businessType=S, t24Name=LB.COUNTRY.RISK)
+		LB_BUS_CENTRES -> byValue SW_Contract:SWAP__LB_BUS_CENTRES *
+		LB_TYPE -> byValue SW_Contract:SWAP__LB_TYPE *
+		SET_CURRENCY -> byValue SW_Contract:SWAP__SET_CURRENCY *
+		BROKER_CODE -> ST_Customer:CUSTOMER
+			@i18n:Label (en="Broker Code", fr="Code du courtier", es="Código de Corredor")
+			@i18n:Tooltip (en="Indicates the broker", fr="Code du courtier")
+			@t24:i (align=R, inputBehaviour=F, maxLength=10, sysNumber=92.0, core=true, businessType=CUS, t24Name=BROKER.CODE)
+		BROKERAGE_BASE : SW_Contract:SWAP__BROKERAGE_BASE
+			@i18n:Label (en="Brokerage Base", fr="Base de courtage", es="Base de Correduría")
+			@i18n:Tooltip (en="Brokerage Base", fr="Base de courtage", es="Lado Activo o pasivo cálculo de correduría-usada")
+			@t24:i (align=L, inputBehaviour=F, maxLength=9, sysNumber=93.0, core=true, t24Name=BROKERAGE.BASE)
+		BROKERAGE : mml:Double
+			@i18n:Label (en=Brokerage, fr="Montant en devises", es="Corredu. Mda. Contra.")
+			@i18n:Tooltip (fr="Montant en devises", es="Correduría (Moneda de Contrato)")
+			@t24:i (align=R, inputBehaviour=F, maxLength=19, sysNumber=94.0, core=true, businessType=AMT, t24Name=BROKERAGE)
+		BROKER_CURRENCY -> FIN_CurrencyConfig:CURRENCY
+			@i18n:Label (en="Broker Currency", fr="Devise du courtage", es="Moneda de Corredor")
+			@i18n:Tooltip (en="Broker Currency", fr="Devise du courtage", es="Indica el código de mda. del corredor asociado")
+			@t24:i (align=L, inputBehaviour=F, maxLength=3, sysNumber=95.0, core=true, businessType=CCY, t24Name=BROKER.CURRENCY)
+		BROKER_AMOUNT : mml:Double
+			@i18n:Label (en="Brokerage Amount", fr="Montant de courtage", es="Monto de Correduría")
+			@i18n:Tooltip (en="Specifies the brokerage amount", fr="Montant de courtage")
+			@t24:i (align=R, inputBehaviour=F, maxLength=19, sysNumber=96.0, core=true, businessType=AMT, t24Name=BROKER.AMOUNT)
+		SEND_PAYMENT : SW_Contract:SWAP__SEND_PAYMENT
+			@i18n:Label (en="Send Payment", fr="Envoi du paiement", es="Enviar Pago")
+			@i18n:Tooltip (en="Send payment - Y/N ?", fr="Envoi du paiement", es="Enviar Pago")
+			@t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=97.0, core=true, t24Name=SEND.PAYMENT)
+		SEND_CONFIRMATION : SW_Contract:SWAP__SEND_CONFIRMATION
+			@i18n:Label (en="Send Confirmation", fr="Envoi de confirmation", es="Enviar Confirmación")
+			@i18n:Tooltip (en="Send confirmation - Y/N ?", fr="Envoi de la confirmation", es="Aviso tiene que ser enviado al Cliente o no")
+			@t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=98.0, core=true, t24Name=SEND.CONFIRMATION)
+		DAYS_DELIVERY : mml:Integer
+			@i18n:Label (en="Delivery Days", fr="Jours ouvrables de livraison", es="Días de Entrega")
+			@i18n:Tooltip (fr="Jours ouvrables de livraison")
+			@t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=99.0, core=true, t24Name=DAYS.DELIVERY)
+		CONFIRM_BY_CUST : SW_Contract:SWAP__CONFIRM_BY_CUST
+			@i18n:Label (en="Confirmation By Customer", es="Confirmación Por Cliente")
+			@t24:i (align=L, inputBehaviour=I, maxLength=30, sysNumber=100.0, core=true, t24Name=CONFIRM.BY.CUST)
+		CONFIRM_BY_BROKER : SW_Contract:SWAP__CONFIRM_BY_BROKER
+			@i18n:Label (en="Confirmation By Broker", es="Confirmación Por Corredor")
+			@t24:i (align=L, inputBehaviour=I, maxLength=30, sysNumber=101.0, core=true, t24Name=CONFIRM.BY.BROKER)
+		FWD_REVAL_AMOUNT : mml:Double
+			@i18n:Label (en="Forward Revaluation Amount", es="Mto. Revaloriz. Forw.")
+			@i18n:Tooltip (en="Field that identifies current value of the Swap", es="Campo que identifica el valor actual del Swap")
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=102.0, core=true, businessType=AMT, t24Name=FWD.REVAL.AMOUNT)
+		CONTRACT_STATUS : SW_Contract:SWAP__CONTRACT_STATUS
+			@i18n:Label (en="Contract Status", fr="Statut du contrat", es=Estado)
+			@i18n:Tooltip (fr="Statut du contrat")
+			@t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=103.0, core=true, t24Name=CONTRACT.STATUS)
+		ASSET_STATUS : SW_Contract:SWAP__ASSET_STATUS
+			@i18n:Label (en="Asset Status", es="Estado de Activo")
+			@i18n:Tooltip (en="Current status of asset leg of the Swap contract", es="Estado actual de entrada de activo del contrato Swap")
+			@t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=104.0, core=true, t24Name=ASSET.STATUS)
+		LIABILITY_STATUS : SW_Contract:SWAP__LIABILITY_STATUS
+			@i18n:Label (en="Liability Status", es="Estado de Pasivo")
+			@i18n:Tooltip (en="Current status of liability leg of the Swap", es="Estado actual de entrada de pasivo del contrato Swap")
+			@t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=105.0, core=true, t24Name=LIABILITY.STATUS)
+		ACTIVITY -> byValue SW_Contract:SWAP__ACTIVITY *
+		LIMIT_AMOUNT : mml:Double
+			@i18n:Label (en="Limit Amount", fr=Montant, es="Monto Límite")
+			@i18n:Tooltip (en="It shows the limit amount", fr=Montant)
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=115.0, core=true, businessType=AMT, t24Name=LIMIT.AMOUNT)
+		BALANCE_SHEET : mml:Integer
+			@i18n:Label (en="Balance Sheet", fr=Bilan, es="Hoja de Saldo")
+			@i18n:Tooltip (fr=Bilan)
+			@t24:i (align=R, inputBehaviour=N, maxLength=3, sysNumber=116.0, core=true, t24Name=BALANCE.SHEET)
+		BASE_CURRENCY -> FIN_CurrencyConfig:CURRENCY
+			@i18n:Label (en="Base Currency", fr="Devise de base")
+			@i18n:Tooltip (en="Base Currency", fr="Devise de base")
+			@t24:i (align=L, inputBehaviour=F, maxLength=3, sysNumber=117.0, core=true, businessType=CCY, t24Name=BASE.CURRENCY)
+		CONTACT_DETAILS -> byValue SW_Contract:SWAP__CONTACT_DETAILS *
+		AS_INTEREST_DET -> byValue SW_Contract:SWAP__AS_INTEREST_DET *
+		LB_INTEREST_DET -> byValue SW_Contract:SWAP__LB_INTEREST_DET *
+		SEND_ADVICE : SW_Contract:SWAP__SEND_ADVICE
+			@i18n:Label (en="Send Advice", fr="Envoi du nessage", es="Enviar Aviso")
+			@i18n:Tooltip (en="Transmission of the advice", fr="Envoi du nessage")
+			@t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=121.0, core=true, t24Name=SEND.ADVICE)
+		FWD_REVAL_CCY : mml:Integer
+			@i18n:Label (en="Forward Revaluation Currency", es="Mda. Revaloriz. Forw.")
+			@i18n:Tooltip (en="Specifies the forward revaluation currency", es="Especifica la moneda de revaloración futura")
+			@t24:i (align=R, inputBehaviour=N, maxLength=3, sysNumber=122.0, core=true, t24Name=FWD.REVAL.CCY)
+		FWD_REVAL_PL_LCY : mml:Double
+			@i18n:Label (en="Forward Revaluation Profit Loss Local Currency", es="ML. P/G Reval. Fut.")
+			@i18n:Tooltip (en="Forward revaluation profit loss in local currency", es="Revaluacción futura de Pérdida y Ganancia en moneda local")
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=123.0, core=true, businessType=AMT, t24Name=FWD.REVAL.PL.LCY)
+		LIQUIDATION_MODE : SW_Contract:SWAP__LIQUIDATION_MODE
+			@i18n:Label (en="Liquidation Mode", fr="Mode de traitement", es="Forma de Liquidación")
+			@i18n:Tooltip (en="Indicates how overdue payments are handled.", fr="Mode de traitement")
+			@t24:i (align=L, inputBehaviour=I, maxLength=15, sysNumber=124.0, core=true, businessType=DEF, t24Name=LIQUIDATION.MODE)
+		OVERDUE_STATUS : mml:Integer
+			@i18n:Label (en="Overdue Status", fr="Statut impayé", es=Pendiente)
+			@i18n:Tooltip (en="Overdue or aging status of the contract", fr="Statut impayé")
+			@t24:i (align=R, inputBehaviour=E, maxLength=3, sysNumber=125.0, core=true, t24Name=OVERDUE.STATUS)
+		SOD_MAT : SW_Contract:SWAP__SOD_MAT
+			@i18n:Label (en="Sod Mat", fr="Trt échéance début journée", es="Vencim.Al Inicio Día")
+			@i18n:Tooltip (fr="Traitement de l\'échéance en début de journée")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=126.0, core=true, t24Name=SOD.MAT)
+		FLEX_PRIN_PAYMENT : SW_Contract:SWAP__FLEX_PRIN_PAYMENT
+			@i18n:Label (en="Flexible Principal Payment", es="Pago Flexible Cap.")
+			@t24:i (align=L, inputBehaviour=F, maxLength=3, sysNumber=127.0, core=true, t24Name=FLEX.PRIN.PAYMENT)
+		NEGATIVE_RATES : SW_Contract:SWAP__NEGATIVE_RATES
+			@i18n:Label (en="Negative Rates", fr="Taux négatif", es="Tasas negativas")
+			@i18n:Tooltip (en="Indicate whether interest rate is negative or not", fr="Taux négatif", es="Indica si la tasa de interés es negativa o no")
+			@t24:i (align=L, inputBehaviour=F, maxLength=11, sysNumber=128.0, core=true, t24Name=NEGATIVE.RATES)
+		EB_ACCRUAL_PARAM -> AC_Fees:EB_ACCRUAL_PARAM
+			@i18n:Label (fr="Paramètres des courus")
+			@i18n:Tooltip (fr="Paramètres des courus")
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=129.0, core=true, businessType=A, t24Name=EB.ACCRUAL.PARAM)
+		NPV_PL_TODAY : mml:Double
+			@i18n:Label (en="Net Present Value Profit Loss Today", es="Valor Pres. Neto P/G")
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=130.0, core=true, businessType=AMT, t24Name=NPV.PL.TODAY)
+		MAT_PAYMENT_DATE : SW_Contract:SWAP__MAT_PAYMENT_DATE
+			@i18n:Label (en="Maturity Payment Date")
+			@i18n:Tooltip (en="Maturity Payment Date")
+			@t24:i (align=L, inputBehaviour=F, maxLength=3, sysNumber=131.0, core=true, t24Name=MAT.PAYMENT.DATE)
+		RESERVED_3 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=132.0, core=true, t24Name=RESERVED.3)
+		RESERVED_2 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=133.0, core=true, t24Name=RESERVED.2)
+		RESERVED_1 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=134.0, core=true, t24Name=RESERVED.1)
+		ENTRY_IDS -> byValue SW_Contract:SWAP__ENTRY_IDS *
+		OVERRIDE -> byValue SW_Contract:SWAP__OVERRIDE *
+		RECORD_STATUS : mml:string
+			@i18n:Label (en="Record Status", fr=Statut, es=Estado)
+			@i18n:Tooltip (fr="Statut de l\'enregistrement")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=137.0, core=true, businessType=STAT, t24Name=RECORD.STATUS)
+		CURR_NO : mml:Integer
+			@i18n:Label (en="Curr No", fr="N° version", es="No. Actual")
+			@i18n:Tooltip (fr="Numéro de version")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=138.0, core=true, t24Name=CURR.NO)
+		INPUTTER -> byValue SW_Contract:SWAP__INPUTTER *
+		DATE_TIME -> byValue SW_Contract:SWAP__DATE_TIME *
+		AUTHORISER : mml:string
+			@i18n:Label (en=Authoriser, fr="Validé par", es=Autorizador)
+			@i18n:Tooltip (en="Indicates the User who Authorises the record", fr="Utilisateur de validation", es="El usuario que autorizó el registro")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=141.0, core=true, businessType=A, t24Name=AUTHORISER)
+		CO_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company, fr=Entité, es="Compañía")
+			@i18n:Tooltip (fr="Code établissement ou agence")
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=142.0, core=true, businessType=A, t24Name=CO.CODE)
+		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Dept Code", fr=Service, es=Departamento)
+			@i18n:Tooltip (fr="Code du service")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=143.0, core=true, t24Name=DEPT.CODE)
+		AUDITOR_CODE : mml:string
+			@i18n:Label (en="Auditor Code", fr="Audité par", es="Código de Auditor")
+			@i18n:Tooltip (en="Auditor Code", fr="Utilisateur d\'audit", es="Nombre del auditor")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=144.0, core=true, businessType=A, t24Name=AUDITOR.CODE)
+		AUDIT_DATE_TIME : mml:dateTime
+			@i18n:Label (en="Audit Date Time", fr="Audité le", es="Fecha/Hora de Audit.")
+			@i18n:Tooltip (en="Date and time when record was audited", fr="Date et heure d\'audit", es="Fecha y Hora de Auditoría ")
+			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=145.0, core=true, businessType=RELTIME, t24Name=AUDIT.DATE.TIME)
+		SECURITY_ID : mml:Integer
+			@i18n:Label (en=Security, fr=Titre, es="Título Valor")
+			@i18n:Tooltip (fr=Titre)
+			@t24:i (align=R, inputBehaviour=I, maxLength=12, sysNumber=106.1, core=false, t24Name=SECURITY.ID)
+		DISCOUNT_RATE : mml:Integer
+			@i18n:Label (en="Discount Rate", fr="Taux d\'escompte", es="Tasa de Descuento")
+			@i18n:Tooltip (fr="Taux d\'escompte")
+			@t24:i (align=L, inputBehaviour=I, maxLength=55, core=false, t24Name=DISCOUNT.RATE, genOperation="\"\"")
+		CURRENCY : mml:Integer
+			@i18n:Label (en=Ccy, fr=Devise, es=Moneda)
+			@i18n:Tooltip (fr="Code devise ISO")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, core=false, t24Name=CURRENCY, genOperation=AS.CURRENCY)
+		SOURCE_ID : mml:Integer
+			@i18n:Label (en="Source Id", fr="No. de transaction", es="ID de Fuente")
+			@i18n:Tooltip (fr="Numéro de transaction")
+			@t24:i (align=R, inputBehaviour=I, maxLength=30, core=false, t24Name=SOURCE.ID, genOperation="@ID")
+		RESIDENCE : mml:Integer
+			@i18n:Label (en=Residence, fr=Résidence, es=Residencia)
+			@i18n:Tooltip (fr="Pays de résidence")
+			@t24:i (align=R, inputBehaviour=I, maxLength=4, core=false, t24Name=RESIDENCE, genOperation="CUSTOMER.NO>CUSTOMER>RESIDENCE")
+		SOURCE_FILE : mml:Integer
+			@i18n:Label (en="Source File", es="Archivo Fuente")
+			@t24:i (align=L, inputBehaviour=I, maxLength=4, core=false, t24Name=SOURCE.FILE, genOperation="\"SWAP\"")
+		PRODCAT : mml:Integer
+			@i18n:Label (en="Deal Type", fr="Catégorie du produit", es="Tipo de Contrato")
+			@i18n:Tooltip (fr="Catégorie du produit")
+			@t24:i (align=R, inputBehaviour=I, maxLength=6, core=false, t24Name=PRODCAT, genOperation=PRODUCT.CATEGORY)
+		PRODCCY : mml:Integer
+			@i18n:Label (en="Product Currency", es="Moneda del Producto")
+			@i18n:Tooltip (es="Moneda del Producto ")
+			@t24:i (align=L, inputBehaviour=I, maxLength=1, core=false, t24Name=PRODCCY, genOperation="\"\"")
+		CUSTOMER_NO : mml:Integer
+			@i18n:Label (en="Customer No", fr="Code client", es="No. de Cliente")
+			@i18n:Tooltip (en="Identifies the Customer for the transaction.", fr="Code client", es="Identifica al Cliente de la transacción")
+			@t24:i (align=R, inputBehaviour=I, maxLength=10, core=false, t24Name=CUSTOMER.NO, genOperation=CUSTOMER)
+		SECTOR : mml:Integer
+			@i18n:Label (en=Sector, fr=Catégorie, es=Sector)
+			@i18n:Tooltip (en="Indicates the sector", fr="Catégorie de client")
+			@t24:i (align=R, inputBehaviour=I, maxLength=4, core=false, t24Name=SECTOR, genOperation="CUSTOMER.NO>CUSTOMER>SECTOR")
+		INDUSTRY : mml:Integer
+			@i18n:Label (en=Industry, fr=Activité, es=Industria)
+			@i18n:Tooltip (en="Indicates the Industry", fr="Secteur d\'activité")
+			@t24:i (align=R, inputBehaviour=I, maxLength=4, core=false, t24Name=INDUSTRY, genOperation="CUSTOMER.NO>CUSTOMER>INDUSTRY")
+		TARGET : mml:Integer
+			@i18n:Label (en=Target, fr=Cible, es="Transacción de T24")
+			@i18n:Tooltip (fr=Cible)
+			@t24:i (align=R, inputBehaviour=I, maxLength=4, core=false, t24Name=TARGET, genOperation="CUSTOMER.NO>CUSTOMER>TARGET")
+		CATEGORY : mml:Integer
+			@i18n:Label (en=Category, fr=Produit, es="Categoría")
+			@i18n:Tooltip (en="Specifies the Category", fr="Code du produit")
+			@t24:i (align=L, inputBehaviour=I, maxLength=6, core=false, t24Name=CATEGORY, genOperation=PRODUCT.CATEGORY)
+		CONV_APPLICATION : mml:Integer
+			@t24:i (align=L, inputBehaviour=I, maxLength=30, core=false, t24Name=CONV.APPLICATION, genOperation="SUBR(\"ENQ.TRANS\", \"EU.CONTRACT.CONVERSION\", @ID, \"APPLICATION\")")
+		CONVERTED_DATE : mml:Integer
+			@i18n:Label (en="Converted Date", es="Fecha Convertida")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, core=false, t24Name=CONVERTED.DATE, genOperation="SUBR(\"ENQ.TRANS\", \"EU.CONTRACT.CONVERSION\", @ID, \"ACTUAL.CONV.DATE\")")
+		BALANCE_ID : mml:Integer
+			@i18n:Label (en="Swap Balance Id", es="ID de Saldo")
+			@i18n:Tooltip (en="Swap Balance Id")
+			@t24:i (align=L, inputBehaviour=I, maxLength=15, core=false, t24Name=BALANCE.ID, genOperation="@ID : \".A\"")
+		BAL_NOTIONAL : mml:Integer
+			@i18n:Label (en="Balance Notional", es="Saldo Nocional")
+			@t24:i (align=L, inputBehaviour=I, maxLength=2, core=false, t24Name=BAL.NOTIONAL, genOperation="BALANCE.ID>SWAP.BALANCES>NOTIONAL")
+	}
+	SWAP__CONDITIONS
+	{
+		CONDITIONS : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=18.0, core=true, businessType=S, t24Name=CONDITIONS)
+	}
+	SWAP__BANK_INFO
+	{
+		BANK_INFO : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=20.0, core=true, businessType=SW, t24Name=BANK.INFO)
+	}
+	SWAP__AS_BUS_CENTRES
+	{
+		AS_BUS_CENTRES : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=4, sysNumber=40.0, core=true, businessType=A, t24Name=AS.BUS.CENTRES)
+	}
+	SWAP__AS_TYPE
+	{
+		AS_TYPE -> SW_Schedules:SWAP_SCHEDULE_TYPE
+			@t24:i (align=L, inputBehaviour=I, maxLength=6, sysNumber=41.0, core=true, businessType=A, t24Name=AS.TYPE)
+		AS_DATE_FREQ : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=42.0, core=true, businessType=FQO, t24Name=AS.DATE.FREQ)
+		AS_INT_SET_DATE : mml:date
+			@t24:i (align=R, inputBehaviour=I, maxLength=16, sysNumber=43.0, core=true, businessType=D, t24Name=AS.INT.SET.DATE)
+		AS_FINAL_SCHED : mml:date
+			@t24:i (align=R, inputBehaviour=I, maxLength=16, sysNumber=44.0, core=true, businessType=D, t24Name=AS.FINAL.SCHED)
+		AS_AMOUNT : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=45.0, core=true, businessType=AMT, t24Name=AS.AMOUNT)
+		AS_RATE : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=46.0, core=true, t24Name=AS.RATE)
+		AS_TRSRY_RATE : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=47.0, core=true, t24Name=AS.TRSRY.RATE)
+		AS_AMORT_DATE : mml:date
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=48.0, core=true, businessType=D, t24Name=AS.AMORT.DATE)
+		AS_NARR -> byValue SW_Contract:SWAP__AS_TYPE__AS_NARR *
+		AS_ADVICE_SENT : SW_Contract:SWAP__AS_TYPE__AS_ADVICE_SENT
+			@t24:i (align=L, inputBehaviour=N, maxLength=1, sysNumber=50.0, core=true, t24Name=AS.ADVICE.SENT)
+		AS_PROCESSED : mml:date
+			@t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=51.0, core=true, businessType=D, t24Name=AS.PROCESSED)
+	}
+	SWAP__AS_TYPE__AS_NARR
+	{
+		AS_NARR : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=49.0, core=true, businessType=S, t24Name=AS.NARR)
+	}
+	SWAP__LB_BUS_CENTRES
+	{
+		LB_BUS_CENTRES : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=4, sysNumber=70.0, core=true, businessType=A, t24Name=LB.BUS.CENTRES)
+	}
+	SWAP__LB_TYPE
+	{
+		LB_TYPE -> SW_Schedules:SWAP_SCHEDULE_TYPE
+			@t24:i (align=L, inputBehaviour=I, maxLength=6, sysNumber=71.0, core=true, businessType=A, t24Name=LB.TYPE)
+		LB_DATE_FREQ : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=72.0, core=true, businessType=FQO, t24Name=LB.DATE.FREQ)
+		LB_INT_SET_DATE : mml:date
+			@t24:i (align=R, inputBehaviour=I, maxLength=16, sysNumber=73.0, core=true, businessType=D, t24Name=LB.INT.SET.DATE)
+		LB_FINAL_SCHED : mml:date
+			@t24:i (align=R, inputBehaviour=I, maxLength=16, sysNumber=74.0, core=true, businessType=D, t24Name=LB.FINAL.SCHED)
+		LB_AMOUNT : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=75.0, core=true, businessType=AMT, t24Name=LB.AMOUNT)
+		LB_RATE : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=76.0, core=true, t24Name=LB.RATE)
+		LB_TRSRY_RATE : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=77.0, core=true, t24Name=LB.TRSRY.RATE)
+		LB_AMORT_DATE : mml:date
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=78.0, core=true, businessType=D, t24Name=LB.AMORT.DATE)
+		LB_NARR -> byValue SW_Contract:SWAP__LB_TYPE__LB_NARR *
+		LB_ADVICE_SENT : SW_Contract:SWAP__LB_TYPE__LB_ADVICE_SENT
+			@t24:i (align=L, inputBehaviour=N, maxLength=1, sysNumber=80.0, core=true, t24Name=LB.ADVICE.SENT)
+		LB_PROCESSED : mml:date
+			@t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=81.0, core=true, businessType=D, t24Name=LB.PROCESSED)
+	}
+	SWAP__LB_TYPE__LB_NARR
+	{
+		LB_NARR : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=79.0, core=true, businessType=S, t24Name=LB.NARR)
+	}
+	SWAP__SET_CURRENCY
+	{
+		SET_CURRENCY -> FIN_CurrencyConfig:CURRENCY
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=82.0, core=true, businessType=CCY, t24Name=SET.CURRENCY)
+		SET_PAY_RECEIPT : SW_Contract:SWAP__SET_CURRENCY__SET_PAY_RECEIPT
+			@t24:i (align=L, inputBehaviour=I, maxLength=8, sysNumber=83.0, core=true, t24Name=SET.PAY.RECEIPT)
+		SET_TYPE : SW_Contract:SWAP__SET_CURRENCY__SET_TYPE
+			@t24:i (align=L, inputBehaviour=I, maxLength=12, sysNumber=84.0, core=true, t24Name=SET.TYPE)
+		ACCOUNT_NUMBER -> ACM_AccountOpening:ACCOUNT
+			@t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=85.0, core=true, businessType=ANT, t24Name=ACCOUNT.NUMBER)
+		INTERMEDIARY -> ST_Customer:CUSTOMER
+			@t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=86.0, core=true, businessType=CUS, t24Name=INTERMEDIARY)
+		INTERM_ADD -> byValue SW_Contract:SWAP__SET_CURRENCY__INTERM_ADD *
+		ACCT_WITH_BANK -> ST_Customer:CUSTOMER
+			@t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=88.0, core=true, businessType=CUS, t24Name=ACCT.WITH.BANK)
+		ACC_WITH_ADD -> byValue SW_Contract:SWAP__SET_CURRENCY__ACC_WITH_ADD *
+		BEN_ACCOUNT : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=90.0, core=true, businessType=S, t24Name=BEN.ACCOUNT)
+		BANK_NARR -> byValue SW_Contract:SWAP__SET_CURRENCY__BANK_NARR *
+	}
+	SWAP__SET_CURRENCY__INTERM_ADD
+	{
+		INTERM_ADD : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=87.0, core=true, businessType=S, t24Name=INTERM.ADD)
+	}
+	SWAP__SET_CURRENCY__ACC_WITH_ADD
+	{
+		ACC_WITH_ADD : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=89.0, core=true, businessType=S, t24Name=ACC.WITH.ADD)
+	}
+	SWAP__SET_CURRENCY__BANK_NARR
+	{
+		BANK_NARR : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=91.0, core=true, businessType=SW, t24Name=BANK.NARR)
+	}
+	SWAP__ACTIVITY
+	{
+		ACTIVITY -> SW_Delivery:SWAP_ACTIVITY
+			@t24:i (align=R, inputBehaviour=N, maxLength=3, sysNumber=107.0, core=true, t24Name=ACTIVITY)
+		NET_AMOUNT : mml:Double
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=108.0, core=true, businessType=AMT, t24Name=NET.AMOUNT)
+		NET_PAY_VAL_DT : mml:date
+			@t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=109.0, core=true, businessType=D, t24Name=NET.PAY.VAL.DT)
+		ACT_LEG_TYPE : SW_Contract:SWAP__ACTIVITY__ACT_LEG_TYPE
+			@t24:i (align=L, inputBehaviour=N, maxLength=1, sysNumber=110.0, core=true, businessType=A, t24Name=ACT.LEG.TYPE)
+		ACT_SCHED_INDEX : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=2, sysNumber=111.0, core=true, t24Name=ACT.SCHED.INDEX)
+		MESSAGE -> byValue SW_Contract:SWAP__ACTIVITY__MESSAGE *
+	}
+	SWAP__ACTIVITY__MESSAGE
+	{
+		MESSAGE -> DE_Config:DE_MESSAGE
+			@t24:i (align=R, inputBehaviour=N, maxLength=3, sysNumber=112.0, core=true, t24Name=MESSAGE)
+		MSG_DATE : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=12, sysNumber=113.0, core=true, businessType=A, t24Name=MSG.DATE)
+		MSG_REF : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=16, sysNumber=114.0, core=true, businessType=A, t24Name=MSG.REF)
+	}
+	SWAP__CONTACT_DETAILS
+	{
+		CONTACT_DETAILS : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=24, sysNumber=118.0, core=true, businessType=SW, t24Name=CONTACT.DETAILS)
+	}
+	SWAP__AS_INTEREST_DET
+	{
+		AS_INTEREST_DET : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=119.0, core=true, businessType=S, t24Name=AS.INTEREST.DET)
+	}
+	SWAP__LB_INTEREST_DET
+	{
+		LB_INTEREST_DET : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=120.0, core=true, businessType=S, t24Name=LB.INTEREST.DET)
+	}
+	SWAP__ENTRY_IDS
+	{
+		ENTRY_IDS : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=29, sysNumber=135.0, core=true, businessType=A, t24Name=ENTRY.IDS)
+	}
+	SWAP__OVERRIDE
+	{
+		OVERRIDE : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=136.0, core=true, businessType=A, t24Name=OVERRIDE)
+	}
+	SWAP__INPUTTER
+	{
+		INPUTTER : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=139.0, core=true, businessType=A, t24Name=INPUTTER)
+	}
+	SWAP__DATE_TIME
+	{
+		DATE_TIME : mml:dateTime
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=140.0, core=true, businessType=RELTIME, t24Name=DATE.TIME)
+	}
+	SWAP_BALANCES
+		@t24:i (t24Name=SWAP.BALANCES, level=F, type=L, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		CONTRACT_NUMBER -> SW_Contract:SWAP_BALANCES PK required
+			@i18n:Label (en="Contract Number", fr="Réf. contrat", es="Ref. de Contrato")
+			@i18n:Tooltip (fr="Référence du contrat")
+			@t24:i (align=L, inputBehaviour=I, maxLength=30, sysNumber=0.0, core=true, businessType=A, t24Name=CONTRACT.NUMBER)
+		CURRENCY : mml:string
+			@i18n:Label (en=Ccy, fr=Devise, es=Moneda)
+			@i18n:Tooltip (fr="Code devise ISO")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=1.0, core=true, businessType=CCY, t24Name=CURRENCY)
+		NOTIONAL : SW_Contract:SWAP_BALANCES__NOTIONAL
+			@t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=2.0, core=true, businessType=A, t24Name=NOTIONAL)
+		PRINCIPAL -> byValue SW_Contract:SWAP_BALANCES__PRINCIPAL *
+		EFFECTIVE_DATE -> byValue SW_Contract:SWAP_BALANCES__EFFECTIVE_DATE *
+		INTEREST_AMOUNT : mml:Double
+			@i18n:Label (en="Interest Amt", fr="Montant d\'intérêt", es="Monto de Interés")
+			@i18n:Tooltip (fr="Montant d\'intérêt")
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=9.0, core=true, businessType=AMT, t24Name=INTEREST.AMOUNT)
+		MKT_INT_AMOUNT : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=10.0, core=true, businessType=AMT, t24Name=MKT.INT.AMOUNT)
+		START_INT_PERIOD : mml:date
+			@i18n:Label (en="Start Int Period", fr="Démarrer Prde d\'Intt", es="Inicio Periodo Int.")
+			@i18n:Tooltip (fr="Démarrer Prde d\'Intérêts")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=11.0, core=true, businessType=D, t24Name=START.INT.PERIOD)
+		END_INT_PERIOD : mml:date
+			@i18n:Label (en="End Int Period", fr="Fin de prde d\'Intt", es="Fin Periodo Interés")
+			@i18n:Tooltip (fr="Fin de prde d\'Intérêts")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=12.0, core=true, businessType=D, t24Name=END.INT.PERIOD)
+		TOT_INT_AMT : mml:Double
+			@i18n:Label (en="Total Intt Amt", fr="Montt total d\'Intt", es="Monto Total Interés")
+			@i18n:Tooltip (fr="Montant total d\'Intérêts")
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=13.0, core=true, businessType=AMT, t24Name=TOT.INT.AMT)
+		TOT_MKT_INT_AMT : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=14.0, core=true, businessType=AMT, t24Name=TOT.MKT.INT.AMT)
+		ACCR_FROM_DATE -> byValue SW_Contract:SWAP_BALANCES__ACCR_FROM_DATE *
+		AMORT_SCHEDULE -> byValue SW_Contract:SWAP_BALANCES__AMORT_SCHEDULE *
+		SCHEDULE_TYPE -> byValue SW_Contract:SWAP_BALANCES__SCHEDULE_TYPE *
+		CRB_VALUE_DATE : mml:date
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=43.0, core=true, businessType=D, t24Name=CRB.VALUE.DATE)
+		CRB_MATURITY_DATE : mml:date
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=44.0, core=true, businessType=D, t24Name=CRB.MATURITY.DATE)
+		CRB_INTEREST_DATE : mml:date
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=45.0, core=true, businessType=D, t24Name=CRB.INTEREST.DATE)
+		CONSOL_KEY : mml:string
+			@i18n:Label (en="Consol Key", fr="Clé de consolidation", es="Clave Consolidación")
+			@i18n:Tooltip (fr="Clé de consolidation")
+			@t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=46.0, core=true, businessType=A, t24Name=CONSOL.KEY)
+		INITIAL_XRATE : mml:string
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=47.0, core=true, businessType=R, t24Name=INITIAL.XRATE)
+		OUTS_PRIN_LCY : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=48.0, core=true, businessType=AMT, t24Name=OUTS.PRIN.LCY)
+		CCY_REVAL_PL : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=49.0, core=true, businessType=AMT, t24Name=CCY.REVAL.PL)
+		NPV : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=50.0, core=true, businessType=AMT, t24Name=NPV)
+		NPV_LCY : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=51.0, core=true, businessType=AMT, t24Name=NPV.LCY)
+		POSITION_DATE -> byValue SW_Contract:SWAP_BALANCES__POSITION_DATE *
+		CONF_SENT : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=55.0, core=true, t24Name=CONF.SENT)
+		OLD_OUTS_PRIN_LCY : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=56.0, core=true, businessType=AMT, t24Name=OLD.OUTS.PRIN.LCY)
+		NPV_BEF_ACC_ADJ : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=57.0, core=true, businessType=AMT, t24Name=NPV.BEF.ACC.ADJ)
+		NPV_BEF_ADJ_LCY : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=58.0, core=true, businessType=AMT, t24Name=NPV.BEF.ADJ.LCY)
+		NPV_INC_TDY_IP : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=59.0, core=true, businessType=AMT, t24Name=NPV.INC.TDY.IP)
+		NPV_INC_TDY_IPLCY : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=60.0, core=true, businessType=AMT, t24Name=NPV.INC.TDY.IPLCY)
+		CCY_REVAL_FCY : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=61.0, core=true, businessType=AMT, t24Name=CCY.REVAL.FCY)
+		MATURITY_DATE : mml:Integer
+			@i18n:Label (en="Maturity Date", fr="Date d\'échéance", es="Fecha de Vencimiento")
+			@i18n:Tooltip (en="Indicates the Maturity Date of the Transaction", fr="Date d\'échéance", es="Indica la Fecha de Vencimiento de la Transacción")
+			@t24:i (align=L, inputBehaviour=I, maxLength=11, core=false, t24Name=MATURITY.DATE, genOperation="CONTRACT.ID>SWAP>MATURITY.DATE")
+		CONTRACT_STATUS : mml:Integer
+			@i18n:Label (en="Contract Status", fr="Statut du contrat", es=Estado)
+			@i18n:Tooltip (fr="Statut du contrat")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, core=false, t24Name=CONTRACT.STATUS, genOperation="CONTRACT.ID>SWAP>CONTRACT.STATUS")
+		SOURCE_ID : mml:Integer
+			@i18n:Label (en="Source Id", fr="No. de transaction", es="ID de Fuente")
+			@i18n:Tooltip (fr="Numéro de transaction")
+			@t24:i (align=L, inputBehaviour=I, maxLength=30, core=false, t24Name=SOURCE.ID, genOperation="@ID")
+		CONTRACT_FILE : mml:Integer
+			@t24:i (align=L, inputBehaviour=I, maxLength=4, core=false, t24Name=CONTRACT.FILE, genOperation="\"SWAP\"")
+		SECTOR : mml:Integer
+			@i18n:Label (en=Sector, fr=Catégorie, es=Sector)
+			@i18n:Tooltip (en="Indicates the sector", fr="Catégorie de client")
+			@t24:i (align=R, inputBehaviour=I, maxLength=4, core=false, t24Name=SECTOR, genOperation="CONTRACT.ID>SWAP>SECTOR")
+		INDUSTRY : mml:Integer
+			@i18n:Label (en=Industry, fr=Activité, es=Industria)
+			@i18n:Tooltip (en="Indicates the Industry", fr="Secteur d\'activité")
+			@t24:i (align=R, inputBehaviour=I, maxLength=4, core=false, t24Name=INDUSTRY, genOperation="CONTRACT.ID>SWAP>INDUSTRY")
+		ACCOUNT_OFFICER : mml:Integer
+			@i18n:Label (en="Account Officer", fr=Gestionnaire, es="Gestor de Cuenta")
+			@i18n:Tooltip (en="Indicates Account Officer responsible", fr="Gestionnaire responsable du compte ou du client")
+			@t24:i (align=R, inputBehaviour=I, maxLength=4, core=false, t24Name=ACCOUNT.OFFICER, genOperation="CONTRACT.ID>SWAP>ACCOUNT.OFFICER")
+		TARGET : mml:Integer
+			@i18n:Label (en=Target, fr=Cible, es="Transacción de T24")
+			@i18n:Tooltip (fr=Cible)
+			@t24:i (align=R, inputBehaviour=I, maxLength=4, core=false, t24Name=TARGET, genOperation="CONTRACT.ID>SWAP>TARGET")
+		CATGEORY : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=5, core=false, t24Name=CATGEORY, genOperation="CONTRACT.ID>SWAP>PRODCAT")
+		RESIDENCE : mml:Integer
+			@i18n:Label (en=Residence, fr=Résidence, es=Residencia)
+			@i18n:Tooltip (fr="Pays de résidence")
+			@t24:i (align=L, inputBehaviour=I, maxLength=2, core=false, t24Name=RESIDENCE, genOperation="CONTRACT.ID>SWAP>RESIDENCE")
+		CONTRACT_ID : mml:Integer
+			@i18n:Label (en="Contract Id", fr="N° de contrat", es="ID de Transacción")
+			@i18n:Tooltip (fr="Numéro de contrat")
+			@t24:i (align=L, inputBehaviour=I, maxLength=30, core=false, t24Name=CONTRACT.ID, genOperation="@ID[\'.\',1,1]")
+		ASSET_OR_LIAB : mml:Integer
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, core=false, t24Name=ASSET.OR.LIAB, genOperation="@ID[\'.\',2,1]")
+		INTEREST_BASIS : mml:Integer
+			@i18n:Label (en="Interest Basis", fr="Base de calcul", es="Base de Interés")
+			@i18n:Tooltip (en="Indicates the interest day basis", fr="Base de calcul des intérêts")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, core=false, t24Name=INTEREST.BASIS, genOperation="IF ASSET.OR.LIAB = \'A\'  THEN AS.BASIS  ELSE LB.BASIS")
+		AS_BASIS : mml:Integer
+			@i18n:Label (fr="Base d\'intérêt")
+			@i18n:Tooltip (fr="Base d\'intérêt")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, core=false, t24Name=AS.BASIS, genOperation="SUBR(\"ENQ.TRANS\",\"SWAP\",CONTRACT.ID,\"AS.BASIS\")")
+		LB_BASIS : mml:Integer
+			@i18n:Label (fr="Base d\'intérêt")
+			@i18n:Tooltip (fr="Base d\'intérêt")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, core=false, t24Name=LB.BASIS, genOperation="SUBR(\"ENQ.TRANS\",\"SWAP\",CONTRACT.ID,\"LB.BASIS\")")
+		PRODCAT : mml:Integer
+			@i18n:Label (en="Deal Type", fr="Catégorie du produit", es="Tipo de Contrato")
+			@i18n:Tooltip (fr="Catégorie du produit")
+			@t24:i (align=R, inputBehaviour=I, maxLength=5, core=false, t24Name=PRODCAT, genOperation="CONTRACT.ID>SWAP>PRODCAT")
+		CUSTOMER_NO : mml:Integer
+			@i18n:Label (en="Customer No", fr="Code client", es="No. de Cliente")
+			@i18n:Tooltip (en="Identifies the Customer for the transaction.", fr="Code client", es="Identifica al Cliente de la transacción")
+			@t24:i (align=R, inputBehaviour=I, maxLength=10, core=false, t24Name=CUSTOMER.NO, genOperation="CONTRACT.ID>SWAP>CUSTOMER")
+		PRODCCY : mml:Integer
+			@i18n:Label (en="Product Currency", es="Moneda del Producto")
+			@i18n:Tooltip (es="Moneda del Producto ")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, core=false, t24Name=PRODCCY, genOperation=CURRENCY)
+	}
+	SWAP_BALANCES__PRINCIPAL
+	{
+		PRINCIPAL : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=3.0, core=true, businessType=AMT, t24Name=PRINCIPAL)
+		PRIN_DATE : mml:date
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=4.0, core=true, businessType=D, t24Name=PRIN.DATE)
+	}
+	SWAP_BALANCES__EFFECTIVE_DATE
+	{
+		EFFECTIVE_DATE : mml:date
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=5.0, core=true, businessType=D, t24Name=EFFECTIVE.DATE)
+		INTEREST_KEY : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=6, sysNumber=6.0, core=true, t24Name=INTEREST.KEY)
+		INTEREST_RATE : mml:string
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=7.0, core=true, businessType=R, t24Name=INTEREST.RATE)
+		MKT_INT_RATE : mml:string
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=8.0, core=true, businessType=R, t24Name=MKT.INT.RATE)
+	}
+	SWAP_BALANCES__ACCR_FROM_DATE
+	{
+		ACCR_FROM_DATE : mml:date
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=15.0, core=true, businessType=D, t24Name=ACCR.FROM.DATE)
+		ACCR_TO_DATE : mml:date
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=16.0, core=true, businessType=D, t24Name=ACCR.TO.DATE)
+		ACCR_DAYS : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=4, sysNumber=17.0, core=true, t24Name=ACCR.DAYS)
+		ACCR_PRIN : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=18.0, core=true, businessType=AMT, t24Name=ACCR.PRIN)
+		ACCR_RATE : mml:string
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=19.0, core=true, businessType=R, t24Name=ACCR.RATE)
+		ACCR_AMT : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=20.0, core=true, businessType=AMT, t24Name=ACCR.AMT)
+		ACCR_ACT_AMT : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=21.0, core=true, t24Name=ACCR.ACT.AMT)
+		MKT_ACCR_RATE : mml:string
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=22.0, core=true, businessType=R, t24Name=MKT.ACCR.RATE)
+		MKT_ACCR_AMT : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=23.0, core=true, businessType=AMT, t24Name=MKT.ACCR.AMT)
+		MKT_ACT_AMT : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=24.0, core=true, t24Name=MKT.ACT.AMT)
+	}
+	SWAP_BALANCES__AMORT_SCHEDULE
+	{
+		AMORT_SCHEDULE : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=12, sysNumber=25.0, core=true, businessType=A, t24Name=AMORT.SCHEDULE)
+		AMORT_AMOUNT : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=26.0, core=true, businessType=AMT, t24Name=AMORT.AMOUNT)
+		AMORT_START : mml:date
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=27.0, core=true, businessType=D, t24Name=AMORT.START)
+		AMORT_END : mml:date
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=28.0, core=true, businessType=D, t24Name=AMORT.END)
+		AMORT_TO_DATE : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=29.0, core=true, businessType=AMT, t24Name=AMORT.TO.DATE)
+	}
+	SWAP_BALANCES__SCHEDULE_TYPE
+	{
+		SCHEDULE_TYPE -> SW_Schedules:SWAP_SCHEDULE_TYPE
+			@t24:i (align=L, inputBehaviour=I, maxLength=12, sysNumber=30.0, core=true, businessType=A, t24Name=SCHEDULE.TYPE)
+		CHARGE_CODE : mml:string
+			@t24:i (align=R, inputBehaviour=I, maxLength=12, sysNumber=31.0, core=true, businessType=CHG, t24Name=CHARGE.CODE)
+		SCHEDULE_DATE : mml:date
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=32.0, core=true, businessType=D, t24Name=SCHEDULE.DATE)
+		PROCESS_DATE : mml:date
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=33.0, core=true, businessType=D, t24Name=PROCESS.DATE)
+		PERIOD_START : mml:date
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=34.0, core=true, businessType=D, t24Name=PERIOD.START)
+		PERIOD_END : mml:date
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=35.0, core=true, businessType=D, t24Name=PERIOD.END)
+		SCHED_EFF_DATE : mml:date
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=36.0, core=true, businessType=D, t24Name=SCHED.EFF.DATE)
+		CCY_AMOUNT : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=37.0, core=true, businessType=AMT, t24Name=CCY.AMOUNT)
+		MKT_CCY_AMT : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=38.0, core=true, businessType=AMT, t24Name=MKT.CCY.AMT)
+		RESET_RATE : mml:string
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=39.0, core=true, businessType=R, t24Name=RESET.RATE)
+		LCL_AMOUNT : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=40.0, core=true, businessType=AMT, t24Name=LCL.AMOUNT)
+		AMOUNT_DIFF : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=41.0, core=true, businessType=AMT, t24Name=AMOUNT.DIFF)
+		VALUE_DATE : mml:date
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=42.0, core=true, businessType=D, t24Name=VALUE.DATE)
+	}
+	SWAP_BALANCES__POSITION_DATE
+	{
+		POSITION_DATE : mml:date
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=52.0, core=true, businessType=D, t24Name=POSITION.DATE)
+		POSITION_FCY : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=53.0, core=true, businessType=AMT, t24Name=POSITION.FCY)
+		POSITION_LCY : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=54.0, core=true, businessType=AMT, t24Name=POSITION.LCY)
+	}
+	SWAP_BALANCES_HIST
+		@t24:i (t24Name=SWAP.BALANCES.HIST, level=F, type=L, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		CONTRACT_NUMBER -> SW_Contract:SWAP_BALANCES_HIST PK required
+			@i18n:Label (en="Contract Number", fr="Réf. contrat", es="Ref. de Contrato")
+			@i18n:Tooltip (fr="Référence du contrat")
+			@t24:i (align=L, inputBehaviour=I, maxLength=30, sysNumber=0.0, core=true, businessType=A, t24Name=CONTRACT.NUMBER)
+		CURRENCY : mml:string
+			@i18n:Label (en=Ccy, fr=Devise, es=Moneda)
+			@i18n:Tooltip (fr="Code devise ISO")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=1.0, core=true, businessType=CCY, t24Name=CURRENCY)
+		NOTIONAL : SW_Contract:SWAP_BALANCES_HIST__NOTIONAL
+			@t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=2.0, core=true, businessType=A, t24Name=NOTIONAL)
+		PRINCIPAL -> byValue SW_Contract:SWAP_BALANCES_HIST__PRINCIPAL *
+		EFFECTIVE_DATE -> byValue SW_Contract:SWAP_BALANCES_HIST__EFFECTIVE_DATE *
+		INTEREST_AMOUNT : mml:Double
+			@i18n:Label (en="Interest Amt", fr="Montant d\'intérêt", es="Monto de Interés")
+			@i18n:Tooltip (fr="Montant d\'intérêt")
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=9.0, core=true, businessType=AMT, t24Name=INTEREST.AMOUNT)
+		MKT_INT_AMOUNT : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=10.0, core=true, businessType=AMT, t24Name=MKT.INT.AMOUNT)
+		START_INT_PERIOD : mml:date
+			@i18n:Label (en="Start Int Period", fr="Démarrer Prde d\'Intt", es="Inicio Periodo Int.")
+			@i18n:Tooltip (fr="Démarrer Prde d\'Intérêts")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=11.0, core=true, businessType=D, t24Name=START.INT.PERIOD)
+		END_INT_PERIOD : mml:date
+			@i18n:Label (en="End Int Period", fr="Fin de prde d\'Intt", es="Fin Periodo Interés")
+			@i18n:Tooltip (fr="Fin de prde d\'Intérêts")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=12.0, core=true, businessType=D, t24Name=END.INT.PERIOD)
+		TOT_INT_AMT : mml:Double
+			@i18n:Label (en="Total Intt Amt", fr="Montt total d\'Intt", es="Monto Total Interés")
+			@i18n:Tooltip (fr="Montant total d\'Intérêts")
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=13.0, core=true, businessType=AMT, t24Name=TOT.INT.AMT)
+		TOT_MKT_INT_AMT : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=14.0, core=true, businessType=AMT, t24Name=TOT.MKT.INT.AMT)
+		ACCR_FROM_DATE -> byValue SW_Contract:SWAP_BALANCES_HIST__ACCR_FROM_DATE *
+		AMORT_SCHEDULE -> byValue SW_Contract:SWAP_BALANCES_HIST__AMORT_SCHEDULE *
+		SCHEDULE_TYPE -> byValue SW_Contract:SWAP_BALANCES_HIST__SCHEDULE_TYPE *
+		CRB_VALUE_DATE : mml:date
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=43.0, core=true, businessType=D, t24Name=CRB.VALUE.DATE)
+		CRB_MATURITY_DATE : mml:date
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=44.0, core=true, businessType=D, t24Name=CRB.MATURITY.DATE)
+		CRB_INTEREST_DATE : mml:date
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=45.0, core=true, businessType=D, t24Name=CRB.INTEREST.DATE)
+		CONSOL_KEY : mml:string
+			@i18n:Label (en="Consol Key", fr="Clé de consolidation", es="Clave Consolidación")
+			@i18n:Tooltip (fr="Clé de consolidation")
+			@t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=46.0, core=true, businessType=A, t24Name=CONSOL.KEY)
+		INITIAL_XRATE : mml:string
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=47.0, core=true, businessType=R, t24Name=INITIAL.XRATE)
+		OUTS_PRIN_LCY : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=48.0, core=true, businessType=AMT, t24Name=OUTS.PRIN.LCY)
+		CCY_REVAL_PL : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=49.0, core=true, businessType=AMT, t24Name=CCY.REVAL.PL)
+		NPV : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=50.0, core=true, businessType=AMT, t24Name=NPV)
+		NPV_LCY : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=51.0, core=true, businessType=AMT, t24Name=NPV.LCY)
+		POSITION_DATE -> byValue SW_Contract:SWAP_BALANCES_HIST__POSITION_DATE *
+		CONF_SENT : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=55.0, core=true, t24Name=CONF.SENT)
+		OLD_OUTS_PRIN_LCY : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=56.0, core=true, businessType=AMT, t24Name=OLD.OUTS.PRIN.LCY)
+		NPV_BEF_ACC_ADJ : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=57.0, core=true, businessType=AMT, t24Name=NPV.BEF.ACC.ADJ)
+		NPV_BEF_ADJ_LCY : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=58.0, core=true, businessType=AMT, t24Name=NPV.BEF.ADJ.LCY)
+		NPV_INC_TDY_IP : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=59.0, core=true, businessType=AMT, t24Name=NPV.INC.TDY.IP)
+		NPV_INC_TDY_IPLCY : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=60.0, core=true, businessType=AMT, t24Name=NPV.INC.TDY.IPLCY)
+		CCY_REVAL_FCY : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=61.0, core=true, businessType=AMT, t24Name=CCY.REVAL.FCY)
+		CONTRACT_ID : mml:Integer
+			@i18n:Label (en="Contract Id", fr="N° de contrat", es="ID de Transacción")
+			@i18n:Tooltip (fr="Numéro de contrat")
+			@t24:i (align=R, inputBehaviour=I, maxLength=30, core=false, t24Name=CONTRACT.ID, genOperation="@ID[\'.\',1,1]")
+		CONTRACT_FILE : mml:Integer
+			@t24:i (align=L, inputBehaviour=I, maxLength=4, core=false, t24Name=CONTRACT.FILE, genOperation="\"SWAP\"")
+		SECTOR : mml:Integer
+			@i18n:Label (en=Sector, fr=Catégorie, es=Sector)
+			@i18n:Tooltip (en="Indicates the sector", fr="Catégorie de client")
+			@t24:i (align=R, inputBehaviour=I, maxLength=4, core=false, t24Name=SECTOR, genOperation="SUBR(\"ENQ.TRANS\",\"SWAP\",CONTRACT.ID,\"SECTOR\")")
+		INDUSTRY : mml:Integer
+			@i18n:Label (en=Industry, fr=Activité, es=Industria)
+			@i18n:Tooltip (en="Indicates the Industry", fr="Secteur d\'activité")
+			@t24:i (align=R, inputBehaviour=I, maxLength=4, core=false, t24Name=INDUSTRY, genOperation="SUBR(\"ENQ.TRANS\",\"SWAP\",CONTRACT.ID,\"INDUSTRY\")")
+		ACCOUNT_OFFICER : mml:Integer
+			@i18n:Label (en="Account Officer", fr=Gestionnaire, es="Gestor de Cuenta")
+			@i18n:Tooltip (en="Indicates Account Officer responsible", fr="Gestionnaire responsable du compte ou du client")
+			@t24:i (align=R, inputBehaviour=I, maxLength=4, core=false, t24Name=ACCOUNT.OFFICER, genOperation="SUBR(\"ENQ.TRANS\",\"SWAP\",CONTRACT.ID, \"ACCOUNT.OFFICER\")")
+		TARGET : mml:Integer
+			@i18n:Label (en=Target, fr=Cible, es="Transacción de T24")
+			@i18n:Tooltip (fr=Cible)
+			@t24:i (align=R, inputBehaviour=I, maxLength=4, core=false, t24Name=TARGET, genOperation="SUBR(\"ENQ.TRANS\",\"SWAP\",CONTRACT.ID,\"TARGET\")")
+		PRODCAT : mml:Integer
+			@i18n:Label (en="Deal Type", fr="Catégorie du produit", es="Tipo de Contrato")
+			@i18n:Tooltip (fr="Catégorie du produit")
+			@t24:i (align=R, inputBehaviour=I, maxLength=5, core=false, t24Name=PRODCAT, genOperation="SUBR(\"ENQ.TRANS\",\"SWAP\",CONTRACT.ID, \"PRODUCT.CATEGORY\")")
+		RESIDENCE : mml:Integer
+			@i18n:Label (en=Residence, fr=Résidence, es=Residencia)
+			@i18n:Tooltip (fr="Pays de résidence")
+			@t24:i (align=L, inputBehaviour=I, maxLength=2, core=false, t24Name=RESIDENCE, genOperation="SUBR(\"ENQ.TRANS\",\"SWAP\",CONTRACT.ID,\"RESIDENCE\")")
+		ASSET_OR_LIAB : mml:Integer
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, core=false, t24Name=ASSET.OR.LIAB, genOperation="@ID[\'.\',2,1]")
+		INTEREST_BASIS : mml:Integer
+			@i18n:Label (en="Interest Basis", fr="Base de calcul", es="Base de Interés")
+			@i18n:Tooltip (en="Indicates the interest day basis", fr="Base de calcul des intérêts")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, core=false, t24Name=INTEREST.BASIS, genOperation="IF ASSET.OR.LIAB = \'A\'  THEN AS.BASIS  ELSE LB.BASIS")
+		AS_BASIS : mml:Integer
+			@i18n:Label (fr="Base d\'intérêt")
+			@i18n:Tooltip (fr="Base d\'intérêt")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, core=false, t24Name=AS.BASIS, genOperation="SUBR(\"ENQ.TRANS\",\"SWAP\",CONTRACT.ID,\"AS.BASIS\")")
+		LB_BASIS : mml:Integer
+			@i18n:Label (fr="Base d\'intérêt")
+			@i18n:Tooltip (fr="Base d\'intérêt")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, core=false, t24Name=LB.BASIS, genOperation="SUBR(\"ENQ.TRANS\",\"SWAP\",CONTRACT.ID,\"LB.BASIS\")")
+		CUSTOMER_NO : mml:Integer
+			@i18n:Label (en="Customer No", fr="Code client", es="No. de Cliente")
+			@i18n:Tooltip (en="Identifies the Customer for the transaction.", fr="Code client", es="Identifica al Cliente de la transacción")
+			@t24:i (align=R, inputBehaviour=I, maxLength=10, core=false, t24Name=CUSTOMER.NO, genOperation="SUBR(\"ENQ.TRANS\",\"SWAP\",CONTRACT.ID,\"CUSTOMER\")")
+		PRODCCY : mml:Integer
+			@i18n:Label (en="Product Currency", es="Moneda del Producto")
+			@i18n:Tooltip (es="Moneda del Producto ")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, core=false, t24Name=PRODCCY, genOperation=CURRENCY)
+	}
+	SWAP_BALANCES_HIST__PRINCIPAL
+	{
+		PRINCIPAL : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=3.0, core=true, businessType=AMT, t24Name=PRINCIPAL)
+		PRIN_DATE : mml:date
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=4.0, core=true, businessType=D, t24Name=PRIN.DATE)
+	}
+	SWAP_BALANCES_HIST__EFFECTIVE_DATE
+	{
+		EFFECTIVE_DATE : mml:date
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=5.0, core=true, businessType=D, t24Name=EFFECTIVE.DATE)
+		INTEREST_KEY : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=6, sysNumber=6.0, core=true, t24Name=INTEREST.KEY)
+		INTEREST_RATE : mml:string
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=7.0, core=true, businessType=R, t24Name=INTEREST.RATE)
+		MKT_INT_RATE : mml:string
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=8.0, core=true, businessType=R, t24Name=MKT.INT.RATE)
+	}
+	SWAP_BALANCES_HIST__ACCR_FROM_DATE
+	{
+		ACCR_FROM_DATE : mml:date
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=15.0, core=true, businessType=D, t24Name=ACCR.FROM.DATE)
+		ACCR_TO_DATE : mml:date
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=16.0, core=true, businessType=D, t24Name=ACCR.TO.DATE)
+		ACCR_DAYS : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=4, sysNumber=17.0, core=true, t24Name=ACCR.DAYS)
+		ACCR_PRIN : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=18.0, core=true, businessType=AMT, t24Name=ACCR.PRIN)
+		ACCR_RATE : mml:string
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=19.0, core=true, businessType=R, t24Name=ACCR.RATE)
+		ACCR_AMT : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=20.0, core=true, businessType=AMT, t24Name=ACCR.AMT)
+		ACCR_ACT_AMT : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=21.0, core=true, t24Name=ACCR.ACT.AMT)
+		MKT_ACCR_RATE : mml:string
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=22.0, core=true, businessType=R, t24Name=MKT.ACCR.RATE)
+		MKT_ACCR_AMT : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=23.0, core=true, businessType=AMT, t24Name=MKT.ACCR.AMT)
+		MKT_ACT_AMT : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=24.0, core=true, t24Name=MKT.ACT.AMT)
+	}
+	SWAP_BALANCES_HIST__AMORT_SCHEDULE
+	{
+		AMORT_SCHEDULE : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=12, sysNumber=25.0, core=true, businessType=A, t24Name=AMORT.SCHEDULE)
+		AMORT_AMOUNT : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=26.0, core=true, businessType=AMT, t24Name=AMORT.AMOUNT)
+		AMORT_START : mml:date
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=27.0, core=true, businessType=D, t24Name=AMORT.START)
+		AMORT_END : mml:date
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=28.0, core=true, businessType=D, t24Name=AMORT.END)
+		AMORT_TO_DATE : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=29.0, core=true, businessType=AMT, t24Name=AMORT.TO.DATE)
+	}
+	SWAP_BALANCES_HIST__SCHEDULE_TYPE
+	{
+		SCHEDULE_TYPE -> SW_Schedules:SWAP_SCHEDULE_TYPE
+			@t24:i (align=L, inputBehaviour=I, maxLength=12, sysNumber=30.0, core=true, businessType=A, t24Name=SCHEDULE.TYPE)
+		CHARGE_CODE : mml:string
+			@t24:i (align=R, inputBehaviour=I, maxLength=12, sysNumber=31.0, core=true, businessType=CHG, t24Name=CHARGE.CODE)
+		SCHEDULE_DATE : mml:date
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=32.0, core=true, businessType=D, t24Name=SCHEDULE.DATE)
+		PROCESS_DATE : mml:date
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=33.0, core=true, businessType=D, t24Name=PROCESS.DATE)
+		PERIOD_START : mml:date
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=34.0, core=true, businessType=D, t24Name=PERIOD.START)
+		PERIOD_END : mml:date
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=35.0, core=true, businessType=D, t24Name=PERIOD.END)
+		SCHED_EFF_DATE : mml:date
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=36.0, core=true, businessType=D, t24Name=SCHED.EFF.DATE)
+		CCY_AMOUNT : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=37.0, core=true, businessType=AMT, t24Name=CCY.AMOUNT)
+		MKT_CCY_AMT : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=38.0, core=true, businessType=AMT, t24Name=MKT.CCY.AMT)
+		RESET_RATE : mml:string
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=39.0, core=true, businessType=R, t24Name=RESET.RATE)
+		LCL_AMOUNT : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=40.0, core=true, businessType=AMT, t24Name=LCL.AMOUNT)
+		AMOUNT_DIFF : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=41.0, core=true, businessType=AMT, t24Name=AMOUNT.DIFF)
+		VALUE_DATE : mml:date
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=42.0, core=true, businessType=D, t24Name=VALUE.DATE)
+	}
+	SWAP_BALANCES_HIST__POSITION_DATE
+	{
+		POSITION_DATE : mml:date
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=52.0, core=true, businessType=D, t24Name=POSITION.DATE)
+		POSITION_FCY : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=53.0, core=true, businessType=AMT, t24Name=POSITION.FCY)
+		POSITION_LCY : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=54.0, core=true, businessType=AMT, t24Name=POSITION.LCY)
+	}
+	SWAP_BALANCES_SAVE
+		@t24:i (t24Name=SWAP.BALANCES.SAVE, level=F, type=L, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		CONTRACT_NUMBER -> SW_Contract:SWAP_BALANCES_SAVE PK required
+			@i18n:Label (en="Contract Number", fr="Réf. contrat", es="Ref. de Contrato")
+			@i18n:Tooltip (fr="Référence du contrat")
+			@t24:i (align=L, inputBehaviour=I, maxLength=30, sysNumber=0.0, core=true, businessType=A, t24Name=CONTRACT.NUMBER)
+		CURRENCY : mml:string
+			@i18n:Label (en=Ccy, fr=Devise, es=Moneda)
+			@i18n:Tooltip (fr="Code devise ISO")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=1.0, core=true, businessType=CCY, t24Name=CURRENCY)
+		NOTIONAL : SW_Contract:SWAP_BALANCES_SAVE__NOTIONAL
+			@t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=2.0, core=true, businessType=A, t24Name=NOTIONAL)
+		PRINCIPAL -> byValue SW_Contract:SWAP_BALANCES_SAVE__PRINCIPAL *
+		EFFECTIVE_DATE -> byValue SW_Contract:SWAP_BALANCES_SAVE__EFFECTIVE_DATE *
+		INTEREST_AMOUNT : mml:Double
+			@i18n:Label (en="Interest Amt", fr="Montant d\'intérêt", es="Monto de Interés")
+			@i18n:Tooltip (fr="Montant d\'intérêt")
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=9.0, core=true, businessType=AMT, t24Name=INTEREST.AMOUNT)
+		MKT_INT_AMOUNT : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=10.0, core=true, businessType=AMT, t24Name=MKT.INT.AMOUNT)
+		START_INT_PERIOD : mml:date
+			@i18n:Label (en="Start Int Period", fr="Démarrer Prde d\'Intt", es="Inicio Periodo Int.")
+			@i18n:Tooltip (fr="Démarrer Prde d\'Intérêts")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=11.0, core=true, businessType=D, t24Name=START.INT.PERIOD)
+		END_INT_PERIOD : mml:date
+			@i18n:Label (en="End Int Period", fr="Fin de prde d\'Intt", es="Fin Periodo Interés")
+			@i18n:Tooltip (fr="Fin de prde d\'Intérêts")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=12.0, core=true, businessType=D, t24Name=END.INT.PERIOD)
+		TOT_INT_AMT : mml:Double
+			@i18n:Label (en="Total Intt Amt", fr="Montt total d\'Intt", es="Monto Total Interés")
+			@i18n:Tooltip (fr="Montant total d\'Intérêts")
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=13.0, core=true, businessType=AMT, t24Name=TOT.INT.AMT)
+		TOT_MKT_INT_AMT : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=14.0, core=true, businessType=AMT, t24Name=TOT.MKT.INT.AMT)
+		ACCR_FROM_DATE -> byValue SW_Contract:SWAP_BALANCES_SAVE__ACCR_FROM_DATE *
+		AMORT_SCHEDULE -> byValue SW_Contract:SWAP_BALANCES_SAVE__AMORT_SCHEDULE *
+		SCHEDULE_TYPE -> byValue SW_Contract:SWAP_BALANCES_SAVE__SCHEDULE_TYPE *
+		CRB_VALUE_DATE : mml:date
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=43.0, core=true, businessType=D, t24Name=CRB.VALUE.DATE)
+		CRB_MATURITY_DATE : mml:date
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=44.0, core=true, businessType=D, t24Name=CRB.MATURITY.DATE)
+		CRB_INTEREST_DATE : mml:date
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=45.0, core=true, businessType=D, t24Name=CRB.INTEREST.DATE)
+		CONSOL_KEY : mml:string
+			@i18n:Label (en="Consol Key", fr="Clé de consolidation", es="Clave Consolidación")
+			@i18n:Tooltip (fr="Clé de consolidation")
+			@t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=46.0, core=true, businessType=A, t24Name=CONSOL.KEY)
+		INITIAL_XRATE : mml:string
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=47.0, core=true, businessType=R, t24Name=INITIAL.XRATE)
+		OUTS_PRIN_LCY : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=48.0, core=true, businessType=AMT, t24Name=OUTS.PRIN.LCY)
+		CCY_REVAL_PL : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=49.0, core=true, businessType=AMT, t24Name=CCY.REVAL.PL)
+		NPV : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=50.0, core=true, businessType=AMT, t24Name=NPV)
+		NPV_LCY : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=51.0, core=true, businessType=AMT, t24Name=NPV.LCY)
+		POSITION_DATE -> byValue SW_Contract:SWAP_BALANCES_SAVE__POSITION_DATE *
+		CONF_SENT : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=55.0, core=true, t24Name=CONF.SENT)
+		OLD_OUTS_PRIN_LCY : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=56.0, core=true, businessType=AMT, t24Name=OLD.OUTS.PRIN.LCY)
+		NPV_BEF_ACC_ADJ : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=57.0, core=true, businessType=AMT, t24Name=NPV.BEF.ACC.ADJ)
+		NPV_BEF_ADJ_LCY : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=58.0, core=true, businessType=AMT, t24Name=NPV.BEF.ADJ.LCY)
+		NPV_INC_TDY_IP : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=59.0, core=true, businessType=AMT, t24Name=NPV.INC.TDY.IP)
+		NPV_INC_TDY_IPLCY : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=60.0, core=true, businessType=AMT, t24Name=NPV.INC.TDY.IPLCY)
+		CCY_REVAL_FCY : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=61.0, core=true, businessType=AMT, t24Name=CCY.REVAL.FCY)
+	}
+	SWAP_BALANCES_SAVE__PRINCIPAL
+	{
+		PRINCIPAL : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=3.0, core=true, businessType=AMT, t24Name=PRINCIPAL)
+		PRIN_DATE : mml:date
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=4.0, core=true, businessType=D, t24Name=PRIN.DATE)
+	}
+	SWAP_BALANCES_SAVE__EFFECTIVE_DATE
+	{
+		EFFECTIVE_DATE : mml:date
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=5.0, core=true, businessType=D, t24Name=EFFECTIVE.DATE)
+		INTEREST_KEY : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=6, sysNumber=6.0, core=true, t24Name=INTEREST.KEY)
+		INTEREST_RATE : mml:string
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=7.0, core=true, businessType=R, t24Name=INTEREST.RATE)
+		MKT_INT_RATE : mml:string
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=8.0, core=true, businessType=R, t24Name=MKT.INT.RATE)
+	}
+	SWAP_BALANCES_SAVE__ACCR_FROM_DATE
+	{
+		ACCR_FROM_DATE : mml:date
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=15.0, core=true, businessType=D, t24Name=ACCR.FROM.DATE)
+		ACCR_TO_DATE : mml:date
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=16.0, core=true, businessType=D, t24Name=ACCR.TO.DATE)
+		ACCR_DAYS : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=4, sysNumber=17.0, core=true, t24Name=ACCR.DAYS)
+		ACCR_PRIN : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=18.0, core=true, businessType=AMT, t24Name=ACCR.PRIN)
+		ACCR_RATE : mml:string
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=19.0, core=true, businessType=R, t24Name=ACCR.RATE)
+		ACCR_AMT : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=20.0, core=true, businessType=AMT, t24Name=ACCR.AMT)
+		ACCR_ACT_AMT : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=21.0, core=true, t24Name=ACCR.ACT.AMT)
+		MKT_ACCR_RATE : mml:string
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=22.0, core=true, businessType=R, t24Name=MKT.ACCR.RATE)
+		MKT_ACCR_AMT : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=23.0, core=true, businessType=AMT, t24Name=MKT.ACCR.AMT)
+		MKT_ACT_AMT : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=24.0, core=true, t24Name=MKT.ACT.AMT)
+	}
+	SWAP_BALANCES_SAVE__AMORT_SCHEDULE
+	{
+		AMORT_SCHEDULE : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=12, sysNumber=25.0, core=true, businessType=A, t24Name=AMORT.SCHEDULE)
+		AMORT_AMOUNT : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=26.0, core=true, businessType=AMT, t24Name=AMORT.AMOUNT)
+		AMORT_START : mml:date
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=27.0, core=true, businessType=D, t24Name=AMORT.START)
+		AMORT_END : mml:date
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=28.0, core=true, businessType=D, t24Name=AMORT.END)
+		AMORT_TO_DATE : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=29.0, core=true, businessType=AMT, t24Name=AMORT.TO.DATE)
+	}
+	SWAP_BALANCES_SAVE__SCHEDULE_TYPE
+	{
+		SCHEDULE_TYPE -> SW_Schedules:SWAP_SCHEDULE_TYPE
+			@t24:i (align=L, inputBehaviour=I, maxLength=12, sysNumber=30.0, core=true, businessType=A, t24Name=SCHEDULE.TYPE)
+		CHARGE_CODE : mml:string
+			@t24:i (align=R, inputBehaviour=I, maxLength=12, sysNumber=31.0, core=true, businessType=CHG, t24Name=CHARGE.CODE)
+		SCHEDULE_DATE : mml:date
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=32.0, core=true, businessType=D, t24Name=SCHEDULE.DATE)
+		PROCESS_DATE : mml:date
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=33.0, core=true, businessType=D, t24Name=PROCESS.DATE)
+		PERIOD_START : mml:date
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=34.0, core=true, businessType=D, t24Name=PERIOD.START)
+		PERIOD_END : mml:date
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=35.0, core=true, businessType=D, t24Name=PERIOD.END)
+		SCHED_EFF_DATE : mml:date
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=36.0, core=true, businessType=D, t24Name=SCHED.EFF.DATE)
+		CCY_AMOUNT : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=37.0, core=true, businessType=AMT, t24Name=CCY.AMOUNT)
+		MKT_CCY_AMT : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=38.0, core=true, businessType=AMT, t24Name=MKT.CCY.AMT)
+		RESET_RATE : mml:string
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=39.0, core=true, businessType=R, t24Name=RESET.RATE)
+		LCL_AMOUNT : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=40.0, core=true, businessType=AMT, t24Name=LCL.AMOUNT)
+		AMOUNT_DIFF : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=41.0, core=true, businessType=AMT, t24Name=AMOUNT.DIFF)
+		VALUE_DATE : mml:date
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=42.0, core=true, businessType=D, t24Name=VALUE.DATE)
+	}
+	SWAP_BALANCES_SAVE__POSITION_DATE
+	{
+		POSITION_DATE : mml:date
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=52.0, core=true, businessType=D, t24Name=POSITION.DATE)
+		POSITION_FCY : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=53.0, core=true, businessType=AMT, t24Name=POSITION.FCY)
+		POSITION_LCY : mml:Double
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=54.0, core=true, businessType=AMT, t24Name=POSITION.LCY)
+	}
+	SWAP_CUSTOMER_CONCAT
+		@t24:i (t24Name=SWAP.CUSTOMER.CONCAT, level=F, type=T, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		CUSTOMER -> SW_Contract:SWAP_CUSTOMER_CONCAT PK required
+			@i18n:Label (en="Nom client", fr=Client, es=Cliente)
+			@i18n:Tooltip (en="Nom du client", fr="Code du client", es="Pasivo de Cliente")
+			@t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=0.0, core=true, businessType=CUS, t24Name=CUSTOMER)
+		CONTRACT_NUMBER -> SW_Contract:SWAP
+			@i18n:Label (en="Contract Number", fr="Réf. contrat", es="Ref. de Contrato")
+			@i18n:Tooltip (fr="Référence du contrat")
+			@t24:i (align=L, inputBehaviour=I, maxLength=12, sysNumber=1.0, core=true, businessType=A, t24Name=CONTRACT.NUMBER)
+	}
+}
+Enumerations {
+	SWAP__REVALUATION_TYPE : mml:string
+		ZERO_CPN_RATE=ZERO.CPN.RATE
+		WITH_RX=WITH.RX
+	SWAP__TRADE_TYPE : mml:string
+		TRADE=TRADE
+		HEDGE=HEDGE
+	SWAP__NET_PAYMENTS : mml:string
+		Y=Y
+		NO=NO
+	SWAP__TREASURY_CUSTOMER : mml:string
+		NO=NO
+	SWAP__AS_FIXED_INTEREST : mml:string
+		Y=Y
+		NO=NO
+	SWAP__AS_DAY_CONVENTION : mml:string
+		FOLLOWING=FOLLOWING
+		MODIFIED=MODIFIED
+		PRECEDING=PRECEDING
+	SWAP__AS_DATE_ADJUSTMENT : mml:string
+		VALUE=VALUE
+		PERIOD=PERIOD
+	SWAP__AS_TYPE__AS_ADVICE_SENT : mml:string
+		Y=Y
+	SWAP__LB_FIXED_INTEREST : mml:string
+		Y=Y
+		NO=NO
+	SWAP__LB_DAY_CONVENTION : mml:string
+		FOLLOWING=FOLLOWING
+		MODIFIED=MODIFIED
+		PRECEDING=PRECEDING
+	SWAP__LB_DATE_ADJUSTMENT : mml:string
+		VALUE=VALUE
+		PERIOD=PERIOD
+	SWAP__LB_TYPE__LB_ADVICE_SENT : mml:string
+		Y=Y
+	SWAP__SET_CURRENCY__SET_PAY_RECEIPT : mml:string
+		PAYMENT=PAYMENT
+		RECEIPT=RECEIPT
+	SWAP__SET_CURRENCY__SET_TYPE : mml:string
+		PRINCIPAL=PRINCIPAL
+		INTEREST=INTEREST
+	SWAP__BROKERAGE_BASE : mml:string
+		ASSET=ASSET
+		LIABILITY=LIABILITY
+	SWAP__SEND_PAYMENT : mml:string
+		Y=Y
+		NO=NO
+	SWAP__SEND_CONFIRMATION : mml:string
+		Y=Y
+		NO=NO
+	SWAP__CONFIRM_BY_CUST : mml:string
+		ONESIDED=ONESIDED
+	SWAP__CONFIRM_BY_BROKER : mml:string
+		ONESIDED=ONESIDED
+	SWAP__CONTRACT_STATUS : mml:string
+		CUR=CUR
+		MAT=MAT
+	SWAP__ASSET_STATUS : mml:string
+		CUR=CUR
+		MAT=MAT
+	SWAP__LIABILITY_STATUS : mml:string
+		CUR=CUR
+		MAT=MAT
+	SWAP__ACTIVITY__ACT_LEG_TYPE : mml:string
+		A=A
+		L=L
+	SWAP__SEND_ADVICE : mml:string
+		Y=Y
+		NO=NO
+	SWAP__LIQUIDATION_MODE : mml:string
+		AUTOMATIC=AUTOMATIC
+		MANUAL=MANUAL
+		SEMI__AUTOMATIC=SEMI-AUTOMATIC
+	SWAP__SOD_MAT : mml:string
+		YES=YES
+		NO=NO
+	SWAP__FLEX_PRIN_PAYMENT : mml:string
+		YES=YES
+		NO=NO
+	SWAP__NEGATIVE_RATES : mml:string
+		YES=YES
+		NO=NO
+	SWAP__MAT_PAYMENT_DATE : mml:string
+		YES=YES
+		NO=NO
+	SWAP_BALANCES__NOTIONAL : mml:string
+		Y=Y
+		NO=NO
+	SWAP_BALANCES_HIST__NOTIONAL : mml:string
+		Y=Y
+		NO=NO
+	SWAP_BALANCES_SAVE__NOTIONAL : mml:string
+		Y=Y
+		NO=NO
+}

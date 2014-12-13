@@ -1,0 +1,223 @@
+# UTF-8
+/* Depository and sub account routing */
+Domain SCT_DepoSubAccount
+	@t24:i (module=SC)
+	@java:Package (value=com.temenos.t24.datamodel.sc.sct_deposubaccount)
+namespace "http://www.temenos.com/t24/SCT_DepoSubAccount"
+metamodelVersion 4.3.0.20110527
+Classes {
+	SC_DEPOT_ROUTING
+		@t24:i (t24Name=SC.DEPOT.ROUTING, level=F, type=H, allowedFunctions="A C D E H I L P Q R S", localRefAllowed=true)
+	{
+		DEPOSITORY -> SCT_DepoSubAccount:SC_DEPOT_ROUTING PK required
+			@i18n:Label (en=Depository, fr=Dépositaire, es=Depositario)
+			@i18n:Tooltip (en="Depository the Security to be delivered from/to", fr=Dépositaire, es="Depositario de Título Valor a ser enviado de/a")
+			@t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=0.0, core=true, businessType=CUS, t24Name=DEPOSITORY)
+		TRANSFER_DEPOT -> byValue SCT_DepoSubAccount:SC_DEPOT_ROUTING__TRANSFER_DEPOT *
+		SEPARATOR : SCT_DepoSubAccount:SC_DEPOT_ROUTING__SEPARATOR
+			@i18n:Label (en=Separator, fr=Séparateur, es=Separador)
+			@i18n:Tooltip (en=Separator, fr=Séparateur)
+			@t24:i (align=L, inputBehaviour=I, maxLength=1, sysNumber=12.0, core=true, t24Name=SEPARATOR)
+		RESERVED_6 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=13.0, core=true, t24Name=RESERVED.6)
+		RESERVED_5 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=14.0, core=true, t24Name=RESERVED.5)
+		RESERVED_4 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=15.0, core=true, t24Name=RESERVED.4)
+		RESERVED_3 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=16.0, core=true, t24Name=RESERVED.3)
+		RESERVED_2 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=17.0, core=true, t24Name=RESERVED.2)
+		RESERVED_1 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=18.0, core=true, t24Name=RESERVED.1)
+		RECORD_STATUS : mml:string
+			@i18n:Label (en="Record Status", fr=Statut, es=Estado)
+			@i18n:Tooltip (fr="Statut de l\'enregistrement")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=20.0, core=true, businessType=STAT, t24Name=RECORD.STATUS)
+		CURR_NO : mml:Integer
+			@i18n:Label (en="Curr No", fr="N° version", es="No. Actual")
+			@i18n:Tooltip (fr="Numéro de version")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=21.0, core=true, t24Name=CURR.NO)
+		INPUTTER -> byValue SCT_DepoSubAccount:SC_DEPOT_ROUTING__INPUTTER *
+		DATE_TIME -> byValue SCT_DepoSubAccount:SC_DEPOT_ROUTING__DATE_TIME *
+		AUTHORISER : mml:string
+			@i18n:Label (en=Authoriser, fr="Validé par", es=Autorizador)
+			@i18n:Tooltip (en="Indicates the User who Authorises the record", fr="Utilisateur de validation", es="El usuario que autorizó el registro")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=24.0, core=true, businessType=A, t24Name=AUTHORISER)
+		CO_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company, fr=Entité, es="Compañía")
+			@i18n:Tooltip (fr="Code établissement ou agence")
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=25.0, core=true, businessType=A, t24Name=CO.CODE)
+		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Dept Code", fr=Service, es=Departamento)
+			@i18n:Tooltip (fr="Code du service")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=26.0, core=true, t24Name=DEPT.CODE)
+		AUDITOR_CODE : mml:string
+			@i18n:Label (en="Auditor Code", fr="Audité par", es="Código de Auditor")
+			@i18n:Tooltip (en="Auditor Code", fr="Utilisateur d\'audit", es="Nombre del auditor")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=27.0, core=true, businessType=A, t24Name=AUDITOR.CODE)
+		AUDIT_DATE_TIME : mml:dateTime
+			@i18n:Label (en="Audit Date Time", fr="Audité le", es="Fecha/Hora de Audit.")
+			@i18n:Tooltip (en="Date and time when record was audited", fr="Date et heure d\'audit", es="Fecha y Hora de Auditoría ")
+			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=28.0, core=true, businessType=RELTIME, t24Name=AUDIT.DATE.TIME)
+	}
+	SC_DEPOT_ROUTING__TRANSFER_DEPOT
+	{
+		TRANSFER_DEPOT -> SC_Config:CUSTOMER_SECURITY required
+			@t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=1.0, core=true, businessType=CUS, t24Name=TRANSFER.DEPOT)
+		SEC_DOMICILE -> ST_Config:COUNTRY
+			@t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=2.0, core=true, businessType=SSS, t24Name=SEC.DOMICILE)
+		NATIONALITY -> ST_Config:COUNTRY
+			@t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=3.0, core=true, businessType=SSS, t24Name=NATIONALITY)
+		RESIDENCE -> ST_Config:COUNTRY
+			@t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=4.0, core=true, businessType=SSS, t24Name=RESIDENCE)
+		BOND_OR_SHARE : SCT_DepoSubAccount:SC_DEPOT_ROUTING__TRANSFER_DEPOT__BOND_OR_SHARE
+			@t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=5.0, core=true, t24Name=BOND.OR.SHARE)
+		SEC_TYPE : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=12, sysNumber=6.0, core=true, businessType=A, t24Name=SEC.TYPE)
+		APP_APPLI -> byValue SCT_DepoSubAccount:SC_DEPOT_ROUTING__TRANSFER_DEPOT__APP_APPLI *
+		TRANS_DELIVERY : SCT_DepoSubAccount:SC_DEPOT_ROUTING__TRANSFER_DEPOT__TRANS_DELIVERY
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=11.0, core=true, t24Name=TRANS.DELIVERY)
+	}
+	SC_DEPOT_ROUTING__TRANSFER_DEPOT__APP_APPLI
+	{
+		APP_APPLI : SCT_DepoSubAccount:SC_DEPOT_ROUTING__TRANSFER_DEPOT__APP_APPLI__APP_APPLI
+			@t24:i (align=L, inputBehaviour=I, maxLength=18, sysNumber=7.0, core=true, t24Name=APP.APPLI)
+		APP_FIELD : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=18, sysNumber=8.0, core=true, businessType=A, t24Name=APP.FIELD)
+		APP_OPERAND : SCT_DepoSubAccount:SC_DEPOT_ROUTING__TRANSFER_DEPOT__APP_APPLI__APP_OPERAND
+			@t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=9.0, core=true, t24Name=APP.OPERAND)
+		APP_VALUE : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=10.0, core=true, businessType=A, t24Name=APP.VALUE)
+	}
+	SC_DEPOT_ROUTING__INPUTTER
+	{
+		INPUTTER : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=22.0, core=true, businessType=A, t24Name=INPUTTER)
+	}
+	SC_DEPOT_ROUTING__DATE_TIME
+	{
+		DATE_TIME : mml:dateTime
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=23.0, core=true, businessType=RELTIME, t24Name=DATE.TIME)
+	}
+	SC_SUB_ACC_ROUTING
+		@t24:i (t24Name=SC.SUB.ACC.ROUTING, level=C, type=H, allowedFunctions="C E L P Q S", localRefAllowed=true)
+	{
+		DEPOSITORY -> SCT_DepoSubAccount:SC_SUB_ACC_ROUTING PK required
+			@i18n:Label (en=Depository, fr=Dépositaire, es=Depositario)
+			@i18n:Tooltip (en="Depository the Security to be delivered from/to", fr=Dépositaire, es="Depositario de Título Valor a ser enviado de/a")
+			@t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=0.0, core=true, businessType=CUS, t24Name=DEPOSITORY)
+		SUB_ACCOUNT -> byValue SCT_DepoSubAccount:SC_SUB_ACC_ROUTING__SUB_ACCOUNT *
+		NEW_CHANGED : mml:Integer
+			@i18n:Label (en="New Changed", fr="Changé nouvellement", es="Nuevo Cambiado")
+			@i18n:Tooltip (fr="Changé nouvellement")
+			@t24:i (align=R, inputBehaviour=N, maxLength=7, sysNumber=9.0, core=true, t24Name=NEW.CHANGED)
+		RESERVED_5 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=10.0, core=true, t24Name=RESERVED.5)
+		RESERVED_4 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=11.0, core=true, t24Name=RESERVED.4)
+		RESERVED_3 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=12.0, core=true, t24Name=RESERVED.3)
+		RESERVED_2 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=13.0, core=true, t24Name=RESERVED.2)
+		RESERVED_1 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=14.0, core=true, t24Name=RESERVED.1)
+		RECORD_STATUS : mml:string
+			@i18n:Label (en="Record Status", fr=Statut, es=Estado)
+			@i18n:Tooltip (fr="Statut de l\'enregistrement")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=16.0, core=true, businessType=STAT, t24Name=RECORD.STATUS)
+		CURR_NO : mml:Integer
+			@i18n:Label (en="Curr No", fr="N° version", es="No. Actual")
+			@i18n:Tooltip (fr="Numéro de version")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=17.0, core=true, t24Name=CURR.NO)
+		INPUTTER -> byValue SCT_DepoSubAccount:SC_SUB_ACC_ROUTING__INPUTTER *
+		DATE_TIME -> byValue SCT_DepoSubAccount:SC_SUB_ACC_ROUTING__DATE_TIME *
+		AUTHORISER : mml:string
+			@i18n:Label (en=Authoriser, fr="Validé par", es=Autorizador)
+			@i18n:Tooltip (en="Indicates the User who Authorises the record", fr="Utilisateur de validation", es="El usuario que autorizó el registro")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=20.0, core=true, businessType=A, t24Name=AUTHORISER)
+		CO_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company, fr=Entité, es="Compañía")
+			@i18n:Tooltip (fr="Code établissement ou agence")
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=21.0, core=true, businessType=A, t24Name=CO.CODE)
+		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Dept Code", fr=Service, es=Departamento)
+			@i18n:Tooltip (fr="Code du service")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=22.0, core=true, t24Name=DEPT.CODE)
+		AUDITOR_CODE : mml:string
+			@i18n:Label (en="Auditor Code", fr="Audité par", es="Código de Auditor")
+			@i18n:Tooltip (en="Auditor Code", fr="Utilisateur d\'audit", es="Nombre del auditor")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=23.0, core=true, businessType=A, t24Name=AUDITOR.CODE)
+		AUDIT_DATE_TIME : mml:dateTime
+			@i18n:Label (en="Audit Date Time", fr="Audité le", es="Fecha/Hora de Audit.")
+			@i18n:Tooltip (en="Date and time when record was audited", fr="Date et heure d\'audit", es="Fecha y Hora de Auditoría ")
+			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=24.0, core=true, businessType=RELTIME, t24Name=AUDIT.DATE.TIME)
+	}
+	SC_SUB_ACC_ROUTING__SUB_ACCOUNT
+	{
+		SUB_ACCOUNT : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=16, sysNumber=1.0, core=true, t24Name=SUB.ACCOUNT)
+		SEC_DOMICILE -> ST_Config:COUNTRY
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=2.0, core=true, businessType=SSS, t24Name=SEC.DOMICILE)
+		RESIDENCE -> ST_Config:COUNTRY
+			@t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=3.0, core=true, businessType=SSS, t24Name=RESIDENCE)
+		NATIONALITY -> ST_Config:COUNTRY
+			@t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=4.0, core=true, businessType=SSS, t24Name=NATIONALITY)
+		APP_APPLI -> byValue SCT_DepoSubAccount:SC_SUB_ACC_ROUTING__SUB_ACCOUNT__APP_APPLI *
+	}
+	SC_SUB_ACC_ROUTING__SUB_ACCOUNT__APP_APPLI
+	{
+		APP_APPLI : SCT_DepoSubAccount:SC_SUB_ACC_ROUTING__SUB_ACCOUNT__APP_APPLI__APP_APPLI
+			@t24:i (align=L, inputBehaviour=I, maxLength=18, sysNumber=5.0, core=true, t24Name=APP.APPLI)
+		APP_FIELD : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=18, sysNumber=6.0, core=true, businessType=A, t24Name=APP.FIELD)
+		APP_OPERAND : SCT_DepoSubAccount:SC_SUB_ACC_ROUTING__SUB_ACCOUNT__APP_APPLI__APP_OPERAND
+			@t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=7.0, core=true, t24Name=APP.OPERAND)
+		APP_VALUE : mml:string
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=8.0, core=true, businessType=A, t24Name=APP.VALUE)
+	}
+	SC_SUB_ACC_ROUTING__INPUTTER
+	{
+		INPUTTER : mml:string
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=18.0, core=true, businessType=A, t24Name=INPUTTER)
+	}
+	SC_SUB_ACC_ROUTING__DATE_TIME
+	{
+		DATE_TIME : mml:dateTime
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=19.0, core=true, businessType=RELTIME, t24Name=DATE.TIME)
+	}
+}
+Enumerations {
+	SC_DEPOT_ROUTING__TRANSFER_DEPOT__BOND_OR_SHARE : mml:string
+		B=B
+		S=S
+	SC_DEPOT_ROUTING__TRANSFER_DEPOT__APP_APPLI__APP_APPLI : mml:string
+		CUSTOMER=CUSTOMER
+		SECURITY_MASTER=SECURITY.MASTER
+		SEC_ACC_MASTER=SEC.ACC.MASTER
+	SC_DEPOT_ROUTING__TRANSFER_DEPOT__APP_APPLI__APP_OPERAND : mml:string
+		EQ=EQ
+		NE=NE
+		LE=LE
+		LT=LT
+		GE=GE
+		GT=GT
+	SC_DEPOT_ROUTING__TRANSFER_DEPOT__TRANS_DELIVERY : mml:string
+		YES=YES
+		NO=NO
+	SC_DEPOT_ROUTING__SEPARATOR : mml:string
+		COMMA=","
+		_=.
+		STAR="*"
+	SC_SUB_ACC_ROUTING__SUB_ACCOUNT__APP_APPLI__APP_APPLI : mml:string
+		CUSTOMER=CUSTOMER
+		SECURITY_MASTER=SECURITY.MASTER
+		SEC_ACC_MASTER=SEC.ACC.MASTER
+	SC_SUB_ACC_ROUTING__SUB_ACCOUNT__APP_APPLI__APP_OPERAND : mml:string
+		EQ=EQ
+		NE=NE
+		LE=LE
+		LT=LT
+		GE=GE
+		GT=GT
+}
