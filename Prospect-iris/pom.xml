@@ -469,6 +469,35 @@
         </resource>
     </resources>
     <plugins>
+
+      <plugin>
+        <groupId>com.temenos.interaction</groupId>
+        <artifactId>interaction-sdk-rim-plugin</artifactId>
+        <version>${iris.version}</version>
+        <executions>
+          <execution>
+            <phase>generate-sources</phase>
+            <goals>
+              <goal>rim-generate</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <!-- Override the default [targetDirectory] of ${project.build.directory}/src-gen
+          <targetDirectory>${basedir}/src-gen</targetDirectory> 
+          -->
+          <rimSourceDir>${basedir}/../Prospect-models/rim/</rimSourceDir>
+          <!-- Override the default [swaggerTargetDirectory] of ${project.build.directory}/swagger-gen -->
+          <swaggerTargetDirectory>${project.build.directory}/${project.build.finalName}</swaggerTargetDirectory>
+          
+          <skipSwaggerGeneration>false</skipSwaggerGeneration>
+          <skipRIMGeneration>true</skipRIMGeneration>
+          <!-- Control generation of Spring XML to load generated classes  -->
+          <skipRIMGenerationSpringPRD>true</skipRIMGenerationSpringPRD>          
+          
+        </configuration>
+      </plugin>
+
       <plugin>
           <artifactId>maven-resources-plugin</artifactId>
           <executions>
@@ -842,6 +871,14 @@
     <dependency>
         <groupId>com.temenos.interaction</groupId>
         <artifactId>useragent-hal-inspector</artifactId>
+		<version>${iris.version}</version>
+        <scope>runtime</scope>
+    </dependency>
+
+    <!-- Add dependency for the Swagger user-agent -->
+    <dependency>
+        <groupId>com.temenos.interaction</groupId>
+        <artifactId>useragent-swagger-ui</artifactId>
 		<version>${iris.version}</version>
         <scope>runtime</scope>
     </dependency>
