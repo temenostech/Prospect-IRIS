@@ -1,0 +1,538 @@
+domain T24 {
+	use common.CoreCommands.*
+	use common.HTTPEvents.*
+	use common.ODataCommands.*
+	use common.T24Commands.*
+	use common.T24Events.*
+	use common.NextState.*
+	use common.Errors.*
+	use T24.ContextEnquiry.*
+	rim verSaScoreTxn_RiskProfilingHp {
+		command GETEntities
+		command GetLiveEntity
+		command GetIauthEntity
+		command GetHauthEntity
+		command NoopGET
+		command T24FieldMetadata
+		command GetIauthEntities
+		command CreateEntity
+		command InputEntity
+		command HoldEntity
+		command AuthoriseEntity
+		command ReviewEntity
+		command ReverseEntity
+		command ValidateEntity
+		command RestoreEntity
+		command DeleteEntity
+		command T24Enrichment
+		command CheckAutoIdSupport
+		command GetHauthEntities
+		command T24NextState
+		basepath: "/{companyid}"
+	
+		resource verSaScoreTxn_RiskProfilingHps {
+			type: collection
+			entity: verSaScoreTxn_RiskProfilingHp
+			commands [ GET : GETEntities {
+				properties [ filter = "{filter}" ]
+				} ]
+			path: "/verSaScoreTxn_RiskProfilingHps()"
+			GET *-> verSaScoreTxn_RiskProfilingHp {
+				parameters [ id = "{Id}" ]
+			}
+			GET *-> verSaScoreTxn_RiskProfilingHp_see {
+				parameters [ id = "{Id}" ]
+				title: "see record"
+			}
+			POST -> verSaScoreTxn_RiskProfilingHp_new {
+				title: "create new deal"
+				condition: OK(verSaScoreTxn_RiskProfilingHp_autoId)
+			}
+			POST -> verSaScoreTxn_RiskProfilingHp_populate {
+				title: "populate existing deal"
+			}
+			PUT *-> verSaScoreTxn_RiskProfilingHp_input {
+				parameters [ id = "{Id}" ]
+				title: "input deal"
+			}
+			POST *-> verSaScoreTxn_RiskProfilingHp_audit {
+				parameters [ id = "{Id}" ]
+				title: "audit deal"
+			}
+			POST *-> verSaScoreTxn_RiskProfilingHp_reverse {
+				parameters [ id = "{Id}" ]
+				title: "reverse deal"
+			}
+		}
+	
+		resource verSaScoreTxn_RiskProfilingHp {
+			type: item
+			entity: verSaScoreTxn_RiskProfilingHp
+			commands [ GET : GetLiveEntity ]
+			path: "/verSaScoreTxn_RiskProfilingHps('{id}')"
+			POST +-> verSaScoreTxn_RiskProfilingHp_metadata {
+				title: "metadata"
+			}
+			GET --> verSaScoreTxn_RiskProfilingHp_IAuth {
+				parameters [ id = "{Id}" ]
+				condition: OK(verSaScoreTxn_RiskProfilingHp_IAuth)
+			}
+			POST -> verSaScoreTxn_RiskProfilingHp_validate {
+				parameters [ id = "{Id}" ]
+				title: "validate deal"
+			}
+			PUT -> verSaScoreTxn_RiskProfilingHp_input {
+				parameters [ id = "{Id}" ]
+				title: "input deal"
+			}
+			POST -> verSaScoreTxn_RiskProfilingHp_audit {
+				parameters [ id = "{Id}" ]
+				title: "audit deal"
+			}
+			POST -> verSaScoreTxn_RiskProfilingHp_reverse {
+				parameters [ id = "{Id}" ]
+				title: "reverse deal"
+			}
+			GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+				parameters [ entity = "verSaScoreTxn_RiskProfilingHp" ]
+				title: "Context Enquiries"
+			}
+		}
+	
+		resource verSaScoreTxn_RiskProfilingHp_see {
+			type: item
+			entity: verSaScoreTxn_RiskProfilingHp
+			commands [ GET : GetLiveEntity ]
+			relations [ "http://schemas.microsoft.com/ado/2007/08/dataservices/related/verSaScoreTxn_RiskProfilingHp","http://temenostech.temenos.com/rels/see" ]
+			path: "/verSaScoreTxn_RiskProfilingHps('{id}')/see"
+			POST +-> verSaScoreTxn_RiskProfilingHp_metadata {
+				title: "metadata"
+			}
+		}
+	
+		resource verSaScoreTxn_RiskProfilingHp_IAuth_see {
+			type: item
+			entity: verSaScoreTxn_RiskProfilingHp
+			commands [ GET : GetIauthEntity ]
+			relations [ "http://schemas.microsoft.com/ado/2007/08/dataservices/related/verSaScoreTxn_RiskProfilingHp_IAuth","http://temenostech.temenos.com/rels/see" ]
+			path: "/verSaScoreTxn_RiskProfilingHps_IAuth('{id}')/see"
+		}
+	
+		resource verSaScoreTxn_RiskProfilingHp_HAuth_see {
+			type: item
+			entity: verSaScoreTxn_RiskProfilingHp
+			commands [ GET : GetHauthEntity ]
+			relations [ "http://schemas.microsoft.com/ado/2007/08/dataservices/related/verSaScoreTxn_RiskProfilingHp_HAuth","http://temenostech.temenos.com/rels/see" ]
+			path: "/verSaScoreTxn_RiskProfilingHps_HAuth('{id}')/see"
+		}
+	
+		resource verSaScoreTxn_RiskProfilingHp_ContextEnquiries {
+			type: item
+			entity: verSaScoreTxn_RiskProfilingHp
+			commands [ GET : NoopGET ]
+			path: "/verSaScoreTxn_RiskProfilingHp/ContextEnquiries"
+//			GET -> T24.enqlistSaScoreTxn.enqlistSaScoreTxns {
+//				parameters [ param = "list" ]
+//				title: "List live deals"
+//			}
+//			GET -> T24.enqlistSaScoreTxn.enqlistSaScoreTxnsUnauth {
+//				parameters [ param = "list" ]
+//				title: "List unauthorised deals"
+//			}
+//			GET -> T24.enqlistSaScoreTxn.enqlistSaScoreTxnsHist {
+//				parameters [ param = "list" ]
+//				title: "List history deals"
+//			}
+//			GET -> T24.enqlistSaScoreTxn.enqlistSaScoreTxns {
+//				title: "Search live deals"
+//			}
+//			GET -> T24.enqlistSaScoreTxn.enqlistSaScoreTxnsUnauth {
+//				title: "Search unauthorised deals"
+//			}
+//			GET -> T24.enqlistSaScoreTxn.enqlistSaScoreTxnsHist {
+//				title: "Search history deals"
+//			}
+//			GET +-> ContextEnquiryList {
+//				parameters [ entity = "verSaScoreTxn_RiskProfilingHp" ]
+//				title: "Other context Enquiries"
+//			}
+		}
+	
+		resource verSaScoreTxn_RiskProfilingHp_metadata {
+			type: collection
+			entity: T24FieldMetadata
+			commands [ POST : T24FieldMetadata ]
+			relations [ "http://temenostech.temenos.com/rels/metadata" ]
+			path: "/verSaScoreTxn_RiskProfilingHps()/metadata"
+		}
+	
+		resource verSaScoreTxn_RiskProfilingHps_IAuth {
+			type: collection
+			entity: verSaScoreTxn_RiskProfilingHp
+			commands [ GET : GetIauthEntities {
+				properties [ filter = "{filter}" ]
+				} ]
+			path: "/verSaScoreTxn_RiskProfilingHps_IAuth()"
+			GET *-> verSaScoreTxn_RiskProfilingHp_IAuth {
+				parameters [ id = "{Id}" ]
+			}
+			POST -> verSaScoreTxn_RiskProfilingHp_new {
+				title: "create new deal"
+				condition: OK(verSaScoreTxn_RiskProfilingHp_autoId)
+			}
+			POST -> verSaScoreTxn_RiskProfilingHp_populate {
+				title: "populate existing deal"
+			}
+			PUT *-> verSaScoreTxn_RiskProfilingHp_input {
+				parameters [ id = "{Id}" ]
+				title: "input deal"
+			}
+			DELETE *-> verSaScoreTxn_RiskProfilingHp_delete {
+				parameters [ id = "{Id}" ]
+				title: "delete"
+			}
+			PUT *-> verSaScoreTxn_RiskProfilingHp_authorise {
+				parameters [ id = "{Id}" ]
+				title: "authorise deal"
+			}
+		}
+	
+		resource verSaScoreTxn_RiskProfilingHp_new {
+			type: item
+			entity: verSaScoreTxn_RiskProfilingHp
+			commands [ POST : CreateEntity ]
+			relations [ "http://schemas.microsoft.com/ado/2007/08/dataservices/related/verSaScoreTxn_RiskProfilingHp","http://temenostech.temenos.com/rels/new" ]
+			path: "/verSaScoreTxn_RiskProfilingHps()/new"
+			POST +-> verSaScoreTxn_RiskProfilingHp_metadata {
+				title: "metadata"
+			}
+			POST -> verSaScoreTxn_RiskProfilingHp_validate {
+				parameters [ id = "{Id}" ]
+				title: "validate deal"
+			}
+			PUT -> verSaScoreTxn_RiskProfilingHp_input {
+				parameters [ id = "{Id}" ]
+				title: "input deal"
+			}
+			POST -> verSaScoreTxn_RiskProfilingHp_hold {
+				parameters [ id = "{Id}" ]
+				title: "hold deal"
+			}
+			GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+				parameters [ entity = "verSaScoreTxn_RiskProfilingHp" ]
+				title: "Context Enquiries"
+			}
+		}
+	
+		resource verSaScoreTxn_RiskProfilingHp_input {
+			type: item
+			entity: verSaScoreTxn_RiskProfilingHp
+			commands [ PUT : InputEntity, POST : InputEntity ]
+			relations [ "http://temenostech.temenos.com/rels/input" ]
+			path: "/verSaScoreTxn_RiskProfilingHps('{id}')"
+//			GET --> nextState {
+//				condition: OK(nextState)
+//			}
+			GET --> verSaScoreTxn_RiskProfilingHp_IAuth {
+				parameters [ id = "{Id}" ]
+				condition: OK(verSaScoreTxn_RiskProfilingHp_IAuth)
+			}
+			GET --> verSaScoreTxn_RiskProfilingHp {
+				parameters [ id = "{Id}" ]
+				condition: OK(verSaScoreTxn_RiskProfilingHp)
+			}
+			GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+				parameters [ entity = "verSaScoreTxn_RiskProfilingHp" ]
+				title: "Context Enquiries"
+			}
+		}
+	
+		resource verSaScoreTxn_RiskProfilingHp_hold {
+			type: item
+			entity: verSaScoreTxn_RiskProfilingHp
+			commands [ POST : HoldEntity ]
+			relations [ "http://temenostech.temenos.com/rels/hold" ]
+			path: "/verSaScoreTxn_RiskProfilingHps('{id}')/hold"
+			PUT -> verSaScoreTxn_RiskProfilingHp_input {
+				parameters [ id = "{Id}" ]
+				title: "input deal"
+			}
+			DELETE -> verSaScoreTxn_RiskProfilingHp_delete {
+				parameters [ id = "{Id}" ]
+				title: "delete"
+			}
+		}
+	
+		resource verSaScoreTxn_RiskProfilingHp_authorise {
+			type: item
+			entity: verSaScoreTxn_RiskProfilingHp
+			commands [ PUT : AuthoriseEntity ]
+			relations [ "http://temenostech.temenos.com/rels/authorise" ]
+			path: "/verSaScoreTxn_RiskProfilingHps('{id}')/authorise"
+			GET --> verSaScoreTxn_RiskProfilingHp_IAuth {
+				parameters [ id = "{Id}" ]
+				condition: OK(verSaScoreTxn_RiskProfilingHp_IAuth)
+			}
+			GET --> verSaScoreTxn_RiskProfilingHp {
+				parameters [ id = "{Id}" ]
+				condition: OK(verSaScoreTxn_RiskProfilingHp)
+			}
+			GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+				parameters [ entity = "verSaScoreTxn_RiskProfilingHp" ]
+				title: "Context Enquiries"
+			}
+		}
+	
+		resource verSaScoreTxn_RiskProfilingHp_audit {
+			type: item
+			entity: verSaScoreTxn_RiskProfilingHp
+			commands [ POST : ReviewEntity ]
+			relations [ "http://temenostech.temenos.com/rels/review" ]
+			path: "/verSaScoreTxn_RiskProfilingHps('{id}')/review"
+			GET -> verSaScoreTxn_RiskProfilingHp {
+				parameters [ id = "{Id}" ]
+			}
+		}
+	
+		resource verSaScoreTxn_RiskProfilingHp_reverse {
+			type: item
+			entity: verSaScoreTxn_RiskProfilingHp
+			commands [ PUT : ReverseEntity ]
+			relations [ "http://temenostech.temenos.com/rels/reverse" ]
+			path: "/verSaScoreTxn_RiskProfilingHps('{id}')/reverse"
+			GET --> verSaScoreTxn_RiskProfilingHp_IAuth {
+				parameters [ id = "{Id}" ]
+				condition: OK(verSaScoreTxn_RiskProfilingHp_IAuth)
+			}
+			GET --> verSaScoreTxn_RiskProfilingHp_HAuth {
+				parameters [ id = "{Id}" ]
+				condition: OK(verSaScoreTxn_RiskProfilingHp_HAuth)
+			}
+		}
+	
+		resource verSaScoreTxn_RiskProfilingHp_validate {
+			type: item
+			entity: verSaScoreTxn_RiskProfilingHp
+			commands [ POST : ValidateEntity ]
+			relations [ "http://temenostech.temenos.com/rels/validate" ]
+			path: "/verSaScoreTxn_RiskProfilingHps('{id}')/validate"
+			POST +-> verSaScoreTxn_RiskProfilingHp_metadata {
+				title: "metadata"
+			}
+			PUT -> verSaScoreTxn_RiskProfilingHp_input {
+				parameters [ id = "{Id}" ]
+				title: "input deal"
+			}
+			POST -> verSaScoreTxn_RiskProfilingHp_hold {
+				parameters [ id = "{Id}" ]
+				title: "hold deal"
+			}
+		}
+	
+		resource verSaScoreTxn_RiskProfilingHp_IAuth {
+			type: item
+			entity: verSaScoreTxn_RiskProfilingHp
+			commands [ GET : GetIauthEntity ]
+			path: "/verSaScoreTxn_RiskProfilingHps_IAuth('{id}')"
+			POST +-> verSaScoreTxn_RiskProfilingHp_metadata {
+				title: "metadata"
+			}
+			POST -> verSaScoreTxn_RiskProfilingHp_validate {
+				parameters [ id = "{Id}" ]
+				title: "validate deal"
+			}
+			PUT -> verSaScoreTxn_RiskProfilingHp_input {
+				parameters [ id = "{Id}" ]
+				title: "input deal"
+			}
+			POST -> verSaScoreTxn_RiskProfilingHp_hold {
+				parameters [ id = "{Id}" ]
+				title: "hold deal"
+			}
+			POST -> verSaScoreTxn_RiskProfilingHp_authorise {
+				parameters [ id = "{Id}" ]
+				title: "authorise deal"
+			}
+			DELETE -> verSaScoreTxn_RiskProfilingHp_delete {
+				parameters [ id = "{Id}" ]
+				title: "delete"
+			}
+			GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+				parameters [ entity = "verSaScoreTxn_RiskProfilingHp" ]
+				title: "Context Enquiries"
+			}
+		}
+	
+		resource verSaScoreTxn_RiskProfilingHp_delete {
+			type: item
+			entity: verSaScoreTxn_RiskProfilingHp
+			commands [ DELETE : DeleteEntity ]
+			relations [ "http://temenostech.temenos.com/rels/delete" ]
+			path: "/verSaScoreTxn_RiskProfilingHps('{id}')/delete"
+		}
+	
+		resource verSaScoreTxn_RiskProfilingHpEntry {
+			type: item
+			entity: verSaScoreTxn_RiskProfilingHp
+			commands [ GET : NoopGET ]
+			relations [ "http://schemas.microsoft.com/ado/2007/08/dataservices/related/verSaScoreTxn_RiskProfilingHp","http://temenostech.temenos.com/rels/contract" ]
+			path: "/verSaScoreTxn_RiskProfilingHpEntry"
+			POST -> verSaScoreTxn_RiskProfilingHp_new {
+				title: "create new deal"
+				condition: OK(verSaScoreTxn_RiskProfilingHp_autoId)
+			}
+			POST -> verSaScoreTxn_RiskProfilingHp_populate {
+				title: "populate existing deal"
+			}
+			GET +-> verSaScoreTxn_RiskProfilingHp_see {
+				parameters [ id = "@" ]
+				title: "See transaction"
+			}
+			GET +-> verSaScoreTxn_RiskProfilingHp_IAuth_see {
+				parameters [ id = "@" ]
+				title: "GetIauthEntity"
+			}
+			GET +-> verSaScoreTxn_RiskProfilingHp_HAuth_see {
+				parameters [ id = "@" ]
+				title: "GetHauthEntity"
+			}
+			GET +-> verSaScoreTxn_RiskProfilingHp_IAuth {
+				parameters [ id = "@" ]
+				title: "GetIauthEntity"
+			}
+			GET +-> verSaScoreTxn_RiskProfilingHp_HAuth {
+				parameters [ id = "@" ]
+				title: "GetHauthEntity"
+			}
+			GET +-> verSaScoreTxn_RiskProfilingHp_ContextEnquiries {
+				title: "All context Enquiries"
+			}
+		}
+	
+		resource verSaScoreTxn_RiskProfilingHp_populate {
+			type: item
+			entity: verSaScoreTxn_RiskProfilingHp
+			commands [ POST : CreateEntity ]
+			relations [ "http://schemas.microsoft.com/ado/2007/08/dataservices/related/verSaScoreTxn_RiskProfilingHp","http://temenostech.temenos.com/rels/populate" ]
+			path: "/verSaScoreTxn_RiskProfilingHps()/populate"
+			POST -> verSaScoreTxn_RiskProfilingHp_validate {
+				parameters [ id = "{Id}" ]
+				title: "validate deal"
+			}
+			POST -> verSaScoreTxn_RiskProfilingHp_input {
+				parameters [ id = "{Id}" ]
+				title: "input deal"
+			}
+			DELETE -> verSaScoreTxn_RiskProfilingHp_delete {
+				parameters [ id = "{Id}" ]
+				title: "delete"
+				condition: OK(verSaScoreTxn_RiskProfilingHp_IAuth)
+			}
+			POST -> verSaScoreTxn_RiskProfilingHp_metadata {
+				title: "metadata"
+			}
+			GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+				parameters [ entity = "verSaScoreTxn_RiskProfilingHp" ]
+				title: "Context Enquiries"
+			}
+		}
+	
+		resource verSaScoreTxn_RiskProfilingHps_enrichment {
+			type: item
+			entity: Enrichment
+			commands [ GET : T24Enrichment {
+				properties [ entity = "verSaScoreTxn_RiskProfilingHp" ]
+				} ]
+			relations [ "http://temenostech.temenos.com/rels/enrichment" ]
+			path: "/verSaScoreTxn_RiskProfilingHps()/enrichment"
+		}
+	
+		resource verSaScoreTxn_RiskProfilingHp_autoId {
+			type: item
+			entity: verSaScoreTxn_RiskProfilingHp
+			commands [ GET : CheckAutoIdSupport ]
+		}
+	
+		resource verSaScoreTxn_RiskProfilingHp_restore {
+			type: item
+			entity: verSaScoreTxn_RiskProfilingHp
+			commands [ POST : RestoreEntity ]
+			relations [ "http://temenostech.temenos.com/rels/restore" ]
+			path: "/verSaScoreTxn_RiskProfilingHps('{id}')/restore"
+			GET --> verSaScoreTxn_RiskProfilingHp_IAuth {
+				parameters [ id = "{Id}" ]
+				condition: OK(verSaScoreTxn_RiskProfilingHp_IAuth)
+			}
+			GET --> verSaScoreTxn_RiskProfilingHp {
+				parameters [ id = "{Id}" ]
+				condition: OK(verSaScoreTxn_RiskProfilingHp)
+			}
+			POST -> verSaScoreTxn_RiskProfilingHp_metadata {
+				title: "metadata"
+			}
+			GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+				parameters [ entity = "verSaScoreTxn_RiskProfilingHp" ]
+				title: "Context Enquiries"
+			}
+		}
+	
+		resource verSaScoreTxn_RiskProfilingHps_HAuth {
+			type: collection
+			entity: verSaScoreTxn_RiskProfilingHp
+			commands [ GET : GetHauthEntities {
+				properties [ filter = "{filter}" ]
+				} ]
+			path: "/verSaScoreTxn_RiskProfilingHps_HAuth()"
+			GET *-> verSaScoreTxn_RiskProfilingHp_HAuth {
+				parameters [ id = "{Id}" ]
+			}
+			POST -> verSaScoreTxn_RiskProfilingHp_new {
+				title: "create new deal"
+				condition: OK(verSaScoreTxn_RiskProfilingHp_autoId)
+			}
+			POST -> verSaScoreTxn_RiskProfilingHp_populate {
+				title: "populate existing deal"
+			}
+			POST *-> verSaScoreTxn_RiskProfilingHp_restore {
+				parameters [ id = "{Id}" ]
+				title: "restore deal"
+			}
+		}
+	
+		resource verSaScoreTxn_RiskProfilingHp_HAuth {
+			type: item
+			entity: verSaScoreTxn_RiskProfilingHp
+			commands [ GET : GetHauthEntity ]
+			path: "/verSaScoreTxn_RiskProfilingHps_HAuth('{id}')"
+			POST +-> verSaScoreTxn_RiskProfilingHp_metadata {
+				title: "metadata"
+			}
+			POST -> verSaScoreTxn_RiskProfilingHp_validate {
+				parameters [ id = "{Id}" ]
+				title: "validate deal"
+			}
+			PUT -> verSaScoreTxn_RiskProfilingHp_input {
+				parameters [ id = "{Id}" ]
+				title: "input deal"
+			}
+			POST -> verSaScoreTxn_RiskProfilingHp_hold {
+				parameters [ id = "{Id}" ]
+				title: "hold deal"
+			}
+			POST -> verSaScoreTxn_RiskProfilingHp_authorise {
+				parameters [ id = "{Id}" ]
+				title: "authorise deal"
+			}
+			DELETE -> verSaScoreTxn_RiskProfilingHp_delete {
+				parameters [ id = "{Id}" ]
+				title: "delete"
+			}
+			GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+				parameters [ entity = "verSaScoreTxn_RiskProfilingHp" ]
+				title: "Context Enquiries"
+			}
+		}
+	
+	}
+	
+}

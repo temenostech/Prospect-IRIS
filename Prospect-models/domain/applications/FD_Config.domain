@@ -1,0 +1,1783 @@
+# UTF-8
+/* Parameter Definitions for Fiduciaries */
+Domain FD_Config
+	@t24:i (module=FD)
+	@java:Package (value=com.temenos.t24.datamodel.fd.fd_config)
+namespace "http://www.temenos.com/t24/FD_Config"
+metamodelVersion 1.30.6
+Classes {
+	FD_CHARGE_PARAMETER
+		@t24:i (t24Name=FD.CHARGE.PARAMETER, level=C, type=H, allowedFunctions="A C D E H I L P Q R S", localRefAllowed=false)
+	{
+		TYPE_CATEGORY -> FD_Config:FD_CHARGE_PARAMETER PK required
+			@t24:i (align=L, inputBehaviour=I, maxLength=6, sysNumber=0.0, core=true, businessType=A, t24Name=TYPE.CATEGORY)
+		COMM_TAKEN : FD_Config:FD_CHARGE_PARAMETER__COMM_TAKEN
+			@i18n:Label (en="Commission Taken")
+			@t24:i (align=L, inputBehaviour=I, maxLength=8, sysNumber=1.0, core=true, t24Name=COMM.TAKEN)
+		BASE_AMOUNT : FD_Config:FD_CHARGE_PARAMETER__BASE_AMOUNT required
+			@t24:i (align=L, inputBehaviour=I, maxLength=9, sysNumber=2.0, core=true, t24Name=BASE.AMOUNT)
+		MIN_MOVEMENT : FD_Config:FD_CHARGE_PARAMETER__MIN_MOVEMENT
+			@t24:i (align=L, inputBehaviour=I, maxLength=9, sysNumber=3.0, core=true, t24Name=MIN.MOVEMENT)
+		COMM_PRIN_INT : FD_Config:FD_CHARGE_PARAMETER__COMM_PRIN_INT
+			@t24:i (align=L, inputBehaviour=I, maxLength=10, sysNumber=4.0, core=true, t24Name=COMM.PRIN.INT)
+		START_END_CALC : FD_Config:FD_CHARGE_PARAMETER__START_END_CALC
+			@t24:i (align=L, inputBehaviour=I, maxLength=5, sysNumber=5.0, core=true, t24Name=START.END.CALC)
+		DEFAULT_CHARGES : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=6.0, core=true, t24Name=DEFAULT.CHARGES)
+		RESERVED2 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=7.0, core=true, t24Name=RESERVED2)
+		RESERVED1 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=8.0, core=true, t24Name=RESERVED1)
+		RECORD_STATUS : T24BusinessTypes:STAT
+			@i18n:Label (en="Record Status")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=9.0, core=true, t24Name=RECORD.STATUS)
+		CURR_NO : mml:Integer
+			@i18n:Label (en="Curr No")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=10.0, core=true, t24Name=CURR.NO)
+		INPUTTER -> byValue FD_Config:FD_CHARGE_PARAMETER__INPUTTER *
+		DATE_TIME -> byValue FD_Config:FD_CHARGE_PARAMETER__DATE_TIME *
+		AUTHORISER : T24BusinessTypes:A
+			@i18n:Label (en=Authoriser)
+			@i18n:Tooltip (en="Indicates the User who Authorises the record")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=13.0, core=true, t24Name=AUTHORISER)
+		CO_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company)
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=14.0, core=true, businessType=A, t24Name=CO.CODE, mask="R##-###-####")
+		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Dept Code")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=15.0, core=true, t24Name=DEPT.CODE)
+		AUDITOR_CODE : T24BusinessTypes:A
+			@i18n:Label (en="Auditor Code")
+			@i18n:Tooltip (en="Auditor Code")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=16.0, core=true, t24Name=AUDITOR.CODE)
+		AUDIT_DATE_TIME : T24BusinessTypes:RELTIME
+			@i18n:Label (en="Audit Date Time")
+			@i18n:Tooltip (en="Date and time when record was audited")
+			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=17.0, core=true, t24Name=AUDIT.DATE.TIME, mask="RDD DD  DD ##:##")
+	}
+	FD_CHARGE_PARAMETER__INPUTTER
+	{
+		INPUTTER : T24BusinessTypes:A
+			@i18n:Label (en=Inputter)
+			@i18n:Tooltip (en="The user who last updated the record")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=11.0, core=true, t24Name=INPUTTER)
+	}
+	FD_CHARGE_PARAMETER__DATE_TIME
+	{
+		DATE_TIME : T24BusinessTypes:RELTIME
+			@i18n:Label (en="Date time")
+			@i18n:Tooltip (en="Date and time when record was input or authorised")
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=12.0, core=true, t24Name=DATE.TIME, mask="RDD DD  DD ##:##")
+	}
+	FD_CUST_DETAILS
+		@t24:i (t24Name=FD.CUST.DETAILS, level=C, type=H, allowedFunctions="A C D E H I L P Q R S", localRefAllowed=false)
+	{
+		CUSTOMER_NO -> FD_Config:FD_CUST_DETAILS PK required
+			@i18n:Label (en="Customer No")
+			@i18n:Tooltip (en="Identifies the Customer for the transaction.")
+			@t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=0.0, core=true, businessType=CUS, t24Name=CUSTOMER.NO)
+		MANDATE_HELD : FD_Config:FD_CUST_DETAILS__MANDATE_HELD
+			@i18n:Label (en="Mandate Held")
+			@t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=1.0, core=true, t24Name=MANDATE.HELD)
+		PREFERRED_CCY -> byValue FD_Config:FD_CUST_DETAILS__PREFERRED_CCY *
+		EXCLUDED_BANK -> byValue FD_Config:FD_CUST_DETAILS__EXCLUDED_BANK *
+		CUST_GROUP_NO : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=5.0, core=true, t24Name=CUST.GROUP.NO)
+		OVERALL_BANK_LIMIT : T24BusinessTypes:AMT
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=6.0, core=true, t24Name=OVERALL.BANK.LIMIT, typeModifiers="USD")
+		LIMIT_BANK -> byValue FD_Config:FD_CUST_DETAILS__LIMIT_BANK *
+		FID_BANK -> byValue FD_Config:FD_CUST_DETAILS__FID_BANK *
+		FIDUCIARY_TYPE -> byValue FD_Config:FD_CUST_DETAILS__FIDUCIARY_TYPE *
+		MIN_ACCT_CCY -> byValue FD_Config:FD_CUST_DETAILS__MIN_ACCT_CCY *
+		RESERVED5 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=24.0, core=true, t24Name=RESERVED5)
+		RESERVED4 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=25.0, core=true, t24Name=RESERVED4)
+		RESERVED3 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=26.0, core=true, t24Name=RESERVED3)
+		RESERVED2 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=27.0, core=true, t24Name=RESERVED2)
+		RESERVED1 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=28.0, core=true, t24Name=RESERVED1)
+		RECORD_STATUS : T24BusinessTypes:STAT
+			@i18n:Label (en="Record Status")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=29.0, core=true, t24Name=RECORD.STATUS)
+		CURR_NO : mml:Integer
+			@i18n:Label (en="Curr No")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=30.0, core=true, t24Name=CURR.NO)
+		INPUTTER -> byValue FD_Config:FD_CUST_DETAILS__INPUTTER *
+		DATE_TIME -> byValue FD_Config:FD_CUST_DETAILS__DATE_TIME *
+		AUTHORISER : T24BusinessTypes:A
+			@i18n:Label (en=Authoriser)
+			@i18n:Tooltip (en="Indicates the User who Authorises the record")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=33.0, core=true, t24Name=AUTHORISER)
+		CO_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company)
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=34.0, core=true, businessType=A, t24Name=CO.CODE, mask="R##-###-####")
+		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Dept Code")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=35.0, core=true, t24Name=DEPT.CODE)
+		AUDITOR_CODE : T24BusinessTypes:A
+			@i18n:Label (en="Auditor Code")
+			@i18n:Tooltip (en="Auditor Code")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=36.0, core=true, t24Name=AUDITOR.CODE)
+		AUDIT_DATE_TIME : T24BusinessTypes:RELTIME
+			@i18n:Label (en="Audit Date Time")
+			@i18n:Tooltip (en="Date and time when record was audited")
+			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=37.0, core=true, t24Name=AUDIT.DATE.TIME, mask="RDD DD  DD ##:##")
+	}
+	FD_CUST_DETAILS__PREFERRED_CCY
+	{
+		PREFERRED_CCY -> FIN_CurrencyConfig:CURRENCY
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=2.0, core=true, businessType=CCY, t24Name=PREFERRED.CCY)
+		PREF_BANK -> byValue FD_Config:FD_CUST_DETAILS__PREFERRED_CCY__PREF_BANK *
+	}
+	FD_CUST_DETAILS__PREFERRED_CCY__PREF_BANK
+	{
+		PREF_BANK -> ST_Customer:CUSTOMER
+			@t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=3.0, core=true, businessType=CUS, t24Name=PREF.BANK)
+	}
+	FD_CUST_DETAILS__EXCLUDED_BANK
+	{
+		EXCLUDED_BANK -> ST_Customer:CUSTOMER
+			@t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=4.0, core=true, businessType=CUS, t24Name=EXCLUDED.BANK)
+	}
+	FD_CUST_DETAILS__LIMIT_BANK
+	{
+		LIMIT_BANK -> ST_Customer:CUSTOMER
+			@t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=7.0, core=true, businessType=CUS, t24Name=LIMIT.BANK)
+		BANK_LIMIT : T24BusinessTypes:AMT
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=8.0, core=true, t24Name=BANK.LIMIT, typeModifiers="USD")
+	}
+	FD_CUST_DETAILS__FID_BANK
+	{
+		FID_BANK -> ST_Customer:CUSTOMER
+			@i18n:Label (en="Fiduciary Bank")
+			@i18n:Tooltip (en="Bank where the funds are to be placed")
+			@t24:i (align=R, inputBehaviour=N, maxLength=10, sysNumber=9.0, core=true, businessType=CUS, t24Name=FID.BANK)
+		CURRENT_OS : T24BusinessTypes:AMT
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=10.0, core=true, t24Name=CURRENT.OS, typeModifiers="USD")
+		OS_CCY -> byValue FD_Config:FD_CUST_DETAILS__FID_BANK__OS_CCY *
+	}
+	FD_CUST_DETAILS__FID_BANK__OS_CCY
+	{
+		OS_CCY -> FIN_CurrencyConfig:CURRENCY
+			@t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=11.0, core=true, businessType=CCY, t24Name=OS.CCY)
+		CCY_AMT : T24BusinessTypes:AMT
+			@i18n:Label (en="Ccy Amt")
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=12.0, core=true, t24Name=CCY.AMT, typeModifiers="11")
+	}
+	FD_CUST_DETAILS__FIDUCIARY_TYPE
+	{
+		FIDUCIARY_TYPE -> FD_Config:FD_CHARGE_PARAMETER
+			@i18n:Label (en="Fiduciary Type")
+			@t24:i (align=L, inputBehaviour=I, maxLength=6, sysNumber=13.0, core=true, businessType=A, t24Name=FIDUCIARY.TYPE)
+		RATE_CATEG : FD_Config:FD_CUST_DETAILS__FIDUCIARY_TYPE__RATE_CATEG
+			@t24:i (align=L, inputBehaviour=I, maxLength=10, sysNumber=14.0, core=true, t24Name=RATE.CATEG)
+		CURRENCY -> byValue FD_Config:FD_CUST_DETAILS__FIDUCIARY_TYPE__CURRENCY *
+	}
+	FD_CUST_DETAILS__FIDUCIARY_TYPE__CURRENCY
+	{
+		CURRENCY -> FIN_CurrencyConfig:CURRENCY
+			@i18n:Label (en=Ccy)
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=15.0, core=true, businessType=CCY, t24Name=CURRENCY)
+		DEF_INT_BASE : FD_Config:FD_CUST_DETAILS__FIDUCIARY_TYPE__CURRENCY__DEF_INT_BASE
+			@t24:i (align=L, inputBehaviour=I, maxLength=1, sysNumber=16.0, core=true, t24Name=DEF.INT.BASE)
+		RATE_DEV_COD -> FD_Contract:FD_RATE_DEVIATION
+			@t24:i (align=L, inputBehaviour=I, maxLength=4, sysNumber=17.0, core=true, businessType=A, t24Name=RATE.DEV.COD)
+		RATE_MARGIN : T24BusinessTypes:R
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=18.0, core=true, t24Name=RATE.MARGIN, typeModifiers=-)
+		RNEW_AMT_MET : FD_Config:FD_CUST_DETAILS__FIDUCIARY_TYPE__CURRENCY__RNEW_AMT_MET
+			@t24:i (align=L, inputBehaviour=I, maxLength=11, sysNumber=19.0, core=true, t24Name=RNEW.AMT.MET)
+		RND_TYPE -> FD_Config:FD_CHARGE_PARAMETER
+			@t24:i (align=L, inputBehaviour=I, maxLength=6, sysNumber=20.0, core=true, businessType=A, t24Name=RND.TYPE)
+		RND_PERCENT : T24BusinessTypes:R
+			@t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=21.0, core=true, t24Name=RND.PERCENT)
+	}
+	FD_CUST_DETAILS__MIN_ACCT_CCY
+	{
+		MIN_ACCT_CCY -> FIN_CurrencyConfig:CURRENCY
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=22.0, core=true, businessType=CCY, t24Name=MIN.ACCT.CCY)
+		MIN_ACCT_AMT : T24BusinessTypes:AMT
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=23.0, core=true, t24Name=MIN.ACCT.AMT, typeModifiers="22.X")
+	}
+	FD_CUST_DETAILS__INPUTTER
+	{
+		INPUTTER : T24BusinessTypes:A
+			@i18n:Label (en=Inputter)
+			@i18n:Tooltip (en="The user who last updated the record")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=31.0, core=true, t24Name=INPUTTER)
+	}
+	FD_CUST_DETAILS__DATE_TIME
+	{
+		DATE_TIME : T24BusinessTypes:RELTIME
+			@i18n:Label (en="Date time")
+			@i18n:Tooltip (en="Date and time when record was input or authorised")
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=32.0, core=true, t24Name=DATE.TIME, mask="RDD DD  DD ##:##")
+	}
+	FD_ENT_TODAY
+		@t24:i (t24Name=FD.ENT.TODAY, level=F, type=L, allowedFunctions="L P S", localRefAllowed=true)
+	{
+		PLACEMENT_NO -> FD_Config:FD_ENT_TODAY PK required
+			@i18n:Label (en="Placement No")
+			@t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=0.0, core=true, businessType=A, t24Name=PLACEMENT.NO, mask="R####/#####/#####")
+		FID_BANK -> ST_Customer:CUSTOMER required
+			@i18n:Label (en="Fiduciary Bank")
+			@i18n:Tooltip (en="Bank where the funds are to be placed")
+			@t24:i (align=R, inputBehaviour=F, maxLength=10, sysNumber=1.0, core=true, businessType=CUS, t24Name=FID.BANK)
+		FID_TYPE : FD_Config:FD_ENT_TODAY__FID_TYPE
+			@i18n:Label (en="Fiduciary Type")
+			@t24:i (align=L, inputBehaviour=N, maxLength=6, sysNumber=2.0, core=true, t24Name=FID.TYPE)
+		CURRENCY -> FIN_CurrencyConfig:CURRENCY
+			@i18n:Label (en=Ccy)
+			@t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=3.0, core=true, businessType=CCY, t24Name=CURRENCY)
+		AMOUNT : T24BusinessTypes:AMT
+			@i18n:Label (en=Amount)
+			@i18n:Tooltip (en="Indicates the Amount")
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=4.0, core=true, t24Name=AMOUNT, typeModifiers="3")
+		CCY_MARKET -> FIN_CurrencyConfig:CURRENCY_MARKET
+			@i18n:Label (en="Ccy Market")
+			@t24:i (align=R, inputBehaviour=I, maxLength=1, sysNumber=5.0, core=true, t24Name=CCY.MARKET)
+		DEAL_DATE : T24BusinessTypes:D
+			@i18n:Label (en="Deal Date")
+			@i18n:Tooltip (en="Indicates the Deal date")
+			@t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=6.0, core=true, t24Name=DEAL.DATE)
+		VALUE_DATE : T24BusinessTypes:D
+			@i18n:Label (en="Value Date")
+			@i18n:Tooltip (en="Indicates the Value date of the Contract")
+			@t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=7.0, core=true, t24Name=VALUE.DATE)
+		ORIG_MAT_DATE : T24BusinessTypes:MATLMM
+			@i18n:Label (en="Original Maturity Date")
+			@t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=8.0, core=true, t24Name=ORIG.MAT.DATE, typeModifiers=DAYS)
+		MATURITY_DATE : T24BusinessTypes:MATLMM
+			@i18n:Label (en="Maturity Date")
+			@i18n:Tooltip (en="Indicates the Maturity Date of the Transaction")
+			@t24:i (align=R, inputBehaviour=F, maxLength=11, sysNumber=9.0, core=true, t24Name=MATURITY.DATE, typeModifiers=DAYS)
+		CATEGORY -> ST_Config:CATEGORY
+			@i18n:Label (en=Category)
+			@i18n:Tooltip (en="Specifies the Category")
+			@t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=10.0, core=true, businessType=PRODCAT, t24Name=CATEGORY, mask="R##-###")
+		MANUAL_INTEREST : FD_Config:FD_ENT_TODAY__MANUAL_INTEREST
+			@i18n:Label (en="Manual Interest")
+			@t24:i (align=L, inputBehaviour=F, maxLength=2, sysNumber=11.0, core=true, t24Name=MANUAL.INTEREST)
+		INTEREST_RATE : T24BusinessTypes:R
+			@i18n:Label (en="Interest Rate")
+			@i18n:Tooltip (en="Indicates interest rate")
+			@t24:i (align=R, inputBehaviour=I, maxLength=12, sysNumber=12.0, core=true, t24Name=INTEREST.RATE, typeModifiers=-)
+		INTEREST_KEY : mml:Integer
+			@i18n:Label (en="Interest Key")
+			@i18n:Tooltip (en="Indicates key to apply floating rate of interest")
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=13.0, core=true, t24Name=INTEREST.KEY)
+		INT_DAY_BASIS : FD_Config:FD_ENT_TODAY__INT_DAY_BASIS
+			@i18n:Label (en="Interest Day Basis")
+			@i18n:Tooltip (en="Interest basis used for interest and commission")
+			@t24:i (align=L, inputBehaviour=F, maxLength=1, sysNumber=14.0, core=true, t24Name=INT.DAY.BASIS)
+		INTEREST_AMT : T24BusinessTypes:AMT
+			@i18n:Label (en="Interest Amount")
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=15.0, core=true, t24Name=INTEREST.AMT, typeModifiers="3")
+		INTEREST_PAY_DATE : T24BusinessTypes:FQO
+			@i18n:Label (en="Int Pmt Date")
+			@t24:i (align=L, inputBehaviour=N, maxLength=19, sysNumber=16.0, core=true, t24Name=INTEREST.PAY.DATE, mask="LDDDD DD  DD #####")
+		DEALER_DESK -> ST_Config:DEALER_DESK
+			@i18n:Label (en="Dealer Desk")
+			@i18n:Tooltip (en="Specifies the Dealer Desk handling the transaction")
+			@t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=17.0, core=true, businessType=A, t24Name=DEALER.DESK)
+		BROKER_CODE : T24BusinessTypes:A
+			@i18n:Label (en="Broker Code")
+			@i18n:Tooltip (en="Indicates the broker")
+			@t24:i (align=L, inputBehaviour=F, maxLength=10, sysNumber=18.0, core=true, t24Name=BROKER.CODE)
+		BROKER_CCY -> FIN_CurrencyConfig:CURRENCY
+			@i18n:Label (en="Brokerage Currency")
+			@i18n:Tooltip (en="Currency in which brokerage is calculated")
+			@t24:i (align=L, inputBehaviour=F, maxLength=3, sysNumber=19.0, core=true, businessType=CCY, t24Name=BROKER.CCY)
+		BROKER_AMT : T24BusinessTypes:AMT
+			@i18n:Label (en="Broker Amount")
+			@i18n:Tooltip (en="Specifies the brokerage amount")
+			@t24:i (align=R, inputBehaviour=F, maxLength=19, sysNumber=20.0, core=true, t24Name=BROKER.AMT, typeModifiers="19")
+		LIMIT_REF : mml:Integer
+			@i18n:Label (en="Limit Ref")
+			@i18n:Tooltip (en="Limit Reference")
+			@t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=21.0, core=true, t24Name=LIMIT.REF)
+		DRAWDOWN_ACCT : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=22.0, core=true, t24Name=DRAWDOWN.ACCT)
+		FID_BANK_CORR -> ST_Customer:CUSTOMER
+			@t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=23.0, core=true, businessType=CUS, t24Name=FID.BANK.CORR)
+		FID_BK_CORR_ADD -> byValue FD_Config:FD_ENT_TODAY__FID_BK_CORR_ADD *
+		FID_BK_CORR_AC : T24BusinessTypes:S
+			@t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=25.0, core=true, t24Name=FID.BK.CORR.AC)
+		INTERMED_BANK -> ST_Customer:CUSTOMER
+			@i18n:Label (en="Intermediary Bank")
+			@t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=26.0, core=true, businessType=CUS, t24Name=INTERMED.BANK)
+		INTERMED_ADDR -> byValue FD_Config:FD_ENT_TODAY__INTERMED_ADDR *
+		RESERVED : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=16, sysNumber=28.0, core=true, t24Name=RESERVED)
+		PRIN_LIQ_ACCT : T24BusinessTypes:A
+			@i18n:Label (en="Principal Liq Acct")
+			@i18n:Tooltip (en="Indicates principal liqudation account")
+			@t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=29.0, core=true, t24Name=PRIN.LIQ.ACCT)
+		INT_LIQ_ACCT : T24BusinessTypes:A
+			@i18n:Label (en="Interest Liq Acct")
+			@i18n:Tooltip (en="Indicates Interest Liquidation Account")
+			@t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=30.0, core=true, t24Name=INT.LIQ.ACCT)
+		THEIR_REFERENCE : T24BusinessTypes:S
+			@i18n:Label (en="Their Ref")
+			@t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=31.0, core=true, t24Name=THEIR.REFERENCE)
+		BANK_TO_BANK -> byValue FD_Config:FD_ENT_TODAY__BANK_TO_BANK *
+		SWIFT_COMMON_REF : T24BusinessTypes:A
+			@i18n:Label (en="Swift Commom Reference")
+			@i18n:Tooltip (en="Indicate the swift message reference")
+			@t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=33.0, core=true, t24Name=SWIFT.COMMON.REF)
+		POOLED_GROUP : T24BusinessTypes:A
+			@i18n:Label (en="Pooled Group")
+			@t24:i (align=L, inputBehaviour=N, maxLength=10, sysNumber=34.0, core=true, t24Name=POOLED.GROUP, mask="R#####/#####")
+		ORDER_NOS -> byValue FD_Config:FD_ENT_TODAY__ORDER_NOS *
+		CONF_BY_BROKER : T24BusinessTypes:A
+			@i18n:Label (en="Confirmation By Broker")
+			@i18n:Tooltip (en="Records broker confirmation details")
+			@t24:i (align=L, inputBehaviour=I, maxLength=20, sysNumber=40.0, core=true, t24Name=CONF.BY.BROKER)
+		CONF_BY_CUST : T24BusinessTypes:A
+			@i18n:Label (en="Confirm by Counterparty")
+			@i18n:Tooltip (en="Indicates counterparty confirmation")
+			@t24:i (align=L, inputBehaviour=I, maxLength=20, sysNumber=41.0, core=true, t24Name=CONF.BY.CUST)
+		FID_STATUS : FD_Config:FD_ENT_TODAY__FID_STATUS
+			@i18n:Label (en="Fid Status")
+			@t24:i (align=L, inputBehaviour=N, maxLength=10, sysNumber=42.0, core=true, t24Name=FID.STATUS)
+		CHANGE_DATE -> byValue FD_Config:FD_ENT_TODAY__CHANGE_DATE *
+		REIMBURSE_DATE : T24BusinessTypes:D
+			@i18n:Label (en="Reimburse Date")
+			@t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=47.0, core=true, t24Name=REIMBURSE.DATE)
+		REIMBURSE_STATUS : FD_Config:FD_ENT_TODAY__REIMBURSE_STATUS
+			@i18n:Label (en="Reimburse Status")
+			@t24:i (align=L, inputBehaviour=I, maxLength=10, sysNumber=48.0, core=true, t24Name=REIMBURSE.STATUS)
+		NEW_INT_RATE -> byValue FD_Config:FD_ENT_TODAY__NEW_INT_RATE *
+		INT_AMT_DIFF : T24BusinessTypes:AMT
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=52.0, core=true, t24Name=INT.AMT.DIFF, typeModifiers="3")
+		OUR_REMARKS -> byValue FD_Config:FD_ENT_TODAY__OUR_REMARKS *
+		LAST_UPDATED_ORD -> FD_Contract:FD_FID_ORDER
+			@t24:i (align=L, inputBehaviour=N, maxLength=18, sysNumber=54.0, core=true, businessType=A, t24Name=LAST.UPDATED.ORD, mask="L####/#####/#########")
+		PREVENT_POOLING : FD_Config:FD_ENT_TODAY__PREVENT_POOLING
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=55.0, core=true, t24Name=PREVENT.POOLING)
+		FORWARD_BACKWARD : mml:Integer
+			@i18n:Label (en="Forward Backward Key")
+			@i18n:Tooltip (en="Indicates the forward backward key")
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=56.0, core=true, t24Name=FORWARD.BACKWARD)
+		BID_RATE : T24BusinessTypes:R
+			@i18n:Label (en="Bid Rate")
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=57.0, core=true, t24Name=BID.RATE)
+		FID_SUBTYPE : mml:Integer
+			@i18n:Label (en="Fiduciary Sub Type")
+			@i18n:Tooltip (en="Denotes the subtype at fiduciary type level")
+			@t24:i (align=R, inputBehaviour=N, maxLength=3, sysNumber=58.0, core=true, t24Name=FID.SUBTYPE)
+		MATURE_AT_SOD : FD_Config:FD_ENT_TODAY__MATURE_AT_SOD
+			@i18n:Label (en="Mature at Start Of Day")
+			@i18n:Tooltip (en="Whether to mature at Start Of Day or not")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=59.0, core=true, t24Name=MATURE.AT.SOD)
+		RESERVED_7 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=60.0, core=true, t24Name=RESERVED.7)
+		RESERVED_6 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=61.0, core=true, t24Name=RESERVED.6)
+		RESERVED_5 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=62.0, core=true, t24Name=RESERVED.5)
+		RESERVED_4 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=63.0, core=true, t24Name=RESERVED.4)
+		RESERVED_3 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=64.0, core=true, t24Name=RESERVED.3)
+		RESERVED_2 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=65.0, core=true, t24Name=RESERVED.2)
+		RESERVED_1 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=66.0, core=true, t24Name=RESERVED.1)
+		CONSOL_KEY : T24BusinessTypes:A
+			@i18n:Label (en="Consol Key")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=67.0, core=true, t24Name=CONSOL.KEY)
+		PRINT_DEAL_SLIP : FD_Config:FD_ENT_TODAY__PRINT_DEAL_SLIP
+			@i18n:Label (en="Print Deal Slip")
+			@i18n:Tooltip (en="Denotes whether deal slip to be printed or not")
+			@t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=69.0, core=true, t24Name=PRINT.DEAL.SLIP)
+		SEND_PAYMENT : FD_Config:FD_ENT_TODAY__SEND_PAYMENT
+			@i18n:Label (en="Send Payment")
+			@i18n:Tooltip (en="Send payment - Y/N ?")
+			@t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=70.0, core=true, t24Name=SEND.PAYMENT)
+		SEND_CONFIRM : FD_Config:FD_ENT_TODAY__SEND_CONFIRM
+			@i18n:Label (en="Send Confirm")
+			@i18n:Tooltip (en="Specifies whether Confirmation to be sent or not")
+			@t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=71.0, core=true, t24Name=SEND.CONFIRM)
+		ADVICE_CODE -> byValue FD_Config:FD_ENT_TODAY__ADVICE_CODE *
+		EARLY_MAT_DATE : T24BusinessTypes:D
+			@i18n:Label (en="Early Mat Dt")
+			@t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=74.0, core=true, t24Name=EARLY.MAT.DATE)
+		EARLY_ORIG_DATE : T24BusinessTypes:D
+			@i18n:Label (en="Early Original Date")
+			@i18n:Tooltip (en="Indicates the early original maturity date")
+			@t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=75.0, core=true, t24Name=EARLY.ORIG.DATE)
+		EARLY_INT_RATE : T24BusinessTypes:R
+			@i18n:Label (en="Early Interest Date")
+			@i18n:Tooltip (en="Indicates new interest rate for early maturity")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=76.0, core=true, t24Name=EARLY.INT.RATE)
+		EARLY_ORIG_RATE : T24BusinessTypes:R
+			@i18n:Label (en="Early Original Rate")
+			@i18n:Tooltip (en="Indicates the original interest rate")
+			@t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=77.0, core=true, t24Name=EARLY.ORIG.RATE)
+		EARLY_STATUS : FD_Config:FD_ENT_TODAY__EARLY_STATUS
+			@i18n:Label (en="Early Status")
+			@i18n:Tooltip (en="Specifies the status of the early maturity request")
+			@t24:i (align=L, inputBehaviour=I, maxLength=10, sysNumber=78.0, core=true, t24Name=EARLY.STATUS)
+		PEN_COMM_TYPE : T24BusinessTypes:A
+			@i18n:Label (en="Penal Commission Type")
+			@i18n:Tooltip (en="Indicates the penal commission type")
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=79.0, core=true, t24Name=PEN.COMM.TYPE)
+		DEF_PEN_COMM_AMT : T24BusinessTypes:AMT
+			@i18n:Label (en="Default Penal Commission Rate")
+			@i18n:Tooltip (en="Indicates the default penal commission amount")
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=80.0, core=true, t24Name=DEF.PEN.COMM.AMT, typeModifiers="3")
+		DEF_PEN_COMM_RATE : T24BusinessTypes:R
+			@i18n:Label (en="Default Penal Commissio Amount")
+			@i18n:Tooltip (en="Indicates Default Penal Comm Rate")
+			@t24:i (align=R, inputBehaviour=N, maxLength=16, sysNumber=81.0, core=true, t24Name=DEF.PEN.COMM.RATE)
+		PEN_COMM_AMT : T24BusinessTypes:AMT
+			@i18n:Label (en="Penal Commission Amount")
+			@i18n:Tooltip (en="Specifies the penal commission amount")
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=82.0, core=true, t24Name=PEN.COMM.AMT, typeModifiers="3")
+		PEN_COMM_RATE : T24BusinessTypes:R
+			@i18n:Label (en="Penal Commission Rate")
+			@i18n:Tooltip (en="Holds the rate of Penal Commission to be charged")
+			@t24:i (align=R, inputBehaviour=N, maxLength=16, sysNumber=83.0, core=true, t24Name=PEN.COMM.RATE)
+		RESERVED_10 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=84.0, core=true, t24Name=RESERVED.10)
+		RESERVED_9 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=85.0, core=true, t24Name=RESERVED.9)
+		STMT_NOS -> byValue FD_Config:FD_ENT_TODAY__STMT_NOS *
+		OVERRIDE -> byValue FD_Config:FD_ENT_TODAY__OVERRIDE *
+	}
+	FD_ENT_TODAY__FID_BK_CORR_ADD
+	{
+		FID_BK_CORR_ADD : T24BusinessTypes:S
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=24.0, core=true, t24Name=FID.BK.CORR.ADD)
+	}
+	FD_ENT_TODAY__INTERMED_ADDR
+	{
+		INTERMED_ADDR : T24BusinessTypes:S
+			@i18n:Label (en="Intermediary Address")
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=27.0, core=true, t24Name=INTERMED.ADDR)
+	}
+	FD_ENT_TODAY__BANK_TO_BANK
+	{
+		BANK_TO_BANK : T24BusinessTypes:SW
+			@t24:i (align=L, inputBehaviour=I, maxLength=34, sysNumber=32.0, core=true, t24Name=BANK.TO.BANK)
+	}
+	FD_ENT_TODAY__ORDER_NOS
+	{
+		ORDER_NOS -> FD_Contract:FD_FID_ORDER
+			@i18n:Label (en="Order Nos")
+			@t24:i (align=L, inputBehaviour=N, maxLength=20, sysNumber=35.0, core=true, businessType=A, t24Name=ORDER.NOS, mask="L####/#####/#########", mvSvExpansionAccess=NOMODIFY)
+		SPEC_INSTR -> byValue FD_Config:FD_ENT_TODAY__ORDER_NOS__SPEC_INSTR *
+		ORDER_AMT : T24BusinessTypes:AMT
+			@i18n:Label (en="Order Amount")
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=37.0, core=true, t24Name=ORDER.AMT, typeModifiers="3")
+		ORDER_INT : T24BusinessTypes:AMT
+			@i18n:Label (en="Order Interest")
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=38.0, core=true, t24Name=ORDER.INT, typeModifiers="3")
+		ORDER_ACTION : FD_Config:FD_ENT_TODAY__ORDER_NOS__ORDER_ACTION
+			@t24:i (align=L, inputBehaviour=F, maxLength=6, sysNumber=39.0, core=true, t24Name=ORDER.ACTION)
+	}
+	FD_ENT_TODAY__ORDER_NOS__SPEC_INSTR
+	{
+		SPEC_INSTR : mml:Integer
+			@i18n:Label (en="Instrns fm Front Off")
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=36.0, core=true, t24Name=SPEC.INSTR)
+	}
+	FD_ENT_TODAY__CHANGE_DATE
+	{
+		CHANGE_DATE : T24BusinessTypes:D
+			@i18n:Label (en="Change Date")
+			@i18n:Tooltip (en="Date on which the arrangement would change")
+			@t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=43.0, core=true, t24Name=CHANGE.DATE, mvSvExpansionAccess=NOMODIFY)
+		ORDER_ID -> byValue FD_Config:FD_ENT_TODAY__CHANGE_DATE__ORDER_ID *
+	}
+	FD_ENT_TODAY__CHANGE_DATE__ORDER_ID
+	{
+		ORDER_ID -> FD_Contract:FD_FID_ORDER
+			@i18n:Label (en="Order ID")
+			@t24:i (align=L, inputBehaviour=N, maxLength=20, sysNumber=44.0, core=true, businessType=A, t24Name=ORDER.ID, mask="L####/#####/#########")
+		PRIN_CHANGE : T24BusinessTypes:AMT
+			@i18n:Label (en="Prin Change")
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=45.0, core=true, t24Name=PRIN.CHANGE, typeModifiers="-3")
+		CHNG_STATUS : FD_Config:FD_ENT_TODAY__CHANGE_DATE__ORDER_ID__CHNG_STATUS
+			@i18n:Label (en="Change Status")
+			@t24:i (align=L, inputBehaviour=I, maxLength=10, sysNumber=46.0, core=true, t24Name=CHNG.STATUS)
+	}
+	FD_ENT_TODAY__NEW_INT_RATE
+	{
+		NEW_INT_RATE : T24BusinessTypes:R
+			@i18n:Label (en="New Interest Rate")
+			@t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=49.0, core=true, t24Name=NEW.INT.RATE)
+		RATE_EFF_DATE : T24BusinessTypes:D
+			@t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=50.0, core=true, t24Name=RATE.EFF.DATE)
+		BACK_VAL_CHG : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=2, sysNumber=51.0, core=true, t24Name=BACK.VAL.CHG)
+	}
+	FD_ENT_TODAY__OUR_REMARKS
+	{
+		OUR_REMARKS : T24BusinessTypes:S
+			@i18n:Label (en="Dealer Remarks")
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=53.0, core=true, t24Name=OUR.REMARKS)
+	}
+	FD_ENT_TODAY__ADVICE_CODE
+	{
+		ADVICE_CODE : T24BusinessTypes:A
+			@i18n:Label (en="Advice Code")
+			@i18n:Tooltip (en="Advice code used to generate the delivery message ")
+			@t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=72.0, core=true, t24Name=ADVICE.CODE)
+		DELIVERY_REF : T24BusinessTypes:A
+			@i18n:Label (en="Delivery Ref")
+			@i18n:Tooltip (en="System generated Delivery ref key")
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=73.0, core=true, t24Name=DELIVERY.REF)
+	}
+	FD_ENT_TODAY__STMT_NOS
+	{
+		STMT_NOS : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=N, maxLength=20, sysNumber=86.0, core=true, t24Name=STMT.NOS)
+	}
+	FD_ENT_TODAY__OVERRIDE
+	{
+		OVERRIDE : T24BusinessTypes:A
+			@i18n:Label (en=Override)
+			@i18n:Tooltip (en="Overrides generated by this transaction")
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=87.0, core=true, t24Name=OVERRIDE)
+	}
+	FD_EOD_LIST
+		@t24:i (t24Name=FD.EOD.LIST, level=F, type=T, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		EVENT_DATE -> FD_Config:FD_EOD_LIST PK required
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=0.0, core=true, businessType=D, t24Name=EVENT.DATE)
+		PLACEMENT_ID : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=I, maxLength=14, sysNumber=1.0, core=true, t24Name=PLACEMENT.ID, mask="R##/#####/#####")
+	}
+	FD_FID_CURRENCY
+		@t24:i (t24Name=FD.FID.CURRENCY, level=Y, type=H, allowedFunctions="A C D E H I L P Q R S", localRefAllowed=false)
+	{
+		CURRENCY_CODE -> FD_Config:FD_FID_CURRENCY PK required
+			@i18n:Label (en="Ccy Code")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=0.0, core=true, businessType=CCY, t24Name=CURRENCY.CODE)
+		CURRENCY : mml:Integer
+			@i18n:Label (en=Ccy)
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=1.0, core=true, t24Name=CURRENCY)
+		FID_TYPE -> byValue FD_Config:FD_FID_CURRENCY__FID_TYPE *
+		RESERVED_5 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=8.0, core=true, t24Name=RESERVED.5)
+		RESERVED_4 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=9.0, core=true, t24Name=RESERVED.4)
+		RESERVED_3 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=10.0, core=true, t24Name=RESERVED.3)
+		RESERVED_2 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=11.0, core=true, t24Name=RESERVED.2)
+		RESERVED_1 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=12.0, core=true, t24Name=RESERVED.1)
+		OVERRIDE -> byValue FD_Config:FD_FID_CURRENCY__OVERRIDE *
+		RECORD_STATUS : T24BusinessTypes:STAT
+			@i18n:Label (en="Record Status")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=14.0, core=true, t24Name=RECORD.STATUS)
+		CURR_NO : mml:Integer
+			@i18n:Label (en="Curr No")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=15.0, core=true, t24Name=CURR.NO)
+		INPUTTER -> byValue FD_Config:FD_FID_CURRENCY__INPUTTER *
+		DATE_TIME -> byValue FD_Config:FD_FID_CURRENCY__DATE_TIME *
+		AUTHORISER : T24BusinessTypes:A
+			@i18n:Label (en=Authoriser)
+			@i18n:Tooltip (en="Indicates the User who Authorises the record")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=18.0, core=true, t24Name=AUTHORISER)
+		CO_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company)
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=19.0, core=true, businessType=A, t24Name=CO.CODE, mask="R##-###-####")
+		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Dept Code")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=20.0, core=true, t24Name=DEPT.CODE)
+		AUDITOR_CODE : T24BusinessTypes:A
+			@i18n:Label (en="Auditor Code")
+			@i18n:Tooltip (en="Auditor Code")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=21.0, core=true, t24Name=AUDITOR.CODE)
+		AUDIT_DATE_TIME : T24BusinessTypes:RELTIME
+			@i18n:Label (en="Audit Date Time")
+			@i18n:Tooltip (en="Date and time when record was audited")
+			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=22.0, core=true, t24Name=AUDIT.DATE.TIME, mask="RDD DD  DD ##:##")
+	}
+	FD_FID_CURRENCY__FID_TYPE
+	{
+		FID_TYPE -> FD_Config:FD_CHARGE_PARAMETER required
+			@i18n:Label (en="Fiduciary Type")
+			@t24:i (align=L, inputBehaviour=I, maxLength=6, sysNumber=2.0, core=true, businessType=A, t24Name=FID.TYPE)
+		UPTO_AMT -> byValue FD_Config:FD_FID_CURRENCY__FID_TYPE__UPTO_AMT *
+		TENOR -> byValue FD_Config:FD_FID_CURRENCY__FID_TYPE__TENOR *
+	}
+	FD_FID_CURRENCY__FID_TYPE__UPTO_AMT
+	{
+		UPTO_AMT : T24BusinessTypes:AMT
+			@i18n:Label (en=Upto..)
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=3.0, core=true, t24Name=UPTO.AMT, typeModifiers="1")
+		MULT_AMT : T24BusinessTypes:AMT
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=4.0, core=true, t24Name=MULT.AMT, typeModifiers="1")
+	}
+	FD_FID_CURRENCY__FID_TYPE__TENOR
+	{
+		TENOR : T24BusinessTypes:A
+			@i18n:Label (en=Tenor)
+			@t24:i (align=L, inputBehaviour=I, maxLength=4, sysNumber=5.0, core=true, t24Name=TENOR)
+		TENOR_EVENT : FD_Config:FD_FID_CURRENCY__FID_TYPE__TENOR__TENOR_EVENT
+			@t24:i (align=L, inputBehaviour=I, maxLength=6, sysNumber=6.0, core=true, t24Name=TENOR.EVENT)
+		MIN_AMT : T24BusinessTypes:AMT
+			@i18n:Label (en="Min Amount")
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=7.0, core=true, t24Name=MIN.AMT, typeModifiers="1")
+	}
+	FD_FID_CURRENCY__OVERRIDE
+	{
+		OVERRIDE : T24BusinessTypes:A
+			@i18n:Label (en=Override)
+			@i18n:Tooltip (en="Overrides generated by this transaction")
+			@t24:i (align=L, inputBehaviour=N, maxLength=45, sysNumber=13.0, core=true, t24Name=OVERRIDE)
+	}
+	FD_FID_CURRENCY__INPUTTER
+	{
+		INPUTTER : T24BusinessTypes:A
+			@i18n:Label (en=Inputter)
+			@i18n:Tooltip (en="The user who last updated the record")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=16.0, core=true, t24Name=INPUTTER)
+	}
+	FD_FID_CURRENCY__DATE_TIME
+	{
+		DATE_TIME : T24BusinessTypes:RELTIME
+			@i18n:Label (en="Date time")
+			@i18n:Tooltip (en="Date and time when record was input or authorised")
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=17.0, core=true, t24Name=DATE.TIME, mask="RDD DD  DD ##:##")
+	}
+	FD_GROUP_PLACEMENT
+		@t24:i (t24Name=FD.GROUP.PLACEMENT, level=F, type=T, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		FID_GROUP_PLCMT -> FD_Config:FD_GROUP_PLACEMENT PK required
+			@t24:i (align=L, inputBehaviour=I, maxLength=30, sysNumber=0.0, core=true, businessType=A, t24Name=FID.GROUP.PLCMT)
+		GROUP_ID : mml:Integer
+			@i18n:Label (en="Group Id")
+			@t24:i (align=R, inputBehaviour=N, maxLength=13, core=false, t24Name=GROUP.ID, genOperation="FIELD(@ID,\"-\",1)")
+		PLACEMENT_ID : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=12, core=false, t24Name=PLACEMENT.ID, genOperation="FIELD(@ID,\"-\",2)")
+	}
+	FD_GROUP_TODAY
+		@t24:i (t24Name=FD.GROUP.TODAY, level=C, type=L, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		BANK_CCY_PERIOD -> FD_Config:FD_GROUP_TODAY PK required
+			@t24:i (align=L, inputBehaviour=I, maxLength=18, sysNumber=0.0, core=true, businessType=A, t24Name=BANK.CCY.PERIOD)
+		DESCRIPTION -> byValue FD_Config:FD_GROUP_TODAY__DESCRIPTION *
+		CURRENT_INT_RATE : T24BusinessTypes:R required
+			@t24:i (align=R, inputBehaviour=F, maxLength=12, sysNumber=2.0, core=true, t24Name=CURRENT.INT.RATE, typeModifiers=-)
+		INTEREST_RATE -> byValue FD_Config:FD_GROUP_TODAY__INTEREST_RATE *
+		NEW_INT_RATE -> byValue FD_Config:FD_GROUP_TODAY__NEW_INT_RATE *
+		DAYS_PRIOR_CONF : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=7.0, core=true, t24Name=DAYS.PRIOR.CONF)
+		AUTO_CHG_RATE : FD_Config:FD_GROUP_TODAY__AUTO_CHG_RATE
+			@t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=8.0, core=true, t24Name=AUTO.CHG.RATE)
+		FORWARD_BACKWARD : FD_Config:FD_GROUP_TODAY__FORWARD_BACKWARD
+			@i18n:Label (en="Forward Backward Key")
+			@i18n:Tooltip (en="Indicates the forward backward key")
+			@t24:i (align=R, inputBehaviour=I, maxLength=1, sysNumber=9.0, core=true, t24Name=FORWARD.BACKWARD)
+		INT_SETTLE_DATE : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=I, maxLength=13, sysNumber=10.0, core=true, t24Name=INT.SETTLE.DATE)
+		LAST_INT_SET_DATE : T24BusinessTypes:D
+			@t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=11.0, core=true, t24Name=LAST.INT.SET.DATE)
+		LAST_RATE_APPLIED : T24BusinessTypes:R
+			@t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=12.0, core=true, t24Name=LAST.RATE.APPLIED)
+		OVERRIDE -> byValue FD_Config:FD_GROUP_TODAY__OVERRIDE *
+	}
+	FD_GROUP_TODAY__DESCRIPTION
+	{
+		DESCRIPTION : T24BusinessTypes:A required
+			@i18n:Label (en=Description)
+			@i18n:Tooltip (en=Description)
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, multiLanguage=true, sysNumber=1.0, core=true, t24Name=DESCRIPTION)
+	}
+	FD_GROUP_TODAY__INTEREST_RATE
+	{
+		INTEREST_RATE : T24BusinessTypes:R
+			@i18n:Label (en="Interest Rate")
+			@i18n:Tooltip (en="Indicates interest rate")
+			@t24:i (align=R, inputBehaviour=F, maxLength=12, sysNumber=3.0, core=true, t24Name=INTEREST.RATE, typeModifiers=-)
+		RATE_EFF_DATE : T24BusinessTypes:D
+			@t24:i (align=R, inputBehaviour=F, maxLength=11, sysNumber=4.0, core=true, t24Name=RATE.EFF.DATE)
+	}
+	FD_GROUP_TODAY__NEW_INT_RATE
+	{
+		NEW_INT_RATE : T24BusinessTypes:R
+			@i18n:Label (en="New Interest Rate")
+			@t24:i (align=R, inputBehaviour=I, maxLength=12, sysNumber=5.0, core=true, t24Name=NEW.INT.RATE, typeModifiers=-)
+		NEW_RATE_EFF : T24BusinessTypes:D
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=6.0, core=true, t24Name=NEW.RATE.EFF)
+	}
+	FD_GROUP_TODAY__OVERRIDE
+	{
+		OVERRIDE : T24BusinessTypes:A
+			@i18n:Label (en=Override)
+			@i18n:Tooltip (en="Overrides generated by this transaction")
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=13.0, core=true, t24Name=OVERRIDE)
+	}
+	FD_MATURITY_DATES
+		@t24:i (t24Name=FD.MATURITY.DATES, level=F, type=H, allowedFunctions="A C D E H I L P Q R S", localRefAllowed=false)
+	{
+		YEAR_MONTH -> FD_Config:FD_MATURITY_DATES PK required
+			@i18n:Label (en="Year Month")
+			@t24:i (align=L, inputBehaviour=I, maxLength=7, sysNumber=0.0, core=true, businessType=A, t24Name=YEAR.MONTH)
+		CURRENCY -> byValue FD_Config:FD_MATURITY_DATES__CURRENCY *
+		RESERVED_5 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=3.0, core=true, t24Name=RESERVED.5)
+		RESERVED_4 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=4.0, core=true, t24Name=RESERVED.4)
+		RESERVED_3 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=5.0, core=true, t24Name=RESERVED.3)
+		RESERVED_2 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=6.0, core=true, t24Name=RESERVED.2)
+		RESERVED_1 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=7.0, core=true, t24Name=RESERVED.1)
+		OVERRIDE -> byValue FD_Config:FD_MATURITY_DATES__OVERRIDE *
+		RECORD_STATUS : T24BusinessTypes:STAT
+			@i18n:Label (en="Record Status")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=9.0, core=true, t24Name=RECORD.STATUS)
+		CURR_NO : mml:Integer
+			@i18n:Label (en="Curr No")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=10.0, core=true, t24Name=CURR.NO)
+		INPUTTER -> byValue FD_Config:FD_MATURITY_DATES__INPUTTER *
+		DATE_TIME -> byValue FD_Config:FD_MATURITY_DATES__DATE_TIME *
+		AUTHORISER : T24BusinessTypes:A
+			@i18n:Label (en=Authoriser)
+			@i18n:Tooltip (en="Indicates the User who Authorises the record")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=13.0, core=true, t24Name=AUTHORISER)
+		CO_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company)
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=14.0, core=true, businessType=A, t24Name=CO.CODE, mask="R##-###-####")
+		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Dept Code")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=15.0, core=true, t24Name=DEPT.CODE)
+		AUDITOR_CODE : T24BusinessTypes:A
+			@i18n:Label (en="Auditor Code")
+			@i18n:Tooltip (en="Auditor Code")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=16.0, core=true, t24Name=AUDITOR.CODE)
+		AUDIT_DATE_TIME : T24BusinessTypes:RELTIME
+			@i18n:Label (en="Audit Date Time")
+			@i18n:Tooltip (en="Date and time when record was audited")
+			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=17.0, core=true, t24Name=AUDIT.DATE.TIME, mask="RDD DD  DD ##:##")
+	}
+	FD_MATURITY_DATES__CURRENCY
+	{
+		CURRENCY -> FIN_CurrencyConfig:CURRENCY
+			@i18n:Label (en=Ccy)
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=1.0, core=true, businessType=CCY, t24Name=CURRENCY)
+		DAYS -> byValue FD_Config:FD_MATURITY_DATES__CURRENCY__DAYS *
+	}
+	FD_MATURITY_DATES__CURRENCY__DAYS
+	{
+		DAYS : mml:Integer required
+			@i18n:Label (en=Days)
+			@t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=2.0, core=true, t24Name=DAYS)
+	}
+	FD_MATURITY_DATES__OVERRIDE
+	{
+		OVERRIDE : T24BusinessTypes:A
+			@i18n:Label (en=Override)
+			@i18n:Tooltip (en="Overrides generated by this transaction")
+			@t24:i (align=L, inputBehaviour=N, maxLength=45, sysNumber=8.0, core=true, t24Name=OVERRIDE)
+	}
+	FD_MATURITY_DATES__INPUTTER
+	{
+		INPUTTER : T24BusinessTypes:A
+			@i18n:Label (en=Inputter)
+			@i18n:Tooltip (en="The user who last updated the record")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=11.0, core=true, t24Name=INPUTTER)
+	}
+	FD_MATURITY_DATES__DATE_TIME
+	{
+		DATE_TIME : T24BusinessTypes:RELTIME
+			@i18n:Label (en="Date time")
+			@i18n:Tooltip (en="Date and time when record was input or authorised")
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=12.0, core=true, t24Name=DATE.TIME, mask="RDD DD  DD ##:##")
+	}
+	FD_ORD_ENT_TODAY
+		@t24:i (t24Name=FD.ORD.ENT.TODAY, level=F, type=L, allowedFunctions="L P S", localRefAllowed=true)
+	{
+		ORDER_NO -> FD_Config:FD_ORD_ENT_TODAY PK required
+			@i18n:Label (en="Order No")
+			@i18n:Tooltip (en="Indicates the order number")
+			@t24:i (align=L, inputBehaviour=I, maxLength=18, sysNumber=0.0, core=true, businessType=A, t24Name=ORDER.NO, mask="L####/#####/#########")
+		CUSTOMER -> ST_Customer:CUSTOMER required
+			@i18n:Label (en=Customer)
+			@i18n:Tooltip (en="Customer Liability")
+			@t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=1.0, core=true, businessType=CUS, t24Name=CUSTOMER)
+		FID_TYPE : FD_Config:FD_ORD_ENT_TODAY__FID_TYPE required
+			@i18n:Label (en="Fiduciary Type")
+			@t24:i (align=L, inputBehaviour=F, maxLength=6, sysNumber=2.0, core=true, t24Name=FID.TYPE)
+		CATEGORY -> ST_Config:CATEGORY
+			@i18n:Label (en=Category)
+			@i18n:Tooltip (en="Specifies the Category")
+			@t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=3.0, core=true, businessType=PRODCAT, t24Name=CATEGORY, mask="R##-###")
+		CURRENCY -> FIN_CurrencyConfig:CURRENCY required
+			@i18n:Label (en=Ccy)
+			@t24:i (align=L, inputBehaviour=F, maxLength=3, sysNumber=4.0, core=true, businessType=CCY, t24Name=CURRENCY)
+		AMOUNT : T24BusinessTypes:AMT
+			@i18n:Label (en=Amount)
+			@i18n:Tooltip (en="Indicates the Amount")
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=5.0, core=true, t24Name=AMOUNT, typeModifiers="4")
+		CCY_MARKET -> FIN_CurrencyConfig:CURRENCY_MARKET required
+			@i18n:Label (en="Ccy Market")
+			@t24:i (align=R, inputBehaviour=I, maxLength=1, sysNumber=6.0, core=true, t24Name=CCY.MARKET)
+		ORDER_DATE : T24BusinessTypes:D
+			@i18n:Label (en="Order Date")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=7.0, core=true, t24Name=ORDER.DATE)
+		VALUE_DATE : T24BusinessTypes:D
+			@i18n:Label (en="Value Date")
+			@i18n:Tooltip (en="Indicates the Value date of the Contract")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=8.0, core=true, t24Name=VALUE.DATE)
+		MATURITY_DATE : T24BusinessTypes:MATLMM
+			@i18n:Label (en="Maturity Date")
+			@i18n:Tooltip (en="Indicates the Maturity Date of the Transaction")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=9.0, core=true, t24Name=MATURITY.DATE, typeModifiers=DAYS)
+		TERM : T24BusinessTypes:A
+			@i18n:Label (en=Term)
+			@i18n:Tooltip (en="period of time by which the amount must be repaid")
+			@t24:i (align=L, inputBehaviour=I, maxLength=4, sysNumber=10.0, core=true, t24Name=TERM)
+		LIMIT_REF : mml:Integer
+			@i18n:Label (en="Limit Ref")
+			@i18n:Tooltip (en="Limit Reference")
+			@t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=11.0, core=true, t24Name=LIMIT.REF)
+		MARGIN_RATE : T24BusinessTypes:R
+			@i18n:Label (en="Margin Rate")
+			@i18n:Tooltip (en="Percentage of margin rate used to value portfolio")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=12.0, core=true, t24Name=MARGIN.RATE)
+		PORTFOLIO_NO : mml:Integer
+			@i18n:Label (en="Portfoio No")
+			@i18n:Tooltip (en="Indicates the Portfolio Account of the customer")
+			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=13.0, core=true, t24Name=PORTFOLIO.NO)
+		DRAWDOWN_ACCT -> ACM_AccountOpening:ACCOUNT
+			@t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=14.0, core=true, businessType=ANT, t24Name=DRAWDOWN.ACCT)
+		PRIN_LIQ_ACCT -> ACM_AccountOpening:ACCOUNT
+			@i18n:Label (en="Principal Liq Acct")
+			@i18n:Tooltip (en="Indicates principal liqudation account")
+			@t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=15.0, core=true, businessType=ANT, t24Name=PRIN.LIQ.ACCT)
+		INT_LIQ_ACCT -> ACM_AccountOpening:ACCOUNT
+			@i18n:Label (en="Interest Liq Acct")
+			@i18n:Tooltip (en="Indicates Interest Liquidation Account")
+			@t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=16.0, core=true, businessType=ANT, t24Name=INT.LIQ.ACCT)
+		COMM_CHG_ACCT -> ACM_AccountOpening:ACCOUNT
+			@i18n:Label (en="Commission Charge Account")
+			@t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=17.0, core=true, businessType=ANT, t24Name=COMM.CHG.ACCT)
+		ACCT_OFFICER -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Account Officer")
+			@i18n:Tooltip (en="Acct Officer")
+			@t24:i (align=R, inputBehaviour=I, maxLength=4, sysNumber=18.0, core=true, businessType=DAO, t24Name=ACCT.OFFICER)
+		RENEWAL_TYPE : FD_Config:FD_ORD_ENT_TODAY__RENEWAL_TYPE
+			@i18n:Label (en="Renewal Type")
+			@t24:i (align=L, inputBehaviour=I, maxLength=6, sysNumber=19.0, core=true, t24Name=RENEWAL.TYPE)
+		RENEWAL_AMT : FD_Config:FD_ORD_ENT_TODAY__RENEWAL_AMT
+			@i18n:Label (en="Renewal Amt")
+			@t24:i (align=L, inputBehaviour=I, maxLength=11, sysNumber=20.0, core=true, t24Name=RENEWAL.AMT)
+		ROUND_RENEWAL : FD_Config:FD_ORD_ENT_TODAY__ROUND_RENEWAL
+			@i18n:Label (en="Round renewal?")
+			@t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=21.0, core=true, t24Name=ROUND.RENEWAL)
+		NEXT_DRAWDOWN -> ACM_AccountOpening:ACCOUNT
+			@i18n:Label (en="Next Drawdown")
+			@t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=22.0, core=true, businessType=ANT, t24Name=NEXT.DRAWDOWN)
+		NEXT_DD_MIN_BAL : T24BusinessTypes:AMT
+			@i18n:Label (en="Next DD Min Bal")
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=23.0, core=true, t24Name=NEXT.DD.MIN.BAL, typeModifiers="4")
+		NEXT_PRIN_LIQ -> ACM_AccountOpening:ACCOUNT
+			@i18n:Label (en="Next Prin Liq")
+			@t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=24.0, core=true, businessType=ANT, t24Name=NEXT.PRIN.LIQ)
+		NEXT_INT_LIQ -> ACM_AccountOpening:ACCOUNT
+			@i18n:Label (en="Next Int Liq")
+			@t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=25.0, core=true, businessType=ANT, t24Name=NEXT.INT.LIQ)
+		NEXT_COMM_CHG -> ACM_AccountOpening:ACCOUNT
+			@i18n:Label (en="Next Comm Chg")
+			@t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=26.0, core=true, businessType=ANT, t24Name=NEXT.COMM.CHG)
+		RENEWED_ORDER_ID : T24BusinessTypes:A
+			@i18n:Label (en="Renewed Order Id")
+			@t24:i (align=L, inputBehaviour=N, maxLength=14, sysNumber=27.0, core=true, t24Name=RENEWED.ORDER.ID)
+		POOLING : FD_Config:FD_ORD_ENT_TODAY__POOLING
+			@i18n:Label (en=Pooling)
+			@t24:i (align=L, inputBehaviour=I, maxLength=6, sysNumber=28.0, core=true, t24Name=POOLING)
+		POOLED_GROUP : T24BusinessTypes:A
+			@i18n:Label (en="Pooled Group")
+			@t24:i (align=L, inputBehaviour=I, maxLength=10, sysNumber=29.0, core=true, t24Name=POOLED.GROUP, mask="R#####/#####")
+		POOLING_STATUS : FD_Config:FD_ORD_ENT_TODAY__POOLING_STATUS
+			@i18n:Label (en="Pooling Status")
+			@t24:i (align=L, inputBehaviour=I, maxLength=8, sysNumber=30.0, core=true, t24Name=POOLING.STATUS)
+		SPLIT_AMOUNT -> byValue FD_Config:FD_ORD_ENT_TODAY__SPLIT_AMOUNT *
+		COMM_TYPE -> FD_Fees:FD_COMMISSION_TYPE
+			@i18n:Label (en="Comm Type")
+			@t24:i (align=L, inputBehaviour=I, maxLength=11, sysNumber=33.0, core=true, businessType=A, t24Name=COMM.TYPE)
+		DEF_COMM_AMT : T24BusinessTypes:AMT
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=34.0, core=true, t24Name=DEF.COMM.AMT, typeModifiers="4")
+		DEF_COMM_RATE : T24BusinessTypes:R
+			@t24:i (align=R, inputBehaviour=N, maxLength=16, sysNumber=35.0, core=true, t24Name=DEF.COMM.RATE)
+		COMM_RATE : T24BusinessTypes:R
+			@i18n:Label (en="Comm Rate")
+			@t24:i (align=R, inputBehaviour=I, maxLength=16, sysNumber=36.0, core=true, t24Name=COMM.RATE)
+		COMM_AMOUNT : T24BusinessTypes:AMT
+			@i18n:Label (en="Commission Amount")
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=37.0, core=true, t24Name=COMM.AMOUNT, typeModifiers="4")
+		COMM_TAKEN : FD_Config:FD_ORD_ENT_TODAY__COMM_TAKEN
+			@i18n:Label (en="Commission Taken")
+			@t24:i (align=L, inputBehaviour=I, maxLength=12, sysNumber=38.0, core=true, t24Name=COMM.TAKEN)
+		COMM_BASIS : FD_Config:FD_ORD_ENT_TODAY__COMM_BASIS
+			@i18n:Label (en="Commission Basis")
+			@t24:i (align=L, inputBehaviour=I, maxLength=9, sysNumber=39.0, core=true, t24Name=COMM.BASIS)
+		CHARGE_DATE -> byValue FD_Config:FD_ORD_ENT_TODAY__CHARGE_DATE *
+		TAX_CODE_COMM -> ST_ChargeConfig:TAX
+			@t24:i (align=R, inputBehaviour=N, maxLength=2, sysNumber=45.0, core=true, t24Name=TAX.CODE.COMM)
+		TAX_AMT_COMM : T24BusinessTypes:AMT
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=46.0, core=true, t24Name=TAX.AMT.COMM, typeModifiers="4")
+		TAX_AMT_COMM_LCY : T24BusinessTypes:AMT
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=47.0, core=true, t24Name=TAX.AMT.COMM.LCY, typeModifiers="USD")
+		TAX_COMM_XRATE : T24BusinessTypes:R
+			@t24:i (align=R, inputBehaviour=N, maxLength=14, sysNumber=48.0, core=true, t24Name=TAX.COMM.XRATE)
+		TAX_CHG_DATE -> byValue FD_Config:FD_ORD_ENT_TODAY__TAX_CHG_DATE *
+		FIDUCIARY_NO -> FD_Contract:FD_FIDUCIARY
+			@i18n:Label (en="Fiduciary No")
+			@t24:i (align=L, inputBehaviour=N, maxLength=12, sysNumber=54.0, core=true, businessType=A, t24Name=FIDUCIARY.NO)
+		COMMITTED_INT : T24BusinessTypes:AMT
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=55.0, core=true, t24Name=COMMITTED.INT, typeModifiers="4")
+		INTEREST_RATE : T24BusinessTypes:R
+			@i18n:Label (en="Interest Rate")
+			@i18n:Tooltip (en="Indicates interest rate")
+			@t24:i (align=R, inputBehaviour=I, maxLength=12, sysNumber=56.0, core=true, t24Name=INTEREST.RATE, typeModifiers=-)
+		INT_DAY_BASIS : FD_Config:FD_ORD_ENT_TODAY__INT_DAY_BASIS
+			@i18n:Label (en="Interest Day Basis")
+			@i18n:Tooltip (en="Interest basis used for interest and commission")
+			@t24:i (align=L, inputBehaviour=I, maxLength=1, sysNumber=57.0, core=true, t24Name=INT.DAY.BASIS)
+		INTEREST_PAY_DATE : T24BusinessTypes:FQO
+			@i18n:Label (en="Int Pmt Date")
+			@t24:i (align=L, inputBehaviour=N, maxLength=19, sysNumber=58.0, core=true, t24Name=INTEREST.PAY.DATE, mask="LDDDD DD  DD #####")
+		WITHOLD_TAX_CODE -> ST_ChargeConfig:TAX
+			@t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=59.0, core=true, t24Name=WITHOLD.TAX.CODE)
+		WITHOLD_TAX_AMT : T24BusinessTypes:AMT
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=60.0, core=true, t24Name=WITHOLD.TAX.AMT, typeModifiers="4")
+		CUSTOMER_REF : T24BusinessTypes:S
+			@i18n:Label (en="Customer Ref")
+			@t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=61.0, core=true, t24Name=CUSTOMER.REF)
+		CUST_REMARKS -> byValue FD_Config:FD_ORD_ENT_TODAY__CUST_REMARKS *
+		DEALER_INSTR -> byValue FD_Config:FD_ORD_ENT_TODAY__DEALER_INSTR *
+		ACCT_OFF_NOTES -> byValue FD_Config:FD_ORD_ENT_TODAY__ACCT_OFF_NOTES *
+		PRIN_CHANGE -> byValue FD_Config:FD_ORD_ENT_TODAY__PRIN_CHANGE *
+		REIMBURSE_DATE : T24BusinessTypes:D
+			@i18n:Label (en="Reimburse Date")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=68.0, core=true, t24Name=REIMBURSE.DATE)
+		REIMBURSE_STATUS : FD_Config:FD_ORD_ENT_TODAY__REIMBURSE_STATUS
+			@i18n:Label (en="Reimburse Status")
+			@t24:i (align=L, inputBehaviour=N, maxLength=10, sysNumber=69.0, core=true, t24Name=REIMBURSE.STATUS)
+		REIMBURSE_REQ : FD_Config:FD_ORD_ENT_TODAY__REIMBURSE_REQ
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=70.0, core=true, t24Name=REIMBURSE.REQ)
+		ORDER_STATUS : FD_Config:FD_ORD_ENT_TODAY__ORDER_STATUS
+			@i18n:Label (en=Status)
+			@t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=71.0, core=true, t24Name=ORDER.STATUS)
+		GROUP_COND_NO : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=N, maxLength=10, sysNumber=72.0, core=true, t24Name=GROUP.COND.NO)
+		REPLACE_ORDER : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=F, maxLength=18, sysNumber=73.0, core=true, t24Name=REPLACE.ORDER, mask="L####/#####/#########")
+		REPLACED_BY -> FD_Contract:FD_FID_ORDER
+			@i18n:Label (en="New Order No")
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=74.0, core=true, t24Name=REPLACED.BY, mask="L####/#####/#########")
+		FORWARD_BACKWARD : mml:Integer
+			@i18n:Label (en="Forward Backward Key")
+			@i18n:Tooltip (en="Indicates the forward backward key")
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=75.0, core=true, t24Name=FORWARD.BACKWARD)
+		RATE_CATEG : FD_Config:FD_ORD_ENT_TODAY__RATE_CATEG
+			@t24:i (align=L, inputBehaviour=I, maxLength=10, sysNumber=76.0, core=true, t24Name=RATE.CATEG)
+		RATE_MARGIN : T24BusinessTypes:R
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=77.0, core=true, t24Name=RATE.MARGIN, typeModifiers=-)
+		RATE_DEV_CODE -> FD_Contract:FD_RATE_DEVIATION
+			@t24:i (align=L, inputBehaviour=I, maxLength=4, sysNumber=78.0, core=true, businessType=A, t24Name=RATE.DEV.CODE)
+		BID_RATE : T24BusinessTypes:R
+			@i18n:Label (en="Bid Rate")
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=79.0, core=true, t24Name=BID.RATE)
+		FID_SUBTYPE : FD_Config:FD_ORD_ENT_TODAY__FID_SUBTYPE
+			@i18n:Label (en="Fiduciary Sub Type")
+			@i18n:Tooltip (en="Denotes the subtype at fiduciary type level")
+			@t24:i (align=L, inputBehaviour=F, maxLength=3, sysNumber=80.0, core=true, t24Name=FID.SUBTYPE)
+		FID_BANK -> ST_Customer:CUSTOMER
+			@i18n:Label (en="Fiduciary Bank")
+			@i18n:Tooltip (en="Bank where the funds are to be placed")
+			@t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=81.0, core=true, businessType=CUS, t24Name=FID.BANK)
+		POOLING_NOTICE : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=82.0, core=true, t24Name=POOLING.NOTICE)
+		RESERVED_4 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=83.0, core=true, t24Name=RESERVED.4)
+		RESERVED_3 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=84.0, core=true, t24Name=RESERVED.3)
+		RESERVED_2 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=85.0, core=true, t24Name=RESERVED.2)
+		RESERVED_1 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=86.0, core=true, t24Name=RESERVED.1)
+		CONSOL_KEY : mml:Integer
+			@i18n:Label (en="Consol Key")
+			@t24:i (align=R, inputBehaviour=N, maxLength=40, sysNumber=87.0, core=true, t24Name=CONSOL.KEY)
+		PRINT_DEAL_SLIP : FD_Config:FD_ORD_ENT_TODAY__PRINT_DEAL_SLIP
+			@i18n:Label (en="Print Deal Slip")
+			@i18n:Tooltip (en="Denotes whether deal slip to be printed or not")
+			@t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=89.0, core=true, t24Name=PRINT.DEAL.SLIP)
+		SEND_CONFIRM : FD_Config:FD_ORD_ENT_TODAY__SEND_CONFIRM required
+			@i18n:Label (en="Send Confirm")
+			@i18n:Tooltip (en="Specifies whether Confirmation to be sent or not")
+			@t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=90.0, core=true, t24Name=SEND.CONFIRM)
+		ACTIVITY_CODE -> byValue FD_Config:FD_ORD_ENT_TODAY__ACTIVITY_CODE *
+		EARLY_MAT_DATE : T24BusinessTypes:D
+			@i18n:Label (en="Early Mat Dt")
+			@t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=93.0, core=true, t24Name=EARLY.MAT.DATE)
+		EARLY_ORIG_DATE : T24BusinessTypes:D
+			@i18n:Label (en="Early Original Date")
+			@i18n:Tooltip (en="Indicates the early original maturity date")
+			@t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=94.0, core=true, t24Name=EARLY.ORIG.DATE)
+		EARLY_INT_RATE : T24BusinessTypes:R
+			@i18n:Label (en="Early Interest Date")
+			@i18n:Tooltip (en="Indicates new interest rate for early maturity")
+			@t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=95.0, core=true, t24Name=EARLY.INT.RATE)
+		EARLY_ORIG_RATE : T24BusinessTypes:R
+			@i18n:Label (en="Early Original Rate")
+			@i18n:Tooltip (en="Indicates the original interest rate")
+			@t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=96.0, core=true, t24Name=EARLY.ORIG.RATE)
+		EARLY_STATUS : FD_Config:FD_ORD_ENT_TODAY__EARLY_STATUS
+			@i18n:Label (en="Early Status")
+			@i18n:Tooltip (en="Specifies the status of the early maturity request")
+			@t24:i (align=L, inputBehaviour=N, maxLength=10, sysNumber=97.0, core=true, t24Name=EARLY.STATUS)
+		PEN_COMM_TYPE -> FD_Fees:FD_COMMISSION_TYPE
+			@i18n:Label (en="Penal Commission Type")
+			@i18n:Tooltip (en="Indicates the penal commission type")
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=98.0, core=true, businessType=A, t24Name=PEN.COMM.TYPE)
+		DEF_PEN_COMM_AMT : T24BusinessTypes:AMT
+			@i18n:Label (en="Default Penal Commission Rate")
+			@i18n:Tooltip (en="Indicates the default penal commission amount")
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=99.0, core=true, t24Name=DEF.PEN.COMM.AMT, typeModifiers="4")
+		DEF_PEN_COMM_RATE : T24BusinessTypes:R
+			@i18n:Label (en="Default Penal Commissio Amount")
+			@i18n:Tooltip (en="Indicates Default Penal Comm Rate")
+			@t24:i (align=R, inputBehaviour=N, maxLength=16, sysNumber=100.0, core=true, t24Name=DEF.PEN.COMM.RATE)
+		PEN_COMM_AMT : T24BusinessTypes:AMT
+			@i18n:Label (en="Penal Commission Amount")
+			@i18n:Tooltip (en="Specifies the penal commission amount")
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=101.0, core=true, t24Name=PEN.COMM.AMT, typeModifiers="4")
+		PEN_COMM_RATE : T24BusinessTypes:R
+			@i18n:Label (en="Penal Commission Rate")
+			@i18n:Tooltip (en="Holds the rate of Penal Commission to be charged")
+			@t24:i (align=R, inputBehaviour=N, maxLength=16, sysNumber=102.0, core=true, t24Name=PEN.COMM.RATE)
+		SETTLEMENT_MARKET -> FIN_CurrencyConfig:CURRENCY_MARKET
+			@t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=103.0, core=true, businessType=A, t24Name=SETTLEMENT.MARKET)
+		XRATE_TYPE : FD_Config:FD_ORD_ENT_TODAY__XRATE_TYPE
+			@t24:i (align=L, inputBehaviour=I, maxLength=8, sysNumber=104.0, core=true, t24Name=XRATE.TYPE)
+		EXCG_RATE : T24BusinessTypes:R
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=105.0, core=true, t24Name=EXCG.RATE)
+		RESERVED_7 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=106.0, core=true, t24Name=RESERVED.7)
+		RESERVED_6 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=107.0, core=true, t24Name=RESERVED.6)
+		STMT_NOS -> byValue FD_Config:FD_ORD_ENT_TODAY__STMT_NOS *
+		OVERRIDE -> byValue FD_Config:FD_ORD_ENT_TODAY__OVERRIDE *
+	}
+	FD_ORD_ENT_TODAY__SPLIT_AMOUNT
+	{
+		SPLIT_AMOUNT : T24BusinessTypes:AMT
+			@i18n:Label (en="Split Amount")
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=31.0, core=true, t24Name=SPLIT.AMOUNT, typeModifiers="4")
+		SPLIT_ORDER_ID : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=N, maxLength=18, sysNumber=32.0, core=true, t24Name=SPLIT.ORDER.ID, mask="L####/#####/#########")
+	}
+	FD_ORD_ENT_TODAY__CHARGE_DATE
+	{
+		CHARGE_DATE : T24BusinessTypes:D
+			@i18n:Label (en="Charge Date")
+			@i18n:Tooltip (en="Indicates value date for online charges raised")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=40.0, core=true, t24Name=CHARGE.DATE)
+		CHARGE_EVENT : FD_Config:FD_ORD_ENT_TODAY__CHARGE_DATE__CHARGE_EVENT
+			@t24:i (align=L, inputBehaviour=I, maxLength=8, sysNumber=41.0, core=true, t24Name=CHARGE.EVENT)
+		CHARGE_TYPE -> byValue FD_Config:FD_ORD_ENT_TODAY__CHARGE_DATE__CHARGE_TYPE *
+	}
+	FD_ORD_ENT_TODAY__CHARGE_DATE__CHARGE_TYPE
+	{
+		CHARGE_TYPE : T24BusinessTypes:CHG
+			@i18n:Label (en="Charge Type")
+			@i18n:Tooltip (en="Type of Charge")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=42.0, core=true, t24Name=CHARGE.TYPE)
+		DEF_CHG_AMT : T24BusinessTypes:AMT
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=43.0, core=true, t24Name=DEF.CHG.AMT, typeModifiers="4")
+		CHG_AMOUNT : T24BusinessTypes:AMT
+			@i18n:Label (en="Charge Amount")
+			@i18n:Tooltip (en="Defines charge amount")
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=44.0, core=true, t24Name=CHG.AMOUNT, typeModifiers="4")
+	}
+	FD_ORD_ENT_TODAY__TAX_CHG_DATE
+	{
+		TAX_CHG_DATE : T24BusinessTypes:D
+			@t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=49.0, core=true, t24Name=TAX.CHG.DATE)
+		TAX_CODE_CHG -> byValue FD_Config:FD_ORD_ENT_TODAY__TAX_CHG_DATE__TAX_CODE_CHG *
+	}
+	FD_ORD_ENT_TODAY__TAX_CHG_DATE__TAX_CODE_CHG
+	{
+		TAX_CODE_CHG -> ST_ChargeConfig:TAX
+			@t24:i (align=R, inputBehaviour=N, maxLength=2, sysNumber=50.0, core=true, t24Name=TAX.CODE.CHG)
+		TAX_AMT_CHG : T24BusinessTypes:AMT
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=51.0, core=true, t24Name=TAX.AMT.CHG, typeModifiers="4")
+		TAX_LAMT_CHG : T24BusinessTypes:AMT
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=52.0, core=true, t24Name=TAX.LAMT.CHG, typeModifiers="USD")
+		TAX_CHG_XRTE : T24BusinessTypes:R
+			@t24:i (align=R, inputBehaviour=N, maxLength=14, sysNumber=53.0, core=true, t24Name=TAX.CHG.XRTE)
+	}
+	FD_ORD_ENT_TODAY__CUST_REMARKS
+	{
+		CUST_REMARKS : T24BusinessTypes:S
+			@i18n:Label (en="Customer Remarks")
+			@i18n:Tooltip (en="Holds customer remarks ")
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=62.0, core=true, t24Name=CUST.REMARKS)
+	}
+	FD_ORD_ENT_TODAY__DEALER_INSTR
+	{
+		DEALER_INSTR : T24BusinessTypes:S
+			@i18n:Label (en="Dealer Instruction")
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=63.0, core=true, t24Name=DEALER.INSTR)
+	}
+	FD_ORD_ENT_TODAY__ACCT_OFF_NOTES
+	{
+		ACCT_OFF_NOTES : T24BusinessTypes:S
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=64.0, core=true, t24Name=ACCT.OFF.NOTES)
+	}
+	FD_ORD_ENT_TODAY__PRIN_CHANGE
+	{
+		PRIN_CHANGE : T24BusinessTypes:AMT
+			@i18n:Label (en="Prin Change")
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=65.0, core=true, t24Name=PRIN.CHANGE, typeModifiers="-4")
+		CHANGE_DATE : T24BusinessTypes:D
+			@i18n:Label (en="Change Date")
+			@i18n:Tooltip (en="Date on which the arrangement would change")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=66.0, core=true, t24Name=CHANGE.DATE)
+		CHANGE_STATUS : FD_Config:FD_ORD_ENT_TODAY__PRIN_CHANGE__CHANGE_STATUS
+			@i18n:Label (en="Change Status")
+			@t24:i (align=L, inputBehaviour=N, maxLength=10, sysNumber=67.0, core=true, t24Name=CHANGE.STATUS)
+	}
+	FD_ORD_ENT_TODAY__ACTIVITY_CODE
+	{
+		ACTIVITY_CODE : mml:Integer
+			@i18n:Label (en="Activity Code")
+			@i18n:Tooltip (en="Indicates activity code")
+			@t24:i (align=R, inputBehaviour=N, maxLength=3, sysNumber=91.0, core=true, t24Name=ACTIVITY.CODE)
+		DELIVERY_REF : T24BusinessTypes:A
+			@i18n:Label (en="Delivery Ref")
+			@i18n:Tooltip (en="System generated Delivery ref key")
+			@t24:i (align=L, inputBehaviour=N, maxLength=20, sysNumber=92.0, core=true, t24Name=DELIVERY.REF)
+	}
+	FD_ORD_ENT_TODAY__STMT_NOS
+	{
+		STMT_NOS : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=N, maxLength=20, sysNumber=108.0, core=true, t24Name=STMT.NOS)
+	}
+	FD_ORD_ENT_TODAY__OVERRIDE
+	{
+		OVERRIDE : T24BusinessTypes:A
+			@i18n:Label (en=Override)
+			@i18n:Tooltip (en="Overrides generated by this transaction")
+			@t24:i (align=L, inputBehaviour=N, maxLength=45, sysNumber=109.0, core=true, t24Name=OVERRIDE)
+	}
+	FD_ORDER_CUST
+		@t24:i (t24Name=FD.ORDER.CUST, level=F, type=T, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		CUSTOMER -> FD_Config:FD_ORDER_CUST PK required
+			@i18n:Label (en=Customer)
+			@i18n:Tooltip (en="Customer Liability")
+			@t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=0.0, core=true, businessType=CUS, t24Name=CUSTOMER)
+		FID_ORDER -> FD_Contract:FD_FID_ORDER
+			@t24:i (align=L, inputBehaviour=I, maxLength=14, sysNumber=1.0, core=true, businessType=A, t24Name=FID.ORDER, mask="L####/#####/#########")
+	}
+	FD_ORDER_MATURITY
+		@t24:i (t24Name=FD.ORDER.MATURITY, level=F, type=L, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		ORDER_MAT_DATE -> FD_Config:FD_ORDER_MATURITY PK required
+			@t24:i (align=L, inputBehaviour=I, maxLength=30, sysNumber=0.0, core=true, businessType=A, t24Name=ORDER.MAT.DATE)
+		MATURITY_DATE : T24BusinessTypes:D
+			@i18n:Label (en="Maturity Date")
+			@i18n:Tooltip (en="Indicates the Maturity Date of the Transaction")
+			@t24:i (align=R, inputBehaviour=N, maxLength=8, core=false, t24Name=MATURITY.DATE, genOperation="FIELD(@ID,\"-\",1)")
+		ORDER_ID : mml:Integer
+			@i18n:Label (en="Order ID")
+			@t24:i (align=R, inputBehaviour=N, maxLength=14, core=false, t24Name=ORDER.ID, genOperation="FIELD(@ID,\"-\",2,2)")
+	}
+	FD_PARAMETER
+		@t24:i (t24Name=FD.PARAMETER, level=F, type=H, allowedFunctions="A C D E H I L P Q R S", localRefAllowed=false)
+	{
+		KEY -> FD_Config:FD_PARAMETER PK required
+			@i18n:Label (en=Key)
+			@i18n:Tooltip (en="Indicates th transaction key")
+			@t24:i (align=L, inputBehaviour=I, maxLength=6, sysNumber=0.0, core=true, t24Name=KEY)
+		FID_TYPE -> byValue FD_Config:FD_PARAMETER__FID_TYPE *
+		ACCR_CYCLE_INT : T24BusinessTypes:FQU
+			@t24:i (align=L, inputBehaviour=I, maxLength=19, sysNumber=17.0, core=true, t24Name=ACCR.CYCLE.INT, mask="RDDDD DD DD  #####")
+		ACCR_CYCLE_COMM : T24BusinessTypes:FQU
+			@t24:i (align=L, inputBehaviour=I, maxLength=19, sysNumber=18.0, core=true, t24Name=ACCR.CYCLE.COMM, mask="RDDDD DD DD  #####")
+		PL_ACCR_COMM -> ST_Config:CATEGORY required
+			@t24:i (align=R, inputBehaviour=F, maxLength=5, sysNumber=19.0, core=true, t24Name=PL.ACCR.COMM)
+		PREV_MTH_ADJ_C -> ST_Config:CATEGORY required
+			@t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=20.0, core=true, t24Name=PREV.MTH.ADJ.C)
+		PREV_YR_ADJ_C -> ST_Config:CATEGORY required
+			@t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=21.0, core=true, t24Name=PREV.YR.ADJ.C)
+		NEW_PL_COMM -> ST_Config:CATEGORY
+			@t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=22.0, core=true, t24Name=NEW.PL.COMM)
+		BROKER_CAT -> ST_Config:CATEGORY
+			@t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=23.0, core=true, t24Name=BROKER.CAT)
+		INT_DIFF_CAT -> ST_Config:CATEGORY required
+			@t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=24.0, core=true, t24Name=INT.DIFF.CAT)
+		RENEWAL_DAYS : T24BusinessTypes:A required
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=25.0, core=true, t24Name=RENEWAL.DAYS)
+		RENEWAL_OVE : FD_Config:FD_PARAMETER__RENEWAL_OVE
+			@t24:i (align=L, inputBehaviour=I, maxLength=8, sysNumber=26.0, core=true, t24Name=RENEWAL.OVE)
+		RENEWAL_START : T24BusinessTypes:A required
+			@t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=27.0, core=true, t24Name=RENEWAL.START)
+		RENEW_BLOCK -> byValue FD_Config:FD_PARAMETER__RENEW_BLOCK *
+		RENEW_RPT_DAYS : T24BusinessTypes:A required
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=29.0, core=true, t24Name=RENEW.RPT.DAYS)
+		MAT_UPD_DAYS : mml:Integer required
+			@t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=30.0, core=true, t24Name=MAT.UPD.DAYS)
+		DAYS_POST_MAT : T24BusinessTypes:A required
+			@i18n:Label (en="Days Post Maturity")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=31.0, core=true, t24Name=DAYS.POST.MAT)
+		DEF_RATE_NOTICE : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=32.0, core=true, t24Name=DEF.RATE.NOTICE)
+		ONLINE_DRAWDOWN : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=I, maxLength=1, sysNumber=33.0, core=true, t24Name=ONLINE.DRAWDOWN)
+		BACK_VALUE_MAX : T24BusinessTypes:D
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=34.0, core=true, t24Name=BACK.VALUE.MAX)
+		NOTICE_POOL_DEFT : FD_Config:FD_PARAMETER__NOTICE_POOL_DEFT
+			@t24:i (align=L, inputBehaviour=I, maxLength=6, sysNumber=35.0, core=true, t24Name=NOTICE.POOL.DEFT)
+		NOTICE_POOL_EXIST : FD_Config:FD_PARAMETER__NOTICE_POOL_EXIST
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=36.0, core=true, t24Name=NOTICE.POOL.EXIST)
+		POOLING_FIELDS -> byValue FD_Config:FD_PARAMETER__POOLING_FIELDS *
+		MODIFY_COMM_RATE : FD_Config:FD_PARAMETER__MODIFY_COMM_RATE
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=38.0, core=true, t24Name=MODIFY.COMM.RATE)
+		CUST_PORTFOLIO_ADD : FD_Config:FD_PARAMETER__CUST_PORTFOLIO_ADD
+			@t24:i (align=L, inputBehaviour=I, maxLength=8, sysNumber=39.0, core=true, t24Name=CUST.PORTFOLIO.ADD)
+		VALUATION_ROUTINE : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=I, maxLength=20, sysNumber=40.0, core=true, t24Name=VALUATION.ROUTINE)
+		EX_ASSET_TYPE -> byValue FD_Config:FD_PARAMETER__EX_ASSET_TYPE *
+		EX_SUB_ASS_TYPE -> byValue FD_Config:FD_PARAMETER__EX_SUB_ASS_TYPE *
+		MATDATES : FD_Config:FD_PARAMETER__MATDATES
+			@t24:i (align=L, inputBehaviour=I, maxLength=18, sysNumber=43.0, core=true, t24Name=MATDATES)
+		NEW_DEF_AMT : FD_Config:FD_PARAMETER__NEW_DEF_AMT
+			@t24:i (align=L, inputBehaviour=I, maxLength=11, sysNumber=44.0, core=true, t24Name=NEW.DEF.AMT)
+		DEF_RENEW_AMT : FD_Config:FD_PARAMETER__DEF_RENEW_AMT
+			@t24:i (align=L, inputBehaviour=I, maxLength=11, sysNumber=45.0, core=true, t24Name=DEF.RENEW.AMT)
+		DEF_RENEW_TYPE : FD_Config:FD_PARAMETER__DEF_RENEW_TYPE
+			@t24:i (align=L, inputBehaviour=I, maxLength=6, sysNumber=46.0, core=true, t24Name=DEF.RENEW.TYPE)
+		RATE_TYPE -> byValue FD_Config:FD_PARAMETER__RATE_TYPE *
+		MIN_INCOME : T24BusinessTypes:AMT
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=48.0, core=true, t24Name=MIN.INCOME, typeModifiers="USD")
+		PLACEMENT_PROFILE : FD_Config:FD_PARAMETER__PLACEMENT_PROFILE
+			@t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=49.0, core=true, t24Name=PLACEMENT.PROFILE)
+		POOLING_FDP_PRG -> byValue FD_Config:FD_PARAMETER__POOLING_FDP_PRG *
+		PEN_COMM_CAT -> ST_Config:CATEGORY
+			@t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=51.0, core=true, t24Name=PEN.COMM.CAT)
+		SETTLEMENT_MARKET -> FIN_CurrencyConfig:CURRENCY_MARKET
+			@t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=52.0, core=true, businessType=A, t24Name=SETTLEMENT.MARKET)
+		XRATE_TYPE : FD_Config:FD_PARAMETER__XRATE_TYPE
+			@t24:i (align=L, inputBehaviour=I, maxLength=8, sysNumber=53.0, core=true, t24Name=XRATE.TYPE)
+		FURTHER_POOLING : FD_Config:FD_PARAMETER__FURTHER_POOLING
+			@t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=54.0, core=true, t24Name=FURTHER.POOLING)
+		ACCR_COMM_NOTICE : FD_Config:FD_PARAMETER__ACCR_COMM_NOTICE
+			@t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=55.0, core=true, t24Name=ACCR.COMM.NOTICE)
+		MATURE_AT_SOD : FD_Config:FD_PARAMETER__MATURE_AT_SOD
+			@i18n:Label (en="Mature at Start Of Day")
+			@i18n:Tooltip (en="Whether to mature at Start Of Day or not")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=56.0, core=true, t24Name=MATURE.AT.SOD)
+		RESERVED_5 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=57.0, core=true, t24Name=RESERVED.5)
+		RESERVED_4 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=58.0, core=true, t24Name=RESERVED.4)
+		RESERVED_3 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=59.0, core=true, t24Name=RESERVED.3)
+		RESERVED_2 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=60.0, core=true, t24Name=RESERVED.2)
+		RESERVED_1 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=61.0, core=true, t24Name=RESERVED.1)
+		RECORD_STATUS : T24BusinessTypes:STAT
+			@i18n:Label (en="Record Status")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=62.0, core=true, t24Name=RECORD.STATUS)
+		CURR_NO : mml:Integer
+			@i18n:Label (en="Curr No")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=63.0, core=true, t24Name=CURR.NO)
+		INPUTTER -> byValue FD_Config:FD_PARAMETER__INPUTTER *
+		DATE_TIME -> byValue FD_Config:FD_PARAMETER__DATE_TIME *
+		AUTHORISER : T24BusinessTypes:A
+			@i18n:Label (en=Authoriser)
+			@i18n:Tooltip (en="Indicates the User who Authorises the record")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=66.0, core=true, t24Name=AUTHORISER)
+		CO_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company)
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=67.0, core=true, businessType=A, t24Name=CO.CODE, mask="R##-###-####")
+		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Dept Code")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=68.0, core=true, t24Name=DEPT.CODE)
+		AUDITOR_CODE : T24BusinessTypes:A
+			@i18n:Label (en="Auditor Code")
+			@i18n:Tooltip (en="Auditor Code")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=69.0, core=true, t24Name=AUDITOR.CODE)
+		AUDIT_DATE_TIME : T24BusinessTypes:RELTIME
+			@i18n:Label (en="Audit Date Time")
+			@i18n:Tooltip (en="Date and time when record was audited")
+			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=70.0, core=true, t24Name=AUDIT.DATE.TIME, mask="RDD DD  DD ##:##")
+	}
+	FD_PARAMETER__FID_TYPE
+	{
+		FID_TYPE : FD_Config:FD_PARAMETER__FID_TYPE__FID_TYPE required
+			@i18n:Label (en="Fiduciary Type")
+			@t24:i (align=L, inputBehaviour=I, maxLength=6, sysNumber=1.0, core=true, t24Name=FID.TYPE)
+		DESCRIPT -> byValue FD_Config:FD_PARAMETER__FID_TYPE__DESCRIPT *
+		DEF_SUBTYPE : FD_Config:FD_PARAMETER__FID_TYPE__DEF_SUBTYPE
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=3.0, core=true, t24Name=DEF.SUBTYPE)
+		FID_SUBTYPE -> byValue FD_Config:FD_PARAMETER__FID_TYPE__FID_SUBTYPE *
+	}
+	FD_PARAMETER__FID_TYPE__DESCRIPT
+	{
+		DESCRIPT : T24BusinessTypes:A required
+			@i18n:Label (en=Description)
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, multiLanguage=true, sysNumber=2.0, core=true, t24Name=DESCRIPT)
+	}
+	FD_PARAMETER__FID_TYPE__FID_SUBTYPE
+	{
+		FID_SUBTYPE : FD_Config:FD_PARAMETER__FID_TYPE__FID_SUBTYPE__FID_SUBTYPE
+			@i18n:Label (en="Fiduciary Sub Type")
+			@i18n:Tooltip (en="Denotes the subtype at fiduciary type level")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=4.0, core=true, t24Name=FID.SUBTYPE)
+		DEP_CAT_STRT -> ST_Config:CATEGORY required
+			@t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=5.0, core=true, t24Name=DEP.CAT.STRT)
+		DEP_CAT_END -> ST_Config:CATEGORY required
+			@t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=6.0, core=true, t24Name=DEP.CAT.END)
+		PLT_CAT_STRT -> ST_Config:CATEGORY required
+			@t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=7.0, core=true, t24Name=PLT.CAT.STRT)
+		PLT_CAT_END -> ST_Config:CATEGORY required
+			@t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=8.0, core=true, t24Name=PLT.CAT.END)
+		DEF_CAT_DEP -> ST_Config:CATEGORY required
+			@t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=9.0, core=true, t24Name=DEF.CAT.DEP)
+		DEF_CAT_PLT -> ST_Config:CATEGORY required
+			@t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=10.0, core=true, t24Name=DEF.CAT.PLT)
+		MARGIN_RATE : mml:Integer required
+			@i18n:Label (en="Margin Rate")
+			@i18n:Tooltip (en="Percentage of margin rate used to value portfolio")
+			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=11.0, core=true, t24Name=MARGIN.RATE)
+		RESERVED5 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=12.0, core=true, t24Name=RESERVED5)
+		RESERVED4 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=13.0, core=true, t24Name=RESERVED4)
+		RESERVED3 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=14.0, core=true, t24Name=RESERVED3)
+		RESERVED2 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=15.0, core=true, t24Name=RESERVED2)
+		RESERVED1 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=16.0, core=true, t24Name=RESERVED1)
+	}
+	FD_PARAMETER__RENEW_BLOCK
+	{
+		RENEW_BLOCK : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=I, maxLength=4, sysNumber=28.0, core=true, t24Name=RENEW.BLOCK)
+	}
+	FD_PARAMETER__POOLING_FIELDS
+	{
+		POOLING_FIELDS : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=I, maxLength=25, sysNumber=37.0, core=true, t24Name=POOLING.FIELDS)
+	}
+	FD_PARAMETER__EX_ASSET_TYPE
+	{
+		EX_ASSET_TYPE -> SC_Config:ASSET_TYPE
+			@t24:i (align=L, inputBehaviour=I, maxLength=20, sysNumber=41.0, core=true, businessType=A, t24Name=EX.ASSET.TYPE)
+	}
+	FD_PARAMETER__EX_SUB_ASS_TYPE
+	{
+		EX_SUB_ASS_TYPE -> SC_Config:SUB_ASSET_TYPE
+			@t24:i (align=L, inputBehaviour=I, maxLength=20, sysNumber=42.0, core=true, businessType=A, t24Name=EX.SUB.ASS.TYPE)
+	}
+	FD_PARAMETER__RATE_TYPE
+	{
+		RATE_TYPE : T24BusinessTypes:A
+			@i18n:Label (en="Rate Type")
+			@i18n:Tooltip (en="Is the Rate quoted net of tax or gross of tax")
+			@t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=47.0, core=true, t24Name=RATE.TYPE)
+	}
+	FD_PARAMETER__POOLING_FDP_PRG
+	{
+		POOLING_FDP_PRG : T24BusinessTypes:PV
+			@t24:i (align=L, inputBehaviour=I, maxLength=54, sysNumber=50.0, core=true, t24Name=POOLING.FDP.PRG, typeModifiers=HULTW)
+	}
+	FD_PARAMETER__INPUTTER
+	{
+		INPUTTER : T24BusinessTypes:A
+			@i18n:Label (en=Inputter)
+			@i18n:Tooltip (en="The user who last updated the record")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=64.0, core=true, t24Name=INPUTTER)
+	}
+	FD_PARAMETER__DATE_TIME
+	{
+		DATE_TIME : T24BusinessTypes:RELTIME
+			@i18n:Label (en="Date time")
+			@i18n:Tooltip (en="Date and time when record was input or authorised")
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=65.0, core=true, t24Name=DATE.TIME, mask="RDD DD  DD ##:##")
+	}
+	FD_PLACEMENT_CUST
+		@t24:i (t24Name=FD.PLACEMENT.CUST, level=F, type=T, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		FID_BANK -> FD_Config:FD_PLACEMENT_CUST PK required
+			@i18n:Label (en="Fiduciary Bank")
+			@i18n:Tooltip (en="Bank where the funds are to be placed")
+			@t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=0.0, core=true, businessType=CUS, t24Name=FID.BANK)
+		PLACEMENT_ID -> FD_Contract:FD_FIDUCIARY
+			@t24:i (align=L, inputBehaviour=I, maxLength=12, sysNumber=1.0, core=true, businessType=A, t24Name=PLACEMENT.ID, mask="R##/#####/#####")
+	}
+	FD_STANDARD_PERIODS
+		@t24:i (t24Name=FD.STANDARD.PERIODS, level=F, type=H, additionalInfo=NOH, allowedFunctions="A C D E H I L P Q R S", localRefAllowed=false)
+	{
+		COMPANY_CODE -> FD_Config:FD_STANDARD_PERIODS PK required
+			@i18n:Label (en=Company)
+			@t24:i (align=L, inputBehaviour=I, maxLength=12, sysNumber=0.0, core=true, businessType=COM, t24Name=COMPANY.CODE)
+		UPTO_DAYS -> byValue FD_Config:FD_STANDARD_PERIODS__UPTO_DAYS *
+		RESERVED_5 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=3.0, core=true, t24Name=RESERVED.5)
+		RESERVED_4 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=4.0, core=true, t24Name=RESERVED.4)
+		RESERVED_3 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=5.0, core=true, t24Name=RESERVED.3)
+		RESERVED_2 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=6.0, core=true, t24Name=RESERVED.2)
+		RESERVED_1 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=7.0, core=true, t24Name=RESERVED.1)
+		OVERRIDE -> byValue FD_Config:FD_STANDARD_PERIODS__OVERRIDE *
+		RECORD_STATUS : T24BusinessTypes:STAT
+			@i18n:Label (en="Record Status")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=9.0, core=true, t24Name=RECORD.STATUS)
+		CURR_NO : mml:Integer
+			@i18n:Label (en="Curr No")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=10.0, core=true, t24Name=CURR.NO)
+		INPUTTER -> byValue FD_Config:FD_STANDARD_PERIODS__INPUTTER *
+		DATE_TIME -> byValue FD_Config:FD_STANDARD_PERIODS__DATE_TIME *
+		AUTHORISER : T24BusinessTypes:A
+			@i18n:Label (en=Authoriser)
+			@i18n:Tooltip (en="Indicates the User who Authorises the record")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=13.0, core=true, t24Name=AUTHORISER)
+		CO_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company)
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=14.0, core=true, businessType=A, t24Name=CO.CODE, mask="R##-###-####")
+		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Dept Code")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=15.0, core=true, t24Name=DEPT.CODE)
+		AUDITOR_CODE : T24BusinessTypes:A
+			@i18n:Label (en="Auditor Code")
+			@i18n:Tooltip (en="Auditor Code")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=16.0, core=true, t24Name=AUDITOR.CODE)
+		AUDIT_DATE_TIME : T24BusinessTypes:RELTIME
+			@i18n:Label (en="Audit Date Time")
+			@i18n:Tooltip (en="Date and time when record was audited")
+			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=17.0, core=true, t24Name=AUDIT.DATE.TIME, mask="RDD DD  DD ##:##")
+	}
+	FD_STANDARD_PERIODS__UPTO_DAYS
+	{
+		UPTO_DAYS : mml:Integer
+			@i18n:Label (en="Upto Days")
+			@i18n:Tooltip (en="Indicates number of days Upto")
+			@t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=1.0, core=true, t24Name=UPTO.DAYS)
+		PERIOD : T24BusinessTypes:A required
+			@i18n:Label (en=Period)
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=2.0, core=true, t24Name=PERIOD)
+	}
+	FD_STANDARD_PERIODS__OVERRIDE
+	{
+		OVERRIDE : T24BusinessTypes:A
+			@i18n:Label (en=Override)
+			@i18n:Tooltip (en="Overrides generated by this transaction")
+			@t24:i (align=L, inputBehaviour=N, maxLength=45, sysNumber=8.0, core=true, t24Name=OVERRIDE)
+	}
+	FD_STANDARD_PERIODS__INPUTTER
+	{
+		INPUTTER : T24BusinessTypes:A
+			@i18n:Label (en=Inputter)
+			@i18n:Tooltip (en="The user who last updated the record")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=11.0, core=true, t24Name=INPUTTER)
+	}
+	FD_STANDARD_PERIODS__DATE_TIME
+	{
+		DATE_TIME : T24BusinessTypes:RELTIME
+			@i18n:Label (en="Date time")
+			@i18n:Tooltip (en="Date and time when record was input or authorised")
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=12.0, core=true, t24Name=DATE.TIME, mask="RDD DD  DD ##:##")
+	}
+	FD_UNCONF_BROKER
+		@t24:i (t24Name=FD.UNCONF.BROKER, level=F, type=L, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		BROKER_FIDUCIARY -> FD_Config:FD_UNCONF_BROKER PK required
+			@t24:i (align=L, inputBehaviour=I, maxLength=20, sysNumber=0.0, core=true, businessType=A, t24Name=BROKER.FIDUCIARY)
+		CONTRACT : T24BusinessTypes:A
+			@i18n:Label (en=Contract)
+			@t24:i (align=L, inputBehaviour=I, maxLength=14, sysNumber=1.0, core=true, t24Name=CONTRACT)
+		BROKER : T24BusinessTypes:CUS
+			@i18n:Label (en=Broker)
+			@t24:i (align=R, inputBehaviour=N, maxLength=10, core=false, t24Name=BROKER, genOperation="FIELD(@ID,\"-\",1)")
+		FIDUCIARY_NO : mml:Integer
+			@i18n:Label (en="Fiduciary No")
+			@t24:i (align=R, inputBehaviour=N, maxLength=12, core=false, t24Name=FIDUCIARY.NO, genOperation="FIELD(@ID,\"-\",2)")
+	}
+	FD_UNCONF_CUSTOMER
+		@t24:i (t24Name=FD.UNCONF.CUSTOMER, level=F, type=L, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		CUSTOMER_FIDUCIARY -> FD_Config:FD_UNCONF_CUSTOMER PK required
+			@t24:i (align=L, inputBehaviour=I, maxLength=20, sysNumber=0.0, core=true, businessType=A, t24Name=CUSTOMER.FIDUCIARY)
+		CONTRACT : T24BusinessTypes:A
+			@i18n:Label (en=Contract)
+			@t24:i (align=L, inputBehaviour=I, maxLength=14, sysNumber=1.0, core=true, t24Name=CONTRACT)
+		CUSTOMER : T24BusinessTypes:CUS
+			@i18n:Label (en=Customer)
+			@i18n:Tooltip (en="Customer Liability")
+			@t24:i (align=R, inputBehaviour=N, maxLength=10, core=false, t24Name=CUSTOMER, genOperation="FIELD(@ID,\"-\",1)")
+		FIDUCIARY_NO : mml:Integer
+			@i18n:Label (en="Fiduciary No")
+			@t24:i (align=R, inputBehaviour=N, maxLength=12, core=false, t24Name=FIDUCIARY.NO, genOperation="FIELD(@ID,\"-\",2)")
+	}
+}
+Enumerations {
+	FD_CHARGE_PARAMETER__COMM_TAKEN : mml:string
+		ARREARS=ARREARS
+		ADVANCE=ADVANCE
+	FD_CHARGE_PARAMETER__BASE_AMOUNT : mml:string
+		PRINCIPAL=PRINCIPAL
+		INTEREST=INTEREST
+		INCOME=INCOME
+	FD_CHARGE_PARAMETER__MIN_MOVEMENT : mml:string
+		PRINCIPAL=PRINCIPAL
+		INTEREST=INTEREST
+		BOTH=BOTH
+	FD_CHARGE_PARAMETER__COMM_PRIN_INT : mml:string
+		INTEREST=INTEREST
+		PRINCIPAL=PRINCIPAL
+		BOTH=BOTH
+	FD_CHARGE_PARAMETER__START_END_CALC : mml:string
+		START=START
+		END=END
+	FD_CHARGE_PARAMETER__DEFAULT_CHARGES : mml:string
+		Y=Y
+		NO=NO
+	FD_CUST_DETAILS__MANDATE_HELD : mml:string
+		NO=NO
+	FD_CUST_DETAILS__FIDUCIARY_TYPE__RATE_CATEG : mml:string
+		BID=BID
+		STANDARD=STANDARD
+	FD_CUST_DETAILS__FIDUCIARY_TYPE__CURRENCY__DEF_INT_BASE : mml:string
+		A=A
+		B=B
+		E=E
+		F=F
+	FD_CUST_DETAILS__FIDUCIARY_TYPE__CURRENCY__RNEW_AMT_MET : mml:string
+		PRINCIPAL=PRINCIPAL
+		INCOME=INCOME
+		INCOME_ACCT=INCOME.ACCT
+		NET=NET
+		PPAL=PPAL
+	FD_ENT_TODAY__FID_TYPE : mml:string
+		FIXED=FIXED
+		NOTICE=NOTICE
+	FD_ENT_TODAY__MANUAL_INTEREST : mml:string
+		Y=Y
+		NO=NO
+	FD_ENT_TODAY__INT_DAY_BASIS : mml:string
+		A=A
+		B=B
+		E=E
+		F=F
+	FD_ENT_TODAY__ORDER_NOS__ORDER_ACTION : mml:string
+		REMOVE=REMOVE
+	FD_ENT_TODAY__FID_STATUS : mml:string
+		FWD=FWD
+		CUR=CUR
+		LIQ=LIQ
+		MAT=MAT
+	FD_ENT_TODAY__CHANGE_DATE__ORDER_ID__CHNG_STATUS : mml:string
+		ACCEPTED=ACCEPTED
+		ACTIONED=ACTIONED
+		REQUESTED=REQUESTED
+		PAYMENT=PAYMENT
+	FD_ENT_TODAY__REIMBURSE_STATUS : mml:string
+		ACCEPTED=ACCEPTED
+		REQUESTED=REQUESTED
+	FD_ENT_TODAY__PREVENT_POOLING : mml:string
+		YES=YES
+		NULL=NULL
+	FD_ENT_TODAY__MATURE_AT_SOD : mml:string
+		YES=YES
+		NO=NO
+	FD_ENT_TODAY__PRINT_DEAL_SLIP : mml:string
+		Y=Y
+		NO=NO
+	FD_ENT_TODAY__SEND_PAYMENT : mml:string
+		Y=Y
+		NO=NO
+	FD_ENT_TODAY__SEND_CONFIRM : mml:string
+		Y=Y
+		NO=NO
+	FD_ENT_TODAY__EARLY_STATUS : mml:string
+		ACCEPTED=ACCEPTED
+		ACTIONED=ACTIONED
+		REQUESTED=REQUESTED
+	FD_FID_CURRENCY__FID_TYPE__TENOR__TENOR_EVENT : mml:string
+		INIT=INIT
+		CHANGE=CHANGE
+		NULL=NULL
+	FD_GROUP_TODAY__AUTO_CHG_RATE : mml:string
+		Y=Y
+		NO=NO
+	FD_GROUP_TODAY__FORWARD_BACKWARD : mml:string
+		1=1
+		2=2
+		3=3
+	FD_ORD_ENT_TODAY__FID_TYPE : mml:string
+		FIXED=FIXED
+		NOTICE=NOTICE
+	FD_ORD_ENT_TODAY__RENEWAL_TYPE : mml:string
+		AUTO=AUTO
+		SEMI=SEMI
+		MANUAL=MANUAL
+		NONE=NONE
+	FD_ORD_ENT_TODAY__RENEWAL_AMT : mml:string
+		PRINCIPAL=PRINCIPAL
+		INCOME=INCOME
+		INCOME_ACCT=INCOME.ACCT
+		NET=NET
+		PPAL=PPAL
+	FD_ORD_ENT_TODAY__ROUND_RENEWAL : mml:string
+		Y=Y
+		NO=NO
+	FD_ORD_ENT_TODAY__POOLING : mml:string
+		AUTO=AUTO
+		MANUAL=MANUAL
+		NONE=NONE
+	FD_ORD_ENT_TODAY__POOLING_STATUS : mml:string
+		OPEN=OPEN
+		APPROVED=APPROVED
+		CLOSED=CLOSED
+		MAT=MAT
+		CANCEL=CANCEL
+		REPLACE=REPLACE
+		SPLIT=SPLIT
+	FD_ORD_ENT_TODAY__COMM_TAKEN : mml:string
+		ARREARS=ARREARS
+		ADVANCE=ADVANCE
+		ARREARS__PRIN=ARREARS-PRIN
+		ARREARS__INT=ARREARS-INT
+		ARREARS__BOTH=ARREARS-BOTH
+	FD_ORD_ENT_TODAY__COMM_BASIS : mml:string
+		PRINCIPAL=PRINCIPAL
+		INTEREST=INTEREST
+		INCOME=INCOME
+	FD_ORD_ENT_TODAY__CHARGE_DATE__CHARGE_EVENT : mml:string
+		DRAWDOWN=DRAWDOWN
+		MATURITY=MATURITY
+		CHANGE=CHANGE
+	FD_ORD_ENT_TODAY__INT_DAY_BASIS : mml:string
+		A=A
+		B=B
+		E=E
+		F=F
+	FD_ORD_ENT_TODAY__PRIN_CHANGE__CHANGE_STATUS : mml:string
+		REQUESTED=REQUESTED
+		ACTIONED=ACTIONED
+	FD_ORD_ENT_TODAY__REIMBURSE_STATUS : mml:string
+		REQUESTED=REQUESTED
+		ACTIONED=ACTIONED
+	FD_ORD_ENT_TODAY__REIMBURSE_REQ : mml:string
+		YES=YES
+		NO=NO
+	FD_ORD_ENT_TODAY__ORDER_STATUS : mml:string
+		FWD=FWD
+		CUR=CUR
+		LIQ=LIQ
+		MAT=MAT
+		SPL=SPL
+	FD_ORD_ENT_TODAY__RATE_CATEG : mml:string
+		MANUAL=MANUAL
+		BID=BID
+		STANDARD=STANDARD
+	FD_ORD_ENT_TODAY__FID_SUBTYPE : mml:string
+		IN=IN
+		OUT=OUT
+		CD=CD
+	FD_ORD_ENT_TODAY__PRINT_DEAL_SLIP : mml:string
+		Y=Y
+		NO=NO
+	FD_ORD_ENT_TODAY__SEND_CONFIRM : mml:string
+		Y=Y
+		NO=NO
+	FD_ORD_ENT_TODAY__EARLY_STATUS : mml:string
+		REQUESTED=REQUESTED
+		ACTIONED=ACTIONED
+	FD_ORD_ENT_TODAY__XRATE_TYPE : mml:string
+		BUY_SELL=BUY.SELL
+		MID=MID
+	FD_PARAMETER__FID_TYPE__FID_TYPE : mml:string
+		FIXED=FIXED
+		NOTICE=NOTICE
+	FD_PARAMETER__FID_TYPE__DEF_SUBTYPE : mml:string
+		IN=IN
+		OUT=OUT
+		CD=CD
+	FD_PARAMETER__FID_TYPE__FID_SUBTYPE__FID_SUBTYPE : mml:string
+		IN=IN
+		OUT=OUT
+		CD=CD
+	FD_PARAMETER__RENEWAL_OVE : mml:string
+		NONE=NONE
+		CONTRACT=CONTRACT
+		ACCOUNT=ACCOUNT
+	FD_PARAMETER__NOTICE_POOL_DEFT : mml:string
+		MANUAL=MANUAL
+		AUTO=AUTO
+		NONE=NONE
+		NULL=NULL
+	FD_PARAMETER__NOTICE_POOL_EXIST : mml:string
+		YES=YES
+		NO=NO
+		NULL=NULL
+	FD_PARAMETER__MODIFY_COMM_RATE : mml:string
+		YES=YES
+		NO=NO
+	FD_PARAMETER__CUST_PORTFOLIO_ADD : mml:string
+		ABSOLUTE=ABSOLUTE
+		NET=NET
+	FD_PARAMETER__MATDATES : mml:string
+		FORWARD=FORWARD
+		FORWARD_IN_MONTH="FORWARD IN MONTH"
+		BACKWARD=BACKWARD
+		BACKWARD_IN_MONTH="BACKWARD IN MONTH"
+		NEAREST_FWD="NEAREST FWD"
+		NEAREST_BWD="NEAREST BWD"
+		NEAREST_FWD_IN_MTH="NEAREST FWD IN MTH"
+		NEAREST_BWD_IN_MTH="NEAREST BWD IN MTH"
+		NULL=NULL
+	FD_PARAMETER__NEW_DEF_AMT : mml:string
+		ACCT=ACCT
+		NULL=NULL
+	FD_PARAMETER__DEF_RENEW_AMT : mml:string
+		PRINCIPAL=PRINCIPAL
+		INCOME=INCOME
+		INCOME_ACCT=INCOME.ACCT
+		NET=NET
+		PPAL=PPAL
+		NULL=NULL
+	FD_PARAMETER__DEF_RENEW_TYPE : mml:string
+		AUTO=AUTO
+		SEMI=SEMI
+		MANUAL=MANUAL
+		NONE=NONE
+	FD_PARAMETER__PLACEMENT_PROFILE : mml:string
+		Y=Y
+		NO=NO
+	FD_PARAMETER__XRATE_TYPE : mml:string
+		BUY_SELL=BUY.SELL
+		MID=MID
+	FD_PARAMETER__FURTHER_POOLING : mml:string
+		Y=Y
+		NO=NO
+	FD_PARAMETER__ACCR_COMM_NOTICE : mml:string
+		Y=Y
+		NO=NO
+	FD_PARAMETER__MATURE_AT_SOD : mml:string
+		YES=YES
+		NO=NO
+}

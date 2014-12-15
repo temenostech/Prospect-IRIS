@@ -10,11 +10,11 @@ The series of vidoes explores the process of creating an API with the Temenos In
 
 
 
-Banking APIs Episode2 - API Design ()
+Banking APIs Episode2 - API Design (https://www.youtube.com/watch?v=MDpstRnl8AY)
 
 The series of vidoes explores the process of creating an API with the Temenos Interaction Framework Design Studio tooling. This second episode focuses on the API Design for data services, browsable API docs and interaction services.
 
 
-Banking APIs Episode3 - API Management ()
+Banking APIs Episode3 - API Management (http://youtu.be/LH9-PSOU2AU)
 
 The series of vidoes explores the process of creating an API with the Temenos Interaction Framework Design Studio tooling. This third episode focuses on the API Management for publication to internal or external developers through API management products such as the Azure API Manager.

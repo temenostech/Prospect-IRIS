@@ -1,0 +1,577 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><enquiry:Enquiry xmlns:enquiry="http://www.odcgroup.com/t24/Enquiry" xmlns:translationDsl="http://www.odcgroup.com/translation/TranslationDsl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" endLine="20" fileName="name:/ENT_EntryCreation:STMT.ENTRY#" metamodelVersion="1.30.6" name="STMT.ENT.BOOK" noSelection="true" showAllBooks="false" startLine="6" zeroRecordsDisplay="true">
+  <description xsi:type="translationDsl:LocalTranslations">
+    <translations locale="en" text="Account Statement"/>
+  </description>
+  <buildRoutines name="E.MB.STMT.BOOK.BUILD" xsi:type="enquiry:JBCRoutine"/>
+  <fixedSorts field="DATE.TIME"/>
+  <customSelection>
+    <selection field="ACCT.ID" mandatory="true" operator="AND">
+      <label xsi:type="translationDsl:LocalTranslations">
+        <translations locale="en" text="Account"/>
+      </label>
+    </selection>
+    <selection field="BOOKING.DATE" operator="AND">
+      <label xsi:type="translationDsl:LocalTranslations">
+        <translations locale="en" text="Booking Date"/>
+      </label>
+      <operands>Equals</operands>
+      <operands>LessThan</operands>
+      <operands>LessOrEquals</operands>
+      <operands>Greater</operands>
+      <operands>GreaterOrEquals</operands>
+      <operands>Between</operands>
+    </selection>
+    <selection field="PROCESSING.DATE" operator="AND">
+      <label xsi:type="translationDsl:LocalTranslations">
+        <translations locale="en" text="Processing Date"/>
+      </label>
+      <operands>Equals</operands>
+      <operands>LessThan</operands>
+      <operands>LessOrEquals</operands>
+      <operands>Greater</operands>
+      <operands>GreaterOrEquals</operands>
+      <operands>Between</operands>
+    </selection>
+    <selection field="VALUE.DATE" operator="AND">
+      <label xsi:type="translationDsl:LocalTranslations">
+        <translations locale="en" text="Value Date"/>
+      </label>
+      <operands>Equals</operands>
+      <operands>LessThan</operands>
+      <operands>LessOrEquals</operands>
+      <operands>Greater</operands>
+      <operands>GreaterOrEquals</operands>
+      <operands>Between</operands>
+    </selection>
+    <selection field="SHOW.NARRATIVE" operator="AND">
+      <label xsi:type="translationDsl:LocalTranslations">
+        <translations locale="en" text="Description"/>
+      </label>
+    </selection>
+    <selection field="SHOW.REVERSAL" operator="AND">
+      <label xsi:type="translationDsl:LocalTranslations">
+        <translations locale="en" text="Reversal Marker"/>
+      </label>
+      <operands>Equals</operands>
+    </selection>
+    <selection field="INCL.SUB.ACCT" operator="AND">
+      <label xsi:type="translationDsl:LocalTranslations">
+        <translations locale="en" text="Include Sub Acct"/>
+      </label>
+      <operands>Equals</operands>
+    </selection>
+    <selection field="APPL.DRILLDOWN">
+      <label xsi:type="translationDsl:LocalTranslations">
+        <translations locale="en" text="Appl Drilldown"/>
+      </label>
+      <operands>Equals</operands>
+    </selection>
+  </customSelection>
+  <fields alignment="Left" commaSeparator="false" name="NULLVAR">
+    <breakCondition break="Once"/>
+    <operation value="&quot;&quot;" xsi:type="enquiry:ConstantOperation"/>
+  </fields>
+  <fields alignment="Left" commaSeparator="false" displaySection="Header" displayType="CLASS-ENQ.H.TITLE" name="HDR.LINE1.1">
+    <position column="1" line="0"/>
+    <operation value="&quot;Account Statement&quot;" xsi:type="enquiry:ConstantOperation"/>
+  </fields>
+  <fields alignment="Left" commaSeparator="false" displaySection="Header" displayType="CLASS-ENQ.ID.LABEL" name="HDR.LINE2.1">
+    <position column="1" line="1"/>
+    <operation value="&quot;Account :&quot;" xsi:type="enquiry:ConstantOperation"/>
+  </fields>
+  <fields alignment="Left" commaSeparator="false" displaySection="Header" displayType="CLASS-ENQ.ID.LABEL" name="HDR.LINE2.2">
+    <position column="1" line="2"/>
+    <operation value="&quot;Customer :&quot;" xsi:type="enquiry:ConstantOperation"/>
+  </fields>
+  <fields alignment="Left" commaSeparator="false" displaySection="Header" displayType="CLASS-ENQ.ID.LABEL" name="HDR.LINE.3">
+    <position column="1" line="3"/>
+    <operation value="&quot;Currency :&quot;" xsi:type="enquiry:ConstantOperation"/>
+  </fields>
+  <fields alignment="Left" commaSeparator="false" length="90" name="@ID" singleMulti="Single">
+    <operation field="@ID" xsi:type="enquiry:ApplicationFieldNameOperation"/>
+  </fields>
+  <fields alignment="Left" commaSeparator="false" length="19" name="ACC" singleMulti="Single">
+    <operation field="ACCT.ID" xsi:type="enquiry:SelectionOperation"/>
+  </fields>
+  <fields alignment="Left" commaSeparator="false" name="ORIG.ACCT">
+    <operation field="ACC" xsi:type="enquiry:FieldExtractOperation"/>
+    <conversion application="ACCOUNT" field="ORIGINAL.ACCT" xsi:type="enquiry:GetFromConversion"/>
+  </fields>
+  <fields alignment="Left" commaSeparator="false" name="AUTO.PAY.ACCT">
+    <operation field="ACC" xsi:type="enquiry:FieldExtractOperation"/>
+    <conversion application="ACCOUNT" field="AUTO.PAY.ACCT" xsi:type="enquiry:GetFromConversion"/>
+  </fields>
+  <fields alignment="Left" commaSeparator="false" name="B.ACC">
+    <operation field="ACC" xsi:type="enquiry:BreakOnChangeOperation"/>
+  </fields>
+  <fields alignment="Left" commaSeparator="false" displaySection="Header" displayType="CLASS-ENQ.H.DATA" length="16" name="D.ACC">
+    <breakCondition break="Page"/>
+    <position column="10" line="1"/>
+    <operation field="ACC" xsi:type="enquiry:FieldExtractOperation"/>
+  </fields>
+  <fields alignment="Left" commaSeparator="false" length="19" name="CCY.CUS" singleMulti="Single">
+    <operation field="ACCOUNT.NUMBER" xsi:type="enquiry:ApplicationFieldNameOperation"/>
+    <conversion xsi:type="enquiry:CallRoutine">
+      <routine name="@ E.ACC.HIS.CCY" xsi:type="enquiry:JBCRoutine"/>
+    </conversion>
+  </fields>
+  <fields alignment="Left" commaSeparator="false" displaySection="Header" displayType="CLASS-ENQ.H.DATA" length="10" name="CUS">
+    <format format="User"/>
+    <breakCondition break="Page"/>
+    <position column="10" line="2"/>
+    <operation field="CCY.CUS" xsi:type="enquiry:FieldExtractOperation"/>
+    <conversion delimiter="\" from="2" xsi:type="enquiry:ExtractConversion"/>
+  </fields>
+  <fields alignment="Left" commaSeparator="false" name="CUSNM">
+    <format format="User"/>
+    <breakCondition break="Page"/>
+    <operation field="CUS" xsi:type="enquiry:FieldExtractOperation"/>
+    <conversion application="CUSTOMER" field="SHORT.NAME" xsi:type="enquiry:GetFromConversion"/>
+  </fields>
+  <fields alignment="Left" commaSeparator="false" name="ACCSNM">
+    <format format="User"/>
+    <breakCondition break="Page"/>
+    <operation field="ACC" xsi:type="enquiry:FieldExtractOperation"/>
+    <conversion application="ACCOUNT" field="SHORT.TITLE" xsi:type="enquiry:GetFromConversion"/>
+  </fields>
+  <fields alignment="Left" commaSeparator="false" displaySection="Header" name="SPACE">
+    <position column="35" line="2"/>
+    <operation value="&quot; &quot;" xsi:type="enquiry:ConstantOperation"/>
+  </fields>
+  <fields alignment="Left" commaSeparator="false" displaySection="Header" displayType="CLASS-ENQ.H.DATA" length="35" name="PRTNM">
+    <position column="36" line="2"/>
+    <operation firstField="CUSNM" leftField="CUS" operand="NotEquals" rightField="NULLVAR" secondField="ACCSNM" xsi:type="enquiry:DecisionOperation"/>
+  </fields>
+  <fields alignment="Left" commaSeparator="false" name="CCY">
+    <operation field="CURRENCY" xsi:type="enquiry:ApplicationFieldNameOperation"/>
+  </fields>
+  <fields alignment="Left" commaSeparator="false" name="FIX.CCY">
+    <operation field="CCY" xsi:type="enquiry:FieldExtractOperation"/>
+    <conversion field="CCY" xsi:type="enquiry:GetFixedCurrencyConversion"/>
+  </fields>
+  <fields alignment="Left" commaSeparator="false" name="D.CCY">
+    <operation field="CCY" xsi:type="enquiry:FieldExtractOperation"/>
+  </fields>
+  <fields alignment="Left" commaSeparator="false" name="NULL">
+    <operation value="&quot;&quot;" xsi:type="enquiry:ConstantOperation"/>
+  </fields>
+  <fields alignment="Left" commaSeparator="false" length="11" name="COMP.CCY" singleMulti="Single">
+    <operation field="COMPANY.CODE" xsi:type="enquiry:ApplicationFieldNameOperation"/>
+    <conversion application="COMPANY" field="LOCAL.CURRENCY" xsi:type="enquiry:GetFromConversion"/>
+  </fields>
+  <fields alignment="Right" commaSeparator="false" length="19" name="AMOUNT.LCY" singleMulti="Single">
+    <operation field="AMOUNT.LCY" xsi:type="enquiry:ApplicationFieldNameOperation"/>
+  </fields>
+  <fields alignment="Right" commaSeparator="false" length="19" name="AMOUNT.FCY" singleMulti="Single">
+    <operation field="AMOUNT.FCY" xsi:type="enquiry:ApplicationFieldNameOperation"/>
+  </fields>
+  <fields alignment="Left" commaSeparator="false" name="CCY1">
+    <operation firstField="CCY" leftField="CCY" operand="NotEquals" rightField="NULL" secondField="COMP.CCY" xsi:type="enquiry:DecisionOperation"/>
+  </fields>
+  <fields alignment="Left" commaSeparator="false" name="DIS.CCY">
+    <operation field="CCY1" xsi:type="enquiry:FieldExtractOperation"/>
+  </fields>
+  <fields alignment="Left" commaSeparator="false" displaySection="Header" displayType="CLASS-ENQ.H.DATA" length="3" name="ACCOUNT.CURRENCY" singleMulti="Single">
+    <operation field="CCY.CUS" xsi:type="enquiry:FieldExtractOperation"/>
+    <conversion delimiter="\" from="1" xsi:type="enquiry:ExtractConversion"/>
+  </fields>
+  <fields alignment="Left" commaSeparator="false" displaySection="Header" displayType="CLASS-ENQ.H.DATA" length="3" name="DISP.CCY" singleMulti="Single">
+    <position column="10" line="3"/>
+    <operation firstField="ACCOUNT.CURRENCY" leftField="D.CCY" operand="Equals" rightField="NULL" secondField="D.CCY" xsi:type="enquiry:DecisionOperation"/>
+  </fields>
+  <fields alignment="Left" commaSeparator="false" name="AMT.1">
+    <operation firstField="AMOUNT.LCY" leftField="CCY" operand="Equals" rightField="NULL" secondField="AMOUNT.FCY" xsi:type="enquiry:DecisionOperation"/>
+  </fields>
+  <fields alignment="Left" commaSeparator="false" name="CHECK1">
+    <operation field="CCY1" xsi:type="enquiry:FieldExtractOperation"/>
+    <conversion from="1" to="3" xsi:type="enquiry:ExtractConversion"/>
+  </fields>
+  <fields alignment="Left" commaSeparator="false" name="CHECK2">
+    <operation field="COMP.CCY" xsi:type="enquiry:FieldExtractOperation"/>
+    <conversion from="1" to="3" xsi:type="enquiry:ExtractConversion"/>
+  </fields>
+  <fields alignment="Left" commaSeparator="false" name="AMOUNT">
+    <operation firstField="AMOUNT.LCY" leftField="CHECK2" operand="Equals" rightField="CHECK1" secondField="AMOUNT.FCY" xsi:type="enquiry:DecisionOperation"/>
+  </fields>
+  <fields alignment="Left" commaSeparator="false" name="LANG">
+    <breakCondition break="Once"/>
+    <operation xsi:type="enquiry:LanguageOperation"/>
+  </fields>
+  <fields alignment="Left" commaSeparator="false" length="5" name="TCODE">
+    <operation field="TRANSACTION.CODE" xsi:type="enquiry:ApplicationFieldNameOperation"/>
+  </fields>
+  <fields alignment="Left" commaSeparator="false" name="CVDT">
+    <operation field="VALUE.DATE" xsi:type="enquiry:ApplicationFieldNameOperation"/>
+    <conversion xsi:type="enquiry:JulianConversion"/>
+    <conversion instruction="D2" xsi:type="enquiry:BasicOConversion"/>
+    <conversion oldData="--" xsi:type="enquiry:ReplaceConversion"/>
+  </fields>
+  <fields alignment="Left" commaSeparator="false" name="DESC">
+    <operation field="@ID" xsi:type="enquiry:FieldExtractOperation"/>
+    <conversion xsi:type="enquiry:CallRoutine">
+      <routine name="@ E.GET.NARRATIVE" xsi:type="enquiry:JBCRoutine"/>
+    </conversion>
+  </fields>
+  <fields alignment="Left" commaSeparator="false" name="VALID.DESC">
+    <operation firstField="NULL" leftField="DESC" operand="Equals" rightField="@ID" secondField="DESC" xsi:type="enquiry:DecisionOperation"/>
+  </fields>
+  <fields alignment="Left" commaSeparator="false" name="NOREC">
+    <breakCondition break="Once"/>
+    <operation value="&quot;*** NO ENTRIES&quot;" xsi:type="enquiry:ConstantOperation"/>
+  </fields>
+  <fields alignment="Left" commaSeparator="false" name="NOREC1">
+    <breakCondition break="Once"/>
+    <operation value="&quot;FOR PERIOD ***&quot;" xsi:type="enquiry:ConstantOperation"/>
+  </fields>
+  <fields alignment="Left" commaSeparator="false" name="NULL">
+    <breakCondition break="Once"/>
+    <operation value="&quot;&quot;" xsi:type="enquiry:ConstantOperation"/>
+  </fields>
+  <fields alignment="Left" commaSeparator="false" name="DELIM">
+    <breakCondition break="Once"/>
+    <operation value="&quot;:&quot;" xsi:type="enquiry:ConstantOperation"/>
+  </fields>
+  <fields alignment="Left" commaSeparator="false" name="THEIR.REF">
+    <operation field="THEIR.REFERENCE" xsi:type="enquiry:ApplicationFieldNameOperation"/>
+  </fields>
+  <fields alignment="Left" commaSeparator="false" length="19" name="B.AMT.BF" singleMulti="Single">
+    <breakCondition break="Once"/>
+    <operation field="ACCOUNT.NUMBER" xsi:type="enquiry:ApplicationFieldNameOperation"/>
+    <conversion xsi:type="enquiry:CallRoutine">
+      <routine name="@ E.CALC.OPEN.BALANCE" xsi:type="enquiry:JBCRoutine"/>
+    </conversion>
+  </fields>
+  <fields alignment="Left" commaSeparator="false" displayType="CLASS-TITLE" name="BFWD">
+    <breakCondition break="Once"/>
+    <position column="14" line="0" relative="+"/>
+    <operation value="&quot;Balance at Period Start&quot;" xsi:type="enquiry:ConstantOperation"/>
+  </fields>
+  <fields alignment="Left" commaSeparator="false" length="9" name="POST">
+    <label xsi:type="translationDsl:LocalTranslations">
+      <translations locale="en" text="Booking Date"/>
+    </label>
+    <format format="Date"/>
+    <position column="10"/>
+    <operation field="BOOKING.DATE" xsi:type="enquiry:ApplicationFieldNameOperation"/>
+    <conversion xsi:type="enquiry:JulianConversion"/>
+    <conversion instruction="D2" xsi:type="enquiry:BasicOConversion"/>
+    <conversion oldData="--" xsi:type="enquiry:ReplaceConversion"/>
+  </fields>
+  <fields alignment="Left" commaSeparator="false" length="25" name="REFNO">
+    <label xsi:type="translationDsl:LocalTranslations">
+      <translations locale="en" text="Reference"/>
+    </label>
+    <position column="14"/>
+    <operation field="TRANS.REFERENCE" xsi:type="enquiry:ApplicationFieldNameOperation"/>
+    <conversion xsi:type="enquiry:CallRoutine">
+      <routine name="@ E.THEIR.REF.CON" xsi:type="enquiry:JBCRoutine"/>
+    </conversion>
+  </fields>
+  <fields alignment="Left" commaSeparator="false" length="50" name="TRANS.NARRATIVE" singleMulti="Single">
+    <operation field="TRANSACTION.CODE" xsi:type="enquiry:ApplicationFieldNameOperation"/>
+    <conversion application="TRANSACTION" field="NARRATIVE" xsi:type="enquiry:GetFromConversion"/>
+  </fields>
+  <fields alignment="Left" commaSeparator="false" length="50" name="PDESC">
+    <label xsi:type="translationDsl:LocalTranslations">
+      <translations locale="en" text="Description"/>
+    </label>
+    <position column="34"/>
+    <operation firstField="TRANS.NARRATIVE" leftField="TCODE" operand="NotEquals" rightField="NULL" secondField="NOREC" xsi:type="enquiry:DecisionOperation"/>
+  </fields>
+  <fields alignment="Left" commaSeparator="false" length="34" name="NARRATIVE" singleMulti="Multi">
+    <position column="34" line="1" relative="+"/>
+    <operation field="NARRATIVE" xsi:type="enquiry:ApplicationFieldNameOperation"/>
+  </fields>
+  <fields alignment="Left" commaSeparator="false" name="EXTRA.NARR">
+    <position column="34" line="2" relative="+"/>
+    <operation field="VALID.DESC" xsi:type="enquiry:FieldExtractOperation"/>
+  </fields>
+  <fields alignment="Left" commaSeparator="false" length="25" name="VALDESC">
+    <label xsi:type="translationDsl:LocalTranslations">
+      <translations locale="en" text="Value Date"/>
+    </label>
+    <format format="Date"/>
+    <position column="48"/>
+    <operation firstField="CVDT" leftField="TCODE" operand="NotEquals" rightField="NULL" secondField="NOREC1" xsi:type="enquiry:DecisionOperation"/>
+  </fields>
+  <fields alignment="Left" commaSeparator="false" name="AMT" singleMulti="Single">
+    <format field="CCY" format="Currency" pattern="-#"/>
+    <operation field="AMOUNT" xsi:type="enquiry:FieldExtractOperation"/>
+  </fields>
+  <fields alignment="Left" commaSeparator="false" name="ZERO">
+    <operation value="&quot;0&quot;" xsi:type="enquiry:ConstantOperation"/>
+  </fields>
+  <fields alignment="Left" commaSeparator="false" name="ABS.DR.AMT">
+    <format field="CCY" format="Currency" pattern="-#"/>
+    <operation field="AMT" xsi:type="enquiry:FieldExtractOperation"/>
+    <conversion xsi:type="enquiry:AbsConversion"/>
+  </fields>
+  <fields alignment="Left" commaSeparator="false" name="DR.AMOUNT">
+    <operation firstField="ABS.DR.AMT" leftField="AMT" operand="LessThan" rightField="ZERO" secondField="NULL" xsi:type="enquiry:DecisionOperation"/>
+  </fields>
+  <fields alignment="Left" commaSeparator="false" name="DR.AMT">
+    <label xsi:type="translationDsl:LocalTranslations">
+      <translations locale="en" text="Debit"/>
+    </label>
+    <position column="60"/>
+    <operation firstField="DR.AMOUNT" leftField="TCODE" operand="NotEquals" rightField="NULL" secondField="NULL" xsi:type="enquiry:DecisionOperation"/>
+  </fields>
+  <fields alignment="Left" commaSeparator="false" name="CR.AMOUNT">
+    <label xsi:type="translationDsl:LocalTranslations">
+      <translations locale="en" text="Credit"/>
+    </label>
+    <position column="70"/>
+    <operation firstField="AMT" leftField="AMT" operand="Greater" rightField="ZERO" secondField="NULL" xsi:type="enquiry:DecisionOperation"/>
+  </fields>
+  <fields alignment="Left" commaSeparator="false" name="CR.AMT">
+    <operation firstField="NULL" leftField="CR.AMOUNT" operand="Equals" rightField="&quot;0&quot;" secondField="CR.AMOUNT" xsi:type="enquiry:DecisionOperation"/>
+  </fields>
+  <fields alignment="Left" commaSeparator="false" name="OPENING.BALANCE">
+    <format field="CCY" format="Currency" pattern="-#"/>
+    <breakCondition break="Once"/>
+    <position column="80" line="0" relative="+"/>
+    <operation field="B.AMT.BF" xsi:type="enquiry:FieldExtractOperation"/>
+  </fields>
+  <fields alignment="Left" commaSeparator="false" name="ENTRY.BALANCE">
+    <operation xsi:type="enquiry:CalcOperation">
+      <field>AMT</field>
+      <field>ENTRY.BALANCE</field>
+      <operator>+</operator>
+    </operation>
+  </fields>
+  <fields alignment="Left" commaSeparator="false" name="RUNNING.BALANCE">
+    <format field="CCY" format="Currency" pattern="-#"/>
+    <operation xsi:type="enquiry:CalcOperation">
+      <field>B.AMT.BF</field>
+      <field>ENTRY.BALANCE</field>
+      <operator>+</operator>
+    </operation>
+  </fields>
+  <fields alignment="Left" commaSeparator="false" name="HYPHN">
+    <breakCondition break="Once"/>
+    <operation value="&quot;---------&quot;" xsi:type="enquiry:ConstantOperation"/>
+  </fields>
+  <fields alignment="Left" commaSeparator="false" name="AA">
+    <breakCondition break="Once"/>
+    <operation value="&quot;AA&quot;" xsi:type="enquiry:ConstantOperation"/>
+  </fields>
+  <fields alignment="Left" commaSeparator="false" name="BALANCE">
+    <label xsi:type="translationDsl:LocalTranslations">
+      <translations locale="en" text="Closing Balance"/>
+    </label>
+    <position column="80"/>
+    <operation firstField="RUNNING.BALANCE" leftField="TCODE" operand="NotEquals" rightField="NULL" secondField="HYPHN" xsi:type="enquiry:DecisionOperation"/>
+  </fields>
+  <fields alignment="Left" commaSeparator="false" name="SYSTEM.ID">
+    <operation field="SYSTEM.ID" xsi:type="enquiry:ApplicationFieldNameOperation"/>
+  </fields>
+  <fields alignment="Left" commaSeparator="false" name="TRANS.REF">
+    <operation field="TRANS.REFERENCE" xsi:type="enquiry:ApplicationFieldNameOperation"/>
+    <conversion xsi:type="enquiry:CallRoutine">
+      <routine name="@ E.TRN.REF.CONV" xsi:type="enquiry:JBCRoutine"/>
+    </conversion>
+  </fields>
+  <fields alignment="Left" commaSeparator="false" name="STMT.ID" singleMulti="Single">
+    <operation field="@ID" xsi:type="enquiry:ApplicationFieldNameOperation"/>
+  </fields>
+  <fields alignment="Left" commaSeparator="false" name="BASE.APPL">
+    <operation field="SYSTEM.ID" xsi:type="enquiry:FieldExtractOperation"/>
+    <conversion xsi:type="enquiry:CallRoutine">
+      <routine name="@ E.READ.EB.SYSTEM.ID" xsi:type="enquiry:JBCRoutine"/>
+    </conversion>
+  </fields>
+  <fields alignment="Left" commaSeparator="false" name="NO">
+    <breakCondition break="Once"/>
+    <operation value="&quot;NO&quot;" xsi:type="enquiry:ConstantOperation"/>
+  </fields>
+  <fields alignment="Left" commaSeparator="false" name="FUN.SEE">
+    <operation value="&quot; S &quot;" xsi:type="enquiry:ConstantOperation"/>
+  </fields>
+  <fields alignment="Left" commaSeparator="false" length="3" name="APPL.DRILLDOWN">
+    <format format="User"/>
+    <operation field="APPL.DRILLDOWN" xsi:type="enquiry:SelectionOperation"/>
+  </fields>
+  <fields alignment="Left" commaSeparator="false" name="NEW.SYSTEM.ID">
+    <operation xsi:type="enquiry:CalcOperation">
+      <field>SYSTEM.ID</field>
+      <field>DELIM</field>
+      <operator>:</operator>
+    </operation>
+  </fields>
+  <fields alignment="Left" commaSeparator="false" length="100" name="NEW.BASE.APPL">
+    <operation xsi:type="enquiry:CalcOperation">
+      <field>NEW.SYSTEM.ID</field>
+      <field>NEXT.ID</field>
+      <operator>:</operator>
+    </operation>
+    <conversion xsi:type="enquiry:CallRoutine">
+      <routine name="@ E.CONV.APPLN" xsi:type="enquiry:JBCRoutine"/>
+    </conversion>
+  </fields>
+  <fields alignment="Left" commaSeparator="false" name="PS">
+    <breakCondition break="Once"/>
+    <operation value="&quot;PS&quot;" xsi:type="enquiry:ConstantOperation"/>
+  </fields>
+  <fields alignment="Left" commaSeparator="false" name="PS.ID.CHK">
+    <operation field="REFNO" xsi:type="enquiry:FieldExtractOperation"/>
+    <conversion delimiter="." from="2" to="1" xsi:type="enquiry:ExtractConversion"/>
+  </fields>
+  <fields alignment="Left" commaSeparator="false" name="PS.ID.FIN1">
+    <operation xsi:type="enquiry:CalcOperation">
+      <field>BASE.APPL</field>
+      <field>FUN.SEE</field>
+      <operator>:</operator>
+    </operation>
+  </fields>
+  <fields alignment="Left" commaSeparator="false" name="PS.ID.FIN">
+    <operation xsi:type="enquiry:CalcOperation">
+      <field>PS.ID.FIN1</field>
+      <field>PS.ID.CHK</field>
+      <operator>:</operator>
+    </operation>
+  </fields>
+  <fields alignment="Left" commaSeparator="false" name="NET.REF">
+    <operation field="REFNO" xsi:type="enquiry:FieldExtractOperation"/>
+    <conversion delimiter="-" from="1" to="1" xsi:type="enquiry:ExtractConversion"/>
+  </fields>
+  <fields alignment="Left" commaSeparator="false" name="NET.ENTRY">
+    <operation value="&quot;NET...&quot;" xsi:type="enquiry:ConstantOperation"/>
+  </fields>
+  <fields alignment="Left" commaSeparator="false" name="STMT.ENT.DET">
+    <operation value="&quot;ENQ STMT.ENT.DETAIL&quot;" xsi:type="enquiry:ConstantOperation"/>
+  </fields>
+  <fields alignment="Left" commaSeparator="false" name="NET.SEL.ID">
+    <operation value="&quot;STMT.ENTRY.ID EQ &quot;" xsi:type="enquiry:ConstantOperation"/>
+  </fields>
+  <fields alignment="Left" commaSeparator="false" name="NET.SEL.FORM">
+    <operation firstField="STMT.ID" leftField="NET.REF" operand="Matches" rightField="NET.ENTRY" secondField="NULL" xsi:type="enquiry:DecisionOperation"/>
+  </fields>
+  <fields alignment="Left" commaSeparator="false" name="FIN.NET.ID.FORM">
+    <operation xsi:type="enquiry:CalcOperation">
+      <field>NET.SEL.ID</field>
+      <field>NET.SEL.FORM</field>
+      <operator>:</operator>
+    </operation>
+  </fields>
+  <fields alignment="Left" commaSeparator="false" name="Y.TRAN.ID">
+    <operation xsi:type="enquiry:CalcOperation">
+      <field>BASE.APPL</field>
+      <field>FUN.SEE</field>
+      <operator>:</operator>
+    </operation>
+  </fields>
+  <fields alignment="Left" commaSeparator="false" name="AA.ID.FORM">
+    <operation value="&quot;AA.ARRANGEMENT.ACTIVITY&quot;" xsi:type="enquiry:ConstantOperation"/>
+  </fields>
+  <fields alignment="Left" commaSeparator="false" name="AA.ID.FIN1">
+    <operation xsi:type="enquiry:CalcOperation">
+      <field>AA.ID.FORM</field>
+      <field>FUN.SEE</field>
+      <operator>:</operator>
+    </operation>
+  </fields>
+  <fields alignment="Left" commaSeparator="false" name="AA.ID.FIN">
+    <operation xsi:type="enquiry:CalcOperation">
+      <field>AA.ID.FIN1</field>
+      <field>REFNO</field>
+      <operator>:</operator>
+    </operation>
+  </fields>
+  <fields alignment="Left" commaSeparator="false" name="Y.TRAN.ID.FIN">
+    <operation xsi:type="enquiry:CalcOperation">
+      <field>Y.TRAN.ID</field>
+      <field>TRANS.REF</field>
+      <operator>:</operator>
+    </operation>
+  </fields>
+  <fields alignment="Left" commaSeparator="false" name="Y.STMT.ID">
+    <operation xsi:type="enquiry:CalcOperation">
+      <field>STMT.ENTRY</field>
+      <field>FUN.SEE</field>
+      <operator>:</operator>
+    </operation>
+  </fields>
+  <fields alignment="Left" commaSeparator="false" name="Y.STMT.ID.FIN">
+    <operation xsi:type="enquiry:CalcOperation">
+      <field>Y.STMT.ID</field>
+      <field>STMT.ID</field>
+      <operator>:</operator>
+    </operation>
+  </fields>
+  <fields alignment="Left" commaSeparator="false" name="Y.PS.ID">
+    <operation firstField="PS.ID.FIN" leftField="SYSTEM.ID" operand="Equals" rightField="PS" secondField="Y.TRAN.ID.FIN" xsi:type="enquiry:DecisionOperation"/>
+  </fields>
+  <fields alignment="Left" commaSeparator="false" name="Y.AA.ID">
+    <operation firstField="AA.ID.FIN" leftField="BASE.APPL" operand="Equals" rightField="AA.ID.FORM" secondField="Y.PS.ID" xsi:type="enquiry:DecisionOperation"/>
+  </fields>
+  <fields alignment="Left" commaSeparator="false" name="NET.DET.ID">
+    <operation firstField="STMT.ENT.DET" leftField="REFNO" operand="Matches" rightField="NET.ENTRY" secondField="Y.DRILL" xsi:type="enquiry:DecisionOperation"/>
+  </fields>
+  <fields alignment="Left" commaSeparator="false" name="ENT.TOT">
+    <operation field="AMT" xsi:type="enquiry:TotalOperation"/>
+  </fields>
+  <fields alignment="Left" commaSeparator="false" name="NO">
+    <breakCondition break="Once"/>
+    <operation value="&quot;N&quot;" xsi:type="enquiry:ConstantOperation"/>
+  </fields>
+  <fields alignment="Left" commaSeparator="false" name="APPL.NAME">
+    <operation firstField="Y.STMT.ID.FIN" leftField="BASE.APPL" operand="Equals" rightField="NULL" secondField="NET.DET.ID" xsi:type="enquiry:DecisionOperation"/>
+  </fields>
+  <fields alignment="Left" commaSeparator="false" name="Y.DRILL">
+    <operation firstField="Y.STMT.ID.FIN" leftField="BASE.APPL" operand="Equals" rightField="NULL" secondField="Y.AA.ID" xsi:type="enquiry:DecisionOperation"/>
+  </fields>
+  <fields alignment="Left" commaSeparator="false" name="NEXT.APPL">
+    <operation firstField="Y.STMT.ID.FIN" leftField="APPL.DRILLDOWN" operand="Equals" rightField="NO" secondField="NET.DET.ID" xsi:type="enquiry:DecisionOperation"/>
+  </fields>
+  <fields alignment="Left" commaSeparator="false" name="DRILL.DOWN">
+    <operation firstField="Y.STMT.ID.FIN" leftField="APPL.DRILLDOWN" operand="Equals" rightField="NO" secondField="NET.DET.ID" xsi:type="enquiry:DecisionOperation"/>
+  </fields>
+  <fields alignment="Left" commaSeparator="false" name="STMT.ENTRY">
+    <breakCondition break="Once"/>
+    <operation value="&quot;STMT.ENTRY&quot;" xsi:type="enquiry:ConstantOperation"/>
+  </fields>
+  <fields alignment="Left" commaSeparator="false" name="ZERO">
+    <breakCondition break="Once"/>
+    <operation value="&quot;0&quot;" xsi:type="enquiry:ConstantOperation"/>
+  </fields>
+  <fields alignment="Left" commaSeparator="false" name="ZER1">
+    <breakCondition break="Once"/>
+    <operation firstField="TOTAL" leftField="TOTAL" operand="Equals" rightField="ZERO" secondField="B.AMT.BF" xsi:type="enquiry:DecisionOperation"/>
+  </fields>
+  <fields alignment="Left" commaSeparator="false" name="END.TOT">
+    <operation xsi:type="enquiry:CalcOperation">
+      <field>ENT.TOT</field>
+      <field>B.AMT.BF</field>
+      <operator>+</operator>
+    </operation>
+  </fields>
+  <fields alignment="Left" commaSeparator="false" displayType="CLASS-TITLE" name="D.BAL">
+    <breakCondition field="B.ACC"/>
+    <position column="14" line="1" relative="+"/>
+    <operation value="&quot;Balance at Period End&quot;" xsi:type="enquiry:ConstantOperation"/>
+  </fields>
+  <fields alignment="Left" commaSeparator="false" name="TOTAL">
+    <label xsi:type="translationDsl:LocalTranslations">
+      <translations locale="en" text="Closing Balance"/>
+    </label>
+    <format field="CCY" format="Currency" pattern="-#"/>
+    <breakCondition field="B.ACC"/>
+    <position column="80" line="1" relative="+"/>
+    <operation field="RUNNING.BALANCE" xsi:type="enquiry:FieldExtractOperation"/>
+  </fields>
+  <fields alignment="Left" commaSeparator="false" name="NULL">
+    <operation value="&quot;&quot;" xsi:type="enquiry:ConstantOperation"/>
+  </fields>
+  <fields alignment="Left" commaSeparator="false" displaySection="Header" displayType="CLASS-ENQ.NORECS" name="ZERORECORDS">
+    <breakCondition break="None"/>
+    <position column="1"/>
+    <operation value="&quot;Either Selection incorrect or No entriesfor the period&quot;" xsi:type="enquiry:ConstantOperation"/>
+  </fields>
+  <drillDowns fromField="DRILL.DOWN" image="view.gif" labelField="VALDESC">
+    <description xsi:type="translationDsl:LocalTranslations">
+      <translations locale="en" text="Transaction Detail"/>
+    </description>
+    <criteria field="FIN.NET.ID.FORM"/>
+    
+  </drillDowns>
+</enquiry:Enquiry>

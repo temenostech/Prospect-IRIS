@@ -1,0 +1,561 @@
+# UTF-8
+/* Payment stop processing for cheques */
+Domain CHQ_PaymentStop
+	@t24:i (module=ST)
+	@java:Package (value=com.temenos.t24.datamodel.st.chq_paymentstop)
+namespace "http://www.temenos.com/t24/CHQ_PaymentStop"
+metamodelVersion 1.30.6
+Classes {
+	CHEQUES_STOPPED
+		@t24:i (t24Name=CHEQUES.STOPPED, level=F, type=L, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		ACNO_CHQNO -> CHQ_PaymentStop:CHEQUES_STOPPED PK required
+			@t24:i (align=L, inputBehaviour=I, maxLength=71, sysNumber=0.0, core=true, businessType=A, t24Name=ACNO.CHQNO)
+		CURRENCY -> FIN_CurrencyConfig:CURRENCY
+			@i18n:Label (en=Ccy)
+			@t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=1.0, core=true, businessType=CCY, t24Name=CURRENCY)
+		PAYM_STOP_TYPE -> byValue CHQ_PaymentStop:CHEQUES_STOPPED__PAYM_STOP_TYPE *
+		USER_NAME : mml:Integer
+			@i18n:Label (en="User Name")
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=9.0, core=true, t24Name=USER.NAME)
+		DATE_TIME : mml:Integer
+			@i18n:Label (en="Date time")
+			@i18n:Tooltip (en="Date and time when record was input or authorised")
+			@t24:i (align=R, inputBehaviour=N, maxLength=15, sysNumber=10.0, core=true, t24Name=DATE.TIME, mask="RDD DD  DD ##:##")
+		PS_CURR_NO : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=I, maxLength=11, sysNumber=11.0, core=true, t24Name=PS.CURR.NO, typeModifiers=NOINPUT)
+		RESERVED_7 : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=I, maxLength=11, sysNumber=12.0, core=true, t24Name=RESERVED.7, typeModifiers=NOINPUT)
+		RESERVED_6 : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=I, maxLength=11, sysNumber=13.0, core=true, t24Name=RESERVED.6, typeModifiers=NOINPUT)
+		RESERVED_5 : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=I, maxLength=11, sysNumber=14.0, core=true, t24Name=RESERVED.5, typeModifiers=NOINPUT)
+		RESERVED_4 : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=I, maxLength=11, sysNumber=15.0, core=true, t24Name=RESERVED.4, typeModifiers=NOINPUT)
+		RESERVED_3 : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=I, maxLength=11, sysNumber=16.0, core=true, t24Name=RESERVED.3, typeModifiers=NOINPUT)
+		RESERVED_2 : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=I, maxLength=11, sysNumber=17.0, core=true, t24Name=RESERVED.2, typeModifiers=NOINPUT)
+		RESERVED_1 : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=I, maxLength=11, sysNumber=18.0, core=true, t24Name=RESERVED.1, typeModifiers=NOINPUT)
+		AMT_TO : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=10, core=false, t24Name=AMT.TO, genOperation="ACCT.NO>PAYMENT.STOP>AMOUNT.TO")
+		AMT_FROM : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=10, core=false, t24Name=AMT.FROM, genOperation="ACCT.NO>PAYMENT.STOP>AMOUNT.FROM")
+		ACCT_NO : T24BusinessTypes:ANT
+			@i18n:Label (en="Account Number")
+			@t24:i (align=R, inputBehaviour=N, maxLength=10, core=false, t24Name=ACCT.NO, genOperation="FIELD(@ID,\'*\',1)")
+		CHQ_NO : mml:Integer
+			@i18n:Label (en="Cheque No")
+			@t24:i (align=R, inputBehaviour=N, maxLength=16, core=false, t24Name=CHQ.NO, genOperation="FIELD(@ID,\'*\',2)")
+	}
+	CHEQUES_STOPPED__PAYM_STOP_TYPE
+	{
+		PAYM_STOP_TYPE -> CHQ_PaymentStop:PAYMENT_STOP_TYPE
+			@i18n:Label (en="Stop Type")
+			@t24:i (align=L, inputBehaviour=I, maxLength=30, sysNumber=2.0, core=true, businessType=A, t24Name=PAYM.STOP.TYPE)
+		CHQ_TYP -> CHQ_Config:CHEQUE_TYPE
+			@i18n:Label (en="Cheque Type")
+			@t24:i (align=L, inputBehaviour=I, maxLength=4, sysNumber=3.0, core=true, businessType=A, t24Name=CHQ.TYP)
+		STOP_DATE : T24BusinessTypes:D
+			@i18n:Label (en="Stop Date")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=4.0, core=true, t24Name=STOP.DATE)
+		AMOUNT_FROM : T24BusinessTypes:AMT
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=5.0, core=true, t24Name=AMOUNT.FROM, typeModifiers="1")
+		AMOUNT_TO : T24BusinessTypes:AMT
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=6.0, core=true, t24Name=AMOUNT.TO, typeModifiers="1")
+		BENEFICIARY : T24BusinessTypes:A
+			@i18n:Label (en=Beneficiary)
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=7.0, core=true, t24Name=BENEFICIARY)
+		REMARKS -> byValue CHQ_PaymentStop:CHEQUES_STOPPED__PAYM_STOP_TYPE__REMARKS *
+	}
+	CHEQUES_STOPPED__PAYM_STOP_TYPE__REMARKS
+	{
+		REMARKS : T24BusinessTypes:A
+			@i18n:Label (en=Remarks)
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=8.0, core=true, t24Name=REMARKS)
+	}
+	PAYMENT_STOP
+		@t24:i (t24Name=PAYMENT.STOP, level=F, type=H, additionalInfo="UNP OEU", allowedFunctions="A C D E H I L P Q S", localRefAllowed=true)
+	{
+		ACCOUNT_NUMBER -> CHQ_PaymentStop:PAYMENT_STOP PK required
+			@i18n:Label (en="Account Number")
+			@t24:i (align=L, inputBehaviour=I, maxLength=36, sysNumber=0.0, core=true, businessType=ANT, t24Name=ACCOUNT.NUMBER)
+		CURRENCY -> FIN_CurrencyConfig:CURRENCY
+			@i18n:Label (en=Ccy)
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=1.0, core=true, businessType=CCY, t24Name=CURRENCY)
+		PAYM_STOP_TYPE -> byValue CHQ_PaymentStop:PAYMENT_STOP__PAYM_STOP_TYPE *
+		CUSTOMER_NO -> ST_Customer:CUSTOMER
+			@i18n:Label (en="Customer No")
+			@i18n:Tooltip (en="Identifies the Customer for the transaction.")
+			@t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=28.0, core=true, businessType=CUS, t24Name=CUSTOMER.NO)
+		DATE_OF_ISSUE : T24BusinessTypes:D
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=29.0, core=true, t24Name=DATE.OF.ISSUE)
+		ACTION_DATE : T24BusinessTypes:D
+			@i18n:Label (en="Blocking Date")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=30.0, core=true, t24Name=ACTION.DATE)
+		OUR_REFERENCE : T24BusinessTypes:A
+			@i18n:Label (en="Transaction Ref")
+			@i18n:Tooltip (en="Our Reference")
+			@t24:i (align=L, inputBehaviour=I, maxLength=25, sysNumber=31.0, core=true, t24Name=OUR.REFERENCE)
+		MESSAGE_REC : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=12, sysNumber=32.0, core=true, t24Name=MESSAGE.REC)
+		PAYEE -> byValue CHQ_PaymentStop:PAYMENT_STOP__PAYEE *
+		ANSWERS -> byValue CHQ_PaymentStop:PAYMENT_STOP__ANSWERS *
+		SEND_NOTICE -> byValue CHQ_PaymentStop:PAYMENT_STOP__SEND_NOTICE *
+		ACTIVITY_CODE -> byValue CHQ_PaymentStop:PAYMENT_STOP__ACTIVITY_CODE *
+		MT112_CHEQUE_NO : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=40.0, core=true, t24Name=MT112.CHEQUE.NO)
+		MT112_AMOUNT : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=41.0, core=true, t24Name=MT112.AMOUNT)
+		MOD_PS_CHQ_NO -> byValue CHQ_PaymentStop:PAYMENT_STOP__MOD_PS_CHQ_NO *
+		IN_DRAWER_BK_ACCT : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=47.0, core=true, t24Name=IN.DRAWER.BK.ACCT)
+		IN_DRAWER_BANK -> byValue CHQ_PaymentStop:PAYMENT_STOP__IN_DRAWER_BANK *
+		IN_DELIVERY_REF : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=I, maxLength=46, sysNumber=49.0, core=true, t24Name=IN.DELIVERY.REF)
+		INWARD_MSG_TYPE : T24BusinessTypes:A
+			@i18n:Label (en="Inward Message Type")
+			@i18n:Tooltip (en="Inward Message Type")
+			@t24:i (align=L, inputBehaviour=I, maxLength=5, sysNumber=50.0, core=true, t24Name=INWARD.MSG.TYPE)
+		IN_SWIFT_MSG -> byValue CHQ_PaymentStop:PAYMENT_STOP__IN_SWIFT_MSG *
+		IN_PROCESS_ERR -> byValue CHQ_PaymentStop:PAYMENT_STOP__IN_PROCESS_ERR *
+		DD_BC_SORT_CODE -> byValue CHQ_PaymentStop:PAYMENT_STOP__DD_BC_SORT_CODE *
+		RESERVED1 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=56.0, core=true, t24Name=RESERVED1)
+		STMT_NOS -> byValue CHQ_PaymentStop:PAYMENT_STOP__STMT_NOS *
+		OVERRIDE -> byValue CHQ_PaymentStop:PAYMENT_STOP__OVERRIDE *
+		RECORD_STATUS : T24BusinessTypes:STAT
+			@i18n:Label (en="Record Status")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=59.0, core=true, t24Name=RECORD.STATUS)
+		CURR_NO : mml:Integer
+			@i18n:Label (en="Curr No")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=60.0, core=true, t24Name=CURR.NO)
+		INPUTTER -> byValue CHQ_PaymentStop:PAYMENT_STOP__INPUTTER *
+		DATE_TIME -> byValue CHQ_PaymentStop:PAYMENT_STOP__DATE_TIME *
+		AUTHORISER : T24BusinessTypes:A
+			@i18n:Label (en=Authoriser)
+			@i18n:Tooltip (en="Indicates the User who Authorises the record")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=63.0, core=true, t24Name=AUTHORISER)
+		CO_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company)
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=64.0, core=true, businessType=A, t24Name=CO.CODE, mask="R##-###-####")
+		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Dept Code")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=65.0, core=true, t24Name=DEPT.CODE)
+		AUDITOR_CODE : T24BusinessTypes:A
+			@i18n:Label (en="Auditor Code")
+			@i18n:Tooltip (en="Auditor Code")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=66.0, core=true, t24Name=AUDITOR.CODE)
+		AUDIT_DATE_TIME : T24BusinessTypes:RELTIME
+			@i18n:Label (en="Audit Date Time")
+			@i18n:Tooltip (en="Date and time when record was audited")
+			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=67.0, core=true, t24Name=AUDIT.DATE.TIME, mask="RDD DD  DD ##:##")
+	}
+	PAYMENT_STOP__PAYM_STOP_TYPE
+	{
+		PAYM_STOP_TYPE -> CHQ_PaymentStop:PAYMENT_STOP_TYPE
+			@i18n:Label (en="Payment Stop Type")
+			@i18n:Tooltip (en="Payment Stop Type")
+			@t24:i (align=L, inputBehaviour=I, maxLength=30, sysNumber=2.0, core=true, businessType=A, t24Name=PAYM.STOP.TYPE)
+		FIRST_CHEQUE_NO : mml:Integer
+			@i18n:Label (en="First Cheque No")
+			@i18n:Tooltip (en="First Cheque No")
+			@t24:i (align=R, inputBehaviour=I, maxLength=35, sysNumber=3.0, core=true, t24Name=FIRST.CHEQUE.NO)
+		LAST_CHEQUE_NO : mml:Integer
+			@i18n:Label (en="Last Cheque No")
+			@i18n:Tooltip (en="Last Cheque No")
+			@t24:i (align=R, inputBehaviour=I, maxLength=35, sysNumber=4.0, core=true, t24Name=LAST.CHEQUE.NO)
+		NO_OF_LEAVES : mml:Integer
+			@i18n:Label (en="No of Leaves")
+			@i18n:Tooltip (en="No of Leaves")
+			@t24:i (align=R, inputBehaviour=N, maxLength=3, sysNumber=5.0, core=true, t24Name=NO.OF.LEAVES)
+		CHEQUE_TYPE -> CHQ_Config:CHEQUE_TYPE
+			@i18n:Label (en="Cheque Type")
+			@t24:i (align=L, inputBehaviour=I, maxLength=4, sysNumber=6.0, core=true, businessType=SSS, t24Name=CHEQUE.TYPE)
+		STOP_DATE : T24BusinessTypes:D
+			@i18n:Label (en="Stop Date")
+			@i18n:Tooltip (en="Stop Date")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=7.0, core=true, t24Name=STOP.DATE)
+		AMOUNT_FROM : T24BusinessTypes:AMT
+			@i18n:Label (en="Amount From")
+			@i18n:Tooltip (en="Amount From")
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=8.0, core=true, t24Name=AMOUNT.FROM, typeModifiers="1")
+		AMOUNT_TO : T24BusinessTypes:AMT
+			@i18n:Label (en="Amount To")
+			@i18n:Tooltip (en="Amount To")
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=9.0, core=true, t24Name=AMOUNT.TO, typeModifiers="1")
+		STOP_ACTIVE : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=10.0, core=true, t24Name=STOP.ACTIVE)
+		WAIVE_CHARGE : CHQ_PaymentStop:PAYMENT_STOP__PAYM_STOP_TYPE__WAIVE_CHARGE
+			@i18n:Label (en="Waive Charges")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=11.0, core=true, t24Name=WAIVE.CHARGE)
+		BENEFICIARY : T24BusinessTypes:A
+			@i18n:Label (en=Beneficiary)
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=12.0, core=true, t24Name=BENEFICIARY)
+		STOP_END_FLAG : CHQ_PaymentStop:PAYMENT_STOP__PAYM_STOP_TYPE__STOP_END_FLAG
+			@i18n:Label (en="Revoke Y/N?")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=13.0, core=true, t24Name=STOP.END.FLAG)
+		APPLY_DATE : T24BusinessTypes:D
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=14.0, core=true, t24Name=APPLY.DATE)
+		REMARKS -> byValue CHQ_PaymentStop:PAYMENT_STOP__PAYM_STOP_TYPE__REMARKS *
+		RAISE_ACTIVITY : CHQ_PaymentStop:PAYMENT_STOP__PAYM_STOP_TYPE__RAISE_ACTIVITY
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=16.0, core=true, t24Name=RAISE.ACTIVITY)
+		CHARGE_CODE -> byValue CHQ_PaymentStop:PAYMENT_STOP__PAYM_STOP_TYPE__CHARGE_CODE *
+	}
+	PAYMENT_STOP__PAYM_STOP_TYPE__REMARKS
+	{
+		REMARKS : T24BusinessTypes:A
+			@i18n:Label (en=Remarks)
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=15.0, core=true, t24Name=REMARKS)
+	}
+	PAYMENT_STOP__PAYM_STOP_TYPE__CHARGE_CODE
+	{
+		CHARGE_CODE : T24BusinessTypes:CHG
+			@i18n:Label (en="Charge Code")
+			@i18n:Tooltip (en="Indicates the Charge code")
+			@t24:i (align=R, inputBehaviour=I, maxLength=15, sysNumber=17.0, core=true, t24Name=CHARGE.CODE, typeModifiers="CHGCOM")
+		CHG_ACCOUNT -> ACM_AccountOpening:ACCOUNT
+			@i18n:Label (en="Charge Account")
+			@i18n:Tooltip (en="Charge Account")
+			@t24:i (align=L, inputBehaviour=I, maxLength=36, sysNumber=18.0, core=true, businessType=ANT, t24Name=CHG.ACCOUNT)
+		CHG_CURRENCY -> FIN_CurrencyConfig:CURRENCY
+			@i18n:Label (en="Charge Currency")
+			@i18n:Tooltip (en="Charge Currency")
+			@t24:i (align=L, inputBehaviour=N, maxLength=6, sysNumber=19.0, core=true, businessType=CCY, t24Name=CHG.CURRENCY)
+		CHG_AMOUNT : T24BusinessTypes:AMT
+			@i18n:Label (en="Charge Amount")
+			@i18n:Tooltip (en="Defines charge amount")
+			@t24:i (align=R, inputBehaviour=I, maxLength=16, sysNumber=20.0, core=true, t24Name=CHG.AMOUNT)
+		TAX_TYPE : T24BusinessTypes:TAX
+			@i18n:Label (en="Tax Type")
+			@i18n:Tooltip (en="Defines the tax type")
+			@t24:i (align=L, inputBehaviour=N, maxLength=20, sysNumber=21.0, core=true, t24Name=TAX.TYPE)
+		TAX_AMT : T24BusinessTypes:AMT
+			@i18n:Label (en="Tax Amount")
+			@i18n:Tooltip (en="Indicates the tax amount")
+			@t24:i (align=R, inputBehaviour=N, maxLength=15, sysNumber=22.0, core=true, t24Name=TAX.AMT)
+		TAX_CCY : T24BusinessTypes:CCY
+			@i18n:Label (en="Tax Currency")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=23.0, core=true, t24Name=TAX.CCY)
+		TAX_DATE : T24BusinessTypes:D
+			@i18n:Label (en="Tax Date")
+			@i18n:Tooltip (en="Tax Date")
+			@t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=24.0, core=true, t24Name=TAX.DATE)
+		RESERVED_1 : T24BusinessTypes:D
+			@t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=25.0, core=true, t24Name=RESERVED.1)
+		RESERVED_2 : T24BusinessTypes:D
+			@t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=26.0, core=true, t24Name=RESERVED.2)
+		RESERVED_3 : T24BusinessTypes:D
+			@t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=27.0, core=true, t24Name=RESERVED.3)
+	}
+	PAYMENT_STOP__PAYEE
+	{
+		PAYEE : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=33.0, core=true, t24Name=PAYEE)
+	}
+	PAYMENT_STOP__ANSWERS
+	{
+		ANSWERS : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=34.0, core=true, t24Name=ANSWERS)
+	}
+	PAYMENT_STOP__SEND_NOTICE
+	{
+		SEND_NOTICE : CHQ_PaymentStop:PAYMENT_STOP__SEND_NOTICE__SEND_NOTICE
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=35.0, core=true, t24Name=SEND.NOTICE, mvSvExpansionAccess=NOMODIFY)
+	}
+	PAYMENT_STOP__ACTIVITY_CODE
+	{
+		ACTIVITY_CODE -> EB_Delivery:EB_ACTIVITY
+			@i18n:Label (en="Activity Code")
+			@i18n:Tooltip (en="Indicates activity code")
+			@t24:i (align=R, inputBehaviour=N, maxLength=7, sysNumber=36.0, core=true, t24Name=ACTIVITY.CODE)
+		ACTIVITY_DATE : T24BusinessTypes:D
+			@i18n:Label (en="Activity Date")
+			@i18n:Tooltip (en="indicates the date on which activity is generated")
+			@t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=37.0, core=true, t24Name=ACTIVITY.DATE)
+		MAPPING_KEY -> byValue CHQ_PaymentStop:PAYMENT_STOP__ACTIVITY_CODE__MAPPING_KEY *
+	}
+	PAYMENT_STOP__ACTIVITY_CODE__MAPPING_KEY
+	{
+		MAPPING_KEY -> DE_Config:DE_MAPPING
+			@i18n:Label (en="Mapping Key")
+			@t24:i (align=R, inputBehaviour=N, maxLength=13, sysNumber=38.0, core=true, t24Name=MAPPING.KEY)
+		DELIVERY_REF : mml:Integer
+			@i18n:Label (en="Delivery Ref")
+			@i18n:Tooltip (en="System generated Delivery ref key")
+			@t24:i (align=R, inputBehaviour=N, maxLength=16, sysNumber=39.0, core=true, t24Name=DELIVERY.REF)
+	}
+	PAYMENT_STOP__MOD_PS_CHQ_NO
+	{
+		MOD_PS_CHQ_NO : T24BusinessTypes:A
+			@i18n:Label (en="Cheque Nos to Revoke")
+			@i18n:Tooltip (en="Cheque Nos to Revoke")
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=43.0, core=true, t24Name=MOD.PS.CHQ.NO)
+		MOD_CHQ_TYPE : T24BusinessTypes:SSS
+			@i18n:Label (en="Cheque Type")
+			@i18n:Tooltip (en="Cheque Type")
+			@t24:i (align=L, inputBehaviour=I, maxLength=4, sysNumber=44.0, core=true, t24Name=MOD.CHQ.TYPE)
+		MOD_PS_DATE : T24BusinessTypes:D
+			@i18n:Label (en="Stop Revoke Date")
+			@i18n:Tooltip (en="Stop Revoke Date")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=45.0, core=true, t24Name=MOD.PS.DATE)
+		REV_AUTH_DATE : T24BusinessTypes:D
+			@t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=46.0, core=true, t24Name=REV.AUTH.DATE)
+	}
+	PAYMENT_STOP__IN_DRAWER_BANK
+	{
+		IN_DRAWER_BANK : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=48.0, core=true, t24Name=IN.DRAWER.BANK)
+	}
+	PAYMENT_STOP__IN_SWIFT_MSG
+	{
+		IN_SWIFT_MSG : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=I, maxLength=65, sysNumber=51.0, core=true, t24Name=IN.SWIFT.MSG)
+	}
+	PAYMENT_STOP__IN_PROCESS_ERR
+	{
+		IN_PROCESS_ERR : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=I, maxLength=65, sysNumber=52.0, core=true, t24Name=IN.PROCESS.ERR)
+	}
+	PAYMENT_STOP__DD_BC_SORT_CODE
+	{
+		DD_BC_SORT_CODE -> FT_LocalClearing:BC_SORT_CODE
+			@i18n:Label (en="DD BC Sort Code")
+			@i18n:Tooltip (en="DD BC Sort Code")
+			@t24:i (align=L, inputBehaviour=I, maxLength=20, sysNumber=53.0, core=true, businessType=A, t24Name=DD.BC.SORT.CODE)
+		DD_MANDATE_REF -> byValue CHQ_PaymentStop:PAYMENT_STOP__DD_BC_SORT_CODE__DD_MANDATE_REF *
+		DD_STOP_TYPE -> CHQ_PaymentStop:PAYMENT_STOP_TYPE
+			@i18n:Label (en="DD Stop Type")
+			@t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=55.0, core=true, businessType=A, t24Name=DD.STOP.TYPE)
+	}
+	PAYMENT_STOP__DD_BC_SORT_CODE__DD_MANDATE_REF
+	{
+		DD_MANDATE_REF -> DD_Contract:DD_DDI
+			@i18n:Label (en="Mandate Ref")
+			@i18n:Tooltip (en="Shows the mandate reference")
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=54.0, core=true, businessType=A, t24Name=DD.MANDATE.REF)
+	}
+	PAYMENT_STOP__STMT_NOS
+	{
+		STMT_NOS : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=57.0, core=true, t24Name=STMT.NOS)
+	}
+	PAYMENT_STOP__OVERRIDE
+	{
+		OVERRIDE : T24BusinessTypes:A
+			@i18n:Label (en=Override)
+			@i18n:Tooltip (en="Overrides generated by this transaction")
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=58.0, core=true, t24Name=OVERRIDE)
+	}
+	PAYMENT_STOP__INPUTTER
+	{
+		INPUTTER : T24BusinessTypes:A
+			@i18n:Label (en=Inputter)
+			@i18n:Tooltip (en="The user who last updated the record")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=61.0, core=true, t24Name=INPUTTER)
+	}
+	PAYMENT_STOP__DATE_TIME
+	{
+		DATE_TIME : T24BusinessTypes:RELTIME
+			@i18n:Label (en="Date time")
+			@i18n:Tooltip (en="Date and time when record was input or authorised")
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=62.0, core=true, t24Name=DATE.TIME, mask="RDD DD  DD ##:##")
+	}
+	PAYMENT_STOP_BALANCES
+		@t24:i (t24Name=PAYMENT.STOP.BALANCES, level=F, type=L, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		ID -> CHQ_PaymentStop:PAYMENT_STOP_BALANCES PK required
+			@i18n:Label (en="Transaction Ref")
+			@i18n:Tooltip (en="Transaction Reference")
+			@t24:i (align=R, inputBehaviour=I, maxLength=20, sysNumber=0.0, core=true, businessType=ACC, t24Name="@ID")
+		CHG_TYPE -> byValue CHQ_PaymentStop:PAYMENT_STOP_BALANCES__CHG_TYPE *
+	}
+	PAYMENT_STOP_BALANCES__CHG_TYPE
+	{
+		CHG_TYPE : T24BusinessTypes:CHG
+			@i18n:Label (en="Charge Type")
+			@i18n:Tooltip (en="Indicates what type of charge is being collected")
+			@t24:i (align=R, inputBehaviour=I, maxLength=15, sysNumber=1.0, core=true, t24Name=CHG.TYPE, typeModifiers="CHGCOM")
+		CHG_ACCOUNT : T24BusinessTypes:ACC
+			@i18n:Label (en="Charge Account")
+			@t24:i (align=R, inputBehaviour=I, maxLength=16, sysNumber=2.0, core=true, t24Name=CHG.ACCOUNT)
+		CHG_CURRENCY : T24BusinessTypes:CCY
+			@i18n:Label (en="Chg Currency")
+			@t24:i (align=L, inputBehaviour=I, maxLength=6, sysNumber=3.0, core=true, t24Name=CHG.CURRENCY)
+		CHG_AMOUNT : T24BusinessTypes:AMT
+			@i18n:Label (en="Charge Amount")
+			@i18n:Tooltip (en="Defines charge amount")
+			@t24:i (align=R, inputBehaviour=I, maxLength=16, sysNumber=4.0, core=true, t24Name=CHG.AMOUNT)
+		TAX_TYPE : T24BusinessTypes:TAX
+			@i18n:Label (en="Tax Type")
+			@i18n:Tooltip (en="Defines the tax type")
+			@t24:i (align=L, inputBehaviour=I, maxLength=20, sysNumber=5.0, core=true, t24Name=TAX.TYPE)
+		TAX_AMT : T24BusinessTypes:AMT
+			@i18n:Label (en="Tax Amount")
+			@i18n:Tooltip (en="Indicates the tax amount")
+			@t24:i (align=R, inputBehaviour=I, maxLength=15, sysNumber=6.0, core=true, t24Name=TAX.AMT)
+		TAX_CCY : T24BusinessTypes:CCY
+			@i18n:Label (en="Tax Currency")
+			@t24:i (align=L, inputBehaviour=I, maxLength=4, sysNumber=7.0, core=true, t24Name=TAX.CCY)
+		TAX_DATE : T24BusinessTypes:D
+			@i18n:Label (en="Tax Date")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=8.0, core=true, t24Name=TAX.DATE)
+		PAYM_STOP_TYPE : T24BusinessTypes:A
+			@i18n:Label (en="Stop Type")
+			@t24:i (align=L, inputBehaviour=I, maxLength=30, sysNumber=9.0, core=true, t24Name=PAYM.STOP.TYPE)
+		FIRST_CHEQUE_NO : mml:Integer
+			@i18n:Label (en="First Cheque No")
+			@t24:i (align=R, inputBehaviour=I, maxLength=35, sysNumber=10.0, core=true, t24Name=FIRST.CHEQUE.NO)
+		LAST_CHEQUE_NO : mml:Integer
+			@i18n:Label (en="Last Cheque No")
+			@t24:i (align=R, inputBehaviour=I, maxLength=35, sysNumber=11.0, core=true, t24Name=LAST.CHEQUE.NO)
+		PS_CURR_NO : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=50, sysNumber=12.0, core=true, t24Name=PS.CURR.NO)
+	}
+	PAYMENT_STOP_HIST
+		@t24:i (t24Name=PAYMENT.STOP.HIST, level=F, type=L, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		ACCOUNT_NUMBER -> CHQ_PaymentStop:PAYMENT_STOP_HIST PK required
+			@i18n:Label (en="Account Number")
+			@t24:i (align=R, inputBehaviour=I, maxLength=16, sysNumber=0.0, core=true, businessType=ACC, t24Name=ACCOUNT.NUMBER)
+		PAYM_STOP_TYPE -> byValue CHQ_PaymentStop:PAYMENT_STOP_HIST__PAYM_STOP_TYPE *
+	}
+	PAYMENT_STOP_HIST__PAYM_STOP_TYPE
+	{
+		PAYM_STOP_TYPE -> CHQ_PaymentStop:PAYMENT_STOP_TYPE
+			@i18n:Label (en="Stop Type")
+			@t24:i (align=L, inputBehaviour=I, maxLength=30, sysNumber=1.0, core=true, businessType=A, t24Name=PAYM.STOP.TYPE)
+		FIRST_CHEQUE_NO : mml:Integer
+			@i18n:Label (en="First Cheque No")
+			@t24:i (align=R, inputBehaviour=I, maxLength=35, sysNumber=2.0, core=true, t24Name=FIRST.CHEQUE.NO)
+		LAST_CHEQUE_NO : mml:Integer
+			@i18n:Label (en="Last Cheque No")
+			@t24:i (align=R, inputBehaviour=I, maxLength=35, sysNumber=3.0, core=true, t24Name=LAST.CHEQUE.NO)
+		CHEQUE_TYPE -> CHQ_Config:CHEQUE_TYPE
+			@i18n:Label (en="Cheque Type")
+			@t24:i (align=L, inputBehaviour=I, maxLength=4, sysNumber=4.0, core=true, businessType=SSS, t24Name=CHEQUE.TYPE)
+		STOP_DATE : T24BusinessTypes:D
+			@i18n:Label (en="Stop Date")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=5.0, core=true, t24Name=STOP.DATE)
+		AMOUNT_FROM : T24BusinessTypes:AMT
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=6.0, core=true, t24Name=AMOUNT.FROM)
+		AMOUNT_TO : T24BusinessTypes:AMT
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=7.0, core=true, t24Name=AMOUNT.TO)
+		BENEFICIARY : T24BusinessTypes:A
+			@i18n:Label (en=Beneficiary)
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=8.0, core=true, t24Name=BENEFICIARY)
+		STOP_END_FLAG : CHQ_PaymentStop:PAYMENT_STOP_HIST__PAYM_STOP_TYPE__STOP_END_FLAG
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=9.0, core=true, t24Name=STOP.END.FLAG)
+		APPLY_DATE : T24BusinessTypes:D
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=10.0, core=true, t24Name=APPLY.DATE)
+		PS_CURR_NO : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=50, sysNumber=11.0, core=true, t24Name=PS.CURR.NO)
+		REMARKS -> byValue CHQ_PaymentStop:PAYMENT_STOP_HIST__PAYM_STOP_TYPE__REMARKS *
+	}
+	PAYMENT_STOP_HIST__PAYM_STOP_TYPE__REMARKS
+	{
+		REMARKS : T24BusinessTypes:A
+			@i18n:Label (en=Remarks)
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=12.0, core=true, t24Name=REMARKS)
+	}
+	PAYMENT_STOP_TYPE
+		@t24:i (t24Name=PAYMENT.STOP.TYPE, level=I, type=H, allowedFunctions="A C D E H I L P Q S", localRefAllowed=false)
+	{
+		PAYMENT_STOP_TYPE -> CHQ_PaymentStop:PAYMENT_STOP_TYPE PK required
+			@t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=0.0, core=true, t24Name=PAYMENT.STOP.TYPE)
+		DESCRIPTION -> byValue CHQ_PaymentStop:PAYMENT_STOP_TYPE__DESCRIPTION *
+		CHARGE_CODE -> byValue CHQ_PaymentStop:PAYMENT_STOP_TYPE__CHARGE_CODE *
+		RECORD_STATUS : T24BusinessTypes:STAT
+			@i18n:Label (en="Record Status")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=3.0, core=true, t24Name=RECORD.STATUS)
+		CURR_NO : mml:Integer
+			@i18n:Label (en="Curr No")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=4.0, core=true, t24Name=CURR.NO)
+		INPUTTER -> byValue CHQ_PaymentStop:PAYMENT_STOP_TYPE__INPUTTER *
+		DATE_TIME -> byValue CHQ_PaymentStop:PAYMENT_STOP_TYPE__DATE_TIME *
+		AUTHORISER : T24BusinessTypes:A
+			@i18n:Label (en=Authoriser)
+			@i18n:Tooltip (en="Indicates the User who Authorises the record")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=7.0, core=true, t24Name=AUTHORISER)
+		CO_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company)
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=8.0, core=true, businessType=A, t24Name=CO.CODE, mask="R##-###-####")
+		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Dept Code")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=9.0, core=true, t24Name=DEPT.CODE)
+		AUDITOR_CODE : T24BusinessTypes:A
+			@i18n:Label (en="Auditor Code")
+			@i18n:Tooltip (en="Auditor Code")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=10.0, core=true, t24Name=AUDITOR.CODE)
+		AUDIT_DATE_TIME : T24BusinessTypes:RELTIME
+			@i18n:Label (en="Audit Date Time")
+			@i18n:Tooltip (en="Date and time when record was audited")
+			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=11.0, core=true, t24Name=AUDIT.DATE.TIME, mask="RDD DD  DD ##:##")
+	}
+	PAYMENT_STOP_TYPE__DESCRIPTION
+	{
+		DESCRIPTION : T24BusinessTypes:A required
+			@i18n:Label (en=Description)
+			@i18n:Tooltip (en=Description)
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, multiLanguage=true, sysNumber=1.0, core=true, t24Name=DESCRIPTION)
+	}
+	PAYMENT_STOP_TYPE__CHARGE_CODE
+	{
+		CHARGE_CODE : T24BusinessTypes:CHG
+			@i18n:Label (en="Charge Code")
+			@i18n:Tooltip (en="Indicates the Charge code")
+			@t24:i (align=R, inputBehaviour=I, maxLength=20, sysNumber=2.0, core=true, t24Name=CHARGE.CODE, typeModifiers="CHGCOM")
+	}
+	PAYMENT_STOP_TYPE__INPUTTER
+	{
+		INPUTTER : T24BusinessTypes:A
+			@i18n:Label (en=Inputter)
+			@i18n:Tooltip (en="The user who last updated the record")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=5.0, core=true, t24Name=INPUTTER)
+	}
+	PAYMENT_STOP_TYPE__DATE_TIME
+	{
+		DATE_TIME : T24BusinessTypes:RELTIME
+			@i18n:Label (en="Date time")
+			@i18n:Tooltip (en="Date and time when record was input or authorised")
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=6.0, core=true, t24Name=DATE.TIME, mask="RDD DD  DD ##:##")
+	}
+	PS_STOP
+		@t24:i (t24Name=PS.STOP, level=F, type=L, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		PS_STOP_ID -> CHQ_PaymentStop:PS_STOP PK required
+			@t24:i (align=L, inputBehaviour=I, maxLength=30, sysNumber=0.0, core=true, businessType=A, t24Name=PS.STOP.ID)
+		PS_REC -> byValue CHQ_PaymentStop:PS_STOP__PS_REC *
+		APPLY_DATE -> byValue CHQ_PaymentStop:PS_STOP__APPLY_DATE *
+	}
+	PS_STOP__PS_REC
+	{
+		PS_REC : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=1.0, core=true, t24Name=PS.REC)
+	}
+	PS_STOP__APPLY_DATE
+	{
+		APPLY_DATE : mml:Integer
+			@t24:i (align=L, inputBehaviour=N, maxLength=12, core=false, t24Name=APPLY.DATE, genOperation="@ID[\".\",1,1]")
+	}
+}
+Enumerations {
+	PAYMENT_STOP__PAYM_STOP_TYPE__STOP_ACTIVE : mml:string
+		YES=YES
+		NO=NO
+	PAYMENT_STOP__PAYM_STOP_TYPE__WAIVE_CHARGE : mml:string
+		YES=YES
+		NO=NO
+	PAYMENT_STOP__PAYM_STOP_TYPE__STOP_END_FLAG : mml:string
+		YES=YES
+		NO=NO
+	PAYMENT_STOP__PAYM_STOP_TYPE__RAISE_ACTIVITY : mml:string
+		YES=YES
+	PAYMENT_STOP__SEND_NOTICE__SEND_NOTICE : mml:string
+		YES=YES
+		NO=NO
+	PAYMENT_STOP_HIST__PAYM_STOP_TYPE__STOP_END_FLAG : mml:string
+		YES=YES
+		NO=NO
+}

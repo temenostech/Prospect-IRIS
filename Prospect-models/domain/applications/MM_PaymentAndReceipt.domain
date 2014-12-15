@@ -1,0 +1,305 @@
+# UTF-8
+/* Payments and Receipts Processing for Money Market */
+Domain MM_PaymentAndReceipt
+	@t24:i (module=MM)
+	@java:Package (value=com.temenos.t24.datamodel.mm.mm_paymentandreceipt)
+namespace "http://www.temenos.com/t24/MM_PaymentAndReceipt"
+metamodelVersion 1.30.6
+Classes {
+	MM_PAYMENT_ENTRY
+		@t24:i (t24Name=MM.PAYMENT.ENTRY, level=F, type=H, additionalInfo="NOH UNP OEU", allowedFunctions="A C D E H I L P Q R S", localRefAllowed=false)
+	{
+		CONTRACT_NO -> MM_PaymentAndReceipt:MM_PAYMENT_ENTRY PK required
+			@t24:i (align=L, inputBehaviour=I, maxLength=17, sysNumber=0.0, core=true, businessType=A, t24Name="CONTRACT NO", mask="R##/#####/#####/##")
+		CURRENCY_CODE -> FIN_CurrencyConfig:CURRENCY
+			@i18n:Label (en="Ccy Code")
+			@t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=1.0, core=true, businessType=CCY, t24Name=CURRENCY.CODE)
+		VALUE_DATE : T24BusinessTypes:D
+			@i18n:Label (en="Value Date")
+			@i18n:Tooltip (en="Indicates the Value date of the Contract")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=2.0, core=true, t24Name=VALUE.DATE)
+		PRINCIPAL_OUTS : T24BusinessTypes:AMT
+			@i18n:Label (en="Principal Outs")
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=3.0, core=true, t24Name=PRINCIPAL.OUTS, typeModifiers="-1")
+		PRINCIPAL_PAID : T24BusinessTypes:AMT required
+			@i18n:Label (en="Principal Paid")
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=4.0, core=true, t24Name=PRINCIPAL.PAID, typeModifiers="-1")
+		PRIN_ACCT_NO : T24BusinessTypes:ACC required
+			@i18n:Label (en="Principal Account Number")
+			@t24:i (align=R, inputBehaviour=I, maxLength=16, sysNumber=5.0, core=true, t24Name=PRIN.ACCT.NO)
+		INTEREST_OUTS : T24BusinessTypes:AMT
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=6.0, core=true, t24Name=INTEREST.OUTS, typeModifiers="-1")
+		INTEREST_PAID : T24BusinessTypes:AMT
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=7.0, core=true, t24Name=INTEREST.PAID, typeModifiers="-1")
+		INT_ACCT_NO : T24BusinessTypes:ACC
+			@t24:i (align=R, inputBehaviour=N, maxLength=16, sysNumber=8.0, core=true, t24Name=INT.ACCT.NO)
+		COMMISSION_OUTS : T24BusinessTypes:AMT
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=9.0, core=true, t24Name=COMMISSION.OUTS, typeModifiers="-1")
+		COMMISSION_PAID : T24BusinessTypes:AMT
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=10.0, core=true, t24Name=COMMISSION.PAID, typeModifiers="-1")
+		COMM_ACCT_NO : T24BusinessTypes:ACC
+			@t24:i (align=R, inputBehaviour=N, maxLength=16, sysNumber=11.0, core=true, t24Name=COMM.ACCT.NO)
+		CHARGE_OUTS : T24BusinessTypes:AMT
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=12.0, core=true, t24Name=CHARGE.OUTS, typeModifiers="-1")
+		CHARGE_PAID : T24BusinessTypes:AMT
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=13.0, core=true, t24Name=CHARGE.PAID, typeModifiers="-1")
+		CHARGE_ACCT_NO : T24BusinessTypes:ACC
+			@t24:i (align=R, inputBehaviour=N, maxLength=16, sysNumber=14.0, core=true, t24Name=CHARGE.ACCT.NO)
+		CHARGE_CODE -> ST_ChargeConfig:FT_CHARGE_TYPE
+			@i18n:Label (en="Charge Code")
+			@i18n:Tooltip (en="Indicates the Charge code")
+			@t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=15.0, core=true, businessType=A, t24Name=CHARGE.CODE)
+		TAX_OUTS : T24BusinessTypes:AMT
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=16.0, core=true, t24Name=TAX.OUTS, typeModifiers="-1")
+		TAX_PAID : T24BusinessTypes:AMT
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=17.0, core=true, t24Name=TAX.PAID, typeModifiers="-1")
+		TAX_ACCT_NO : T24BusinessTypes:ACC
+			@t24:i (align=R, inputBehaviour=N, maxLength=16, sysNumber=18.0, core=true, t24Name=TAX.ACCT.NO)
+		TAX_CODE -> byValue MM_PaymentAndReceipt:MM_PAYMENT_ENTRY__TAX_CODE *
+		TOTAL_AMOUNT_PAID : T24BusinessTypes:AMT
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=20.0, core=true, t24Name=TOTAL.AMOUNT.PAID, typeModifiers="-1")
+		MANUAL_AUTO : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=N, maxLength=1, sysNumber=21.0, core=true, t24Name=MANUAL.AUTO)
+		CUST_REMARKS -> byValue MM_PaymentAndReceipt:MM_PAYMENT_ENTRY__CUST_REMARKS *
+		ALONE_MERGE_IND : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=N, maxLength=1, sysNumber=23.0, core=true, t24Name=ALONE.MERGE.IND)
+		OUR_REMARKS -> byValue MM_PaymentAndReceipt:MM_PAYMENT_ENTRY__OUR_REMARKS *
+		INT_CCY -> FIN_CurrencyConfig:CURRENCY
+			@i18n:Label (en="Interest Currency")
+			@t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=25.0, core=true, businessType=CCY, t24Name=INT.CCY)
+		RESERVED_5 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=26.0, core=true, t24Name=RESERVED.5)
+		RESERVED_4 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=27.0, core=true, t24Name=RESERVED.4)
+		RESERVED_3 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=28.0, core=true, t24Name=RESERVED.3)
+		RESERVED_2 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=29.0, core=true, t24Name=RESERVED.2)
+		RESERVED_1 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=30.0, core=true, t24Name=RESERVED.1)
+		ACTIVITY -> byValue MM_PaymentAndReceipt:MM_PAYMENT_ENTRY__ACTIVITY *
+		STMT_NO -> byValue MM_PaymentAndReceipt:MM_PAYMENT_ENTRY__STMT_NO *
+		OVERRIDE -> byValue MM_PaymentAndReceipt:MM_PAYMENT_ENTRY__OVERRIDE *
+		RECORD_STATUS : T24BusinessTypes:STAT
+			@i18n:Label (en="Record Status")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=35.0, core=true, t24Name=RECORD.STATUS)
+		CURR_NO : mml:Integer
+			@i18n:Label (en="Curr No")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=36.0, core=true, t24Name=CURR.NO)
+		INPUTTER -> byValue MM_PaymentAndReceipt:MM_PAYMENT_ENTRY__INPUTTER *
+		DATE_TIME -> byValue MM_PaymentAndReceipt:MM_PAYMENT_ENTRY__DATE_TIME *
+		AUTHORISER : T24BusinessTypes:A
+			@i18n:Label (en=Authoriser)
+			@i18n:Tooltip (en="Indicates the User who Authorises the record")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=39.0, core=true, t24Name=AUTHORISER)
+		CO_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company)
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=40.0, core=true, businessType=A, t24Name=CO.CODE, mask="R##-###-####")
+		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Dept Code")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=41.0, core=true, t24Name=DEPT.CODE)
+		AUDITOR_CODE : T24BusinessTypes:A
+			@i18n:Label (en="Auditor Code")
+			@i18n:Tooltip (en="Auditor Code")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=42.0, core=true, t24Name=AUDITOR.CODE)
+		AUDIT_DATE_TIME : T24BusinessTypes:RELTIME
+			@i18n:Label (en="Audit Date Time")
+			@i18n:Tooltip (en="Date and time when record was audited")
+			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=43.0, core=true, t24Name=AUDIT.DATE.TIME, mask="RDD DD  DD ##:##")
+	}
+	MM_PAYMENT_ENTRY__TAX_CODE
+	{
+		TAX_CODE : T24BusinessTypes:A
+			@i18n:Label (en="Tax Code")
+			@t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=19.0, core=true, t24Name=TAX.CODE)
+	}
+	MM_PAYMENT_ENTRY__CUST_REMARKS
+	{
+		CUST_REMARKS : T24BusinessTypes:S
+			@i18n:Label (en="Customer Remarks")
+			@i18n:Tooltip (en="Holds customer remarks ")
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=22.0, core=true, t24Name=CUST.REMARKS)
+	}
+	MM_PAYMENT_ENTRY__OUR_REMARKS
+	{
+		OUR_REMARKS : T24BusinessTypes:A
+			@i18n:Label (en="Dealer Remarks")
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=24.0, core=true, t24Name=OUR.REMARKS)
+	}
+	MM_PAYMENT_ENTRY__ACTIVITY
+	{
+		ACTIVITY -> LM_Delivery:LMM_ACTIVITY
+			@i18n:Label (en=Activity)
+			@t24:i (align=L, inputBehaviour=N, maxLength=8, sysNumber=31.0, core=true, businessType=A, t24Name=ACTIVITY)
+		TIME_DATE_STAMP : T24BusinessTypes:AA
+			@t24:i (align=L, inputBehaviour=N, maxLength=25, sysNumber=32.0, core=true, t24Name=TIME.DATE.STAMP, mask="R##############-#######")
+	}
+	MM_PAYMENT_ENTRY__STMT_NO
+	{
+		STMT_NO : T24BusinessTypes:A
+			@i18n:Label (en="Statement number")
+			@t24:i (align=L, inputBehaviour=N, maxLength=29, sysNumber=33.0, core=true, t24Name=STMT.NO)
+	}
+	MM_PAYMENT_ENTRY__OVERRIDE
+	{
+		OVERRIDE : T24BusinessTypes:A
+			@i18n:Label (en=Override)
+			@i18n:Tooltip (en="Overrides generated by this transaction")
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=34.0, core=true, t24Name=OVERRIDE)
+	}
+	MM_PAYMENT_ENTRY__INPUTTER
+	{
+		INPUTTER : T24BusinessTypes:A
+			@i18n:Label (en=Inputter)
+			@i18n:Tooltip (en="The user who last updated the record")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=37.0, core=true, t24Name=INPUTTER)
+	}
+	MM_PAYMENT_ENTRY__DATE_TIME
+	{
+		DATE_TIME : T24BusinessTypes:RELTIME
+			@i18n:Label (en="Date time")
+			@i18n:Tooltip (en="Date and time when record was input or authorised")
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=38.0, core=true, t24Name=DATE.TIME, mask="RDD DD  DD ##:##")
+	}
+	MM_RECEIPT_ENTRY
+		@t24:i (t24Name=MM.RECEIPT.ENTRY, level=F, type=H, additionalInfo="NOH UNP OEU", allowedFunctions="A C D E H I L P Q R S", localRefAllowed=false)
+	{
+		CONTRACT_NO -> MM_PaymentAndReceipt:MM_RECEIPT_ENTRY PK required
+			@t24:i (align=L, inputBehaviour=I, maxLength=17, sysNumber=0.0, core=true, businessType=A, t24Name="CONTRACT NO", mask="R##/#####/#####/##")
+		CURRENCY_CODE -> FIN_CurrencyConfig:CURRENCY
+			@i18n:Label (en="Ccy Code")
+			@t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=1.0, core=true, businessType=CCY, t24Name=CURRENCY.CODE)
+		VALUE_DATE : T24BusinessTypes:D
+			@i18n:Label (en="Value Date")
+			@i18n:Tooltip (en="Indicates the Value date of the Contract")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=2.0, core=true, t24Name=VALUE.DATE)
+		TRANSACTION_AMOUNT : T24BusinessTypes:AMT
+			@i18n:Label (en="Transaction Amount")
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=3.0, core=true, t24Name=TRANSACTION.AMOUNT, typeModifiers="1")
+		PRINCIPAL_OUTS : T24BusinessTypes:AMT
+			@i18n:Label (en="Principal Outs")
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=4.0, core=true, t24Name=PRINCIPAL.OUTS, typeModifiers="1")
+		PRIN_RECEIPT_CODE : MM_PaymentAndReceipt:MM_RECEIPT_ENTRY__PRIN_RECEIPT_CODE
+			@t24:i (align=L, inputBehaviour=I, maxLength=1, sysNumber=5.0, core=true, t24Name=PRIN.RECEIPT.CODE)
+		PRIN_RECEIVED : T24BusinessTypes:AMT
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=6.0, core=true, t24Name=PRIN.RECEIVED, typeModifiers="1")
+		PRIN_ACCT_NO : T24BusinessTypes:ACC
+			@i18n:Label (en="Principal Account Number")
+			@t24:i (align=R, inputBehaviour=I, maxLength=16, sysNumber=7.0, core=true, t24Name=PRIN.ACCT.NO)
+		INTEREST_OUTS : T24BusinessTypes:AMT
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=8.0, core=true, t24Name=INTEREST.OUTS, typeModifiers="1")
+		INT_RECEIPT_CODE : MM_PaymentAndReceipt:MM_RECEIPT_ENTRY__INT_RECEIPT_CODE
+			@t24:i (align=L, inputBehaviour=I, maxLength=1, sysNumber=9.0, core=true, t24Name=INT.RECEIPT.CODE)
+		INTEREST_RECEIVED : T24BusinessTypes:AMT
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=10.0, core=true, t24Name=INTEREST.RECEIVED, typeModifiers="1")
+		INT_ACCT_NO : T24BusinessTypes:ACC
+			@t24:i (align=R, inputBehaviour=I, maxLength=16, sysNumber=11.0, core=true, t24Name=INT.ACCT.NO)
+		TOTAL_AMNT_OUTS : T24BusinessTypes:AMT
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=12.0, core=true, t24Name=TOTAL.AMNT.OUTS, typeModifiers="1")
+		TOT_AMT_RECEIVED : T24BusinessTypes:AMT
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=13.0, core=true, t24Name=TOT.AMT.RECEIVED, typeModifiers="1")
+		CUST_REMARKS -> byValue MM_PaymentAndReceipt:MM_RECEIPT_ENTRY__CUST_REMARKS *
+		ALONE_MERGE_IND : MM_PaymentAndReceipt:MM_RECEIPT_ENTRY__ALONE_MERGE_IND
+			@t24:i (align=L, inputBehaviour=I, maxLength=1, sysNumber=15.0, core=true, t24Name=ALONE.MERGE.IND)
+		OUR_REMARKS -> byValue MM_PaymentAndReceipt:MM_RECEIPT_ENTRY__OUR_REMARKS *
+		INT_CCY -> FIN_CurrencyConfig:CURRENCY
+			@i18n:Label (en="Interest Currency")
+			@t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=17.0, core=true, businessType=CCY, t24Name=INT.CCY)
+		RESERVED_5 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=18.0, core=true, t24Name=RESERVED.5)
+		RESERVED_4 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=19.0, core=true, t24Name=RESERVED.4)
+		RESERVED_3 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=20.0, core=true, t24Name=RESERVED.3)
+		RESERVED_2 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=21.0, core=true, t24Name=RESERVED.2)
+		RESERVED_1 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=22.0, core=true, t24Name=RESERVED.1)
+		ACTIVITY -> byValue MM_PaymentAndReceipt:MM_RECEIPT_ENTRY__ACTIVITY *
+		STMT_NO -> byValue MM_PaymentAndReceipt:MM_RECEIPT_ENTRY__STMT_NO *
+		OVERRIDES -> byValue MM_PaymentAndReceipt:MM_RECEIPT_ENTRY__OVERRIDES *
+		RECORD_STATUS : T24BusinessTypes:STAT
+			@i18n:Label (en="Record Status")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=27.0, core=true, t24Name=RECORD.STATUS)
+		CURR_NO : mml:Integer
+			@i18n:Label (en="Curr No")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=28.0, core=true, t24Name=CURR.NO)
+		INPUTTER -> byValue MM_PaymentAndReceipt:MM_RECEIPT_ENTRY__INPUTTER *
+		DATE_TIME -> byValue MM_PaymentAndReceipt:MM_RECEIPT_ENTRY__DATE_TIME *
+		AUTHORISER : T24BusinessTypes:A
+			@i18n:Label (en=Authoriser)
+			@i18n:Tooltip (en="Indicates the User who Authorises the record")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=31.0, core=true, t24Name=AUTHORISER)
+		CO_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company)
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=32.0, core=true, businessType=A, t24Name=CO.CODE, mask="R##-###-####")
+		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Dept Code")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=33.0, core=true, t24Name=DEPT.CODE)
+		AUDITOR_CODE : T24BusinessTypes:A
+			@i18n:Label (en="Auditor Code")
+			@i18n:Tooltip (en="Auditor Code")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=34.0, core=true, t24Name=AUDITOR.CODE)
+		AUDIT_DATE_TIME : T24BusinessTypes:RELTIME
+			@i18n:Label (en="Audit Date Time")
+			@i18n:Tooltip (en="Date and time when record was audited")
+			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=35.0, core=true, t24Name=AUDIT.DATE.TIME, mask="RDD DD  DD ##:##")
+	}
+	MM_RECEIPT_ENTRY__CUST_REMARKS
+	{
+		CUST_REMARKS : T24BusinessTypes:S
+			@i18n:Label (en="Customer Remarks")
+			@i18n:Tooltip (en="Holds customer remarks ")
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=14.0, core=true, t24Name=CUST.REMARKS)
+	}
+	MM_RECEIPT_ENTRY__OUR_REMARKS
+	{
+		OUR_REMARKS : T24BusinessTypes:A
+			@i18n:Label (en="Dealer Remarks")
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=16.0, core=true, t24Name=OUR.REMARKS)
+	}
+	MM_RECEIPT_ENTRY__ACTIVITY
+	{
+		ACTIVITY -> LM_Delivery:LMM_ACTIVITY
+			@i18n:Label (en=Activity)
+			@t24:i (align=L, inputBehaviour=N, maxLength=8, sysNumber=23.0, core=true, businessType=A, t24Name=ACTIVITY)
+		TIME_DATE_STAMP : T24BusinessTypes:AA
+			@t24:i (align=L, inputBehaviour=N, maxLength=17, sysNumber=24.0, core=true, t24Name=TIME.DATE.STAMP, mask="R#########-#######")
+	}
+	MM_RECEIPT_ENTRY__STMT_NO
+	{
+		STMT_NO : T24BusinessTypes:A
+			@i18n:Label (en="Statement number")
+			@t24:i (align=L, inputBehaviour=N, maxLength=29, sysNumber=25.0, core=true, t24Name=STMT.NO)
+	}
+	MM_RECEIPT_ENTRY__OVERRIDES
+	{
+		OVERRIDES : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=26.0, core=true, t24Name=OVERRIDES)
+	}
+	MM_RECEIPT_ENTRY__INPUTTER
+	{
+		INPUTTER : T24BusinessTypes:A
+			@i18n:Label (en=Inputter)
+			@i18n:Tooltip (en="The user who last updated the record")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=29.0, core=true, t24Name=INPUTTER)
+	}
+	MM_RECEIPT_ENTRY__DATE_TIME
+	{
+		DATE_TIME : T24BusinessTypes:RELTIME
+			@i18n:Label (en="Date time")
+			@i18n:Tooltip (en="Date and time when record was input or authorised")
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=30.0, core=true, t24Name=DATE.TIME, mask="RDD DD  DD ##:##")
+	}
+}
+Enumerations {
+	MM_RECEIPT_ENTRY__PRIN_RECEIPT_CODE : mml:string
+		Y=Y
+		N=N
+	MM_RECEIPT_ENTRY__INT_RECEIPT_CODE : mml:string
+		Y=Y
+		N=N
+	MM_RECEIPT_ENTRY__ALONE_MERGE_IND : mml:string
+		A=A
+		M=M
+}

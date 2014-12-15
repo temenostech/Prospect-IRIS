@@ -1,0 +1,67 @@
+# UTF-8
+/* Trade Processing for Forex */
+Domain FX_Trading
+	@t24:i (module=FX)
+	@java:Package (value=com.temenos.t24.datamodel.fx.fx_trading)
+namespace "http://www.temenos.com/t24/FX_Trading"
+metamodelVersion 1.30.6
+Classes {
+	FX_HISTORY_TODAY
+		@t24:i (t24Name=FX.HISTORY.TODAY, level=F, type=L, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		TRANSACTION_ID -> FX_Trading:FX_HISTORY_TODAY PK required
+			@i18n:Label (en="Transaction ID")
+			@t24:i (align=L, inputBehaviour=I, maxLength=12, sysNumber=0.0, core=true, businessType=A, t24Name=TRANSACTION.ID)
+	}
+	RE_FOREX_OPTION
+		@t24:i (t24Name=RE.FOREX.OPTION, level=F, type=L, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		TRANSACTION_REF_NO -> FX_Trading:RE_FOREX_OPTION PK required
+			@t24:i (align=L, inputBehaviour=I, maxLength=15, sysNumber=0.0, core=true, businessType=A, t24Name=TRANSACTION.REF.NO, mask="R##-#####-#####")
+		LAST_UPDT_DATE : T24BusinessTypes:D
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=1.0, core=true, t24Name=LAST.UPDT.DATE)
+		CCY_BOUGHT : T24BusinessTypes:CCY
+			@i18n:Label (en="Ccy Bought")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=2.0, core=true, t24Name=CCY.BOUGHT)
+		CCY_SOLD : T24BusinessTypes:CCY
+			@i18n:Label (en="Ccy Sold")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=3.0, core=true, t24Name=CCY.SOLD)
+		DEL_DATE_BUY -> byValue FX_Trading:RE_FOREX_OPTION__DEL_DATE_BUY *
+		OS_DEL_BUY_AMT : T24BusinessTypes:AMT
+			@i18n:Label (en="O/S Del Buy Amt")
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=12.0, core=true, t24Name=OS.DEL.BUY.AMT, typeModifiers="2")
+		OS_DEL_SELL_AMT : T24BusinessTypes:AMT
+			@i18n:Label (en="O/S Del SellAmt")
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=13.0, core=true, t24Name=OS.DEL.SELL.AMT, typeModifiers="3")
+		ORG_VALBUY_DATE : T24BusinessTypes:D
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=14.0, core=true, t24Name=ORG.VALBUY.DATE)
+		ORG_VALSELL_DATE : T24BusinessTypes:D
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=15.0, core=true, t24Name=ORG.VALSELL.DATE)
+		OS_LCY_EQUIV_AMT : T24BusinessTypes:AMT
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=16.0, core=true, t24Name=OS.LCY.EQUIV.AMT, mask="AMT#USD")
+		OS_LST_CRF_BUY_EOP : T24BusinessTypes:D
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=17.0, core=true, t24Name=OS.LST.CRF.BUY.EOP)
+		OS_LST_CRF_SEL_EOP : T24BusinessTypes:D
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=18.0, core=true, t24Name=OS.LST.CRF.SEL.EOP)
+	}
+	RE_FOREX_OPTION__DEL_DATE_BUY
+	{
+		DEL_DATE_BUY : T24BusinessTypes:D
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=4.0, core=true, t24Name=DEL.DATE.BUY)
+		DEL_AMT_BUY : T24BusinessTypes:AMT
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=5.0, core=true, t24Name=DEL.AMT.BUY, typeModifiers="2")
+		BUY_PAID_INDIC : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=I, maxLength=1, sysNumber=6.0, core=true, t24Name=BUY.PAID.INDIC)
+		DEL_DATE_SELL : T24BusinessTypes:D
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=7.0, core=true, t24Name=DEL.DATE.SELL)
+		DEL_AMT_SELL : T24BusinessTypes:AMT
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=8.0, core=true, t24Name=DEL.AMT.SELL, typeModifiers="3")
+		SELL_PAID_INDIC : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=I, maxLength=1, sysNumber=9.0, core=true, t24Name=SELL.PAID.INDIC)
+		DEL_LCY_AMT : T24BusinessTypes:AMT
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=10.0, core=true, t24Name=DEL.LCY.AMT, mask="AMT#USD")
+		STATUS : mml:Integer
+			@i18n:Label (en=Status)
+			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=11.0, core=true, t24Name=STATUS)
+	}
+}

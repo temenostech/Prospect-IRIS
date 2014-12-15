@@ -1,0 +1,177 @@
+Screen SA_Foundation:SA_SCORE_TXN, RISK_PROFILING_HP
+	t24Name: "SA.SCORE.TXN,RISK.PROFILING.HP"
+	metamodelVersion: "1.30.6"
+	numberOfAuthorisers: 0
+	description: en = "Credit Scoring"
+
+TransactionFlow {
+	otherCompanyAccess: Yes
+}
+
+Presentation {
+	recordsPerPage: "1"
+	fieldsPerLine: "MULTI"
+	language: en
+	header1: en = "                                       *** Calculate Score ***"
+}
+
+//Relationship {
+//	associatedVersions: SA_SCORE_TXN,AUDIT
+//}
+
+	attributes: "NO.HEADER.TAB"
+
+Fields {
+	"DESCRIPTION"
+	{
+
+		Presentation {
+			maxLength: 18
+			column: 1
+			row: 0
+		}
+
+		Translations:
+			label: en = "Description"
+		MV: 1
+	}
+
+	"CUSTOMER_ID"
+	{
+
+		Presentation {
+			maxLength: 18
+			enrichmentLength: 35
+			column: 1
+			row: 1
+		}
+
+		Translations:
+			label: en = "Customer No."
+			toolTip: en = "Customer for whom credit scoring is done"
+	}
+
+	"CURRENCY"
+	{
+
+		Presentation {
+			maxLength: 18
+			column: 1
+			row: 2
+		}
+
+		default: IF ( ) "NULL" THEN "!LOCAL.CCY"
+		Translations:
+			label: en = "Currency"
+			toolTip: en = "Currency in which data is gathered"
+	}
+
+	"SCORE_DATA"
+	{
+
+		Presentation {
+			maxLength: 18
+			column: 1
+			row: 3
+			hotValidate: Yes
+		}
+
+		Translations:
+			label: en = "Product Name"
+			toolTip: en = "Specifies product name"
+	}
+
+	"*"
+	{
+
+		Presentation {
+			maxLength: 68
+			column: 1
+			row: 4
+		}
+
+		Translations:
+			label: en = "Data Type                                                       Date Value"
+	}
+
+	"DATA_TYPES"
+	{
+
+		Presentation {
+			maxLength: 0
+			enrichmentLength: 15
+			column: 1
+			row: 5
+		}
+
+		Translations:
+			toolTip: en = "Specifies data types"
+		MV: 1
+	}
+
+	"DATA_VAL"
+	{
+
+		Presentation {
+			maxLength: 0
+			column: 59
+			row: 5
+			hotValidate: Yes
+			selectionEnquiry: "SA.SCORE.CARD.DETS"
+			enquiryParameter: "DATA.TYPE EQ DATA.TYPES"
+		}
+
+		Translations:
+			toolTip: en = "Specifies date value"
+		MV: 1
+	}
+
+	"*"
+	{
+
+		Presentation {
+			column: 1
+			row: 6
+		}
+
+	}
+
+	"PERFORM_CALC"
+	{
+
+		Presentation {
+			maxLength: 18
+			column: 1
+			row: 7
+			hotField: Yes
+		}
+
+		Translations:
+			label: en = "Calc. Score"
+			toolTip: en = "Allowed values are YES and NO"
+	}
+
+	"AGG_SCORE"
+	{
+
+		Presentation {
+			maxLength: 17
+			column: 41
+			row: 7
+		}
+
+		Translations:
+			label: en = "Agg Score"
+	}
+
+	"GRANT_LIMIT_LCY"
+	{
+
+			API {
+				validation-routines:
+					jBC: "@V.MB.SA"
+			}
+
+		}
+
+	}

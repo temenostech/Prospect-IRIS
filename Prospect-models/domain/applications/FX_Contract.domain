@@ -1,0 +1,1217 @@
+# UTF-8
+/* Template Servicing of Forex related updates */
+Domain FX_Contract
+	@t24:i (module=FX)
+	@java:Package (value=com.temenos.t24.datamodel.fx.fx_contract)
+namespace "http://www.temenos.com/t24/FX_Contract"
+metamodelVersion 1.30.6
+Classes {
+	FOREX
+		@t24:i (t24Name=FOREX, level=F, type=H, additionalInfo="NOH UNP OEU NOC", allowedFunctions="A C D E H I L P Q R S V", localRefAllowed=true)
+	{
+		TRANSACTION_REF_NO -> FX_Contract:FOREX PK required
+			@i18n:Label (en="Transaction Reference")
+			@i18n:Tooltip (en="Reference Number generated for FX transaction")
+			@t24:i (align=L, inputBehaviour=I, maxLength=15, sysNumber=0.0, core=true, businessType=A, t24Name=TRANSACTION.REF.NO)
+		DEAL_TYPE : FX_Contract:FOREX__DEAL_TYPE
+			@i18n:Label (en="Deal Type")
+			@i18n:Tooltip (en="Identifies the type of Foreign Exchange deal")
+			@t24:i (align=L, inputBehaviour=F, maxLength=2, sysNumber=1.0, core=true, t24Name=DEAL.TYPE, isValidateOnChange=true)
+		DEAL_SUB_TYPE : FX_Contract:FOREX__DEAL_SUB_TYPE
+			@i18n:Label (en="Sub Type")
+			@i18n:Tooltip (en="Deal type, if it is internal or broker")
+			@t24:i (align=L, inputBehaviour=F, maxLength=2, sysNumber=2.0, core=true, t24Name=DEAL.SUB.TYPE)
+		COUNTERPARTY -> ST_Customer:CUSTOMER
+			@i18n:Label (en=Counterparty)
+			@i18n:Tooltip (en="Counterparty with whom the deal is made")
+			@t24:i (align=R, inputBehaviour=F, maxLength=10, sysNumber=3.0, core=true, businessType=CPARTY, t24Name=COUNTERPARTY)
+		DEALER_DESK -> ST_Config:DEALER_DESK
+			@i18n:Label (en="Dealer Desk")
+			@i18n:Tooltip (en="Specifies the Dealer Desk handling the transaction")
+			@t24:i (align=L, inputBehaviour=F, maxLength=2, sysNumber=4.0, core=true, businessType=A, t24Name=DEALER.DESK)
+		CURRENCY_MARKET -> FIN_CurrencyConfig:CURRENCY_MARKET
+			@i18n:Label (en="Currency Market")
+			@i18n:Tooltip (en="Currency market applicable for the transaction")
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=5.0, core=true, t24Name=CURRENCY.MARKET)
+		CURRENCY_BOUGHT -> FIN_CurrencyConfig:CURRENCY
+			@i18n:Label (en="Currency Bought")
+			@i18n:Tooltip (en="Specifies the code of the Currency bought")
+			@t24:i (align=L, inputBehaviour=F, maxLength=3, sysNumber=6.0, core=true, businessType=CCY, t24Name=CURRENCY.BOUGHT)
+		AMOUNT_BOUGHT : T24BusinessTypes:AMT
+			@i18n:Label (en="Buy Amount")
+			@i18n:Tooltip (en="Specifies the amount of the currency bought")
+			@t24:i (align=R, inputBehaviour=F, maxLength=19, sysNumber=7.0, core=true, t24Name=AMOUNT.BOUGHT, typeModifiers="6")
+		VALUE_DATE_BUY : T24BusinessTypes:FOREXD
+			@i18n:Label (en="Value Date Buy")
+			@i18n:Tooltip (en="Value date applicable for currency purchased")
+			@t24:i (align=R, inputBehaviour=F, maxLength=11, sysNumber=8.0, core=true, t24Name=VALUE.DATE.BUY, mask="RDD DDD DDDD")
+		CURRENCY_SOLD -> FIN_CurrencyConfig:CURRENCY
+			@i18n:Label (en="Sell Currency")
+			@t24:i (align=L, inputBehaviour=F, maxLength=3, sysNumber=9.0, core=true, businessType=CCY, t24Name=CURRENCY.SOLD)
+		AMOUNT_SOLD : T24BusinessTypes:AMT
+			@i18n:Label (en="Sell Amount")
+			@i18n:Tooltip (en="Specifies the Amount of the currency sold")
+			@t24:i (align=R, inputBehaviour=F, maxLength=19, sysNumber=10.0, core=true, t24Name=AMOUNT.SOLD, typeModifiers="9")
+		VALUE_DATE_SELL : T24BusinessTypes:FOREXD
+			@i18n:Label (en="Value Date Sell")
+			@i18n:Tooltip (en="Value date applicable for currency sold")
+			@t24:i (align=R, inputBehaviour=F, maxLength=11, sysNumber=11.0, core=true, t24Name=VALUE.DATE.SELL, mask="RDD DDD DDDD")
+		SPOT_RATE : T24BusinessTypes:R
+			@i18n:Label (en="Spot Rate")
+			@t24:i (align=R, inputBehaviour=F, maxLength=16, sysNumber=12.0, core=true, t24Name=SPOT.RATE)
+		FORWARD_RATE : T24BusinessTypes:FWDR
+			@i18n:Label (en="Forward Rate")
+			@t24:i (align=L, inputBehaviour=F, maxLength=16, sysNumber=13.0, core=true, t24Name=FORWARD.RATE)
+		SWAP_BASE_CCY -> FIN_CurrencyConfig:CURRENCY
+			@i18n:Label (en="Swap Base Currency")
+			@i18n:Tooltip (en="Swap Base Currency")
+			@t24:i (align=L, inputBehaviour=F, maxLength=3, sysNumber=14.0, core=true, businessType=CCY, t24Name=SWAP.BASE.CCY)
+		BROKER -> ST_Config:BROKER
+			@i18n:Label (en="Deal Method")
+			@i18n:Tooltip (en="Specifies the method of the deal done")
+			@t24:i (align=L, inputBehaviour=F, maxLength=10, sysNumber=15.0, core=true, businessType=BRK, t24Name=BROKER)
+		BROKERAGE : T24BusinessTypes:AMT
+			@i18n:Label (en=Brokerage)
+			@t24:i (align=R, inputBehaviour=F, maxLength=19, sysNumber=16.0, core=true, t24Name=BROKERAGE, typeModifiers="6")
+		BROKERAGE_CCY -> FIN_CurrencyConfig:CURRENCY
+			@i18n:Label (en="Brokerage Currency")
+			@i18n:Tooltip (en="Currency in which Brokerage is taken")
+			@t24:i (align=L, inputBehaviour=F, maxLength=3, sysNumber=17.0, core=true, businessType=CCY, t24Name=BROKERAGE.CCY)
+		BROKERAGE_AMOUNT : T24BusinessTypes:AMT
+			@i18n:Label (en="Brokerage Amount")
+			@i18n:Tooltip (en="Brokerage Amount")
+			@t24:i (align=R, inputBehaviour=F, maxLength=19, sysNumber=18.0, core=true, t24Name=BROKERAGE.AMOUNT, typeModifiers="-17")
+		CONFIRMD_BY_BROKER : T24BusinessTypes:A
+			@i18n:Label (en="Confirmed By Broker")
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=19.0, core=true, t24Name=CONFIRMD.BY.BROKER)
+		LIMIT_REFERENCE_NO : mml:Integer
+			@i18n:Label (en="Limit Reference")
+			@i18n:Tooltip (en="Limit Reference")
+			@t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=20.0, core=true, t24Name=LIMIT.REFERENCE.NO)
+		POSITION_TYPE_BUY -> RE_Config:FX_POS_TYPE
+			@i18n:Label (en="Position Type for Buy")
+			@i18n:Tooltip (en="Position Type for Buy")
+			@t24:i (align=L, inputBehaviour=F, maxLength=2, sysNumber=21.0, core=true, businessType=DEF, t24Name=POSITION.TYPE.BUY, typeModifiers="ATR")
+		POSITION_TYPE_SELL -> RE_Config:FX_POS_TYPE
+			@i18n:Label (en="Position Type for Sell")
+			@i18n:Tooltip (en="Position Type for Sell")
+			@t24:i (align=L, inputBehaviour=F, maxLength=2, sysNumber=22.0, core=true, businessType=DEF, t24Name=POSITION.TYPE.SELL, typeModifiers="A0")
+		NEGOTIATED_REF_NO : mml:Integer
+			@i18n:Label (en="Negotiated Reference")
+			@i18n:Tooltip (en="Reference Number of a deal negotiated by a Dealer")
+			@t24:i (align=R, inputBehaviour=F, maxLength=5, sysNumber=23.0, core=true, t24Name=NEGOTIATED.REF.NO)
+		DEAL_DATE : T24BusinessTypes:FOREXD
+			@i18n:Label (en="Deal Date")
+			@i18n:Tooltip (en="Indicates the Deal date")
+			@t24:i (align=R, inputBehaviour=F, maxLength=11, sysNumber=24.0, core=true, t24Name=DEAL.DATE, mask="RDD DDD DDDD")
+		REVALUATION_TYPE -> FX_PositionAndReval:FX_REVAL_TYPE
+			@i18n:Label (en="Revaluation Type")
+			@i18n:Tooltip (en="Revaluation method to be used on forward contracts")
+			@t24:i (align=L, inputBehaviour=F, maxLength=2, sysNumber=25.0, core=true, businessType=SSS, t24Name=REVALUATION.TYPE)
+		SPOT_DATE : T24BusinessTypes:FOREXD
+			@i18n:Label (en="Spot Date")
+			@i18n:Tooltip (en="The start date for calculation of Profit and Loss")
+			@t24:i (align=R, inputBehaviour=F, maxLength=11, sysNumber=26.0, core=true, t24Name=SPOT.DATE, mask="RDD DDD DDDD")
+		BASE_CCY -> FIN_CurrencyConfig:CURRENCY
+			@i18n:Label (en="Base Ccy")
+			@t24:i (align=L, inputBehaviour=F, maxLength=3, sysNumber=27.0, core=true, businessType=CCY, t24Name=BASE.CCY)
+		SPOT_LCY_AMOUNT : T24BusinessTypes:AMT
+			@i18n:Label (en="Spot Local Ccy Amt")
+			@i18n:Tooltip (en="Indicates the Spot Local Currency Amount")
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=28.0, core=true, t24Name=SPOT.LCY.AMOUNT, typeModifiers="-USD")
+		SWAP_REF_NO -> byValue FX_Contract:FOREX__SWAP_REF_NO *
+		INT_RATE_BUY : T24BusinessTypes:R
+			@i18n:Label (en="Interest Rate Buy")
+			@i18n:Tooltip (en="Interest Rate applicable to Currency bought")
+			@t24:i (align=R, inputBehaviour=F, maxLength=16, sysNumber=30.0, core=true, t24Name=INT.RATE.BUY, mask="R##.####")
+		INT_RATE_SELL : T24BusinessTypes:R
+			@i18n:Label (en="Interest Rate Sell")
+			@i18n:Tooltip (en="Interest Rate applicable to Currency sold")
+			@t24:i (align=R, inputBehaviour=F, maxLength=16, sysNumber=31.0, core=true, t24Name=INT.RATE.SELL, mask="R##.####")
+		OPTION_DATE : T24BusinessTypes:FOREXD
+			@i18n:Label (en="Option Avail From")
+			@i18n:Tooltip (en="Starting date - partial or total delivery starts")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=32.0, core=true, t24Name=OPTION.DATE, mask="RDD DDD DDDD")
+		OPTION_CURRENCY : T24BusinessTypes:CCY
+			@i18n:Label (en="Option Currency")
+			@i18n:Tooltip (en="Currency considered to be the Option currency")
+			@t24:i (align=L, inputBehaviour=F, maxLength=3, sysNumber=33.0, core=true, t24Name=OPTION.CURRENCY)
+		OPTION_AMOUNT : T24BusinessTypes:AMT
+			@i18n:Label (en="Option Amount")
+			@i18n:Tooltip (en="Amount of the Option Contract")
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=34.0, core=true, t24Name=OPTION.AMOUNT)
+		OPTION_OS_AMT : T24BusinessTypes:AMT
+			@i18n:Label (en="Outstg.Amt in Option Ccy")
+			@i18n:Tooltip (en="Outstanding Amount in Option Currency")
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=35.0, core=true, t24Name=OPTION.OS.AMT)
+		OPTION_RATEDATE -> byValue FX_Contract:FOREX__OPTION_RATEDATE *
+		OUR_ACCOUNT_PAY -> byValue FX_Contract:FOREX__OUR_ACCOUNT_PAY *
+		CONF_BY_CPARTY : FX_Contract:FOREX__CONF_BY_CPARTY
+			@i18n:Label (en="Counterparty Confirmation")
+			@i18n:Tooltip (en="Cpty Confirmation")
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=75.0, core=true, t24Name=CONF.BY.CPARTY)
+		BUY_LCY_EQUIV : T24BusinessTypes:AMT
+			@i18n:Label (en="Buy Local currency Equivalent")
+			@i18n:Tooltip (en="Local currency equivalent of the currency bought")
+			@t24:i (align=R, inputBehaviour=E, maxLength=19, sysNumber=76.0, core=true, t24Name=BUY.LCY.EQUIV, typeModifiers="-USD")
+		SEL_LCY_EQUIV : T24BusinessTypes:AMT
+			@i18n:Label (en="Sell Local currency Equivalent")
+			@i18n:Tooltip (en="Local currency equivalent of the currency sold")
+			@t24:i (align=R, inputBehaviour=E, maxLength=19, sysNumber=77.0, core=true, t24Name=SEL.LCY.EQUIV, typeModifiers="-USD")
+		BUY_DAILY_ACC_L : T24BusinessTypes:AMT
+			@i18n:Label (en="Buy Ccy Daily Accr")
+			@i18n:Tooltip (en="Buy Ccy Daily Accr")
+			@t24:i (align=R, inputBehaviour=E, maxLength=19, sysNumber=78.0, core=true, t24Name=BUY.DAILY.ACC.L, typeModifiers="-USD")
+		BUY_ACC_TDATE_L : T24BusinessTypes:AMT
+			@i18n:Label (en="Buy Ccy Accrual Todate")
+			@i18n:Tooltip (en="Buy Ccy Accrual Todate")
+			@t24:i (align=R, inputBehaviour=E, maxLength=19, sysNumber=79.0, core=true, t24Name=BUY.ACC.TDATE.L, typeModifiers="-USD")
+		BUY_DAILY_ACC_F : T24BusinessTypes:AMT
+			@i18n:Label (en="Buy Ccy Daily Accr")
+			@i18n:Tooltip (en="Daily accrual of foreign currency")
+			@t24:i (align=R, inputBehaviour=E, maxLength=19, sysNumber=80.0, core=true, t24Name=BUY.DAILY.ACC.F, typeModifiers="-6")
+		BUY_ACC_TDATE_F : T24BusinessTypes:AMT
+			@i18n:Label (en="Buy Ccy Accrual Todate")
+			@i18n:Tooltip (en="Buy Ccy Accrual Todate")
+			@t24:i (align=R, inputBehaviour=E, maxLength=19, sysNumber=81.0, core=true, t24Name=BUY.ACC.TDATE.F, typeModifiers="-6")
+		SEL_DAILY_ACC_L : T24BusinessTypes:AMT
+			@i18n:Label (en="Sell Ccy Daily Accr-Local")
+			@i18n:Tooltip (en="Sell Ccy Daily Accrual-LC")
+			@t24:i (align=R, inputBehaviour=E, maxLength=19, sysNumber=82.0, core=true, t24Name=SEL.DAILY.ACC.L, typeModifiers="-USD")
+		SEL_ACC_TDATE_L : T24BusinessTypes:AMT
+			@i18n:Label (en="Sell Ccy Accrual Todate")
+			@i18n:Tooltip (en="Sell Ccy Accr.Todate Local")
+			@t24:i (align=R, inputBehaviour=E, maxLength=19, sysNumber=83.0, core=true, t24Name=SEL.ACC.TDATE.L, typeModifiers="-USD")
+		SEL_DAILY_ACC_F : T24BusinessTypes:AMT
+			@i18n:Label (en="Sell Ccy Daily Accr-Foreign")
+			@i18n:Tooltip (en="Daily accrual of foreign currency")
+			@t24:i (align=R, inputBehaviour=E, maxLength=19, sysNumber=84.0, core=true, t24Name=SEL.DAILY.ACC.F, typeModifiers="-9")
+		SEL_ACC_TDATE_F : T24BusinessTypes:AMT
+			@i18n:Label (en="Sell Ccy Accrual Todate")
+			@i18n:Tooltip (en="Sell Ccy Accr. Todate Foreign")
+			@t24:i (align=R, inputBehaviour=E, maxLength=19, sysNumber=85.0, core=true, t24Name=SEL.ACC.TDATE.F, typeModifiers="-9")
+		SWIFT_COMMON_REF : T24BusinessTypes:A
+			@i18n:Label (en="Swift Commom Reference")
+			@i18n:Tooltip (en="Indicate the swift message reference")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=86.0, core=true, t24Name=SWIFT.COMMON.REF)
+		CATEGORY_CODE -> ST_Config:CATEGORY
+			@i18n:Label (en="Category Code")
+			@t24:i (align=R, inputBehaviour=F, maxLength=6, sysNumber=87.0, core=true, t24Name=CATEGORY.CODE, mask="R##-###")
+		TREASURY_CUSTOMER : FX_Contract:FOREX__TREASURY_CUSTOMER
+			@i18n:Label (en="Treasury Customer")
+			@i18n:Tooltip (en="Indicates whether treasury customer?")
+			@t24:i (align=L, inputBehaviour=F, maxLength=2, sysNumber=88.0, core=true, t24Name=TREASURY.CUSTOMER)
+		ACCOUNT_TO_CHARGE -> ACM_AccountOpening:ACCOUNT
+			@i18n:Label (en="Charge Account")
+			@i18n:Tooltip (en="Debit account for charges or commission")
+			@t24:i (align=R, inputBehaviour=F, maxLength=16, sysNumber=89.0, core=true, businessType=ACC, t24Name=ACCOUNT.TO.CHARGE)
+		MKTG_EXCH_PROFIT : T24BusinessTypes:AMT
+			@i18n:Label (en="Market Exchange Profit")
+			@i18n:Tooltip (en="Local currency profit taken on the FX trade")
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=90.0, core=true, t24Name=MKTG.EXCH.PROFIT, typeModifiers="-USD")
+		COMMISSION_TAKEN : T24BusinessTypes:AMT
+			@i18n:Label (en="Commission Taken")
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=91.0, core=true, t24Name=COMMISSION.TAKEN, typeModifiers="-USD")
+		TREASURY_RATE : T24BusinessTypes:FWDR
+			@i18n:Label (en="Treasury Rate")
+			@i18n:Tooltip (en="Exchange rate quoted by the Treasury Department")
+			@t24:i (align=L, inputBehaviour=F, maxLength=16, sysNumber=92.0, core=true, t24Name=TREASURY.RATE)
+		MARGIN_PERC : T24BusinessTypes:R
+			@i18n:Label (en="Margin percentage")
+			@i18n:Tooltip (en="Specifies the Margin Percentage")
+			@t24:i (align=R, inputBehaviour=F, maxLength=16, sysNumber=93.0, core=true, t24Name=MARGIN.PERC)
+		MARGIN_PIPS : T24BusinessTypes:R
+			@i18n:Label (en="Margin Pips")
+			@i18n:Tooltip (en="Specifies the Margin Pips")
+			@t24:i (align=R, inputBehaviour=N, maxLength=16, sysNumber=94.0, core=true, t24Name=MARGIN.PIPS)
+		FX_GROUP_COND_ID : T24BusinessTypes:A
+			@i18n:Label (en="Group ID")
+			@i18n:Tooltip (en="The field represents the Group ID")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=95.0, core=true, t24Name=FX.GROUP.COND.ID)
+		CHARGE_CODE -> byValue FX_Contract:FOREX__CHARGE_CODE *
+		TAX_CODE -> byValue FX_Contract:FOREX__TAX_CODE *
+		ACCOUNT_OFFICER -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Account Officer")
+			@i18n:Tooltip (en="Indicates Account Officer responsible")
+			@t24:i (align=L, inputBehaviour=F, maxLength=4, sysNumber=100.0, core=true, businessType=DEF, t24Name=ACCOUNT.OFFICER, typeModifiers="DAOCUSTOMER24.A")
+		FED_FUNDS : FX_Contract:FOREX__FED_FUNDS
+			@i18n:Label (en="Federal Funds")
+			@i18n:Tooltip (en="Specify Federal Funds or Not")
+			@t24:i (align=L, inputBehaviour=N, maxLength=1, sysNumber=101.0, core=true, t24Name=FED.FUNDS)
+		SEND_CONFIRMATION : T24BusinessTypes:DEF
+			@i18n:Label (en="Send Confirmation")
+			@i18n:Tooltip (en="Send confirmation - Y/N ?")
+			@t24:i (align=L, inputBehaviour=I, maxLength=8, sysNumber=102.0, core=true, t24Name=SEND.CONFIRMATION)
+		SEND_PAYMENT : T24BusinessTypes:DEF
+			@i18n:Label (en="Send Payment")
+			@i18n:Tooltip (en="Send payment - Y/N ?")
+			@t24:i (align=L, inputBehaviour=I, maxLength=8, sysNumber=103.0, core=true, t24Name=SEND.PAYMENT)
+		SEND_ADVICE : T24BusinessTypes:DEF
+			@i18n:Label (en="Send Advice")
+			@i18n:Tooltip (en="Transmission of the advice")
+			@t24:i (align=L, inputBehaviour=I, maxLength=8, sysNumber=104.0, core=true, t24Name=SEND.ADVICE)
+		CORR_AMEND_MKR : FX_Contract:FOREX__CORR_AMEND_MKR
+			@i18n:Label (en="Correction or Amendment")
+			@i18n:Tooltip (en="Indicates if it is a Correction or Amendment")
+			@t24:i (align=L, inputBehaviour=I, maxLength=7, sysNumber=105.0, core=true, t24Name=CORR.AMEND.MKR)
+		REPLACING_DEAL_NO : T24BusinessTypes:A
+			@i18n:Label (en="Replacing Deal")
+			@i18n:Tooltip (en="Replacing a wrongly reversed deal")
+			@t24:i (align=L, inputBehaviour=F, maxLength=12, sysNumber=106.0, core=true, t24Name=REPLACING.DEAL.NO)
+		NOTES -> byValue FX_Contract:FOREX__NOTES *
+		DEALER_NOTES -> byValue FX_Contract:FOREX__DEALER_NOTES *
+		ORIGINAL_FUNCTION : T24BusinessTypes:A
+			@i18n:Label (en="Dealer Comment")
+			@t24:i (align=L, inputBehaviour=E, maxLength=1, sysNumber=109.0, core=true, t24Name=ORIGINAL.FUNCTION)
+		EQV_CODE -> byValue FX_Contract:FOREX__EQV_CODE *
+		BROKERAGE_EQUIV : T24BusinessTypes:AMT
+			@i18n:Label (en="Brokerage Equivalent")
+			@i18n:Tooltip (en="Indicates the brokerage in local currency")
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=112.0, core=true, t24Name=BROKERAGE.EQUIV, typeModifiers="-USD")
+		CHARGE_EQUIV -> byValue FX_Contract:FOREX__CHARGE_EQUIV *
+		NOTIONAL_BUY_AMT : T24BusinessTypes:AMT
+			@i18n:Label (en="Notional Buy Amount")
+			@i18n:Tooltip (en="NPU amount of contract for amount brought")
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=115.0, core=true, t24Name=NOTIONAL.BUY.AMT, typeModifiers="6")
+		NOTIONAL_SELL_AMT : T24BusinessTypes:AMT
+			@i18n:Label (en="Notional Sell Amount")
+			@i18n:Tooltip (en="NPU amount of contract for amount sold")
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=116.0, core=true, t24Name=NOTIONAL.SELL.AMT, typeModifiers="9")
+		PORTFOLIO_NUMBER : T24BusinessTypes:A
+			@i18n:Label (en="Portfolio Number")
+			@i18n:Tooltip (en="Portfolio Number")
+			@t24:i (align=L, inputBehaviour=F, maxLength=3, sysNumber=117.0, core=true, t24Name=PORTFOLIO.NUMBER)
+		TOTAL_INT_BOUGHT : T24BusinessTypes:AMT
+			@i18n:Label (en="Total Interest Bought")
+			@i18n:Tooltip (en="Total Interest Bought")
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=118.0, core=true, t24Name=TOTAL.INT.BOUGHT, typeModifiers="6")
+		TOTAL_INT_SOLD : T24BusinessTypes:AMT
+			@i18n:Label (en="Total Interest Sold")
+			@i18n:Tooltip (en="Total Interest in Sell Ccy")
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=119.0, core=true, t24Name=TOTAL.INT.SOLD, typeModifiers="9")
+		EQUIV_INT_BOUGHT : T24BusinessTypes:AMT
+			@i18n:Label (en="Equivalent Interest Bought")
+			@i18n:Tooltip (en="Local currency equivalent-Notional interest amount")
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=120.0, core=true, t24Name=EQUIV.INT.BOUGHT, typeModifiers="USD")
+		EQUIV_INT_SOLD : T24BusinessTypes:AMT
+			@i18n:Label (en="Equivalent Interest Sold")
+			@i18n:Tooltip (en="Local currency equivalent-Notional interest amount")
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=121.0, core=true, t24Name=EQUIV.INT.SOLD, typeModifiers="USD")
+		INT_BASIS_BOUGHT -> ST_RateParameters:INTEREST_BASIS
+			@i18n:Label (en="Interest Basis Bought")
+			@i18n:Tooltip (en="Interest day basis of the currency bought")
+			@t24:i (align=L, inputBehaviour=N, maxLength=1, sysNumber=122.0, core=true, t24Name=INT.BASIS.BOUGHT)
+		INT_BASIS_SOLD -> ST_RateParameters:INTEREST_BASIS
+			@i18n:Label (en="Interest Basis Sold")
+			@i18n:Tooltip (en="Interest day basis of the currency sold")
+			@t24:i (align=L, inputBehaviour=N, maxLength=1, sysNumber=123.0, core=true, t24Name=INT.BASIS.SOLD)
+		BULK_DEAL : FX_Contract:FOREX__BULK_DEAL
+			@i18n:Label (en="Bulk Deal")
+			@i18n:Tooltip (en="If deal is a Bulk deal or not")
+			@t24:i (align=L, inputBehaviour=F, maxLength=1, sysNumber=124.0, core=true, t24Name=BULK.DEAL)
+		BULK_REFERENCE : T24BusinessTypes:A
+			@i18n:Label (en="Bulk Reference")
+			@i18n:Tooltip (en="Deal Reference of the Bulk Deal")
+			@t24:i (align=L, inputBehaviour=F, maxLength=15, sysNumber=125.0, core=true, t24Name=BULK.REFERENCE, mask="R##-#####-#####")
+		TRANSACTION_TYPE -> FX_Config:FX_TRANSACTION_TYPE
+			@i18n:Label (en="Transaction Type")
+			@i18n:Tooltip (en="Indicates the Transaction Type")
+			@t24:i (align=L, inputBehaviour=F, maxLength=4, sysNumber=126.0, core=true, businessType=A, t24Name=TRANSACTION.TYPE)
+		OPTION_TYPE : T24BusinessTypes:A
+			@i18n:Label (en="Option Type")
+			@i18n:Tooltip (en="Indicates the type of contract")
+			@t24:i (align=L, inputBehaviour=N, maxLength=10, sysNumber=127.0, core=true, t24Name=OPTION.TYPE)
+		ORG_VALBUY_DATE -> byValue FX_Contract:FOREX__ORG_VALBUY_DATE *
+		AMT_BOUGHT_OS : T24BusinessTypes:AMT
+			@i18n:Label (en="Amt Bought Outstg")
+			@i18n:Tooltip (en="Amount Bought Outstanding")
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=130.0, core=true, t24Name=AMT.BOUGHT.OS, typeModifiers="6")
+		AMT_SOLD_OS : T24BusinessTypes:AMT
+			@i18n:Label (en="Amt Sold Outstg")
+			@i18n:Tooltip (en="Amount Sold Outstanding")
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=131.0, core=true, t24Name=AMT.SOLD.OS, typeModifiers="9")
+		DEAL_MARKET -> FIN_CurrencyConfig:CURRENCY_MARKET
+			@i18n:Label (en="Deal Market")
+			@i18n:Tooltip (en="Default deal market for exchange rates")
+			@t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=132.0, core=true, t24Name=DEAL.MARKET)
+		LINK_REFERENCE : T24BusinessTypes:A
+			@i18n:Label (en="Link Reference")
+			@i18n:Tooltip (en="Transaction link reference of the contract")
+			@t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=133.0, core=true, t24Name=LINK.REFERENCE)
+		NETTING_STATUS : FX_Contract:FOREX__NETTING_STATUS
+			@i18n:Label (en="Is Deal to be Netted")
+			@i18n:Tooltip (en="Is the Deal to be netted")
+			@t24:i (align=L, inputBehaviour=F, maxLength=1, sysNumber=134.0, core=true, t24Name=NETTING.STATUS)
+		AMORTISE_POSITION : FX_Contract:FOREX__AMORTISE_POSITION
+			@i18n:Label (en="Amortise Position")
+			@i18n:Tooltip (en="Amortise Position")
+			@t24:i (align=L, inputBehaviour=F, maxLength=4, sysNumber=135.0, core=true, t24Name=AMORTISE.POSITION)
+		AMORTISE_FROM_DATE : T24BusinessTypes:D
+			@i18n:Label (en="Amortise From Date")
+			@i18n:Tooltip (en="Date from which positn Amortisatn starts")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=136.0, core=true, t24Name=AMORTISE.FROM.DATE)
+		AMORTISE_CYCLE : T24BusinessTypes:FQU
+			@i18n:Label (en="Amortisation Cycle")
+			@i18n:Tooltip (en="Frequency of position amortisation")
+			@t24:i (align=L, inputBehaviour=I, maxLength=19, sysNumber=137.0, core=true, t24Name=AMORTISE.CYCLE)
+		MKTG_EXCH_ADJ : T24BusinessTypes:AMT
+			@i18n:Label (en="Market Exchane Profit")
+			@i18n:Tooltip (en="Market Exchane Profit")
+			@t24:i (align=R, inputBehaviour=F, maxLength=19, sysNumber=138.0, core=true, t24Name=MKTG.EXCH.ADJ, typeModifiers="-USD")
+		OS_DEL_BUY_AMT : T24BusinessTypes:AMT
+			@i18n:Label (en="Outstg. Del.Buy Amount")
+			@i18n:Tooltip (en="Outstg. Del.Buy Amount")
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=139.0, core=true, t24Name=OS.DEL.BUY.AMT, typeModifiers="6")
+		OS_DEL_SELL_AMT : T24BusinessTypes:AMT
+			@i18n:Label (en="Outstg.Del Sell Amount")
+			@i18n:Tooltip (en="Outstg.Del Sell Amount")
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=140.0, core=true, t24Name=OS.DEL.SELL.AMT, typeModifiers="9")
+		OS_LCY_EQUIV_AMT : T24BusinessTypes:AMT
+			@i18n:Label (en="Oustg.Lcy Equivalent Amt")
+			@i18n:Tooltip (en="Oustg.Lcy Equivalent Amt")
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=141.0, core=true, t24Name=OS.LCY.EQUIV.AMT, mask="AMT#USD")
+		OS_LST_LIM_BUY_EOP : T24BusinessTypes:D
+			@t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=142.0, core=true, t24Name=OS.LST.LIM.BUY.EOP)
+		OS_LST_LIM_SEL_EOP : T24BusinessTypes:D
+			@t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=143.0, core=true, t24Name=OS.LST.LIM.SEL.EOP)
+		OLD_INT_RATE_CALC : FX_Contract:FOREX__OLD_INT_RATE_CALC
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=144.0, core=true, t24Name=OLD.INT.RATE.CALC)
+		SWAP_PL_FWD_POS : FX_Contract:FOREX__SWAP_PL_FWD_POS
+			@i18n:Label (en="Swap PL Forward Position")
+			@i18n:Tooltip (en="Swap PL Forward Position")
+			@t24:i (align=L, inputBehaviour=F, maxLength=3, sysNumber=145.0, core=true, t24Name=SWAP.PL.FWD.POS)
+		REALISE_FIX_PL : FX_Contract:FOREX__REALISE_FIX_PL
+			@i18n:Label (en="Realised Profit")
+			@i18n:Tooltip (en="Realised Profit")
+			@t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=146.0, core=true, t24Name=REALISE.FIX.PL)
+		FIX_PL_REALISED : T24BusinessTypes:D
+			@i18n:Label (en="Accruals Realisation Date")
+			@i18n:Tooltip (en="Accrual Realisation Date")
+			@t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=147.0, core=true, t24Name=FIX.PL.REALISED)
+		LAST_DEL_ID : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=148.0, core=true, t24Name=LAST.DEL.ID)
+		SOD_MAT : FX_Contract:FOREX__SOD_MAT
+			@i18n:Label (en="Sod Mat")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=149.0, core=true, t24Name=SOD.MAT)
+		FX_BULK_ORDR_ID -> byValue FX_Contract:FOREX__FX_BULK_ORDR_ID *
+		FX_ORDER_ID : T24BusinessTypes:A
+			@i18n:Label (en="Forex Order ID")
+			@i18n:Tooltip (en="The forex order ID placed by the customer")
+			@t24:i (align=L, inputBehaviour=N, maxLength=16, sysNumber=151.0, core=true, t24Name=FX.ORDER.ID)
+		CLS_DEAL : FX_Contract:FOREX__CLS_DEAL
+			@i18n:Label (en="Is it CLS deal?")
+			@i18n:Tooltip (en="Whether the Deal CLS deal or not")
+			@t24:i (align=L, inputBehaviour=F, maxLength=3, sysNumber=152.0, core=true, t24Name=CLS.DEAL)
+		IDENTIFICATION : T24BusinessTypes:A
+			@i18n:Label (en=Identification)
+			@i18n:Tooltip (en="Details to be mandatorily displayed in contract")
+			@t24:i (align=L, inputBehaviour=N, maxLength=27, sysNumber=153.0, core=true, t24Name=IDENTIFICATION)
+		DELIVERY_DETAILS : FX_Contract:FOREX__DELIVERY_DETAILS
+			@i18n:Label (en="Delivery Details")
+			@i18n:Tooltip (en="Delivery Details - CIF")
+			@t24:i (align=L, inputBehaviour=I, maxLength=4, sysNumber=154.0, core=true, t24Name=DELIVERY.DETAILS)
+		AVAILABILITY : T24BusinessTypes:AAA
+			@i18n:Label (en=Availability)
+			@i18n:Tooltip (en="Location where the metal is available for delivery")
+			@t24:i (align=L, inputBehaviour=I, maxLength=15, sysNumber=155.0, core=true, t24Name=AVAILABILITY)
+		ALLOCATION : FX_Contract:FOREX__ALLOCATION
+			@i18n:Label (en=Allocation)
+			@i18n:Tooltip (en="Is the metal required allocated or unallocated")
+			@t24:i (align=L, inputBehaviour=I, maxLength=5, sysNumber=156.0, core=true, t24Name=ALLOCATION)
+		METAL_TYPE : FX_Contract:FOREX__METAL_TYPE
+			@i18n:Label (en="Metal Type")
+			@i18n:Tooltip (en="Metal Type")
+			@t24:i (align=L, inputBehaviour=I, maxLength=4, sysNumber=157.0, core=true, t24Name=METAL.TYPE)
+		FURTHER_INDENT : FX_Contract:FOREX__FURTHER_INDENT
+			@i18n:Label (en="Futher Indent")
+			@i18n:Tooltip (en="Metal will be delivered / transferred")
+			@t24:i (align=L, inputBehaviour=I, maxLength=8, sysNumber=158.0, core=true, t24Name=FURTHER.INDENT)
+		QUANTITY : FX_Contract:FOREX__QUANTITY
+			@i18n:Label (en=Quantity)
+			@i18n:Tooltip (en="Type of unit of the metal")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=159.0, core=true, t24Name=QUANTITY)
+		CLOSING_ID : T24BusinessTypes:A
+			@i18n:Label (en="Fx Closing Group id")
+			@i18n:Tooltip (en="Fx Closing Group id")
+			@t24:i (align=L, inputBehaviour=N, maxLength=14, sysNumber=160.0, core=true, t24Name=CLOSING.ID)
+		TRADE_ORD_ID : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=N, maxLength=20, sysNumber=161.0, core=true, t24Name=TRADE.ORD.ID)
+		ROUNDING_RULE -> ST_Config:EB_ROUNDING_RULE
+			@i18n:Label (en="Rounding Rule")
+			@i18n:Tooltip (en="Indicates the rounding rule")
+			@t24:i (align=L, inputBehaviour=F, maxLength=20, sysNumber=162.0, core=true, businessType=A, t24Name=ROUNDING.RULE)
+		AGREEMENT_TYPE -> FX_Config:FX_AGREEMENT_TYPE
+			@i18n:Label (en="Agreement Type")
+			@i18n:Tooltip (en="Agreement Type Eg. ISDA, FRABBA, etc.")
+			@t24:i (align=L, inputBehaviour=I, maxLength=21, sysNumber=163.0, core=true, businessType=A, t24Name=AGREEMENT.TYPE)
+		TERMS_AND_CONDS : T24BusinessTypes:A
+			@i18n:Label (en="Terms and Conditions")
+			@i18n:Tooltip (en="Terms and Conditions,If any")
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=164.0, core=true, t24Name=TERMS.AND.CONDS)
+		ADDL_INFO_METAL -> byValue FX_Contract:FOREX__ADDL_INFO_METAL *
+		ORIGINATING_DEPT : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=E, maxLength=4, sysNumber=167.0, core=true, t24Name=ORIGINATING.DEPT)
+		PHANTOM_IND : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=E, maxLength=1, sysNumber=168.0, core=true, t24Name=PHANTOM.IND)
+		CONSOL_IND -> byValue FX_Contract:FOREX__CONSOL_IND *
+		PVP_SETTLEMENT : FX_Contract:FOREX__PVP_SETTLEMENT
+			@t24:i (align=L, inputBehaviour=F, maxLength=1, sysNumber=170.0, core=true, t24Name=PVP.SETTLEMENT)
+		RESERVED10 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=171.0, core=true, t24Name=RESERVED10)
+		RESERVED9 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=172.0, core=true, t24Name=RESERVED9)
+		RESERVED8 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=173.0, core=true, t24Name=RESERVED8)
+		RESERVED7 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=174.0, core=true, t24Name=RESERVED7)
+		RESERVED6 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=175.0, core=true, t24Name=RESERVED6)
+		RESERVED5 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=176.0, core=true, t24Name=RESERVED5)
+		RESERVED4 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=177.0, core=true, t24Name=RESERVED4)
+		RESERVED3 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=178.0, core=true, t24Name=RESERVED3)
+		RESERVED2 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=179.0, core=true, t24Name=RESERVED2)
+		RESERVED1 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=180.0, core=true, t24Name=RESERVED1)
+		STMT_NO -> byValue FX_Contract:FOREX__STMT_NO *
+		OVERRIDE -> byValue FX_Contract:FOREX__OVERRIDE *
+		RECORD_STATUS : T24BusinessTypes:STAT
+			@i18n:Label (en="Record Status")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=183.0, core=true, t24Name=RECORD.STATUS)
+		CURR_NO : mml:Integer
+			@i18n:Label (en="Curr No")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=184.0, core=true, t24Name=CURR.NO)
+		INPUTTER -> byValue FX_Contract:FOREX__INPUTTER *
+		DATE_TIME -> byValue FX_Contract:FOREX__DATE_TIME *
+		AUTHORISER : T24BusinessTypes:A
+			@i18n:Label (en=Authoriser)
+			@i18n:Tooltip (en="Indicates the User who Authorises the record")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=187.0, core=true, t24Name=AUTHORISER)
+		CO_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company)
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=188.0, core=true, businessType=A, t24Name=CO.CODE, mask="R##-###-####")
+		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Dept Code")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=189.0, core=true, t24Name=DEPT.CODE)
+		AUDITOR_CODE : T24BusinessTypes:A
+			@i18n:Label (en="Auditor Code")
+			@i18n:Tooltip (en="Auditor Code")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=190.0, core=true, t24Name=AUDITOR.CODE)
+		AUDIT_DATE_TIME : T24BusinessTypes:RELTIME
+			@i18n:Label (en="Audit Date Time")
+			@i18n:Tooltip (en="Date and time when record was audited")
+			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=191.0, core=true, t24Name=AUDIT.DATE.TIME, mask="RDD DD  DD ##:##")
+		SY_ID : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=I, maxLength=15, sysNumber=166.1, core=false, t24Name=SY.ID)
+		SY_UNIT : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=I, maxLength=52, sysNumber=166.2, core=false, t24Name=SY.UNIT)
+		SYEXVAL : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=166.3, core=false, t24Name=SYEXVAL)
+		SOURCE_ID : mml:Integer
+			@i18n:Label (en="Source Id")
+			@t24:i (align=R, inputBehaviour=N, maxLength=15, core=false, t24Name=SOURCE.ID, genOperation="@ID")
+		INTEREST_BASIS : mml:Integer
+			@i18n:Label (en="Interest Basis")
+			@i18n:Tooltip (en="Indicates the interest day basis")
+			@t24:i (align=L, inputBehaviour=N, maxLength=3, core=false, t24Name=INTEREST.BASIS, genOperation="\"RTN\"")
+		RESIDENCE : mml:Integer
+			@i18n:Label (en=Residence)
+			@t24:i (align=L, inputBehaviour=N, maxLength=2, core=false, t24Name=RESIDENCE, genOperation="COUNTERPARTY>CUSTOMER>RESIDENCE")
+		SOURCE_FILE : mml:Integer
+			@i18n:Label (en="Source File")
+			@t24:i (align=L, inputBehaviour=N, maxLength=5, core=false, t24Name=SOURCE.FILE, genOperation="\"FOREX\"")
+		PRODCCY : mml:Integer
+			@i18n:Label (en="Product Currency")
+			@t24:i (align=L, inputBehaviour=N, maxLength=3, core=false, t24Name=PRODCCY, genOperation="\"\"")
+		CUSTOMER_NO : mml:Integer
+			@i18n:Label (en="Customer No")
+			@i18n:Tooltip (en="Identifies the Customer for the transaction.")
+			@t24:i (align=R, inputBehaviour=N, maxLength=10, core=false, t24Name=CUSTOMER.NO, genOperation="SUBR(\"CUSTOMER.NO\",BULK.DEAL,@ID,COUNTERPARTY)")
+		SECTOR : mml:Integer
+			@i18n:Label (en=Sector)
+			@i18n:Tooltip (en="Indicates the sector")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, core=false, t24Name=SECTOR, genOperation="CUSTOMER.NO>CUSTOMER>SECTOR")
+		INDUSTRY : mml:Integer
+			@i18n:Label (en=Industry)
+			@i18n:Tooltip (en="Indicates the Industry")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, core=false, t24Name=INDUSTRY, genOperation="CUSTOMER.NO>CUSTOMER>INDUSTRY")
+		TARGET : mml:Integer
+			@i18n:Label (en=Target)
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, core=false, t24Name=TARGET, genOperation="CUSTOMER.NO>CUSTOMER>TARGET")
+		PRODCAT : mml:Integer
+			@i18n:Label (en="Deal Type")
+			@t24:i (align=L, inputBehaviour=N, maxLength=6, core=false, t24Name=PRODCAT, genOperation=CATEGORY.CODE)
+		CATEGORY : mml:Integer
+			@i18n:Label (en=Category)
+			@i18n:Tooltip (en="Specifies the Category")
+			@t24:i (align=L, inputBehaviour=N, maxLength=6, core=false, t24Name=CATEGORY, genOperation=CATEGORY.CODE)
+		BUY_CURRENCY_RISK : mml:Integer
+			@t24:i (align=L, inputBehaviour=N, maxLength=10, core=false, t24Name=BUY.CURRENCY.RISK, genOperation=CURRENCY.BOUGHT)
+		SELL_CURRENCY_RISK : mml:Integer
+			@t24:i (align=L, inputBehaviour=N, maxLength=10, core=false, t24Name=SELL.CURRENCY.RISK, genOperation=CURRENCY.SOLD)
+		BUY_COUNTRY_RISK : mml:Integer
+			@t24:i (align=L, inputBehaviour=N, maxLength=10, core=false, t24Name=BUY.COUNTRY.RISK, genOperation="CURRENCY.BOUGHT>CURRENCY>COUNTRY.CODE")
+		SELL_COUNTRY_RISK : mml:Integer
+			@t24:i (align=L, inputBehaviour=N, maxLength=10, core=false, t24Name=SELL.COUNTRY.RISK, genOperation="CURRENCY.SOLD>CURRENCY>COUNTRY.CODE")
+		SAM_REF_CCY : mml:Integer
+			@t24:i (align=L, inputBehaviour=N, maxLength=10, core=false, t24Name=SAM.REF.CCY, genOperation="SUBR(\'AM.EXP.FX.IDESC\',COUNTERPARTY, PORTFOLIO.NUMBER)")
+	}
+	FOREX__SWAP_REF_NO
+	{
+		SWAP_REF_NO : T24BusinessTypes:A
+			@i18n:Label (en="Swap Reference Number")
+			@i18n:Tooltip (en="Hold the reference number of each swap deal")
+			@t24:i (align=L, inputBehaviour=N, maxLength=12, sysNumber=29.0, core=true, t24Name=SWAP.REF.NO)
+	}
+	FOREX__OPTION_RATEDATE
+	{
+		OPTION_RATEDATE : T24BusinessTypes:FOREXD
+			@i18n:Label (en="Delivery Date")
+			@i18n:Tooltip (en="Delivery Date")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=36.0, core=true, t24Name=OPTION.RATEDATE, mask="RDD DDD DDDD")
+		OPTION_RATE : T24BusinessTypes:FWDR
+			@i18n:Label (en="Option Rate")
+			@i18n:Tooltip (en="Rate to be used to reflect the forward rate")
+			@t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=37.0, core=true, t24Name=OPTION.RATE)
+		OPTION_RATE_ID : T24BusinessTypes:A
+			@i18n:Label (en="Option Rate Id")
+			@i18n:Tooltip (en="Option Rate Id")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=38.0, core=true, t24Name=OPTION.RATE.ID)
+	}
+	FOREX__OUR_ACCOUNT_PAY
+	{
+		OUR_ACCOUNT_PAY -> ACM_AccountOpening:ACCOUNT
+			@i18n:Label (en="Setlmnt A/c for Ccy Sell")
+			@i18n:Tooltip (en="Settlement A/c for Sell")
+			@t24:i (align=L, inputBehaviour=I, maxLength=36, sysNumber=39.0, core=true, businessType=DELACC, t24Name=OUR.ACCOUNT.PAY)
+		OUR_ACCOUNT_REC -> ACM_AccountOpening:ACCOUNT
+			@i18n:Label (en="Setlmnt A/c for Ccy Buy")
+			@i18n:Tooltip (en="Settlement A/c for Buy")
+			@t24:i (align=L, inputBehaviour=I, maxLength=36, sysNumber=40.0, core=true, businessType=DELACC, t24Name=OUR.ACCOUNT.REC)
+		DEL_DATE_BUY : T24BusinessTypes:FOREXD
+			@i18n:Label (en="Option Date Buy")
+			@i18n:Tooltip (en="Date on which option amount bought was received")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=41.0, core=true, t24Name=DEL.DATE.BUY, mask="RDD DDD DDDD")
+		DEL_AMOUNT_BUY : T24BusinessTypes:AMT
+			@i18n:Label (en="Optn Amount Buy")
+			@i18n:Tooltip (en="Optn/take up amount in currency being purchased")
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=42.0, core=true, t24Name=DEL.AMOUNT.BUY, typeModifiers="6")
+		DEL_DATE_SELL : T24BusinessTypes:FOREXD
+			@i18n:Label (en="Option Date Sell")
+			@i18n:Tooltip (en="Date on which option amount sold was delivered")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=43.0, core=true, t24Name=DEL.DATE.SELL, mask="RDD DDD DDDD")
+		DEL_AMOUNT_SELL : T24BusinessTypes:AMT
+			@i18n:Label (en="Optn Amount Sell")
+			@i18n:Tooltip (en="Optn/ take up amount in currency being sold")
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=44.0, core=true, t24Name=DEL.AMOUNT.SELL, typeModifiers="9")
+		DEL_LCY_AMT : T24BusinessTypes:AMT
+			@i18n:Label (en="LCY Amount")
+			@i18n:Tooltip (en="Local Currency Amount")
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=45.0, core=true, t24Name=DEL.LCY.AMT, typeModifiers="-USD")
+		BENEFICIARY_NO -> ST_Customer:CUSTOMER
+			@i18n:Label (en=Beneficiary)
+			@i18n:Tooltip (en="Identifies the beneficiary")
+			@t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=46.0, core=true, businessType=CUS, t24Name=BENEFICIARY.NO)
+		BENFCY_ADD -> byValue FX_Contract:FOREX__OUR_ACCOUNT_PAY__BENFCY_ADD *
+		CPARTY_CORR_NO -> ST_Customer:CUSTOMER
+			@i18n:Label (en="Counterparty\'s SSI")
+			@i18n:Tooltip (en="Specifies counterparty\'s SSI")
+			@t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=48.0, core=true, businessType=CUS, t24Name=CPARTY.CORR.NO)
+		CPY_CORR_ADD -> byValue FX_Contract:FOREX__OUR_ACCOUNT_PAY__CPY_CORR_ADD *
+		CPARTY_BANK_ACC : T24BusinessTypes:A
+			@i18n:Label (en="Bank Account Number")
+			@i18n:Tooltip (en="Account number of the Counterparty bank")
+			@t24:i (align=L, inputBehaviour=I, maxLength=34, sysNumber=50.0, core=true, t24Name=CPARTY.BANK.ACC)
+		INTERMED_BK_NO -> ST_Customer:CUSTOMER
+			@i18n:Label (en="Intermediary Bank")
+			@t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=51.0, core=true, businessType=CUS, t24Name=INTERMED.BK.NO)
+		INTERMED_ADD -> byValue FX_Contract:FOREX__OUR_ACCOUNT_PAY__INTERMED_ADD *
+		CONF_NARR -> byValue FX_Contract:FOREX__OUR_ACCOUNT_PAY__CONF_NARR *
+		PAYMT_NARR -> byValue FX_Contract:FOREX__OUR_ACCOUNT_PAY__PAYMT_NARR *
+		REC_ADV_NARR -> byValue FX_Contract:FOREX__OUR_ACCOUNT_PAY__REC_ADV_NARR *
+		BK_TO_BK_INF -> byValue FX_Contract:FOREX__OUR_ACCOUNT_PAY__BK_TO_BK_INF *
+		PAY_ACC_POSTED : T24BusinessTypes:A
+			@i18n:Label (en="Pay Account Posted")
+			@i18n:Tooltip (en="Time/Date on which entry to Pay Account got posted")
+			@t24:i (align=L, inputBehaviour=N, maxLength=13, sysNumber=57.0, core=true, t24Name=PAY.ACC.POSTED)
+		REC_ACC_POSTED : T24BusinessTypes:A
+			@i18n:Label (en="Receive Account Posted")
+			@i18n:Tooltip (en="Time/Date - entry to Receive Account got posted")
+			@t24:i (align=L, inputBehaviour=N, maxLength=13, sysNumber=58.0, core=true, t24Name=REC.ACC.POSTED)
+		PAYMENT_SENT : T24BusinessTypes:A
+			@i18n:Label (en="Payment Sent")
+			@i18n:Tooltip (en="Time and Date when the payment details were sent")
+			@t24:i (align=L, inputBehaviour=N, maxLength=16, sysNumber=59.0, core=true, t24Name=PAYMENT.SENT)
+		ADVICE_SENT : T24BusinessTypes:A
+			@i18n:Label (en="Advice Sent")
+			@i18n:Tooltip (en="Time and Date when the Advice details were sent")
+			@t24:i (align=L, inputBehaviour=N, maxLength=25, sysNumber=60.0, core=true, t24Name=ADVICE.SENT)
+		ACTIVITYCODE -> byValue FX_Contract:FOREX__OUR_ACCOUNT_PAY__ACTIVITYCODE *
+		DEL_CHG_ACCOUNT -> ACM_AccountOpening:ACCOUNT
+			@i18n:Label (en="Charge Account")
+			@i18n:Tooltip (en="Delivery Charge Account")
+			@t24:i (align=R, inputBehaviour=I, maxLength=16, sysNumber=63.0, core=true, businessType=ACC, t24Name=DEL.CHG.ACCOUNT)
+		DEL_CHG_ACC_CCY -> FIN_CurrencyConfig:CURRENCY
+			@i18n:Label (en="Charge Acct Ccy")
+			@i18n:Tooltip (en="Currency of Delivery Charge Account")
+			@t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=64.0, core=true, businessType=CCY, t24Name=DEL.CHG.ACC.CCY)
+		DEL_RATE : T24BusinessTypes:R
+			@i18n:Label (en="Delivery Rate")
+			@i18n:Tooltip (en="Indicates the rate used for the take-down amount")
+			@t24:i (align=R, inputBehaviour=N, maxLength=16, sysNumber=65.0, core=true, t24Name=DEL.RATE)
+		DEL_AMOUNT_CHG : T24BusinessTypes:AMT
+			@i18n:Label (en="Delivery Amt Charge")
+			@i18n:Tooltip (en="Amount charged for associated delivery charges ")
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=66.0, core=true, t24Name=DEL.AMOUNT.CHG, typeModifiers="64.X")
+		DEL_CHG_TYPE -> byValue FX_Contract:FOREX__OUR_ACCOUNT_PAY__DEL_CHG_TYPE *
+		DEL_RATE_ID : mml:Integer
+			@i18n:Label (en="Delivery Rate Id")
+			@i18n:Tooltip (en="Delivery Rate Id")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=73.0, core=true, t24Name=DEL.RATE.ID)
+		STATUS : FX_Contract:FOREX__OUR_ACCOUNT_PAY__STATUS
+			@i18n:Label (en=Status)
+			@t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=74.0, core=true, t24Name=STATUS)
+	}
+	FOREX__OUR_ACCOUNT_PAY__BENFCY_ADD
+	{
+		BENFCY_ADD : T24BusinessTypes:A
+			@i18n:Label (en="Beneficiary Address")
+			@i18n:Tooltip (en="Beneficiary\'s Address")
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=47.0, core=true, t24Name=BENFCY.ADD)
+	}
+	FOREX__OUR_ACCOUNT_PAY__CPY_CORR_ADD
+	{
+		CPY_CORR_ADD : T24BusinessTypes:A
+			@i18n:Label (en="Free Format Address")
+			@i18n:Tooltip (en="Bank name/address where amount is to be paid")
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=49.0, core=true, t24Name=CPY.CORR.ADD)
+	}
+	FOREX__OUR_ACCOUNT_PAY__INTERMED_ADD
+	{
+		INTERMED_ADD : T24BusinessTypes:A
+			@i18n:Label (en="Intermediary Address")
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=52.0, core=true, t24Name=INTERMED.ADD)
+	}
+	FOREX__OUR_ACCOUNT_PAY__CONF_NARR
+	{
+		CONF_NARR : T24BusinessTypes:SW
+			@i18n:Label (en="Confirmation Narrative")
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=53.0, core=true, t24Name=CONF.NARR)
+	}
+	FOREX__OUR_ACCOUNT_PAY__PAYMT_NARR
+	{
+		PAYMT_NARR : T24BusinessTypes:SW
+			@i18n:Label (en="Payment Narrative")
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=54.0, core=true, t24Name=PAYMT.NARR)
+	}
+	FOREX__OUR_ACCOUNT_PAY__REC_ADV_NARR
+	{
+		REC_ADV_NARR : T24BusinessTypes:SW
+			@i18n:Label (en="Advice to Receive Narrative")
+			@i18n:Tooltip (en="Free text narrative relating to advice to receive")
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=55.0, core=true, t24Name=REC.ADV.NARR)
+	}
+	FOREX__OUR_ACCOUNT_PAY__BK_TO_BK_INF
+	{
+		BK_TO_BK_INF : T24BusinessTypes:SW
+			@i18n:Label (en="Bank to Bank info")
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=56.0, core=true, t24Name=BK.TO.BK.INF)
+	}
+	FOREX__OUR_ACCOUNT_PAY__ACTIVITYCODE
+	{
+		ACTIVITYCODE -> FX_Delivery:FX_ACTIVITY
+			@i18n:Label (en="Activity Code")
+			@i18n:Tooltip (en="Indicates activity code")
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=61.0, core=true, businessType=A, t24Name=ACTIVITYCODE)
+		CONFIRM_SENT : T24BusinessTypes:A
+			@i18n:Label (en="Confirmation Sent")
+			@i18n:Tooltip (en="Confirmation Sent")
+			@t24:i (align=L, inputBehaviour=N, maxLength=25, sysNumber=62.0, core=true, t24Name=CONFIRM.SENT)
+	}
+	FOREX__OUR_ACCOUNT_PAY__DEL_CHG_TYPE
+	{
+		DEL_CHG_TYPE : T24BusinessTypes:CHG
+			@i18n:Label (en="Charge Type")
+			@i18n:Tooltip (en="Charge Type")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=67.0, core=true, t24Name=DEL.CHG.TYPE, typeModifiers="CHGCOM")
+		DEL_CHG_AMT : T24BusinessTypes:AMT
+			@i18n:Label (en="Charge Amount")
+			@i18n:Tooltip (en="Delivery Charge Amount")
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=68.0, core=true, t24Name=DEL.CHG.AMT, typeModifiers="64.X")
+		DEL_CHG_LCY : T24BusinessTypes:AMT
+			@i18n:Label (en="Lcy Equivalent")
+			@i18n:Tooltip (en="Local Currency equivalent of Charge Amount")
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=69.0, core=true, t24Name=DEL.CHG.LCY)
+		DEL_TAX_TYPE : T24BusinessTypes:TAX
+			@i18n:Label (en="Delivery Tax Type")
+			@i18n:Tooltip (en="Delivery tax type associated with delivery charge")
+			@t24:i (align=L, inputBehaviour=N, maxLength=2, sysNumber=70.0, core=true, t24Name=DEL.TAX.TYPE)
+		DEL_TAX_AMT : T24BusinessTypes:AMT
+			@i18n:Label (en="Delivery Tax Amt")
+			@i18n:Tooltip (en="Specifies the delivery tax amount")
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=71.0, core=true, t24Name=DEL.TAX.AMT, typeModifiers="64.X")
+		DEL_TAX_LCY : T24BusinessTypes:AMT
+			@i18n:Label (en="Tax on Charges")
+			@i18n:Tooltip (en="Tax on Charges")
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=72.0, core=true, t24Name=DEL.TAX.LCY, typeModifiers="-USD")
+	}
+	FOREX__CHARGE_CODE
+	{
+		CHARGE_CODE : T24BusinessTypes:CHG
+			@i18n:Label (en="Charge Code")
+			@i18n:Tooltip (en="Indicates the Charge code")
+			@t24:i (align=R, inputBehaviour=F, maxLength=11, sysNumber=96.0, core=true, t24Name=CHARGE.CODE, typeModifiers="CHGCOM")
+		CHARGE_AMOUNT : T24BusinessTypes:AMT
+			@i18n:Label (en="Charge Amount")
+			@i18n:Tooltip (en="Indicates charge amount")
+			@t24:i (align=R, inputBehaviour=F, maxLength=19, sysNumber=97.0, core=true, t24Name=CHARGE.AMOUNT)
+	}
+	FOREX__TAX_CODE
+	{
+		TAX_CODE -> ST_ChargeConfig:TAX
+			@i18n:Label (en="Tax Code")
+			@t24:i (align=L, inputBehaviour=N, maxLength=2, sysNumber=98.0, core=true, businessType=A, t24Name=TAX.CODE)
+		TAX_AMOUNT : T24BusinessTypes:AMT
+			@i18n:Label (en="Tax Amount")
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=99.0, core=true, t24Name=TAX.AMOUNT, mask="- ")
+	}
+	FOREX__NOTES
+	{
+		NOTES : T24BusinessTypes:A
+			@i18n:Label (en="Dealer Notes")
+			@i18n:Tooltip (en="Dealer Notes,if any")
+			@t24:i (align=L, inputBehaviour=I, maxLength=50, sysNumber=107.0, core=true, t24Name=NOTES)
+	}
+	FOREX__DEALER_NOTES
+	{
+		DEALER_NOTES : T24BusinessTypes:A
+			@i18n:Label (en="Dealer\'s Comment")
+			@i18n:Tooltip (en="Dealer to record any special informatn")
+			@t24:i (align=L, inputBehaviour=F, maxLength=35, sysNumber=108.0, core=true, t24Name=DEALER.NOTES)
+	}
+	FOREX__EQV_CODE
+	{
+		EQV_CODE : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=E, maxLength=3, sysNumber=110.0, core=true, t24Name=EQV.CODE)
+		EQUIV_AMT : T24BusinessTypes:AMT
+			@t24:i (align=R, inputBehaviour=E, maxLength=19, sysNumber=111.0, core=true, t24Name=EQUIV.AMT)
+	}
+	FOREX__CHARGE_EQUIV
+	{
+		CHARGE_EQUIV : T24BusinessTypes:AMT
+			@i18n:Label (en="Charge Equivalent")
+			@i18n:Tooltip (en="Indicates the charge in local currency equivalent")
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=113.0, core=true, t24Name=CHARGE.EQUIV, typeModifiers="-USD")
+		TAX_EQUIV : T24BusinessTypes:AMT
+			@i18n:Label (en="Tax Equivalent")
+			@i18n:Tooltip (en="Local currency equivalent of tax amount")
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=114.0, core=true, t24Name=TAX.EQUIV, typeModifiers="-USD")
+	}
+	FOREX__ORG_VALBUY_DATE
+	{
+		ORG_VALBUY_DATE : T24BusinessTypes:D
+			@i18n:Label (en="Original Value Date Buy")
+			@i18n:Tooltip (en="Original Value Date Buy")
+			@t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=128.0, core=true, t24Name=ORG.VALBUY.DATE)
+		ORG_VALSEL_DATE : T24BusinessTypes:D
+			@i18n:Label (en="Original Value Date Sell")
+			@i18n:Tooltip (en="Original Value Date Sell")
+			@t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=129.0, core=true, t24Name=ORG.VALSEL.DATE)
+	}
+	FOREX__FX_BULK_ORDR_ID
+	{
+		FX_BULK_ORDR_ID : T24BusinessTypes:A
+			@i18n:Label (en="Forex Bulk Order ID")
+			@i18n:Tooltip (en="Indicates the forex bulk order id")
+			@t24:i (align=L, inputBehaviour=N, maxLength=16, sysNumber=150.0, core=true, t24Name=FX.BULK.ORDR.ID)
+	}
+	FOREX__ADDL_INFO_METAL
+	{
+		ADDL_INFO_METAL : T24BusinessTypes:A
+			@i18n:Label (en="Additional Information")
+			@i18n:Tooltip (en="Additional Information on Metal, if any")
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=165.0, core=true, t24Name=ADDL.INFO.METAL)
+	}
+	FOREX__CONSOL_IND
+	{
+		CONSOL_IND : T24BusinessTypes:A
+			@i18n:Label (en="Consolidatn Indicator")
+			@t24:i (align=L, inputBehaviour=E, maxLength=65, sysNumber=169.0, core=true, t24Name=CONSOL.IND)
+	}
+	FOREX__STMT_NO
+	{
+		STMT_NO : T24BusinessTypes:A
+			@i18n:Label (en="Statement number")
+			@t24:i (align=L, inputBehaviour=N, maxLength=29, sysNumber=181.0, core=true, t24Name=STMT.NO)
+	}
+	FOREX__OVERRIDE
+	{
+		OVERRIDE : T24BusinessTypes:A
+			@i18n:Label (en=Override)
+			@i18n:Tooltip (en="Overrides generated by this transaction")
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=182.0, core=true, t24Name=OVERRIDE)
+	}
+	FOREX__INPUTTER
+	{
+		INPUTTER : T24BusinessTypes:A
+			@i18n:Label (en=Inputter)
+			@i18n:Tooltip (en="The user who last updated the record")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=185.0, core=true, t24Name=INPUTTER)
+	}
+	FOREX__DATE_TIME
+	{
+		DATE_TIME : T24BusinessTypes:RELTIME
+			@i18n:Label (en="Date time")
+			@i18n:Tooltip (en="Date and time when record was input or authorised")
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=186.0, core=true, t24Name=DATE.TIME, mask="RDD DD  DD ##:##")
+	}
+	FX_CLS_CPARTY
+		@t24:i (t24Name=FX.CLS.CPARTY, level=C, type=H, allowedFunctions="A C D E H I L P Q R S", localRefAllowed=true)
+	{
+		CPARTY_ID -> FX_Contract:FX_CLS_CPARTY PK required
+			@t24:i (align=L, inputBehaviour=I, maxLength=10, sysNumber=0.0, core=true, businessType=A, t24Name=CPARTY.ID)
+		CUS_SHORT_NAME : T24BusinessTypes:SS
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=1.0, core=true, t24Name=CUS.SHORT.NAME)
+		CUT_OFF_TIME : mml:Integer
+			@i18n:Label (en="Cut off time")
+			@i18n:Tooltip (en="Cut off time")
+			@t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=2.0, core=true, t24Name=CUT.OFF.TIME, mask="R##:##")
+		CURRENCY -> byValue FX_Contract:FX_CLS_CPARTY__CURRENCY *
+		RESERVED11 : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=6.0, core=true, t24Name=RESERVED11)
+		RESERVED10 : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=7.0, core=true, t24Name=RESERVED10)
+		RESERVED9 : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=8.0, core=true, t24Name=RESERVED9)
+		RESERVED8 : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=9.0, core=true, t24Name=RESERVED8)
+		RESERVED7 : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=10.0, core=true, t24Name=RESERVED7)
+		RESERVED6 : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=11.0, core=true, t24Name=RESERVED6)
+		RESERVED5 : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=12.0, core=true, t24Name=RESERVED5)
+		RESERVED4 : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=13.0, core=true, t24Name=RESERVED4)
+		RESERVED3 : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=14.0, core=true, t24Name=RESERVED3)
+		RESERVED2 : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=15.0, core=true, t24Name=RESERVED2)
+		RESERVED1 : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=16.0, core=true, t24Name=RESERVED1)
+		RECORD_STATUS : T24BusinessTypes:STAT
+			@i18n:Label (en="Record Status")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=17.0, core=true, t24Name=RECORD.STATUS)
+		CURR_NO : mml:Integer
+			@i18n:Label (en="Curr No")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=18.0, core=true, t24Name=CURR.NO)
+		INPUTTER -> byValue FX_Contract:FX_CLS_CPARTY__INPUTTER *
+		DATE_TIME -> byValue FX_Contract:FX_CLS_CPARTY__DATE_TIME *
+		AUTHORISER : T24BusinessTypes:A
+			@i18n:Label (en=Authoriser)
+			@i18n:Tooltip (en="Indicates the User who Authorises the record")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=21.0, core=true, t24Name=AUTHORISER)
+		CO_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company)
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=22.0, core=true, businessType=A, t24Name=CO.CODE, mask="R##-###-####")
+		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Dept Code")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=23.0, core=true, t24Name=DEPT.CODE)
+		AUDITOR_CODE : T24BusinessTypes:A
+			@i18n:Label (en="Auditor Code")
+			@i18n:Tooltip (en="Auditor Code")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=24.0, core=true, t24Name=AUDITOR.CODE)
+		AUDIT_DATE_TIME : T24BusinessTypes:RELTIME
+			@i18n:Label (en="Audit Date Time")
+			@i18n:Tooltip (en="Date and time when record was audited")
+			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=25.0, core=true, t24Name=AUDIT.DATE.TIME, mask="RDD DD  DD ##:##")
+	}
+	FX_CLS_CPARTY__CURRENCY
+	{
+		CURRENCY -> FIN_CurrencyConfig:CURRENCY required
+			@i18n:Label (en=Ccy)
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=3.0, core=true, businessType=CCY, t24Name=CURRENCY)
+		NOSTRO_ACC -> ACM_AccountOpening:ACCOUNT required
+			@t24:i (align=R, inputBehaviour=I, maxLength=16, sysNumber=4.0, core=true, businessType=ACC, t24Name=NOSTRO.ACC)
+	}
+	FX_CLS_CPARTY__INPUTTER
+	{
+		INPUTTER : T24BusinessTypes:A
+			@i18n:Label (en=Inputter)
+			@i18n:Tooltip (en="The user who last updated the record")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=19.0, core=true, t24Name=INPUTTER)
+	}
+	FX_CLS_CPARTY__DATE_TIME
+	{
+		DATE_TIME : T24BusinessTypes:RELTIME
+			@i18n:Label (en="Date time")
+			@i18n:Tooltip (en="Date and time when record was input or authorised")
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=20.0, core=true, t24Name=DATE.TIME, mask="RDD DD  DD ##:##")
+	}
+	FX_TRANSACTION
+		@t24:i (t24Name=FX.TRANSACTION, level=F, type=L, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		TRANSACTION_REF_NO -> FX_Contract:FX_TRANSACTION PK required
+			@t24:i (align=L, inputBehaviour=I, maxLength=15, sysNumber=0.0, core=true, businessType=A, t24Name=TRANSACTION.REF.NO)
+		NARRATIVE : T24BusinessTypes:A
+			@i18n:Label (en=Narrative)
+			@i18n:Tooltip (en="Any narrative to be input for user information")
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=1.0, core=true, t24Name=NARRATIVE)
+		REVAL_TYPE : T24BusinessTypes:SSS
+			@i18n:Label (en="Reval Type")
+			@t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=2.0, core=true, t24Name=REVAL.TYPE)
+		AMOUNT_1 : T24BusinessTypes:AMT
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=3.0, core=true, t24Name=AMOUNT.1, typeModifiers=-)
+		AMOUNT_2 : T24BusinessTypes:AMT
+			@i18n:Label (en=Amount)
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=4.0, core=true, t24Name=AMOUNT.2, typeModifiers=-)
+		LCY_AMOUNT_1 : T24BusinessTypes:AMT
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=5.0, core=true, t24Name=LCY.AMOUNT.1, typeModifiers=-)
+		LCY_AMOUNT_2 : T24BusinessTypes:AMT
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=6.0, core=true, t24Name=LCY.AMOUNT.2, typeModifiers=-)
+		RVL_AMOUNT_1 : T24BusinessTypes:AMT
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=7.0, core=true, t24Name=RVL.AMOUNT.1, typeModifiers=-)
+		RVL_AMOUNT_2 : T24BusinessTypes:AMT
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=8.0, core=true, t24Name=RVL.AMOUNT.2, typeModifiers=-)
+		CURRENCY_1 : T24BusinessTypes:CCY
+			@i18n:Label (en=Ccy)
+			@t24:i (align=L, inputBehaviour=I, maxLength=6, sysNumber=9.0, core=true, t24Name=CURRENCY.1)
+		CURRENCY_2 : T24BusinessTypes:CCY
+			@i18n:Label (en=Ccy)
+			@t24:i (align=L, inputBehaviour=I, maxLength=6, sysNumber=10.0, core=true, t24Name=CURRENCY.2)
+		DEAL_DATE : T24BusinessTypes:DEF
+			@i18n:Label (en="Deal Date")
+			@i18n:Tooltip (en="Indicates the Deal date")
+			@t24:i (align=L, inputBehaviour=I, maxLength=11, sysNumber=11.0, core=true, t24Name=DEAL.DATE)
+		LAST_REVAL_DATE : T24BusinessTypes:DEF
+			@t24:i (align=L, inputBehaviour=I, maxLength=11, sysNumber=12.0, core=true, t24Name=LAST.REVAL.DATE)
+		OLD_AMOUNT_1 : T24BusinessTypes:AMT
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=13.0, core=true, t24Name=OLD.AMOUNT.1, typeModifiers=-)
+		OLD_AMOUNT_2 : T24BusinessTypes:AMT
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=14.0, core=true, t24Name=OLD.AMOUNT.2, typeModifiers=-)
+		OLD_LCY_AMOUNT_1 : T24BusinessTypes:AMT
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=15.0, core=true, t24Name=OLD.LCY.AMOUNT.1, typeModifiers=-)
+		OLD_LCY_AMOUNT_2 : T24BusinessTypes:AMT
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=16.0, core=true, t24Name=OLD.LCY.AMOUNT.2, typeModifiers=-)
+		OLD_RVL_AMOUNT_1 : T24BusinessTypes:AMT
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=17.0, core=true, t24Name=OLD.RVL.AMOUNT.1, typeModifiers=-)
+		OLD_RVL_AMOUNT_2 : T24BusinessTypes:AMT
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=18.0, core=true, t24Name=OLD.RVL.AMOUNT.2, typeModifiers=-)
+		AMORT_START_DATE : T24BusinessTypes:D
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=19.0, core=true, t24Name=AMORT.START.DATE)
+		AMORT_DAYS : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=4, sysNumber=20.0, core=true, t24Name=AMORT.DAYS)
+		AMORT_FCY_AMT1 : T24BusinessTypes:AMT
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=21.0, core=true, t24Name=AMORT.FCY.AMT1, typeModifiers=-)
+		AMORT_FCY_AMT2 : T24BusinessTypes:AMT
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=22.0, core=true, t24Name=AMORT.FCY.AMT2, typeModifiers=-)
+		AMORT_LCY_AMT1 : T24BusinessTypes:AMT
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=23.0, core=true, t24Name=AMORT.LCY.AMT1, typeModifiers=-)
+		AMORT_LCY_AMT2 : T24BusinessTypes:AMT
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=24.0, core=true, t24Name=AMORT.LCY.AMT2, typeModifiers=-)
+		DEALER_DESK : mml:Integer
+			@i18n:Label (en="Dealer Desk")
+			@i18n:Tooltip (en="Specifies the Dealer Desk handling the transaction")
+			@t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=25.0, core=true, t24Name=DEALER.DESK)
+		MARKET : mml:Integer
+			@i18n:Label (en=Market)
+			@t24:i (align=R, inputBehaviour=N, maxLength=2, core=false, t24Name=MARKET, genOperation="SUBR(\"ENQ.TRANS\",\"F.FOREX\", @ID[1,12], 5) ; @1[1,1 ]")
+		LONG_POS_SIGN : FX_Contract:FX_TRANSACTION__LONG_POS_SIGN
+			@t24:i (align=L, inputBehaviour=N, maxLength=5, core=false, t24Name=LONG.POS.SIGN)
+	}
+	NEGOTIATED_DEAL
+		@t24:i (t24Name=NEGOTIATED.DEAL, level=F, type=L, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		NEGOTIATED_DEAL -> FX_Contract:NEGOTIATED_DEAL PK required
+			@t24:i (align=L, inputBehaviour=I, maxLength=14, sysNumber=0.0, core=true, businessType=A, t24Name=NEGOTIATED.DEAL)
+		CURRENCY_MARKET -> FIN_CurrencyConfig:CURRENCY_MARKET
+			@i18n:Label (en=Market)
+			@t24:i (align=R, inputBehaviour=I, maxLength=55, sysNumber=1.0, core=true, t24Name=CURRENCY.MARKET)
+		POSITION_TYPE_1 -> RE_Config:FX_POS_TYPE
+			@t24:i (align=R, inputBehaviour=I, maxLength=55, sysNumber=2.0, core=true, t24Name=POSITION.TYPE.1)
+		POSITION_TYPE_2 -> RE_Config:FX_POS_TYPE
+			@t24:i (align=R, inputBehaviour=I, maxLength=55, sysNumber=3.0, core=true, t24Name=POSITION.TYPE.2)
+		DEALER_DESK -> ST_Config:DEALER_DESK
+			@i18n:Label (en="Dealer Desk")
+			@i18n:Tooltip (en="Specifies the Dealer Desk handling the transaction")
+			@t24:i (align=R, inputBehaviour=I, maxLength=55, sysNumber=4.0, core=true, t24Name=DEALER.DESK)
+		CURRENCY_1 -> FIN_CurrencyConfig:CURRENCY
+			@i18n:Label (en=Ccy)
+			@t24:i (align=R, inputBehaviour=I, maxLength=55, sysNumber=5.0, core=true, t24Name=CURRENCY.1)
+		CURRENCY_2 -> FIN_CurrencyConfig:CURRENCY
+			@i18n:Label (en=Ccy)
+			@t24:i (align=R, inputBehaviour=I, maxLength=55, sysNumber=6.0, core=true, t24Name=CURRENCY.2)
+		VALUE_DATE_1 : T24BusinessTypes:D
+			@i18n:Label (en="Value Date")
+			@t24:i (align=R, inputBehaviour=I, maxLength=55, sysNumber=7.0, core=true, t24Name=VALUE.DATE.1)
+		VALUE_DATE_2 : T24BusinessTypes:D
+			@i18n:Label (en="Value Date")
+			@t24:i (align=R, inputBehaviour=I, maxLength=55, sysNumber=8.0, core=true, t24Name=VALUE.DATE.2)
+		REFERENCE_NO : mml:Integer
+			@i18n:Label (en="Reference No")
+			@i18n:Tooltip (en="Unique reference which identifies the transaction")
+			@t24:i (align=R, inputBehaviour=I, maxLength=55, sysNumber=9.0, core=true, t24Name=REFERENCE.NO)
+		DEPARTMENT_CODE : mml:Integer
+			@i18n:Label (en="Department Code")
+			@t24:i (align=R, inputBehaviour=I, maxLength=55, sysNumber=10.0, core=true, t24Name=DEPARTMENT.CODE)
+		RATE : mml:Integer
+			@i18n:Label (en=Rate)
+			@i18n:Tooltip (en="Rate at which dividend/coupon is being paid")
+			@t24:i (align=R, inputBehaviour=I, maxLength=55, sysNumber=11.0, core=true, t24Name=RATE)
+		CURRENCY_AMOUNT_1 : T24BusinessTypes:AMT
+			@t24:i (align=R, inputBehaviour=I, maxLength=55, sysNumber=12.0, core=true, t24Name=CURRENCY.AMOUNT.1)
+		CURRENCY_AMOUNT_2 : T24BusinessTypes:AMT
+			@t24:i (align=R, inputBehaviour=I, maxLength=55, sysNumber=13.0, core=true, t24Name=CURRENCY.AMOUNT.2)
+		LOCAL_AMOUNT_1 : T24BusinessTypes:AMT
+			@t24:i (align=R, inputBehaviour=I, maxLength=55, sysNumber=14.0, core=true, t24Name=LOCAL.AMOUNT.1)
+		LOCAL_AMOUNT_2 : T24BusinessTypes:AMT
+			@t24:i (align=R, inputBehaviour=I, maxLength=55, sysNumber=15.0, core=true, t24Name=LOCAL.AMOUNT.2)
+		TIME_DATE : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=55, sysNumber=16.0, core=true, t24Name=TIME.DATE)
+		NE_REFERENCE -> byValue FX_Contract:NEGOTIATED_DEAL__NE_REFERENCE *
+	}
+	NEGOTIATED_DEAL__NE_REFERENCE
+	{
+		NE_REFERENCE : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=55, sysNumber=17.0, core=true, t24Name=NE.REFERENCE)
+		NE_CCY_AMOUNT_1 : T24BusinessTypes:AMT
+			@t24:i (align=R, inputBehaviour=I, maxLength=55, sysNumber=18.0, core=true, t24Name=NE.CCY.AMOUNT.1)
+		NE_CCY_AMOUNT_2 : T24BusinessTypes:AMT
+			@t24:i (align=R, inputBehaviour=I, maxLength=55, sysNumber=19.0, core=true, t24Name=NE.CCY.AMOUNT.2)
+		NE_LOCAL_AMT_1 : T24BusinessTypes:AMT
+			@t24:i (align=R, inputBehaviour=I, maxLength=55, sysNumber=20.0, core=true, t24Name=NE.LOCAL.AMT.1)
+		NE_LOCAL_AMT_2 : T24BusinessTypes:AMT
+			@t24:i (align=R, inputBehaviour=I, maxLength=55, sysNumber=21.0, core=true, t24Name=NE.LOCAL.AMT.2)
+		NE_TIME_DATE : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=55, sysNumber=22.0, core=true, t24Name=NE.TIME.DATE)
+	}
+}
+Enumerations {
+	FOREX__DEAL_TYPE : mml:string
+		SP=SP
+		FW=FW
+		SW=SW
+	FOREX__DEAL_SUB_TYPE : mml:string
+		BR=BR
+		IN=IN
+		NE=NE
+	FOREX__OUR_ACCOUNT_PAY__STATUS : mml:string
+		FWD=FWD
+		MAT=MAT
+		REV=REV
+		SPT=SPT
+	FOREX__CONF_BY_CPARTY : mml:string
+		ONESIDED=ONESIDED
+	FOREX__TREASURY_CUSTOMER : mml:string
+		NO=NO
+	FOREX__FED_FUNDS : mml:string
+		F=F
+		C=C
+	FOREX__SEND_CONFIRMATION : mml:string
+		NORMAL=NORMAL
+		HOLD=HOLD
+		PRIORITY=PRIORITY
+		URGENT=URGENT
+		ONESIDED=ONESIDED
+	FOREX__SEND_PAYMENT : mml:string
+		NORMAL=NORMAL
+		HOLD=HOLD
+		PRIORITY=PRIORITY
+		URGENT=URGENT
+	FOREX__SEND_ADVICE : mml:string
+		NORMAL=NORMAL
+		HOLD=HOLD
+		PRIORITY=PRIORITY
+		URGENT=URGENT
+	FOREX__CORR_AMEND_MKR : mml:string
+		AMEND=AMEND
+		CORRECT=CORRECT
+	FOREX__BULK_DEAL : mml:string
+		Y=Y
+	FOREX__NETTING_STATUS : mml:string
+		N=N
+		Y=Y
+	FOREX__AMORTISE_POSITION : mml:string
+		Y=Y
+		NO=NO
+		BOTH=BOTH
+	FOREX__OLD_INT_RATE_CALC : mml:string
+		YES=YES
+	FOREX__SWAP_PL_FWD_POS : mml:string
+		YES=YES
+		NO=NO
+	FOREX__REALISE_FIX_PL : mml:string
+		Y=Y
+	FOREX__SOD_MAT : mml:string
+		YES=YES
+		NO=NO
+	FOREX__CLS_DEAL : mml:string
+		YES=YES
+		NO=NO
+	FOREX__DELIVERY_DETAILS : mml:string
+		CIF=CIF
+		CFR=CFR
+		CIP=CIP
+		CPT=CPT
+		DAF=DAF
+		DDP=DDP
+		DDU=DDU
+		DEQ=DEQ
+		DES=DES
+		EXW=EXW
+		FAS=FAS
+		FCA=FCA
+		FOB=FOB
+		LOC=LOC
+		OTH=OTH
+		DTD=DTD
+	FOREX__ALLOCATION : mml:string
+		ALLOC=ALLOC
+		UNALL=UNALL
+	FOREX__METAL_TYPE : mml:string
+		GOLD=GOLD
+		SILV=SILV
+		PLAT=PLAT
+		PALL=PALL
+		RHOD=RHOD
+		RUTH=RUTH
+		OSMI=OSMI
+		IRID=IRID
+		ALUM=ALUM
+		COPP=COPP
+		LEAD=LEAD
+		NICK=NICK
+		TINA=TINA
+		ZINC=ZINC
+		STEE=STEE
+		TITA=TITA
+		OTHR=OTHR
+	FOREX__FURTHER_INDENT : mml:string
+		TRANSFER=TRANSFER
+		DELIVERY=DELIVERY
+	FOREX__QUANTITY : mml:string
+		FOZ=FOZ
+		GOZ=GOZ
+		GRM=GRM
+		KLO=KLO
+		LOT=LOT
+		TAL=TAL
+		TOL=TOL
+		UNT=UNT
+		PND=PND
+		TON=TON
+		TOZ=TOZ
+		OTH=OTH
+	FOREX__PVP_SETTLEMENT : mml:string
+		Y=Y
+		N=N
+	FOREX__SYEXVAL : mml:string
+		YES=YES
+		NO=NO
+	FX_TRANSACTION__LONG_POS_SIGN : mml:string
+		PLUS=PLUS
+		MINUS=MINUS
+}

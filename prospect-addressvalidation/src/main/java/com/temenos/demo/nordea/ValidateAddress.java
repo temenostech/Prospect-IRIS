@@ -28,11 +28,16 @@ public class ValidateAddress {
 			for (int i = 0; i < params.length; i++) {
 				if (params[i].contains("=")) {
 					String[] nv = params[i].split("=");
-					NameValuePair nvpair = new NameValuePair(nv[0], nv[1]);
-					queryParams.add(nvpair);
+					if (nv.length == 2) {
+						NameValuePair nvpair = new NameValuePair(nv[0], nv[1]);
+						queryParams.add(nvpair);
+					}
 				}
 			}
+			if (queryParams.size() == 0)
+				return "OK";
 			getMethod.setQueryString(queryParams.toArray(new NameValuePair[queryParams.size()]));
+			System.out.println(getMethod.getURI().toString());
 			client.executeMethod(getMethod);
 			
 	        // read the response
@@ -49,4 +54,8 @@ public class ValidateAddress {
 		return null;
 	}
 	
+	public static void main(String[] args) {
+		System.out.println(new ValidateAddress().validate("vejnavn=Fægangen,husnr=1,etage=1,dør=13,postnr=4180"));
+	}
+ 	
 }

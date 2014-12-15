@@ -1,0 +1,1219 @@
+# UTF-8
+/* Model Configuration for SC */
+Domain SC_ModelBank
+	@t24:i (module=SC)
+	@java:Package (value=com.temenos.t24.datamodel.sc.sc_modelbank)
+namespace "http://www.temenos.com/t24/SC_ModelBank"
+metamodelVersion 1.30.6
+Classes {
+	NOFILE_BR_UNSETTLE
+		@t24:i (t24Name=NOFILE.BR.UNSETTLE, level=I, type=T, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		RET_DATA : mml:Integer required
+			@t24:i (align=L, inputBehaviour=N, maxLength=100000, core=false, t24Name=RET.DATA, genOperation=E.MB.SC.BROKER.UNSETTLE)
+	}
+	NOFILE_BUY_SELL
+		@t24:i (t24Name=NOFILE.BUY.SELL, level=I, type=T, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		ARR : mml:Integer required
+			@t24:i (align=L, inputBehaviour=N, maxLength=100, core=false, t24Name=ARR, genOperation=E.SC.ELIG.CALC)
+		PORTFOLIO_NO -> SCO_PortfolioMaintenance:SEC_ACC_MASTER
+			@i18n:Label (en="Portfoio No")
+			@i18n:Tooltip (en="Indicates the Portfolio Account of the customer")
+			@t24:i (align=R, inputBehaviour=N, maxLength=100, core=false, t24Name=PORTFOLIO.NO)
+		SEC_CODE -> SCO_SecurityMasterMaintenance:SECURITY_MASTER
+			@i18n:Label (en="Security Code")
+			@t24:i (align=R, inputBehaviour=N, maxLength=100, core=false, t24Name=SEC.CODE)
+		ACC_NO -> ACM_AccountOpening:ACCOUNT
+			@i18n:Label (en="Account No")
+			@t24:i (align=R, inputBehaviour=N, maxLength=100, core=false, t24Name=ACC.NO)
+		BUY_SELL : SC_ModelBank:NOFILE_BUY_SELL__BUY_SELL
+			@i18n:Label (en=Buy/Sell)
+			@i18n:Tooltip (en="Buy or Sell?")
+			@t24:i (align=L, inputBehaviour=N, maxLength=100, core=false, t24Name=BUY.SELL)
+	}
+	NOFILE_CUS_REL_DETS
+		@t24:i (t24Name=NOFILE.CUS.REL.DETS, level=I, type=T, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		FIN_ARRAY : mml:Integer required
+			@t24:i (align=L, inputBehaviour=N, maxLength=200, core=false, t24Name=FIN.ARRAY, genOperation=E.SC.CUS.REL.DETS)
+		CUSTOMER -> ST_Customer:CUSTOMER
+			@i18n:Label (en=Customer)
+			@i18n:Tooltip (en="Customer Liability")
+			@t24:i (align=R, inputBehaviour=N, maxLength=20, core=false, t24Name=CUSTOMER)
+		PORTFOLIO -> SCO_PortfolioMaintenance:SEC_ACC_MASTER
+			@i18n:Label (en=Portfolio)
+			@t24:i (align=R, inputBehaviour=N, maxLength=20, core=false, t24Name=PORTFOLIO)
+	}
+	NOFILE_DEALER_BLOTTER
+		@t24:i (t24Name=NOFILE.DEALER.BLOTTER, level=I, type=T, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		RET_DATA : mml:Integer required
+			@t24:i (align=L, inputBehaviour=N, maxLength=100000, core=false, t24Name=RET.DATA, genOperation=E.MB.DEALER.BLOTTER)
+		CUSTOMER_NO : mml:Integer
+			@i18n:Label (en="Customer No")
+			@i18n:Tooltip (en="Identifies the Customer for the transaction.")
+			@t24:i (align=R, inputBehaviour=N, maxLength=10, core=false, t24Name=CUSTOMER.NO)
+		PRODUCT : mml:Integer
+			@i18n:Label (en=Product)
+			@t24:i (align=R, inputBehaviour=N, maxLength=10, core=false, t24Name=PRODUCT)
+		SECURITY_NO : mml:Integer
+			@i18n:Label (en="Security No")
+			@i18n:Tooltip (en="Indicates the security code/number")
+			@t24:i (align=R, inputBehaviour=N, maxLength=12, core=false, t24Name=SECURITY.NO)
+		PORTFOLIO -> byValue SC_ModelBank:NOFILE_DEALER_BLOTTER__PORTFOLIO *
+		NOMINAL -> byValue SC_ModelBank:NOFILE_DEALER_BLOTTER__NOMINAL *
+	}
+	NOFILE_DEALER_BLOTTER__PORTFOLIO
+	{
+		PORTFOLIO : mml:Integer
+			@i18n:Label (en=Portfolio)
+			@t24:i (align=R, inputBehaviour=N, maxLength=10, core=false, t24Name=PORTFOLIO)
+	}
+	NOFILE_DEALER_BLOTTER__NOMINAL
+	{
+		NOMINAL : mml:Integer
+			@i18n:Label (en=Nominal)
+			@i18n:Tooltip (en="No of Units or Amount")
+			@t24:i (align=R, inputBehaviour=N, maxLength=15, core=false, t24Name=NOMINAL)
+	}
+	NOFILE_DIARY_NOT_COMPLETED
+		@t24:i (t24Name=NOFILE.DIARY.NOT.COMPLETED, level=I, type=T, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		RET_DATA : mml:Integer required
+			@t24:i (align=L, inputBehaviour=N, maxLength=100000, core=false, t24Name=RET.DATA, genOperation=E.MB.DIARY.NOT.COMPLETED)
+	}
+	NOFILE_E_LAST_MONTH_RTN
+		@t24:i (t24Name=NOFILE.E.LAST.MONTH.RTN, level=I, type=T, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		ENQ_DATA : mml:Integer required
+			@t24:i (align=L, inputBehaviour=N, maxLength=20, core=false, t24Name=ENQ.DATA, genOperation=E.MB.LAST.MONTH.RTN)
+		PORT_ID : mml:Integer
+			@i18n:Label (en="Portfolio No")
+			@t24:i (align=R, inputBehaviour=N, maxLength=20, core=false, t24Name=PORT.ID)
+	}
+	NOFILE_E_NOF_FR_OFFICE
+		@t24:i (t24Name=NOFILE.E.NOF.FR.OFFICE, level=I, type=T, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		FR_DATA : mml:Integer required
+			@t24:i (align=L, inputBehaviour=N, maxLength=31, core=false, t24Name=FR.DATA, genOperation=E.MB.NOF.FR.OFFICE)
+		RM_CODE -> ST_Customer:CUSTOMER
+			@t24:i (align=R, inputBehaviour=N, maxLength=10, core=false, t24Name=RM.CODE)
+		RG_CODE -> ST_Customer:CUSTOMER
+			@t24:i (align=R, inputBehaviour=N, maxLength=15, core=false, t24Name=RG.CODE)
+		RC_CODE -> SCO_PortfolioMaintenance:SEC_ACC_MASTER
+			@t24:i (align=R, inputBehaviour=N, maxLength=20, core=false, t24Name=RC.CODE)
+		CURRENCY : mml:Integer
+			@i18n:Label (en=Ccy)
+			@t24:i (align=R, inputBehaviour=N, maxLength=30, core=false, t24Name=CURRENCY)
+		CUSTOMER_NO : mml:Integer
+			@i18n:Label (en="Customer No")
+			@i18n:Tooltip (en="Identifies the Customer for the transaction.")
+			@t24:i (align=R, inputBehaviour=N, maxLength=40, core=false, t24Name=CUSTOMER.NO)
+		VALUE_DATE : mml:Integer
+			@i18n:Label (en="Value Date")
+			@i18n:Tooltip (en="Indicates the Value date of the Contract")
+			@t24:i (align=R, inputBehaviour=N, maxLength=50, core=false, t24Name=VALUE.DATE)
+		ACCOUNT_NOS : mml:Integer
+			@i18n:Label (en="Account Number")
+			@i18n:Tooltip (en="Customer account relating to the portfolio")
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, core=false, t24Name=ACCOUNT.NOS)
+	}
+	NOFILE_E_NOF_GET_DETAILS
+		@t24:i (t24Name=NOFILE.E.NOF.GET.DETAILS, level=I, type=T, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		DEP_POSITIONS : mml:Integer required
+			@t24:i (align=L, inputBehaviour=N, maxLength=20, core=false, t24Name=DEP.POSITIONS, genOperation=E.MB.NOF.GET.DETAILS)
+		SECURITY_NUMBER : T24BusinessTypes:SEC
+			@i18n:Label (en="Security No")
+			@i18n:Tooltip (en="Indicates the security number")
+			@t24:i (align=L, inputBehaviour=N, maxLength=12, core=false, t24Name=SECURITY.NUMBER)
+		DEPOSITORY : T24BusinessTypes:CUS
+			@i18n:Label (en=Depository)
+			@i18n:Tooltip (en="Depository the Security to be delivered from/to")
+			@t24:i (align=R, inputBehaviour=N, maxLength=10, core=false, t24Name=DEPOSITORY)
+		TRADE_DATE : T24BusinessTypes:D
+			@i18n:Label (en="Trade Date")
+			@t24:i (align=R, inputBehaviour=N, maxLength=11, core=false, t24Name=TRADE.DATE)
+		VALUE_DATE : T24BusinessTypes:D
+			@i18n:Label (en="Value Date")
+			@i18n:Tooltip (en="Indicates the Value date of the Contract")
+			@t24:i (align=R, inputBehaviour=N, maxLength=11, core=false, t24Name=VALUE.DATE)
+		SECURITY_ACCOUNT : T24BusinessTypes:SAM
+			@i18n:Label (en=Portfolio)
+			@t24:i (align=L, inputBehaviour=N, maxLength=14, core=false, t24Name=SECURITY.ACCOUNT)
+	}
+	NOFILE_ENTITLEMENT
+		@t24:i (t24Name=NOFILE.ENTITLEMENT, level=I, type=T, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		DIARY_ID : mml:Integer required
+			@i18n:Label (en="Diary Id")
+			@i18n:Tooltip (en="Indicates the diary Id")
+			@t24:i (align=R, inputBehaviour=N, maxLength=16, core=false, t24Name=DIARY.ID, genOperation=E.ENTITLEMENT)
+		SECURITY_NO : T24BusinessTypes:SEC
+			@i18n:Label (en="Security No")
+			@i18n:Tooltip (en="Indicates the security code/number")
+			@t24:i (align=L, inputBehaviour=N, maxLength=12, sysNumber=1.0, core=true, t24Name=SECURITY.NO)
+		EX_DATE : mml:Integer
+			@i18n:Label (en="Ex Date")
+			@i18n:Tooltip (en="Holds Ex Dividend date of the Diary.")
+			@t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=6.0, core=true, t24Name=EX.DATE)
+		PAY_DATE : mml:Integer
+			@i18n:Label (en="Pay Date")
+			@i18n:Tooltip (en="Holds the date the Event is Paid or Issued")
+			@t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=7.0, core=true, t24Name=PAY.DATE)
+	}
+	NOFILE_EU_TAX_CUS
+		@t24:i (t24Name=NOFILE.EU.TAX.CUS, level=I, type=T, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		RET_VAL -> byValue SC_ModelBank:NOFILE_EU_TAX_CUS__RET_VAL *
+		TAX_TYPE -> byValue SC_ModelBank:NOFILE_EU_TAX_CUS__TAX_TYPE *
+		CUSTOMER -> byValue SC_ModelBank:NOFILE_EU_TAX_CUS__CUSTOMER *
+		CUST_TYPE -> byValue SC_ModelBank:NOFILE_EU_TAX_CUS__CUST_TYPE *
+		COUNTRY -> byValue SC_ModelBank:NOFILE_EU_TAX_CUS__COUNTRY *
+	}
+	NOFILE_EU_TAX_CUS__RET_VAL
+	{
+		RET_VAL : mml:Integer required
+			@t24:i (align=L, inputBehaviour=N, maxLength=1000, core=false, t24Name=RET.VAL, genOperation=E.MB.EU.TAX.CUS)
+	}
+	NOFILE_EU_TAX_CUS__TAX_TYPE
+	{
+		TAX_TYPE : mml:Integer
+			@i18n:Label (en="Tax Type")
+			@i18n:Tooltip (en="Defines the tax type")
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, core=false, t24Name=TAX.TYPE)
+	}
+	NOFILE_EU_TAX_CUS__CUSTOMER
+	{
+		CUSTOMER : mml:Integer
+			@i18n:Label (en=Customer)
+			@i18n:Tooltip (en="Customer Liability")
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, core=false, t24Name=CUSTOMER)
+	}
+	NOFILE_EU_TAX_CUS__CUST_TYPE
+	{
+		CUST_TYPE : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, core=false, t24Name=CUST.TYPE)
+	}
+	NOFILE_EU_TAX_CUS__COUNTRY
+	{
+		COUNTRY : mml:Integer
+			@i18n:Label (en=Country)
+			@i18n:Tooltip (en="Holds the country code")
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, core=false, t24Name=COUNTRY)
+	}
+	NOFILE_PERF_CMP_FLOWS
+		@t24:i (t24Name=NOFILE.PERF.CMP.FLOWS, level=I, type=T, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		PERF_CMP_FLOWS : mml:Integer required
+			@t24:i (align=L, inputBehaviour=N, maxLength=10, core=false, t24Name=PERF.CMP.FLOWS, genOperation=PERF.CMP.FLOWS)
+	}
+	NOFILE_PERF_METHOD
+		@t24:i (t24Name=NOFILE.PERF.METHOD, level=I, type=T, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		SAM_NO -> byValue SC_ModelBank:NOFILE_PERF_METHOD__SAM_NO *
+		START_DATE : T24BusinessTypes:D
+			@i18n:Label (en="Start Date")
+			@i18n:Tooltip (en="Start Date")
+			@t24:i (align=L, inputBehaviour=N, maxLength=8, core=false, t24Name=START.DATE, genOperation=1)
+		END_DATE : T24BusinessTypes:D
+			@i18n:Label (en="End Date")
+			@i18n:Tooltip (en="End Date")
+			@t24:i (align=L, inputBehaviour=N, maxLength=8, core=false, t24Name=END.DATE, genOperation=2)
+		REF_CCY : mml:Integer
+			@i18n:Label (en="Reference Ccy")
+			@i18n:Tooltip (en="The Reference currency of the Portfolio")
+			@t24:i (align=L, inputBehaviour=N, maxLength=3, core=false, t24Name=REF.CCY, genOperation=3)
+		PORT_NO : mml:Integer
+			@i18n:Label (en=Portfolio)
+			@t24:i (align=L, inputBehaviour=N, maxLength=10, core=false, t24Name=PORT.NO, genOperation=E.CALC.DEITZ.PERF)
+	}
+	NOFILE_PERF_METHOD__SAM_NO
+	{
+		SAM_NO : mml:Integer required
+			@i18n:Label (en="Portfolio No")
+			@t24:i (align=R, inputBehaviour=N, maxLength=3, core=false, t24Name=SAM.NO, genOperation=E.CALC.DAILY.PERF)
+	}
+	NOFILE_POS_BW_DATES
+		@t24:i (t24Name=NOFILE.POS.BW.DATES, level=I, type=T, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		POS_BW_DATES : mml:Integer required
+			@t24:i (align=L, inputBehaviour=N, maxLength=20, core=false, t24Name=POS.BW.DATES, genOperation=E.MB.NOF.GET.POS.BW.DATES)
+		SECURITY_NUMBER : mml:Integer
+			@i18n:Label (en="Security No")
+			@i18n:Tooltip (en="Indicates the security number")
+			@t24:i (align=R, inputBehaviour=N, maxLength=12, core=false, t24Name=SECURITY.NUMBER)
+		SECURITY_ACCOUNT : mml:Integer
+			@i18n:Label (en=Portfolio)
+			@t24:i (align=R, inputBehaviour=N, maxLength=14, core=false, t24Name=SECURITY.ACCOUNT)
+		DEPOSITORY : mml:Integer
+			@i18n:Label (en=Depository)
+			@i18n:Tooltip (en="Depository the Security to be delivered from/to")
+			@t24:i (align=R, inputBehaviour=N, maxLength=10, core=false, t24Name=DEPOSITORY)
+		FROM_TRADE_DATE : mml:Integer
+			@i18n:Label (en="From Trade Date")
+			@t24:i (align=R, inputBehaviour=N, maxLength=11, core=false, t24Name=FROM.TRADE.DATE)
+		TO_TRADE_DATE : mml:Integer
+			@i18n:Label (en="To Trade Date")
+			@t24:i (align=R, inputBehaviour=N, maxLength=11, core=false, t24Name=TO.TRADE.DATE)
+	}
+	NOFILE_SC_CA_ERROR_LOG
+		@t24:i (t24Name=NOFILE.SC.CA.ERROR.LOG, level=I, type=T, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		ERROR_LOG : mml:Integer required
+			@t24:i (align=L, inputBehaviour=N, maxLength=100, core=false, t24Name=ERROR.LOG, genOperation=E.NOFILE.SC.CA.ERR.LOG)
+		EX_DATE -> byValue SC_ModelBank:NOFILE_SC_CA_ERROR_LOG__EX_DATE *
+		PAY_DATE -> byValue SC_ModelBank:NOFILE_SC_CA_ERROR_LOG__PAY_DATE *
+		STATUS -> byValue SC_ModelBank:NOFILE_SC_CA_ERROR_LOG__STATUS *
+		STAGE -> byValue SC_ModelBank:NOFILE_SC_CA_ERROR_LOG__STAGE *
+	}
+	NOFILE_SC_CA_ERROR_LOG__EX_DATE
+	{
+		EX_DATE : mml:Integer
+			@i18n:Label (en="Ex Date")
+			@i18n:Tooltip (en="Holds Ex Dividend date of the Diary.")
+			@t24:i (align=R, inputBehaviour=N, maxLength=20, core=false, t24Name=EX.DATE)
+	}
+	NOFILE_SC_CA_ERROR_LOG__PAY_DATE
+	{
+		PAY_DATE : mml:Integer
+			@i18n:Label (en="Pay Date")
+			@i18n:Tooltip (en="Holds the date the Event is Paid or Issued")
+			@t24:i (align=R, inputBehaviour=N, maxLength=20, core=false, t24Name=PAY.DATE)
+	}
+	NOFILE_SC_CA_ERROR_LOG__STATUS
+	{
+		STATUS : mml:Integer
+			@i18n:Label (en=Status)
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, core=false, t24Name=STATUS)
+	}
+	NOFILE_SC_CA_ERROR_LOG__STAGE
+	{
+		STAGE : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=50, core=false, t24Name=STAGE)
+	}
+	NOFILE_SC_DEPO_SUM
+		@t24:i (t24Name=NOFILE.SC.DEPO.SUM, level=I, type=T, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		SECURITY_ACCOUNT : mml:Integer required
+			@i18n:Label (en=Portfolio)
+			@t24:i (align=L, inputBehaviour=N, maxLength=50, core=false, t24Name=SECURITY.ACCOUNT, genOperation=E.SC.DEPO.SUM)
+		ID_LIST : mml:Integer PK
+			@t24:i (align=R, inputBehaviour=N, maxLength=20, sysNumber=0.0, core=true, t24Name=ID.LIST)
+		SECURITY_NUMBER : mml:Integer
+			@i18n:Label (en="Security No")
+			@i18n:Tooltip (en="Indicates the security number")
+			@t24:i (align=R, inputBehaviour=N, maxLength=20, core=false, t24Name=SECURITY.NUMBER)
+	}
+	NOFILE_SC_DESC_DISPLAY
+		@t24:i (t24Name=NOFILE.SC.DESC.DISPLAY, level=I, type=T, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		Y_RESULT : mml:Integer required
+			@t24:i (align=L, inputBehaviour=N, maxLength=100, core=false, t24Name=Y.RESULT, genOperation=E.SC.DESC.DISPLAY)
+	}
+	NOFILE_SC_PARENT_CHILD
+		@t24:i (t24Name=NOFILE.SC.PARENT.CHILD, level=I, type=T, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		Y_ARR : mml:Integer required
+			@t24:i (align=L, inputBehaviour=N, maxLength=16, core=false, t24Name=Y.ARR, genOperation=E.SC.PARENT.CHILD)
+		Y_TRADE : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=16, core=false, t24Name=Y.TRADE)
+		PARENT_REF : mml:Integer
+			@i18n:Label (en="Parent Reference")
+			@t24:i (align=R, inputBehaviour=N, maxLength=16, core=false, t24Name=PARENT.REF)
+	}
+	NOFILE_SC_PEND_HLD
+		@t24:i (t24Name=NOFILE.SC.PEND.HLD, level=I, type=T, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		RET_DATA : mml:Integer required
+			@t24:i (align=L, inputBehaviour=N, maxLength=10, core=false, t24Name=RET.DATA, genOperation=E.MB.SC.PEND.HLD)
+		TXN_ID : mml:Integer
+			@i18n:Label (en="Transaction Ref")
+			@t24:i (align=R, inputBehaviour=N, maxLength=10, core=false, t24Name=TXN.ID)
+		CUSTOMER_NO : mml:Integer
+			@i18n:Label (en="Customer No")
+			@i18n:Tooltip (en="Identifies the Customer for the transaction.")
+			@t24:i (align=R, inputBehaviour=N, maxLength=10, core=false, t24Name=CUSTOMER.NO)
+		PORTFOLIO : mml:Integer
+			@i18n:Label (en=Portfolio)
+			@t24:i (align=R, inputBehaviour=N, maxLength=10, core=false, t24Name=PORTFOLIO)
+		SECURITY_NO : mml:Integer
+			@i18n:Label (en="Security No")
+			@i18n:Tooltip (en="Indicates the security code/number")
+			@t24:i (align=R, inputBehaviour=N, maxLength=10, core=false, t24Name=SECURITY.NO)
+		THREAD_KEY : mml:Integer
+			@i18n:Label (en="Thread Key")
+			@i18n:Tooltip (en="Holds the thread Key for service based orders")
+			@t24:i (align=R, inputBehaviour=N, maxLength=20, core=false, t24Name=THREAD.KEY)
+	}
+	NOFILE_SC_SEC_DISPLAY
+		@t24:i (t24Name=NOFILE.SC.SEC.DISPLAY, level=I, type=T, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		Y_RESULT : mml:Integer required
+			@t24:i (align=L, inputBehaviour=N, maxLength=100, core=false, t24Name=Y.RESULT, genOperation=E.SC.SEC.DISPLAY)
+	}
+	NOFILE_SC_STP_EXCEPTION_REPORT
+		@t24:i (t24Name=NOFILE.SC.STP.EXCEPTION.REPORT, level=I, type=T, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		ID1 : mml:Integer required
+			@i18n:Label (en=ID1)
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, core=false, t24Name=ID1)
+		SEC_NO : mml:Integer
+			@i18n:Label (en="Security Number")
+			@i18n:Tooltip (en="Indicates a vailid Security")
+			@t24:i (align=L, inputBehaviour=N, maxLength=18, core=false, t24Name=SEC.NO, genOperation=SC.STP.EXCEPTION.REPORT)
+	}
+	NOFILE_SC_TOP_TEN
+		@t24:i (t24Name=NOFILE.SC.TOP.TEN, level=I, type=T, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		CUST_LIST -> byValue SC_ModelBank:NOFILE_SC_TOP_TEN__CUST_LIST *
+	}
+	NOFILE_SC_TOP_TEN__CUST_LIST
+	{
+		CUST_LIST : mml:Integer required
+			@t24:i (align=R, inputBehaviour=N, maxLength=16, core=false, t24Name=CUST.LIST, genOperation=E.MB.CHK.VALUATION.AMT)
+	}
+	NOFILE_SEC_ORDER_STATUS
+		@t24:i (t24Name=NOFILE.SEC.ORDER.STATUS, level=I, type=T, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		RET_VALUE : mml:Integer required
+			@t24:i (align=L, inputBehaviour=N, maxLength=1000000, core=false, t24Name=RET.VALUE, genOperation=E.MB.SEC.ORDER.STATUS)
+		ORDER_NUMBER : mml:Integer
+			@i18n:Label (en="Order No")
+			@t24:i (align=R, inputBehaviour=N, maxLength=17, core=false, t24Name=ORDER.NUMBER)
+		CUST_NUMBER : mml:Integer
+			@i18n:Label (en="Customer No")
+			@i18n:Tooltip (en="Identifies the Customer for the transaction.")
+			@t24:i (align=R, inputBehaviour=N, maxLength=10, core=false, t24Name=CUST.NUMBER)
+		SECURITY_NO : mml:Integer
+			@i18n:Label (en="Security No")
+			@i18n:Tooltip (en="Indicates the security code/number")
+			@t24:i (align=R, inputBehaviour=N, maxLength=12, core=false, t24Name=SECURITY.NO)
+	}
+	NOFILE_SEC_TRADE_UNAUTH
+		@t24:i (t24Name=NOFILE.SEC.TRADE.UNAUTH, level=I, type=T, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		RET_DATA : mml:Integer required
+			@t24:i (align=L, inputBehaviour=N, maxLength=10, core=false, t24Name=RET.DATA, genOperation=E.MB.SEC.TRADE.UNAUTH)
+		TXN_ID : mml:Integer
+			@i18n:Label (en="Transaction Ref")
+			@t24:i (align=R, inputBehaviour=N, maxLength=10, core=false, t24Name=TXN.ID)
+		CUSTOMER_NO : mml:Integer
+			@i18n:Label (en="Customer No")
+			@i18n:Tooltip (en="Identifies the Customer for the transaction.")
+			@t24:i (align=R, inputBehaviour=N, maxLength=10, core=false, t24Name=CUSTOMER.NO)
+		PORTFOLIO : mml:Integer
+			@i18n:Label (en=Portfolio)
+			@t24:i (align=R, inputBehaviour=N, maxLength=10, core=false, t24Name=PORTFOLIO)
+		SECURITY_NO : mml:Integer
+			@i18n:Label (en="Security No")
+			@i18n:Tooltip (en="Indicates the security code/number")
+			@t24:i (align=R, inputBehaviour=N, maxLength=10, core=false, t24Name=SECURITY.NO)
+		BROK : mml:Integer
+			@i18n:Label (en="Cpty/Broker Nostro")
+			@i18n:Tooltip (en="Broker\'s account number")
+			@t24:i (align=R, inputBehaviour=N, maxLength=10, core=false, t24Name=BROK)
+		DEPO : mml:Integer
+			@i18n:Label (en=Depository)
+			@t24:i (align=R, inputBehaviour=N, maxLength=10, core=false, t24Name=DEPO)
+		THREAD_KEY : mml:Integer
+			@i18n:Label (en="Thread Key")
+			@i18n:Tooltip (en="Holds the thread Key for service based orders")
+			@t24:i (align=R, inputBehaviour=N, maxLength=20, core=false, t24Name=THREAD.KEY)
+	}
+	NOFILE_SEC_UNAUTH
+		@t24:i (t24Name=NOFILE.SEC.UNAUTH, level=I, type=T, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		RET_DATA : mml:Integer required
+			@t24:i (align=L, inputBehaviour=N, maxLength=100000, core=false, t24Name=RET.DATA, genOperation=E.MB.SEC.UNAUTH)
+	}
+	NOFILE_SETT
+		@t24:i (t24Name=NOFILE.SETT, level=I, type=T, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		SEL_REC -> byValue SC_ModelBank:NOFILE_SETT__SEL_REC *
+		TRANS_REF : mml:Integer
+			@i18n:Label (en="Transaction No")
+			@i18n:Tooltip (en="Indicates the transaction reference")
+			@t24:i (align=R, inputBehaviour=N, maxLength=100, core=false, t24Name=TRANS.REF)
+		CUSTOMER : mml:Integer
+			@i18n:Label (en=Customer)
+			@i18n:Tooltip (en="Customer Liability")
+			@t24:i (align=L, inputBehaviour=N, maxLength=10, core=false, t24Name=CUSTOMER, genOperation="FIELD(CU.PORTFOLIO,\"-\",1)")
+		CU_PORTFOLIO : mml:Integer
+			@i18n:Label (en="Portfolio No")
+			@t24:i (align=R, inputBehaviour=N, maxLength=105, core=false, t24Name=CU.PORTFOLIO)
+		VALUE_DATE : mml:Integer
+			@i18n:Label (en="Value Date")
+			@i18n:Tooltip (en="Indicates the Value date of the Contract")
+			@t24:i (align=R, inputBehaviour=N, maxLength=13, core=false, t24Name=VALUE.DATE)
+		DEPOSITORY : mml:Integer
+			@i18n:Label (en=Depository)
+			@i18n:Tooltip (en="Depository the Security to be delivered from/to")
+			@t24:i (align=R, inputBehaviour=N, maxLength=10, core=false, t24Name=DEPOSITORY)
+		SECURITY_NUMBER : mml:Integer
+			@i18n:Label (en="Security No")
+			@i18n:Tooltip (en="Indicates the security number")
+			@t24:i (align=R, inputBehaviour=N, maxLength=15, core=false, t24Name=SECURITY.NUMBER)
+		TRADE_DATE : mml:Integer
+			@i18n:Label (en="Trade Date")
+			@t24:i (align=R, inputBehaviour=N, maxLength=12, core=false, t24Name=TRADE.DATE)
+		BR_DEL_INSTR : mml:Integer
+			@i18n:Label (en="Delivery Instn")
+			@t24:i (align=R, inputBehaviour=N, maxLength=3, core=false, t24Name=BR.DEL.INSTR)
+		TRANS_CODE : mml:Integer
+			@i18n:Label (en="Trans Code")
+			@i18n:Tooltip (en="Indicates the Transaction Code")
+			@t24:i (align=R, inputBehaviour=N, maxLength=3, core=false, t24Name=TRANS.CODE)
+		BROKER_NO : mml:Integer
+			@i18n:Label (en="Broker No")
+			@t24:i (align=R, inputBehaviour=N, maxLength=13, core=false, t24Name=BROKER.NO)
+		TRADE_CCY : mml:Integer
+			@i18n:Label (en="Trade Currency")
+			@i18n:Tooltip (en="Identifies the currency of the transaction")
+			@t24:i (align=R, inputBehaviour=N, maxLength=13, core=false, t24Name=TRADE.CCY)
+		TOTAL_NOMINAL : mml:Integer
+			@i18n:Label (en="No Nominals")
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, core=false, t24Name=TOTAL.NOMINAL)
+		BR_AMT_REC_PAID -> byValue SC_ModelBank:NOFILE_SETT__BR_AMT_REC_PAID *
+		BR_NOM_RECD_DEL -> byValue SC_ModelBank:NOFILE_SETT__BR_NOM_RECD_DEL *
+		CU_AMT_REC_PAID -> byValue SC_ModelBank:NOFILE_SETT__CU_AMT_REC_PAID *
+		CU_NOM_RECD_DEL -> byValue SC_ModelBank:NOFILE_SETT__CU_NOM_RECD_DEL *
+		BOND_OR_SHARE : mml:Integer
+			@i18n:Label (en="Bond or Share")
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, core=false, t24Name=BOND.OR.SHARE)
+	}
+	NOFILE_SETT__SEL_REC
+	{
+		SEL_REC : mml:Integer required
+			@t24:i (align=L, inputBehaviour=N, maxLength=10000, core=false, t24Name=SEL.REC, genOperation=E.MB.SETT.OUTSTANDING)
+	}
+	NOFILE_SETT__BR_AMT_REC_PAID
+	{
+		BR_AMT_REC_PAID : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=2.0, core=true, t24Name=BR.AMT.REC.PAID)
+	}
+	NOFILE_SETT__BR_NOM_RECD_DEL
+	{
+		BR_NOM_RECD_DEL : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=1.0, core=true, t24Name=BR.NOM.RECD.DEL)
+	}
+	NOFILE_SETT__CU_AMT_REC_PAID
+	{
+		CU_AMT_REC_PAID : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=3.0, core=true, t24Name=CU.AMT.REC.PAID)
+	}
+	NOFILE_SETT__CU_NOM_RECD_DEL
+	{
+		CU_NOM_RECD_DEL : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=4.0, core=true, t24Name=CU.NOM.RECD.DEL)
+	}
+	NOFILE_SETT_OVER
+		@t24:i (t24Name=NOFILE.SETT.OVER, level=I, type=T, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		SEL_REC -> byValue SC_ModelBank:NOFILE_SETT_OVER__SEL_REC *
+		TRANS_REF : mml:Integer
+			@i18n:Label (en="Transaction No")
+			@i18n:Tooltip (en="Indicates the transaction reference")
+			@t24:i (align=R, inputBehaviour=N, maxLength=100, core=false, t24Name=TRANS.REF)
+		CUSTOMER : mml:Integer
+			@i18n:Label (en=Customer)
+			@i18n:Tooltip (en="Customer Liability")
+			@t24:i (align=L, inputBehaviour=N, maxLength=10, core=false, t24Name=CUSTOMER, genOperation="FIELD(PORTFOLIO,\"-\",1)")
+		CU_PORTFOLIO : mml:Integer
+			@i18n:Label (en="Portfolio No")
+			@t24:i (align=R, inputBehaviour=N, maxLength=105, core=false, t24Name=CU.PORTFOLIO)
+		VALUE_DATE : mml:Integer
+			@i18n:Label (en="Value Date")
+			@i18n:Tooltip (en="Indicates the Value date of the Contract")
+			@t24:i (align=R, inputBehaviour=N, maxLength=13, core=false, t24Name=VALUE.DATE)
+		DEPOSITORY : mml:Integer
+			@i18n:Label (en=Depository)
+			@i18n:Tooltip (en="Depository the Security to be delivered from/to")
+			@t24:i (align=R, inputBehaviour=N, maxLength=10, core=false, t24Name=DEPOSITORY)
+		BROKER_NO : mml:Integer
+			@i18n:Label (en="Broker No")
+			@t24:i (align=R, inputBehaviour=N, maxLength=15, core=false, t24Name=BROKER.NO)
+		TRADE_DATE : mml:Integer
+			@i18n:Label (en="Trade Date")
+			@t24:i (align=R, inputBehaviour=N, maxLength=13, core=false, t24Name=TRADE.DATE)
+		TRADE_CCY : mml:Integer
+			@i18n:Label (en="Trade Currency")
+			@i18n:Tooltip (en="Identifies the currency of the transaction")
+			@t24:i (align=R, inputBehaviour=N, maxLength=13, core=false, t24Name=TRADE.CCY)
+		BR_DEL_INSTR : mml:Integer
+			@i18n:Label (en="Delivery Instn")
+			@t24:i (align=R, inputBehaviour=N, maxLength=15, core=false, t24Name=BR.DEL.INSTR)
+		TRANS_CODE : mml:Integer
+			@i18n:Label (en="Trans Code")
+			@i18n:Tooltip (en="Indicates the Transaction Code")
+			@t24:i (align=R, inputBehaviour=N, maxLength=15, core=false, t24Name=TRANS.CODE)
+		TOTAL_NOMINAL : mml:Integer
+			@i18n:Label (en="No Nominals")
+			@t24:i (align=R, inputBehaviour=N, maxLength=15, core=false, t24Name=TOTAL.NOMINAL)
+		SECURITY_NUMBER : mml:Integer
+			@i18n:Label (en="Security No")
+			@i18n:Tooltip (en="Indicates the security number")
+			@t24:i (align=R, inputBehaviour=N, maxLength=15, core=false, t24Name=SECURITY.NUMBER)
+		BOND_OR_SHARE : mml:Integer
+			@i18n:Label (en="Bond or Share")
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, core=false, t24Name=BOND.OR.SHARE)
+	}
+	NOFILE_SETT_OVER__SEL_REC
+	{
+		SEL_REC : mml:Integer required
+			@t24:i (align=L, inputBehaviour=N, maxLength=10000, core=false, t24Name=SEL.REC, genOperation=E.MB.SETT.OVERDUE)
+	}
+	NOFILE_STOCK_REC_ACTIVITY
+		@t24:i (t24Name=NOFILE.STOCK.REC.ACTIVITY, level=I, type=T, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		STOCK_REC_ACTIVITY : mml:Integer required
+			@t24:i (align=L, inputBehaviour=N, maxLength=10, core=false, t24Name=STOCK.REC.ACTIVITY, genOperation=STOCK.REC.ACTIVITY)
+	}
+	NOFILE_STOCK_SUMMARY
+		@t24:i (t24Name=NOFILE.STOCK.SUMMARY, level=I, type=T, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		SECURITY_NO : mml:Integer PK required
+			@i18n:Label (en="Security No")
+			@i18n:Tooltip (en="Indicates the security code/number")
+			@t24:i (align=R, inputBehaviour=N, maxLength=500, sysNumber=0.0, core=true, t24Name=SECURITY.NO)
+		STOCK_SUMMARY : mml:Integer
+			@t24:i (align=L, inputBehaviour=N, maxLength=500, core=false, t24Name=STOCK.SUMMARY, genOperation=STOCK.SUMMARY)
+	}
+	NOFILE_TRADES_TODAY
+		@t24:i (t24Name=NOFILE.TRADES.TODAY, level=I, type=T, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		RET_DATA : mml:Integer required
+			@t24:i (align=L, inputBehaviour=N, maxLength=100000, core=false, t24Name=RET.DATA, genOperation=E.MB.TRADES.TODAY)
+		CUSTOMER_NO : mml:Integer
+			@i18n:Label (en="Customer No")
+			@i18n:Tooltip (en="Identifies the Customer for the transaction.")
+			@t24:i (align=R, inputBehaviour=N, maxLength=10, core=false, t24Name=CUSTOMER.NO)
+		SECURITY_NO : mml:Integer
+			@i18n:Label (en="Security No")
+			@i18n:Tooltip (en="Indicates the security code/number")
+			@t24:i (align=R, inputBehaviour=N, maxLength=10, core=false, t24Name=SECURITY.NO)
+		PORTFOLIO : mml:Integer
+			@i18n:Label (en=Portfolio)
+			@t24:i (align=R, inputBehaviour=N, maxLength=10, core=false, t24Name=PORTFOLIO)
+	}
+	NOFILE_TRANS_BW_DATES
+		@t24:i (t24Name=NOFILE.TRANS.BW.DATES, level=I, type=T, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		POS_BW_DATES : mml:Integer required
+			@t24:i (align=L, inputBehaviour=N, maxLength=20, core=false, t24Name=POS.BW.DATES, genOperation=E.MB.NOF.GET.TRANS.BW.DATES)
+		SECURITY_NUMBER : mml:Integer
+			@i18n:Label (en="Security No")
+			@i18n:Tooltip (en="Indicates the security number")
+			@t24:i (align=R, inputBehaviour=N, maxLength=12, core=false, t24Name=SECURITY.NUMBER)
+		SECURITY_ACCOUNT : mml:Integer
+			@i18n:Label (en=Portfolio)
+			@t24:i (align=R, inputBehaviour=N, maxLength=14, core=false, t24Name=SECURITY.ACCOUNT)
+		DEPOSITORY : mml:Integer
+			@i18n:Label (en=Depository)
+			@i18n:Tooltip (en="Depository the Security to be delivered from/to")
+			@t24:i (align=R, inputBehaviour=N, maxLength=10, core=false, t24Name=DEPOSITORY)
+		FROM_TRADE_DATE : mml:Integer
+			@i18n:Label (en="From Trade Date")
+			@t24:i (align=R, inputBehaviour=N, maxLength=11, core=false, t24Name=FROM.TRADE.DATE)
+		TO_TRADE_DATE : mml:Integer
+			@i18n:Label (en="To Trade Date")
+			@t24:i (align=R, inputBehaviour=N, maxLength=11, core=false, t24Name=TO.TRADE.DATE)
+	}
+	NOFILE_VAL_CONS_DURATION
+		@t24:i (t24Name=NOFILE.VAL.CONS.DURATION, level=I, type=T, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		VAL_DURATION : mml:Integer required
+			@t24:i (align=L, inputBehaviour=N, maxLength=100, core=false, t24Name=VAL.DURATION, genOperation=E.AM.VAL.CONS.DURATION)
+		ONLINE_VALUATION : mml:Integer
+			@i18n:Label (en="Value Online?")
+			@i18n:Tooltip (en="Should the Portfolio be valued online")
+			@t24:i (align=R, inputBehaviour=N, maxLength=20, core=false, t24Name=ONLINE.VALUATION)
+		CUSTOMER_NUMBER : mml:Integer
+			@i18n:Label (en="Customer No")
+			@i18n:Tooltip (en="Identifies the Customer for the transaction.")
+			@t24:i (align=R, inputBehaviour=N, maxLength=20, core=false, t24Name=CUSTOMER.NUMBER)
+		REFERENCE_CURRENCY : mml:Integer
+			@i18n:Label (en="Ref Ccy")
+			@t24:i (align=R, inputBehaviour=N, maxLength=3, core=false, t24Name=REFERENCE.CURRENCY)
+		ACCOUNT_NAME : mml:Integer
+			@i18n:Label (en="Portfolio Name")
+			@t24:i (align=R, inputBehaviour=N, maxLength=20, core=false, t24Name=ACCOUNT.NAME)
+		ACCOUNT_OFFICER : mml:Integer
+			@i18n:Label (en="Account Officer")
+			@i18n:Tooltip (en="Indicates Account Officer responsible")
+			@t24:i (align=R, inputBehaviour=N, maxLength=20, core=false, t24Name=ACCOUNT.OFFICER)
+		INVESTMENT_PROGRAM : mml:Integer
+			@i18n:Label (en="Investment Program")
+			@t24:i (align=R, inputBehaviour=N, maxLength=20, core=false, t24Name=INVESTMENT.PROGRAM)
+		VALUATION_CURRENCY : mml:Integer
+			@i18n:Label (en="Valuation Currency")
+			@t24:i (align=R, inputBehaviour=N, maxLength=20, core=false, t24Name=VALUATION.CURRENCY)
+		SAFEKEEPING_PERCNT : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=20, core=false, t24Name=SAFEKEEPING.PERCNT)
+		SAFEKEEPING_AMOUNT : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=20, core=false, t24Name=SAFEKEEPING.AMOUNT)
+		MANAGED_ACCOUNT : mml:Integer
+			@i18n:Label (en="Managed Account")
+			@t24:i (align=R, inputBehaviour=N, maxLength=20, core=false, t24Name=MANAGED.ACCOUNT)
+		MARGIN_ALLOWED : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=20, core=false, t24Name=MARGIN.ALLOWED)
+		MEMO_ACCOUNT : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=20, core=false, t24Name=MEMO.ACCOUNT)
+		EXTERNAL_ACC_NO : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=20, core=false, t24Name=EXTERNAL.ACC.NO)
+		ACCOUNT_NOS : mml:Integer
+			@i18n:Label (en="Account Number")
+			@i18n:Tooltip (en="Customer account relating to the portfolio")
+			@t24:i (align=R, inputBehaviour=N, maxLength=20, core=false, t24Name=ACCOUNT.NOS)
+		ACCOUNT_CCY : mml:Integer
+			@i18n:Label (en="Account Ccy")
+			@i18n:Tooltip (en="Indicates the currency of the account")
+			@t24:i (align=R, inputBehaviour=N, maxLength=20, core=false, t24Name=ACCOUNT.CCY)
+		AC_DEF_SYS_CODE : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=20, core=false, t24Name=AC.DEF.SYS.CODE)
+		AC_DEF_CATEG : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=20, core=false, t24Name=AC.DEF.CATEG)
+		AC_DEF_CCY : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=20, core=false, t24Name=AC.DEF.CCY)
+		AC_DEF_ACCT : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=20, core=false, t24Name=AC.DEF.ACCT)
+		AC_DEF_SC_ACCT : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=20, core=false, t24Name=AC.DEF.SC.ACCT)
+		DIV_ACC_MANDATORY : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=20, core=false, t24Name=DIV.ACC.MANDATORY)
+		SAFEKEEP_CHRG_ACC : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=20, core=false, t24Name=SAFEKEEP.CHRG.ACC)
+		SAFEKEEP_CCY : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=20, core=false, t24Name=SAFEKEEP.CCY)
+		VALUATION_AMT : mml:Integer
+			@i18n:Label (en="Valuation Amount")
+			@t24:i (align=R, inputBehaviour=N, maxLength=20, core=false, t24Name=VALUATION.AMT)
+		MARGIN_VALUE : mml:Integer
+			@i18n:Label (en="Margin Value")
+			@t24:i (align=R, inputBehaviour=N, maxLength=20, core=false, t24Name=MARGIN.VALUE)
+		DATE_OF_VALUATION : mml:Integer
+			@i18n:Label (en="Date of Valuation")
+			@t24:i (align=R, inputBehaviour=N, maxLength=20, core=false, t24Name=DATE.OF.VALUATION)
+		PORTFOLIO_TURNOVER : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=20, core=false, t24Name=PORTFOLIO.TURNOVER)
+		START_DATE : mml:Integer
+			@i18n:Label (en="Start Date")
+			@i18n:Tooltip (en="Start Date")
+			@t24:i (align=R, inputBehaviour=N, maxLength=20, core=false, t24Name=START.DATE)
+		CLOSURE_DATE : mml:Integer
+			@i18n:Label (en="Closure Date")
+			@t24:i (align=R, inputBehaviour=N, maxLength=20, core=false, t24Name=CLOSURE.DATE)
+		PERFORM_DATE : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=20, core=false, t24Name=PERFORM.DATE)
+		CONTRIBUTIONS : mml:Integer
+			@i18n:Label (en=Contributions)
+			@t24:i (align=R, inputBehaviour=N, maxLength=20, core=false, t24Name=CONTRIBUTIONS)
+		WITHDRAWALS : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=20, core=false, t24Name=WITHDRAWALS)
+		INVESTED_CAPL : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=20, core=false, t24Name=INVESTED.CAPL)
+		COMPARE_VALUE : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=20, core=false, t24Name=COMPARE.VALUE)
+		BLOCKING_DATE : mml:Integer
+			@i18n:Label (en="Blocking Date")
+			@t24:i (align=R, inputBehaviour=N, maxLength=20, core=false, t24Name=BLOCKING.DATE)
+		BLOCKING_NARR : mml:Integer
+			@i18n:Label (en=Narrative)
+			@t24:i (align=R, inputBehaviour=N, maxLength=20, core=false, t24Name=BLOCKING.NARR)
+		DEALER_BOOK : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=20, core=false, t24Name=DEALER.BOOK)
+		ASSET_CAT : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=20, core=false, t24Name=ASSET.CAT)
+		IENC_CAT : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=20, core=false, t24Name=IENC.CAT)
+		REAL_PL_CAT_PROFIT : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=20, core=false, t24Name=REAL.PL.CAT.PROFIT)
+		REAL_PL_CAT_LOSS : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=20, core=false, t24Name=REAL.PL.CAT.LOSS)
+		UNREAL_PL_CAT_PRT : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=20, core=false, t24Name=UNREAL.PL.CAT.PRT)
+		UNREAL_PL_CAT_LOSS : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=20, core=false, t24Name=UNREAL.PL.CAT.LOSS)
+		INT_PAID_CAT : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=20, core=false, t24Name=INT.PAID.CAT)
+		INT_RECD_CAT : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=20, core=false, t24Name=INT.RECD.CAT)
+		CPN_PAYABLE_CAT : mml:Integer
+			@i18n:Label (en="Coupon Payable Category")
+			@t24:i (align=R, inputBehaviour=N, maxLength=20, core=false, t24Name=CPN.PAYABLE.CAT)
+		CPN_RECEIVABLE_CAT : mml:Integer
+			@i18n:Label (en="Coupon Receivable Category")
+			@t24:i (align=R, inputBehaviour=N, maxLength=20, core=false, t24Name=CPN.RECEIVABLE.CAT)
+		CPN_ADJ_DR_CAT : mml:Integer
+			@i18n:Label (en="Coupon Adj Debit Category")
+			@t24:i (align=R, inputBehaviour=N, maxLength=20, core=false, t24Name=CPN.ADJ.DR.CAT)
+		CPN_ADJ_CR_CAT : mml:Integer
+			@i18n:Label (en="Coupon Adj Credit Category")
+			@t24:i (align=R, inputBehaviour=N, maxLength=25, core=false, t24Name=CPN.ADJ.CR.CAT)
+		TAX_RECLAIMED_CAT : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=25, core=false, t24Name=TAX.RECLAIMED.CAT)
+		UNREAL_LOSS_PROV : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=25, core=false, t24Name=UNREAL.LOSS.PROV)
+		UNREAL_PROFIT_SUSP : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=25, core=false, t24Name=UNREAL.PROFIT.SUSP)
+		LINEAR_COMP_ACCR : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=25, core=false, t24Name=LINEAR.COMP.ACCR)
+		REVALUATION : mml:Integer
+			@i18n:Label (en=Revaluation)
+			@t24:i (align=R, inputBehaviour=N, maxLength=25, core=false, t24Name=REVALUATION)
+		REVAL_FREQ : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=25, core=false, t24Name=REVAL.FREQ)
+		CLEAN_BOOK_COST : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=25, core=false, t24Name=CLEAN.BOOK.COST)
+		POST_DISC_UPFRONT : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=25, core=false, t24Name=POST.DISC.UPFRONT)
+		POST_UNREAL_PL : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=25, core=false, t24Name=POST.UNREAL.PL)
+		BELGIUM_TAX_CAT : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=25, core=false, t24Name=BELGIUM.TAX.CAT)
+		ACCRUE_DISCOUNT : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=25, core=false, t24Name=ACCRUE.DISCOUNT)
+		DISCOUNT_CAT : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=25, core=false, t24Name=DISCOUNT.CAT)
+		PORTFOLIO_TYPE : mml:Integer
+			@i18n:Label (en="Portfolio Type")
+			@t24:i (align=R, inputBehaviour=N, maxLength=25, core=false, t24Name=PORTFOLIO.TYPE)
+		DISCSOLD_TO_REALPL : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=20, core=false, t24Name=DISCSOLD.TO.REALPL)
+		LINK_SEC_MASTER : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=25, core=false, t24Name=LINK.SEC.MASTER)
+		START_PERFORM : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=20, core=false, t24Name=START.PERFORM)
+		END_PERFORM : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=20, core=false, t24Name=END.PERFORM)
+		SAFECUSTODY_FREQ : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=20, core=false, t24Name=SAFECUSTODY.FREQ)
+		SAFE_LAST_RUN : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=20, core=false, t24Name=SAFE.LAST.RUN)
+		SAFE_CHG_SCALE : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=20, core=false, t24Name=SAFE.CHG.SCALE)
+		ADVISORY_FREQ : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=20, core=false, t24Name=ADVISORY.FREQ)
+		ADV_LAST_RUN : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=20, core=false, t24Name=ADV.LAST.RUN)
+		ADV_CHG_SCALE : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=20, core=false, t24Name=ADV.CHG.SCALE)
+		PORTFOLIO_FEES : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=20, core=false, t24Name=PORTFOLIO.FEES)
+		MONTH_END_DATE : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=20, core=false, t24Name=MONTH.END.DATE)
+		SAFECUSTDY_FEES : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=20, core=false, t24Name=SAFECUSTDY.FEES)
+		ADVISORY_FEES : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=20, core=false, t24Name=ADVISORY.FEES)
+		NEW_RFCCY_EFF_DATE : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=20, core=false, t24Name=NEW.RFCCY.EFF.DATE)
+		NEW_REFERENCE_CCY : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=20, core=false, t24Name=NEW.REFERENCE.CCY)
+		OLD_REFERENCE_CCY : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=20, core=false, t24Name=OLD.REFERENCE.CCY)
+		OLD_CCY_DATE : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=20, core=false, t24Name=OLD.CCY.DATE)
+		OLD_CCY_CONTRIB : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=20, core=false, t24Name=OLD.CCY.CONTRIB)
+		OLD_CCY_WITHDR : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=20, core=false, t24Name=OLD.CCY.WITHDR)
+		OLD_CCY_INV_CAP : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=20, core=false, t24Name=OLD.CCY.INV.CAP)
+		OLD_CCY_VALUE : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=20, core=false, t24Name=OLD.CCY.VALUE)
+		CHECK_LIMIT : mml:Integer
+			@i18n:Label (en="Check Limit")
+			@t24:i (align=R, inputBehaviour=N, maxLength=20, core=false, t24Name=CHECK.LIMIT)
+		REVAL_POST_METHOD : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=20, core=false, t24Name=REVAL.POST.METHOD)
+		INT_PAID_ACCOUNT : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=20, core=false, t24Name=INT.PAID.ACCOUNT)
+		INT_RECD_ACCOUNT : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=20, core=false, t24Name=INT.RECD.ACCOUNT)
+		CAP_PAID_CAT : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=20, core=false, t24Name=CAP.PAID.CAT)
+		CAP_RECD_CAT : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=20, core=false, t24Name=CAP.RECD.CAT)
+		COUPON_TAX_STATUS : mml:Integer
+			@i18n:Label (en="Coupon Tax Status")
+			@t24:i (align=R, inputBehaviour=N, maxLength=20, core=false, t24Name=COUPON.TAX.STATUS)
+		TAX_PAYABLE_CAT : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=20, core=false, t24Name=TAX.PAYABLE.CAT)
+		SAFEKEEP_ACCR_ACCT : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=20, core=false, t24Name=SAFEKEEP.ACCR.ACCT)
+		ADVISORY_ACCR_ACCT : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=20, core=false, t24Name=ADVISORY.ACCR.ACCT)
+		LOWER_COST_DAYS : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=20, core=false, t24Name=LOWER.COST.DAYS)
+		DEFAULT_DEPO : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=20, core=false, t24Name=DEFAULT.DEPO)
+		APP_FIELD : mml:Integer
+			@i18n:Label (en="Application Field")
+			@i18n:Tooltip (en="Indicates field in respective application")
+			@t24:i (align=R, inputBehaviour=N, maxLength=20, core=false, t24Name=APP.FIELD)
+		APP_OPERAND : mml:Integer
+			@i18n:Label (en=Operand)
+			@i18n:Tooltip (en="Contains the operands EQ, NE, LE, LT, GE or GT")
+			@t24:i (align=R, inputBehaviour=N, maxLength=20, core=false, t24Name=APP.OPERAND)
+		APP_VALUE : mml:Integer
+			@i18n:Label (en="Application Value")
+			@i18n:Tooltip (en="Field values to be used as the selection criteria")
+			@t24:i (align=R, inputBehaviour=N, maxLength=20, core=false, t24Name=APP.VALUE)
+		COMPARE_FREQ : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=20, core=false, t24Name=COMPARE.FREQ)
+		FX_COMM_GROUP_ID : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=20, core=false, t24Name=FX.COMM.GROUP.ID)
+		BENCHMARK : mml:Integer
+			@i18n:Label (en=Benchmark)
+			@i18n:Tooltip (en=Benchmark)
+			@t24:i (align=R, inputBehaviour=N, maxLength=20, core=false, t24Name=BENCHMARK)
+		CNT_REAL_PL_CAT_PR : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=20, core=false, t24Name=CNT.REAL.PL.CAT.PR)
+		CNT_REAL_PL_CAT_LO : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=20, core=false, t24Name=CNT.REAL.PL.CAT.LO)
+		CREDIT_CHECK : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=20, core=false, t24Name=CREDIT.CHECK)
+		AVAILABLE_BAL_UPD : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=20, core=false, t24Name=AVAILABLE.BAL.UPD)
+		FUND_ID : mml:Integer
+			@i18n:Label (en="Fund Id")
+			@i18n:Tooltip (en="Indicates Id of the fund to be subscribed.")
+			@t24:i (align=R, inputBehaviour=N, maxLength=20, core=false, t24Name=FUND.ID)
+		ADV_GROUP_PORT : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=20, core=false, t24Name=ADV.GROUP.PORT)
+		SAFE_GROUP_PORT : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=20, core=false, t24Name=SAFE.GROUP.PORT)
+		JOINT_HOLDER : mml:Integer
+			@i18n:Label (en="Joint Holder")
+			@t24:i (align=R, inputBehaviour=N, maxLength=20, core=false, t24Name=JOINT.HOLDER)
+		RELATION_CODE : mml:Integer
+			@i18n:Label (en="Relation code")
+			@t24:i (align=R, inputBehaviour=N, maxLength=20, core=false, t24Name=RELATION.CODE)
+		JOINT_NOTES : mml:Integer
+			@i18n:Label (en="Joint Notes")
+			@t24:i (align=R, inputBehaviour=N, maxLength=20, core=false, t24Name=JOINT.NOTES)
+		DIV_ACCR_TYPE : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=20, core=false, t24Name=DIV.ACCR.TYPE)
+		PORT_COMP_ID : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=20, core=false, t24Name=PORT.COMP.ID)
+	}
+	NOFILE_VAL_DETAIL_DURATION
+		@t24:i (t24Name=NOFILE.VAL.DETAIL.DURATION, level=I, type=T, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		DETAIL_DURATION : mml:Integer required
+			@t24:i (align=L, inputBehaviour=N, maxLength=100, core=false, t24Name=DETAIL.DURATION, genOperation=E.AM.VAL.DETAIL.DURATION)
+		SAM_ID : mml:Integer
+			@i18n:Label (en="Portfolio Id")
+			@t24:i (align=R, inputBehaviour=N, maxLength=20, core=false, t24Name=SAM.ID)
+		ONLINE_VALUATION : mml:Integer
+			@i18n:Label (en="Value Online?")
+			@i18n:Tooltip (en="Should the Portfolio be valued online")
+			@t24:i (align=R, inputBehaviour=N, maxLength=20, core=false, t24Name=ONLINE.VALUATION)
+		SPLIT : mml:Integer
+			@i18n:Label (en=Split)
+			@t24:i (align=R, inputBehaviour=N, maxLength=20, core=false, t24Name=SPLIT)
+	}
+	SC_FRONT_ORDER
+		@t24:i (t24Name=SC.FRONT.ORDER, level=C, type=D, allowedFunctions="A E L Q S", localRefAllowed=false)
+	{
+		DEAL_NO -> SC_ModelBank:SC_FRONT_ORDER PK required
+			@i18n:Label (en="Deal Number")
+			@t24:i (align=L, inputBehaviour=I, maxLength=50, sysNumber=0.0, core=true, businessType=A, t24Name=DEAL.NO)
+		CUSTOMER -> ST_Customer:CUSTOMER
+			@i18n:Label (en=Customer)
+			@i18n:Tooltip (en="Customer Liability")
+			@t24:i (align=R, inputBehaviour=I, maxLength=15, sysNumber=1.0, core=true, businessType=CUS, t24Name=CUSTOMER)
+		PORTFOLIO -> SCO_PortfolioMaintenance:SEC_ACC_MASTER
+			@i18n:Label (en=Portfolio)
+			@t24:i (align=L, inputBehaviour=I, maxLength=15, sysNumber=2.0, core=true, businessType=SAM, t24Name=PORTFOLIO)
+		SECURITY_CODE : T24BusinessTypes:A
+			@i18n:Label (en="Security No")
+			@i18n:Tooltip (en="Indicates a valid Security")
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=3.0, core=true, t24Name=SECURITY.CODE)
+		SECURITY_NUMBER : T24BusinessTypes:A
+			@i18n:Label (en="Security No")
+			@i18n:Tooltip (en="Indicates the security number")
+			@t24:i (align=L, inputBehaviour=I, maxLength=14, sysNumber=4.0, core=true, t24Name=SECURITY.NUMBER)
+		PRODUCT -> EB_SystemTables:EB_PRODUCT
+			@i18n:Label (en="Order Number")
+			@i18n:Tooltip (en="Product associated with the transaction")
+			@t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=5.0, core=true, businessType=A, t24Name=PRODUCT)
+		ORDER_TYPE -> EB_SystemTables:EB_TABLE_VETTING
+			@i18n:Label (en="Transmit?")
+			@i18n:Tooltip (en="Whether SC.EXE.SEC.ORDERS to be generated or not")
+			@t24:i (align=L, inputBehaviour=I, maxLength=15, sysNumber=6.0, core=true, t24Name=ORDER.TYPE)
+		ORDER_NO : T24BusinessTypes:A
+			@i18n:Label (en="Group Order")
+			@i18n:Tooltip (en="Order Id generated by this application.")
+			@t24:i (align=L, inputBehaviour=I, maxLength=25, sysNumber=7.0, core=true, t24Name=ORDER.NO)
+		ORDER_DATE : T24BusinessTypes:A
+			@i18n:Label (en="Order Date")
+			@t24:i (align=L, inputBehaviour=I, maxLength=15, sysNumber=8.0, core=true, t24Name=ORDER.DATE)
+		ORDER_TIME : T24BusinessTypes:A
+			@i18n:Label (en=Time)
+			@t24:i (align=L, inputBehaviour=I, maxLength=15, sysNumber=9.0, core=true, t24Name=ORDER.TIME)
+		RECEIVE_MODE -> EB_SystemTables:EB_TABLE_VETTING
+			@i18n:Label (en="Auto Group ID")
+			@i18n:Tooltip (en="Mode of receipt of order Email,Fax,Phone etc.")
+			@t24:i (align=L, inputBehaviour=I, maxLength=20, sysNumber=10.0, core=true, t24Name=RECEIVE.MODE)
+		OVERRIDE -> byValue SC_ModelBank:SC_FRONT_ORDER__OVERRIDE *
+		RECORD_STATUS : T24BusinessTypes:STAT
+			@i18n:Label (en="Record Status")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=12.0, core=true, t24Name=RECORD.STATUS)
+		CURR_NO : mml:Integer
+			@i18n:Label (en="Curr No")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=13.0, core=true, t24Name=CURR.NO)
+		INPUTTER -> byValue SC_ModelBank:SC_FRONT_ORDER__INPUTTER *
+		DATE_TIME -> byValue SC_ModelBank:SC_FRONT_ORDER__DATE_TIME *
+		AUTHORISER : T24BusinessTypes:A
+			@i18n:Label (en=Authoriser)
+			@i18n:Tooltip (en="Indicates the User who Authorises the record")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=16.0, core=true, t24Name=AUTHORISER)
+		CO_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company)
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=17.0, core=true, businessType=A, t24Name=CO.CODE, mask="R##-###-####")
+		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Dept Code")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=18.0, core=true, t24Name=DEPT.CODE)
+		AUDITOR_CODE : T24BusinessTypes:A
+			@i18n:Label (en="Auditor Code")
+			@i18n:Tooltip (en="Auditor Code")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=19.0, core=true, t24Name=AUDITOR.CODE)
+		AUDIT_DATE_TIME : T24BusinessTypes:RELTIME
+			@i18n:Label (en="Audit Date Time")
+			@i18n:Tooltip (en="Date and time when record was audited")
+			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=20.0, core=true, t24Name=AUDIT.DATE.TIME, mask="RDD DD  DD ##:##")
+	}
+	SC_FRONT_ORDER__OVERRIDE
+	{
+		OVERRIDE : T24BusinessTypes:A
+			@i18n:Label (en=Override)
+			@i18n:Tooltip (en="Overrides generated by this transaction")
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=11.0, core=true, t24Name=OVERRIDE)
+	}
+	SC_FRONT_ORDER__INPUTTER
+	{
+		INPUTTER : T24BusinessTypes:A
+			@i18n:Label (en=Inputter)
+			@i18n:Tooltip (en="The user who last updated the record")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=14.0, core=true, t24Name=INPUTTER)
+	}
+	SC_FRONT_ORDER__DATE_TIME
+	{
+		DATE_TIME : T24BusinessTypes:RELTIME
+			@i18n:Label (en="Date time")
+			@i18n:Tooltip (en="Date and time when record was input or authorised")
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=15.0, core=true, t24Name=DATE.TIME, mask="RDD DD  DD ##:##")
+	}
+	SC_MULTI_SEC_TRANSFER
+		@t24:i (t24Name=SC.MULTI.SEC.TRANSFER, level=F, type=D, additionalInfo=NOH, allowedFunctions="A C D E H I L P Q R S", localRefAllowed=false)
+	{
+		DEAL_NO -> SC_ModelBank:SC_MULTI_SEC_TRANSFER PK required
+			@i18n:Label (en="Deal Number")
+			@t24:i (align=L, inputBehaviour=I, maxLength=50, sysNumber=0.0, core=true, businessType=A, t24Name=DEAL.NO)
+		OFS_SOURCE -> EB_Interface:OFS_SOURCE required
+			@i18n:Label (en="OFS Source")
+			@i18n:Tooltip (en="The OFS Source record ID")
+			@t24:i (align=L, inputBehaviour=I, maxLength=20, sysNumber=1.0, core=true, businessType=A, t24Name=OFS.SOURCE)
+		OFS_VERSION -> EB_Versions:VERSION required
+			@i18n:Label (en="Default Version")
+			@t24:i (align=L, inputBehaviour=I, maxLength=54, sysNumber=2.0, core=true, businessType=A, t24Name=OFS.VERSION)
+		TRANS_TYPE -> SC_Config:SC_TRANS_NAME required
+			@i18n:Label (en="Trans Type")
+			@i18n:Tooltip (en="Indicates the Transaction Type")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=3.0, core=true, businessType=A, t24Name=TRANS.TYPE)
+		CUSTOMER_NO -> ST_Customer:CUSTOMER required
+			@i18n:Label (en="Customer No")
+			@i18n:Tooltip (en="Identifies the Customer for the transaction.")
+			@t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=4.0, core=true, businessType=CUS, t24Name=CUSTOMER.NO)
+		SECURITY_ACC -> SCO_PortfolioMaintenance:SEC_ACC_MASTER
+			@i18n:Label (en="Portfolio No")
+			@i18n:Tooltip (en="Indicates the Portfolio Account of the customer")
+			@t24:i (align=L, inputBehaviour=I, maxLength=18, sysNumber=5.0, core=true, businessType=SAM, t24Name=SECURITY.ACC)
+		TRADE_DATE : T24BusinessTypes:D
+			@i18n:Label (en="Trade Date")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=6.0, core=true, t24Name=TRADE.DATE)
+		VALUE_DATE : T24BusinessTypes:D
+			@i18n:Label (en="Value Date")
+			@i18n:Tooltip (en="Indicates the Value date of the Contract")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=7.0, core=true, t24Name=VALUE.DATE)
+		BR_DEL_INSTR -> SC_Config:SC_DEL_INSTR required
+			@i18n:Label (en="Delivery Instn")
+			@t24:i (align=L, inputBehaviour=I, maxLength=5, sysNumber=8.0, core=true, businessType=A, t24Name=BR.DEL.INSTR)
+		BROKER_NO -> ST_Customer:CUSTOMER required
+			@i18n:Label (en="Broker No")
+			@t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=9.0, core=true, businessType=CUS, t24Name=BROKER.NO)
+		AUTO_SELECT -> EB_SystemTables:EB_TABLE_VETTING
+			@i18n:Label (en="Auto Select")
+			@i18n:Tooltip (en="Positions to be automatically selected or not")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=10.0, core=true, t24Name=AUTO.SELECT)
+		SECURITY_NO -> byValue SC_ModelBank:SC_MULTI_SEC_TRANSFER__SECURITY_NO *
+		RESERVED05 : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=21.0, core=true, t24Name=RESERVED05)
+		RESERVED04 : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=22.0, core=true, t24Name=RESERVED04)
+		RESERVED03 : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=23.0, core=true, t24Name=RESERVED03)
+		RESERVED02 : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=24.0, core=true, t24Name=RESERVED02)
+		RESERVED01 : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=25.0, core=true, t24Name=RESERVED01)
+		OVERRIDE -> byValue SC_ModelBank:SC_MULTI_SEC_TRANSFER__OVERRIDE *
+		RECORD_STATUS : T24BusinessTypes:STAT
+			@i18n:Label (en="Record Status")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=27.0, core=true, t24Name=RECORD.STATUS)
+		CURR_NO : mml:Integer
+			@i18n:Label (en="Curr No")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=28.0, core=true, t24Name=CURR.NO)
+		INPUTTER -> byValue SC_ModelBank:SC_MULTI_SEC_TRANSFER__INPUTTER *
+		DATE_TIME -> byValue SC_ModelBank:SC_MULTI_SEC_TRANSFER__DATE_TIME *
+		AUTHORISER : T24BusinessTypes:A
+			@i18n:Label (en=Authoriser)
+			@i18n:Tooltip (en="Indicates the User who Authorises the record")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=31.0, core=true, t24Name=AUTHORISER)
+		CO_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company)
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=32.0, core=true, businessType=A, t24Name=CO.CODE, mask="R##-###-####")
+		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Dept Code")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=33.0, core=true, t24Name=DEPT.CODE)
+		AUDITOR_CODE : T24BusinessTypes:A
+			@i18n:Label (en="Auditor Code")
+			@i18n:Tooltip (en="Auditor Code")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=34.0, core=true, t24Name=AUDITOR.CODE)
+		AUDIT_DATE_TIME : T24BusinessTypes:RELTIME
+			@i18n:Label (en="Audit Date Time")
+			@i18n:Tooltip (en="Date and time when record was audited")
+			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=35.0, core=true, t24Name=AUDIT.DATE.TIME, mask="RDD DD  DD ##:##")
+	}
+	SC_MULTI_SEC_TRANSFER__SECURITY_NO
+	{
+		SECURITY_NO -> SCO_SecurityMasterMaintenance:SECURITY_MASTER
+			@i18n:Label (en="Security No")
+			@i18n:Tooltip (en="Indicates the security code/number")
+			@t24:i (align=L, inputBehaviour=I, maxLength=12, sysNumber=11.0, core=true, businessType=SEC, t24Name=SECURITY.NO)
+		DEPOSITORY -> ST_Customer:CUSTOMER
+			@i18n:Label (en=Depository)
+			@i18n:Tooltip (en="Depository the Security to be delivered from/to")
+			@t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=12.0, core=true, businessType=CUS, t24Name=DEPOSITORY)
+		NO_NOMINAL : T24BusinessTypes:AMT
+			@i18n:Label (en=Nominal)
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=13.0, core=true, t24Name=NO.NOMINAL, typeModifiers="-USD")
+		PRICE : T24BusinessTypes:AMT
+			@i18n:Label (en=Price)
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=14.0, core=true, t24Name=PRICE, typeModifiers="-USD")
+		OFS_MSG_ID : mml:Integer
+			@i18n:Label (en="OFS Message Id")
+			@i18n:Tooltip (en="OFS Message Id")
+			@t24:i (align=R, inputBehaviour=N, maxLength=14, sysNumber=15.0, core=true, t24Name=OFS.MSG.ID)
+		MVRESERVED05 : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=16.0, core=true, t24Name=MVRESERVED05)
+		MVRESERVED04 : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=17.0, core=true, t24Name=MVRESERVED04)
+		MVRESERVED03 : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=18.0, core=true, t24Name=MVRESERVED03)
+		MVRESERVED02 : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=19.0, core=true, t24Name=MVRESERVED02)
+		MVRESERVED01 : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=20.0, core=true, t24Name=MVRESERVED01)
+	}
+	SC_MULTI_SEC_TRANSFER__OVERRIDE
+	{
+		OVERRIDE : T24BusinessTypes:A
+			@i18n:Label (en=Override)
+			@i18n:Tooltip (en="Overrides generated by this transaction")
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=26.0, core=true, t24Name=OVERRIDE)
+	}
+	SC_MULTI_SEC_TRANSFER__INPUTTER
+	{
+		INPUTTER : T24BusinessTypes:A
+			@i18n:Label (en=Inputter)
+			@i18n:Tooltip (en="The user who last updated the record")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=29.0, core=true, t24Name=INPUTTER)
+	}
+	SC_MULTI_SEC_TRANSFER__DATE_TIME
+	{
+		DATE_TIME : T24BusinessTypes:RELTIME
+			@i18n:Label (en="Date time")
+			@i18n:Tooltip (en="Date and time when record was input or authorised")
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=30.0, core=true, t24Name=DATE.TIME, mask="RDD DD  DD ##:##")
+	}
+	SC_OPEN_PORTFOLIO
+		@t24:i (t24Name=SC.OPEN.PORTFOLIO, level=C, type=D, additionalInfo=NOH, allowedFunctions="A C D E H I L P Q R S", localRefAllowed=false)
+	{
+		DEAL_NO -> SC_ModelBank:SC_OPEN_PORTFOLIO PK required
+			@i18n:Label (en="Deal Number")
+			@t24:i (align=L, inputBehaviour=I, maxLength=50, sysNumber=0.0, core=true, businessType=A, t24Name=DEAL.NO)
+		CUSTOMER_INFO -> EB_SystemTables:EB_TABLE_VETTING
+			@i18n:Label (en="Customer Information")
+			@i18n:Tooltip (en="Customer Information")
+			@t24:i (align=L, inputBehaviour=I, maxLength=8, sysNumber=1.0, core=true, t24Name=CUSTOMER.INFO)
+		CUSTOMER_NO -> ST_Customer:CUSTOMER
+			@i18n:Label (en="Customer No")
+			@i18n:Tooltip (en="Identifies the Customer for the transaction.")
+			@t24:i (align=R, inputBehaviour=I, maxLength=15, sysNumber=2.0, core=true, businessType=CUS, t24Name=CUSTOMER.NO)
+		CREATE_ACCOUNT -> EB_SystemTables:EB_TABLE_VETTING
+			@i18n:Label (en="Create Account")
+			@i18n:Tooltip (en="Create Account")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=3.0, core=true, t24Name=CREATE.ACCOUNT)
+		CHECK_STATUS -> EB_SystemTables:EB_TABLE_VETTING
+			@i18n:Label (en="Check Status")
+			@i18n:Tooltip (en="Check Status")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=4.0, core=true, t24Name=CHECK.STATUS)
+		OVERRIDE -> byValue SC_ModelBank:SC_OPEN_PORTFOLIO__OVERRIDE *
+		RECORD_STATUS : T24BusinessTypes:STAT
+			@i18n:Label (en="Record Status")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=6.0, core=true, t24Name=RECORD.STATUS)
+		CURR_NO : mml:Integer
+			@i18n:Label (en="Curr No")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=7.0, core=true, t24Name=CURR.NO)
+		INPUTTER -> byValue SC_ModelBank:SC_OPEN_PORTFOLIO__INPUTTER *
+		DATE_TIME -> byValue SC_ModelBank:SC_OPEN_PORTFOLIO__DATE_TIME *
+		AUTHORISER : T24BusinessTypes:A
+			@i18n:Label (en=Authoriser)
+			@i18n:Tooltip (en="Indicates the User who Authorises the record")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=10.0, core=true, t24Name=AUTHORISER)
+		CO_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company)
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=11.0, core=true, businessType=A, t24Name=CO.CODE, mask="R##-###-####")
+		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Dept Code")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=12.0, core=true, t24Name=DEPT.CODE)
+		AUDITOR_CODE : T24BusinessTypes:A
+			@i18n:Label (en="Auditor Code")
+			@i18n:Tooltip (en="Auditor Code")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=13.0, core=true, t24Name=AUDITOR.CODE)
+		AUDIT_DATE_TIME : T24BusinessTypes:RELTIME
+			@i18n:Label (en="Audit Date Time")
+			@i18n:Tooltip (en="Date and time when record was audited")
+			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=14.0, core=true, t24Name=AUDIT.DATE.TIME, mask="RDD DD  DD ##:##")
+	}
+	SC_OPEN_PORTFOLIO__OVERRIDE
+	{
+		OVERRIDE : T24BusinessTypes:A
+			@i18n:Label (en=Override)
+			@i18n:Tooltip (en="Overrides generated by this transaction")
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=5.0, core=true, t24Name=OVERRIDE)
+	}
+	SC_OPEN_PORTFOLIO__INPUTTER
+	{
+		INPUTTER : T24BusinessTypes:A
+			@i18n:Label (en=Inputter)
+			@i18n:Tooltip (en="The user who last updated the record")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=8.0, core=true, t24Name=INPUTTER)
+	}
+	SC_OPEN_PORTFOLIO__DATE_TIME
+	{
+		DATE_TIME : T24BusinessTypes:RELTIME
+			@i18n:Label (en="Date time")
+			@i18n:Tooltip (en="Date and time when record was input or authorised")
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=9.0, core=true, t24Name=DATE.TIME, mask="RDD DD  DD ##:##")
+	}
+}
+Enumerations {
+	NOFILE_BUY_SELL__BUY_SELL : mml:string
+		BUY=BUY
+		TRANSFER=TRANSFER
+}

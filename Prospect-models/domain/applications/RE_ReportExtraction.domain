@@ -1,0 +1,400 @@
+# UTF-8
+/* Report Extraction Processing for General Ledger */
+Domain RE_ReportExtraction
+	@t24:i (module=RE)
+	@java:Package (value=com.temenos.t24.datamodel.re.re_reportextraction)
+namespace "http://www.temenos.com/t24/RE_ReportExtraction"
+metamodelVersion 1.30.6
+Classes {
+	RE_CONTRACT_EXTRACT
+		@t24:i (t24Name=RE.CONTRACT.EXTRACT, level=F, type=L, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		CONTRACT_ID -> RE_ReportExtraction:RE_CONTRACT_EXTRACT PK required
+			@i18n:Label (en="Contract Id")
+			@t24:i (align=L, inputBehaviour=I, maxLength=60, sysNumber=0.0, core=true, businessType=ANY, t24Name=CONTRACT.ID)
+		APPLICATION : T24BusinessTypes:A
+			@i18n:Label (en=Application)
+			@t24:i (align=L, inputBehaviour=I, maxLength=25, sysNumber=1.0, core=true, t24Name=APPLICATION)
+		DATE_LAST_UPDATE : T24BusinessTypes:D
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=2.0, core=true, t24Name=DATE.LAST.UPDATE)
+		CONSOL_KEY_TYPE -> byValue RE_ReportExtraction:RE_CONTRACT_EXTRACT__CONSOL_KEY_TYPE *
+		ENTRY_ID -> byValue RE_ReportExtraction:RE_CONTRACT_EXTRACT__ENTRY_ID *
+		TXN_MVMT_TOTAL : T24BusinessTypes:AMT
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=19.0, core=true, t24Name=TXN.MVMT.TOTAL, typeModifiers="-USD")
+		POS_CCY -> byValue RE_ReportExtraction:RE_CONTRACT_EXTRACT__POS_CCY *
+		CONSOL_IND : RE_ReportExtraction:RE_CONTRACT_EXTRACT__CONSOL_IND
+			@i18n:Label (en="Consolidatn Indicator")
+			@t24:i (align=L, inputBehaviour=I, maxLength=1, sysNumber=26.0, core=true, t24Name=CONSOL.IND)
+	}
+	RE_CONTRACT_EXTRACT__CONSOL_KEY_TYPE
+	{
+		CONSOL_KEY_TYPE : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=I, maxLength=60, sysNumber=3.0, core=true, t24Name=CONSOL.KEY.TYPE)
+		CURRENCY -> FIN_CurrencyConfig:CURRENCY
+			@i18n:Label (en=Ccy)
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=4.0, core=true, businessType=CCY, t24Name=CURRENCY)
+		OPEN_BALANCE : T24BusinessTypes:AMT
+			@i18n:Label (en="Opening balance")
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=5.0, core=true, t24Name=OPEN.BALANCE, typeModifiers="-4.X")
+		OPEN_LCL_BAL : T24BusinessTypes:AMT
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=6.0, core=true, t24Name=OPEN.LCL.BAL, typeModifiers="-USD")
+		CREDIT_MVMT : T24BusinessTypes:AMT
+			@i18n:Label (en="Credit Mvmt")
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=7.0, core=true, t24Name=CREDIT.MVMT, typeModifiers="-4.X")
+		CREDIT_LCL_MVMT : T24BusinessTypes:AMT
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=8.0, core=true, t24Name=CREDIT.LCL.MVMT, typeModifiers="-USD")
+		DEBIT_MVMT : T24BusinessTypes:AMT
+			@i18n:Label (en="Debit Movement")
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=9.0, core=true, t24Name=DEBIT.MVMT, typeModifiers="-4.X")
+		DEBIT_LCL_MVMT : T24BusinessTypes:AMT
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=10.0, core=true, t24Name=DEBIT.LCL.MVMT, typeModifiers="-USD")
+		CONTRACT_BAL : T24BusinessTypes:AMT
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=11.0, core=true, t24Name=CONTRACT.BAL, typeModifiers="-4.X")
+		UNBROKEN_LINK : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=I, maxLength=1, sysNumber=12.0, core=true, t24Name=UNBROKEN.LINK)
+		CET_MVMT_TOTAL : T24BusinessTypes:AMT
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=13.0, core=true, t24Name=CET.MVMT.TOTAL, typeModifiers="-4.X")
+		CET_LCL_MVT_TOT : T24BusinessTypes:AMT
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=14.0, core=true, t24Name=CET.LCL.MVT.TOT, typeModifiers="-USD")
+		CET_IDS -> byValue RE_ReportExtraction:RE_CONTRACT_EXTRACT__CONSOL_KEY_TYPE__CET_IDS *
+	}
+	RE_CONTRACT_EXTRACT__CONSOL_KEY_TYPE__CET_IDS
+	{
+		CET_IDS : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=I, maxLength=25, sysNumber=15.0, core=true, t24Name=CET.IDS)
+	}
+	RE_CONTRACT_EXTRACT__ENTRY_ID
+	{
+		ENTRY_ID : T24BusinessTypes:A
+			@i18n:Label (en="Entry Id")
+			@t24:i (align=L, inputBehaviour=I, maxLength=25, sysNumber=16.0, core=true, t24Name=ENTRY.ID)
+		ENTRY_TYPE : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=I, maxLength=1, sysNumber=17.0, core=true, t24Name=ENTRY.TYPE)
+		AMOUNT_LCY : T24BusinessTypes:AMT
+			@i18n:Label (en="Amount Lcy")
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=18.0, core=true, t24Name=AMOUNT.LCY, typeModifiers="-USD")
+	}
+	RE_CONTRACT_EXTRACT__POS_CCY
+	{
+		POS_CCY -> FIN_CurrencyConfig:CURRENCY
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=20.0, core=true, businessType=CCY, t24Name=POS.CCY)
+		FCY_ENTRY_ID -> byValue RE_ReportExtraction:RE_CONTRACT_EXTRACT__POS_CCY__FCY_ENTRY_ID *
+		FCY_MVMT_TOT : T24BusinessTypes:AMT
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=24.0, core=true, t24Name=FCY.MVMT.TOT, typeModifiers="-20.X")
+		POS_MVMT_TOTAL : T24BusinessTypes:AMT
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=25.0, core=true, t24Name=POS.MVMT.TOTAL, typeModifiers="-20.X")
+	}
+	RE_CONTRACT_EXTRACT__POS_CCY__FCY_ENTRY_ID
+	{
+		FCY_ENTRY_ID : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=I, maxLength=25, sysNumber=21.0, core=true, t24Name=FCY.ENTRY.ID)
+		FCY_ENT_TYPE : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=I, maxLength=1, sysNumber=22.0, core=true, t24Name=FCY.ENT.TYPE)
+		AMOUNT_FCY : T24BusinessTypes:AMT
+			@i18n:Label (en="Amount Fcy")
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=23.0, core=true, t24Name=AMOUNT.FCY, typeModifiers="-20.X")
+	}
+	RE_EXPORT_REQUEST
+		@t24:i (t24Name=RE.EXPORT.REQUEST, level=I, type=W, allowedFunctions="C I L P Q R S", localRefAllowed=false)
+	{
+		REQ_NAME -> RE_ReportExtraction:RE_EXPORT_REQUEST PK required
+			@t24:i (align=L, inputBehaviour=I, maxLength=14, sysNumber=0.0, core=true, businessType=S, t24Name=REQ.NAME)
+		DESCRIPTION -> byValue RE_ReportExtraction:RE_EXPORT_REQUEST__DESCRIPTION *
+		CO_TO_EXPORT -> byValue RE_ReportExtraction:RE_EXPORT_REQUEST__CO_TO_EXPORT *
+		TRANSFER_CMD -> byValue RE_ReportExtraction:RE_EXPORT_REQUEST__TRANSFER_CMD *
+		RESERVED_3 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=4.0, core=true, t24Name=RESERVED.3)
+		RESERVED_2 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=5.0, core=true, t24Name=RESERVED.2)
+		RESERVED_1 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=6.0, core=true, t24Name=RESERVED.1)
+		RECORD_STATUS : T24BusinessTypes:STAT
+			@i18n:Label (en="Record Status")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=7.0, core=true, t24Name=RECORD.STATUS)
+		CURR_NO : mml:Integer
+			@i18n:Label (en="Curr No")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=8.0, core=true, t24Name=CURR.NO)
+		INPUTTER -> byValue RE_ReportExtraction:RE_EXPORT_REQUEST__INPUTTER *
+		DATE_TIME -> byValue RE_ReportExtraction:RE_EXPORT_REQUEST__DATE_TIME *
+		AUTHORISER : T24BusinessTypes:A
+			@i18n:Label (en=Authoriser)
+			@i18n:Tooltip (en="Indicates the User who Authorises the record")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=11.0, core=true, t24Name=AUTHORISER)
+		CO_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company)
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=12.0, core=true, businessType=A, t24Name=CO.CODE, mask="R##-###-####")
+		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Dept Code")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=13.0, core=true, t24Name=DEPT.CODE)
+		AUDITOR_CODE : T24BusinessTypes:A
+			@i18n:Label (en="Auditor Code")
+			@i18n:Tooltip (en="Auditor Code")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=14.0, core=true, t24Name=AUDITOR.CODE)
+		AUDIT_DATE_TIME : T24BusinessTypes:RELTIME
+			@i18n:Label (en="Audit Date Time")
+			@i18n:Tooltip (en="Date and time when record was audited")
+			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=15.0, core=true, t24Name=AUDIT.DATE.TIME, mask="RDD DD  DD ##:##")
+	}
+	RE_EXPORT_REQUEST__DESCRIPTION
+	{
+		DESCRIPTION : T24BusinessTypes:A required
+			@i18n:Label (en=Description)
+			@i18n:Tooltip (en=Description)
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, multiLanguage=true, sysNumber=1.0, core=true, t24Name=DESCRIPTION)
+	}
+	RE_EXPORT_REQUEST__CO_TO_EXPORT
+	{
+		CO_TO_EXPORT : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=I, maxLength=9, sysNumber=2.0, core=true, t24Name=CO.TO.EXPORT)
+	}
+	RE_EXPORT_REQUEST__TRANSFER_CMD
+	{
+		TRANSFER_CMD -> byValue RE_ReportExtraction:RE_EXPORT_REQUEST__TRANSFER_CMD__TRANSFER_CMD *
+	}
+	RE_EXPORT_REQUEST__TRANSFER_CMD__TRANSFER_CMD
+	{
+		TRANSFER_CMD : T24BusinessTypes:ANY
+			@t24:i (align=L, inputBehaviour=I, maxLength=50, sysNumber=3.0, core=true, t24Name=TRANSFER.CMD)
+	}
+	RE_EXPORT_REQUEST__INPUTTER
+	{
+		INPUTTER : T24BusinessTypes:A
+			@i18n:Label (en=Inputter)
+			@i18n:Tooltip (en="The user who last updated the record")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=9.0, core=true, t24Name=INPUTTER)
+	}
+	RE_EXPORT_REQUEST__DATE_TIME
+	{
+		DATE_TIME : T24BusinessTypes:RELTIME
+			@i18n:Label (en="Date time")
+			@i18n:Tooltip (en="Date and time when record was input or authorised")
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=10.0, core=true, t24Name=DATE.TIME, mask="RDD DD  DD ##:##")
+	}
+	RE_EXTRACT_PARAMS
+		@t24:i (t24Name=RE.EXTRACT.PARAMS, level=I, type=U, allowedFunctions="A C D E I L P Q R S", localRefAllowed=true)
+	{
+		REPORT_NAME -> RE_ReportExtraction:RE_EXTRACT_PARAMS PK required
+			@i18n:Label (en="Report Name")
+			@t24:i (align=L, inputBehaviour=I, maxLength=21, sysNumber=0.0, core=true, businessType=S, t24Name=REPORT.NAME)
+		REP_LINE_NARR -> byValue RE_ReportExtraction:RE_EXTRACT_PARAMS__REP_LINE_NARR *
+		ASSET_KEY_POS -> byValue RE_ReportExtraction:RE_EXTRACT_PARAMS__ASSET_KEY_POS *
+		CONSOL_KEY_IN_REC : RE_ReportExtraction:RE_EXTRACT_PARAMS__CONSOL_KEY_IN_REC required
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=4.0, core=true, t24Name=CONSOL.KEY.IN.REC)
+		MAT_DATE_RANGE -> byValue RE_ReportExtraction:RE_EXTRACT_PARAMS__MAT_DATE_RANGE *
+		AMOUNT_TYPE : RE_ReportExtraction:RE_EXTRACT_PARAMS__AMOUNT_TYPE required
+			@t24:i (align=L, inputBehaviour=I, maxLength=8, sysNumber=6.0, core=true, t24Name=AMOUNT.TYPE)
+		CONTRACT_DETAILS : RE_ReportExtraction:RE_EXTRACT_PARAMS__CONTRACT_DETAILS required
+			@t24:i (align=L, inputBehaviour=I, maxLength=8, sysNumber=7.0, core=true, t24Name=CONTRACT.DETAILS)
+		INC_CONSOL_DETAIL : RE_ReportExtraction:RE_EXTRACT_PARAMS__INC_CONSOL_DETAIL
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=8.0, core=true, t24Name=INC.CONSOL.DETAIL)
+		INCL_PERIOD_END : RE_ReportExtraction:RE_EXTRACT_PARAMS__INCL_PERIOD_END
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=9.0, core=true, t24Name=INCL.PERIOD.END)
+		PL_DETAILS : RE_ReportExtraction:RE_EXTRACT_PARAMS__PL_DETAILS required
+			@t24:i (align=L, inputBehaviour=I, maxLength=8, sysNumber=10.0, core=true, t24Name=PL.DETAILS)
+		KEY_FORMAT : RE_ReportExtraction:RE_EXTRACT_PARAMS__KEY_FORMAT required
+			@t24:i (align=L, inputBehaviour=I, maxLength=10, sysNumber=11.0, core=true, t24Name=KEY.FORMAT)
+		CRB_REPORT : RE_ReportExtraction:RE_EXTRACT_PARAMS__CRB_REPORT
+			@t24:i (align=L, inputBehaviour=I, maxLength=1, sysNumber=12.0, core=true, t24Name=CRB.REPORT)
+		OPTIONS -> byValue RE_ReportExtraction:RE_EXTRACT_PARAMS__OPTIONS *
+		CRB_FILE_LEVEL : RE_ReportExtraction:RE_EXTRACT_PARAMS__CRB_FILE_LEVEL
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=14.0, core=true, t24Name=CRB.FILE.LEVEL)
+		CSV_FILE_FORMAT : RE_ReportExtraction:RE_EXTRACT_PARAMS__CSV_FILE_FORMAT
+			@t24:i (align=L, inputBehaviour=I, maxLength=5, sysNumber=15.0, core=true, t24Name=CSV.FILE.FORMAT)
+		RESERVED_1 : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=17.0, core=true, t24Name=RESERVED.1)
+		RESERVED_2 : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=18.0, core=true, t24Name=RESERVED.2)
+		RESERVED_3 : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=19.0, core=true, t24Name=RESERVED.3)
+		RECORD_STATUS : T24BusinessTypes:STAT
+			@i18n:Label (en="Record Status")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=20.0, core=true, t24Name=RECORD.STATUS)
+		CURR_NO : mml:Integer
+			@i18n:Label (en="Curr No")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=21.0, core=true, t24Name=CURR.NO)
+		INPUTTER -> byValue RE_ReportExtraction:RE_EXTRACT_PARAMS__INPUTTER *
+		DATE_TIME -> byValue RE_ReportExtraction:RE_EXTRACT_PARAMS__DATE_TIME *
+		AUTHORISER : T24BusinessTypes:A
+			@i18n:Label (en=Authoriser)
+			@i18n:Tooltip (en="Indicates the User who Authorises the record")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=24.0, core=true, t24Name=AUTHORISER)
+		CO_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company)
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=25.0, core=true, businessType=A, t24Name=CO.CODE, mask="R##-###-####")
+		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Dept Code")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=26.0, core=true, t24Name=DEPT.CODE)
+		AUDITOR_CODE : T24BusinessTypes:A
+			@i18n:Label (en="Auditor Code")
+			@i18n:Tooltip (en="Auditor Code")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=27.0, core=true, t24Name=AUDITOR.CODE)
+		AUDIT_DATE_TIME : T24BusinessTypes:RELTIME
+			@i18n:Label (en="Audit Date Time")
+			@i18n:Tooltip (en="Date and time when record was audited")
+			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=28.0, core=true, t24Name=AUDIT.DATE.TIME, mask="RDD DD  DD ##:##")
+	}
+	RE_EXTRACT_PARAMS__REP_LINE_NARR
+	{
+		REP_LINE_NARR : RE_ReportExtraction:RE_EXTRACT_PARAMS__REP_LINE_NARR__REP_LINE_NARR
+			@t24:i (align=R, inputBehaviour=I, maxLength=1, sysNumber=1.0, core=true, t24Name=REP.LINE.NARR)
+	}
+	RE_EXTRACT_PARAMS__ASSET_KEY_POS
+	{
+		ASSET_KEY_POS : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=2.0, core=true, t24Name=ASSET.KEY.POS)
+		PROFIT_KEY_POS : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=3.0, core=true, t24Name=PROFIT.KEY.POS)
+	}
+	RE_EXTRACT_PARAMS__MAT_DATE_RANGE
+	{
+		MAT_DATE_RANGE : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=5.0, core=true, t24Name=MAT.DATE.RANGE)
+	}
+	RE_EXTRACT_PARAMS__OPTIONS
+	{
+		OPTIONS : RE_ReportExtraction:RE_EXTRACT_PARAMS__OPTIONS__OPTIONS
+			@i18n:Label (en=Options)
+			@t24:i (align=L, inputBehaviour=I, maxLength=20, sysNumber=13.0, core=true, t24Name=OPTIONS)
+	}
+	RE_EXTRACT_PARAMS__INPUTTER
+	{
+		INPUTTER : T24BusinessTypes:A
+			@i18n:Label (en=Inputter)
+			@i18n:Tooltip (en="The user who last updated the record")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=22.0, core=true, t24Name=INPUTTER)
+	}
+	RE_EXTRACT_PARAMS__DATE_TIME
+	{
+		DATE_TIME : T24BusinessTypes:RELTIME
+			@i18n:Label (en="Date time")
+			@i18n:Tooltip (en="Date and time when record was input or authorised")
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=23.0, core=true, t24Name=DATE.TIME, mask="RDD DD  DD ##:##")
+	}
+	RE_RETURN_EXTRACT
+		@t24:i (t24Name=RE.RETURN.EXTRACT, level=I, type=W, allowedFunctions="C I L P Q R S V", localRefAllowed=false)
+	{
+		KEY -> RE_ReportExtraction:RE_RETURN_EXTRACT PK required
+			@i18n:Label (en=Key)
+			@i18n:Tooltip (en="Indicates th transaction key")
+			@t24:i (align=L, inputBehaviour=I, maxLength=14, sysNumber=0.0, core=true, businessType=S, t24Name=KEY)
+		DESCRIPTION -> byValue RE_ReportExtraction:RE_RETURN_EXTRACT__DESCRIPTION *
+		REPORT_NAME -> RE_Config:RE_STAT_REPORT_HEAD required
+			@i18n:Label (en="Report Name")
+			@t24:i (align=L, inputBehaviour=I, maxLength=10, sysNumber=2.0, core=true, businessType=S, t24Name=REPORT.NAME)
+		BUILD_DICTIONARY : RE_ReportExtraction:RE_RETURN_EXTRACT__BUILD_DICTIONARY
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=3.0, core=true, t24Name=BUILD.DICTIONARY)
+		LINE_NO_ST -> byValue RE_ReportExtraction:RE_RETURN_EXTRACT__LINE_NO_ST *
+		RESERVED1 : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=6.0, core=true, t24Name=RESERVED1)
+		RESERVED2 : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=7.0, core=true, t24Name=RESERVED2)
+		RESERVED3 : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=8.0, core=true, t24Name=RESERVED3)
+		RESERVED4 : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=9.0, core=true, t24Name=RESERVED4)
+		RESERVED5 : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=10.0, core=true, t24Name=RESERVED5)
+		RECORD_STATUS : T24BusinessTypes:STAT
+			@i18n:Label (en="Record Status")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=11.0, core=true, t24Name=RECORD.STATUS)
+		CURR_NO : mml:Integer
+			@i18n:Label (en="Curr No")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=12.0, core=true, t24Name=CURR.NO)
+		INPUTTER -> byValue RE_ReportExtraction:RE_RETURN_EXTRACT__INPUTTER *
+		DATE_TIME -> byValue RE_ReportExtraction:RE_RETURN_EXTRACT__DATE_TIME *
+		AUTHORISER : T24BusinessTypes:A
+			@i18n:Label (en=Authoriser)
+			@i18n:Tooltip (en="Indicates the User who Authorises the record")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=15.0, core=true, t24Name=AUTHORISER)
+		CO_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company)
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=16.0, core=true, businessType=A, t24Name=CO.CODE, mask="R##-###-####")
+		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Dept Code")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=17.0, core=true, t24Name=DEPT.CODE)
+		AUDITOR_CODE : T24BusinessTypes:A
+			@i18n:Label (en="Auditor Code")
+			@i18n:Tooltip (en="Auditor Code")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=18.0, core=true, t24Name=AUDITOR.CODE)
+		AUDIT_DATE_TIME : T24BusinessTypes:RELTIME
+			@i18n:Label (en="Audit Date Time")
+			@i18n:Tooltip (en="Date and time when record was audited")
+			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=19.0, core=true, t24Name=AUDIT.DATE.TIME, mask="RDD DD  DD ##:##")
+	}
+	RE_RETURN_EXTRACT__DESCRIPTION
+	{
+		DESCRIPTION : T24BusinessTypes:A required
+			@i18n:Label (en=Description)
+			@i18n:Tooltip (en=Description)
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, multiLanguage=true, sysNumber=1.0, core=true, t24Name=DESCRIPTION)
+	}
+	RE_RETURN_EXTRACT__LINE_NO_ST
+	{
+		LINE_NO_ST : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=4, sysNumber=4.0, core=true, t24Name=LINE.NO.ST)
+		LINE_NO_END : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=4, sysNumber=5.0, core=true, t24Name=LINE.NO.END)
+	}
+	RE_RETURN_EXTRACT__INPUTTER
+	{
+		INPUTTER : T24BusinessTypes:A
+			@i18n:Label (en=Inputter)
+			@i18n:Tooltip (en="The user who last updated the record")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=13.0, core=true, t24Name=INPUTTER)
+	}
+	RE_RETURN_EXTRACT__DATE_TIME
+	{
+		DATE_TIME : T24BusinessTypes:RELTIME
+			@i18n:Label (en="Date time")
+			@i18n:Tooltip (en="Date and time when record was input or authorised")
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=14.0, core=true, t24Name=DATE.TIME, mask="RDD DD  DD ##:##")
+	}
+}
+Enumerations {
+	RE_CONTRACT_EXTRACT__CONSOL_IND : mml:string
+		Y=Y
+	RE_EXTRACT_PARAMS__REP_LINE_NARR__REP_LINE_NARR : mml:string
+		0=0
+		1=1
+		2=2
+		3=3
+	RE_EXTRACT_PARAMS__CONSOL_KEY_IN_REC : mml:string
+		YES=YES
+		NO=NO
+	RE_EXTRACT_PARAMS__AMOUNT_TYPE : mml:string
+		MOVEMENT=MOVEMENT
+		CLOSING=CLOSING
+	RE_EXTRACT_PARAMS__CONTRACT_DETAILS : mml:string
+		NO=NO
+		YES=YES
+		CONTRACT=CONTRACT
+	RE_EXTRACT_PARAMS__INC_CONSOL_DETAIL : mml:string
+		YES=YES
+		NO=NO
+	RE_EXTRACT_PARAMS__INCL_PERIOD_END : mml:string
+		YES=YES
+		NO=NO
+	RE_EXTRACT_PARAMS__PL_DETAILS : mml:string
+		NO=NO
+		YES=YES
+		DETAIL=DETAIL
+	RE_EXTRACT_PARAMS__KEY_FORMAT : mml:string
+		UNIQUE_KEY=UNIQUE.KEY
+		LINE_IDS=LINE.IDS
+	RE_EXTRACT_PARAMS__CRB_REPORT : mml:string
+		Y=Y
+		NULL=NULL
+	RE_EXTRACT_PARAMS__OPTIONS__OPTIONS : mml:string
+		PL_NET_OPP_LINE=PL.NET.OPP.LINE
+		AL_NET_CONSOL_KEY=AL.NET.CONSOL.KEY
+		NET_LINE_BAL=NET.LINE.BAL
+	RE_EXTRACT_PARAMS__CRB_FILE_LEVEL : mml:string
+		FIN=FIN
+		FRP=FRP
+	RE_EXTRACT_PARAMS__CSV_FILE_FORMAT : mml:string
+		Y=Y
+		NULL=NULL
+	RE_RETURN_EXTRACT__BUILD_DICTIONARY : mml:string
+		YES=YES
+		NO=NO
+}

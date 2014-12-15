@@ -1,0 +1,301 @@
+# UTF-8
+/* Order Grouping of Securities */
+Domain SCT_OrderGrouping
+	@t24:i (module=SC)
+	@java:Package (value=com.temenos.t24.datamodel.sc.sct_ordergrouping)
+namespace "http://www.temenos.com/t24/SCT_OrderGrouping"
+metamodelVersion 1.30.6
+Classes {
+	SC_AUTO_GROUP_ORDERS
+		@t24:i (t24Name=SC.AUTO.GROUP.ORDERS, level=F, type=H, allowedFunctions="A E L Q S", localRefAllowed=true)
+	{
+		SECURITY_TYPE -> SCT_OrderGrouping:SC_AUTO_GROUP_ORDERS PK required
+			@i18n:Label (en="Security Type")
+			@i18n:Tooltip (en="The level for calculating the basis amount")
+			@t24:i (align=L, inputBehaviour=I, maxLength=18, sysNumber=0.0, core=true, businessType=A, t24Name=SECURITY.TYPE)
+		CUT_OFF_DATE : T24BusinessTypes:D
+			@i18n:Label (en="Cut Off Date")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=1.0, core=true, t24Name=CUT.OFF.DATE)
+		CUT_OFF_TIME : T24BusinessTypes:TIME required
+			@i18n:Label (en="Cut Off Time")
+			@t24:i (align=L, inputBehaviour=I, maxLength=11, sysNumber=2.0, core=true, t24Name=CUT.OFF.TIME)
+		ORDER_NUMBER -> byValue SCT_OrderGrouping:SC_AUTO_GROUP_ORDERS__ORDER_NUMBER *
+		GROUP_ORDER_NO -> byValue SCT_OrderGrouping:SC_AUTO_GROUP_ORDERS__GROUP_ORDER_NO *
+		CUT_OFF_FREQ : T24BusinessTypes:FQF
+			@i18n:Label (en="Cut Off Frequency")
+			@t24:i (align=L, inputBehaviour=I, maxLength=19, sysNumber=5.0, core=true, t24Name=CUT.OFF.FREQ)
+		CUT_OFF_EXPRY_DATE : T24BusinessTypes:D
+			@i18n:Label (en="Cut Off Expiry Date")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=6.0, core=true, t24Name=CUT.OFF.EXPRY.DATE)
+		DAY_CONVENTION : SCT_OrderGrouping:SC_AUTO_GROUP_ORDERS__DAY_CONVENTION
+			@i18n:Label (en="Day Convention")
+			@t24:i (align=L, inputBehaviour=I, maxLength=9, sysNumber=7.0, core=true, t24Name=DAY.CONVENTION)
+		ACT_CUT_OFF_DATE : T24BusinessTypes:D
+			@i18n:Label (en="Act Cut Off Date")
+			@i18n:Tooltip (en="Actual Cut Off Date on the basis of Day Convention")
+			@t24:i (align=R, inputBehaviour=N, maxLength=8, sysNumber=8.0, core=true, t24Name=ACT.CUT.OFF.DATE)
+		PREV_CUT_OFF_DATE : T24BusinessTypes:D
+			@i18n:Label (en="Prev Cut Off Date")
+			@i18n:Tooltip (en="Previous actual Cut off Date when the date is recycled")
+			@t24:i (align=R, inputBehaviour=N, maxLength=8, sysNumber=9.0, core=true, t24Name=PREV.CUT.OFF.DATE)
+		PARENT_CHILD : SCT_OrderGrouping:SC_AUTO_GROUP_ORDERS__PARENT_CHILD
+			@i18n:Label (en="Parent Child")
+			@i18n:Tooltip (en="Whether the group order should be created as parent child order or single order")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=10.0, core=true, t24Name=PARENT.CHILD)
+		RECORD_STATUS : T24BusinessTypes:STAT
+			@i18n:Label (en="Record Status")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=12.0, core=true, t24Name=RECORD.STATUS)
+		CURR_NO : mml:Integer
+			@i18n:Label (en="Curr No")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=13.0, core=true, t24Name=CURR.NO)
+		INPUTTER -> byValue SCT_OrderGrouping:SC_AUTO_GROUP_ORDERS__INPUTTER *
+		DATE_TIME -> byValue SCT_OrderGrouping:SC_AUTO_GROUP_ORDERS__DATE_TIME *
+		AUTHORISER : T24BusinessTypes:A
+			@i18n:Label (en=Authoriser)
+			@i18n:Tooltip (en="Indicates the User who Authorises the record")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=16.0, core=true, t24Name=AUTHORISER)
+		CO_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company)
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=17.0, core=true, businessType=A, t24Name=CO.CODE, mask="R##-###-####")
+		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Dept Code")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=18.0, core=true, t24Name=DEPT.CODE)
+		AUDITOR_CODE : T24BusinessTypes:A
+			@i18n:Label (en="Auditor Code")
+			@i18n:Tooltip (en="Auditor Code")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=19.0, core=true, t24Name=AUDITOR.CODE)
+		AUDIT_DATE_TIME : T24BusinessTypes:RELTIME
+			@i18n:Label (en="Audit Date Time")
+			@i18n:Tooltip (en="Date and time when record was audited")
+			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=20.0, core=true, t24Name=AUDIT.DATE.TIME, mask="RDD DD  DD ##:##")
+	}
+	SC_AUTO_GROUP_ORDERS__ORDER_NUMBER
+	{
+		ORDER_NUMBER -> byValue SCT_OrderGrouping:SC_AUTO_GROUP_ORDERS__ORDER_NUMBER__ORDER_NUMBER *
+	}
+	SC_AUTO_GROUP_ORDERS__ORDER_NUMBER__ORDER_NUMBER
+	{
+		ORDER_NUMBER : mml:Integer
+			@i18n:Label (en="Order Number")
+			@t24:i (align=R, inputBehaviour=N, maxLength=17, sysNumber=3.0, core=true, t24Name=ORDER.NUMBER)
+	}
+	SC_AUTO_GROUP_ORDERS__GROUP_ORDER_NO
+	{
+		GROUP_ORDER_NO : mml:Integer
+			@i18n:Label (en="Group Order No")
+			@t24:i (align=R, inputBehaviour=N, maxLength=17, sysNumber=4.0, core=true, t24Name=GROUP.ORDER.NO)
+	}
+	SC_AUTO_GROUP_ORDERS__INPUTTER
+	{
+		INPUTTER : T24BusinessTypes:A
+			@i18n:Label (en=Inputter)
+			@i18n:Tooltip (en="The user who last updated the record")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=14.0, core=true, t24Name=INPUTTER)
+	}
+	SC_AUTO_GROUP_ORDERS__DATE_TIME
+	{
+		DATE_TIME : T24BusinessTypes:RELTIME
+			@i18n:Label (en="Date time")
+			@i18n:Tooltip (en="Date and time when record was input or authorised")
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=15.0, core=true, t24Name=DATE.TIME, mask="RDD DD  DD ##:##")
+	}
+	SC_GROUP_ORDERS
+		@t24:i (t24Name=SC.GROUP.ORDERS, level=F, type=H, allowedFunctions="A E L Q S", localRefAllowed=false)
+	{
+		SC_GRP_ORD_NO -> SCT_OrderGrouping:SC_GROUP_ORDERS PK required
+			@t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=0.0, core=true, businessType=S, t24Name=SC.GRP.ORD.NO)
+		ORDER_NUMBER -> byValue SCT_OrderGrouping:SC_GROUP_ORDERS__ORDER_NUMBER *
+		TRANSMIT : T24BusinessTypes:DEF required
+			@i18n:Label (en="Transmit?")
+			@i18n:Tooltip (en="Whether SC.EXE.SEC.ORDERS to be generated or not")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=2.0, core=true, t24Name=TRANSMIT, typeModifiers="YES")
+		GROUP_ORDER : mml:Integer
+			@i18n:Label (en="Group Order")
+			@i18n:Tooltip (en="Indicates the group order")
+			@t24:i (align=R, inputBehaviour=N, maxLength=16, sysNumber=3.0, core=true, t24Name=GROUP.ORDER)
+		AUTO_GROUP_ID : mml:Integer
+			@i18n:Label (en="Auto Group ID")
+			@i18n:Tooltip (en="Group order id created through AUTO-GROUPING")
+			@t24:i (align=R, inputBehaviour=N, maxLength=16, sysNumber=4.0, core=true, t24Name=AUTO.GROUP.ID)
+		PARENT_CHILD : SCT_OrderGrouping:SC_GROUP_ORDERS__PARENT_CHILD
+			@i18n:Label (en="Parent Child")
+			@i18n:Tooltip (en="Whether the group order should be created as parent child order or single order")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=5.0, core=true, t24Name=PARENT.CHILD)
+		RESERVED_9 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=6.0, core=true, t24Name=RESERVED.9)
+		RESERVED_8 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=7.0, core=true, t24Name=RESERVED.8)
+		RESERVED_7 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=8.0, core=true, t24Name=RESERVED.7)
+		RESERVED_6 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=9.0, core=true, t24Name=RESERVED.6)
+		RESERVED_5 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=10.0, core=true, t24Name=RESERVED.5)
+		RESERVED_4 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=11.0, core=true, t24Name=RESERVED.4)
+		RESERVED_3 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=12.0, core=true, t24Name=RESERVED.3)
+		RESERVED_2 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=13.0, core=true, t24Name=RESERVED.2)
+		RESERVED_1 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=14.0, core=true, t24Name=RESERVED.1)
+		RECORD_STATUS : T24BusinessTypes:STAT
+			@i18n:Label (en="Record Status")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=15.0, core=true, t24Name=RECORD.STATUS)
+		CURR_NO : mml:Integer
+			@i18n:Label (en="Curr No")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=16.0, core=true, t24Name=CURR.NO)
+		INPUTTER -> byValue SCT_OrderGrouping:SC_GROUP_ORDERS__INPUTTER *
+		DATE_TIME -> byValue SCT_OrderGrouping:SC_GROUP_ORDERS__DATE_TIME *
+		AUTHORISER : T24BusinessTypes:A
+			@i18n:Label (en=Authoriser)
+			@i18n:Tooltip (en="Indicates the User who Authorises the record")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=19.0, core=true, t24Name=AUTHORISER)
+		CO_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company)
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=20.0, core=true, businessType=A, t24Name=CO.CODE, mask="R##-###-####")
+		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Dept Code")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=21.0, core=true, t24Name=DEPT.CODE)
+		AUDITOR_CODE : T24BusinessTypes:A
+			@i18n:Label (en="Auditor Code")
+			@i18n:Tooltip (en="Auditor Code")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=22.0, core=true, t24Name=AUDITOR.CODE)
+		AUDIT_DATE_TIME : T24BusinessTypes:RELTIME
+			@i18n:Label (en="Audit Date Time")
+			@i18n:Tooltip (en="Date and time when record was audited")
+			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=23.0, core=true, t24Name=AUDIT.DATE.TIME, mask="RDD DD  DD ##:##")
+	}
+	SC_GROUP_ORDERS__ORDER_NUMBER
+	{
+		ORDER_NUMBER -> SCT_OrderCapture:SEC_OPEN_ORDER required
+			@i18n:Label (en="Order No")
+			@t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=1.0, core=true, businessType=A, t24Name=ORDER.NUMBER)
+	}
+	SC_GROUP_ORDERS__INPUTTER
+	{
+		INPUTTER : T24BusinessTypes:A
+			@i18n:Label (en=Inputter)
+			@i18n:Tooltip (en="The user who last updated the record")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=17.0, core=true, t24Name=INPUTTER)
+	}
+	SC_GROUP_ORDERS__DATE_TIME
+	{
+		DATE_TIME : T24BusinessTypes:RELTIME
+			@i18n:Label (en="Date time")
+			@i18n:Tooltip (en="Date and time when record was input or authorised")
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=18.0, core=true, t24Name=DATE.TIME, mask="RDD DD  DD ##:##")
+	}
+	SC_GROUP_PARAM
+		@t24:i (t24Name=SC.GROUP.PARAM, level=I, type=H, allowedFunctions="A E L Q S", localRefAllowed=true)
+	{
+		SC_GRP_PARA_NO -> SCT_OrderGrouping:SC_GROUP_PARAM PK required
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=0.0, core=true, businessType=A, t24Name=SC.GRP.PARA.NO)
+		SYS_FIELDS -> byValue SCT_OrderGrouping:SC_GROUP_PARAM__SYS_FIELDS *
+		USER_FIELDS -> byValue SCT_OrderGrouping:SC_GROUP_PARAM__USER_FIELDS *
+		SOO_LOC_REF -> byValue SCT_OrderGrouping:SC_GROUP_PARAM__SOO_LOC_REF *
+		GROUP_ROUTINE : T24BusinessTypes:ANY
+			@i18n:Label (en="Group Routine")
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=5.0, core=true, t24Name=GROUP.ROUTINE)
+		RESERVED_9 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=6.0, core=true, t24Name=RESERVED.9)
+		RESERVED_8 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=7.0, core=true, t24Name=RESERVED.8)
+		RESERVED_7 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=8.0, core=true, t24Name=RESERVED.7)
+		RESERVED_6 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=9.0, core=true, t24Name=RESERVED.6)
+		RESERVED_5 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=10.0, core=true, t24Name=RESERVED.5)
+		RESERVED_4 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=11.0, core=true, t24Name=RESERVED.4)
+		RESERVED_3 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=12.0, core=true, t24Name=RESERVED.3)
+		RESERVED_2 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=13.0, core=true, t24Name=RESERVED.2)
+		RESERVED_1 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=14.0, core=true, t24Name=RESERVED.1)
+		RECORD_STATUS : T24BusinessTypes:STAT
+			@i18n:Label (en="Record Status")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=15.0, core=true, t24Name=RECORD.STATUS)
+		CURR_NO : mml:Integer
+			@i18n:Label (en="Curr No")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=16.0, core=true, t24Name=CURR.NO)
+		INPUTTER -> byValue SCT_OrderGrouping:SC_GROUP_PARAM__INPUTTER *
+		DATE_TIME -> byValue SCT_OrderGrouping:SC_GROUP_PARAM__DATE_TIME *
+		AUTHORISER : T24BusinessTypes:A
+			@i18n:Label (en=Authoriser)
+			@i18n:Tooltip (en="Indicates the User who Authorises the record")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=19.0, core=true, t24Name=AUTHORISER)
+		CO_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company)
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=20.0, core=true, businessType=A, t24Name=CO.CODE, mask="R##-###-####")
+		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Dept Code")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=21.0, core=true, t24Name=DEPT.CODE)
+		AUDITOR_CODE : T24BusinessTypes:A
+			@i18n:Label (en="Auditor Code")
+			@i18n:Tooltip (en="Auditor Code")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=22.0, core=true, t24Name=AUDITOR.CODE)
+		AUDIT_DATE_TIME : T24BusinessTypes:RELTIME
+			@i18n:Label (en="Audit Date Time")
+			@i18n:Tooltip (en="Date and time when record was audited")
+			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=23.0, core=true, t24Name=AUDIT.DATE.TIME, mask="RDD DD  DD ##:##")
+	}
+	SC_GROUP_PARAM__SYS_FIELDS
+	{
+		SYS_FIELDS : T24BusinessTypes:A required
+			@i18n:Label (en="Sys Fields")
+			@t24:i (align=L, inputBehaviour=N, maxLength=25, sysNumber=1.0, core=true, t24Name=SYS.FIELDS)
+	}
+	SC_GROUP_PARAM__USER_FIELDS
+	{
+		USER_FIELDS : SCT_OrderGrouping:SC_GROUP_PARAM__USER_FIELDS__USER_FIELDS
+			@i18n:Label (en="User Fields")
+			@t24:i (align=L, inputBehaviour=I, maxLength=25, sysNumber=2.0, core=true, t24Name=USER.FIELDS)
+	}
+	SC_GROUP_PARAM__SOO_LOC_REF
+	{
+		SOO_LOC_REF : T24BusinessTypes:A
+			@i18n:Label (en="Soo Loc Ref")
+			@t24:i (align=L, inputBehaviour=I, maxLength=25, sysNumber=3.0, core=true, t24Name=SOO.LOC.REF)
+	}
+	SC_GROUP_PARAM__INPUTTER
+	{
+		INPUTTER : T24BusinessTypes:A
+			@i18n:Label (en=Inputter)
+			@i18n:Tooltip (en="The user who last updated the record")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=17.0, core=true, t24Name=INPUTTER)
+	}
+	SC_GROUP_PARAM__DATE_TIME
+	{
+		DATE_TIME : T24BusinessTypes:RELTIME
+			@i18n:Label (en="Date time")
+			@i18n:Tooltip (en="Date and time when record was input or authorised")
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=18.0, core=true, t24Name=DATE.TIME, mask="RDD DD  DD ##:##")
+	}
+}
+Enumerations {
+	SC_AUTO_GROUP_ORDERS__DAY_CONVENTION : mml:string
+		FOLLOWING=FOLLOWING
+		PRECEDING=PRECEDING
+	SC_AUTO_GROUP_ORDERS__PARENT_CHILD : mml:string
+		YES=YES
+	SC_GROUP_ORDERS__TRANSMIT : mml:string
+		YES=YES
+		NO=NO
+	SC_GROUP_ORDERS__PARENT_CHILD : mml:string
+		YES=YES
+	SC_GROUP_PARAM__USER_FIELDS__USER_FIELDS : mml:string
+		CUST_NUMBER=CUST.NUMBER
+		ORDER_DATE=ORDER.DATE
+		ACCOUNT_MANAGER=ACCOUNT.MANAGER
+		LIQUIDATION_PERIOD=LIQUIDATION.PERIOD
+		PREMIUM_PRICE=PREMIUM.PRICE
+		PORTFOLIO_TYPE=PORTFOLIO.TYPE
+		STOCK_EXCHANGE=STOCK.EXCHANGE
+		CUST_ACC_NO=CUST.ACC.NO
+		CU_EX_RATE_ACC=CU.EX.RATE.ACC
+		INVESTMENT_PROGRAM=INVESTMENT.PROGRAM
+		CU_DEPOSITORY=CU.DEPOSITORY
+}

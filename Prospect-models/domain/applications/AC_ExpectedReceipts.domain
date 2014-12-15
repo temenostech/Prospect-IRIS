@@ -1,0 +1,508 @@
+# UTF-8
+/* Expected Receipts Processing */
+Domain AC_ExpectedReceipts
+	@t24:i (module=AC)
+	@java:Package (value=com.temenos.t24.datamodel.ac.ac_expectedreceipts)
+namespace "http://www.temenos.com/t24/AC_ExpectedReceipts"
+metamodelVersion 1.30.6
+Classes {
+	AC_EXPECTED_RECS
+		@t24:i (t24Name=AC.EXPECTED.RECS, level=F, type=H, additionalInfo=IDA, allowedFunctions="A C D E H I L P Q R S", localRefAllowed=true)
+	{
+		ID_NO -> AC_ExpectedReceipts:AC_EXPECTED_RECS PK required
+			@t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=0.0, core=true, businessType=A, t24Name=ID.NO, mask="####/#####/#####")
+		ACCOUNT_ID : T24BusinessTypes:A
+			@i18n:Label (en="Account No")
+			@i18n:Tooltip (en="Indicates the Account Number")
+			@t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=1.0, core=true, t24Name=ACCOUNT.ID)
+		ACCOUNT_CCY : T24BusinessTypes:CCY
+			@i18n:Label (en="Account Ccy")
+			@i18n:Tooltip (en="Indicates the currency of the account")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=2.0, core=true, t24Name=ACCOUNT.CCY)
+		TRAN_REFERENCE : T24BusinessTypes:A
+			@i18n:Label (en="Trans Ref")
+			@t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=3.0, core=true, t24Name=TRAN.REFERENCE)
+		DESCRIPTION : T24BusinessTypes:A
+			@i18n:Label (en=Description)
+			@i18n:Tooltip (en=Description)
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=4.0, core=true, t24Name=DESCRIPTION)
+		REFERENCE : T24BusinessTypes:A
+			@i18n:Label (en="Search by Referece")
+			@t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=5.0, core=true, t24Name=REFERENCE)
+		DATE_ENTERED : T24BusinessTypes:D
+			@i18n:Label (en="Date entered")
+			@i18n:Tooltip (en="Date entered")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=6.0, core=true, t24Name=DATE.ENTERED)
+		VALUE_DATE : T24BusinessTypes:D required
+			@i18n:Label (en="Value Date")
+			@i18n:Tooltip (en="Indicates the Value date of the Contract")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=7.0, core=true, t24Name=VALUE.DATE)
+		RELATED_REF : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=8.0, core=true, t24Name=RELATED.REF)
+		CURRENCY -> FIN_CurrencyConfig:CURRENCY required
+			@i18n:Label (en=Ccy)
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=9.0, core=true, businessType=CCY, t24Name=CURRENCY)
+		AMOUNT : T24BusinessTypes:AMT required
+			@i18n:Label (en=Amount)
+			@i18n:Tooltip (en="Indicates the Amount")
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=10.0, core=true, t24Name=AMOUNT)
+		CCY_AMOUNT : T24BusinessTypes:A
+			@i18n:Label (en=Amount)
+			@t24:i (align=L, inputBehaviour=I, maxLength=19, sysNumber=11.0, core=true, t24Name=CCY.AMOUNT)
+		ORD_CUSTOMER -> byValue AC_ExpectedReceipts:AC_EXPECTED_RECS__ORD_CUSTOMER *
+		ORD_INSTITUTION -> byValue AC_ExpectedReceipts:AC_EXPECTED_RECS__ORD_INSTITUTION *
+		INTERMEDIARY -> byValue AC_ExpectedReceipts:AC_EXPECTED_RECS__INTERMEDIARY *
+		STATUS -> ACM_AccountOpening:AC_ENRICHMENT
+			@i18n:Label (en=Status)
+			@t24:i (align=L, inputBehaviour=I, maxLength=4, sysNumber=15.0, core=true, t24Name=STATUS)
+		STATUS_HIST -> byValue AC_ExpectedReceipts:AC_EXPECTED_RECS__STATUS_HIST *
+		METHOD : AC_ExpectedReceipts:AC_EXPECTED_RECS__METHOD
+			@i18n:Label (en=Method)
+			@t24:i (align=L, inputBehaviour=I, maxLength=10, sysNumber=21.0, core=true, t24Name=METHOD)
+		FUNDS_TYPE : AC_ExpectedReceipts:AC_EXPECTED_RECS__FUNDS_TYPE required
+			@i18n:Label (en="Funds Type")
+			@i18n:Tooltip (en="Funds Type")
+			@t24:i (align=L, inputBehaviour=I, maxLength=10, sysNumber=22.0, core=true, t24Name=FUNDS.TYPE)
+		DATE_MATCHED : T24BusinessTypes:D
+			@i18n:Label (en="Date Matched")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=23.0, core=true, t24Name=DATE.MATCHED)
+		AMOUNT_MATCHED : T24BusinessTypes:AMT
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=24.0, core=true, t24Name=AMOUNT.MATCHED)
+		ERRORS -> byValue AC_ExpectedReceipts:AC_EXPECTED_RECS__ERRORS *
+		MATCH_WITH -> AC_ExpectedReceipts:AC_EXPECTED_RECS
+			@i18n:Label (en="Match with deal")
+			@i18n:Tooltip (en="Match With")
+			@t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=26.0, core=true, businessType=A, t24Name=MATCH.WITH)
+		MATCHED_WITH -> byValue AC_ExpectedReceipts:AC_EXPECTED_RECS__MATCHED_WITH *
+		DELIVERY_IN_REF : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=28.0, core=true, t24Name=DELIVERY.IN.REF)
+		MANUAL : AC_ExpectedReceipts:AC_EXPECTED_RECS__MANUAL
+			@t24:i (align=L, inputBehaviour=I, maxLength=1, sysNumber=29.0, core=true, t24Name=MANUAL)
+		SEND_CORR_BANK -> byValue AC_ExpectedReceipts:AC_EXPECTED_RECS__SEND_CORR_BANK *
+		REC_CORR_BANK -> byValue AC_ExpectedReceipts:AC_EXPECTED_RECS__REC_CORR_BANK *
+		ACCT_WITH_BANK -> byValue AC_ExpectedReceipts:AC_EXPECTED_RECS__ACCT_WITH_BANK *
+		BEN_BANK -> byValue AC_ExpectedReceipts:AC_EXPECTED_RECS__BEN_BANK *
+		BEN_CUSTOMER -> byValue AC_ExpectedReceipts:AC_EXPECTED_RECS__BEN_CUSTOMER *
+		RELATED_COVER_ID : T24BusinessTypes:S
+			@t24:i (align=L, inputBehaviour=I, maxLength=11, sysNumber=35.0, core=true, t24Name=RELATED.COVER.ID)
+		COVER_CCY_AMT : T24BusinessTypes:AMT
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=36.0, core=true, t24Name=COVER.CCY.AMT)
+		PROCESS_PAYMENTS : AC_ExpectedReceipts:AC_EXPECTED_RECS__PROCESS_PAYMENTS
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=37.0, core=true, t24Name=PROCESS.PAYMENTS)
+		PROCESS_AV_LIMIT : AC_ExpectedReceipts:AC_EXPECTED_RECS__PROCESS_AV_LIMIT
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=38.0, core=true, t24Name=PROCESS.AV.LIMIT)
+		REQUEST_QUERY -> byValue AC_ExpectedReceipts:AC_EXPECTED_RECS__REQUEST_QUERY *
+		CANCEL_QUERY -> byValue AC_ExpectedReceipts:AC_EXPECTED_RECS__CANCEL_QUERY *
+		REQUEST_DEL_REF : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=41.0, core=true, t24Name=REQUEST.DEL.REF)
+		CANCEL_DEL_REF : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=42.0, core=true, t24Name=CANCEL.DEL.REF)
+		RESERVED4 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=44.0, core=true, t24Name=RESERVED4)
+		RESERVED3 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=45.0, core=true, t24Name=RESERVED3)
+		RESERVED2 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=46.0, core=true, t24Name=RESERVED2)
+		RESERVED1 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=47.0, core=true, t24Name=RESERVED1)
+		OVERRIDE -> byValue AC_ExpectedReceipts:AC_EXPECTED_RECS__OVERRIDE *
+		RECORD_STATUS : T24BusinessTypes:STAT
+			@i18n:Label (en="Record Status")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=49.0, core=true, t24Name=RECORD.STATUS)
+		CURR_NO : mml:Integer
+			@i18n:Label (en="Curr No")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=50.0, core=true, t24Name=CURR.NO)
+		INPUTTER -> byValue AC_ExpectedReceipts:AC_EXPECTED_RECS__INPUTTER *
+		DATE_TIME -> byValue AC_ExpectedReceipts:AC_EXPECTED_RECS__DATE_TIME *
+		AUTHORISER : T24BusinessTypes:A
+			@i18n:Label (en=Authoriser)
+			@i18n:Tooltip (en="Indicates the User who Authorises the record")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=53.0, core=true, t24Name=AUTHORISER)
+		CO_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company)
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=54.0, core=true, businessType=A, t24Name=CO.CODE, mask="R##-###-####")
+		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Dept Code")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=55.0, core=true, t24Name=DEPT.CODE)
+		AUDITOR_CODE : T24BusinessTypes:A
+			@i18n:Label (en="Auditor Code")
+			@i18n:Tooltip (en="Auditor Code")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=56.0, core=true, t24Name=AUDITOR.CODE)
+		AUDIT_DATE_TIME : T24BusinessTypes:RELTIME
+			@i18n:Label (en="Audit Date Time")
+			@i18n:Tooltip (en="Date and time when record was audited")
+			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=57.0, core=true, t24Name=AUDIT.DATE.TIME, mask="RDD DD  DD ##:##")
+	}
+	AC_EXPECTED_RECS__ORD_CUSTOMER
+	{
+		ORD_CUSTOMER : T24BusinessTypes:SW
+			@i18n:Label (en=CUSTOMER)
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=12.0, core=true, t24Name=ORD.CUSTOMER)
+	}
+	AC_EXPECTED_RECS__ORD_INSTITUTION
+	{
+		ORD_INSTITUTION : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=13.0, core=true, t24Name=ORD.INSTITUTION)
+	}
+	AC_EXPECTED_RECS__INTERMEDIARY
+	{
+		INTERMEDIARY : T24BusinessTypes:A
+			@i18n:Label (en=Intermediary)
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=14.0, core=true, t24Name=INTERMEDIARY)
+	}
+	AC_EXPECTED_RECS__STATUS_HIST
+	{
+		STATUS_HIST -> ACM_AccountOpening:AC_ENRICHMENT
+			@t24:i (align=R, inputBehaviour=I, maxLength=4, sysNumber=16.0, core=true, t24Name=STATUS.HIST)
+		STATUS_DATE : T24BusinessTypes:D
+			@i18n:Label (en="Status Date")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=17.0, core=true, t24Name=STATUS.DATE)
+		AMOUNT_DUE : T24BusinessTypes:AMT
+			@t24:i (align=R, inputBehaviour=I, maxLength=14, sysNumber=18.0, core=true, t24Name=AMOUNT.DUE)
+		AMOUNT_RECEIVED : T24BusinessTypes:AMT
+			@t24:i (align=R, inputBehaviour=I, maxLength=14, sysNumber=19.0, core=true, t24Name=AMOUNT.RECEIVED)
+		RECEIPT_ID : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=20.0, core=true, t24Name=RECEIPT.ID)
+	}
+	AC_EXPECTED_RECS__ERRORS
+	{
+		ERRORS : T24BusinessTypes:A
+			@i18n:Label (en=Errors)
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=25.0, core=true, t24Name=ERRORS)
+	}
+	AC_EXPECTED_RECS__MATCHED_WITH
+	{
+		MATCHED_WITH -> AC_ExpectedReceipts:AC_EXPECTED_RECS
+			@i18n:Label (en="Matched With")
+			@t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=27.0, core=true, businessType=A, t24Name=MATCHED.WITH)
+	}
+	AC_EXPECTED_RECS__SEND_CORR_BANK
+	{
+		SEND_CORR_BANK : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=30.0, core=true, t24Name=SEND.CORR.BANK)
+	}
+	AC_EXPECTED_RECS__REC_CORR_BANK
+	{
+		REC_CORR_BANK : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=31.0, core=true, t24Name=REC.CORR.BANK)
+	}
+	AC_EXPECTED_RECS__ACCT_WITH_BANK
+	{
+		ACCT_WITH_BANK : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=32.0, core=true, t24Name=ACCT.WITH.BANK)
+	}
+	AC_EXPECTED_RECS__BEN_BANK
+	{
+		BEN_BANK : T24BusinessTypes:A
+			@i18n:Label (en="Beneficiary Bank")
+			@i18n:Tooltip (en="Specifies the Bank which is the ultimate receiver")
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=33.0, core=true, t24Name=BEN.BANK)
+	}
+	AC_EXPECTED_RECS__BEN_CUSTOMER
+	{
+		BEN_CUSTOMER : T24BusinessTypes:A
+			@i18n:Label (en=Beneficiary)
+			@i18n:Tooltip (en="Ultimate receiver of the funds transfer")
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=34.0, core=true, t24Name=BEN.CUSTOMER)
+	}
+	AC_EXPECTED_RECS__REQUEST_QUERY
+	{
+		REQUEST_QUERY : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=39.0, core=true, t24Name=REQUEST.QUERY)
+	}
+	AC_EXPECTED_RECS__CANCEL_QUERY
+	{
+		CANCEL_QUERY : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=40.0, core=true, t24Name=CANCEL.QUERY)
+	}
+	AC_EXPECTED_RECS__OVERRIDE
+	{
+		OVERRIDE : T24BusinessTypes:A
+			@i18n:Label (en=Override)
+			@i18n:Tooltip (en="Overrides generated by this transaction")
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=48.0, core=true, t24Name=OVERRIDE)
+	}
+	AC_EXPECTED_RECS__INPUTTER
+	{
+		INPUTTER : T24BusinessTypes:A
+			@i18n:Label (en=Inputter)
+			@i18n:Tooltip (en="The user who last updated the record")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=51.0, core=true, t24Name=INPUTTER)
+	}
+	AC_EXPECTED_RECS__DATE_TIME
+	{
+		DATE_TIME : T24BusinessTypes:RELTIME
+			@i18n:Label (en="Date time")
+			@i18n:Tooltip (en="Date and time when record was input or authorised")
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=52.0, core=true, t24Name=DATE.TIME, mask="RDD DD  DD ##:##")
+	}
+	ER_COVER_LIMIT
+		@t24:i (t24Name=ER.COVER.LIMIT, level=F, type=H, allowedFunctions="A C D E H I L P Q R S", localRefAllowed=true)
+	{
+		SWIFT_CODE -> AC_ExpectedReceipts:ER_COVER_LIMIT PK required
+			@i18n:Label (en="SWIFT Code")
+			@t24:i (align=L, inputBehaviour=I, maxLength=11, sysNumber=0.0, core=true, businessType=S, t24Name=SWIFT.CODE)
+		CURRENCY -> FIN_CurrencyConfig:CURRENCY required
+			@i18n:Label (en=Ccy)
+			@t24:i (align=L, inputBehaviour=F, maxLength=3, sysNumber=1.0, core=true, businessType=CCY, t24Name=CURRENCY)
+		ORIGINAL_LIMIT : T24BusinessTypes:AMT required
+			@t24:i (align=R, inputBehaviour=I, maxLength=14, sysNumber=2.0, core=true, t24Name=ORIGINAL.LIMIT, typeModifiers="1")
+		UTILISED_LIMIT : T24BusinessTypes:AMT
+			@t24:i (align=R, inputBehaviour=N, maxLength=14, sysNumber=3.0, core=true, t24Name=UTILISED.LIMIT, typeModifiers="1")
+		AVAILABLE_LIMIT : T24BusinessTypes:AMT
+			@t24:i (align=R, inputBehaviour=N, maxLength=14, sysNumber=4.0, core=true, t24Name=AVAILABLE.LIMIT, typeModifiers="1")
+		EXPIRY_DATE : T24BusinessTypes:D
+			@i18n:Label (en="Expiry Date")
+			@i18n:Tooltip (en="Indicates the Expiry Date of the Transaction")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=5.0, core=true, t24Name=EXPIRY.DATE)
+		LIMIT_ACTIVE_Y_N : AC_ExpectedReceipts:ER_COVER_LIMIT__LIMIT_ACTIVE_Y_N required
+			@t24:i (align=L, inputBehaviour=I, maxLength=1, sysNumber=6.0, core=true, t24Name=LIMIT.ACTIVE.Y.N)
+		REMARKS : T24BusinessTypes:A
+			@i18n:Label (en=Remarks)
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=7.0, core=true, t24Name=REMARKS)
+		RESERVED05 : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=8.0, core=true, t24Name=RESERVED05)
+		RESERVED04 : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=9.0, core=true, t24Name=RESERVED04)
+		RESERVED03 : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=10.0, core=true, t24Name=RESERVED03)
+		RESERVED02 : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=11.0, core=true, t24Name=RESERVED02)
+		RESERVED01 : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=12.0, core=true, t24Name=RESERVED01)
+		OVERRIDE -> byValue AC_ExpectedReceipts:ER_COVER_LIMIT__OVERRIDE *
+		RECORD_STATUS : T24BusinessTypes:STAT
+			@i18n:Label (en="Record Status")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=15.0, core=true, t24Name=RECORD.STATUS)
+		CURR_NO : mml:Integer
+			@i18n:Label (en="Curr No")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=16.0, core=true, t24Name=CURR.NO)
+		INPUTTER -> byValue AC_ExpectedReceipts:ER_COVER_LIMIT__INPUTTER *
+		DATE_TIME -> byValue AC_ExpectedReceipts:ER_COVER_LIMIT__DATE_TIME *
+		AUTHORISER : T24BusinessTypes:A
+			@i18n:Label (en=Authoriser)
+			@i18n:Tooltip (en="Indicates the User who Authorises the record")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=19.0, core=true, t24Name=AUTHORISER)
+		CO_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company)
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=20.0, core=true, businessType=A, t24Name=CO.CODE, mask="R##-###-####")
+		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Dept Code")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=21.0, core=true, t24Name=DEPT.CODE)
+		AUDITOR_CODE : T24BusinessTypes:A
+			@i18n:Label (en="Auditor Code")
+			@i18n:Tooltip (en="Auditor Code")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=22.0, core=true, t24Name=AUDITOR.CODE)
+		AUDIT_DATE_TIME : T24BusinessTypes:RELTIME
+			@i18n:Label (en="Audit Date Time")
+			@i18n:Tooltip (en="Date and time when record was audited")
+			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=23.0, core=true, t24Name=AUDIT.DATE.TIME, mask="RDD DD  DD ##:##")
+	}
+	ER_COVER_LIMIT__OVERRIDE
+	{
+		OVERRIDE : T24BusinessTypes:A
+			@i18n:Label (en=Override)
+			@i18n:Tooltip (en="Overrides generated by this transaction")
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=14.0, core=true, t24Name=OVERRIDE)
+	}
+	ER_COVER_LIMIT__INPUTTER
+	{
+		INPUTTER : T24BusinessTypes:A
+			@i18n:Label (en=Inputter)
+			@i18n:Tooltip (en="The user who last updated the record")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=17.0, core=true, t24Name=INPUTTER)
+	}
+	ER_COVER_LIMIT__DATE_TIME
+	{
+		DATE_TIME : T24BusinessTypes:RELTIME
+			@i18n:Label (en="Date time")
+			@i18n:Tooltip (en="Date and time when record was input or authorised")
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=18.0, core=true, t24Name=DATE.TIME, mask="RDD DD  DD ##:##")
+	}
+	ER_PARAMETER
+		@t24:i (t24Name=ER.PARAMETER, level=I, type=H, allowedFunctions="A C D E H I L P Q R S", localRefAllowed=false)
+	{
+		PARAMETER_KEY -> AC_ExpectedReceipts:ER_PARAMETER PK required
+			@t24:i (align=L, inputBehaviour=I, maxLength=14, sysNumber=0.0, core=true, businessType=A, t24Name=PARAMETER.KEY)
+		ACCOUNT_ID -> byValue AC_ExpectedReceipts:ER_PARAMETER__ACCOUNT_ID *
+		CATEGORY -> byValue AC_ExpectedReceipts:ER_PARAMETER__CATEGORY *
+		EXP_FUNDS_TYPE -> byValue AC_ExpectedReceipts:ER_PARAMETER__EXP_FUNDS_TYPE *
+		RETENTION_DAYS : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=15.0, core=true, t24Name=RETENTION.DAYS)
+		OVERDUE_DAYS : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=1, sysNumber=16.0, core=true, t24Name=OVERDUE.DAYS)
+		CCY_MKT -> FIN_CurrencyConfig:CURRENCY_MARKET
+			@i18n:Label (en="Currency Market")
+			@t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=17.0, core=true, t24Name=CCY.MKT)
+		REQUEST_ADV_DAYS : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=18.0, core=true, t24Name=REQUEST.ADV.DAYS)
+		CANCEL_ADV_DAYS : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=19.0, core=true, t24Name=CANCEL.ADV.DAYS)
+		RESERVED9 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=20.0, core=true, t24Name=RESERVED9)
+		RESERVED8 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=21.0, core=true, t24Name=RESERVED8)
+		RESERVED7 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=22.0, core=true, t24Name=RESERVED7)
+		RESERVED6 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=23.0, core=true, t24Name=RESERVED6)
+		RESERVED5 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=24.0, core=true, t24Name=RESERVED5)
+		RESERVED4 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=25.0, core=true, t24Name=RESERVED4)
+		RESERVED3 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=26.0, core=true, t24Name=RESERVED3)
+		RESERVED2 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=27.0, core=true, t24Name=RESERVED2)
+		RESERVED1 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=28.0, core=true, t24Name=RESERVED1)
+		RECORD_STATUS : T24BusinessTypes:STAT
+			@i18n:Label (en="Record Status")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=29.0, core=true, t24Name=RECORD.STATUS)
+		CURR_NO : mml:Integer
+			@i18n:Label (en="Curr No")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=30.0, core=true, t24Name=CURR.NO)
+		INPUTTER -> byValue AC_ExpectedReceipts:ER_PARAMETER__INPUTTER *
+		DATE_TIME -> byValue AC_ExpectedReceipts:ER_PARAMETER__DATE_TIME *
+		AUTHORISER : T24BusinessTypes:A
+			@i18n:Label (en=Authoriser)
+			@i18n:Tooltip (en="Indicates the User who Authorises the record")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=33.0, core=true, t24Name=AUTHORISER)
+		CO_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company)
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=34.0, core=true, businessType=A, t24Name=CO.CODE, mask="R##-###-####")
+		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Dept Code")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=35.0, core=true, t24Name=DEPT.CODE)
+		AUDITOR_CODE : T24BusinessTypes:A
+			@i18n:Label (en="Auditor Code")
+			@i18n:Tooltip (en="Auditor Code")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=36.0, core=true, t24Name=AUDITOR.CODE)
+		AUDIT_DATE_TIME : T24BusinessTypes:RELTIME
+			@i18n:Label (en="Audit Date Time")
+			@i18n:Tooltip (en="Date and time when record was audited")
+			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=37.0, core=true, t24Name=AUDIT.DATE.TIME, mask="RDD DD  DD ##:##")
+	}
+	ER_PARAMETER__ACCOUNT_ID
+	{
+		ACCOUNT_ID -> ACM_AccountOpening:ACCOUNT
+			@i18n:Label (en="Account No")
+			@i18n:Tooltip (en="Indicates the Account Number")
+			@t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=1.0, core=true, businessType=ANT, t24Name=ACCOUNT.ID)
+		AC_RET_DAYS : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=2.0, core=true, t24Name=AC.RET.DAYS)
+		AC_OVER_DAYS : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=1, sysNumber=3.0, core=true, t24Name=AC.OVER.DAYS)
+	}
+	ER_PARAMETER__CATEGORY
+	{
+		CATEGORY -> ST_Config:CATEGORY
+			@i18n:Label (en=Category)
+			@i18n:Tooltip (en="Specifies the Category")
+			@t24:i (align=L, inputBehaviour=I, maxLength=10, sysNumber=4.0, core=true, businessType=CAT, t24Name=CATEGORY)
+	}
+	ER_PARAMETER__EXP_FUNDS_TYPE
+	{
+		EXP_FUNDS_TYPE : AC_ExpectedReceipts:ER_PARAMETER__EXP_FUNDS_TYPE__EXP_FUNDS_TYPE
+			@t24:i (align=L, inputBehaviour=I, maxLength=15, sysNumber=5.0, core=true, t24Name=EXP.FUNDS.TYPE)
+		EXP_TYPE_DESC : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=6.0, core=true, t24Name=EXP.TYPE.DESC)
+		EXP_TYPE_CR_DR : AC_ExpectedReceipts:ER_PARAMETER__EXP_FUNDS_TYPE__EXP_TYPE_CR_DR
+			@t24:i (align=L, inputBehaviour=I, maxLength=1, sysNumber=7.0, core=true, t24Name=EXP.TYPE.CR.DR)
+		PAY_FUNDS_TYPE : AC_ExpectedReceipts:ER_PARAMETER__EXP_FUNDS_TYPE__PAY_FUNDS_TYPE
+			@t24:i (align=L, inputBehaviour=I, maxLength=15, sysNumber=8.0, core=true, t24Name=PAY.FUNDS.TYPE)
+		PAY_TYPE_DESC : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=9.0, core=true, t24Name=PAY.TYPE.DESC)
+		PAY_TYPE_CR_DR : AC_ExpectedReceipts:ER_PARAMETER__EXP_FUNDS_TYPE__PAY_TYPE_CR_DR
+			@t24:i (align=L, inputBehaviour=I, maxLength=1, sysNumber=10.0, core=true, t24Name=PAY.TYPE.CR.DR)
+		ACCT_BAL_FIELD : AC_ExpectedReceipts:ER_PARAMETER__EXP_FUNDS_TYPE__ACCT_BAL_FIELD
+			@t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=11.0, core=true, t24Name=ACCT.BAL.FIELD)
+		AUTO_PART_MATCH : AC_ExpectedReceipts:ER_PARAMETER__EXP_FUNDS_TYPE__AUTO_PART_MATCH
+			@t24:i (align=L, inputBehaviour=I, maxLength=1, sysNumber=12.0, core=true, t24Name=AUTO.PART.MATCH)
+		MATCH_FIELD -> byValue AC_ExpectedReceipts:ER_PARAMETER__EXP_FUNDS_TYPE__MATCH_FIELD *
+	}
+	ER_PARAMETER__EXP_FUNDS_TYPE__MATCH_FIELD
+	{
+		MATCH_FIELD : AC_ExpectedReceipts:ER_PARAMETER__EXP_FUNDS_TYPE__MATCH_FIELD__MATCH_FIELD
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=13.0, core=true, t24Name=MATCH.FIELD)
+		TOLERANCE : T24BusinessTypes:R
+			@t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=14.0, core=true, t24Name=TOLERANCE)
+	}
+	ER_PARAMETER__INPUTTER
+	{
+		INPUTTER : T24BusinessTypes:A
+			@i18n:Label (en=Inputter)
+			@i18n:Tooltip (en="The user who last updated the record")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=31.0, core=true, t24Name=INPUTTER)
+	}
+	ER_PARAMETER__DATE_TIME
+	{
+		DATE_TIME : T24BusinessTypes:RELTIME
+			@i18n:Label (en="Date time")
+			@i18n:Tooltip (en="Date and time when record was input or authorised")
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=32.0, core=true, t24Name=DATE.TIME, mask="RDD DD  DD ##:##")
+	}
+}
+Enumerations {
+	AC_EXPECTED_RECS__METHOD : mml:string
+		SWIFT=SWIFT
+		PHONE=PHONE
+		EMAIL=EMAIL
+		FAX=FAX
+		TELEX=TELEX
+		FT=FT
+	AC_EXPECTED_RECS__FUNDS_TYPE : mml:string
+		ER=ER
+		RECEIPT=RECEIPT
+		EP=EP
+		PAYMENT=PAYMENT
+		EC=EC
+		RC=RC
+		ERR=ERR
+		RR=RR
+	AC_EXPECTED_RECS__MANUAL : mml:string
+		M=M
+	AC_EXPECTED_RECS__PROCESS_PAYMENTS : mml:string
+		YES=YES
+		NULL=NULL
+	AC_EXPECTED_RECS__PROCESS_AV_LIMIT : mml:string
+		YES=YES
+		NULL=NULL
+	ER_COVER_LIMIT__LIMIT_ACTIVE_Y_N : mml:string
+		Y=Y
+		N=N
+	ER_PARAMETER__EXP_FUNDS_TYPE__EXP_FUNDS_TYPE : mml:string
+		ER=ER
+		EP=EP
+		ERR=ERR
+	ER_PARAMETER__EXP_FUNDS_TYPE__EXP_TYPE_CR_DR : mml:string
+		C=C
+		D=D
+	ER_PARAMETER__EXP_FUNDS_TYPE__PAY_FUNDS_TYPE : mml:string
+		RECEIPT=RECEIPT
+		PAYMENT=PAYMENT
+		RR=RR
+	ER_PARAMETER__EXP_FUNDS_TYPE__PAY_TYPE_CR_DR : mml:string
+		C=C
+		D=D
+	ER_PARAMETER__EXP_FUNDS_TYPE__ACCT_BAL_FIELD : mml:string
+		ER=ER
+		EP=EP
+	ER_PARAMETER__EXP_FUNDS_TYPE__AUTO_PART_MATCH : mml:string
+		Y=Y
+	ER_PARAMETER__EXP_FUNDS_TYPE__MATCH_FIELD__MATCH_FIELD : mml:string
+		ACCOUNT_ID=ACCOUNT.ID
+		TRAN_REFERENCE=TRAN.REFERENCE
+		VALUE_DATE=VALUE.DATE
+		CURRENCY=CURRENCY
+		CCY_AMOUNT=CCY.AMOUNT
+		ORD_CUSTOMER=ORD.CUSTOMER
+		ORD_INSTITUTION=ORD.INSTITUTION
+		ACCT_WITH_BANK=ACCT.WITH.BANK
+		BEN_BANK=BEN.BANK
+		BEN_CUSTOMER=BEN.CUSTOMER
+		REC_CORR_BANK=REC.CORR.BANK
+		SEND_CORR_BANK=SEND.CORR.BANK
+		INTERMEDIARY=INTERMEDIARY
+		REFERENCE=REFERENCE
+}

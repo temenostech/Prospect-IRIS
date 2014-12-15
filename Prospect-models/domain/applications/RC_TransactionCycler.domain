@@ -1,0 +1,500 @@
+# UTF-8
+/* Transaction related details for recycler. */
+Domain RC_TransactionCycler
+	@t24:i (module=RC)
+	@java:Package (value=com.temenos.t24.datamodel.rc.rc_transactioncycler)
+namespace "http://www.temenos.com/t24/RC_TransactionCycler"
+metamodelVersion 1.30.6
+Classes {
+	RC_CHANGE
+		@t24:i (t24Name=RC.CHANGE, level=F, type=H, allowedFunctions="A C D E H I L P Q R S", localRefAllowed=true)
+	{
+		ACCOUNT_NO -> RC_TransactionCycler:RC_CHANGE PK required
+			@i18n:Label (en=Account)
+			@i18n:Tooltip (en="Indicates Customer Account Number")
+			@t24:i (align=R, inputBehaviour=I, maxLength=16, sysNumber=0.0, core=true, businessType=ACC, t24Name=ACCOUNT.NO)
+		RC_DETAIL_ID -> byValue RC_TransactionCycler:RC_CHANGE__RC_DETAIL_ID *
+		RESERVED_07 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=11.0, core=true, t24Name=RESERVED.07)
+		RESERVED_08 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=12.0, core=true, t24Name=RESERVED.08)
+		RESERVED_09 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=13.0, core=true, t24Name=RESERVED.09)
+		RESERVED_10 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=15.0, core=true, t24Name=RESERVED.10)
+		RECORD_STATUS : T24BusinessTypes:STAT
+			@i18n:Label (en="Record Status")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=16.0, core=true, t24Name=RECORD.STATUS)
+		CURR_NO : mml:Integer
+			@i18n:Label (en="Curr No")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=17.0, core=true, t24Name=CURR.NO)
+		INPUTTER -> byValue RC_TransactionCycler:RC_CHANGE__INPUTTER *
+		DATE_TIME -> byValue RC_TransactionCycler:RC_CHANGE__DATE_TIME *
+		AUTHORISER : T24BusinessTypes:A
+			@i18n:Label (en=Authoriser)
+			@i18n:Tooltip (en="Indicates the User who Authorises the record")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=20.0, core=true, t24Name=AUTHORISER)
+		CO_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company)
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=21.0, core=true, businessType=A, t24Name=CO.CODE, mask="R##-###-####")
+		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Dept Code")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=22.0, core=true, t24Name=DEPT.CODE)
+		AUDITOR_CODE : T24BusinessTypes:A
+			@i18n:Label (en="Auditor Code")
+			@i18n:Tooltip (en="Auditor Code")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=23.0, core=true, t24Name=AUDITOR.CODE)
+		AUDIT_DATE_TIME : T24BusinessTypes:RELTIME
+			@i18n:Label (en="Audit Date Time")
+			@i18n:Tooltip (en="Date and time when record was audited")
+			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=24.0, core=true, t24Name=AUDIT.DATE.TIME, mask="RDD DD  DD ##:##")
+	}
+	RC_CHANGE__RC_DETAIL_ID
+	{
+		RC_DETAIL_ID -> RC_TransactionCycler:RC_DETAIL
+			@i18n:Label (en="RC Detail Id")
+			@t24:i (align=L, inputBehaviour=I, maxLength=80, sysNumber=1.0, core=true, businessType=A, t24Name=RC.DETAIL.ID, isValidateOnChange=true)
+		RESERVED_01 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=2.0, core=true, t24Name=RESERVED.01)
+		RESERVED_02 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=3.0, core=true, t24Name=RESERVED.02)
+		CHANGE_TYPE -> byValue RC_TransactionCycler:RC_CHANGE__RC_DETAIL_ID__CHANGE_TYPE *
+	}
+	RC_CHANGE__RC_DETAIL_ID__CHANGE_TYPE
+	{
+		CHANGE_TYPE : RC_TransactionCycler:RC_CHANGE__RC_DETAIL_ID__CHANGE_TYPE__CHANGE_TYPE
+			@i18n:Label (en="Change Type")
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=4.0, core=true, t24Name=CHANGE.TYPE)
+		CHANGE_VALUE : T24BusinessTypes:A
+			@i18n:Label (en="Change Value")
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=5.0, core=true, t24Name=CHANGE.VALUE)
+		RESERVED_03 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=6.0, core=true, t24Name=RESERVED.03)
+		RESERVED_04 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=7.0, core=true, t24Name=RESERVED.04)
+		RESERVED_05 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=8.0, core=true, t24Name=RESERVED.05)
+		RESERVED_06 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=9.0, core=true, t24Name=RESERVED.06)
+		CHANGE_REASON : T24BusinessTypes:A
+			@i18n:Label (en="Change Reason")
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=10.0, core=true, t24Name=CHANGE.REASON)
+	}
+	RC_CHANGE__INPUTTER
+	{
+		INPUTTER : T24BusinessTypes:A
+			@i18n:Label (en=Inputter)
+			@i18n:Tooltip (en="The user who last updated the record")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=18.0, core=true, t24Name=INPUTTER)
+	}
+	RC_CHANGE__DATE_TIME
+	{
+		DATE_TIME : T24BusinessTypes:RELTIME
+			@i18n:Label (en="Date time")
+			@i18n:Tooltip (en="Date and time when record was input or authorised")
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=19.0, core=true, t24Name=DATE.TIME, mask="RDD DD  DD ##:##")
+	}
+	RC_DETAIL
+		@t24:i (t24Name=RC.DETAIL, level=F, type=L, allowedFunctions="L P S", localRefAllowed=true)
+	{
+		RC_DETAIL_ID -> RC_TransactionCycler:RC_DETAIL PK required
+			@t24:i (align=L, inputBehaviour=I, maxLength=80, sysNumber=0.0, core=true, businessType=A, t24Name=RC.DETAIL.ID)
+		RETRY_FQU : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=55, sysNumber=1.0, core=true, t24Name=RETRY.FQU)
+		NO_OF_RETRIES : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=35, sysNumber=2.0, core=true, t24Name=NO.OF.RETRIES)
+		RETRY_ATTEMPTED : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=35, sysNumber=3.0, core=true, t24Name=RETRY.ATTEMPTED)
+		DT_CONVENTION : RC_TransactionCycler:RC_DETAIL__DT_CONVENTION
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=4.0, core=true, t24Name=DT.CONVENTION)
+		RESERVED_11 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=5.0, core=true, t24Name=RESERVED.11)
+		RETRY_START_DATE : T24BusinessTypes:D
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=6.0, core=true, t24Name=RETRY.START.DATE)
+		RETRY_END_DATE : T24BusinessTypes:D
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=7.0, core=true, t24Name=RETRY.END.DATE)
+		NEXT_RETRY_DATE : T24BusinessTypes:D
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=8.0, core=true, t24Name=NEXT.RETRY.DATE)
+		NEXT_RETRY_STAGE : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=9.0, core=true, t24Name=NEXT.RETRY.STAGE)
+		SETTLE_OPTION : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=10.0, core=true, t24Name=SETTLE.OPTION)
+		TXN_TYPE -> FT_Config:FT_TXN_TYPE_CONDITION
+			@i18n:Label (en="Trans Type")
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=11.0, core=true, businessType=A, t24Name=TXN.TYPE)
+		RC_TYPE -> RC_Config:RC_TYPE
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=12.0, core=true, businessType=A, t24Name=RC.TYPE)
+		RC_CONDITION -> RC_Config:RC_CONDITION
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=13.0, core=true, businessType=A, t24Name=RC.CONDITION)
+		CONTRACT_ID : T24BusinessTypes:A
+			@i18n:Label (en="Contract Id")
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=14.0, core=true, t24Name=CONTRACT.ID)
+		AA_PRODUCT_GROUP : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=15.0, core=true, t24Name=AA.PRODUCT.GROUP)
+		AA_PRODUCT : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=16.0, core=true, t24Name=AA.PRODUCT)
+		ARRANGEMENT_ID : T24BusinessTypes:A
+			@i18n:Label (en="Arrangement Id")
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=17.0, core=true, t24Name=ARRANGEMENT.ID)
+		CONTRACT_CATEGORY -> ST_Config:CATEGORY
+			@t24:i (align=R, inputBehaviour=I, maxLength=35, sysNumber=18.0, core=true, t24Name=CONTRACT.CATEGORY)
+		ORIG_ENTRY_TABLE -> byValue RC_TransactionCycler:RC_DETAIL__ORIG_ENTRY_TABLE *
+		TRANS_CCY -> FIN_CurrencyConfig:CURRENCY
+			@i18n:Label (en="Trans Ccy")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=21.0, core=true, businessType=CCY, t24Name=TRANS.CCY)
+		ORIG_AMT : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=55, sysNumber=22.0, core=true, t24Name=ORIG.AMT)
+		ORIG_AMT_LCY : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=55, sysNumber=23.0, core=true, t24Name=ORIG.AMT.LCY)
+		ORIG_EXCH_RATE : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=35, sysNumber=24.0, core=true, t24Name=ORIG.EXCH.RATE)
+		SUSPENSE_CATEGORY -> ST_Config:CATEGORY
+			@t24:i (align=R, inputBehaviour=I, maxLength=35, sysNumber=25.0, core=true, t24Name=SUSPENSE.CATEGORY)
+		RETRY_AMT : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=55, sysNumber=26.0, core=true, t24Name=RETRY.AMT)
+		RETRY_AMT_LCY : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=55, sysNumber=27.0, core=true, t24Name=RETRY.AMT.LCY)
+		TXN_SIGN : RC_TransactionCycler:RC_DETAIL__TXN_SIGN
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=28.0, core=true, t24Name=TXN.SIGN)
+		COMBINE_WITH -> byValue RC_TransactionCycler:RC_DETAIL__COMBINE_WITH *
+		COMBINED_AMT : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=55, sysNumber=30.0, core=true, t24Name=COMBINED.AMT)
+		RC_STATUS : RC_TransactionCycler:RC_DETAIL__RC_STATUS
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=31.0, core=true, t24Name=RC.STATUS)
+		SETTLE_STATUS : RC_TransactionCycler:RC_DETAIL__SETTLE_STATUS
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=32.0, core=true, t24Name=SETTLE.STATUS)
+		LAST_RETRY -> byValue RC_TransactionCycler:RC_DETAIL__LAST_RETRY *
+		INT_NAME -> byValue RC_TransactionCycler:RC_DETAIL__INT_NAME *
+		CO_CODE : T24BusinessTypes:A
+			@i18n:Label (en=Company)
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=47.0, core=true, t24Name=CO.CODE)
+		PREDECESSOR_ID : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=55, sysNumber=48.0, core=true, t24Name=PREDECESSOR.ID)
+		AMEND_BY -> byValue RC_TransactionCycler:RC_DETAIL__AMEND_BY *
+		RESERVED_01 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=53.0, core=true, t24Name=RESERVED.01)
+		RESERVED_00 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=54.0, core=true, t24Name=RESERVED.00)
+	}
+	RC_DETAIL__ORIG_ENTRY_TABLE
+	{
+		ORIG_ENTRY_TABLE : T24BusinessTypes:A
+			@i18n:Label (en="Orig Entry Time")
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=19.0, core=true, t24Name=ORIG.ENTRY.TABLE)
+		ORIG_ENTRY_ID : T24BusinessTypes:A
+			@i18n:Label (en="Orig Entry Id")
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=20.0, core=true, t24Name=ORIG.ENTRY.ID)
+	}
+	RC_DETAIL__COMBINE_WITH
+	{
+		COMBINE_WITH : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=29.0, core=true, t24Name=COMBINE.WITH)
+	}
+	RC_DETAIL__LAST_RETRY
+	{
+		LAST_RETRY : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=20, sysNumber=33.0, core=true, t24Name=LAST.RETRY, mask="RDD DD  DD  ##:##")
+		LAST_RETRY_STAGE : T24BusinessTypes:A
+			@i18n:Label (en="Last Retry Stage")
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=34.0, core=true, t24Name=LAST.RETRY.STAGE)
+		LAST_RESULT -> byValue RC_TransactionCycler:RC_DETAIL__LAST_RETRY__LAST_RESULT *
+		RETRY_TRANS_TABLE : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=36.0, core=true, t24Name=RETRY.TRANS.TABLE)
+		RETRY_TRANS_REF : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=37.0, core=true, t24Name=RETRY.TRANS.REF)
+		LAST_RETRY_TRIGGER : T24BusinessTypes:A
+			@i18n:Label (en="Last Retry Trigger")
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=38.0, core=true, t24Name=LAST.RETRY.TRIGGER)
+		RESERVED_09 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=39.0, core=true, t24Name=RESERVED.09)
+		RESERVED_08 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=40.0, core=true, t24Name=RESERVED.08)
+		RESERVED_07 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=41.0, core=true, t24Name=RESERVED.07)
+		RESERVED_06 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=42.0, core=true, t24Name=RESERVED.06)
+		RESERVED_05 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=43.0, core=true, t24Name=RESERVED.05)
+		RECOVERED_AMT : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=55, sysNumber=44.0, core=true, t24Name=RECOVERED.AMT)
+	}
+	RC_DETAIL__LAST_RETRY__LAST_RESULT
+	{
+		LAST_RESULT : T24BusinessTypes:A
+			@i18n:Label (en="Last Result")
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=35.0, core=true, t24Name=LAST.RESULT)
+	}
+	RC_DETAIL__INT_NAME
+	{
+		INT_NAME : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=45.0, core=true, t24Name=INT.NAME)
+		INT_VALUE : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=46.0, core=true, t24Name=INT.VALUE)
+	}
+	RC_DETAIL__AMEND_BY
+	{
+		AMEND_BY : T24BusinessTypes:A
+			@i18n:Label (en="Amend By")
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=50.0, core=true, t24Name=AMEND.BY)
+		AMEND_DATE_TIME : mml:Integer
+			@i18n:Label (en="Amend Date Time")
+			@t24:i (align=R, inputBehaviour=I, maxLength=20, sysNumber=51.0, core=true, t24Name=AMEND.DATE.TIME, mask="RDD DD  DD  ##:##")
+		AMEND_REASON : T24BusinessTypes:A
+			@i18n:Label (en="Amend Reason")
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=52.0, core=true, t24Name=AMEND.REASON)
+	}
+	RC_DETAIL_HIST
+		@t24:i (t24Name=RC.DETAIL.HIST, level=F, type=L, allowedFunctions="L P S", localRefAllowed=true)
+	{
+		RC_DETAIL_ID -> RC_TransactionCycler:RC_DETAIL_HIST PK required
+			@t24:i (align=L, inputBehaviour=I, maxLength=80, sysNumber=0.0, core=true, businessType=A, t24Name=RC.DETAIL.ID)
+		RETRY_FQU : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=55, sysNumber=1.0, core=true, t24Name=RETRY.FQU)
+		NO_OF_RETRIES : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=35, sysNumber=2.0, core=true, t24Name=NO.OF.RETRIES)
+		RETRY_ATTEMPTED : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=35, sysNumber=3.0, core=true, t24Name=RETRY.ATTEMPTED)
+		DT_CONVENTION : RC_TransactionCycler:RC_DETAIL_HIST__DT_CONVENTION
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=4.0, core=true, t24Name=DT.CONVENTION)
+		RESERVED_11 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=5.0, core=true, t24Name=RESERVED.11)
+		RETRY_START_DATE : T24BusinessTypes:D
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=6.0, core=true, t24Name=RETRY.START.DATE)
+		RETRY_END_DATE : T24BusinessTypes:D
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=7.0, core=true, t24Name=RETRY.END.DATE)
+		NEXT_RETRY_DATE : T24BusinessTypes:D
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=8.0, core=true, t24Name=NEXT.RETRY.DATE)
+		NEXT_RETRY_STAGE : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=9.0, core=true, t24Name=NEXT.RETRY.STAGE)
+		SETTLE_OPTION : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=10.0, core=true, t24Name=SETTLE.OPTION)
+		TXN_TYPE -> FT_Config:FT_TXN_TYPE_CONDITION
+			@i18n:Label (en="Trans Type")
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=11.0, core=true, businessType=A, t24Name=TXN.TYPE)
+		RC_TYPE -> RC_Config:RC_TYPE
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=12.0, core=true, businessType=A, t24Name=RC.TYPE)
+		RC_CONDITION -> RC_Config:RC_CONDITION
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=13.0, core=true, businessType=A, t24Name=RC.CONDITION)
+		CONTRACT_ID : T24BusinessTypes:A
+			@i18n:Label (en="Contract Id")
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=14.0, core=true, t24Name=CONTRACT.ID)
+		AA_PRODUCT_GROUP : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=15.0, core=true, t24Name=AA.PRODUCT.GROUP)
+		AA_PRODUCT : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=16.0, core=true, t24Name=AA.PRODUCT)
+		ARRANGEMENT_ID : T24BusinessTypes:A
+			@i18n:Label (en="Arrangement Id")
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=17.0, core=true, t24Name=ARRANGEMENT.ID)
+		CONTRACT_CATEGORY -> ST_Config:CATEGORY
+			@t24:i (align=R, inputBehaviour=I, maxLength=35, sysNumber=18.0, core=true, t24Name=CONTRACT.CATEGORY)
+		ORIG_ENTRY_TABLE -> byValue RC_TransactionCycler:RC_DETAIL_HIST__ORIG_ENTRY_TABLE *
+		TRANS_CCY -> FIN_CurrencyConfig:CURRENCY
+			@i18n:Label (en="Trans Ccy")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=21.0, core=true, businessType=CCY, t24Name=TRANS.CCY)
+		ORIG_AMT : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=55, sysNumber=22.0, core=true, t24Name=ORIG.AMT)
+		ORIG_AMT_LCY : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=55, sysNumber=23.0, core=true, t24Name=ORIG.AMT.LCY)
+		ORIG_EXCH_RATE : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=35, sysNumber=24.0, core=true, t24Name=ORIG.EXCH.RATE)
+		SUSPENSE_CATEGORY -> ST_Config:CATEGORY
+			@t24:i (align=R, inputBehaviour=I, maxLength=35, sysNumber=25.0, core=true, t24Name=SUSPENSE.CATEGORY)
+		RETRY_AMT : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=55, sysNumber=26.0, core=true, t24Name=RETRY.AMT)
+		RETRY_AMT_LCY : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=55, sysNumber=27.0, core=true, t24Name=RETRY.AMT.LCY)
+		TXN_SIGN : RC_TransactionCycler:RC_DETAIL_HIST__TXN_SIGN
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=28.0, core=true, t24Name=TXN.SIGN)
+		COMBINE_WITH -> byValue RC_TransactionCycler:RC_DETAIL_HIST__COMBINE_WITH *
+		COMBINED_AMT : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=55, sysNumber=30.0, core=true, t24Name=COMBINED.AMT)
+		RC_STATUS : RC_TransactionCycler:RC_DETAIL_HIST__RC_STATUS
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=31.0, core=true, t24Name=RC.STATUS)
+		SETTLE_STATUS : RC_TransactionCycler:RC_DETAIL_HIST__SETTLE_STATUS
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=32.0, core=true, t24Name=SETTLE.STATUS)
+		LAST_RETRY -> byValue RC_TransactionCycler:RC_DETAIL_HIST__LAST_RETRY *
+		INT_NAME -> byValue RC_TransactionCycler:RC_DETAIL_HIST__INT_NAME *
+		CO_CODE : T24BusinessTypes:A
+			@i18n:Label (en=Company)
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=47.0, core=true, t24Name=CO.CODE)
+		PREDECESSOR_ID : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=55, sysNumber=48.0, core=true, t24Name=PREDECESSOR.ID)
+		AMEND_BY -> byValue RC_TransactionCycler:RC_DETAIL_HIST__AMEND_BY *
+		RESERVED_01 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=53.0, core=true, t24Name=RESERVED.01)
+		RESERVED_00 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=54.0, core=true, t24Name=RESERVED.00)
+	}
+	RC_DETAIL_HIST__ORIG_ENTRY_TABLE
+	{
+		ORIG_ENTRY_TABLE : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=19.0, core=true, t24Name=ORIG.ENTRY.TABLE)
+		ORIG_ENTRY_ID : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=20.0, core=true, t24Name=ORIG.ENTRY.ID)
+	}
+	RC_DETAIL_HIST__COMBINE_WITH
+	{
+		COMBINE_WITH : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=29.0, core=true, t24Name=COMBINE.WITH)
+	}
+	RC_DETAIL_HIST__LAST_RETRY
+	{
+		LAST_RETRY : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=20, sysNumber=33.0, core=true, t24Name=LAST.RETRY, mask="RDD DD  DD  ##:##")
+		LAST_RETRY_STAGE : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=34.0, core=true, t24Name=LAST.RETRY.STAGE)
+		LAST_RESULT -> byValue RC_TransactionCycler:RC_DETAIL_HIST__LAST_RETRY__LAST_RESULT *
+		RETRY_TRANS_TABLE : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=36.0, core=true, t24Name=RETRY.TRANS.TABLE)
+		RETRY_TRANS_REF : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=37.0, core=true, t24Name=RETRY.TRANS.REF)
+		LAST_RETRY_TRIGGER : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=38.0, core=true, t24Name=LAST.RETRY.TRIGGER)
+		RESERVED_09 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=39.0, core=true, t24Name=RESERVED.09)
+		RESERVED_08 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=40.0, core=true, t24Name=RESERVED.08)
+		RESERVED_07 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=41.0, core=true, t24Name=RESERVED.07)
+		RESERVED_06 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=42.0, core=true, t24Name=RESERVED.06)
+		RESERVED_05 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=43.0, core=true, t24Name=RESERVED.05)
+		RECOVERED_AMT : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=55, sysNumber=44.0, core=true, t24Name=RECOVERED.AMT)
+	}
+	RC_DETAIL_HIST__LAST_RETRY__LAST_RESULT
+	{
+		LAST_RESULT : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=35.0, core=true, t24Name=LAST.RESULT)
+	}
+	RC_DETAIL_HIST__INT_NAME
+	{
+		INT_NAME : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=45.0, core=true, t24Name=INT.NAME)
+		INT_VALUE : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=46.0, core=true, t24Name=INT.VALUE)
+	}
+	RC_DETAIL_HIST__AMEND_BY
+	{
+		AMEND_BY : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=50.0, core=true, t24Name=AMEND.BY)
+		AMEND_DATE_TIME : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=20, sysNumber=51.0, core=true, t24Name=AMEND.DATE.TIME, mask="RDD DD  DD  ##:##")
+		AMEND_REASON : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=52.0, core=true, t24Name=AMEND.REASON)
+	}
+	RC_PENDING_TXNS
+		@t24:i (t24Name=RC.PENDING.TXNS, level=F, type=L, allowedFunctions="L P S", localRefAllowed=true)
+	{
+		ID -> RC_TransactionCycler:RC_PENDING_TXNS PK required
+			@i18n:Label (en="Transaction Ref")
+			@i18n:Tooltip (en="Transaction Reference")
+			@t24:i (align=L, inputBehaviour=I, maxLength=19, sysNumber=0.0, core=true, businessType=ANT, t24Name=ID)
+		RC_DETAIL_ID -> byValue RC_TransactionCycler:RC_PENDING_TXNS__RC_DETAIL_ID *
+		RESERVED_06 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=8.0, core=true, t24Name=RESERVED.06)
+		RESERVED_07 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=9.0, core=true, t24Name=RESERVED.07)
+		RESERVED_08 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=10.0, core=true, t24Name=RESERVED.08)
+		RESERVED_09 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=11.0, core=true, t24Name=RESERVED.09)
+		RESERVED_10 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=12.0, core=true, t24Name=RESERVED.10)
+	}
+	RC_PENDING_TXNS__RC_DETAIL_ID
+	{
+		RC_DETAIL_ID -> RC_TransactionCycler:RC_DETAIL
+			@t24:i (align=L, inputBehaviour=I, maxLength=80, sysNumber=1.0, core=true, businessType=A, t24Name=RC.DETAIL.ID)
+		RESERVED_01 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=2.0, core=true, t24Name=RESERVED.01)
+		RESERVED_02 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=3.0, core=true, t24Name=RESERVED.02)
+		RESERVED_03 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=4.0, core=true, t24Name=RESERVED.03)
+		RESERVED_04 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=5.0, core=true, t24Name=RESERVED.04)
+		RESERVED_05 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=6.0, core=true, t24Name=RESERVED.05)
+	}
+	RC_RETRY_TRIGGER
+		@t24:i (t24Name=RC.RETRY.TRIGGER, level=F, type=L, allowedFunctions="L P S", localRefAllowed=true)
+	{
+		ACCOUNT_ID -> RC_TransactionCycler:RC_RETRY_TRIGGER PK required
+			@i18n:Label (en="Account No")
+			@i18n:Tooltip (en="Indicates the Account Number")
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=0.0, core=true, businessType=A, t24Name=ACCOUNT.ID)
+		TRIGGER_REF : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=1.0, core=true, t24Name=TRIGGER.REF)
+		TRIGGER_TYPE : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=2.0, core=true, t24Name=TRIGGER.TYPE)
+		RESERVED_10 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=4.0, core=true, t24Name=RESERVED.10)
+		RESERVED_09 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=5.0, core=true, t24Name=RESERVED.09)
+		RESERVED_08 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=6.0, core=true, t24Name=RESERVED.08)
+		RESERVED_07 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=7.0, core=true, t24Name=RESERVED.07)
+		RESERVED_06 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=8.0, core=true, t24Name=RESERVED.06)
+		RESERVED_05 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=9.0, core=true, t24Name=RESERVED.05)
+		RESERVED_04 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=10.0, core=true, t24Name=RESERVED.04)
+		RESERVED_03 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=11.0, core=true, t24Name=RESERVED.03)
+		RESERVED_02 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=12.0, core=true, t24Name=RESERVED.02)
+		RESERVED_01 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=13.0, core=true, t24Name=RESERVED.01)
+	}
+}
+Enumerations {
+	RC_CHANGE__RC_DETAIL_ID__CHANGE_TYPE__CHANGE_TYPE : mml:string
+		STATUS=STATUS
+		FREQ=FREQ
+		RETRY_ATTEMPT=RETRY.ATTEMPT
+		RETRY_PERIOD=RETRY.PERIOD
+		RETRY_OPTIONS=RETRY.OPTIONS
+		NULL=NULL
+	RC_DETAIL__DT_CONVENTION : mml:string
+		FORWARD=FORWARD
+		BACKWARD=BACKWARD
+	RC_DETAIL__TXN_SIGN : mml:string
+		CREDIT=CREDIT
+		DEBIT=DEBIT
+		NULL=NULL
+	RC_DETAIL__RC_STATUS : mml:string
+		NEW=NEW
+		CURRENT=CURRENT
+		COMPLETED=COMPLETED
+		REJECTED=REJECTED
+		NULL=NULL
+	RC_DETAIL__SETTLE_STATUS : mml:string
+		PENDING=PENDING
+		SETTLED=SETTLED
+		PARTIAL=PARTIAL
+		REJECTED=REJECTED
+		NULL=NULL
+	RC_DETAIL_HIST__DT_CONVENTION : mml:string
+		FORWARD=FORWARD
+		BACKWARD=BACKWARD
+	RC_DETAIL_HIST__TXN_SIGN : mml:string
+		CREDIT=CREDIT
+		DEBIT=DEBIT
+		NULL=NULL
+	RC_DETAIL_HIST__RC_STATUS : mml:string
+		NEW=NEW
+		CURRENT=CURRENT
+		COMPLETED=COMPLETED
+		REJECTED=REJECTED
+		NULL=NULL
+	RC_DETAIL_HIST__SETTLE_STATUS : mml:string
+		PENDING=PENDING
+		SETTLED=SETTLED
+		PARTIAL=PARTIAL
+		REJECTED=REJECTED
+		NULL=NULL
+}

@@ -1,0 +1,431 @@
+# UTF-8
+/* Delivery Definition and Processing for Loans and Deposits */
+Domain LD_Delivery
+	@t24:i (module=LD)
+	@java:Package (value=com.temenos.t24.datamodel.ld.ld_delivery)
+namespace "http://www.temenos.com/t24/LD_Delivery"
+metamodelVersion 1.30.6
+Classes {
+	LD_PAYMENT_ENTRY
+		@t24:i (t24Name=LD.PAYMENT.ENTRY, level=F, type=H, allowedFunctions="A C D E H I L P Q R S", localRefAllowed=false)
+	{
+		CONTRACT_NO -> LD_Delivery:LD_PAYMENT_ENTRY PK required
+			@t24:i (align=L, inputBehaviour=I, maxLength=17, sysNumber=0.0, core=true, businessType=A, t24Name="CONTRACT NO", mask="R##/#####/#####/##")
+		CURRENCY_CODE : T24BusinessTypes:CCY
+			@i18n:Label (en="Currency Code")
+			@t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=1.0, core=true, t24Name=CURRENCY.CODE)
+		VALUE_DATE : T24BusinessTypes:D
+			@i18n:Label (en="Value Date")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=2.0, core=true, t24Name=VALUE.DATE)
+		TOT_AMT_TO_PAY : T24BusinessTypes:AMT
+			@i18n:Label (en="Total Amount Of All Disbursements")
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=3.0, core=true, t24Name=TOT.AMT.TO.PAY, typeModifiers="-1")
+		CUSTOMER_ID : T24BusinessTypes:CUS required
+			@i18n:Label (en="Customer Id")
+			@t24:i (align=R, inputBehaviour=F, maxLength=10, sysNumber=4.0, core=true, t24Name=CUSTOMER.ID)
+		PRIN_ACCT_CCY : T24BusinessTypes:CCY
+			@i18n:Label (en="Currency Code")
+			@t24:i (align=L, inputBehaviour=F, maxLength=3, sysNumber=5.0, core=true, t24Name=PRIN.ACCT.CCY)
+		PRIN_ACCT_CCY_AMT : T24BusinessTypes:AMT
+			@i18n:Label (en="Amount Of Payment Made In Payment Currency")
+			@t24:i (align=R, inputBehaviour=F, maxLength=19, sysNumber=6.0, core=true, t24Name=PRIN.ACCT.CCY.AMT, typeModifiers="-1")
+		PRIN_INTER_BANK -> byValue LD_Delivery:LD_PAYMENT_ENTRY__PRIN_INTER_BANK *
+		PRIN_AC_WITH_BK -> byValue LD_Delivery:LD_PAYMENT_ENTRY__PRIN_AC_WITH_BK *
+		PRIN_BEN_BANK_ACCT : T24BusinessTypes:S
+			@i18n:Label (en="Beneficiary Account Details")
+			@t24:i (align=L, inputBehaviour=F, maxLength=16, sysNumber=9.0, core=true, t24Name=PRIN.BEN.BANK.ACCT)
+		INT_ACCT_CCY : T24BusinessTypes:CCY
+			@i18n:Label (en="Currency Code")
+			@t24:i (align=L, inputBehaviour=F, maxLength=3, sysNumber=10.0, core=true, t24Name=INT.ACCT.CCY)
+		INT_ACCT_CCY_AMT : T24BusinessTypes:AMT
+			@i18n:Label (en="Payment Currency")
+			@t24:i (align=R, inputBehaviour=F, maxLength=19, sysNumber=11.0, core=true, t24Name=INT.ACCT.CCY.AMT, typeModifiers="-1")
+		INT_INTER_BANK -> byValue LD_Delivery:LD_PAYMENT_ENTRY__INT_INTER_BANK *
+		INT_AC_WITH_BK -> byValue LD_Delivery:LD_PAYMENT_ENTRY__INT_AC_WITH_BK *
+		INT_BEN_BANK_ACCT : T24BusinessTypes:S
+			@i18n:Label (en="Beneficiary Account Details")
+			@t24:i (align=L, inputBehaviour=F, maxLength=16, sysNumber=14.0, core=true, t24Name=INT.BEN.BANK.ACCT)
+		OVERRIDE_CARRIER : T24BusinessTypes:S required
+			@i18n:Label (en="Ovr Carrier")
+			@i18n:Tooltip (en="Indicates the Carrier to be used for a message.")
+			@t24:i (align=L, inputBehaviour=F, maxLength=5, sysNumber=15.0, core=true, t24Name=OVERRIDE.CARRIER)
+		SCH_TYPE_PRINCIPAL : T24BusinessTypes:AAA
+			@i18n:Label (en="Principal To Be Processed")
+			@t24:i (align=L, inputBehaviour=N, maxLength=1, sysNumber=16.0, core=true, t24Name=SCH.TYPE.PRINCIPAL)
+		PRINCIPAL_AMT_DUE : T24BusinessTypes:AMT
+			@i18n:Label (en="Principal Amount Due")
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=17.0, core=true, t24Name=PRINCIPAL.AMT.DUE, typeModifiers="-1")
+		PRINC_PAY_DEDUCT : LD_Delivery:LD_PAYMENT_ENTRY__PRINC_PAY_DEDUCT
+			@i18n:Label (en="Amount To Be Added To Or Deducted")
+			@t24:i (align=L, inputBehaviour=I, maxLength=1, sysNumber=18.0, core=true, t24Name=PRINC.PAY.DEDUCT)
+		PRINC_AMT_TO_PAY : T24BusinessTypes:AMT
+			@i18n:Label (en="Amount To Be Added To Or Deducted")
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=19.0, core=true, t24Name=PRINC.AMT.TO.PAY, typeModifiers="-1")
+		PRINC_DISB_ACC : mml:Integer
+			@i18n:Label (en="Disbursement Account To Be Used For Principal Payments")
+			@t24:i (align=R, inputBehaviour=I, maxLength=16, sysNumber=20.0, core=true, t24Name=PRINC.DISB.ACC)
+		SCH_TYPE_INTEREST : T24BusinessTypes:AAA
+			@i18n:Label (en="Interest Component To Be Processed")
+			@t24:i (align=L, inputBehaviour=N, maxLength=1, sysNumber=21.0, core=true, t24Name=SCH.TYPE.INTEREST)
+		INTEREST_AMT_DUE : T24BusinessTypes:AMT
+			@i18n:Label (en="Interest Amount Due")
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=22.0, core=true, t24Name=INTEREST.AMT.DUE, typeModifiers="-1")
+		INT_PAY_DEDUCT : LD_Delivery:LD_PAYMENT_ENTRY__INT_PAY_DEDUCT
+			@i18n:Label (en="Amount To Be Paid Or Deducted")
+			@t24:i (align=L, inputBehaviour=I, maxLength=1, sysNumber=23.0, core=true, t24Name=INT.PAY.DEDUCT)
+		INT_AMT_TO_PAY : T24BusinessTypes:AMT
+			@i18n:Label (en="Amount To Be Paid")
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=24.0, core=true, t24Name=INT.AMT.TO.PAY, typeModifiers="-1")
+		INT_DISB_ACC : mml:Integer
+			@i18n:Label (en="Disbursement Account For Interest Payments")
+			@t24:i (align=R, inputBehaviour=I, maxLength=16, sysNumber=25.0, core=true, t24Name=INT.DISB.ACC)
+		SCH_TYPE_COMM : T24BusinessTypes:AAA
+			@i18n:Label (en="Commission Component To Be Processed")
+			@t24:i (align=L, inputBehaviour=N, maxLength=1, sysNumber=26.0, core=true, t24Name=SCH.TYPE.COMM)
+		COMM_AMT_DUE : T24BusinessTypes:AMT
+			@i18n:Label (en="Commission Amount Due")
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=27.0, core=true, t24Name=COMM.AMT.DUE, typeModifiers="-1")
+		COMM_PAY_DEDUCT : LD_Delivery:LD_PAYMENT_ENTRY__COMM_PAY_DEDUCT
+			@i18n:Label (en="Commission To Be Paid Or Deducted")
+			@t24:i (align=L, inputBehaviour=I, maxLength=1, sysNumber=28.0, core=true, t24Name=COMM.PAY.DEDUCT)
+		COMM_AMT_TO_PAY : T24BusinessTypes:AMT
+			@i18n:Label (en="Commission Amount To Be Paid")
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=29.0, core=true, t24Name=COMM.AMT.TO.PAY, typeModifiers="-1")
+		COMM_DISB_ACC : mml:Integer
+			@i18n:Label (en="Account For Commission Payments")
+			@t24:i (align=R, inputBehaviour=I, maxLength=16, sysNumber=30.0, core=true, t24Name=COMM.DISB.ACC)
+		SCH_TYPE_CHRG : T24BusinessTypes:AAA
+			@i18n:Label (en="Charge Component To Be Processed")
+			@t24:i (align=L, inputBehaviour=N, maxLength=1, sysNumber=31.0, core=true, t24Name=SCH.TYPE.CHRG)
+		CHRG_AMT_DUE -> byValue LD_Delivery:LD_PAYMENT_ENTRY__CHRG_AMT_DUE *
+		SCH_TYPE_TAX : T24BusinessTypes:AAA
+			@i18n:Label (en="Tax To Be Processed")
+			@t24:i (align=L, inputBehaviour=N, maxLength=1, sysNumber=36.0, core=true, t24Name=SCH.TYPE.TAX)
+		TAX_AMT_DUE : T24BusinessTypes:AMT
+			@i18n:Label (en="Tax Amount Due")
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=37.0, core=true, t24Name=TAX.AMT.DUE, typeModifiers="-1")
+		TAX_PAY_DEDUCT : LD_Delivery:LD_PAYMENT_ENTRY__TAX_PAY_DEDUCT
+			@i18n:Label (en="Amount To Be Added To Or Deducted")
+			@t24:i (align=L, inputBehaviour=I, maxLength=1, sysNumber=38.0, core=true, t24Name=TAX.PAY.DEDUCT)
+		TAX_AMT_TO_PAY : T24BusinessTypes:AMT
+			@i18n:Label (en="Tax Amount To Be Paid")
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=39.0, core=true, t24Name=TAX.AMT.TO.PAY, typeModifiers="-1")
+		TAX_DISB_ACC : mml:Integer
+			@i18n:Label (en="Disbursement Account To Be Used For Tax Payments")
+			@t24:i (align=R, inputBehaviour=I, maxLength=16, sysNumber=40.0, core=true, t24Name=TAX.DISB.ACC)
+		SCH_TYPE_FEES : T24BusinessTypes:AAA
+			@i18n:Label (en="Fee Payment To Be Processed")
+			@t24:i (align=L, inputBehaviour=N, maxLength=1, sysNumber=41.0, core=true, t24Name=SCH.TYPE.FEES)
+		FEES_AMT_DUE -> byValue LD_Delivery:LD_PAYMENT_ENTRY__FEES_AMT_DUE *
+		SCH_TYPE_PEN_INT : T24BusinessTypes:AAA
+			@i18n:Label (en="Penalty Interest To Be Processed")
+			@t24:i (align=L, inputBehaviour=N, maxLength=1, sysNumber=46.0, core=true, t24Name=SCH.TYPE.PEN.INT)
+		PEN_INT_AMT_DUE : T24BusinessTypes:AMT
+			@i18n:Label (en="Penalty Interest Amount Due")
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=47.0, core=true, t24Name=PEN.INT.AMT.DUE, typeModifiers="-1")
+		PEN_INT_PAY_DEDUCT : LD_Delivery:LD_PAYMENT_ENTRY__PEN_INT_PAY_DEDUCT
+			@i18n:Label (en="Amount To Be Deducted Or Added")
+			@t24:i (align=L, inputBehaviour=I, maxLength=1, sysNumber=48.0, core=true, t24Name=PEN.INT.PAY.DEDUCT)
+		PEN_INT_AMT_TO_PAY : T24BusinessTypes:AMT
+			@i18n:Label (en="Penalty Interest Amount To Be Paid")
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=49.0, core=true, t24Name=PEN.INT.AMT.TO.PAY, typeModifiers="-1")
+		PEN_INT_DISB_ACC : mml:Integer
+			@i18n:Label (en="Disbursement Account To Be Used For Penalty Interest Payments")
+			@t24:i (align=R, inputBehaviour=I, maxLength=16, sysNumber=50.0, core=true, t24Name=PEN.INT.DISB.ACC)
+		SCH_TYPE_PEN_COMM : T24BusinessTypes:AAA
+			@i18n:Label (en="Penalty Commission To Be Processed")
+			@t24:i (align=L, inputBehaviour=N, maxLength=1, sysNumber=51.0, core=true, t24Name=SCH.TYPE.PEN.COMM)
+		PEN_COM_AMT_DUE : T24BusinessTypes:AMT
+			@i18n:Label (en="Penalty Commission Amount Due")
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=52.0, core=true, t24Name=PEN.COM.AMT.DUE, typeModifiers="-1")
+		PEN_COM_PAY_DEDUCT : LD_Delivery:LD_PAYMENT_ENTRY__PEN_COM_PAY_DEDUCT
+			@i18n:Label (en="Amount To Be Deducted Or Added")
+			@t24:i (align=L, inputBehaviour=I, maxLength=1, sysNumber=53.0, core=true, t24Name=PEN.COM.PAY.DEDUCT)
+		PEN_COM_AMT_TO_PAY : T24BusinessTypes:AMT
+			@i18n:Label (en="Amount To Be Added To Or Deducted")
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=54.0, core=true, t24Name=PEN.COM.AMT.TO.PAY, typeModifiers="-1")
+		PEN_COM_DISB_ACC : mml:Integer
+			@i18n:Label (en="Disbursement Account For Penalty Commission Payments")
+			@t24:i (align=R, inputBehaviour=I, maxLength=16, sysNumber=55.0, core=true, t24Name=PEN.COM.DISB.ACC)
+		SCH_TYPE_GEN_CHG : T24BusinessTypes:AAA
+			@i18n:Label (en=Sch.Type.Gen.Chg)
+			@i18n:Tooltip (en="Field For Future Use")
+			@t24:i (align=L, inputBehaviour=N, maxLength=1, sysNumber=56.0, core=true, t24Name=SCH.TYPE.GEN.CHG)
+		GEN_CHG_AMT_DUE : T24BusinessTypes:AMT
+			@i18n:Label (en=Gen.Chg.Amt.Due)
+			@i18n:Tooltip (en="Field For Future Use")
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=57.0, core=true, t24Name=GEN.CHG.AMT.DUE, typeModifiers="-1")
+		GEN_CHG_PAY_DEDUCT : LD_Delivery:LD_PAYMENT_ENTRY__GEN_CHG_PAY_DEDUCT
+			@i18n:Label (en=Gen.Chg.Pay.Deduct)
+			@i18n:Tooltip (en="Field For Future Use")
+			@t24:i (align=L, inputBehaviour=I, maxLength=1, sysNumber=58.0, core=true, t24Name=GEN.CHG.PAY.DEDUCT)
+		GEN_CHG_AMT_TO_PAY : T24BusinessTypes:AMT
+			@i18n:Label (en=Gen.Chg.Amt.To.Pay)
+			@i18n:Tooltip (en="Field For Future Use")
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=59.0, core=true, t24Name=GEN.CHG.AMT.TO.PAY, typeModifiers="-1")
+		GEN_CHG_DISB_ACC : mml:Integer
+			@i18n:Label (en=Gen.Chg.Disb.Acc)
+			@i18n:Tooltip (en="Field For Future Use")
+			@t24:i (align=R, inputBehaviour=I, maxLength=16, sysNumber=60.0, core=true, t24Name=GEN.CHG.DISB.ACC)
+		CHARGE_CODE -> byValue LD_Delivery:LD_PAYMENT_ENTRY__CHARGE_CODE *
+		TAX_TYPE -> byValue LD_Delivery:LD_PAYMENT_ENTRY__TAX_TYPE *
+		GRAND_TOTAL_DUE : T24BusinessTypes:AMT
+			@i18n:Label (en=Grand.Total.Due)
+			@i18n:Tooltip (en="Field For Future Use")
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=70.0, core=true, t24Name=GRAND.TOTAL.DUE, typeModifiers="-1")
+		GRAND_TOTAL_P_OR_D : LD_Delivery:LD_PAYMENT_ENTRY__GRAND_TOTAL_P_OR_D
+			@i18n:Label (en=Grand.Total.P.Or.D)
+			@i18n:Tooltip (en="Field For Future Use")
+			@t24:i (align=L, inputBehaviour=N, maxLength=1, sysNumber=71.0, core=true, t24Name=GRAND.TOTAL.P.OR.D)
+		GRAND_TOTAL_TO_PAY : T24BusinessTypes:AMT
+			@i18n:Label (en=Grand.Total.To.Pay)
+			@i18n:Tooltip (en="Field For Future Use")
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=72.0, core=true, t24Name=GRAND.TOTAL.TO.PAY, typeModifiers="-1")
+		XRATE : T24BusinessTypes:R
+			@i18n:Label (en="Exchange Rate")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=73.0, core=true, t24Name=XRATE)
+		MIS_XRATE : T24BusinessTypes:R
+			@i18n:Label (en="Mis Spread Used In The Xrate Conversion")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=74.0, core=true, t24Name=MIS.XRATE)
+		OTHER_XRATE : T24BusinessTypes:R
+			@i18n:Label (en="Exchange Rate On The Contract")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=75.0, core=true, t24Name=OTHER.XRATE)
+		MIS_OTHER_XRATE : T24BusinessTypes:R
+			@i18n:Label (en="Mis Spread Used In The Other.Xrate Conversion")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=76.0, core=true, t24Name=MIS.OTHER.XRATE)
+		MANUAL_AUTO : LD_Delivery:LD_PAYMENT_ENTRY__MANUAL_AUTO
+			@i18n:Label (en="Payment Entry Calculated Manually Or Automatically")
+			@t24:i (align=L, inputBehaviour=N, maxLength=1, sysNumber=77.0, core=true, t24Name=MANUAL.AUTO)
+		CUST_REMARKS -> byValue LD_Delivery:LD_PAYMENT_ENTRY__CUST_REMARKS *
+		ALONE_MERGE_IND : LD_Delivery:LD_PAYMENT_ENTRY__ALONE_MERGE_IND
+			@i18n:Label (en="Merge Customer Remarks")
+			@t24:i (align=L, inputBehaviour=I, maxLength=1, sysNumber=79.0, core=true, t24Name=ALONE.MERGE.IND)
+		OUR_REMARKS -> byValue LD_Delivery:LD_PAYMENT_ENTRY__OUR_REMARKS *
+		ACTIVITY -> byValue LD_Delivery:LD_PAYMENT_ENTRY__ACTIVITY *
+		STMT_NO -> byValue LD_Delivery:LD_PAYMENT_ENTRY__STMT_NO *
+		OVERRIDES -> byValue LD_Delivery:LD_PAYMENT_ENTRY__OVERRIDES *
+		RECORD_STATUS : T24BusinessTypes:STAT
+			@i18n:Label (en="Record Status")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=85.0, core=true, t24Name=RECORD.STATUS)
+		CURR_NO : mml:Integer
+			@i18n:Label (en="Curr No")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=86.0, core=true, t24Name=CURR.NO)
+		INPUTTER -> byValue LD_Delivery:LD_PAYMENT_ENTRY__INPUTTER *
+		DATE_TIME -> byValue LD_Delivery:LD_PAYMENT_ENTRY__DATE_TIME *
+		AUTHORISER : T24BusinessTypes:A
+			@i18n:Label (en=Authoriser)
+			@i18n:Tooltip (en="Indicates the User who Authorises the record")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=89.0, core=true, t24Name=AUTHORISER)
+		CO_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company)
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=90.0, core=true, businessType=A, t24Name=CO.CODE, mask="R##-###-####")
+		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Department Code")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=91.0, core=true, t24Name=DEPT.CODE)
+		AUDITOR_CODE : T24BusinessTypes:A
+			@i18n:Label (en="Auditor Code")
+			@i18n:Tooltip (en="Auditor Code")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=92.0, core=true, t24Name=AUDITOR.CODE)
+		AUDIT_DATE_TIME : T24BusinessTypes:RELTIME
+			@i18n:Label (en="Audit Date Time")
+			@i18n:Tooltip (en="Date and time when record was audited")
+			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=93.0, core=true, t24Name=AUDIT.DATE.TIME, mask="RDD DD  DD ##:##")
+	}
+	LD_PAYMENT_ENTRY__PRIN_INTER_BANK
+	{
+		PRIN_INTER_BANK : T24BusinessTypes:S
+			@i18n:Label (en="Name And Address Of The Intermediary Bank")
+			@t24:i (align=L, inputBehaviour=F, maxLength=35, sysNumber=7.0, core=true, t24Name=PRIN.INTER.BANK)
+	}
+	LD_PAYMENT_ENTRY__PRIN_AC_WITH_BK
+	{
+		PRIN_AC_WITH_BK : T24BusinessTypes:S
+			@i18n:Label (en="Name And Address Of The Account With Bank")
+			@t24:i (align=L, inputBehaviour=F, maxLength=35, sysNumber=8.0, core=true, t24Name=PRIN.AC.WITH.BK)
+	}
+	LD_PAYMENT_ENTRY__INT_INTER_BANK
+	{
+		INT_INTER_BANK : T24BusinessTypes:S
+			@i18n:Label (en="Details Of Intermediary Bank")
+			@t24:i (align=L, inputBehaviour=F, maxLength=35, sysNumber=12.0, core=true, t24Name=INT.INTER.BANK)
+	}
+	LD_PAYMENT_ENTRY__INT_AC_WITH_BK
+	{
+		INT_AC_WITH_BK : T24BusinessTypes:S
+			@i18n:Label (en="Bank Details")
+			@t24:i (align=L, inputBehaviour=F, maxLength=35, sysNumber=13.0, core=true, t24Name=INT.AC.WITH.BK)
+	}
+	LD_PAYMENT_ENTRY__CHRG_AMT_DUE
+	{
+		CHRG_AMT_DUE : T24BusinessTypes:AMT
+			@i18n:Label (en="Charge Amount On Due")
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=32.0, core=true, t24Name=CHRG.AMT.DUE, typeModifiers="-1")
+		CHRG_PAY_DEDUCT : LD_Delivery:LD_PAYMENT_ENTRY__CHRG_AMT_DUE__CHRG_PAY_DEDUCT
+			@i18n:Label (en="Charge Amount To Be Paid Or Dedducted")
+			@t24:i (align=L, inputBehaviour=I, maxLength=1, sysNumber=33.0, core=true, t24Name=CHRG.PAY.DEDUCT)
+		CHRG_AMT_TO_PAY : T24BusinessTypes:AMT
+			@i18n:Label (en="Charge Amount To Be Paid")
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=34.0, core=true, t24Name=CHRG.AMT.TO.PAY, typeModifiers="-1")
+		CHRG_DISB_ACC : mml:Integer
+			@i18n:Label (en="Disbursement Account For Charge Payment")
+			@t24:i (align=R, inputBehaviour=I, maxLength=16, sysNumber=35.0, core=true, t24Name=CHRG.DISB.ACC)
+	}
+	LD_PAYMENT_ENTRY__FEES_AMT_DUE
+	{
+		FEES_AMT_DUE : T24BusinessTypes:AMT
+			@i18n:Label (en="Fee Amount Due")
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=42.0, core=true, t24Name=FEES.AMT.DUE, typeModifiers="-1")
+		FEES_PAY_DEDUCT : LD_Delivery:LD_PAYMENT_ENTRY__FEES_AMT_DUE__FEES_PAY_DEDUCT
+			@i18n:Label (en="Fees To Be Paid Or Deducted")
+			@t24:i (align=L, inputBehaviour=I, maxLength=1, sysNumber=43.0, core=true, t24Name=FEES.PAY.DEDUCT)
+		FEES_AMT_TO_PAY : T24BusinessTypes:AMT
+			@i18n:Label (en="Fee Amount To Be Paid")
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=44.0, core=true, t24Name=FEES.AMT.TO.PAY, typeModifiers="-1")
+		FEES_DISB_ACC : mml:Integer
+			@i18n:Label (en="Disbursement Account For Fee Payments")
+			@t24:i (align=R, inputBehaviour=I, maxLength=16, sysNumber=45.0, core=true, t24Name=FEES.DISB.ACC)
+	}
+	LD_PAYMENT_ENTRY__CHARGE_CODE
+	{
+		CHARGE_CODE : mml:Integer
+			@i18n:Label (en="Charge Code")
+			@t24:i (align=R, inputBehaviour=N, maxLength=3, sysNumber=61.0, core=true, t24Name=CHARGE.CODE)
+		AMT_DUE : T24BusinessTypes:AMT
+			@i18n:Label (en="Due Amount")
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=62.0, core=true, t24Name=AMT.DUE, typeModifiers="-1")
+		PAY_OR_DEDUCT : LD_Delivery:LD_PAYMENT_ENTRY__CHARGE_CODE__PAY_OR_DEDUCT
+			@i18n:Label (en="Pay Or Deduct")
+			@t24:i (align=L, inputBehaviour=N, maxLength=1, sysNumber=63.0, core=true, t24Name=PAY.OR.DEDUCT)
+		AMT_TO_PAY : T24BusinessTypes:AMT
+			@i18n:Label (en="Amount To Be Paid")
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=64.0, core=true, t24Name=AMT.TO.PAY, typeModifiers="-1")
+	}
+	LD_PAYMENT_ENTRY__TAX_TYPE
+	{
+		TAX_TYPE : LD_Delivery:LD_PAYMENT_ENTRY__TAX_TYPE__TAX_TYPE
+			@i18n:Label (en="Tax Type")
+			@t24:i (align=L, inputBehaviour=I, maxLength=1, sysNumber=65.0, core=true, t24Name=TAX.TYPE)
+		TAX_CODE -> byValue LD_Delivery:LD_PAYMENT_ENTRY__TAX_TYPE__TAX_CODE *
+		TAX_TYPE_DUE : T24BusinessTypes:AMT
+			@i18n:Label (en="Tax Amount Due")
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=67.0, core=true, t24Name=TAX.TYPE.DUE, typeModifiers="-1")
+		TAX_TYPE_P_OR_D : LD_Delivery:LD_PAYMENT_ENTRY__TAX_TYPE__TAX_TYPE_P_OR_D
+			@i18n:Label (en="Tax To Be Added To Or Deducted")
+			@t24:i (align=L, inputBehaviour=N, maxLength=1, sysNumber=68.0, core=true, t24Name=TAX.TYPE.P.OR.D)
+		TAX_TYPE_TO_PAY : T24BusinessTypes:AMT
+			@i18n:Label (en="Tax To Be Added To Or Deducted")
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=69.0, core=true, t24Name=TAX.TYPE.TO.PAY, typeModifiers="-1")
+	}
+	LD_PAYMENT_ENTRY__TAX_TYPE__TAX_CODE
+	{
+		TAX_CODE : mml:Integer
+			@i18n:Label (en="Tax Code")
+			@t24:i (align=R, inputBehaviour=N, maxLength=3, sysNumber=66.0, core=true, t24Name=TAX.CODE)
+	}
+	LD_PAYMENT_ENTRY__CUST_REMARKS
+	{
+		CUST_REMARKS : T24BusinessTypes:A
+			@i18n:Label (en="Customer Remarks")
+			@t24:i (align=L, inputBehaviour=I, maxLength=65, sysNumber=78.0, core=true, t24Name=CUST.REMARKS)
+	}
+	LD_PAYMENT_ENTRY__OUR_REMARKS
+	{
+		OUR_REMARKS : T24BusinessTypes:A
+			@i18n:Label (en=Remarks)
+			@t24:i (align=L, inputBehaviour=I, maxLength=65, sysNumber=80.0, core=true, t24Name=OUR.REMARKS)
+	}
+	LD_PAYMENT_ENTRY__ACTIVITY
+	{
+		ACTIVITY : T24BusinessTypes:A
+			@i18n:Label (en=Activity)
+			@t24:i (align=L, inputBehaviour=N, maxLength=8, sysNumber=81.0, core=true, t24Name=ACTIVITY)
+		TIME_DATE_STAMP : T24BusinessTypes:AA
+			@i18n:Label (en="Time Stamp For Delivery Advice")
+			@t24:i (align=L, inputBehaviour=N, maxLength=16, sysNumber=82.0, core=true, t24Name=TIME.DATE.STAMP)
+	}
+	LD_PAYMENT_ENTRY__STMT_NO
+	{
+		STMT_NO : mml:Integer
+			@i18n:Label (en="Statement Number")
+			@t24:i (align=R, inputBehaviour=N, maxLength=29, sysNumber=83.0, core=true, t24Name=STMT.NO)
+	}
+	LD_PAYMENT_ENTRY__OVERRIDES
+	{
+		OVERRIDES : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=84.0, core=true, t24Name=OVERRIDES)
+	}
+	LD_PAYMENT_ENTRY__INPUTTER
+	{
+		INPUTTER : T24BusinessTypes:A
+			@i18n:Label (en=Inputter)
+			@i18n:Tooltip (en="The user who last updated the record")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=87.0, core=true, t24Name=INPUTTER)
+	}
+	LD_PAYMENT_ENTRY__DATE_TIME
+	{
+		DATE_TIME : T24BusinessTypes:RELTIME
+			@i18n:Label (en="Date time")
+			@i18n:Tooltip (en="Date and time when record was input or authorised")
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=88.0, core=true, t24Name=DATE.TIME, mask="RDD DD  DD ##:##")
+	}
+}
+Enumerations {
+	LD_PAYMENT_ENTRY__PRINC_PAY_DEDUCT : mml:string
+		P=P
+		N=N
+	LD_PAYMENT_ENTRY__INT_PAY_DEDUCT : mml:string
+		P=P
+		N=N
+		R=R
+	LD_PAYMENT_ENTRY__COMM_PAY_DEDUCT : mml:string
+		P=P
+		D=D
+		N=N
+		R=R
+	LD_PAYMENT_ENTRY__CHRG_AMT_DUE__CHRG_PAY_DEDUCT : mml:string
+		P=P
+		D=D
+		N=N
+	LD_PAYMENT_ENTRY__TAX_PAY_DEDUCT : mml:string
+		P=P
+		D=D
+		N=N
+	LD_PAYMENT_ENTRY__FEES_AMT_DUE__FEES_PAY_DEDUCT : mml:string
+		P=P
+		D=D
+		N=N
+	LD_PAYMENT_ENTRY__PEN_INT_PAY_DEDUCT : mml:string
+		P=P
+		D=D
+		N=N
+	LD_PAYMENT_ENTRY__PEN_COM_PAY_DEDUCT : mml:string
+		P=P
+		D=D
+		N=N
+	LD_PAYMENT_ENTRY__GEN_CHG_PAY_DEDUCT : mml:string
+		P=P
+		D=D
+		N=N
+	LD_PAYMENT_ENTRY__CHARGE_CODE__PAY_OR_DEDUCT : mml:string
+		P=P
+		D=D
+		N=N
+	LD_PAYMENT_ENTRY__TAX_TYPE__TAX_TYPE : mml:string
+		P=P
+		I=I
+		C=C
+	LD_PAYMENT_ENTRY__TAX_TYPE__TAX_TYPE_P_OR_D : mml:string
+		P=P
+		D=D
+		N=N
+	LD_PAYMENT_ENTRY__GRAND_TOTAL_P_OR_D : mml:string
+		P=P
+		D=D
+		N=N
+	LD_PAYMENT_ENTRY__MANUAL_AUTO : mml:string
+		A=A
+		M=M
+	LD_PAYMENT_ENTRY__ALONE_MERGE_IND : mml:string
+		A=A
+		M=M
+}

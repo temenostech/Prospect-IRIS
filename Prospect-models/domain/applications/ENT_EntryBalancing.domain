@@ -1,0 +1,196 @@
+# UTF-8
+/* Entry Balance Processing for Core Accounting */
+Domain ENT_EntryBalancing
+	@t24:i (module=AC)
+	@java:Package (value=com.temenos.t24.datamodel.ac.ent_entrybalancing)
+namespace "http://www.temenos.com/t24/ENT_EntryBalancing"
+metamodelVersion 1.30.6
+Classes {
+	EB_FIN_SYSTEM
+		@t24:i (t24Name=EB.FIN.SYSTEM, level=I, type=H, allowedFunctions="A C D E I L Q S", localRefAllowed=true)
+	{
+		FIN_SYSTEM_ID -> ENT_EntryBalancing:EB_FIN_SYSTEM PK required
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=0.0, core=true, businessType=A, t24Name=FIN.SYSTEM.ID)
+		DESCRIPTION -> byValue ENT_EntryBalancing:EB_FIN_SYSTEM__DESCRIPTION *
+		LOCAL_REF -> byValue ENT_EntryBalancing:EB_FIN_SYSTEM__LOCAL_REF *
+		RESERVED03 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=8.0, core=true, t24Name=RESERVED03)
+		RESERVED02 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=9.0, core=true, t24Name=RESERVED02)
+		RESERVED01 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=10.0, core=true, t24Name=RESERVED01)
+		RECORD_STATUS : T24BusinessTypes:STAT
+			@i18n:Label (en="Record Status")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=11.0, core=true, t24Name=RECORD.STATUS)
+		CURR_NO : mml:Integer
+			@i18n:Label (en="Curr No")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=12.0, core=true, t24Name=CURR.NO)
+		INPUTTER -> byValue ENT_EntryBalancing:EB_FIN_SYSTEM__INPUTTER *
+		DATE_TIME -> byValue ENT_EntryBalancing:EB_FIN_SYSTEM__DATE_TIME *
+		AUTHORISER : T24BusinessTypes:A
+			@i18n:Label (en=Authoriser)
+			@i18n:Tooltip (en="Indicates the User who Authorises the record")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=15.0, core=true, t24Name=AUTHORISER)
+		CO_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company)
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=16.0, core=true, businessType=A, t24Name=CO.CODE, mask="R##-###-####")
+		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Dept Code")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=17.0, core=true, t24Name=DEPT.CODE)
+		AUDITOR_CODE : T24BusinessTypes:A
+			@i18n:Label (en="Auditor Code")
+			@i18n:Tooltip (en="Auditor Code")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=18.0, core=true, t24Name=AUDITOR.CODE)
+		AUDIT_DATE_TIME : T24BusinessTypes:RELTIME
+			@i18n:Label (en="Audit Date Time")
+			@i18n:Tooltip (en="Date and time when record was audited")
+			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=19.0, core=true, t24Name=AUDIT.DATE.TIME, mask="RDD DD  DD ##:##")
+	}
+	EB_FIN_SYSTEM__DESCRIPTION
+	{
+		DESCRIPTION : T24BusinessTypes:A required
+			@i18n:Label (en=Description)
+			@i18n:Tooltip (en=Description)
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, multiLanguage=true, sysNumber=1.0, core=true, t24Name=DESCRIPTION)
+	}
+	EB_FIN_SYSTEM__LOCAL_REF
+	{
+		RESERVED08 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=3.0, core=true, t24Name=RESERVED08)
+		RESERVED07 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=4.0, core=true, t24Name=RESERVED07)
+		RESERVED06 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=5.0, core=true, t24Name=RESERVED06)
+		RESERVED05 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=6.0, core=true, t24Name=RESERVED05)
+		RESERVED04 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=7.0, core=true, t24Name=RESERVED04)
+	}
+	EB_FIN_SYSTEM__INPUTTER
+	{
+		INPUTTER : T24BusinessTypes:A
+			@i18n:Label (en=Inputter)
+			@i18n:Tooltip (en="The user who last updated the record")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=13.0, core=true, t24Name=INPUTTER)
+	}
+	EB_FIN_SYSTEM__DATE_TIME
+	{
+		DATE_TIME : T24BusinessTypes:RELTIME
+			@i18n:Label (en="Date time")
+			@i18n:Tooltip (en="Date and time when record was input or authorised")
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=14.0, core=true, t24Name=DATE.TIME, mask="RDD DD  DD ##:##")
+	}
+	EB_FINANCIAL_SYSTEM
+		@t24:i (t24Name=EB.FINANCIAL.SYSTEM, level=I, type=H, allowedFunctions="A C D E I L Q S", localRefAllowed=false)
+	{
+		FIN_SYSTEM_ID -> ENT_EntryBalancing:EB_FINANCIAL_SYSTEM PK required
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=0.0, core=true, businessType=A, t24Name=FIN.SYSTEM.ID)
+		DESCRIPTION -> byValue ENT_EntryBalancing:EB_FINANCIAL_SYSTEM__DESCRIPTION *
+		SYS_ID_POS_TYPE -> byValue ENT_EntryBalancing:EB_FINANCIAL_SYSTEM__SYS_ID_POS_TYPE *
+		RESERVED03 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=14.0, core=true, t24Name=RESERVED03)
+		RESERVED02 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=15.0, core=true, t24Name=RESERVED02)
+		RESERVED01 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=16.0, core=true, t24Name=RESERVED01)
+		RECORD_STATUS : T24BusinessTypes:STAT
+			@i18n:Label (en="Record Status")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=17.0, core=true, t24Name=RECORD.STATUS)
+		CURR_NO : mml:Integer
+			@i18n:Label (en="Curr No")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=18.0, core=true, t24Name=CURR.NO)
+		INPUTTER -> byValue ENT_EntryBalancing:EB_FINANCIAL_SYSTEM__INPUTTER *
+		DATE_TIME -> byValue ENT_EntryBalancing:EB_FINANCIAL_SYSTEM__DATE_TIME *
+		AUTHORISER : T24BusinessTypes:A
+			@i18n:Label (en=Authoriser)
+			@i18n:Tooltip (en="Indicates the User who Authorises the record")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=21.0, core=true, t24Name=AUTHORISER)
+		CO_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company)
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=22.0, core=true, businessType=A, t24Name=CO.CODE, mask="R##-###-####")
+		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Dept Code")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=23.0, core=true, t24Name=DEPT.CODE)
+		AUDITOR_CODE : T24BusinessTypes:A
+			@i18n:Label (en="Auditor Code")
+			@i18n:Tooltip (en="Auditor Code")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=24.0, core=true, t24Name=AUDITOR.CODE)
+		AUDIT_DATE_TIME : T24BusinessTypes:RELTIME
+			@i18n:Label (en="Audit Date Time")
+			@i18n:Tooltip (en="Date and time when record was audited")
+			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=25.0, core=true, t24Name=AUDIT.DATE.TIME, mask="RDD DD  DD ##:##")
+	}
+	EB_FINANCIAL_SYSTEM__DESCRIPTION
+	{
+		DESCRIPTION : T24BusinessTypes:A required
+			@i18n:Label (en=Description)
+			@i18n:Tooltip (en=Description)
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, multiLanguage=true, sysNumber=1.0, core=true, t24Name=DESCRIPTION)
+	}
+	EB_FINANCIAL_SYSTEM__SYS_ID_POS_TYPE
+	{
+		SYS_ID_POS_TYPE : T24BusinessTypes:A
+			@i18n:Label (en="Sys Id Pos Type")
+			@i18n:Tooltip (en="System Id Position Type")
+			@t24:i (align=L, inputBehaviour=I, maxLength=6, sysNumber=2.0, core=true, t24Name=SYS.ID.POS.TYPE)
+		AUTO_BL_SYS_ONL : ENT_EntryBalancing:EB_FINANCIAL_SYSTEM__SYS_ID_POS_TYPE__AUTO_BL_SYS_ONL required
+			@i18n:Label (en="Auto Bl Sys Onl")
+			@i18n:Tooltip (en="Auto Bal System Online")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=3.0, core=true, t24Name=AUTO.BL.SYS.ONL)
+		AUTO_BL_SYS_COB : ENT_EntryBalancing:EB_FINANCIAL_SYSTEM__SYS_ID_POS_TYPE__AUTO_BL_SYS_COB required
+			@i18n:Label (en="Auto Bl Sys Cob")
+			@i18n:Tooltip (en="Auto BalanceSystem Cob")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=4.0, core=true, t24Name=AUTO.BL.SYS.COB)
+		BALANCED_INTRNL : ENT_EntryBalancing:EB_FINANCIAL_SYSTEM__SYS_ID_POS_TYPE__BALANCED_INTRNL required
+			@i18n:Label (en="Blnced Intrnl")
+			@i18n:Tooltip (en="Balanced Internal")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=5.0, core=true, t24Name=BALANCED.INTRNL)
+		BALANCING_CAT : mml:Integer
+			@i18n:Label (en="Balancing Category")
+			@i18n:Tooltip (en="Balancing Category")
+			@t24:i (align=R, inputBehaviour=I, maxLength=6, sysNumber=6.0, core=true, t24Name=BALANCING.CAT)
+		BLNCING_TXN_CDE : mml:Integer
+			@i18n:Label (en="Blncing Txn Cde")
+			@i18n:Tooltip (en="Balancing Txn Code")
+			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=7.0, core=true, t24Name=BLNCING.TXN.CDE)
+		INTRNL_BAL_TYPE -> ENT_SoftAccounting:AC_BALANCE_TYPE
+			@i18n:Label (en="Intrnl Bal Type")
+			@i18n:Tooltip (en="Internl Balancing Type")
+			@t24:i (align=L, inputBehaviour=I, maxLength=12, sysNumber=8.0, core=true, businessType=A, t24Name=INTRNL.BAL.TYPE)
+		RESERVED08 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=9.0, core=true, t24Name=RESERVED08)
+		RESERVED07 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=10.0, core=true, t24Name=RESERVED07)
+		RESERVED06 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=11.0, core=true, t24Name=RESERVED06)
+		RESERVED05 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=12.0, core=true, t24Name=RESERVED05)
+		RESERVED04 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=13.0, core=true, t24Name=RESERVED04)
+	}
+	EB_FINANCIAL_SYSTEM__INPUTTER
+	{
+		INPUTTER : T24BusinessTypes:A
+			@i18n:Label (en=Inputter)
+			@i18n:Tooltip (en="The user who last updated the record")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=19.0, core=true, t24Name=INPUTTER)
+	}
+	EB_FINANCIAL_SYSTEM__DATE_TIME
+	{
+		DATE_TIME : T24BusinessTypes:RELTIME
+			@i18n:Label (en="Date time")
+			@i18n:Tooltip (en="Date and time when record was input or authorised")
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=20.0, core=true, t24Name=DATE.TIME, mask="RDD DD  DD ##:##")
+	}
+}
+Enumerations {
+	EB_FINANCIAL_SYSTEM__SYS_ID_POS_TYPE__AUTO_BL_SYS_ONL : mml:string
+		Y=Y
+		NO=NO
+	EB_FINANCIAL_SYSTEM__SYS_ID_POS_TYPE__AUTO_BL_SYS_COB : mml:string
+		Y=Y
+		NO=NO
+	EB_FINANCIAL_SYSTEM__SYS_ID_POS_TYPE__BALANCED_INTRNL : mml:string
+		Y=Y
+		NO=NO
+}

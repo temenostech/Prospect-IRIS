@@ -1,0 +1,140 @@
+# UTF-8
+/* Model Configuration for ST */
+Domain ST_ModelBank
+	@t24:i (module=ST)
+	@java:Package (value=com.temenos.t24.datamodel.st.st_modelbank)
+namespace "http://www.temenos.com/t24/ST_ModelBank"
+metamodelVersion 1.30.6
+Classes {
+	NOFILE_ACC_STS
+		@t24:i (t24Name=NOFILE.ACC.STS, level=I, type=T, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		YID_LIST : mml:Integer required
+			@t24:i (align=L, inputBehaviour=N, maxLength=50, core=false, t24Name=YID.LIST, genOperation=E.ACC.STS)
+		CHEQUE_STATUS : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=10, sysNumber=1.0, core=true, t24Name=CHEQUE.STATUS)
+	}
+	NOFILE_ASSET_DEPRECIATION
+		@t24:i (t24Name=NOFILE.ASSET.DEPRECIATION, level=I, type=T, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		RET_VAR : mml:Integer required
+			@t24:i (align=L, inputBehaviour=N, maxLength=10, core=false, t24Name=RET.VAR, genOperation=ASSET.DEPRECIATION.REPORT)
+	}
+	NOFILE_BASIC_INTEREST_CONDS
+		@t24:i (t24Name=NOFILE.BASIC.INTEREST.CONDS, level=I, type=T, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		RET_ARR -> byValue ST_ModelBank:NOFILE_BASIC_INTEREST_CONDS__RET_ARR *
+		KEY : mml:Integer
+			@i18n:Label (en=Key)
+			@i18n:Tooltip (en="Indicates th transaction key")
+			@t24:i (align=R, inputBehaviour=N, maxLength=5, core=false, t24Name=KEY)
+		CURRENCY : mml:Integer
+			@i18n:Label (en=Ccy)
+			@t24:i (align=R, inputBehaviour=N, maxLength=3, core=false, t24Name=CURRENCY)
+		DATE : mml:Integer
+			@i18n:Label (en=Date)
+			@t24:i (align=R, inputBehaviour=N, maxLength=8, core=false, t24Name=DATE)
+	}
+	NOFILE_BASIC_INTEREST_CONDS__RET_ARR
+	{
+		RET_ARR : mml:Integer required
+			@t24:i (align=L, inputBehaviour=N, maxLength=1000, core=false, t24Name=RET.ARR, genOperation=E.MB.BASIC.INT.CONDS)
+	}
+	NOFILE_CUSTOMER_AC_LIST
+		@t24:i (t24Name=NOFILE.CUSTOMER.AC.LIST, level=I, type=T, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		MB_CUSTOMER_ID : mml:Integer required
+			@i18n:Label (en=Customer)
+			@t24:i (align=L, inputBehaviour=N, core=false, t24Name=MB.CUSTOMER.ID, genOperation=E.MB.LIST.CUSTOMER.ACCOUNTS)
+		JOINT_HOLDER : mml:Integer
+			@i18n:Label (en="Joint Holder")
+			@t24:i (align=R, inputBehaviour=N, maxLength=50, core=false, t24Name=JOINT.HOLDER)
+	}
+	NOFILE_CUSTOMER_CONDITIONS
+		@t24:i (t24Name=NOFILE.CUSTOMER.CONDITIONS, level=I, type=T, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		RET_ARR -> byValue ST_ModelBank:NOFILE_CUSTOMER_CONDITIONS__RET_ARR *
+		CUSTOMER -> byValue ST_ModelBank:NOFILE_CUSTOMER_CONDITIONS__CUSTOMER *
+	}
+	NOFILE_CUSTOMER_CONDITIONS__RET_ARR
+	{
+		RET_ARR : mml:Integer required
+			@t24:i (align=L, inputBehaviour=N, maxLength=1000, core=false, t24Name=RET.ARR, genOperation=E.MB.BUILD.CUST.CONDITIONS)
+	}
+	NOFILE_CUSTOMER_CONDITIONS__CUSTOMER
+	{
+		CUSTOMER : mml:Integer
+			@i18n:Label (en=Customer)
+			@i18n:Tooltip (en="Customer Liability")
+			@t24:i (align=R, inputBehaviour=N, maxLength=1000, core=false, t24Name=CUSTOMER)
+	}
+	NOFILE_CUSTOMER_PERSON_ENTITY
+		@t24:i (t24Name=NOFILE.CUSTOMER.PERSON.ENTITY, level=I, type=T, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		ID : mml:Integer required
+			@i18n:Label (en="Transaction Ref")
+			@i18n:Tooltip (en="Transaction Reference")
+			@t24:i (align=R, inputBehaviour=N, maxLength=50, core=false, t24Name="@ID")
+		ENQ_DATA : mml:Integer
+			@t24:i (align=L, inputBehaviour=N, maxLength=50, core=false, t24Name=ENQ.DATA, genOperation=E.MB.CUSTOMER.PERSON.ENTITY)
+	}
+	NOFILE_EOD_REORDER
+		@t24:i (t24Name=NOFILE.EOD.REORDER, level=I, type=T, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		ST_DATE : T24BusinessTypes:D required
+			@i18n:Label (en="Start Date")
+			@t24:i (align=R, inputBehaviour=N, maxLength=12, sysNumber=1.0, core=true, t24Name=ST.DATE)
+		YID_LIST : mml:Integer
+			@t24:i (align=L, inputBehaviour=N, maxLength=50, core=false, t24Name=YID.LIST, genOperation=E.EOD.REORDER)
+		END_DATE : T24BusinessTypes:D
+			@i18n:Label (en="End Date")
+			@i18n:Tooltip (en="End Date")
+			@t24:i (align=R, inputBehaviour=N, maxLength=12, sysNumber=2.0, core=true, t24Name=END.DATE)
+	}
+	NOFILE_HIS_STS
+		@t24:i (t24Name=NOFILE.HIS.STS, level=I, type=T, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		ACCT_NO : mml:Integer required
+			@i18n:Label (en="Account Number")
+			@t24:i (align=R, inputBehaviour=N, maxLength=10, sysNumber=1.0, core=true, t24Name=ACCT.NO)
+		ST_DATE : T24BusinessTypes:D
+			@i18n:Label (en="Start Date")
+			@t24:i (align=R, inputBehaviour=N, maxLength=10, sysNumber=1.0, core=true, t24Name=ST.DATE)
+		END_DATE : T24BusinessTypes:D
+			@i18n:Label (en="End Date")
+			@i18n:Tooltip (en="End Date")
+			@t24:i (align=R, inputBehaviour=N, maxLength=10, sysNumber=1.0, core=true, t24Name=END.DATE)
+		YID_LIST : mml:Integer
+			@t24:i (align=L, inputBehaviour=N, maxLength=50, core=false, t24Name=YID.LIST, genOperation=E.HIS.STS)
+	}
+	NOFILE_PERIODIC_INTEREST_CONDS
+		@t24:i (t24Name=NOFILE.PERIODIC.INTEREST.CONDS, level=I, type=T, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		RET_ARR -> byValue ST_ModelBank:NOFILE_PERIODIC_INTEREST_CONDS__RET_ARR *
+		KEY : mml:Integer
+			@i18n:Label (en=Key)
+			@i18n:Tooltip (en="Indicates th transaction key")
+			@t24:i (align=R, inputBehaviour=N, maxLength=5, core=false, t24Name=KEY)
+		CURRENCY : mml:Integer
+			@i18n:Label (en=Ccy)
+			@t24:i (align=R, inputBehaviour=N, maxLength=3, core=false, t24Name=CURRENCY)
+		DATE : mml:Integer
+			@i18n:Label (en=Date)
+			@t24:i (align=R, inputBehaviour=N, maxLength=8, core=false, t24Name=DATE)
+	}
+	NOFILE_PERIODIC_INTEREST_CONDS__RET_ARR
+	{
+		RET_ARR : mml:Integer required
+			@t24:i (align=L, inputBehaviour=N, maxLength=1000, core=false, t24Name=RET.ARR, genOperation=E.MB.PERIODIC.INT.CONDS)
+	}
+	NOFILE_SWEEP_HIST
+		@t24:i (t24Name=NOFILE.SWEEP.HIST, level=I, type=T, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		RET_DATA : mml:Integer required
+			@t24:i (align=L, inputBehaviour=N, maxLength=100000, core=false, t24Name=RET.DATA, genOperation=E.MB.SWEEPS.HIST.TODAY)
+		ID : mml:Integer
+			@i18n:Label (en="Transaction Ref")
+			@i18n:Tooltip (en="Transaction Reference")
+			@t24:i (align=R, inputBehaviour=N, maxLength=15, core=false, t24Name="@ID")
+	}
+}

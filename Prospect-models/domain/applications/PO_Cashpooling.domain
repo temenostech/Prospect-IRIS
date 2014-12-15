@@ -1,0 +1,1145 @@
+# UTF-8
+/* Corporate Cash Management */
+Domain PO_Cashpooling
+	@t24:i (module=PO)
+	@java:Package (value=com.temenos.t24.datamodel.po.po_cashpooling)
+namespace "http://www.temenos.com/t24/PO_Cashpooling"
+metamodelVersion 1.30.6
+Classes {
+	AC_AUTO_SWEEP_SCHD
+		@t24:i (t24Name=AC.AUTO.SWEEP.SCHD, level=F, type=L, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		SWEEP_TIME -> PO_Cashpooling:AC_AUTO_SWEEP_SCHD PK required
+			@t24:i (align=L, inputBehaviour=I, maxLength=5, sysNumber=0.0, core=true, businessType=TIME, t24Name=SWEEP.TIME)
+		AC_GROUP_IDS -> byValue PO_Cashpooling:AC_AUTO_SWEEP_SCHD__AC_GROUP_IDS *
+	}
+	AC_AUTO_SWEEP_SCHD__AC_GROUP_IDS
+	{
+		AC_GROUP_IDS : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=I, maxLength=18, sysNumber=1.0, core=true, t24Name=AC.GROUP.IDS)
+	}
+	AC_CASH_POOL
+		@t24:i (t24Name=AC.CASH.POOL, level=F, type=H, allowedFunctions="A C D E I L Q S", localRefAllowed=true)
+	{
+		ID -> PO_Cashpooling:AC_CASH_POOL PK required
+			@i18n:Label (en="Transaction Ref")
+			@i18n:Tooltip (en="Transaction Reference")
+			@t24:i (align=L, inputBehaviour=I, maxLength=18, sysNumber=0.0, core=true, businessType=ANT, t24Name="@ID")
+		GROUP_ID -> PO_Cashpooling:AC_CP_GROUP_PARAM
+			@i18n:Label (en="Group Id")
+			@i18n:Tooltip (en="Group Id")
+			@t24:i (align=L, inputBehaviour=I, maxLength=18, sysNumber=1.0, core=true, businessType=A, t24Name=GROUP.ID)
+		SUB_GROUP -> PO_Cashpooling:AC_CP_GROUP_PARAM
+			@i18n:Label (en="Sub Group")
+			@i18n:Tooltip (en="Sub Group")
+			@t24:i (align=L, inputBehaviour=I, maxLength=18, sysNumber=2.0, core=true, businessType=A, t24Name=SUB.GROUP)
+		MAIN_DEPOSIT -> ACM_AccountOpening:ACCOUNT
+			@i18n:Label (en="Main Deposit")
+			@i18n:Tooltip (en="Main Deposit")
+			@t24:i (align=R, inputBehaviour=N, maxLength=16, sysNumber=3.0, core=true, businessType=ACC, t24Name=MAIN.DEPOSIT)
+		MAIN_MASTER -> ACM_AccountOpening:ACCOUNT
+			@i18n:Label (en="Main Master")
+			@i18n:Tooltip (en="Main Master")
+			@t24:i (align=R, inputBehaviour=N, maxLength=16, sysNumber=4.0, core=true, businessType=ACC, t24Name=MAIN.MASTER)
+		CURRENT_BALANCE : T24BusinessTypes:AMT
+			@i18n:Label (en="Current Balance")
+			@i18n:Tooltip (en="Current Balance")
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=5.0, core=true, t24Name=CURRENT.BALANCE)
+		SEQUENCE : T24BusinessTypes:AMT
+			@i18n:Label (en=Sequence)
+			@t24:i (align=R, inputBehaviour=I, maxLength=8, sysNumber=6.0, core=true, t24Name=SEQUENCE)
+		LINK_ACCT -> byValue PO_Cashpooling:AC_CASH_POOL__LINK_ACCT *
+		NARRATIVE -> byValue PO_Cashpooling:AC_CASH_POOL__NARRATIVE *
+		LINKS_PRODUCED -> byValue PO_Cashpooling:AC_CASH_POOL__LINKS_PRODUCED *
+		LEVEL_NO : mml:Integer
+			@i18n:Label (en="Level No")
+			@i18n:Tooltip (en="Level Number")
+			@t24:i (align=R, inputBehaviour=N, maxLength=3, sysNumber=31.0, core=true, t24Name=LEVEL.NO)
+		INTEREST_RATE : T24BusinessTypes:R
+			@i18n:Label (en="Interest Rate")
+			@i18n:Tooltip (en="Indicates interest rate")
+			@t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=32.0, core=true, t24Name=INTEREST.RATE)
+		INTEREST_KEY : mml:Integer
+			@i18n:Label (en="Interest Key")
+			@i18n:Tooltip (en="Indicates key to apply floating rate of interest")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=33.0, core=true, t24Name=INTEREST.KEY)
+		INTEREST_SPREAD : T24BusinessTypes:R
+			@i18n:Label (en="Interest Spread")
+			@i18n:Tooltip (en="Indicates the spread or margin on the contract.")
+			@t24:i (align=R, inputBehaviour=N, maxLength=12, sysNumber=34.0, core=true, t24Name=INTEREST.SPREAD, typeModifiers=-)
+		INT_LIQ_ACCT : T24BusinessTypes:ACC
+			@i18n:Label (en="Interest Liq Acct")
+			@i18n:Tooltip (en="Indicates Interest Liquidation Account")
+			@t24:i (align=R, inputBehaviour=N, maxLength=16, sysNumber=35.0, core=true, t24Name=INT.LIQ.ACCT)
+		CATEGORY : T24BusinessTypes:PRODCAT
+			@i18n:Label (en=Category)
+			@i18n:Tooltip (en="Specifies the Category")
+			@t24:i (align=R, inputBehaviour=N, maxLength=6, sysNumber=36.0, core=true, t24Name=CATEGORY, typeModifiers="2100121039", mask="R##-###")
+		LAST_MAINT_DATE : T24BusinessTypes:D
+			@i18n:Label (en="Last Maint Date")
+			@i18n:Tooltip (en="Last Maintenance Date")
+			@t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=37.0, core=true, t24Name=LAST.MAINT.DATE)
+		MULTI_RULE : mml:Integer
+			@i18n:Label (en="Multi Rule")
+			@i18n:Tooltip (en="Multi Rule")
+			@t24:i (align=R, inputBehaviour=N, maxLength=3, sysNumber=38.0, core=true, t24Name=MULTI.RULE)
+		RTN_WITH_SW_AMT : PO_Cashpooling:AC_CASH_POOL__RTN_WITH_SW_AMT
+			@i18n:Label (en="Sweep Amount")
+			@i18n:Tooltip (en="Sweep Amount")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=39.0, core=true, t24Name=RTN.WITH.SW.AMT)
+		CHARGE_CODE : T24BusinessTypes:CHG
+			@i18n:Label (en="Charge Code")
+			@i18n:Tooltip (en="Indicates the Charge code")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=40.0, core=true, t24Name=CHARGE.CODE, typeModifiers="CHGCOM")
+		CHARGE_AMOUNT : T24BusinessTypes:AMT
+			@i18n:Label (en="Charge Amount")
+			@i18n:Tooltip (en="Indicates charge amount")
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=41.0, core=true, t24Name=CHARGE.AMOUNT)
+		CHARGE_ACCOUNT -> ACM_AccountOpening:ACCOUNT
+			@i18n:Label (en="Charge Debit Account")
+			@t24:i (align=R, inputBehaviour=I, maxLength=16, sysNumber=42.0, core=true, businessType=ACC, t24Name=CHARGE.ACCOUNT)
+		TAX_AMOUNT : T24BusinessTypes:AMT
+			@i18n:Label (en="Tax Amount")
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=43.0, core=true, t24Name=TAX.AMOUNT)
+		SWEEP_CHG_CODE : T24BusinessTypes:CHG
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=44.0, core=true, t24Name=SWEEP.CHG.CODE, typeModifiers="CHGCOM")
+		SWEEP_CHG_AMOUNT : T24BusinessTypes:AMT
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=45.0, core=true, t24Name=SWEEP.CHG.AMOUNT)
+		WAIVE_CHARGES : PO_Cashpooling:AC_CASH_POOL__WAIVE_CHARGES
+			@i18n:Label (en="Waive Charges")
+			@i18n:Tooltip (en="Waive charges Y/N?")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=46.0, core=true, t24Name=WAIVE.CHARGES)
+		SUSP_START_DATE : T24BusinessTypes:D
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=47.0, core=true, t24Name=SUSP.START.DATE)
+		SUSP_END_DATE : T24BusinessTypes:D
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=48.0, core=true, t24Name=SUSP.END.DATE)
+		SWEEP_CANCEL_DATE : T24BusinessTypes:D
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=49.0, core=true, t24Name=SWEEP.CANCEL.DATE)
+		ALLOCATE_SWEEP_AMT : PO_Cashpooling:AC_CASH_POOL__ALLOCATE_SWEEP_AMT
+			@t24:i (align=L, inputBehaviour=F, maxLength=1, sysNumber=50.0, core=true, t24Name=ALLOCATE.SWEEP.AMT)
+		RESERVED05 : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=52.0, core=true, t24Name=RESERVED05)
+		RESERVED04 : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=53.0, core=true, t24Name=RESERVED04)
+		RESERVED03 : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=54.0, core=true, t24Name=RESERVED03)
+		RESERVED02 : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=55.0, core=true, t24Name=RESERVED02)
+		RESERVED01 : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=56.0, core=true, t24Name=RESERVED01)
+		STMT_NOS -> byValue PO_Cashpooling:AC_CASH_POOL__STMT_NOS *
+		OVERRIDE -> byValue PO_Cashpooling:AC_CASH_POOL__OVERRIDE *
+		RECORD_STATUS : T24BusinessTypes:STAT
+			@i18n:Label (en="Record Status")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=59.0, core=true, t24Name=RECORD.STATUS)
+		CURR_NO : mml:Integer
+			@i18n:Label (en="Curr No")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=60.0, core=true, t24Name=CURR.NO)
+		INPUTTER -> byValue PO_Cashpooling:AC_CASH_POOL__INPUTTER *
+		DATE_TIME -> byValue PO_Cashpooling:AC_CASH_POOL__DATE_TIME *
+		AUTHORISER : T24BusinessTypes:A
+			@i18n:Label (en=Authoriser)
+			@i18n:Tooltip (en="Indicates the User who Authorises the record")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=63.0, core=true, t24Name=AUTHORISER)
+		CO_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company)
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=64.0, core=true, businessType=A, t24Name=CO.CODE, mask="R##-###-####")
+		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Dept Code")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=65.0, core=true, t24Name=DEPT.CODE)
+		AUDITOR_CODE : T24BusinessTypes:A
+			@i18n:Label (en="Auditor Code")
+			@i18n:Tooltip (en="Auditor Code")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=66.0, core=true, t24Name=AUDITOR.CODE)
+		AUDIT_DATE_TIME : T24BusinessTypes:RELTIME
+			@i18n:Label (en="Audit Date Time")
+			@i18n:Tooltip (en="Date and time when record was audited")
+			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=67.0, core=true, t24Name=AUDIT.DATE.TIME, mask="RDD DD  DD ##:##")
+		NEXT_RUN_DATE -> byValue PO_Cashpooling:AC_CASH_POOL__NEXT_RUN_DATE *
+	}
+	AC_CASH_POOL__LINK_ACCT
+	{
+		LINK_ACCT -> ACM_AccountOpening:ACCOUNT
+			@i18n:Label (en="Link Account")
+			@i18n:Tooltip (en="Link Account")
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=7.0, core=true, businessType=ACC, t24Name=LINK.ACCT)
+		RULE -> ST_Sweeping:AC_SWEEP_TYPE
+			@i18n:Label (en=Rule)
+			@i18n:Tooltip (en="Rule ")
+			@t24:i (align=L, inputBehaviour=I, maxLength=12, sysNumber=8.0, core=true, businessType=A, t24Name=RULE)
+		ID_BAL_TYPE -> ENT_SoftAccounting:AC_BALANCE_TYPE
+			@i18n:Label (en="ARR Bal Type")
+			@i18n:Tooltip (en="Balance Type")
+			@t24:i (align=L, inputBehaviour=I, maxLength=20, sysNumber=9.0, core=true, businessType=A, t24Name=ID.BAL.TYPE)
+		LINK_BAL_TYPE -> ENT_SoftAccounting:AC_BALANCE_TYPE
+			@i18n:Label (en="Link Bal Type")
+			@i18n:Tooltip (en="Link Balance Type")
+			@t24:i (align=L, inputBehaviour=I, maxLength=20, sysNumber=10.0, core=true, businessType=A, t24Name=LINK.BAL.TYPE)
+		CASHFLOW_AMT : T24BusinessTypes:AMT
+			@i18n:Label (en="Cashflow Amount")
+			@i18n:Tooltip (en="Cashflow Amount")
+			@t24:i (align=R, inputBehaviour=I, maxLength=16, sysNumber=11.0, core=true, t24Name=CASHFLOW.AMT)
+		AGREGATE_BAL : T24BusinessTypes:AMT
+			@i18n:Label (en="Aggregate Bal")
+			@i18n:Tooltip (en="Aggregate Balance")
+			@t24:i (align=R, inputBehaviour=F, maxLength=16, sysNumber=12.0, core=true, t24Name=AGREGATE.BAL)
+		DR_NARR_TXT -> byValue PO_Cashpooling:AC_CASH_POOL__LINK_ACCT__DR_NARR_TXT *
+		CR_NARR_TXT -> byValue PO_Cashpooling:AC_CASH_POOL__LINK_ACCT__CR_NARR_TXT *
+		FREQUENCY : T24BusinessTypes:FQU
+			@i18n:Label (en=Frequency)
+			@i18n:Tooltip (en="Frequency of pooling")
+			@t24:i (align=L, inputBehaviour=I, maxLength=18, sysNumber=15.0, core=true, t24Name=FREQUENCY)
+		MINIMUM_AMT : T24BusinessTypes:AMT
+			@i18n:Label (en="Minimum Amt")
+			@i18n:Tooltip (en="Minimum Amount")
+			@t24:i (align=R, inputBehaviour=I, maxLength=16, sysNumber=16.0, core=true, t24Name=MINIMUM.AMT)
+		MAXIMUM_AMT : T24BusinessTypes:AMT
+			@i18n:Label (en="Maximum Amt")
+			@i18n:Tooltip (en="Maximum Amount")
+			@t24:i (align=R, inputBehaviour=I, maxLength=16, sysNumber=17.0, core=true, t24Name=MAXIMUM.AMT)
+		OVERRIDE_AMT : T24BusinessTypes:AMT
+			@i18n:Label (en="Override Amount")
+			@i18n:Tooltip (en="Override Amount")
+			@t24:i (align=R, inputBehaviour=I, maxLength=16, sysNumber=18.0, core=true, t24Name=OVERRIDE.AMT)
+		OVERRIDE_PERCNT : T24BusinessTypes:R
+			@i18n:Label (en="Override Percent")
+			@i18n:Tooltip (en="Override Percent")
+			@t24:i (align=R, inputBehaviour=I, maxLength=15, sysNumber=19.0, core=true, t24Name=OVERRIDE.PERCNT)
+		AMT_ROUTINE : T24BusinessTypes:A
+			@i18n:Label (en="Amount Routine")
+			@i18n:Tooltip (en="Amount Routine")
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=20.0, core=true, t24Name=AMT.ROUTINE)
+		UP_TO_AMOUNT : T24BusinessTypes:AMT
+			@i18n:Label (en="Upto Amount")
+			@i18n:Tooltip (en="Upto Amount")
+			@t24:i (align=R, inputBehaviour=I, maxLength=16, sysNumber=21.0, core=true, t24Name=UP.TO.AMOUNT)
+		UP_TO_PERCENT : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=22.0, core=true, t24Name=UP.TO.PERCENT)
+		RULE_PRIORITY : mml:Integer
+			@i18n:Label (en="Rule Priority")
+			@i18n:Tooltip (en="Rule Priority")
+			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=23.0, core=true, t24Name=RULE.PRIORITY)
+		SCHEDULE : PO_Cashpooling:AC_CASH_POOL__LINK_ACCT__SCHEDULE
+			@i18n:Label (en=Schedule)
+			@i18n:Tooltip (en=Schedule)
+			@t24:i (align=L, inputBehaviour=I, maxLength=6, sysNumber=24.0, core=true, t24Name=SCHEDULE)
+		EXCH_RATE_SPR : T24BusinessTypes:R
+			@t24:i (align=R, inputBehaviour=I, maxLength=16, sysNumber=25.0, core=true, t24Name=EXCH.RATE.SPR)
+		MIN_TFR_DR : T24BusinessTypes:AMT
+			@i18n:Label (en="Min TFR Dr")
+			@i18n:Tooltip (en="Min TFR Dr")
+			@t24:i (align=R, inputBehaviour=I, maxLength=16, sysNumber=26.0, core=true, t24Name=MIN.TFR.DR)
+		MIN_TFR_CR : T24BusinessTypes:AMT
+			@i18n:Label (en="Min TFR Cr")
+			@i18n:Tooltip (en="Min TFR Cr")
+			@t24:i (align=R, inputBehaviour=I, maxLength=16, sysNumber=27.0, core=true, t24Name=MIN.TFR.CR)
+		ADJ_START_DATE : T24BusinessTypes:D
+			@i18n:Label (en="Adjusted Start Date")
+			@i18n:Tooltip (en="Adjusted Start Date")
+			@t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=28.0, core=true, t24Name=ADJ.START.DATE)
+	}
+	AC_CASH_POOL__LINK_ACCT__DR_NARR_TXT
+	{
+		DR_NARR_TXT : T24BusinessTypes:A
+			@i18n:Label (en="Debit Narrative")
+			@i18n:Tooltip (en="Debit Narrative Text")
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=13.0, core=true, t24Name=DR.NARR.TXT)
+	}
+	AC_CASH_POOL__LINK_ACCT__CR_NARR_TXT
+	{
+		CR_NARR_TXT : T24BusinessTypes:A
+			@i18n:Label (en="Credit Narrative Text")
+			@i18n:Tooltip (en="Credit Narrative Text")
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=14.0, core=true, t24Name=CR.NARR.TXT)
+	}
+	AC_CASH_POOL__NARRATIVE
+	{
+		NARRATIVE : T24BusinessTypes:A
+			@i18n:Label (en=Narrative)
+			@i18n:Tooltip (en=Narrative)
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=29.0, core=true, t24Name=NARRATIVE)
+	}
+	AC_CASH_POOL__LINKS_PRODUCED
+	{
+		LINKS_PRODUCED : mml:Integer
+			@i18n:Label (en="Links Produced")
+			@i18n:Tooltip (en="Links Produced")
+			@t24:i (align=R, inputBehaviour=N, maxLength=14, sysNumber=30.0, core=true, t24Name=LINKS.PRODUCED)
+	}
+	AC_CASH_POOL__STMT_NOS
+	{
+		STMT_NOS : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=57.0, core=true, t24Name=STMT.NOS)
+	}
+	AC_CASH_POOL__OVERRIDE
+	{
+		OVERRIDE : T24BusinessTypes:A
+			@i18n:Label (en=Override)
+			@i18n:Tooltip (en="Overrides generated by this transaction")
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=58.0, core=true, t24Name=OVERRIDE)
+	}
+	AC_CASH_POOL__INPUTTER
+	{
+		INPUTTER : T24BusinessTypes:A
+			@i18n:Label (en=Inputter)
+			@i18n:Tooltip (en="The user who last updated the record")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=61.0, core=true, t24Name=INPUTTER)
+	}
+	AC_CASH_POOL__DATE_TIME
+	{
+		DATE_TIME : T24BusinessTypes:RELTIME
+			@i18n:Label (en="Date time")
+			@i18n:Tooltip (en="Date and time when record was input or authorised")
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=62.0, core=true, t24Name=DATE.TIME, mask="RDD DD  DD ##:##")
+	}
+	AC_CASH_POOL__NEXT_RUN_DATE
+	{
+		NEXT_RUN_DATE : mml:Integer
+			@i18n:Label (en="Next Run Date")
+			@i18n:Tooltip (en="Next Run Date")
+			@t24:i (align=L, inputBehaviour=N, maxLength=8, core=false, t24Name=NEXT.RUN.DATE, genOperation="SUBSTRINGS(FREQUENCY,1,8)")
+	}
+	AC_CASH_POOL_LINK
+		@t24:i (t24Name=AC.CASH.POOL.LINK, level=F, type=L, allowedFunctions="L S", localRefAllowed=false)
+	{
+		LIST_ID -> PO_Cashpooling:AC_CASH_POOL_LINK PK required
+			@i18n:Label (en="List ID")
+			@t24:i (align=L, inputBehaviour=I, maxLength=14, sysNumber=0.0, core=true, businessType=A, t24Name=LIST.ID, mask="####/#####/#####")
+		DESCRIPTION : T24BusinessTypes:A required
+			@i18n:Label (en=Description)
+			@i18n:Tooltip (en=Description)
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=1.0, core=true, t24Name=DESCRIPTION)
+		GROUP_ID : T24BusinessTypes:A
+			@i18n:Label (en="Group Id")
+			@t24:i (align=L, inputBehaviour=I, maxLength=18, sysNumber=2.0, core=true, t24Name=GROUP.ID)
+		SUB_GROUP_ID : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=I, maxLength=18, sysNumber=3.0, core=true, t24Name=SUB.GROUP.ID)
+		SEQUENCE : T24BusinessTypes:AMT
+			@i18n:Label (en=Sequence)
+			@t24:i (align=R, inputBehaviour=I, maxLength=8, sysNumber=4.0, core=true, t24Name=SEQUENCE)
+		LINK_CURRENCY : T24BusinessTypes:CCY
+			@i18n:Label (en=Ccy)
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=5.0, core=true, t24Name=LINK.CURRENCY)
+		SWEEP_TYPE -> byValue PO_Cashpooling:AC_CASH_POOL_LINK__SWEEP_TYPE *
+		INTEREST_RATE : T24BusinessTypes:R
+			@i18n:Label (en="Interest Rate")
+			@i18n:Tooltip (en="Indicates interest rate")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=29.0, core=true, t24Name=INTEREST.RATE)
+		INTEREST_KEY : mml:Integer
+			@i18n:Label (en="Interest Key")
+			@i18n:Tooltip (en="Indicates key to apply floating rate of interest")
+			@t24:i (align=R, inputBehaviour=I, maxLength=4, sysNumber=30.0, core=true, t24Name=INTEREST.KEY)
+		INTEREST_SPREAD : mml:Integer
+			@i18n:Label (en="Interest Spread")
+			@i18n:Tooltip (en="Indicates the spread or margin on the contract.")
+			@t24:i (align=R, inputBehaviour=I, maxLength=12, sysNumber=31.0, core=true, t24Name=INTEREST.SPREAD)
+		INT_LIQ_ACCT : T24BusinessTypes:ACC
+			@i18n:Label (en="Interest Liq Acct")
+			@i18n:Tooltip (en="Indicates Interest Liquidation Account")
+			@t24:i (align=R, inputBehaviour=I, maxLength=16, sysNumber=32.0, core=true, t24Name=INT.LIQ.ACCT)
+		CATEGORY : mml:Integer
+			@i18n:Label (en=Category)
+			@i18n:Tooltip (en="Specifies the Category")
+			@t24:i (align=R, inputBehaviour=I, maxLength=6, sysNumber=33.0, core=true, t24Name=CATEGORY)
+		MM_CONTRACT -> byValue PO_Cashpooling:AC_CASH_POOL_LINK__MM_CONTRACT *
+		MULTI_RULE : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=35.0, core=true, t24Name=MULTI.RULE)
+		LAST_RUN_DATE : T24BusinessTypes:D
+			@i18n:Label (en="Last Payment")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=36.0, core=true, t24Name=LAST.RUN.DATE)
+		SEQUENCE_PRIORITY : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=I, maxLength=15, sysNumber=37.0, core=true, t24Name=SEQUENCE.PRIORITY)
+		EUCC_SOD_PROCESS : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=E, maxLength=3, sysNumber=38.0, core=true, t24Name=EUCC.SOD.PROCESS)
+		RESERVED02 : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=I, maxLength=1, sysNumber=39.0, core=true, t24Name=RESERVED02)
+		RESERVED01 : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=I, maxLength=1, sysNumber=40.0, core=true, t24Name=RESERVED01)
+		CASH_POOL_ID : mml:Integer
+			@i18n:Label (en="Cash Pool Id")
+			@t24:i (align=R, inputBehaviour=N, maxLength=10, core=false, t24Name=CASH.POOL.ID, genOperation="DESCRIPTION[22,18]")
+	}
+	AC_CASH_POOL_LINK__SWEEP_TYPE
+	{
+		SWEEP_TYPE : T24BusinessTypes:A
+			@i18n:Label (en="Sweep Type")
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=6.0, core=true, t24Name=SWEEP.TYPE)
+		CASHFLOW_AMT : T24BusinessTypes:AMT
+			@i18n:Label (en="Cashflow Amount")
+			@t24:i (align=R, inputBehaviour=I, maxLength=16, sysNumber=7.0, core=true, t24Name=CASHFLOW.AMT)
+		AGREGATE_BAL : T24BusinessTypes:AMT
+			@i18n:Label (en="Aggregate Balance")
+			@t24:i (align=R, inputBehaviour=I, maxLength=16, sysNumber=8.0, core=true, t24Name=AGREGATE.BAL)
+		FREQUENCY : T24BusinessTypes:FQU
+			@i18n:Label (en=Frequency)
+			@i18n:Tooltip (en=Frequency)
+			@t24:i (align=L, inputBehaviour=I, maxLength=18, sysNumber=9.0, core=true, t24Name=FREQUENCY)
+		NEXT_RUN_DATE : T24BusinessTypes:D
+			@i18n:Label (en="Next Run Date")
+			@t24:i (align=R, inputBehaviour=I, maxLength=8, sysNumber=10.0, core=true, t24Name=NEXT.RUN.DATE)
+		DR_NARR_TXT -> byValue PO_Cashpooling:AC_CASH_POOL_LINK__SWEEP_TYPE__DR_NARR_TXT *
+		CR_NARR_TXT -> byValue PO_Cashpooling:AC_CASH_POOL_LINK__SWEEP_TYPE__CR_NARR_TXT *
+		ACCOUNT_TO -> ACM_AccountOpening:ACCOUNT
+			@i18n:Label (en="Account To")
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=13.0, core=true, businessType=ACC, t24Name=ACCOUNT.TO)
+		ACCOUNT_FROM -> ACM_AccountOpening:ACCOUNT
+			@i18n:Label (en="Account From")
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=14.0, core=true, businessType=ACC, t24Name=ACCOUNT.FROM)
+		MAXIMUM_AMT : T24BusinessTypes:AMT
+			@i18n:Label (en="Maximum Amt")
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=15.0, core=true, t24Name=MAXIMUM.AMT)
+		MINIMUM_AMT : T24BusinessTypes:AMT
+			@i18n:Label (en="Minimum Amt")
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=16.0, core=true, t24Name=MINIMUM.AMT)
+		OVERRIDE_AMT : T24BusinessTypes:AMT
+			@i18n:Label (en="Override Amount")
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=17.0, core=true, t24Name=OVERRIDE.AMT)
+		OVERRIDE_PERCNT : T24BusinessTypes:R
+			@i18n:Label (en="Override Percent")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=18.0, core=true, t24Name=OVERRIDE.PERCNT)
+		AMT_ROUTINE : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=19.0, core=true, t24Name=AMT.ROUTINE)
+		UP_TO_AMOUNT : T24BusinessTypes:AMT
+			@t24:i (align=R, inputBehaviour=I, maxLength=16, sysNumber=20.0, core=true, t24Name=UP.TO.AMOUNT)
+		UP_TO_PERCENT : T24BusinessTypes:R
+			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=21.0, core=true, t24Name=UP.TO.PERCENT)
+		RULE_PRIORITY : T24BusinessTypes:A
+			@i18n:Label (en="Rule Priority")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=22.0, core=true, t24Name=RULE.PRIORITY)
+		SCHEDULE : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=I, maxLength=6, sysNumber=23.0, core=true, t24Name=SCHEDULE)
+		BACK_VALUE_IND : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=24.0, core=true, t24Name=BACK.VALUE.IND)
+		MIN_TFR_DR : T24BusinessTypes:AMT
+			@t24:i (align=R, inputBehaviour=I, maxLength=16, sysNumber=25.0, core=true, t24Name=MIN.TFR.DR)
+		MIN_TFR_CR : T24BusinessTypes:AMT
+			@t24:i (align=R, inputBehaviour=I, maxLength=16, sysNumber=26.0, core=true, t24Name=MIN.TFR.CR)
+		FROM_AC_BAL_TYPE : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=I, maxLength=20, sysNumber=27.0, core=true, t24Name=FROM.AC.BAL.TYPE)
+		TO_AC_BAL_TYPE : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=I, maxLength=20, sysNumber=28.0, core=true, t24Name=TO.AC.BAL.TYPE)
+	}
+	AC_CASH_POOL_LINK__SWEEP_TYPE__DR_NARR_TXT
+	{
+		DR_NARR_TXT : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=11.0, core=true, t24Name=DR.NARR.TXT)
+	}
+	AC_CASH_POOL_LINK__SWEEP_TYPE__CR_NARR_TXT
+	{
+		CR_NARR_TXT : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=12.0, core=true, t24Name=CR.NARR.TXT)
+	}
+	AC_CASH_POOL_LINK__MM_CONTRACT
+	{
+		MM_CONTRACT : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=I, maxLength=14, sysNumber=34.0, core=true, t24Name=MM.CONTRACT)
+	}
+	AC_CP_GROUP_PARAM
+		@t24:i (t24Name=AC.CP.GROUP.PARAM, level=F, type=H, allowedFunctions="A C D E H I L P Q R S", localRefAllowed=true)
+	{
+		ID -> PO_Cashpooling:AC_CP_GROUP_PARAM PK required
+			@i18n:Label (en="Transaction Ref")
+			@i18n:Tooltip (en="Transaction Reference")
+			@t24:i (align=L, inputBehaviour=I, maxLength=18, sysNumber=0.0, core=true, businessType=A, t24Name="@ID")
+		DESCRIPTION : T24BusinessTypes:A required
+			@i18n:Label (en=Description)
+			@i18n:Tooltip (en=Description)
+			@t24:i (align=L, inputBehaviour=I, maxLength=40, sysNumber=1.0, core=true, t24Name=DESCRIPTION)
+		SUB_GROUP : PO_Cashpooling:AC_CP_GROUP_PARAM__SUB_GROUP
+			@i18n:Label (en="Sub Group")
+			@i18n:Tooltip (en="Sub Group")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=2.0, core=true, t24Name=SUB.GROUP)
+		MAIN_GROUP_ID -> PO_Cashpooling:AC_CP_GROUP_PARAM
+			@i18n:Label (en="Main Group Id")
+			@i18n:Tooltip (en="Main Group Id")
+			@t24:i (align=L, inputBehaviour=I, maxLength=18, sysNumber=3.0, core=true, businessType=A, t24Name=MAIN.GROUP.ID)
+		INTRA_DAY : PO_Cashpooling:AC_CP_GROUP_PARAM__INTRA_DAY
+			@i18n:Label (en="Intra Day")
+			@i18n:Tooltip (en="Intra Day")
+			@t24:i (align=L, inputBehaviour=F, maxLength=10, sysNumber=4.0, core=true, t24Name=INTRA.DAY)
+		MAIN_MASTER -> ACM_AccountOpening:ACCOUNT required
+			@i18n:Label (en="Main Master")
+			@i18n:Tooltip (en="Top level Account")
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=5.0, core=true, businessType=ACC, t24Name=MAIN.MASTER)
+		CURRENCY -> FIN_CurrencyConfig:CURRENCY
+			@i18n:Label (en=Ccy)
+			@t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=6.0, core=true, businessType=CCY, t24Name=CURRENCY)
+		MAIN_DEPOSIT : T24BusinessTypes:ACC
+			@t24:i (align=R, inputBehaviour=N, maxLength=16, sysNumber=7.0, core=true, t24Name=MAIN.DEPOSIT)
+		SHARED_BALANCES : PO_Cashpooling:AC_CP_GROUP_PARAM__SHARED_BALANCES
+			@i18n:Label (en="Shared Balances")
+			@i18n:Tooltip (en="Shared Balances")
+			@t24:i (align=L, inputBehaviour=I, maxLength=7, sysNumber=8.0, core=true, t24Name=SHARED.BALANCES)
+		SEQUENCING : PO_Cashpooling:AC_CP_GROUP_PARAM__SEQUENCING
+			@i18n:Label (en=Sequencing)
+			@i18n:Tooltip (en=Sequencing)
+			@t24:i (align=L, inputBehaviour=F, maxLength=6, sysNumber=9.0, core=true, t24Name=SEQUENCING)
+		MAX_NUMBER : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=6, sysNumber=10.0, core=true, t24Name=MAX.NUMBER)
+		BALANCE_TO_USE : PO_Cashpooling:AC_CP_GROUP_PARAM__BALANCE_TO_USE required
+			@i18n:Label (en="Balance To Use")
+			@t24:i (align=L, inputBehaviour=I, maxLength=25, sysNumber=11.0, core=true, t24Name=BALANCE.TO.USE)
+		RULE_PRIORITY : PO_Cashpooling:AC_CP_GROUP_PARAM__RULE_PRIORITY
+			@i18n:Label (en="Rule Priority")
+			@i18n:Tooltip (en="Rule Priority")
+			@t24:i (align=L, inputBehaviour=F, maxLength=12, sysNumber=12.0, core=true, t24Name=RULE.PRIORITY)
+		GROUP_BALANCE : T24BusinessTypes:AMT
+			@i18n:Label (en="Group Balance")
+			@i18n:Tooltip (en="Group Balance")
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=13.0, core=true, t24Name=GROUP.BALANCE)
+		OFS_SOURCE : T24BusinessTypes:A
+			@i18n:Label (en="OFS Source")
+			@i18n:Tooltip (en="The OFS Source record ID")
+			@t24:i (align=L, inputBehaviour=N, maxLength=20, sysNumber=14.0, core=true, t24Name=OFS.SOURCE)
+		MM_OFS_VERSION : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=15.0, core=true, t24Name=MM.OFS.VERSION)
+		BACK_VALUE_ADJ : PO_Cashpooling:AC_CP_GROUP_PARAM__BACK_VALUE_ADJ
+			@i18n:Label (en="Back Value Adjustment")
+			@i18n:Tooltip (en="Back Value Adjustment is required$")
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=16.0, core=true, t24Name=BACK.VALUE.ADJ)
+		BACK_VALUE_CAP : mml:Integer
+			@i18n:Label (en="Back Value Capitalisation")
+			@i18n:Tooltip (en="Back Value Capitalisation is required$")
+			@t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=17.0, core=true, t24Name=BACK.VALUE.CAP)
+		MULTI_RULE : PO_Cashpooling:AC_CP_GROUP_PARAM__MULTI_RULE
+			@i18n:Label (en="Multi Rule is Required$")
+			@i18n:Tooltip (en="Define Multi Rule is required$")
+			@t24:i (align=L, inputBehaviour=F, maxLength=3, sysNumber=18.0, core=true, t24Name=MULTI.RULE)
+		BALANCE_ROUTINE -> EB_SystemTables:PGM_FILE
+			@i18n:Label (en="Balance Routine")
+			@i18n:Tooltip (en="Balance Routine")
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=19.0, core=true, businessType=A, t24Name=BALANCE.ROUTINE)
+		BUILD_SEQUENCE : PO_Cashpooling:AC_CP_GROUP_PARAM__BUILD_SEQUENCE
+			@t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=20.0, core=true, t24Name=BUILD.SEQUENCE)
+		BV_SWEEP_TYPE : PO_Cashpooling:AC_CP_GROUP_PARAM__BV_SWEEP_TYPE
+			@i18n:Label (en="Back Value Sweep Type")
+			@i18n:Tooltip (en="Back Value Sweep Type")
+			@t24:i (align=L, inputBehaviour=I, maxLength=15, sysNumber=21.0, core=true, t24Name=BV.SWEEP.TYPE)
+		EUCC_PROCESS : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=E, maxLength=3, sysNumber=22.0, core=true, t24Name=EUCC.PROCESS)
+		ACC_IN_MUL_POOL : PO_Cashpooling:AC_CP_GROUP_PARAM__ACC_IN_MUL_POOL
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=23.0, core=true, t24Name=ACC.IN.MUL.POOL)
+		SWEEP_CHG_CODE : T24BusinessTypes:CHG
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=24.0, core=true, t24Name=SWEEP.CHG.CODE, typeModifiers="CHGCOM")
+		EXCH_RATE_TYPE : PO_Cashpooling:AC_CP_GROUP_PARAM__EXCH_RATE_TYPE
+			@t24:i (align=L, inputBehaviour=I, maxLength=8, sysNumber=25.0, core=true, t24Name=EXCH.RATE.TYPE)
+		EXCH_RATE_SPR : T24BusinessTypes:R
+			@t24:i (align=R, inputBehaviour=I, maxLength=16, sysNumber=26.0, core=true, t24Name=EXCH.RATE.SPR)
+		RESERVED03 : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=27.0, core=true, t24Name=RESERVED03)
+		RESERVED02 : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=28.0, core=true, t24Name=RESERVED02)
+		RESERVED01 : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=29.0, core=true, t24Name=RESERVED01)
+		OVERRIDE -> byValue PO_Cashpooling:AC_CP_GROUP_PARAM__OVERRIDE *
+		RECORD_STATUS : T24BusinessTypes:STAT
+			@i18n:Label (en="Record Status")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=32.0, core=true, t24Name=RECORD.STATUS)
+		CURR_NO : mml:Integer
+			@i18n:Label (en="Curr No")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=33.0, core=true, t24Name=CURR.NO)
+		INPUTTER -> byValue PO_Cashpooling:AC_CP_GROUP_PARAM__INPUTTER *
+		DATE_TIME -> byValue PO_Cashpooling:AC_CP_GROUP_PARAM__DATE_TIME *
+		AUTHORISER : T24BusinessTypes:A
+			@i18n:Label (en=Authoriser)
+			@i18n:Tooltip (en="Indicates the User who Authorises the record")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=36.0, core=true, t24Name=AUTHORISER)
+		CO_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company)
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=37.0, core=true, businessType=A, t24Name=CO.CODE, mask="R##-###-####")
+		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Dept Code")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=38.0, core=true, t24Name=DEPT.CODE)
+		AUDITOR_CODE : T24BusinessTypes:A
+			@i18n:Label (en="Auditor Code")
+			@i18n:Tooltip (en="Auditor Code")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=39.0, core=true, t24Name=AUDITOR.CODE)
+		AUDIT_DATE_TIME : T24BusinessTypes:RELTIME
+			@i18n:Label (en="Audit Date Time")
+			@i18n:Tooltip (en="Date and time when record was audited")
+			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=40.0, core=true, t24Name=AUDIT.DATE.TIME, mask="RDD DD  DD ##:##")
+	}
+	AC_CP_GROUP_PARAM__OVERRIDE
+	{
+		OVERRIDE : T24BusinessTypes:A
+			@i18n:Label (en=Override)
+			@i18n:Tooltip (en="Overrides generated by this transaction")
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=31.0, core=true, t24Name=OVERRIDE)
+	}
+	AC_CP_GROUP_PARAM__INPUTTER
+	{
+		INPUTTER : T24BusinessTypes:A
+			@i18n:Label (en=Inputter)
+			@i18n:Tooltip (en="The user who last updated the record")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=34.0, core=true, t24Name=INPUTTER)
+	}
+	AC_CP_GROUP_PARAM__DATE_TIME
+	{
+		DATE_TIME : T24BusinessTypes:RELTIME
+			@i18n:Label (en="Date time")
+			@i18n:Tooltip (en="Date and time when record was input or authorised")
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=35.0, core=true, t24Name=DATE.TIME, mask="RDD DD  DD ##:##")
+	}
+	AC_GROUP_CASH_POOL
+		@t24:i (t24Name=AC.GROUP.CASH.POOL, level=F, type=T, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		GROUP_ID -> PO_Cashpooling:AC_GROUP_CASH_POOL PK required
+			@i18n:Label (en="Group Id")
+			@t24:i (align=L, inputBehaviour=I, maxLength=18, sysNumber=0.0, core=true, businessType=A, t24Name=GROUP.ID)
+		CASH_POOL_ID : T24BusinessTypes:ANT required
+			@i18n:Label (en="Cash Pool Id")
+			@t24:i (align=L, inputBehaviour=I, maxLength=18, sysNumber=1.0, core=true, t24Name=CASH.POOL.ID)
+	}
+	AC_GROUP_CP_LIST
+		@t24:i (t24Name=AC.GROUP.CP.LIST, level=F, type=L, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		GROUP_ID -> PO_Cashpooling:AC_GROUP_CP_LIST PK required
+			@i18n:Label (en="Group Id")
+			@t24:i (align=L, inputBehaviour=I, maxLength=10, sysNumber=0.0, core=true, businessType=A, t24Name=GROUP.ID)
+		CP_LINK_ID -> byValue PO_Cashpooling:AC_GROUP_CP_LIST__CP_LINK_ID *
+	}
+	AC_GROUP_CP_LIST__CP_LINK_ID
+	{
+		CP_LINK_ID -> PO_Cashpooling:AC_CASH_POOL_LINK
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=1.0, core=true, businessType=A, t24Name=CP.LINK.ID)
+	}
+	AC_SHARED_ACCOUNT
+		@t24:i (t24Name=AC.SHARED.ACCOUNT, level=F, type=L, allowedFunctions="L P S", localRefAllowed=true)
+	{
+		ID -> PO_Cashpooling:AC_SHARED_ACCOUNT PK required
+			@i18n:Label (en="@ID")
+			@t24:i (align=L, inputBehaviour=I, maxLength=18, sysNumber=0.0, core=true, businessType=A, t24Name="@ID")
+		DESCRIPTION : T24BusinessTypes:A
+			@i18n:Label (en=Description)
+			@i18n:Tooltip (en=Description)
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=1.0, core=true, t24Name=DESCRIPTION)
+		MAIN_ACCT -> ACM_AccountOpening:ACCOUNT
+			@i18n:Label (en="Main Account")
+			@t24:i (align=R, inputBehaviour=N, maxLength=16, sysNumber=2.0, core=true, businessType=ACC, t24Name=MAIN.ACCT)
+		CP_ID -> byValue PO_Cashpooling:AC_SHARED_ACCOUNT__CP_ID *
+		ADD_ACCT -> byValue PO_Cashpooling:AC_SHARED_ACCOUNT__ADD_ACCT *
+		DEL_ACCT -> byValue PO_Cashpooling:AC_SHARED_ACCOUNT__DEL_ACCT *
+		ACCT_LIST -> ACM_AccountOpening:ACCOUNT
+			@i18n:Label (en="Account List")
+			@t24:i (align=R, inputBehaviour=N, maxLength=16, sysNumber=7.0, core=true, businessType=ACC, t24Name=ACCT.LIST)
+		RESERVED05 : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=8.0, core=true, t24Name=RESERVED05)
+		RESERVED04 : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=9.0, core=true, t24Name=RESERVED04)
+		RESERVED03 : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=10.0, core=true, t24Name=RESERVED03)
+		RESERVED02 : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=11.0, core=true, t24Name=RESERVED02)
+		RESERVED01 : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=12.0, core=true, t24Name=RESERVED01)
+		OVERRIDE -> byValue PO_Cashpooling:AC_SHARED_ACCOUNT__OVERRIDE *
+	}
+	AC_SHARED_ACCOUNT__CP_ID
+	{
+		CP_ID -> ACM_AccountOpening:ACCOUNT
+			@i18n:Label (en="CP ID")
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=3.0, core=true, businessType=ACC, t24Name=CP.ID)
+		CP_ACCT -> byValue PO_Cashpooling:AC_SHARED_ACCOUNT__CP_ID__CP_ACCT *
+	}
+	AC_SHARED_ACCOUNT__CP_ID__CP_ACCT
+	{
+		CP_ACCT -> ACM_AccountOpening:ACCOUNT
+			@i18n:Label (en="Link Account")
+			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=4.0, core=true, businessType=ACC, t24Name=CP.ACCT)
+	}
+	AC_SHARED_ACCOUNT__ADD_ACCT
+	{
+		ADD_ACCT -> ACM_AccountOpening:ACCOUNT
+			@t24:i (align=R, inputBehaviour=N, maxLength=16, sysNumber=5.0, core=true, businessType=ACC, t24Name=ADD.ACCT)
+	}
+	AC_SHARED_ACCOUNT__DEL_ACCT
+	{
+		DEL_ACCT -> ACM_AccountOpening:ACCOUNT
+			@t24:i (align=R, inputBehaviour=N, maxLength=16, sysNumber=6.0, core=true, businessType=ACC, t24Name=DEL.ACCT)
+	}
+	AC_SHARED_ACCOUNT__OVERRIDE
+	{
+		OVERRIDE : T24BusinessTypes:A
+			@i18n:Label (en=Override)
+			@i18n:Tooltip (en="Overrides generated by this transaction")
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=14.0, core=true, t24Name=OVERRIDE)
+	}
+	AC_SWEEP_BAL_WORK
+		@t24:i (t24Name=AC.SWEEP.BAL.WORK, level=F, type=L, allowedFunctions="L S", localRefAllowed=false)
+	{
+		SWEEP_ACCT_ID -> PO_Cashpooling:AC_SWEEP_BAL_WORK PK required
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=0.0, core=true, businessType=ACC, t24Name=SWEEP.ACCT.ID)
+		SWEEP_DATE : T24BusinessTypes:D
+			@i18n:Label (en=Date)
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=1.0, core=true, t24Name=SWEEP.DATE)
+		TOTAL_AMOUNT : T24BusinessTypes:AMT
+			@i18n:Label (en="Total Amount")
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=2.0, core=true, t24Name=TOTAL.AMOUNT)
+	}
+	CORR_GROUP_CP
+		@t24:i (t24Name=CORR.GROUP.CP, level=F, type=L, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		KEY -> PO_Cashpooling:CORR_GROUP_CP PK required
+			@i18n:Label (en=Key)
+			@i18n:Tooltip (en="Indicates th transaction key")
+			@t24:i (align=L, inputBehaviour=I, maxLength=28, sysNumber=0.0, core=true, businessType=A, t24Name=KEY)
+		PERIOD_START_DATE : T24BusinessTypes:D
+			@t24:i (align=R, inputBehaviour=I, maxLength=8, sysNumber=1.0, core=true, t24Name=PERIOD.START.DATE)
+		PERIOD_END_DATE : T24BusinessTypes:D
+			@t24:i (align=R, inputBehaviour=I, maxLength=8, sysNumber=2.0, core=true, t24Name=PERIOD.END.DATE)
+		PERIOD_DAYS : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=3.0, core=true, t24Name=PERIOD.DAYS)
+		GROUP_ID : T24BusinessTypes:A
+			@i18n:Label (en="Group Id")
+			@t24:i (align=L, inputBehaviour=I, maxLength=10, sysNumber=4.0, core=true, t24Name=GROUP.ID)
+		TRAN_AMOUNT : T24BusinessTypes:AMT
+			@t24:i (align=R, inputBehaviour=I, maxLength=16, sysNumber=5.0, core=true, t24Name=TRAN.AMOUNT)
+		SWEEP_DATE -> byValue PO_Cashpooling:CORR_GROUP_CP__SWEEP_DATE *
+		ACCOUNT_FROM -> byValue PO_Cashpooling:CORR_GROUP_CP__ACCOUNT_FROM *
+		RESERVED11 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=26.0, core=true, t24Name=RESERVED11)
+		RESERVED12 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=27.0, core=true, t24Name=RESERVED12)
+		RESERVED13 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=28.0, core=true, t24Name=RESERVED13)
+		RESERVED14 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=29.0, core=true, t24Name=RESERVED14)
+		RESERVED15 -> ACM_AccountOpening:ACCOUNT
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=30.0, core=true, t24Name=RESERVED15)
+	}
+	CORR_GROUP_CP__SWEEP_DATE
+	{
+		SWEEP_DATE : T24BusinessTypes:D
+			@i18n:Label (en=Date)
+			@t24:i (align=R, inputBehaviour=I, maxLength=8, sysNumber=6.0, core=true, t24Name=SWEEP.DATE)
+	}
+	CORR_GROUP_CP__ACCOUNT_FROM
+	{
+		ACCOUNT_FROM -> byValue PO_Cashpooling:CORR_GROUP_CP__ACCOUNT_FROM__ACCOUNT_FROM *
+		RESERVED07 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=22.0, core=true, t24Name=RESERVED07)
+		RESERVED08 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=23.0, core=true, t24Name=RESERVED08)
+		RESERVED09 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=24.0, core=true, t24Name=RESERVED09)
+		RESERVED10 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=25.0, core=true, t24Name=RESERVED10)
+	}
+	CORR_GROUP_CP__ACCOUNT_FROM__ACCOUNT_FROM
+	{
+		ACCOUNT_FROM : T24BusinessTypes:ACC
+			@i18n:Label (en="Account From")
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=7.0, core=true, t24Name=ACCOUNT.FROM)
+		BACK_VAL_AMT : T24BusinessTypes:AMT
+			@t24:i (align=R, inputBehaviour=I, maxLength=16, sysNumber=8.0, core=true, t24Name=BACK.VAL.AMT)
+		SWEEP_REF : T24BusinessTypes:A
+			@i18n:Label (en=Reference)
+			@t24:i (align=L, inputBehaviour=I, maxLength=25, sysNumber=9.0, core=true, t24Name=SWEEP.REF)
+		HIST_KEY : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=I, maxLength=25, sysNumber=10.0, core=true, t24Name=HIST.KEY)
+		ACCOUNT_TO : T24BusinessTypes:ACC
+			@i18n:Label (en="Account To")
+			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=11.0, core=true, t24Name=ACCOUNT.TO)
+		NETTING : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=12.0, core=true, t24Name=NETTING)
+		PERCENTAGE : T24BusinessTypes:R
+			@i18n:Label (en="% Change")
+			@t24:i (align=R, inputBehaviour=I, maxLength=15, sysNumber=13.0, core=true, t24Name=PERCENTAGE)
+		BACK_VAL_ADJ : T24BusinessTypes:AMT
+			@t24:i (align=R, inputBehaviour=I, maxLength=16, sysNumber=14.0, core=true, t24Name=BACK.VAL.ADJ)
+		TRAN_CODE : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=35, sysNumber=15.0, core=true, t24Name=TRAN.CODE)
+		RESERVED01 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=16.0, core=true, t24Name=RESERVED01)
+		RESERVED02 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=17.0, core=true, t24Name=RESERVED02)
+		RESERVED03 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=18.0, core=true, t24Name=RESERVED03)
+		RESERVED04 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=19.0, core=true, t24Name=RESERVED04)
+		RESERVED05 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=20.0, core=true, t24Name=RESERVED05)
+		RESERVED06 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=21.0, core=true, t24Name=RESERVED06)
+	}
+	INFO_GROUP_CP
+		@t24:i (t24Name=INFO.GROUP.CP, level=F, type=L, allowedFunctions="L P S V", localRefAllowed=false)
+	{
+		GROUP_ID -> PO_Cashpooling:INFO_GROUP_CP PK required
+			@i18n:Label (en="Group Id")
+			@t24:i (align=L, inputBehaviour=I, maxLength=18, sysNumber=0.0, core=true, businessType=A, t24Name=GROUP.ID)
+		AVAILABLE_CREDIT : T24BusinessTypes:AMT
+			@t24:i (align=R, inputBehaviour=I, maxLength=12, sysNumber=1.0, core=true, t24Name=AVAILABLE.CREDIT)
+		SWEEP_DATE -> byValue PO_Cashpooling:INFO_GROUP_CP__SWEEP_DATE *
+		RESERVED12 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=10.0, core=true, t24Name=RESERVED12)
+		RESERVED11 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=11.0, core=true, t24Name=RESERVED11)
+		RESERVED10 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=12.0, core=true, t24Name=RESERVED10)
+		RESERVED09 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=13.0, core=true, t24Name=RESERVED09)
+		RESERVED08 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=14.0, core=true, t24Name=RESERVED08)
+		RESERVED07 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=15.0, core=true, t24Name=RESERVED07)
+		RESERVED06 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=16.0, core=true, t24Name=RESERVED06)
+		RESERVED05 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=17.0, core=true, t24Name=RESERVED05)
+		RESERVED04 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=18.0, core=true, t24Name=RESERVED04)
+		RESERVED03 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=19.0, core=true, t24Name=RESERVED03)
+		RESERVED02 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=20.0, core=true, t24Name=RESERVED02)
+		RESERVED01 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=21.0, core=true, t24Name=RESERVED01)
+	}
+	INFO_GROUP_CP__SWEEP_DATE
+	{
+		SWEEP_DATE : mml:Integer
+			@i18n:Label (en=Date)
+			@t24:i (align=R, inputBehaviour=I, maxLength=8, sysNumber=2.0, core=true, t24Name=SWEEP.DATE)
+		SWEEP_REF -> byValue PO_Cashpooling:INFO_GROUP_CP__SWEEP_DATE__SWEEP_REF *
+	}
+	INFO_GROUP_CP__SWEEP_DATE__SWEEP_REF
+	{
+		SWEEP_REF : T24BusinessTypes:A
+			@i18n:Label (en=Reference)
+			@t24:i (align=L, inputBehaviour=I, maxLength=45, sysNumber=3.0, core=true, t24Name=SWEEP.REF)
+		SWEEP_AMT : T24BusinessTypes:AMT
+			@t24:i (align=R, inputBehaviour=I, maxLength=16, sysNumber=4.0, core=true, t24Name=SWEEP.AMT)
+		SEQ_NO : mml:Integer
+			@i18n:Label (en="Sequence No")
+			@t24:i (align=R, inputBehaviour=I, maxLength=6, sysNumber=5.0, core=true, t24Name=SEQ.NO)
+		SWEEP_TYPE : T24BusinessTypes:A
+			@i18n:Label (en="Sweep Type")
+			@t24:i (align=L, inputBehaviour=I, maxLength=12, sysNumber=6.0, core=true, t24Name=SWEEP.TYPE)
+		ACCOUNT_BAL : T24BusinessTypes:AMT
+			@t24:i (align=R, inputBehaviour=I, maxLength=12, sysNumber=7.0, core=true, t24Name=ACCOUNT.BAL)
+		OVERDRAFT : T24BusinessTypes:AMT
+			@t24:i (align=R, inputBehaviour=I, maxLength=12, sysNumber=8.0, core=true, t24Name=OVERDRAFT)
+		POOL_BAL : T24BusinessTypes:AMT
+			@t24:i (align=R, inputBehaviour=I, maxLength=16, sysNumber=9.0, core=true, t24Name=POOL.BAL)
+	}
+	INTRA_DAY_SWEEP
+		@t24:i (t24Name=INTRA.DAY.SWEEP, level=F, type=H, allowedFunctions="A C D E H I L P Q R S", localRefAllowed=true)
+	{
+		GROUP_ID -> PO_Cashpooling:INTRA_DAY_SWEEP PK required
+			@i18n:Label (en="Group Id")
+			@t24:i (align=L, inputBehaviour=I, maxLength=18, sysNumber=0.0, core=true, businessType=A, t24Name=GROUP.ID)
+		DESCRIPTION : T24BusinessTypes:A required
+			@i18n:Label (en=Description)
+			@i18n:Tooltip (en=Description)
+			@t24:i (align=L, inputBehaviour=I, maxLength=40, sysNumber=1.0, core=true, t24Name=DESCRIPTION)
+		SWEEP_TIME -> byValue PO_Cashpooling:INTRA_DAY_SWEEP__SWEEP_TIME *
+		PH_END_TIME : T24BusinessTypes:TIME
+			@t24:i (align=L, inputBehaviour=N, maxLength=5, sysNumber=3.0, core=true, t24Name=PH.END.TIME)
+		PH_USER : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=4.0, core=true, t24Name=PH.USER)
+		CHARGE_CODE : T24BusinessTypes:CHG
+			@i18n:Label (en="Charge Code")
+			@i18n:Tooltip (en="Indicates the Charge code")
+			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=5.0, core=true, t24Name=CHARGE.CODE, typeModifiers="CHGCOM")
+		CHARGE_AMOUNT : T24BusinessTypes:AMT
+			@i18n:Label (en="Charge Amount")
+			@i18n:Tooltip (en="Indicates charge amount")
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=6.0, core=true, t24Name=CHARGE.AMOUNT)
+		CHARGE_ACCOUNT -> ACM_AccountOpening:ACCOUNT
+			@i18n:Label (en="Charge Debit Account")
+			@t24:i (align=R, inputBehaviour=I, maxLength=16, sysNumber=7.0, core=true, businessType=ACC, t24Name=CHARGE.ACCOUNT)
+		TAX_AMOUNT : T24BusinessTypes:AMT
+			@i18n:Label (en="Tax Amount")
+			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=8.0, core=true, t24Name=TAX.AMOUNT)
+		RESERVED_1 : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=9.0, core=true, t24Name=RESERVED.1)
+		SW_DATE_TIME : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=11.0, core=true, t24Name=SW.DATE.TIME)
+		RESERVED_14 : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=12.0, core=true, t24Name=RESERVED.14)
+		RESERVED_13 : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=13.0, core=true, t24Name=RESERVED.13)
+		RESERVED_12 : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=14.0, core=true, t24Name=RESERVED.12)
+		RESERVED_11 : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=15.0, core=true, t24Name=RESERVED.11)
+		STMT_NOS -> byValue PO_Cashpooling:INTRA_DAY_SWEEP__STMT_NOS *
+		OVERRIDE -> byValue PO_Cashpooling:INTRA_DAY_SWEEP__OVERRIDE *
+		RECORD_STATUS : T24BusinessTypes:STAT
+			@i18n:Label (en="Record Status")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=18.0, core=true, t24Name=RECORD.STATUS)
+		CURR_NO : mml:Integer
+			@i18n:Label (en="Curr No")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=19.0, core=true, t24Name=CURR.NO)
+		INPUTTER -> byValue PO_Cashpooling:INTRA_DAY_SWEEP__INPUTTER *
+		DATE_TIME -> byValue PO_Cashpooling:INTRA_DAY_SWEEP__DATE_TIME *
+		AUTHORISER : T24BusinessTypes:A
+			@i18n:Label (en=Authoriser)
+			@i18n:Tooltip (en="Indicates the User who Authorises the record")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=22.0, core=true, t24Name=AUTHORISER)
+		CO_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company)
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=23.0, core=true, businessType=A, t24Name=CO.CODE, mask="R##-###-####")
+		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Dept Code")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=24.0, core=true, t24Name=DEPT.CODE)
+		AUDITOR_CODE : T24BusinessTypes:A
+			@i18n:Label (en="Auditor Code")
+			@i18n:Tooltip (en="Auditor Code")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=25.0, core=true, t24Name=AUDITOR.CODE)
+		AUDIT_DATE_TIME : T24BusinessTypes:RELTIME
+			@i18n:Label (en="Audit Date Time")
+			@i18n:Tooltip (en="Date and time when record was audited")
+			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=26.0, core=true, t24Name=AUDIT.DATE.TIME, mask="RDD DD  DD ##:##")
+	}
+	INTRA_DAY_SWEEP__SWEEP_TIME
+	{
+		SWEEP_TIME : T24BusinessTypes:TIME
+			@t24:i (align=L, inputBehaviour=I, maxLength=5, sysNumber=2.0, core=true, t24Name=SWEEP.TIME)
+	}
+	INTRA_DAY_SWEEP__STMT_NOS
+	{
+		STMT_NOS : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=16.0, core=true, t24Name=STMT.NOS)
+	}
+	INTRA_DAY_SWEEP__OVERRIDE
+	{
+		OVERRIDE : T24BusinessTypes:A
+			@i18n:Label (en=Override)
+			@i18n:Tooltip (en="Overrides generated by this transaction")
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=17.0, core=true, t24Name=OVERRIDE)
+	}
+	INTRA_DAY_SWEEP__INPUTTER
+	{
+		INPUTTER : T24BusinessTypes:A
+			@i18n:Label (en=Inputter)
+			@i18n:Tooltip (en="The user who last updated the record")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=20.0, core=true, t24Name=INPUTTER)
+	}
+	INTRA_DAY_SWEEP__DATE_TIME
+	{
+		DATE_TIME : T24BusinessTypes:RELTIME
+			@i18n:Label (en="Date time")
+			@i18n:Tooltip (en="Date and time when record was input or authorised")
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=21.0, core=true, t24Name=DATE.TIME, mask="RDD DD  DD ##:##")
+	}
+	NOFILE_GROUP_POSITION
+		@t24:i (t24Name=NOFILE.GROUP.POSITION, level=I, type=T, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		ID : mml:Integer required
+			@i18n:Label (en="Transaction Ref")
+			@i18n:Tooltip (en="Transaction Reference")
+			@t24:i (align=L, inputBehaviour=N, maxLength=100000, core=false, t24Name="@ID", genOperation=E.MB.GET.GROUP.BALANCE)
+		GROUP_NAME : mml:Integer
+			@i18n:Label (en="Group Name")
+			@t24:i (align=R, inputBehaviour=N, maxLength=30, core=false, t24Name=GROUP.NAME)
+		SUB_GROUP -> byValue PO_Cashpooling:NOFILE_GROUP_POSITION__SUB_GROUP *
+	}
+	NOFILE_GROUP_POSITION__SUB_GROUP
+	{
+		SUB_GROUP : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=20, core=false, t24Name=SUB.GROUP)
+	}
+	NOFILE_PROJECTED_SWEEP_MOVEMENTS
+		@t24:i (t24Name=NOFILE.PROJECTED.SWEEP.MOVEMENTS, level=I, type=T, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		INFO_CP_RECORDS -> byValue PO_Cashpooling:NOFILE_PROJECTED_SWEEP_MOVEMENTS__INFO_CP_RECORDS *
+		ID -> byValue PO_Cashpooling:NOFILE_PROJECTED_SWEEP_MOVEMENTS__ID *
+	}
+	NOFILE_PROJECTED_SWEEP_MOVEMENTS__INFO_CP_RECORDS
+	{
+		INFO_CP_RECORDS : mml:Integer required
+			@t24:i (align=L, inputBehaviour=N, maxLength=20, core=false, t24Name=INFO.CP.RECORDS, genOperation=E.MB.GET.FUTURE.SWEEP.MVMTS)
+	}
+	NOFILE_PROJECTED_SWEEP_MOVEMENTS__ID
+	{
+		ID : mml:Integer
+			@i18n:Label (en="Transaction Ref")
+			@i18n:Tooltip (en="Transaction Reference")
+			@t24:i (align=R, inputBehaviour=N, maxLength=20, core=false, t24Name="@ID")
+	}
+	NOFILE_SWEEP_MOVEMENTS_GROUP
+		@t24:i (t24Name=NOFILE.SWEEP.MOVEMENTS.GROUP, level=I, type=T, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		RETURN_ARRAY : mml:Integer required
+			@t24:i (align=L, inputBehaviour=N, maxLength=100000, core=false, t24Name=RETURN.ARRAY, genOperation=E.MB.GET.SWEEP.HIST)
+		ID -> byValue PO_Cashpooling:NOFILE_SWEEP_MOVEMENTS_GROUP__ID *
+		FROM_DATE : T24BusinessTypes:D
+			@i18n:Label (en="Start Date")
+			@i18n:Tooltip (en="Date from which it is effective")
+			@t24:i (align=R, inputBehaviour=N, maxLength=30, core=false, t24Name=FROM.DATE)
+		TO_DATE : T24BusinessTypes:D
+			@i18n:Label (en="To Date")
+			@t24:i (align=R, inputBehaviour=N, maxLength=30, core=false, t24Name=TO.DATE)
+		GROUP_NAME : mml:Integer
+			@i18n:Label (en="Group Name")
+			@t24:i (align=R, inputBehaviour=N, maxLength=30, core=false, t24Name=GROUP.NAME)
+	}
+	NOFILE_SWEEP_MOVEMENTS_GROUP__ID
+	{
+		ID : mml:Integer
+			@i18n:Label (en="Transaction Ref")
+			@i18n:Tooltip (en="Transaction Reference")
+			@t24:i (align=R, inputBehaviour=N, maxLength=40, core=false, t24Name="@ID")
+	}
+	RERUN_CP_SWEEP
+		@t24:i (t24Name=RERUN.CP.SWEEP, level=F, type=L, allowedFunctions="L P S V", localRefAllowed=false)
+	{
+		GROUP_ID -> PO_Cashpooling:RERUN_CP_SWEEP PK required
+			@i18n:Label (en="Group Id")
+			@t24:i (align=L, inputBehaviour=I, maxLength=18, sysNumber=0.0, core=true, businessType=A, t24Name=GROUP.ID)
+		DUMMY : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=I, maxLength=10, sysNumber=1.0, core=true, t24Name=DUMMY)
+	}
+	REV_GROUP_CP
+		@t24:i (t24Name=REV.GROUP.CP, level=F, type=H, allowedFunctions="A C D E H I L P Q R S", localRefAllowed=true)
+	{
+		ID -> PO_Cashpooling:REV_GROUP_CP PK required
+			@i18n:Label (en="Transaction Ref")
+			@i18n:Tooltip (en="Transaction Reference")
+			@t24:i (align=L, inputBehaviour=I, maxLength=18, sysNumber=0.0, core=true, businessType=A, t24Name=ID)
+		DESCRIPTION : T24BusinessTypes:A
+			@i18n:Label (en=Description)
+			@i18n:Tooltip (en=Description)
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=1.0, core=true, t24Name=DESCRIPTION)
+		RESERVED11 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=2.0, core=true, t24Name=RESERVED11)
+		RESERVED10 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=3.0, core=true, t24Name=RESERVED10)
+		RESERVED09 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=4.0, core=true, t24Name=RESERVED09)
+		RESERVED08 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=5.0, core=true, t24Name=RESERVED08)
+		RESERVED07 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=6.0, core=true, t24Name=RESERVED07)
+		RESERVED06 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=7.0, core=true, t24Name=RESERVED06)
+		RESERVED05 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=8.0, core=true, t24Name=RESERVED05)
+		RESERVED04 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=9.0, core=true, t24Name=RESERVED04)
+		RESERVED03 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=10.0, core=true, t24Name=RESERVED03)
+		RESERVED02 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=11.0, core=true, t24Name=RESERVED02)
+		STMT_NOS -> byValue PO_Cashpooling:REV_GROUP_CP__STMT_NOS *
+		OVERRIDE -> byValue PO_Cashpooling:REV_GROUP_CP__OVERRIDE *
+		RECORD_STATUS : T24BusinessTypes:STAT
+			@i18n:Label (en="Record Status")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=15.0, core=true, t24Name=RECORD.STATUS)
+		CURR_NO : mml:Integer
+			@i18n:Label (en="Curr No")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=16.0, core=true, t24Name=CURR.NO)
+		INPUTTER -> byValue PO_Cashpooling:REV_GROUP_CP__INPUTTER *
+		DATE_TIME -> byValue PO_Cashpooling:REV_GROUP_CP__DATE_TIME *
+		AUTHORISER : T24BusinessTypes:A
+			@i18n:Label (en=Authoriser)
+			@i18n:Tooltip (en="Indicates the User who Authorises the record")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=19.0, core=true, t24Name=AUTHORISER)
+		CO_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company)
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=20.0, core=true, businessType=A, t24Name=CO.CODE, mask="R##-###-####")
+		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Dept Code")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=21.0, core=true, t24Name=DEPT.CODE)
+		AUDITOR_CODE : T24BusinessTypes:A
+			@i18n:Label (en="Auditor Code")
+			@i18n:Tooltip (en="Auditor Code")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=22.0, core=true, t24Name=AUDITOR.CODE)
+		AUDIT_DATE_TIME : T24BusinessTypes:RELTIME
+			@i18n:Label (en="Audit Date Time")
+			@i18n:Tooltip (en="Date and time when record was audited")
+			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=23.0, core=true, t24Name=AUDIT.DATE.TIME, mask="RDD DD  DD ##:##")
+	}
+	REV_GROUP_CP__STMT_NOS
+	{
+		STMT_NOS : T24BusinessTypes:A
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=13.0, core=true, t24Name=STMT.NOS)
+	}
+	REV_GROUP_CP__OVERRIDE
+	{
+		OVERRIDE : T24BusinessTypes:A
+			@i18n:Label (en=Override)
+			@i18n:Tooltip (en="Overrides generated by this transaction")
+			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=14.0, core=true, t24Name=OVERRIDE)
+	}
+	REV_GROUP_CP__INPUTTER
+	{
+		INPUTTER : T24BusinessTypes:A
+			@i18n:Label (en=Inputter)
+			@i18n:Tooltip (en="The user who last updated the record")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=17.0, core=true, t24Name=INPUTTER)
+	}
+	REV_GROUP_CP__DATE_TIME
+	{
+		DATE_TIME : T24BusinessTypes:RELTIME
+			@i18n:Label (en="Date time")
+			@i18n:Tooltip (en="Date and time when record was input or authorised")
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=18.0, core=true, t24Name=DATE.TIME, mask="RDD DD  DD ##:##")
+	}
+}
+Enumerations {
+	AC_CASH_POOL__LINK_ACCT__SCHEDULE : mml:string
+		EOD=EOD
+		INTRA=INTRA
+		NULL=NULL
+	AC_CASH_POOL__RTN_WITH_SW_AMT : mml:string
+		YES=YES
+		NULL=NULL
+	AC_CASH_POOL__WAIVE_CHARGES : mml:string
+		YES=YES
+		NO=NO
+	AC_CASH_POOL__ALLOCATE_SWEEP_AMT : mml:string
+		Y=Y
+		NULL=NULL
+	AC_CASH_POOL_LINK__EUCC_SOD_PROCESS : mml:string
+		YES=YES
+		NULL=NULL
+	AC_CP_GROUP_PARAM__SUB_GROUP : mml:string
+		YES=YES
+		NO=NO
+	AC_CP_GROUP_PARAM__INTRA_DAY : mml:string
+		MULTIPLE=MULTIPLE
+		SINGLE=SINGLE
+	AC_CP_GROUP_PARAM__SHARED_BALANCES : mml:string
+		YES=YES
+		NO=NO
+		PARTIAL=PARTIAL
+	AC_CP_GROUP_PARAM__SEQUENCING : mml:string
+		AUTO=AUTO
+		MANUAL=MANUAL
+	AC_CP_GROUP_PARAM__BALANCE_TO_USE : mml:string
+		WORKING=WORKING
+		ONLINE_ACTUAL="ONLINE ACTUAL"
+		ONLINE_CLEARED="ONLINE CLEARED"
+		VALUE_DATED=VALUE.DATED
+		USER_DEFINED="USER DEFINED"
+		AC_BALANCE_TYPE=AC.BALANCE.TYPE
+		WORKING_LESS_LOCKED_AMT="WORKING LESS LOCKED AMT"
+	AC_CP_GROUP_PARAM__RULE_PRIORITY : mml:string
+		FREQUENCY=FREQUENCY
+		PRIORITY=PRIORITY
+	AC_CP_GROUP_PARAM__BACK_VALUE_ADJ : mml:string
+		YES=YES
+		NULL=NULL
+	AC_CP_GROUP_PARAM__MULTI_RULE : mml:string
+		YES=YES
+		NULL=NULL
+	AC_CP_GROUP_PARAM__BUILD_SEQUENCE : mml:string
+		YES=YES
+		NULL=NULL
+	AC_CP_GROUP_PARAM__BV_SWEEP_TYPE : mml:string
+		SURPLUS=SURPLUS
+		NULL=NULL
+	AC_CP_GROUP_PARAM__EUCC_PROCESS : mml:string
+		YES=YES
+		NULL=NULL
+	AC_CP_GROUP_PARAM__ACC_IN_MUL_POOL : mml:string
+		YES=YES
+		NO=NO
+		NULL=NULL
+	AC_CP_GROUP_PARAM__EXCH_RATE_TYPE : mml:string
+		MID=MID
+		BUY_SELL=BUY/SELL
+}

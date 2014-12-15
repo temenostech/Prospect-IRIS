@@ -1,0 +1,187 @@
+# UTF-8
+/* Delivery Definition and Processing for Loans and Money Market */
+Domain LM_Delivery
+	@t24:i (module=LM)
+	@java:Package (value=com.temenos.t24.datamodel.lm.lm_delivery)
+namespace "http://www.temenos.com/t24/LM_Delivery"
+metamodelVersion 1.30.6
+Classes {
+	LMM_ACTIVITY
+		@t24:i (t24Name=LMM.ACTIVITY, level=I, type=U, additionalInfo="UNP OEU", allowedFunctions="A C D E I L P Q R S", localRefAllowed=false)
+	{
+		ACTIVITY -> LM_Delivery:LMM_ACTIVITY PK required
+			@i18n:Label (en=Activity)
+			@t24:i (align=R, inputBehaviour=I, maxLength=4, sysNumber=0.0, core=true, t24Name=ACTIVITY)
+		DESCRIPTION -> byValue LM_Delivery:LMM_ACTIVITY__DESCRIPTION *
+		RECORD_STATUS : T24BusinessTypes:STAT
+			@i18n:Label (en="Record Status")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=2.0, core=true, t24Name=RECORD.STATUS)
+		CURR_NO : mml:Integer
+			@i18n:Label (en="Curr No")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=3.0, core=true, t24Name=CURR.NO)
+		INPUTTER -> byValue LM_Delivery:LMM_ACTIVITY__INPUTTER *
+		DATE_TIME -> byValue LM_Delivery:LMM_ACTIVITY__DATE_TIME *
+		AUTHORISER : T24BusinessTypes:A
+			@i18n:Label (en=Authoriser)
+			@i18n:Tooltip (en="Indicates the User who Authorises the record")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=6.0, core=true, t24Name=AUTHORISER)
+		CO_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company)
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=7.0, core=true, businessType=A, t24Name=CO.CODE, mask="R##-###-####")
+		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Dept Code")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=8.0, core=true, t24Name=DEPT.CODE)
+		AUDITOR_CODE : T24BusinessTypes:A
+			@i18n:Label (en="Auditor Code")
+			@i18n:Tooltip (en="Auditor Code")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=9.0, core=true, t24Name=AUDITOR.CODE)
+		AUDIT_DATE_TIME : T24BusinessTypes:RELTIME
+			@i18n:Label (en="Audit Date Time")
+			@i18n:Tooltip (en="Date and time when record was audited")
+			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=10.0, core=true, t24Name=AUDIT.DATE.TIME, mask="RDD DD  DD ##:##")
+	}
+	LMM_ACTIVITY__DESCRIPTION
+	{
+		DESCRIPTION : T24BusinessTypes:A required
+			@i18n:Label (en=Description)
+			@i18n:Tooltip (en=Description)
+			@t24:i (align=L, inputBehaviour=I, maxLength=35, multiLanguage=true, sysNumber=1.0, core=true, t24Name=DESCRIPTION)
+	}
+	LMM_ACTIVITY__INPUTTER
+	{
+		INPUTTER : T24BusinessTypes:A
+			@i18n:Label (en=Inputter)
+			@i18n:Tooltip (en="The user who last updated the record")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=4.0, core=true, t24Name=INPUTTER)
+	}
+	LMM_ACTIVITY__DATE_TIME
+	{
+		DATE_TIME : T24BusinessTypes:RELTIME
+			@i18n:Label (en="Date time")
+			@i18n:Tooltip (en="Date and time when record was input or authorised")
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=5.0, core=true, t24Name=DATE.TIME, mask="RDD DD  DD ##:##")
+	}
+	LMM_ADVICES
+		@t24:i (t24Name=LMM.ADVICES, level=I, type=U, additionalInfo="UNP OEU", allowedFunctions="A C D E I L P Q R S", localRefAllowed=true)
+	{
+		CATEGORY_CODE -> LM_Delivery:LMM_ADVICES PK required
+			@i18n:Label (en="Category Code")
+			@t24:i (align=R, inputBehaviour=I, maxLength=6, sysNumber=0.0, core=true, t24Name=CATEGORY.CODE)
+		ALL_NONE_ADVICES : LM_Delivery:LMM_ADVICES__ALL_NONE_ADVICES
+			@t24:i (align=L, inputBehaviour=I, maxLength=4, sysNumber=1.0, core=true, t24Name=ALL.NONE.ADVICES)
+		ACTIVITY -> byValue LM_Delivery:LMM_ADVICES__ACTIVITY *
+		FORMAT_CATEGORY : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=5.0, core=true, t24Name=FORMAT.CATEGORY)
+		MATURE_MM_AT_SOD : LM_Delivery:LMM_ADVICES__MATURE_MM_AT_SOD
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=6.0, core=true, t24Name=MATURE.MM.AT.SOD)
+		FV_RATE_KEY : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=4, sysNumber=7.0, core=true, t24Name=FV.RATE.KEY)
+		FV_MARGIN_KEY : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=4, sysNumber=8.0, core=true, t24Name=FV.MARGIN.KEY)
+		COMPOUND_TYPE : T24BusinessTypes:COMPFQU
+			@i18n:Label (en=Compounding)
+			@i18n:Tooltip (en="It supports both debit and credit interest")
+			@t24:i (align=L, inputBehaviour=I, maxLength=5, sysNumber=9.0, core=true, t24Name=COMPOUND.TYPE)
+		COMPOUND_YLD_MTHD : LM_Delivery:LMM_ADVICES__COMPOUND_YLD_MTHD
+			@t24:i (align=L, inputBehaviour=I, maxLength=8, sysNumber=10.0, core=true, t24Name=COMPOUND.YLD.MTHD)
+		RESERVED10 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=11.0, core=true, t24Name=RESERVED10)
+		RESERVED9 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=12.0, core=true, t24Name=RESERVED9)
+		RESERVED8 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=13.0, core=true, t24Name=RESERVED8)
+		RESERVED7 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=14.0, core=true, t24Name=RESERVED7)
+		RESERVED6 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=15.0, core=true, t24Name=RESERVED6)
+		RESERVED5 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=16.0, core=true, t24Name=RESERVED5)
+		RESERVED4 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=17.0, core=true, t24Name=RESERVED4)
+		RESERVED3 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=18.0, core=true, t24Name=RESERVED3)
+		RESERVED2 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=19.0, core=true, t24Name=RESERVED2)
+		RESERVED1 : mml:Integer
+			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=20.0, core=true, t24Name=RESERVED1)
+		RECORD_STATUS : T24BusinessTypes:STAT
+			@i18n:Label (en="Record Status")
+			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=22.0, core=true, t24Name=RECORD.STATUS)
+		CURR_NO : mml:Integer
+			@i18n:Label (en="Curr No")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=23.0, core=true, t24Name=CURR.NO)
+		INPUTTER -> byValue LM_Delivery:LMM_ADVICES__INPUTTER *
+		DATE_TIME -> byValue LM_Delivery:LMM_ADVICES__DATE_TIME *
+		AUTHORISER : T24BusinessTypes:A
+			@i18n:Label (en=Authoriser)
+			@i18n:Tooltip (en="Indicates the User who Authorises the record")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=26.0, core=true, t24Name=AUTHORISER)
+		CO_CODE -> ST_CompanyCreation:COMPANY
+			@i18n:Label (en=Company)
+			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=27.0, core=true, businessType=A, t24Name=CO.CODE, mask="R##-###-####")
+		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+			@i18n:Label (en="Dept Code")
+			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=28.0, core=true, t24Name=DEPT.CODE)
+		AUDITOR_CODE : T24BusinessTypes:A
+			@i18n:Label (en="Auditor Code")
+			@i18n:Tooltip (en="Auditor Code")
+			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=29.0, core=true, t24Name=AUDITOR.CODE)
+		AUDIT_DATE_TIME : T24BusinessTypes:RELTIME
+			@i18n:Label (en="Audit Date Time")
+			@i18n:Tooltip (en="Date and time when record was audited")
+			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=30.0, core=true, t24Name=AUDIT.DATE.TIME, mask="RDD DD  DD ##:##")
+	}
+	LMM_ADVICES__ACTIVITY
+	{
+		ACTIVITY -> LM_Delivery:LMM_ACTIVITY
+			@i18n:Label (en=Activity)
+			@t24:i (align=L, inputBehaviour=I, maxLength=8, sysNumber=2.0, core=true, businessType=A, t24Name=ACTIVITY)
+		REQUIRED_Y_N : LM_Delivery:LMM_ADVICES__ACTIVITY__REQUIRED_Y_N
+			@t24:i (align=L, inputBehaviour=I, maxLength=1, sysNumber=3.0, core=true, t24Name=REQUIRED.Y.N)
+		DAYS_PRIOR_POST : mml:Integer
+			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=4.0, core=true, t24Name=DAYS.PRIOR.POST)
+	}
+	LMM_ADVICES__INPUTTER
+	{
+		INPUTTER : T24BusinessTypes:A
+			@i18n:Label (en=Inputter)
+			@i18n:Tooltip (en="The user who last updated the record")
+			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=24.0, core=true, t24Name=INPUTTER)
+	}
+	LMM_ADVICES__DATE_TIME
+	{
+		DATE_TIME : T24BusinessTypes:RELTIME
+			@i18n:Label (en="Date time")
+			@i18n:Tooltip (en="Date and time when record was input or authorised")
+			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=25.0, core=true, t24Name=DATE.TIME, mask="RDD DD  DD ##:##")
+	}
+	RE_LMM_INT_PAYMENT
+		@t24:i (t24Name=RE.LMM.INT.PAYMENT, level=F, type=L, allowedFunctions="L P S", localRefAllowed=false)
+	{
+		CONTRACT_SEQ_NO -> LM_Delivery:RE_LMM_INT_PAYMENT PK required
+			@t24:i (align=L, inputBehaviour=I, maxLength=14, sysNumber=0.0, core=true, businessType=AA, t24Name=CONTRACT.SEQ.NO)
+		CURRENCY : T24BusinessTypes:CCY
+			@i18n:Label (en=Ccy)
+			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=1.0, core=true, t24Name=CURRENCY)
+		INTEREST_RECEIVE : T24BusinessTypes:AMT
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=2.0, core=true, t24Name=INTEREST.RECEIVE)
+		COMMISSION_RECVE : T24BusinessTypes:AMT
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=3.0, core=true, t24Name=COMMISSION.RECVE)
+		INTEREST_PAYABLE : T24BusinessTypes:AMT
+			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=4.0, core=true, t24Name=INTEREST.PAYABLE)
+	}
+}
+Enumerations {
+	LMM_ADVICES__ALL_NONE_ADVICES : mml:string
+		ALL=ALL
+		NONE=NONE
+	LMM_ADVICES__ACTIVITY__REQUIRED_Y_N : mml:string
+		Y=Y
+		N=N
+	LMM_ADVICES__MATURE_MM_AT_SOD : mml:string
+		YES=YES
+		NO=NO
+	LMM_ADVICES__COMPOUND_YLD_MTHD : mml:string
+		YIELD=YIELD
+		NULL=NULL
+}
