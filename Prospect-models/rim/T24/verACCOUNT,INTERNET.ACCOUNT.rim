@@ -1,0 +1,538 @@
+domain T24 {
+	use common.CoreCommands.*
+	use common.HTTPEvents.*
+	use common.ODataCommands.*
+	use common.T24Commands.*
+	use common.T24Events.*
+	use common.NextState.*
+	use common.Errors.*
+	use T24.ContextEnquiry.*
+	rim verAccount_InternetAccount {
+		command GETEntities
+		command GetLiveEntity
+		command GetIauthEntity
+		command GetHauthEntity
+		command NoopGET
+		command T24FieldMetadata
+		command GetIauthEntities
+		command CreateEntity
+		command InputEntity
+		command HoldEntity
+		command AuthoriseEntity
+		command ReviewEntity
+		command ReverseEntity
+		command ValidateEntity
+		command RestoreEntity
+		command DeleteEntity
+		command T24Enrichment
+		command CheckAutoIdSupport
+		command GetHauthEntities
+		command T24NextState
+		basepath: "/{companyid}"
+	
+		resource verAccount_InternetAccounts {
+			type: collection
+			entity: verAccount_InternetAccount
+			commands [ GET : GETEntities {
+				properties [ filter = "{filter}" ]
+				} ]
+			path: "/verAccount_InternetAccounts()"
+			GET *-> verAccount_InternetAccount {
+				parameters [ id = "{AccountNumber}" ]
+			}
+			GET *-> verAccount_InternetAccount_see {
+				parameters [ id = "{AccountNumber}" ]
+				title: "see record"
+			}
+			POST -> verAccount_InternetAccount_new {
+				title: "create new deal"
+				condition: OK(verAccount_InternetAccount_autoId)
+			}
+			POST -> verAccount_InternetAccount_populate {
+				title: "populate existing deal"
+			}
+			PUT *-> verAccount_InternetAccount_input {
+				parameters [ id = "{AccountNumber}" ]
+				title: "input deal"
+			}
+			POST *-> verAccount_InternetAccount_audit {
+				parameters [ id = "{AccountNumber}" ]
+				title: "audit deal"
+			}
+			POST *-> verAccount_InternetAccount_reverse {
+				parameters [ id = "{AccountNumber}" ]
+				title: "reverse deal"
+			}
+		}
+	
+		resource verAccount_InternetAccount {
+			type: item
+			entity: verAccount_InternetAccount
+			commands [ GET : GetLiveEntity ]
+			path: "/verAccount_InternetAccounts('{id}')"
+			POST +-> verAccount_InternetAccount_metadata {
+				title: "metadata"
+			}
+			GET --> verAccount_InternetAccount_IAuth {
+				parameters [ id = "{AccountNumber}" ]
+				condition: OK(verAccount_InternetAccount_IAuth)
+			}
+			POST -> verAccount_InternetAccount_validate {
+				parameters [ id = "{AccountNumber}" ]
+				title: "validate deal"
+			}
+			PUT -> verAccount_InternetAccount_input {
+				parameters [ id = "{AccountNumber}" ]
+				title: "input deal"
+			}
+			POST -> verAccount_InternetAccount_audit {
+				parameters [ id = "{AccountNumber}" ]
+				title: "audit deal"
+			}
+			POST -> verAccount_InternetAccount_reverse {
+				parameters [ id = "{AccountNumber}" ]
+				title: "reverse deal"
+			}
+			GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+				parameters [ entity = "verAccount_InternetAccount" ]
+				title: "Context Enquiries"
+			}
+		}
+	
+		resource verAccount_InternetAccount_see {
+			type: item
+			entity: verAccount_InternetAccount
+			commands [ GET : GetLiveEntity ]
+			relations [ "http://schemas.microsoft.com/ado/2007/08/dataservices/related/verAccount_InternetAccount","http://temenostech.temenos.com/rels/see" ]
+			path: "/verAccount_InternetAccounts('{id}')/see"
+			POST +-> verAccount_InternetAccount_metadata {
+				title: "metadata"
+			}
+		}
+	
+		resource verAccount_InternetAccount_IAuth_see {
+			type: item
+			entity: verAccount_InternetAccount
+			commands [ GET : GetIauthEntity ]
+			relations [ "http://schemas.microsoft.com/ado/2007/08/dataservices/related/verAccount_InternetAccount_IAuth","http://temenostech.temenos.com/rels/see" ]
+			path: "/verAccount_InternetAccounts_IAuth('{id}')/see"
+		}
+	
+		resource verAccount_InternetAccount_HAuth_see {
+			type: item
+			entity: verAccount_InternetAccount
+			commands [ GET : GetHauthEntity ]
+			relations [ "http://schemas.microsoft.com/ado/2007/08/dataservices/related/verAccount_InternetAccount_HAuth","http://temenostech.temenos.com/rels/see" ]
+			path: "/verAccount_InternetAccounts_HAuth('{id}')/see"
+		}
+	
+		resource verAccount_InternetAccount_ContextEnquiries {
+			type: item
+			entity: verAccount_InternetAccount
+			commands [ GET : NoopGET ]
+			path: "/verAccount_InternetAccount/ContextEnquiries"
+//			GET -> T24.enqlistAccount.enqlistAccounts {
+//				parameters [ param = "list" ]
+//				title: "List live deals"
+//			}
+//			GET -> T24.enqlistAccount.enqlistAccountsUnauth {
+//				parameters [ param = "list" ]
+//				title: "List unauthorised deals"
+//			}
+//			GET -> T24.enqlistAccount.enqlistAccountsHist {
+//				parameters [ param = "list" ]
+//				title: "List history deals"
+//			}
+//			GET -> T24.enqlistAccount.enqlistAccounts {
+//				title: "Search live deals"
+//			}
+//			GET -> T24.enqlistAccount.enqlistAccountsUnauth {
+//				title: "Search unauthorised deals"
+//			}
+//			GET -> T24.enqlistAccount.enqlistAccountsHist {
+//				title: "Search history deals"
+//			}
+//			GET +-> ContextEnquiryList {
+//				parameters [ entity = "verAccount_InternetAccount" ]
+//				title: "Other context Enquiries"
+//			}
+		}
+	
+		resource verAccount_InternetAccount_metadata {
+			type: collection
+			entity: T24FieldMetadata
+			commands [ POST : T24FieldMetadata ]
+			relations [ "http://temenostech.temenos.com/rels/metadata" ]
+			path: "/verAccount_InternetAccounts()/metadata"
+		}
+	
+		resource verAccount_InternetAccounts_IAuth {
+			type: collection
+			entity: verAccount_InternetAccount
+			commands [ GET : GetIauthEntities {
+				properties [ filter = "{filter}" ]
+				} ]
+			path: "/verAccount_InternetAccounts_IAuth()"
+			GET *-> verAccount_InternetAccount_IAuth {
+				parameters [ id = "{AccountNumber}" ]
+			}
+			POST -> verAccount_InternetAccount_new {
+				title: "create new deal"
+				condition: OK(verAccount_InternetAccount_autoId)
+			}
+			POST -> verAccount_InternetAccount_populate {
+				title: "populate existing deal"
+			}
+			PUT *-> verAccount_InternetAccount_input {
+				parameters [ id = "{AccountNumber}" ]
+				title: "input deal"
+			}
+			DELETE *-> verAccount_InternetAccount_delete {
+				parameters [ id = "{AccountNumber}" ]
+				title: "delete"
+			}
+			PUT *-> verAccount_InternetAccount_authorise {
+				parameters [ id = "{AccountNumber}" ]
+				title: "authorise deal"
+			}
+		}
+	
+		resource verAccount_InternetAccount_new {
+			type: item
+			entity: verAccount_InternetAccount
+			commands [ POST : CreateEntity ]
+			relations [ "http://schemas.microsoft.com/ado/2007/08/dataservices/related/verAccount_InternetAccount","http://temenostech.temenos.com/rels/new" ]
+			path: "/verAccount_InternetAccounts()/new"
+			POST +-> verAccount_InternetAccount_metadata {
+				title: "metadata"
+			}
+			POST -> verAccount_InternetAccount_validate {
+				parameters [ id = "{AccountNumber}" ]
+				title: "validate deal"
+			}
+			PUT -> verAccount_InternetAccount_input {
+				parameters [ id = "{AccountNumber}" ]
+				title: "input deal"
+			}
+			POST -> verAccount_InternetAccount_hold {
+				parameters [ id = "{AccountNumber}" ]
+				title: "hold deal"
+			}
+			GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+				parameters [ entity = "verAccount_InternetAccount" ]
+				title: "Context Enquiries"
+			}
+		}
+	
+		resource verAccount_InternetAccount_input {
+			type: item
+			entity: verAccount_InternetAccount
+			commands [ PUT : InputEntity, POST : InputEntity ]
+			relations [ "http://temenostech.temenos.com/rels/input" ]
+			path: "/verAccount_InternetAccounts('{id}')"
+//			GET --> nextState {
+//				condition: OK(nextState)
+//			}
+			GET --> verAccount_InternetAccount_IAuth {
+				parameters [ id = "{AccountNumber}" ]
+				condition: OK(verAccount_InternetAccount_IAuth)
+			}
+			GET --> verAccount_InternetAccount {
+				parameters [ id = "{AccountNumber}" ]
+				condition: OK(verAccount_InternetAccount)
+			}
+			GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+				parameters [ entity = "verAccount_InternetAccount" ]
+				title: "Context Enquiries"
+			}
+		}
+	
+		resource verAccount_InternetAccount_hold {
+			type: item
+			entity: verAccount_InternetAccount
+			commands [ POST : HoldEntity ]
+			relations [ "http://temenostech.temenos.com/rels/hold" ]
+			path: "/verAccount_InternetAccounts('{id}')/hold"
+			PUT -> verAccount_InternetAccount_input {
+				parameters [ id = "{AccountNumber}" ]
+				title: "input deal"
+			}
+			DELETE -> verAccount_InternetAccount_delete {
+				parameters [ id = "{AccountNumber}" ]
+				title: "delete"
+			}
+		}
+	
+		resource verAccount_InternetAccount_authorise {
+			type: item
+			entity: verAccount_InternetAccount
+			commands [ PUT : AuthoriseEntity ]
+			relations [ "http://temenostech.temenos.com/rels/authorise" ]
+			path: "/verAccount_InternetAccounts('{id}')/authorise"
+			GET --> verAccount_InternetAccount_IAuth {
+				parameters [ id = "{AccountNumber}" ]
+				condition: OK(verAccount_InternetAccount_IAuth)
+			}
+			GET --> verAccount_InternetAccount {
+				parameters [ id = "{AccountNumber}" ]
+				condition: OK(verAccount_InternetAccount)
+			}
+			GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+				parameters [ entity = "verAccount_InternetAccount" ]
+				title: "Context Enquiries"
+			}
+		}
+	
+		resource verAccount_InternetAccount_audit {
+			type: item
+			entity: verAccount_InternetAccount
+			commands [ POST : ReviewEntity ]
+			relations [ "http://temenostech.temenos.com/rels/review" ]
+			path: "/verAccount_InternetAccounts('{id}')/review"
+			GET -> verAccount_InternetAccount {
+				parameters [ id = "{AccountNumber}" ]
+			}
+		}
+	
+		resource verAccount_InternetAccount_reverse {
+			type: item
+			entity: verAccount_InternetAccount
+			commands [ PUT : ReverseEntity ]
+			relations [ "http://temenostech.temenos.com/rels/reverse" ]
+			path: "/verAccount_InternetAccounts('{id}')/reverse"
+			GET --> verAccount_InternetAccount_IAuth {
+				parameters [ id = "{AccountNumber}" ]
+				condition: OK(verAccount_InternetAccount_IAuth)
+			}
+			GET --> verAccount_InternetAccount_HAuth {
+				parameters [ id = "{AccountNumber}" ]
+				condition: OK(verAccount_InternetAccount_HAuth)
+			}
+		}
+	
+		resource verAccount_InternetAccount_validate {
+			type: item
+			entity: verAccount_InternetAccount
+			commands [ POST : ValidateEntity ]
+			relations [ "http://temenostech.temenos.com/rels/validate" ]
+			path: "/verAccount_InternetAccounts('{id}')/validate"
+			POST +-> verAccount_InternetAccount_metadata {
+				title: "metadata"
+			}
+			PUT -> verAccount_InternetAccount_input {
+				parameters [ id = "{AccountNumber}" ]
+				title: "input deal"
+			}
+			POST -> verAccount_InternetAccount_hold {
+				parameters [ id = "{AccountNumber}" ]
+				title: "hold deal"
+			}
+		}
+	
+		resource verAccount_InternetAccount_IAuth {
+			type: item
+			entity: verAccount_InternetAccount
+			commands [ GET : GetIauthEntity ]
+			path: "/verAccount_InternetAccounts_IAuth('{id}')"
+			POST +-> verAccount_InternetAccount_metadata {
+				title: "metadata"
+			}
+			POST -> verAccount_InternetAccount_validate {
+				parameters [ id = "{AccountNumber}" ]
+				title: "validate deal"
+			}
+			PUT -> verAccount_InternetAccount_input {
+				parameters [ id = "{AccountNumber}" ]
+				title: "input deal"
+			}
+			POST -> verAccount_InternetAccount_hold {
+				parameters [ id = "{AccountNumber}" ]
+				title: "hold deal"
+			}
+			POST -> verAccount_InternetAccount_authorise {
+				parameters [ id = "{AccountNumber}" ]
+				title: "authorise deal"
+			}
+			DELETE -> verAccount_InternetAccount_delete {
+				parameters [ id = "{AccountNumber}" ]
+				title: "delete"
+			}
+			GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+				parameters [ entity = "verAccount_InternetAccount" ]
+				title: "Context Enquiries"
+			}
+		}
+	
+		resource verAccount_InternetAccount_delete {
+			type: item
+			entity: verAccount_InternetAccount
+			commands [ DELETE : DeleteEntity ]
+			relations [ "http://temenostech.temenos.com/rels/delete" ]
+			path: "/verAccount_InternetAccounts('{id}')/delete"
+		}
+	
+		resource verAccount_InternetAccountEntry {
+			type: item
+			entity: verAccount_InternetAccount
+			commands [ GET : NoopGET ]
+			relations [ "http://schemas.microsoft.com/ado/2007/08/dataservices/related/verAccount_InternetAccount","http://temenostech.temenos.com/rels/contract" ]
+			path: "/verAccount_InternetAccountEntry"
+			POST -> verAccount_InternetAccount_new {
+				title: "create new deal"
+				condition: OK(verAccount_InternetAccount_autoId)
+			}
+			POST -> verAccount_InternetAccount_populate {
+				title: "populate existing deal"
+			}
+			GET +-> verAccount_InternetAccount_see {
+				parameters [ id = "@" ]
+				title: "See transaction"
+			}
+			GET +-> verAccount_InternetAccount_IAuth_see {
+				parameters [ id = "@" ]
+				title: "GetIauthEntity"
+			}
+			GET +-> verAccount_InternetAccount_HAuth_see {
+				parameters [ id = "@" ]
+				title: "GetHauthEntity"
+			}
+			GET +-> verAccount_InternetAccount_IAuth {
+				parameters [ id = "@" ]
+				title: "GetIauthEntity"
+			}
+			GET +-> verAccount_InternetAccount_HAuth {
+				parameters [ id = "@" ]
+				title: "GetHauthEntity"
+			}
+			GET +-> verAccount_InternetAccount_ContextEnquiries {
+				title: "All context Enquiries"
+			}
+		}
+	
+		resource verAccount_InternetAccount_populate {
+			type: item
+			entity: verAccount_InternetAccount
+			commands [ POST : CreateEntity ]
+			relations [ "http://schemas.microsoft.com/ado/2007/08/dataservices/related/verAccount_InternetAccount","http://temenostech.temenos.com/rels/populate" ]
+			path: "/verAccount_InternetAccounts()/populate"
+			POST -> verAccount_InternetAccount_validate {
+				parameters [ id = "{AccountNumber}" ]
+				title: "validate deal"
+			}
+			POST -> verAccount_InternetAccount_input {
+				parameters [ id = "{AccountNumber}" ]
+				title: "input deal"
+			}
+			DELETE -> verAccount_InternetAccount_delete {
+				parameters [ id = "{AccountNumber}" ]
+				title: "delete"
+				condition: OK(verAccount_InternetAccount_IAuth)
+			}
+			POST -> verAccount_InternetAccount_metadata {
+				title: "metadata"
+			}
+			GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+				parameters [ entity = "verAccount_InternetAccount" ]
+				title: "Context Enquiries"
+			}
+		}
+	
+		resource verAccount_InternetAccounts_enrichment {
+			type: item
+			entity: Enrichment
+			commands [ GET : T24Enrichment {
+				properties [ entity = "verAccount_InternetAccount" ]
+				} ]
+			relations [ "http://temenostech.temenos.com/rels/enrichment" ]
+			path: "/verAccount_InternetAccounts()/enrichment"
+		}
+	
+		resource verAccount_InternetAccount_autoId {
+			type: item
+			entity: verAccount_InternetAccount
+			commands [ GET : CheckAutoIdSupport ]
+		}
+	
+		resource verAccount_InternetAccount_restore {
+			type: item
+			entity: verAccount_InternetAccount
+			commands [ POST : RestoreEntity ]
+			relations [ "http://temenostech.temenos.com/rels/restore" ]
+			path: "/verAccount_InternetAccounts('{id}')/restore"
+			GET --> verAccount_InternetAccount_IAuth {
+				parameters [ id = "{AccountNumber}" ]
+				condition: OK(verAccount_InternetAccount_IAuth)
+			}
+			GET --> verAccount_InternetAccount {
+				parameters [ id = "{AccountNumber}" ]
+				condition: OK(verAccount_InternetAccount)
+			}
+			POST -> verAccount_InternetAccount_metadata {
+				title: "metadata"
+			}
+			GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+				parameters [ entity = "verAccount_InternetAccount" ]
+				title: "Context Enquiries"
+			}
+		}
+	
+		resource verAccount_InternetAccounts_HAuth {
+			type: collection
+			entity: verAccount_InternetAccount
+			commands [ GET : GetHauthEntities {
+				properties [ filter = "{filter}" ]
+				} ]
+			path: "/verAccount_InternetAccounts_HAuth()"
+			GET *-> verAccount_InternetAccount_HAuth {
+				parameters [ id = "{AccountNumber}" ]
+			}
+			POST -> verAccount_InternetAccount_new {
+				title: "create new deal"
+				condition: OK(verAccount_InternetAccount_autoId)
+			}
+			POST -> verAccount_InternetAccount_populate {
+				title: "populate existing deal"
+			}
+			POST *-> verAccount_InternetAccount_restore {
+				parameters [ id = "{AccountNumber}" ]
+				title: "restore deal"
+			}
+		}
+	
+		resource verAccount_InternetAccount_HAuth {
+			type: item
+			entity: verAccount_InternetAccount
+			commands [ GET : GetHauthEntity ]
+			path: "/verAccount_InternetAccounts_HAuth('{id}')"
+			POST +-> verAccount_InternetAccount_metadata {
+				title: "metadata"
+			}
+			POST -> verAccount_InternetAccount_validate {
+				parameters [ id = "{AccountNumber}" ]
+				title: "validate deal"
+			}
+			PUT -> verAccount_InternetAccount_input {
+				parameters [ id = "{AccountNumber}" ]
+				title: "input deal"
+			}
+			POST -> verAccount_InternetAccount_hold {
+				parameters [ id = "{AccountNumber}" ]
+				title: "hold deal"
+			}
+			POST -> verAccount_InternetAccount_authorise {
+				parameters [ id = "{AccountNumber}" ]
+				title: "authorise deal"
+			}
+			DELETE -> verAccount_InternetAccount_delete {
+				parameters [ id = "{AccountNumber}" ]
+				title: "delete"
+			}
+			GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+				parameters [ entity = "verAccount_InternetAccount" ]
+				title: "Context Enquiries"
+			}
+		}
+	
+	}
+	
+}

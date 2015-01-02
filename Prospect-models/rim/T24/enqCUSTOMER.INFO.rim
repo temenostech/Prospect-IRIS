@@ -7,6 +7,7 @@ domain T24 {
 	rim enqCustomerInfo {
 		command GETEntities
 		command GETEntity
+		command MatchCommand
 		basepath: "/{companyid}"
 	
 		resource enqCustomerInfos {
@@ -22,11 +23,9 @@ domain T24 {
 			GET *-> enqCustomerInfo {
 				parameters [ id = "{CusNo}" ]
 			}
-			GET *-> "T24.verCustomer_Default.verCustomer_DefaultEntry" {
-				title: "Record View"
-			}
-			GET *-> "T24.verFundsTransfer_Interbank.verFundsTransfer_InterbankEntry" {
-				title: "Input Customer"
+			POST *-> T24.verAccount_InternetAccount.verAccount_InternetAccount_new {
+				title: "Open Account"
+				condition: OK(CustomerKYCChecked)
 			}
 		}
 	
@@ -35,6 +34,15 @@ domain T24 {
 			entity: enqCustomerInfo
 			view: GETEntity
 			path: "/enqCustomerInfos('{id}')"
+		}
+	
+		resource CustomerKYCChecked {
+		   type: item
+		   entity: Entity 
+		   view: MatchCommand {
+		      properties [ Expression="{KycComplete}='YES'" ]
+		   }
+		   path: "/CustomerKYCChecked/{KycComplete}"
 		}
 	
 	}
