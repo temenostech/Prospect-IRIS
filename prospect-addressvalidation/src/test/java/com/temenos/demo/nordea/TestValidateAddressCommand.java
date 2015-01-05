@@ -9,6 +9,7 @@ import javax.ws.rs.core.UriInfo;
 
 import org.junit.Test;
 
+import com.temenos.demo.prospect.ValidateAddressCommand;
 import com.temenos.interaction.core.MultivaluedMapImpl;
 import com.temenos.interaction.core.command.InteractionCommand;
 import com.temenos.interaction.core.command.InteractionCommand.Result;
