@@ -52,14 +52,13 @@ public class ValidateAddress {
 		} finally {
 			if (getMethod != null) {
 				getMethod.releaseConnection();
-				getMethod.abort();
 			}
 		}
 		return null;
 	}
 	
 	public static void main(String[] args) {
-		System.out.println(new ValidateAddress().validate("vejnavn=Fægangen,husnr=1,etage=1,dør=13,postnr=4180"));
+		System.out.println(new ValidateAddress().validate("vejnavn=Fï¿½gangen,husnr=1,etage=1,dï¿½r=13,postnr=4180"));
 	}
  	
 }

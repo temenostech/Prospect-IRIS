@@ -11,7 +11,7 @@ public class TestValidateAddress {
 	@Test
 	public void testValid() {
 		ValidateAddress va = new ValidateAddress();
-		String result = va.validate("vejnavn=Fægangen,husnr=1,etage=1,dør=13,postnr=4180");
+		String result = va.validate("vejnavn=FÃ¦gangen,husnr=1,etage=1,dÃ¸r=13,postnr=4180");
 		System.out.println("result="+result+";length="+result.length());
 		assertTrue(result.contains("\"status\": 1"));
 	}
@@ -19,7 +19,7 @@ public class TestValidateAddress {
 	@Test
 	public void testInvalid() {
 		ValidateAddress va = new ValidateAddress();
-		String result = va.validate("vejnavn=Fægangen,husnr=1,etage=99,dør=13,postnr=4180");
+		String result = va.validate("vejnavn=FÃ¦gangen,husnr=1,etage=99,dÃ¸r=13,postnr=4180");
 		System.out.println("result="+result+";length="+result.length());
 		assertFalse(result.contains("\"status\": 1"));
 	}

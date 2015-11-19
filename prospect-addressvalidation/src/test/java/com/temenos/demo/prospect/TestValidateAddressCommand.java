@@ -25,12 +25,12 @@ public class TestValidateAddressCommand {
 
 	@SuppressWarnings("unchecked")
 	@Test
-	public void test() throws Exception {
+	public void testSuccess() throws Exception {
 		MultivaluedMap<String, String> queryParams = new MultivaluedMapImpl<String>();
         InteractionContext ctx = new InteractionContext(mock(UriInfo.class), mock(HttpHeaders.class), mock(MultivaluedMap.class), queryParams, mock(ResourceState.class), mock(Metadata.class));
 
         EntityProperties properties = new EntityProperties();
-        properties.setProperty(new EntityProperty("Road", "Fægangen"));
+        properties.setProperty(new EntityProperty("Road", "FÃ¦gangen"));
         properties.setProperty(new EntityProperty("HouseNumber", "1"));
         properties.setProperty(new EntityProperty("Floor", "1"));
         properties.setProperty(new EntityProperty("Door", "13"));
