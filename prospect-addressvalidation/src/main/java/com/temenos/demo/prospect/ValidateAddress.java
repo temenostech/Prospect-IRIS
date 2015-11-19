@@ -50,8 +50,10 @@ public class ValidateAddress {
 		} catch (IOException e) {
 			e.printStackTrace();
 		} finally {
-			if (getMethod != null)
+			if (getMethod != null) {
 				getMethod.releaseConnection();
+				getMethod.abort();
+			}
 		}
 		return null;
 	}
