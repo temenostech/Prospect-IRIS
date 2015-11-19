@@ -1,4 +1,4 @@
-package com.temenos.demo.nordea;
+package com.temenos.demo.prospect;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
