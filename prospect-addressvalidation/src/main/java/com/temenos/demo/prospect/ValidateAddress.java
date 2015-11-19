@@ -21,6 +21,7 @@ public class ValidateAddress {
 		try {
 			// GET request to address resource
 			HttpClient client = new HttpClient();
+			client.getParams().setSoTimeout(60000);;
 			String uri = "http://dawa.aws.dk/adresser";
 			getMethod = new GetMethod(uri);
 			List<NameValuePair> queryParams = new ArrayList<NameValuePair>();
