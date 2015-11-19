@@ -43,6 +43,7 @@ public class ValidateAddress {
 			
 	        // read the response
 	        String str = getMethod.getResponseBodyAsString();
+	        System.out.println(getMethod.getStatusLine());
 	        return str;
 		} catch (HttpException e) {
 			e.printStackTrace();
