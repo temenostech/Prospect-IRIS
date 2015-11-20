@@ -1,0 +1,413 @@
+# UTF-8
+/* Risk Filter GUI */
+Domain PP_RiskFilterGUI
+    @t24:i (module=PP)
+    @java:Package (value=com.temenos.t24.datamodel.pp.pp_riskfiltergui)
+namespace "http://www.temenos.com/t24/PP_RiskFilterGUI"
+metamodelVersion 1.30.6
+Classes {
+    NOFILE_PP_PPT_RFO_LIST
+        @i18n:Description (en="")
+        @t24:i (t24Name=NOFILE.PP.PPT.RFO.LIST, level=I, type=T, allowedFunctions="L P S", localRefAllowed=false)
+    {
+        ID : T24BusinessTypes:N required
+            @i18n:Label (en="Transaction Ref")
+            @i18n:Tooltip (en="Transaction Reference")
+            @t24:i (align=R, inputBehaviour=N, maxLength=100, core=false, t24Name="@ID")
+        COMPANY_ID : T24BusinessTypes:N
+            @i18n:Label (en=Company)
+            @t24:i (align=R, inputBehaviour=N, maxLength=100, core=false, t24Name=COMPANY.ID)
+        FT_NUMBER : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=100, core=false, t24Name=FT.NUMBER)
+        TRANS_AMT : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=100, core=false, t24Name=TRANS.AMT)
+        TRANS_CCY : T24BusinessTypes:N
+            @i18n:Label (en="Trans Ccy")
+            @t24:i (align=R, inputBehaviour=N, maxLength=100, core=false, t24Name=TRANS.CCY)
+        DR_DATE : T24BusinessTypes:N
+            @i18n:Label (en="Debit date")
+            @t24:i (align=R, inputBehaviour=N, maxLength=100, core=false, t24Name=DR.DATE)
+        CR_DATE : T24BusinessTypes:N
+            @i18n:Label (en="Credit date")
+            @t24:i (align=R, inputBehaviour=N, maxLength=1, core=false, t24Name=CR.DATE)
+        ARR -> byValue PP_RiskFilterGUI:NOFILE_PP_PPT_RFO_LIST__ARR *
+    }
+    NOFILE_PP_PPT_RFO_LIST__ARR
+    {
+        ARR : T24BusinessTypes:N
+            @t24:i (align=L, inputBehaviour=N, maxLength=100, core=false, t24Name=ARR, genOperation=PP.PPT.RFO.LIST)
+    }
+PP_RISK_FILTER_OUTPUT
+        @i18n:Description (en="")
+        @t24:i (t24Name=PP.RISK.FILTER.OUTPUT, nonStop=true, level=I, type=U, allowedFunctions="A C D E I L P Q S", localRefAllowed=false)
+    {
+        ID -> PP_RiskFilterGUI:PP_RISK_FILTER_OUTPUT PK required
+            @i18n:Label (en="Transaction Ref")
+            @i18n:Tooltip (en="Transaction Reference")
+            @t24:i (align=L, inputBehaviour=I, maxLength=15, sysNumber=0.0, core=true, businessType=A, t24Name=ID)
+        CompanyID : T24BusinessTypes:A required
+            @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=1.0, core=true, t24Name=CompanyID)
+        FTNumber : T24BusinessTypes:A required
+            @t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=2.0, core=true, t24Name=FTNumber)
+        TransactionAmount : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=15, sysNumber=3.0, core=true, t24Name=TransactionAmount)
+        TransactionCurrency : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=4.0, core=true, t24Name=TransactionCurrency)
+        DebitValueDate : T24BusinessTypes:D
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=5.0, core=true, t24Name=DebitValueDate)
+        CreditValueDate : T24BusinessTypes:D
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=6.0, core=true, t24Name=CreditValueDate)
+        FilterID -> byValue PP_RiskFilterGUI:PP_RISK_FILTER_OUTPUT__FilterID *
+        Action : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=I, maxLength=1, sysNumber=36.0, core=true, t24Name=Action)
+        OldID : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=I, maxLength=65, sysNumber=37.0, core=true, t24Name=OldID)
+        OVERRIDE -> byValue PP_RiskFilterGUI:PP_RISK_FILTER_OUTPUT__OVERRIDE *
+        RECORD_STATUS : T24BusinessTypes:STAT
+            @i18n:Label (en="Record Status")
+            @t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=39.0, core=true, t24Name=RECORD.STATUS)
+        CURR_NO : T24BusinessTypes:N
+            @i18n:Label (en="Curr No")
+            @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=40.0, core=true, t24Name=CURR.NO)
+        INPUTTER -> byValue PP_RiskFilterGUI:PP_RISK_FILTER_OUTPUT__INPUTTER *
+        DATE_TIME -> byValue PP_RiskFilterGUI:PP_RISK_FILTER_OUTPUT__DATE_TIME *
+        AUTHORISER : T24BusinessTypes:A
+            @i18n:Label (en=Authoriser)
+            @i18n:Tooltip (en="Indicates the User who Authorises the record")
+            @t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=43.0, core=true, t24Name=AUTHORISER)
+        CO_CODE -> ST_CompanyCreation:COMPANY
+            @i18n:Label (en=Company)
+            @t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=44.0, core=true, businessType=A, t24Name=CO.CODE, mask="R##-###-####")
+        DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+            @i18n:Label (en="Dept Code")
+            @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=45.0, core=true, t24Name=DEPT.CODE)
+        AUDITOR_CODE : T24BusinessTypes:A
+            @i18n:Label (en="Auditor Code")
+            @i18n:Tooltip (en="Auditor Code")
+            @t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=46.0, core=true, t24Name=AUDITOR.CODE)
+        AUDIT_DATE_TIME : T24BusinessTypes:RELTIME
+            @i18n:Label (en="Audit Date Time")
+            @i18n:Tooltip (en="Date and time when record was audited")
+            @t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=47.0, core=true, t24Name=AUDIT.DATE.TIME, mask="RDD DD  DD ##:##")
+    }
+    PP_RISK_FILTER_OUTPUT__FilterID
+    {
+        FilterID : T24BusinessTypes:A required
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=7.0, core=true, t24Name=FilterID)
+        TransactionAmountLimit : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=15, sysNumber=8.0, core=true, t24Name=TransactionAmountLimit)
+        TRNLimitBreach : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=15, sysNumber=9.0, core=true, t24Name=TRNLimitBreach)
+        DailyAmountLimit : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=15, sysNumber=10.0, core=true, t24Name=DailyAmountLimit)
+        DailyLimitBreach : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=15, sysNumber=11.0, core=true, t24Name=DailyLimitBreach)
+        WeeklyAmountLimit : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=15, sysNumber=12.0, core=true, t24Name=WeeklyAmountLimit)
+        WeeklyLimitBreach : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=15, sysNumber=13.0, core=true, t24Name=WeeklyLimitBreach)
+        MonthlyAmountLimit : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=15, sysNumber=14.0, core=true, t24Name=MonthlyAmountLimit)
+        MonthlyLimitBreach : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=15, sysNumber=15.0, core=true, t24Name=MonthlyLimitBreach)
+        PaymentsPerDay : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=I, maxLength=6, sysNumber=16.0, core=true, t24Name=PaymentsPerDay)
+        PPDLimitBreach : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=I, maxLength=6, sysNumber=17.0, core=true, t24Name=PPDLimitBreach)
+        PaymentsPerWeek : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=I, maxLength=6, sysNumber=18.0, core=true, t24Name=PaymentsPerWeek)
+        PPWLimitBreach : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=I, maxLength=6, sysNumber=19.0, core=true, t24Name=PPWLimitBreach)
+        PaymentsPerMonth : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=I, maxLength=6, sysNumber=20.0, core=true, t24Name=PaymentsPerMonth)
+        PPMLimitBreach : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=I, maxLength=6, sysNumber=21.0, core=true, t24Name=PPMLimitBreach)
+        CUR_TransactionAmountLimit : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=15, sysNumber=22.0, core=true, t24Name=CUR.TransactionAmountLimit)
+        CUR_TRNLimitBreach : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=15, sysNumber=23.0, core=true, t24Name=CUR.TRNLimitBreach)
+        CUR_DailyAmountLimit : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=15, sysNumber=24.0, core=true, t24Name=CUR.DailyAmountLimit)
+        CUR_DailyLimitBreach : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=15, sysNumber=25.0, core=true, t24Name=CUR.DailyLimitBreach)
+        CUR_WeeklyAmountLimit : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=15, sysNumber=26.0, core=true, t24Name=CUR.WeeklyAmountLimit)
+        CUR_WeeklyLimitBreach : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=15, sysNumber=27.0, core=true, t24Name=CUR.WeeklyLimitBreach)
+        CUR_MonthlyAmountLimit : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=15, sysNumber=28.0, core=true, t24Name=CUR.MonthlyAmountLimit)
+        CUR_MonthlyLimitBreach : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=15, sysNumber=29.0, core=true, t24Name=CUR.MonthlyLimitBreach)
+        CUR_PaymentsPerDay : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=I, maxLength=6, sysNumber=30.0, core=true, t24Name=CUR.PaymentsPerDay)
+        CUR_PPDLimitBreach : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=I, maxLength=6, sysNumber=31.0, core=true, t24Name=CUR.PPDLimitBreach)
+        CUR_PaymentsPerWeek : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=I, maxLength=6, sysNumber=32.0, core=true, t24Name=CUR.PaymentsPerWeek)
+        CUR_PPWLimitBreach : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=I, maxLength=6, sysNumber=33.0, core=true, t24Name=CUR.PPWLimitBreach)
+        CUR_PaymentsPerMonth : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=I, maxLength=6, sysNumber=34.0, core=true, t24Name=CUR.PaymentsPerMonth)
+        CUR_PPMLimitBreach : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=I, maxLength=6, sysNumber=35.0, core=true, t24Name=CUR.PPMLimitBreach)
+    }
+    PP_RISK_FILTER_OUTPUT__OVERRIDE
+    {
+        OVERRIDE : T24BusinessTypes:N
+            @i18n:Label (en=Override)
+            @i18n:Tooltip (en="Overrides generated by this transaction")
+            @t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=38.0, core=true, t24Name=OVERRIDE)
+    }
+    PP_RISK_FILTER_OUTPUT__INPUTTER
+    {
+        INPUTTER : T24BusinessTypes:A
+            @i18n:Label (en=Inputter)
+            @i18n:Tooltip (en="The user who last updated the record")
+            @t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=41.0, core=true, t24Name=INPUTTER)
+    }
+    PP_RISK_FILTER_OUTPUT__DATE_TIME
+    {
+        DATE_TIME : T24BusinessTypes:RELTIME
+            @i18n:Label (en="Date time")
+            @i18n:Tooltip (en="Date and time when record was input or authorised")
+            @t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=42.0, core=true, t24Name=DATE.TIME, mask="RDD DD  DD ##:##")
+    }
+    PPT_ACCUMULATOR
+        @i18n:Description (en="")
+        @t24:i (t24Name=PPT.ACCUMULATOR, nonStop=true, level=I, type=L, allowedFunctions="L P S", localRefAllowed=false)
+    {
+        ID -> PP_RiskFilterGUI:PPT_ACCUMULATOR PK required
+            @i18n:Label (en="Transaction Ref")
+            @i18n:Tooltip (en="Transaction Reference")
+            @t24:i (align=L, inputBehaviour=I, maxLength=255, sysNumber=0.0, core=true, businessType=A, t24Name=ID)
+        RiskFilterConditionID : T24BusinessTypes:A required
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=1.0, core=true, t24Name=RiskFilterConditionID)
+        CompanyID : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=2.0, core=true, t24Name=CompanyID)
+        DailyExhaustedAmountLimit : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=17, sysNumber=3.0, core=true, t24Name=DailyExhaustedAmountLimit, typeModifiers="3")
+        WeeklyExhaustedAmountLimit : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=17, sysNumber=4.0, core=true, t24Name=WeeklyExhaustedAmountLimit, typeModifiers="3")
+        MonthlyExhaustedAmountLimit : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=17, sysNumber=5.0, core=true, t24Name=MonthlyExhaustedAmountLimit, typeModifiers="3")
+        DailyExhaustedCountLimit : mml:Integer
+            @t24:i (align=R, inputBehaviour=I, maxLength=6, sysNumber=6.0, core=true, t24Name=DailyExhaustedCountLimit)
+        WeeklyExhaustedCountLimit : mml:Integer
+            @t24:i (align=R, inputBehaviour=I, maxLength=6, sysNumber=7.0, core=true, t24Name=WeeklyExhaustedCountLimit)
+        MonthlyExhaustedCountLimit : mml:Integer
+            @t24:i (align=R, inputBehaviour=I, maxLength=6, sysNumber=8.0, core=true, t24Name=MonthlyExhaustedCountLimit)
+    }
+    PPT_RISKFILTERCONDITIONS
+        @i18n:Description (en="")
+        @t24:i (t24Name=PPT.RISKFILTERCONDITIONS, nonStop=true, level=I, type=L, allowedFunctions="L P S", localRefAllowed=false)
+    {
+        ID -> PP_RiskFilterGUI:PPT_RISKFILTERCONDITIONS PK required
+            @i18n:Label (en="Transaction Ref")
+            @i18n:Tooltip (en="Transaction Reference")
+            @t24:i (align=L, inputBehaviour=I, maxLength=255, sysNumber=0.0, core=true, businessType=A, t24Name=ID)
+        RiskFilterConditionID : T24BusinessTypes:A required
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=1.0, core=true, t24Name=RiskFilterConditionID)
+        CompanyID : T24BusinessTypes:A required
+            @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=2.0, core=true, t24Name=CompanyID)
+        DebitCreditIndicator : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=I, maxLength=1, sysNumber=3.0, core=true, t24Name=DebitCreditIndicator)
+        CurrencyCode : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=4.0, core=true, t24Name=CurrencyCode)
+        IncomingMessageType : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=I, maxLength=10, sysNumber=5.0, core=true, t24Name=IncomingMessageType)
+        CTRBTRIndicator : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=I, maxLength=1, sysNumber=6.0, core=true, t24Name=CTRBTRIndicator)
+        BICCode : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=7.0, core=true, t24Name=BICCode)
+        StartDateRiskFilterConditions : T24BusinessTypes:D
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=8.0, core=true, t24Name=StartDateRiskFilterConditions)
+        EndDateRiskFilterConditions : T24BusinessTypes:D
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=9.0, core=true, t24Name=EndDateRiskFilterConditions)
+        LimitCurrencyCode : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=10.0, core=true, t24Name=LimitCurrencyCode)
+        TransactionAmountLimit : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=15, sysNumber=11.0, core=true, t24Name=TransactionAmountLimit)
+        DailyAmountLimit : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=15, sysNumber=12.0, core=true, t24Name=DailyAmountLimit)
+        WeeklyAmountLimit : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=15, sysNumber=13.0, core=true, t24Name=WeeklyAmountLimit)
+        MonthlyAmountLimit : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=15, sysNumber=14.0, core=true, t24Name=MonthlyAmountLimit)
+        NumberOfPaymentsPerDay : mml:Integer
+            @t24:i (align=R, inputBehaviour=I, maxLength=6, sysNumber=15.0, core=true, t24Name=NumberOfPaymentsPerDay)
+        NumberOfPaymentsPerWeek : mml:Integer
+            @t24:i (align=R, inputBehaviour=I, maxLength=6, sysNumber=16.0, core=true, t24Name=NumberOfPaymentsPerWeek)
+        NumberOfPaymentsPerMonth : mml:Integer
+            @t24:i (align=R, inputBehaviour=I, maxLength=6, sysNumber=17.0, core=true, t24Name=NumberOfPaymentsPerMonth)
+        RACRiskFilterConditions : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=I, maxLength=19, sysNumber=18.0, core=true, t24Name=RACRiskFilterConditions)
+        RSCRiskFilterConditions : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=I, maxLength=1, sysNumber=19.0, core=true, t24Name=RSCRiskFilterConditions)
+        EntryUserID : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=I, maxLength=30, sysNumber=20.0, core=true, t24Name=EntryUserID)
+        EntryDateTime : T24BusinessTypes:TIME
+            @t24:i (align=L, inputBehaviour=I, maxLength=17, sysNumber=21.0, core=true, t24Name=EntryDateTime, mask="RDDDD DD  DD ##:##:##.###")
+        ApproverUserID : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=I, maxLength=30, sysNumber=22.0, core=true, t24Name=ApproverUserID)
+        ApprovedDateTime : T24BusinessTypes:TIME
+            @t24:i (align=L, inputBehaviour=I, maxLength=17, sysNumber=23.0, core=true, t24Name=ApprovedDateTime, mask="RDDDD DD  DD ##:##:##.###")
+    }
+    PPT_RISKFILTEROUTPUT
+        @i18n:Description (en="")
+        @t24:i (t24Name=PPT.RISKFILTEROUTPUT, nonStop=true, level=I, type=L, allowedFunctions="L P S", localRefAllowed=false)
+    {
+        ID -> PP_RiskFilterGUI:PPT_RISKFILTEROUTPUT PK required
+            @i18n:Label (en="Transaction Ref")
+            @i18n:Tooltip (en="Transaction Reference")
+            @t24:i (align=L, inputBehaviour=I, maxLength=255, sysNumber=0.0, core=true, businessType=A, t24Name=ID)
+        CompanyID : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=1.0, core=true, t24Name=CompanyID)
+        FTNumber : T24BusinessTypes:A required
+            @t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=2.0, core=true, t24Name=FTNumber)
+        FilterID : T24BusinessTypes:A required
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=3.0, core=true, t24Name=FilterID)
+        TransactionAmountLimit : mml:Integer
+            @t24:i (align=R, inputBehaviour=I, maxLength=15, sysNumber=4.0, core=true, t24Name=TransactionAmountLimit)
+        TRNLimitBreach : mml:Integer
+            @t24:i (align=R, inputBehaviour=I, maxLength=15, sysNumber=5.0, core=true, t24Name=TRNLimitBreach)
+        DailyAmountLimit : mml:Integer
+            @t24:i (align=R, inputBehaviour=I, maxLength=15, sysNumber=6.0, core=true, t24Name=DailyAmountLimit)
+        DailyLimitBreach : mml:Integer
+            @t24:i (align=R, inputBehaviour=I, maxLength=15, sysNumber=7.0, core=true, t24Name=DailyLimitBreach)
+        WeeklyAmountLimit : mml:Integer
+            @t24:i (align=R, inputBehaviour=I, maxLength=15, sysNumber=8.0, core=true, t24Name=WeeklyAmountLimit)
+        WeeklyLimitBreach : mml:Integer
+            @t24:i (align=R, inputBehaviour=I, maxLength=15, sysNumber=9.0, core=true, t24Name=WeeklyLimitBreach)
+        MonthlyAmountLimit : mml:Integer
+            @t24:i (align=R, inputBehaviour=I, maxLength=15, sysNumber=10.0, core=true, t24Name=MonthlyAmountLimit)
+        MonthlyLimitBreach : mml:Integer
+            @t24:i (align=R, inputBehaviour=I, maxLength=15, sysNumber=11.0, core=true, t24Name=MonthlyLimitBreach)
+        PaymentsPerDay : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=I, maxLength=6, sysNumber=12.0, core=true, t24Name=PaymentsPerDay)
+        PPDLimitBreach : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=I, maxLength=6, sysNumber=13.0, core=true, t24Name=PPDLimitBreach)
+        PaymentsPerWeek : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=I, maxLength=6, sysNumber=14.0, core=true, t24Name=PaymentsPerWeek)
+        PPWLimitBreach : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=I, maxLength=6, sysNumber=15.0, core=true, t24Name=PPWLimitBreach)
+        PaymentsPerMonth : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=I, maxLength=6, sysNumber=16.0, core=true, t24Name=PaymentsPerMonth)
+        PPMLimitBreach : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=I, maxLength=6, sysNumber=17.0, core=true, t24Name=PPMLimitBreach)
+    }
+    PP_RISK_FILTER_CONDITIONS
+        @i18n:Description (en="")
+        @t24:i (t24Name=PP.RISK.FILTER.CONDITIONS, nonStop=true, level=I, type=U, additionalInfo=HLD, allowedFunctions="A C D E I L P Q S", localRefAllowed=false)
+    {
+        ID -> PP_RiskFilterGUI:PP_RISK_FILTER_CONDITIONS PK required
+            @i18n:Label (en="Transaction Ref")
+            @i18n:Tooltip (en="Transaction Reference")
+            @t24:i (align=L, inputBehaviour=I, maxLength=15, sysNumber=0.0, core=true, businessType=A, t24Name=ID)
+        RiskFilterConditionID : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=1.0, core=true, t24Name=RiskFilterConditionID)
+        CompanyID : T24BusinessTypes:A required
+            @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=2.0, core=true, t24Name=CompanyID)
+        DebitCreditIndicator : PP_RiskFilterGUI:PP_RISK_FILTER_CONDITIONS__DebitCreditIndicator
+            @t24:i (align=L, inputBehaviour=I, maxLength=1, sysNumber=3.0, core=true, t24Name=DebitCreditIndicator)
+        CurrencyCode : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=4.0, core=true, t24Name=CurrencyCode)
+        IncomingMessageType : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=I, maxLength=10, sysNumber=5.0, core=true, t24Name=IncomingMessageType)
+        CTRBTRIndicator : PP_RiskFilterGUI:PP_RISK_FILTER_CONDITIONS__CTRBTRIndicator
+            @t24:i (align=L, inputBehaviour=I, maxLength=1, sysNumber=6.0, core=true, t24Name=CTRBTRIndicator)
+        BICCode : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=7.0, core=true, t24Name=BICCode)
+        StartDateRiskFilterConditions : T24BusinessTypes:D
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=8.0, core=true, t24Name=StartDateRiskFilterConditions)
+        EndDateRiskFilterConditions : T24BusinessTypes:D
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=9.0, core=true, t24Name=EndDateRiskFilterConditions)
+        LimitCurrencyCode : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=10.0, core=true, t24Name=LimitCurrencyCode)
+        TransactionAmountLimit : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=15, sysNumber=11.0, core=true, t24Name=TransactionAmountLimit)
+        DailyAmountLimit : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=15, sysNumber=12.0, core=true, t24Name=DailyAmountLimit)
+        WeeklyAmountLimit : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=15, sysNumber=13.0, core=true, t24Name=WeeklyAmountLimit)
+        MonthlyAmountLimit : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=15, sysNumber=14.0, core=true, t24Name=MonthlyAmountLimit)
+        NumberOfPaymentsPerDay : mml:Integer
+            @t24:i (align=R, inputBehaviour=I, maxLength=6, sysNumber=15.0, core=true, t24Name=NumberOfPaymentsPerDay)
+        NumberOfPaymentsPerWeek : mml:Integer
+            @t24:i (align=R, inputBehaviour=I, maxLength=6, sysNumber=16.0, core=true, t24Name=NumberOfPaymentsPerWeek)
+        NumberOfPaymentsPerMonth : mml:Integer
+            @t24:i (align=R, inputBehaviour=I, maxLength=6, sysNumber=17.0, core=true, t24Name=NumberOfPaymentsPerMonth)
+        Reset_Accumulator : mml:Integer
+            @t24:i (align=R, inputBehaviour=I, maxLength=1, sysNumber=18.0, core=true, t24Name=Reset.Accumulator)
+        RAC : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=I, maxLength=19, sysNumber=19.0, core=true, t24Name=RAC)
+        RSC : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=I, maxLength=1, sysNumber=20.0, core=true, t24Name=RSC)
+        OldID : T24BusinessTypes:ANY
+            @t24:i (align=L, inputBehaviour=I, maxLength=65, sysNumber=21.0, core=true, t24Name=OldID, onchangeBehaviour=HOT.FIELD)
+        CurrentID : T24BusinessTypes:ANY
+            @t24:i (align=L, inputBehaviour=I, maxLength=65, sysNumber=22.0, core=true, t24Name=CurrentID)
+        Action : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=I, maxLength=1, sysNumber=23.0, core=true, t24Name=Action)
+        OVERRIDE -> byValue PP_RiskFilterGUI:PP_RISK_FILTER_CONDITIONS__OVERRIDE *
+        RECORD_STATUS : T24BusinessTypes:STAT
+            @i18n:Label (en="Record Status")
+            @t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=25.0, core=true, t24Name=RECORD.STATUS)
+        CURR_NO : T24BusinessTypes:N
+            @i18n:Label (en="Curr No")
+            @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=26.0, core=true, t24Name=CURR.NO)
+        INPUTTER -> byValue PP_RiskFilterGUI:PP_RISK_FILTER_CONDITIONS__INPUTTER *
+        DATE_TIME -> byValue PP_RiskFilterGUI:PP_RISK_FILTER_CONDITIONS__DATE_TIME *
+        AUTHORISER : T24BusinessTypes:A
+            @i18n:Label (en=Authoriser)
+            @i18n:Tooltip (en="Indicates the User who Authorises the record")
+            @t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=29.0, core=true, t24Name=AUTHORISER)
+        CO_CODE -> ST_CompanyCreation:COMPANY
+            @i18n:Label (en=Company)
+            @t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=30.0, core=true, businessType=A, t24Name=CO.CODE, mask="R##-###-####")
+        DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+            @i18n:Label (en="Dept Code")
+            @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=31.0, core=true, t24Name=DEPT.CODE)
+        AUDITOR_CODE : T24BusinessTypes:A
+            @i18n:Label (en="Auditor Code")
+            @i18n:Tooltip (en="Auditor Code")
+            @t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=32.0, core=true, t24Name=AUDITOR.CODE)
+        AUDIT_DATE_TIME : T24BusinessTypes:RELTIME
+            @i18n:Label (en="Audit Date Time")
+            @i18n:Tooltip (en="Date and time when record was audited")
+            @t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=33.0, core=true, t24Name=AUDIT.DATE.TIME, mask="RDD DD  DD ##:##")
+    }
+    PP_RISK_FILTER_CONDITIONS__OVERRIDE
+    {
+        OVERRIDE : T24BusinessTypes:N
+            @i18n:Label (en=Override)
+            @i18n:Tooltip (en="Overrides generated by this transaction")
+            @t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=24.0, core=true, t24Name=OVERRIDE)
+    }
+    PP_RISK_FILTER_CONDITIONS__INPUTTER
+    {
+        INPUTTER : T24BusinessTypes:A
+            @i18n:Label (en=Inputter)
+            @i18n:Tooltip (en="The user who last updated the record")
+            @t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=27.0, core=true, t24Name=INPUTTER)
+    }
+    PP_RISK_FILTER_CONDITIONS__DATE_TIME
+    {
+        DATE_TIME : T24BusinessTypes:RELTIME
+            @i18n:Label (en="Date time")
+            @i18n:Tooltip (en="Date and time when record was input or authorised")
+            @t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=28.0, core=true, t24Name=DATE.TIME, mask="RDD DD  DD ##:##")
+    }
+}
+Enumerations {
+    PP_RISK_FILTER_CONDITIONS__DebitCreditIndicator : mml:string
+        NULL=NULL
+        D=D
+        C=C
+        B=B
+    PP_RISK_FILTER_CONDITIONS__CTRBTRIndicator : mml:string
+        NULL=NULL
+        C=C
+        B=B
+        STAR="*"
+}

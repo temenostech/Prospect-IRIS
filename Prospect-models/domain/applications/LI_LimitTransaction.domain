@@ -1,619 +1,634 @@
 # UTF-8
 /* Public Routines for Limit */
 Domain LI_LimitTransaction
-	@t24:i (module=LI)
-	@java:Package (value=com.temenos.t24.datamodel.li.li_limittransaction)
+    @t24:i (module=LI)
+    @java:Package (value=com.temenos.t24.datamodel.li.li_limittransaction)
 namespace "http://www.temenos.com/t24/LI_LimitTransaction"
 metamodelVersion 1.30.6
 Classes {
-	FX_LIMIT_PARAMS
-		@t24:i (t24Name=FX.LIMIT.PARAMS, level=C, type=U, allowedFunctions="A C D E I L P Q R S", localRefAllowed=false)
-	{
-		FX_LIMIT_PARAMS -> LI_LimitTransaction:FX_LIMIT_PARAMS PK required
-			@t24:i (align=L, inputBehaviour=I, maxLength=5, sysNumber=0.0, core=true, t24Name=FX.LIMIT.PARAMS)
-		OVERALL_LIMIT_REF -> LI_Config:LIMIT_REFERENCE
-			@t24:i (align=R, inputBehaviour=I, maxLength=4, sysNumber=1.0, core=true, t24Name=OVERALL.LIMIT.REF)
-		SPOT_LIMIT_REF -> LI_Config:LIMIT_REFERENCE
-			@t24:i (align=R, inputBehaviour=I, maxLength=4, sysNumber=2.0, core=true, t24Name=SPOT.LIMIT.REF)
-		FWD_LIMIT_REF -> LI_Config:LIMIT_REFERENCE
-			@t24:i (align=R, inputBehaviour=I, maxLength=4, sysNumber=3.0, core=true, t24Name=FWD.LIMIT.REF)
-		SWAP_LIMIT_REF -> LI_Config:LIMIT_REFERENCE
-			@t24:i (align=R, inputBehaviour=I, maxLength=4, sysNumber=4.0, core=true, t24Name=SWAP.LIMIT.REF)
-		SPOT_EXPOSUREPERCENT : mml:Integer
-			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=5.0, core=true, t24Name=SPOT.EXPOSURE%)
-		FWD_EXPOSUREPERCENT : mml:Integer
-			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=6.0, core=true, t24Name=FWD.EXPOSURE%)
-		SWAP_EXPOSUREPERCENT : mml:Integer
-			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=7.0, core=true, t24Name=SWAP.EXPOSURE%)
-		OTHER_EXPOSUREPERCENT : mml:Integer
-			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=8.0, core=true, t24Name=OTHER.EXPOSURE%)
-		RESERVED6 : mml:Integer
-			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=9.0, core=true, t24Name=RESERVED6)
-		RESERVED5 : mml:Integer
-			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=10.0, core=true, t24Name=RESERVED5)
-		RESERVED4 : mml:Integer
-			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=11.0, core=true, t24Name=RESERVED4)
-		RESERVED3 : mml:Integer
-			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=12.0, core=true, t24Name=RESERVED3)
-		RESERVED2 : mml:Integer
-			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=13.0, core=true, t24Name=RESERVED2)
-		RESERVED1 : mml:Integer
-			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=14.0, core=true, t24Name=RESERVED1)
-		RECORD_STATUS : T24BusinessTypes:STAT
-			@i18n:Label (en="Record Status")
-			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=15.0, core=true, t24Name=RECORD.STATUS)
-		CURR_NO : mml:Integer
-			@i18n:Label (en="Curr No")
-			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=16.0, core=true, t24Name=CURR.NO)
-		INPUTTER -> byValue LI_LimitTransaction:FX_LIMIT_PARAMS__INPUTTER *
-		DATE_TIME -> byValue LI_LimitTransaction:FX_LIMIT_PARAMS__DATE_TIME *
-		AUTHORISER : T24BusinessTypes:A
-			@i18n:Label (en=Authoriser)
-			@i18n:Tooltip (en="Indicates the User who Authorises the record")
-			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=19.0, core=true, t24Name=AUTHORISER)
-		CO_CODE -> ST_CompanyCreation:COMPANY
-			@i18n:Label (en=Company)
-			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=20.0, core=true, businessType=A, t24Name=CO.CODE, mask="R##-###-####")
-		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
-			@i18n:Label (en="Dept Code")
-			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=21.0, core=true, t24Name=DEPT.CODE)
-		AUDITOR_CODE : T24BusinessTypes:A
-			@i18n:Label (en="Auditor Code")
-			@i18n:Tooltip (en="Auditor Code")
-			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=22.0, core=true, t24Name=AUDITOR.CODE)
-		AUDIT_DATE_TIME : T24BusinessTypes:RELTIME
-			@i18n:Label (en="Audit Date Time")
-			@i18n:Tooltip (en="Date and time when record was audited")
-			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=23.0, core=true, t24Name=AUDIT.DATE.TIME, mask="RDD DD  DD ##:##")
-	}
-	FX_LIMIT_PARAMS__INPUTTER
-	{
-		INPUTTER : T24BusinessTypes:A
-			@i18n:Label (en=Inputter)
-			@i18n:Tooltip (en="The user who last updated the record")
-			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=17.0, core=true, t24Name=INPUTTER)
-	}
-	FX_LIMIT_PARAMS__DATE_TIME
-	{
-		DATE_TIME : T24BusinessTypes:RELTIME
-			@i18n:Label (en="Date time")
-			@i18n:Tooltip (en="Date and time when record was input or authorised")
-			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=18.0, core=true, t24Name=DATE.TIME, mask="RDD DD  DD ##:##")
-	}
-	LIMIT_CCY_LINK
-		@t24:i (t24Name=LIMIT.CCY.LINK, level=C, type=L, allowedFunctions="L P S", localRefAllowed=false)
-	{
-		LINK_CCY -> LI_LimitTransaction:LIMIT_CCY_LINK PK required
-			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=0.0, core=true, businessType=CCY, t24Name=LINK.CCY)
-		MNE_COMPANY : T24BusinessTypes:MNE required
-			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=1.0, core=true, t24Name=MNE.COMPANY)
-		LOCAL_CCY : T24BusinessTypes:CCY required
-			@i18n:Label (en=Lcy)
-			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=2.0, core=true, t24Name=LOCAL.CCY)
-	}
-	LIMIT_CROSS_USAGE
-		@t24:i (t24Name=LIMIT.CROSS.USAGE, level=C, type=L, allowedFunctions="L P S", localRefAllowed=false)
-	{
-		CUSTOMER_PRODUCT -> LI_LimitTransaction:LIMIT_CROSS_USAGE PK required
-			@t24:i (align=L, inputBehaviour=I, maxLength=18, sysNumber=0.0, core=true, businessType=S, t24Name=CUSTOMER.PRODUCT)
-		NEXT_SEQ_NO : mml:Integer
-			@t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=1.0, core=true, t24Name=NEXT.SEQ.NO)
-		NEXT_PROD_REF : mml:Integer
-			@t24:i (align=R, inputBehaviour=I, maxLength=4, sysNumber=2.0, core=true, t24Name=NEXT.PROD.REF)
-		PRODUCT_SEQ_NO -> byValue LI_LimitTransaction:LIMIT_CROSS_USAGE__PRODUCT_SEQ_NO *
-	}
-	LIMIT_CROSS_USAGE__PRODUCT_SEQ_NO
-	{
-		PRODUCT_SEQ_NO : mml:Integer
-			@t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=3.0, core=true, t24Name=PRODUCT.SEQ.NO)
-		NXT_PROD_LINK : mml:Integer
-			@t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=4.0, core=true, t24Name=NXT.PROD.LINK)
-		NXT_CROSS_LIMIT : T24BusinessTypes:A required
-			@t24:i (align=L, inputBehaviour=I, maxLength=32, sysNumber=5.0, core=true, t24Name=NXT.CROSS.LIMIT)
-		SEQ_NOS_USED -> byValue LI_LimitTransaction:LIMIT_CROSS_USAGE__PRODUCT_SEQ_NO__SEQ_NOS_USED *
-		CROSS_LIMITS -> byValue LI_LimitTransaction:LIMIT_CROSS_USAGE__PRODUCT_SEQ_NO__CROSS_LIMITS *
-		SUB_LIMITS -> byValue LI_LimitTransaction:LIMIT_CROSS_USAGE__PRODUCT_SEQ_NO__SUB_LIMITS *
-	}
-	LIMIT_CROSS_USAGE__PRODUCT_SEQ_NO__SEQ_NOS_USED
-	{
-		SEQ_NOS_USED : mml:Integer
-			@t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=6.0, core=true, t24Name=SEQ.NOS.USED)
-	}
-	LIMIT_CROSS_USAGE__PRODUCT_SEQ_NO__CROSS_LIMITS
-	{
-		CROSS_LIMITS : T24BusinessTypes:A required
-			@t24:i (align=L, inputBehaviour=I, maxLength=32, sysNumber=7.0, core=true, t24Name=CROSS.LIMITS)
-	}
-	LIMIT_CROSS_USAGE__PRODUCT_SEQ_NO__SUB_LIMITS
-	{
-		SUB_LIMITS : T24BusinessTypes:A required
-			@t24:i (align=L, inputBehaviour=I, maxLength=32, sysNumber=8.0, core=true, t24Name=SUB.LIMITS)
-	}
-	LIMIT_CURRENCY
-		@t24:i (t24Name=LIMIT.CURRENCY, level=C, type=H, allowedFunctions="A C D E H I L P Q R S", localRefAllowed=true)
-	{
-		CURRENCY_CODE -> LI_LimitTransaction:LIMIT_CURRENCY PK required
-			@i18n:Label (en="Ccy Code")
-			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=0.0, core=true, businessType=CCY, t24Name=CURRENCY.CODE)
-		DESCRIPTION -> byValue LI_LimitTransaction:LIMIT_CURRENCY__DESCRIPTION *
-		GRADE_CURRENCY -> ST_Customer:CUSTOMER_STATUS
-			@i18n:Label (en="Currency Grade")
-			@i18n:Tooltip (en="Status to be associated with a Currency Limit")
-			@t24:i (align=R, inputBehaviour=I, maxLength=4, sysNumber=2.0, core=true, t24Name=GRADE.CURRENCY)
-		PRODUCT_GROUP -> byValue LI_LimitTransaction:LIMIT_CURRENCY__PRODUCT_GROUP *
-		REPORT_PROD_GRP -> byValue LI_LimitTransaction:LIMIT_CURRENCY__REPORT_PROD_GRP *
-		RESERVED_1 : mml:Integer
-			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=10.0, core=true, t24Name=RESERVED.1)
-		RESERVED_2 : mml:Integer
-			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=11.0, core=true, t24Name=RESERVED.2)
-		RESERVED_3 : mml:Integer
-			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=12.0, core=true, t24Name=RESERVED.3)
-		RESERVED_4 : mml:Integer
-			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=13.0, core=true, t24Name=RESERVED.4)
-		OVERRIDE -> byValue LI_LimitTransaction:LIMIT_CURRENCY__OVERRIDE *
-		RECORD_STATUS : T24BusinessTypes:STAT
-			@i18n:Label (en="Record Status")
-			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=16.0, core=true, t24Name=RECORD.STATUS)
-		CURR_NO : mml:Integer
-			@i18n:Label (en="Curr No")
-			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=17.0, core=true, t24Name=CURR.NO)
-		INPUTTER -> byValue LI_LimitTransaction:LIMIT_CURRENCY__INPUTTER *
-		DATE_TIME -> byValue LI_LimitTransaction:LIMIT_CURRENCY__DATE_TIME *
-		AUTHORISER : T24BusinessTypes:A
-			@i18n:Label (en=Authoriser)
-			@i18n:Tooltip (en="Indicates the User who Authorises the record")
-			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=20.0, core=true, t24Name=AUTHORISER)
-		CO_CODE -> ST_CompanyCreation:COMPANY
-			@i18n:Label (en=Company)
-			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=21.0, core=true, businessType=A, t24Name=CO.CODE, mask="R##-###-####")
-		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
-			@i18n:Label (en="Dept Code")
-			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=22.0, core=true, t24Name=DEPT.CODE)
-		AUDITOR_CODE : T24BusinessTypes:A
-			@i18n:Label (en="Auditor Code")
-			@i18n:Tooltip (en="Auditor Code")
-			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=23.0, core=true, t24Name=AUDITOR.CODE)
-		AUDIT_DATE_TIME : T24BusinessTypes:RELTIME
-			@i18n:Label (en="Audit Date Time")
-			@i18n:Tooltip (en="Date and time when record was audited")
-			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=24.0, core=true, t24Name=AUDIT.DATE.TIME, mask="RDD DD  DD ##:##")
-	}
-	LIMIT_CURRENCY__DESCRIPTION
-	{
-		DESCRIPTION : T24BusinessTypes:A required
-			@i18n:Label (en=Description)
-			@i18n:Tooltip (en=Description)
-			@t24:i (align=L, inputBehaviour=I, maxLength=35, multiLanguage=true, sysNumber=1.0, core=true, t24Name=DESCRIPTION)
-	}
-	LIMIT_CURRENCY__PRODUCT_GROUP
-	{
-		PRODUCT_GROUP : T24BusinessTypes:MNE required
-			@i18n:Label (en="Product Group")
-			@t24:i (align=L, inputBehaviour=I, maxLength=15, sysNumber=3.0, core=true, t24Name=PRODUCT.GROUP)
-		LIMIT_AMOUNT : T24BusinessTypes:AMT required
-			@i18n:Label (en="Limit Amount")
-			@i18n:Tooltip (en="It shows the limit amount")
-			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=4.0, core=true, t24Name=LIMIT.AMOUNT)
-		GRADE_PRODUCT -> ST_Customer:CUSTOMER_STATUS
-			@i18n:Label (en="Product Grade")
-			@t24:i (align=R, inputBehaviour=I, maxLength=4, sysNumber=5.0, core=true, t24Name=GRADE.PRODUCT)
-	}
-	LIMIT_CURRENCY__REPORT_PROD_GRP
-	{
-		REPORT_PROD_GRP : T24BusinessTypes:MNE
-			@i18n:Label (en="Report Product Group")
-			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=6.0, core=true, t24Name=REPORT.PROD.GRP)
-		REPRT_LIMIT_AMT : T24BusinessTypes:AMT
-			@i18n:Label (en="Report Limit Amount")
-			@t24:i (align=R, inputBehaviour=E, maxLength=18, sysNumber=7.0, core=true, t24Name=REPRT.LIMIT.AMT)
-		REPRT_OUTSTANDG : T24BusinessTypes:AMT
-			@i18n:Label (en="Report Outstanding")
-			@t24:i (align=R, inputBehaviour=E, maxLength=19, sysNumber=8.0, core=true, t24Name=REPRT.OUTSTANDG)
-		REPRT_AVAILABLE : T24BusinessTypes:AMT
-			@i18n:Label (en="Report Available")
-			@t24:i (align=R, inputBehaviour=E, maxLength=19, sysNumber=9.0, core=true, t24Name=REPRT.AVAILABLE)
-	}
-	LIMIT_CURRENCY__OVERRIDE
-	{
-		OVERRIDE : T24BusinessTypes:A
-			@i18n:Label (en=Override)
-			@i18n:Tooltip (en="Overrides generated by this transaction")
-			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=15.0, core=true, t24Name=OVERRIDE)
-	}
-	LIMIT_CURRENCY__INPUTTER
-	{
-		INPUTTER : T24BusinessTypes:A
-			@i18n:Label (en=Inputter)
-			@i18n:Tooltip (en="The user who last updated the record")
-			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=18.0, core=true, t24Name=INPUTTER)
-	}
-	LIMIT_CURRENCY__DATE_TIME
-	{
-		DATE_TIME : T24BusinessTypes:RELTIME
-			@i18n:Label (en="Date time")
-			@i18n:Tooltip (en="Date and time when record was input or authorised")
-			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=19.0, core=true, t24Name=DATE.TIME, mask="RDD DD  DD ##:##")
-	}
-	LIMIT_DAILY_OS
-		@t24:i (t24Name=LIMIT.DAILY.OS, level=C, type=L, allowedFunctions="L P S", localRefAllowed=false)
-	{
-		CREDIT_LINE_NO -> LI_LimitTransaction:LIMIT_DAILY_OS PK required
-			@i18n:Label (en="Credit Line No.")
-			@t24:i (align=L, inputBehaviour=I, maxLength=44, sysNumber=0.0, core=true, businessType=S, t24Name=CREDIT.LINE.NO)
-		TXN_REF_COMPANY -> byValue LI_LimitTransaction:LIMIT_DAILY_OS__TXN_REF_COMPANY *
-		FROM_CURRENCY -> byValue LI_LimitTransaction:LIMIT_DAILY_OS__FROM_CURRENCY *
-		NET_CCY -> byValue LI_LimitTransaction:LIMIT_DAILY_OS__NET_CCY *
-		CLEAN_RISK_USED : T24BusinessTypes:AMT
-			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=16.0, core=true, t24Name=CLEAN.RISK.USED)
-		CLEAN_RISK_AVAIL : T24BusinessTypes:AMT
-			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=17.0, core=true, t24Name=CLEAN.RISK.AVAIL)
-		LIAB_NO : T24BusinessTypes:CUS
-			@i18n:Label (en="Liability Number")
-			@t24:i (align=R, inputBehaviour=N, maxLength=10, core=false, t24Name=LIAB.NO, genOperation="@ID[\'.\',1,1]")
-		REF_NO : mml:Integer
-			@i18n:Label (en="Reference Number")
-			@t24:i (align=L, inputBehaviour=N, maxLength=7, core=false, t24Name=REF.NO, genOperation="@ID[\'.\',2,1]")
-		SER_NO : mml:Integer
-			@i18n:Label (en="Serial Number")
-			@t24:i (align=L, inputBehaviour=N, maxLength=5, core=false, t24Name=SER.NO, genOperation="@ID[\'.\',3,1]")
-		CUST_NO : T24BusinessTypes:CUS
-			@i18n:Label (en="Customer Number")
-			@t24:i (align=R, inputBehaviour=N, maxLength=10, core=false, t24Name=CUST.NO, genOperation="@ID[\'.\',4,1]")
-		LIMIT_ID : mml:Integer
-			@i18n:Label (en="Limit Id")
-			@t24:i (align=L, inputBehaviour=N, maxLength=24, core=false, t24Name=LIMIT.ID, genOperation="IF @ID[\".\",4,1] THEN @ID[\".\",1,4] ELSE @ID[\".\",1,3 ] ")
-		LIMIT_CCY : mml:Integer
-			@i18n:Label (en="Limit Ccy")
-			@t24:i (align=R, inputBehaviour=N, maxLength=3, core=false, t24Name=LIMIT.CCY, genOperation="SUBR(\"ENQ.TRANS\", \"F.LIMIT\", LIMIT.ID, \"LIMIT.CURR ENCY\")")
-	}
-	LIMIT_DAILY_OS__TXN_REF_COMPANY
-	{
-		TXN_REF_COMPANY : T24BusinessTypes:MNE required
-			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=1.0, core=true, t24Name=TXN.REF.COMPANY)
-		TXN_REFERENCE : T24BusinessTypes:AA
-			@t24:i (align=L, inputBehaviour=I, maxLength=12, sysNumber=2.0, core=true, t24Name=TXN.REFERENCE)
-		TXN_CURRENCY -> FIN_CurrencyConfig:CURRENCY required
-			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=3.0, core=true, businessType=CCY, t24Name=TXN.CURRENCY)
-		TXN_AMOUNT : T24BusinessTypes:AMT required
-			@i18n:Label (en="Transaction Amount")
-			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=4.0, core=true, t24Name=TXN.AMOUNT, typeModifiers="3.X")
-		TXN_FULL_AMT : T24BusinessTypes:AMT required
-			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=5.0, core=true, t24Name=TXN.FULL.AMT, typeModifiers="3.X")
-		OTHER_CURRENCY -> FIN_CurrencyConfig:CURRENCY required
-			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=6.0, core=true, businessType=CCY, t24Name=OTHER.CURRENCY)
-		OTHER_AMOUNT : T24BusinessTypes:AMT required
-			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=7.0, core=true, t24Name=OTHER.AMOUNT, typeModifiers="6.X")
-		OTHER_FULL_AMT : T24BusinessTypes:AMT required
-			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=8.0, core=true, t24Name=OTHER.FULL.AMT, typeModifiers="6.X")
-		REPL_VALUE : T24BusinessTypes:AMT required
-			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=9.0, core=true, t24Name=REPL.VALUE)
-	}
-	LIMIT_DAILY_OS__FROM_CURRENCY
-	{
-		FROM_CURRENCY -> FIN_CurrencyConfig:CURRENCY required
-			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=10.0, core=true, businessType=CCY, t24Name=FROM.CURRENCY)
-		TO_CURRENCY -> FIN_CurrencyConfig:CURRENCY required
-			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=11.0, core=true, businessType=CCY, t24Name=TO.CURRENCY)
-		FROM_AMOUNT : T24BusinessTypes:AMT
-			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=12.0, core=true, t24Name=FROM.AMOUNT, typeModifiers="10.X")
-		TO_AMOUNT : T24BusinessTypes:AMT
-			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=13.0, core=true, t24Name=TO.AMOUNT, typeModifiers="11.X")
-	}
-	LIMIT_DAILY_OS__NET_CCY
-	{
-		NET_CCY -> FIN_CurrencyConfig:CURRENCY
-			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=14.0, core=true, businessType=CCY, t24Name=NET.CCY)
-		NET_AMOUNT : T24BusinessTypes:AMT
-			@i18n:Label (en="Net Amount")
-			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=15.0, core=true, t24Name=NET.AMOUNT, typeModifiers="14.X")
-	}
-	LIMIT_EXPIRY
-		@t24:i (t24Name=LIMIT.EXPIRY, level=C, type=T, allowedFunctions="L P S", localRefAllowed=false)
-	{
-		EXPIRY_DATE -> LI_LimitTransaction:LIMIT_EXPIRY PK required
-			@i18n:Label (en="Expiry Date")
-			@i18n:Tooltip (en="Indicates the Expiry Date of the Transaction")
-			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=0.0, core=true, businessType=D, t24Name=EXPIRY.DATE)
-		CREDIT_LINE_NO : T24BusinessTypes:S
-			@i18n:Label (en="Credit Line No.")
-			@t24:i (align=L, inputBehaviour=I, maxLength=24, sysNumber=1.0, core=true, t24Name=CREDIT.LINE.NO)
-	}
-	LIMIT_FX_PROFIT_LOSS
-		@t24:i (t24Name=LIMIT.FX.PROFIT.LOSS, level=C, type=L, allowedFunctions="L P S", localRefAllowed=false)
-	{
-		LIMIT_ID -> LI_LimitTransaction:LIMIT_FX_PROFIT_LOSS PK required
-			@i18n:Label (en="Limit Id")
-			@t24:i (align=L, inputBehaviour=I, maxLength=44, sysNumber=0.0, core=true, businessType=S, t24Name=LIMIT.ID)
-		VALUE_DATE -> byValue LI_LimitTransaction:LIMIT_FX_PROFIT_LOSS__VALUE_DATE *
-		TOTAL_CUS_LOSS : T24BusinessTypes:AMT
-			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=11.0, core=true, t24Name=TOTAL.CUS.LOSS)
-		TOTAL_CUS_PROFIT : T24BusinessTypes:AMT
-			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=12.0, core=true, t24Name=TOTAL.CUS.PROFIT)
-		TOTAL_CUS_PL : T24BusinessTypes:AMT
-			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=13.0, core=true, t24Name=TOTAL.CUS.PL)
-		REVAL_DATE : T24BusinessTypes:D
-			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=14.0, core=true, t24Name=REVAL.DATE)
-		LIMIT_OS_AMT : T24BusinessTypes:AMT
-			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=15.0, core=true, t24Name=LIMIT.OS.AMT)
-	}
-	LIMIT_FX_PROFIT_LOSS__VALUE_DATE
-	{
-		VALUE_DATE : T24BusinessTypes:D
-			@i18n:Label (en="Value Date")
-			@i18n:Tooltip (en="Indicates the Value date of the Contract")
-			@t24:i (align=R, inputBehaviour=I, maxLength=35, sysNumber=1.0, core=true, t24Name=VALUE.DATE)
-		NET_CURRENCY -> byValue LI_LimitTransaction:LIMIT_FX_PROFIT_LOSS__VALUE_DATE__NET_CURRENCY *
-		TOT_BUY_POS -> byValue LI_LimitTransaction:LIMIT_FX_PROFIT_LOSS__VALUE_DATE__TOT_BUY_POS *
-		TOT_SELL_POS -> byValue LI_LimitTransaction:LIMIT_FX_PROFIT_LOSS__VALUE_DATE__TOT_SELL_POS *
-		CUS_BUY_CCY -> byValue LI_LimitTransaction:LIMIT_FX_PROFIT_LOSS__VALUE_DATE__CUS_BUY_CCY *
-		CUS_BUY_POS -> byValue LI_LimitTransaction:LIMIT_FX_PROFIT_LOSS__VALUE_DATE__CUS_BUY_POS *
-		CUS_SEL_CCY -> byValue LI_LimitTransaction:LIMIT_FX_PROFIT_LOSS__VALUE_DATE__CUS_SEL_CCY *
-		CUS_SEL_POS -> byValue LI_LimitTransaction:LIMIT_FX_PROFIT_LOSS__VALUE_DATE__CUS_SEL_POS *
-		PROFIT_LOSS -> byValue LI_LimitTransaction:LIMIT_FX_PROFIT_LOSS__VALUE_DATE__PROFIT_LOSS *
-	}
-	LIMIT_FX_PROFIT_LOSS__VALUE_DATE__NET_CURRENCY
-	{
-		NET_CURRENCY -> FIN_CurrencyConfig:CURRENCY required
-			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=2.0, core=true, businessType=CCY, t24Name=NET.CURRENCY)
-	}
-	LIMIT_FX_PROFIT_LOSS__VALUE_DATE__TOT_BUY_POS
-	{
-		TOT_BUY_POS : T24BusinessTypes:AMT
-			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=3.0, core=true, t24Name=TOT.BUY.POS)
-	}
-	LIMIT_FX_PROFIT_LOSS__VALUE_DATE__TOT_SELL_POS
-	{
-		TOT_SELL_POS : T24BusinessTypes:AMT
-			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=4.0, core=true, t24Name=TOT.SELL.POS)
-	}
-	LIMIT_FX_PROFIT_LOSS__VALUE_DATE__CUS_BUY_CCY
-	{
-		CUS_BUY_CCY -> FIN_CurrencyConfig:CURRENCY required
-			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=5.0, core=true, businessType=CCY, t24Name=CUS.BUY.CCY)
-	}
-	LIMIT_FX_PROFIT_LOSS__VALUE_DATE__CUS_BUY_POS
-	{
-		CUS_BUY_POS : T24BusinessTypes:AMT
-			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=6.0, core=true, t24Name=CUS.BUY.POS)
-	}
-	LIMIT_FX_PROFIT_LOSS__VALUE_DATE__CUS_SEL_CCY
-	{
-		CUS_SEL_CCY -> FIN_CurrencyConfig:CURRENCY required
-			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=7.0, core=true, businessType=CCY, t24Name=CUS.SEL.CCY)
-	}
-	LIMIT_FX_PROFIT_LOSS__VALUE_DATE__CUS_SEL_POS
-	{
-		CUS_SEL_POS : T24BusinessTypes:AMT
-			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=8.0, core=true, t24Name=CUS.SEL.POS)
-	}
-	LIMIT_FX_PROFIT_LOSS__VALUE_DATE__PROFIT_LOSS
-	{
-		PROFIT_LOSS : T24BusinessTypes:AMT
-			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=9.0, core=true, t24Name=PROFIT.LOSS)
-		MARGIN_AMT : T24BusinessTypes:AMT
-			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=10.0, core=true, t24Name=MARGIN.AMT)
-	}
-	LIMIT_PREV
-		@t24:i (t24Name=LIMIT.PREV, level=C, type=L, allowedFunctions="L P S", localRefAllowed=false)
-	{
-		LIMIT_NO -> LI_LimitTransaction:LIMIT_PREV PK required
-			@i18n:Label (en=No)
-			@t24:i (align=L, inputBehaviour=I, maxLength=32, sysNumber=0.0, core=true, businessType=S, t24Name=LIMIT.NO)
-		CONSOL_KEY : T24BusinessTypes:A
-			@i18n:Label (en="Consol Key")
-			@t24:i (align=L, inputBehaviour=I, maxLength=65, sysNumber=1.0, core=true, t24Name=CONSOL.KEY)
-		CCY : T24BusinessTypes:CCY required
-			@i18n:Label (en=Ccy)
-			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=2.0, core=true, t24Name=CCY)
-		UPD_DATE : T24BusinessTypes:D
-			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=3.0, core=true, t24Name=UPD.DATE)
-		EXPIRY_DATE : T24BusinessTypes:D
-			@i18n:Label (en="Expiry Date")
-			@i18n:Tooltip (en="Indicates the Expiry Date of the Transaction")
-			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=4.0, core=true, t24Name=EXPIRY.DATE)
-		LINE_AMOUNT : T24BusinessTypes:AMT
-			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=5.0, core=true, t24Name=LINE.AMOUNT, typeModifiers="2")
-		UTIL_AMOUNT : T24BusinessTypes:AMT
-			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=6.0, core=true, t24Name=UTIL.AMOUNT, typeModifiers="2")
-	}
-	LIMIT_RANGE
-		@t24:i (t24Name=LIMIT.RANGE, level=C, type=H, allowedFunctions="A C D E H I L P Q R S", localRefAllowed=false)
-	{
-		MNEMONIC_NAME -> LI_LimitTransaction:LIMIT_RANGE PK required
-			@t24:i (align=L, inputBehaviour=I, maxLength=20, sysNumber=0.0, core=true, businessType=A, t24Name=MNEMONIC.NAME)
-		DESCRIPTION -> byValue LI_LimitTransaction:LIMIT_RANGE__DESCRIPTION *
-		COMP_OR_CCY : LI_LimitTransaction:LIMIT_RANGE__COMP_OR_CCY required
-			@t24:i (align=L, inputBehaviour=F, maxLength=8, sysNumber=2.0, core=true, t24Name=COMP.OR.CCY)
-		DISCR_VALUE -> byValue LI_LimitTransaction:LIMIT_RANGE__DISCR_VALUE *
-		START_VALUE -> byValue LI_LimitTransaction:LIMIT_RANGE__START_VALUE *
-		RESERVED2 : mml:Integer
-			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=6.0, core=true, t24Name=RESERVED2)
-		RESERVED1 : mml:Integer
-			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=7.0, core=true, t24Name=RESERVED1)
-		RECORD_STATUS : T24BusinessTypes:STAT
-			@i18n:Label (en="Record Status")
-			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=8.0, core=true, t24Name=RECORD.STATUS)
-		CURR_NO : mml:Integer
-			@i18n:Label (en="Curr No")
-			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=9.0, core=true, t24Name=CURR.NO)
-		INPUTTER -> byValue LI_LimitTransaction:LIMIT_RANGE__INPUTTER *
-		DATE_TIME -> byValue LI_LimitTransaction:LIMIT_RANGE__DATE_TIME *
-		AUTHORISER : T24BusinessTypes:A
-			@i18n:Label (en=Authoriser)
-			@i18n:Tooltip (en="Indicates the User who Authorises the record")
-			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=12.0, core=true, t24Name=AUTHORISER)
-		CO_CODE -> ST_CompanyCreation:COMPANY
-			@i18n:Label (en=Company)
-			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=13.0, core=true, businessType=A, t24Name=CO.CODE, mask="R##-###-####")
-		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
-			@i18n:Label (en="Dept Code")
-			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=14.0, core=true, t24Name=DEPT.CODE)
-		AUDITOR_CODE : T24BusinessTypes:A
-			@i18n:Label (en="Auditor Code")
-			@i18n:Tooltip (en="Auditor Code")
-			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=15.0, core=true, t24Name=AUDITOR.CODE)
-		AUDIT_DATE_TIME : T24BusinessTypes:RELTIME
-			@i18n:Label (en="Audit Date Time")
-			@i18n:Tooltip (en="Date and time when record was audited")
-			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=16.0, core=true, t24Name=AUDIT.DATE.TIME, mask="RDD DD  DD ##:##")
-	}
-	LIMIT_RANGE__DESCRIPTION
-	{
-		DESCRIPTION : T24BusinessTypes:A required
-			@i18n:Label (en=Description)
-			@i18n:Tooltip (en=Description)
-			@t24:i (align=L, inputBehaviour=I, maxLength=35, multiLanguage=true, sysNumber=1.0, core=true, t24Name=DESCRIPTION)
-	}
-	LIMIT_RANGE__DISCR_VALUE
-	{
-		DISCR_VALUE : T24BusinessTypes:A
-			@t24:i (align=L, inputBehaviour=I, maxLength=9, sysNumber=3.0, core=true, t24Name=DISCR.VALUE)
-	}
-	LIMIT_RANGE__START_VALUE
-	{
-		START_VALUE : T24BusinessTypes:A
-			@t24:i (align=L, inputBehaviour=I, maxLength=9, sysNumber=4.0, core=true, t24Name=START.VALUE)
-		END_VALUE : T24BusinessTypes:A
-			@i18n:Label (en="End Value")
-			@t24:i (align=L, inputBehaviour=I, maxLength=9, sysNumber=5.0, core=true, t24Name=END.VALUE)
-	}
-	LIMIT_RANGE__INPUTTER
-	{
-		INPUTTER : T24BusinessTypes:A
-			@i18n:Label (en=Inputter)
-			@i18n:Tooltip (en="The user who last updated the record")
-			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=10.0, core=true, t24Name=INPUTTER)
-	}
-	LIMIT_RANGE__DATE_TIME
-	{
-		DATE_TIME : T24BusinessTypes:RELTIME
-			@i18n:Label (en="Date time")
-			@i18n:Tooltip (en="Date and time when record was input or authorised")
-			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=11.0, core=true, t24Name=DATE.TIME, mask="RDD DD  DD ##:##")
-	}
-	LIMIT_SUB_ALLOC
-		@t24:i (t24Name=LIMIT.SUB.ALLOC, level=C, type=H, allowedFunctions="A C D E H I L P Q R S", localRefAllowed=true)
-	{
-		SUB_ALLOC_ID -> LI_LimitTransaction:LIMIT_SUB_ALLOC PK required
-			@t24:i (align=L, inputBehaviour=I, maxLength=10, sysNumber=0.0, core=true, businessType=A, t24Name=SUB.ALLOC.ID)
-		SUB_ALLOCATE_FROM : T24BusinessTypes:A required
-			@i18n:Label (en="Sub Alloc From")
-			@i18n:Tooltip (en="Credit line which is giving the sub-allocation")
-			@t24:i (align=L, inputBehaviour=I, maxLength=32, sysNumber=1.0, core=true, t24Name=SUB.ALLOCATE.FROM)
-		SUB_ALLOCATE_TO : T24BusinessTypes:A required
-			@i18n:Label (en="Sub Alloc To")
-			@i18n:Tooltip (en="Credit line which is receiving the sub-allocation")
-			@t24:i (align=L, inputBehaviour=I, maxLength=32, sysNumber=2.0, core=true, t24Name=SUB.ALLOCATE.TO)
-		NOTES : T24BusinessTypes:S required
-			@i18n:Label (en=Notes)
-			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=3.0, core=true, t24Name=NOTES)
-		EFFECTIVE_DATE : T24BusinessTypes:D
-			@i18n:Label (en="Effective Date")
-			@i18n:Tooltip (en="Effective date of the transaction")
-			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=4.0, core=true, t24Name=EFFECTIVE.DATE)
-		EXPIRY_DATE : T24BusinessTypes:D
-			@i18n:Label (en="Expiry Date")
-			@i18n:Tooltip (en="Indicates the Expiry Date of the Transaction")
-			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=5.0, core=true, t24Name=EXPIRY.DATE)
-		CURRENCY -> FIN_CurrencyConfig:CURRENCY
-			@i18n:Label (en=Ccy)
-			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=6.0, core=true, businessType=CCY, t24Name=CURRENCY)
-		ONLINE_LIMIT_AMT : T24BusinessTypes:AMT required
-			@i18n:Label (en=Amount)
-			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=7.0, core=true, t24Name=ONLINE.LIMIT.AMT)
-		AUTO_RESTORE_ALLOC : LI_LimitTransaction:LIMIT_SUB_ALLOC__AUTO_RESTORE_ALLOC
-			@i18n:Label (en="Auto Restore Limit ?")
-			@i18n:Tooltip (en="If sub-allocation is returned automatically ")
-			@t24:i (align=L, inputBehaviour=I, maxLength=1, sysNumber=8.0, core=true, t24Name=AUTO.RESTORE.ALLOC)
-		RESERVED3 : mml:Integer
-			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=9.0, core=true, t24Name=RESERVED3)
-		RESERVED2 : mml:Integer
-			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=10.0, core=true, t24Name=RESERVED2)
-		RESERVED1 : mml:Integer
-			@t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=11.0, core=true, t24Name=RESERVED1)
-		OVERRIDE -> byValue LI_LimitTransaction:LIMIT_SUB_ALLOC__OVERRIDE *
-		RECORD_STATUS : T24BusinessTypes:STAT
-			@i18n:Label (en="Record Status")
-			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=14.0, core=true, t24Name=RECORD.STATUS)
-		CURR_NO : mml:Integer
-			@i18n:Label (en="Curr No")
-			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=15.0, core=true, t24Name=CURR.NO)
-		INPUTTER -> byValue LI_LimitTransaction:LIMIT_SUB_ALLOC__INPUTTER *
-		DATE_TIME -> byValue LI_LimitTransaction:LIMIT_SUB_ALLOC__DATE_TIME *
-		AUTHORISER : T24BusinessTypes:A
-			@i18n:Label (en=Authoriser)
-			@i18n:Tooltip (en="Indicates the User who Authorises the record")
-			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=18.0, core=true, t24Name=AUTHORISER)
-		CO_CODE -> ST_CompanyCreation:COMPANY
-			@i18n:Label (en=Company)
-			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=19.0, core=true, businessType=A, t24Name=CO.CODE, mask="R##-###-####")
-		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
-			@i18n:Label (en="Dept Code")
-			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=20.0, core=true, t24Name=DEPT.CODE)
-		AUDITOR_CODE : T24BusinessTypes:A
-			@i18n:Label (en="Auditor Code")
-			@i18n:Tooltip (en="Auditor Code")
-			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=21.0, core=true, t24Name=AUDITOR.CODE)
-		AUDIT_DATE_TIME : T24BusinessTypes:RELTIME
-			@i18n:Label (en="Audit Date Time")
-			@i18n:Tooltip (en="Date and time when record was audited")
-			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=22.0, core=true, t24Name=AUDIT.DATE.TIME, mask="RDD DD  DD ##:##")
-	}
-	LIMIT_SUB_ALLOC__OVERRIDE
-	{
-		OVERRIDE : T24BusinessTypes:A
-			@i18n:Label (en=Override)
-			@i18n:Tooltip (en="Overrides generated by this transaction")
-			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=13.0, core=true, t24Name=OVERRIDE)
-	}
-	LIMIT_SUB_ALLOC__INPUTTER
-	{
-		INPUTTER : T24BusinessTypes:A
-			@i18n:Label (en=Inputter)
-			@i18n:Tooltip (en="The user who last updated the record")
-			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=16.0, core=true, t24Name=INPUTTER)
-	}
-	LIMIT_SUB_ALLOC__DATE_TIME
-	{
-		DATE_TIME : T24BusinessTypes:RELTIME
-			@i18n:Label (en="Date time")
-			@i18n:Tooltip (en="Date and time when record was input or authorised")
-			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=17.0, core=true, t24Name=DATE.TIME, mask="RDD DD  DD ##:##")
-	}
-	LIMIT_TXNS
-		@t24:i (t24Name=LIMIT.TXNS, level=C, type=T, allowedFunctions="L P S", localRefAllowed=false)
-	{
-		CREDIT_LINE_NO -> LI_LimitTransaction:LIMIT_TXNS PK required
-			@i18n:Label (en="Credit Line No.")
-			@t24:i (align=L, inputBehaviour=I, maxLength=40, sysNumber=0.0, core=true, businessType=S, t24Name=CREDIT.LINE.NO)
-		TXN_DATA : T24BusinessTypes:A
-			@t24:i (align=L, inputBehaviour=I, maxLength=59, sysNumber=1.0, core=true, t24Name=TXN.DATA)
-		LIAB_NO : T24BusinessTypes:CUS
-			@i18n:Label (en="Liability Number")
-			@t24:i (align=R, inputBehaviour=N, maxLength=10, core=false, t24Name=LIAB.NO, genOperation="@ID[\'.\',1,1]")
-		REF_NO : mml:Integer
-			@i18n:Label (en="Reference Number")
-			@t24:i (align=L, inputBehaviour=N, maxLength=7, core=false, t24Name=REF.NO, genOperation="@ID[\'.\',2,1]")
-		SER_NO : mml:Integer
-			@i18n:Label (en="Serial Number")
-			@t24:i (align=L, inputBehaviour=N, maxLength=5, core=false, t24Name=SER.NO, genOperation="@ID[\'.\',3,1]")
-		CUST_NO : T24BusinessTypes:CUS
-			@i18n:Label (en="Customer Number")
-			@t24:i (align=R, inputBehaviour=N, maxLength=10, core=false, t24Name=CUST.NO, genOperation="@ID[\'.\',4,1]")
-	}
-	NOFILE_LIMIT_ALLOW_EXCESS
-		@t24:i (t24Name=NOFILE.LIMIT.ALLOW.EXCESS, level=I, type=T, allowedFunctions="L P S", localRefAllowed=false)
-	{
-		LIABILITY_NUMBER : T24BusinessTypes:CUS required
-			@i18n:Label (en="Liability No.")
-			@t24:i (align=L, inputBehaviour=N, maxLength=10, core=false, t24Name=LIABILITY.NUMBER, genOperation=E.LIM.ALLOW.EXCESS.SELECTION)
-	}
+    LIMIT_PREV
+        @i18n:Description (en="")
+        @t24:i (t24Name=LIMIT.PREV, level=C, type=L, allowedFunctions="L P S", localRefAllowed=false)
+    {
+        LIMIT_NO -> LI_LimitTransaction:LIMIT_PREV PK required
+            @i18n:Label (en=No)
+            @t24:i (align=L, inputBehaviour=I, maxLength=32, sysNumber=0.0, core=true, businessType=S, t24Name=LIMIT.NO)
+        CONSOL_KEY : T24BusinessTypes:A
+            @i18n:Label (en="Consol Key")
+            @t24:i (align=L, inputBehaviour=I, maxLength=65, sysNumber=1.0, core=true, t24Name=CONSOL.KEY)
+        CCY : T24BusinessTypes:CCY required
+            @i18n:Label (en=Ccy)
+            @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=2.0, core=true, t24Name=CCY)
+        UPD_DATE : T24BusinessTypes:D
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=3.0, core=true, t24Name=UPD.DATE)
+        EXPIRY_DATE : T24BusinessTypes:D
+            @i18n:Label (en="Expiry Date")
+            @i18n:Tooltip (en="Indicates the Expiry Date of the Transaction")
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=4.0, core=true, t24Name=EXPIRY.DATE)
+        LINE_AMOUNT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=5.0, core=true, t24Name=LINE.AMOUNT, typeModifiers="2")
+        UTIL_AMOUNT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=6.0, core=true, t24Name=UTIL.AMOUNT, typeModifiers="2")
+    }
+    FX_LIMIT_PARAMS
+        @i18n:Description (en="")
+        @t24:i (t24Name=FX.LIMIT.PARAMS, level=C, type=U, allowedFunctions="A C D E I L P Q R S", localRefAllowed=true)
+    {
+        FX_LIMIT_PARAMS : LI_LimitTransaction:FX_LIMIT_PARAMS__FX_LIMIT_PARAMS PK required
+            @t24:i (align=L, inputBehaviour=I, maxLength=5, sysNumber=0.0, core=true, t24Name=FX.LIMIT.PARAMS)
+        OVERALL_LIMIT_REF -> LI_Config:LIMIT_REFERENCE
+            @t24:i (align=R, inputBehaviour=I, maxLength=4, sysNumber=1.0, core=true, t24Name=OVERALL.LIMIT.REF)
+        SPOT_LIMIT_REF -> LI_Config:LIMIT_REFERENCE
+            @t24:i (align=R, inputBehaviour=I, maxLength=4, sysNumber=2.0, core=true, t24Name=SPOT.LIMIT.REF)
+        FWD_LIMIT_REF -> LI_Config:LIMIT_REFERENCE
+            @t24:i (align=R, inputBehaviour=I, maxLength=4, sysNumber=3.0, core=true, t24Name=FWD.LIMIT.REF)
+        SWAP_LIMIT_REF -> LI_Config:LIMIT_REFERENCE
+            @t24:i (align=R, inputBehaviour=I, maxLength=4, sysNumber=4.0, core=true, t24Name=SWAP.LIMIT.REF)
+        SPOT_EXPOSURE_ : mml:Integer
+            @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=5.0, core=true, t24Name=SPOT.EXPOSURE.)
+        FWD_EXPOSURE_ : mml:Integer
+            @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=6.0, core=true, t24Name=FWD.EXPOSURE.)
+        SWAP_EXPOSURE_ : mml:Integer
+            @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=7.0, core=true, t24Name=SWAP.EXPOSURE.)
+        OTHER_EXPOSURE_ : mml:Integer
+            @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=8.0, core=true, t24Name=OTHER.EXPOSURE.)
+        RESERVED6 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=9.0, core=true, t24Name=RESERVED6)
+        RESERVED5 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=10.0, core=true, t24Name=RESERVED5)
+        RESERVED4 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=11.0, core=true, t24Name=RESERVED4)
+        RESERVED3 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=12.0, core=true, t24Name=RESERVED3)
+        OVERRIDE -> byValue LI_LimitTransaction:FX_LIMIT_PARAMS__OVERRIDE *
+        RECORD_STATUS : T24BusinessTypes:N
+            @i18n:Label (en="Record Status")
+            @t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=15.0, core=true, t24Name=RECORD.STATUS)
+        CURR_NO : T24BusinessTypes:N
+            @i18n:Label (en="Curr No")
+            @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=16.0, core=true, t24Name=CURR.NO)
+        INPUTTER -> byValue LI_LimitTransaction:FX_LIMIT_PARAMS__INPUTTER *
+        DATE_TIME -> byValue LI_LimitTransaction:FX_LIMIT_PARAMS__DATE_TIME *
+        AUTHORISER : T24BusinessTypes:N
+            @i18n:Label (en=Authoriser)
+            @i18n:Tooltip (en="Indicates the User who Authorises the record")
+            @t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=19.0, core=true, t24Name=AUTHORISER)
+        CO_CODE -> ST_CompanyCreation:COMPANY
+            @i18n:Label (en=Company)
+            @t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=20.0, core=true, businessType=A, t24Name=CO.CODE, mask="R##-###-####")
+        DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+            @i18n:Label (en="Dept Code")
+            @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=21.0, core=true, t24Name=DEPT.CODE)
+        AUDITOR_CODE : T24BusinessTypes:A
+            @i18n:Label (en="Auditor Code")
+            @i18n:Tooltip (en="Auditor Code")
+            @t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=22.0, core=true, t24Name=AUDITOR.CODE)
+        AUDIT_DATE_TIME : T24BusinessTypes:RELTIME
+            @i18n:Label (en="Audit Date Time")
+            @i18n:Tooltip (en="Date and time when record was audited")
+            @t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=23.0, core=true, t24Name=AUDIT.DATE.TIME, mask="RDD DD  DD ##:##")
+    }
+    FX_LIMIT_PARAMS__OVERRIDE
+    {
+        OVERRIDE : T24BusinessTypes:N
+            @i18n:Label (en=Override)
+            @i18n:Tooltip (en="Overrides generated by this transaction")
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=14.0, core=true, t24Name=OVERRIDE)
+    }
+    FX_LIMIT_PARAMS__INPUTTER
+    {
+        INPUTTER : T24BusinessTypes:N
+            @i18n:Label (en=Inputter)
+            @i18n:Tooltip (en="The user who last updated the record")
+            @t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=17.0, core=true, t24Name=INPUTTER)
+    }
+    FX_LIMIT_PARAMS__DATE_TIME
+    {
+        DATE_TIME : T24BusinessTypes:N
+            @i18n:Label (en="Date time")
+            @i18n:Tooltip (en="Date and time when record was input or authorised")
+            @t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=18.0, core=true, t24Name=DATE.TIME, mask="RDD DD  DD ##:##")
+    }
+    LIMIT_SUB_ALLOC
+        @i18n:Description (en="")
+        @t24:i (t24Name=LIMIT.SUB.ALLOC, level=C, type=H, allowedFunctions="A C D E H I L P Q R S", localRefAllowed=true)
+    {
+        SUB_ALLOC_ID -> LI_LimitTransaction:LIMIT_SUB_ALLOC PK required
+            @t24:i (align=L, inputBehaviour=I, maxLength=10, sysNumber=0.0, core=true, businessType=A, t24Name=SUB.ALLOC.ID)
+        SUB_ALLOCATE_FROM : T24BusinessTypes:A required
+            @i18n:Label (en="Sub Alloc From ")
+            @i18n:Tooltip (en="Credit line which is giving the sub-allocation")
+            @t24:i (align=L, inputBehaviour=I, maxLength=32, sysNumber=1.0, core=true, t24Name=SUB.ALLOCATE.FROM)
+        SUB_ALLOCATE_TO : T24BusinessTypes:A required
+            @i18n:Label (en="Sub Alloc To")
+            @i18n:Tooltip (en="Credit line which is receiving the sub-allocation")
+            @t24:i (align=L, inputBehaviour=I, maxLength=32, sysNumber=2.0, core=true, t24Name=SUB.ALLOCATE.TO)
+        NOTES : T24BusinessTypes:S required
+            @i18n:Label (en=Notes)
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=3.0, core=true, t24Name=NOTES)
+        EFFECTIVE_DATE : T24BusinessTypes:D
+            @i18n:Label (en="Effective Date")
+            @i18n:Tooltip (en="Effective date of the transaction")
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=4.0, core=true, t24Name=EFFECTIVE.DATE)
+        EXPIRY_DATE : T24BusinessTypes:D
+            @i18n:Label (en="Expiry Date")
+            @i18n:Tooltip (en="Indicates the Expiry Date of the Transaction")
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=5.0, core=true, t24Name=EXPIRY.DATE)
+        CURRENCY -> ST_CurrencyConfig:CURRENCY
+            @i18n:Label (en=Ccy)
+            @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=6.0, core=true, businessType=CCY, t24Name=CURRENCY)
+        ONLINE_LIMIT_AMT : T24BusinessTypes:AMT required
+            @i18n:Label (en=Amount)
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=7.0, core=true, t24Name=ONLINE.LIMIT.AMT)
+        AUTO_RESTORE_ALLOC : LI_LimitTransaction:LIMIT_SUB_ALLOC__AUTO_RESTORE_ALLOC
+            @i18n:Label (en="Auto Restore Limit ?")
+            @i18n:Tooltip (en="If sub-allocation is returned automatically ")
+            @t24:i (align=L, inputBehaviour=I, maxLength=1, sysNumber=8.0, core=true, t24Name=AUTO.RESTORE.ALLOC)
+        RESERVED3 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=9.0, core=true, t24Name=RESERVED3)
+        RESERVED2 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=10.0, core=true, t24Name=RESERVED2)
+        RESERVED1 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=11.0, core=true, t24Name=RESERVED1)
+        OVERRIDE -> byValue LI_LimitTransaction:LIMIT_SUB_ALLOC__OVERRIDE *
+        RECORD_STATUS : T24BusinessTypes:N
+            @i18n:Label (en="Record Status")
+            @t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=14.0, core=true, t24Name=RECORD.STATUS)
+        CURR_NO : T24BusinessTypes:N
+            @i18n:Label (en="Curr No")
+            @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=15.0, core=true, t24Name=CURR.NO)
+        INPUTTER -> byValue LI_LimitTransaction:LIMIT_SUB_ALLOC__INPUTTER *
+        DATE_TIME -> byValue LI_LimitTransaction:LIMIT_SUB_ALLOC__DATE_TIME *
+        AUTHORISER : T24BusinessTypes:N
+            @i18n:Label (en=Authoriser)
+            @i18n:Tooltip (en="Indicates the User who Authorises the record")
+            @t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=18.0, core=true, t24Name=AUTHORISER)
+        CO_CODE -> ST_CompanyCreation:COMPANY
+            @i18n:Label (en=Company)
+            @t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=19.0, core=true, businessType=A, t24Name=CO.CODE, mask="R##-###-####")
+        DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+            @i18n:Label (en="Dept Code")
+            @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=20.0, core=true, t24Name=DEPT.CODE)
+        AUDITOR_CODE : T24BusinessTypes:A
+            @i18n:Label (en="Auditor Code")
+            @i18n:Tooltip (en="Auditor Code")
+            @t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=21.0, core=true, t24Name=AUDITOR.CODE)
+        AUDIT_DATE_TIME : T24BusinessTypes:RELTIME
+            @i18n:Label (en="Audit Date Time")
+            @i18n:Tooltip (en="Date and time when record was audited")
+            @t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=22.0, core=true, t24Name=AUDIT.DATE.TIME, mask="RDD DD  DD ##:##")
+        K_CURRENCY -> ST_CurrencyConfig:CURRENCY
+            @i18n:Label (en=Ccy)
+            @t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=6.0, core=true, businessType=CCY, t24Name=K.CURRENCY)
+    }
+    LIMIT_SUB_ALLOC__OVERRIDE
+    {
+        OVERRIDE : T24BusinessTypes:N
+            @i18n:Label (en=Override)
+            @i18n:Tooltip (en="Overrides generated by this transaction")
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=13.0, core=true, t24Name=OVERRIDE)
+    }
+    LIMIT_SUB_ALLOC__INPUTTER
+    {
+        INPUTTER : T24BusinessTypes:N
+            @i18n:Label (en=Inputter)
+            @i18n:Tooltip (en="The user who last updated the record")
+            @t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=16.0, core=true, t24Name=INPUTTER)
+    }
+    LIMIT_SUB_ALLOC__DATE_TIME
+    {
+        DATE_TIME : T24BusinessTypes:N
+            @i18n:Label (en="Date time")
+            @i18n:Tooltip (en="Date and time when record was input or authorised")
+            @t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=17.0, core=true, t24Name=DATE.TIME, mask="RDD DD  DD ##:##")
+    }
+    LIMIT_FX_PROFIT_LOSS
+        @i18n:Description (en="")
+        @t24:i (t24Name=LIMIT.FX.PROFIT.LOSS, level=C, type=L, allowedFunctions="L P S", localRefAllowed=false)
+    {
+        LIMIT_ID -> LI_LimitTransaction:LIMIT_FX_PROFIT_LOSS PK required
+            @i18n:Label (en="Limit Id")
+            @t24:i (align=L, inputBehaviour=I, maxLength=44, sysNumber=0.0, core=true, businessType=S, t24Name=LIMIT.ID)
+        VALUE_DATE -> byValue LI_LimitTransaction:LIMIT_FX_PROFIT_LOSS__VALUE_DATE *
+        TOTAL_CUS_LOSS : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=11.0, core=true, t24Name=TOTAL.CUS.LOSS)
+        TOTAL_CUS_PROFIT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=12.0, core=true, t24Name=TOTAL.CUS.PROFIT)
+        TOTAL_CUS_PL : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=13.0, core=true, t24Name=TOTAL.CUS.PL)
+        REVAL_DATE : T24BusinessTypes:D
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=14.0, core=true, t24Name=REVAL.DATE)
+        LIMIT_OS_AMT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=15.0, core=true, t24Name=LIMIT.OS.AMT)
+    }
+    LIMIT_FX_PROFIT_LOSS__VALUE_DATE
+    {
+        VALUE_DATE : T24BusinessTypes:D
+            @i18n:Label (en="Value Date")
+            @i18n:Tooltip (en="Indicates the Value date of the Contract")
+            @t24:i (align=R, inputBehaviour=I, maxLength=35, sysNumber=1.0, core=true, t24Name=VALUE.DATE)
+        NET_CURRENCY -> byValue LI_LimitTransaction:LIMIT_FX_PROFIT_LOSS__VALUE_DATE__NET_CURRENCY *
+        TOT_BUY_POS -> byValue LI_LimitTransaction:LIMIT_FX_PROFIT_LOSS__VALUE_DATE__TOT_BUY_POS *
+        TOT_SELL_POS -> byValue LI_LimitTransaction:LIMIT_FX_PROFIT_LOSS__VALUE_DATE__TOT_SELL_POS *
+        CUS_BUY_CCY -> byValue LI_LimitTransaction:LIMIT_FX_PROFIT_LOSS__VALUE_DATE__CUS_BUY_CCY *
+        CUS_BUY_POS -> byValue LI_LimitTransaction:LIMIT_FX_PROFIT_LOSS__VALUE_DATE__CUS_BUY_POS *
+        CUS_SEL_CCY -> byValue LI_LimitTransaction:LIMIT_FX_PROFIT_LOSS__VALUE_DATE__CUS_SEL_CCY *
+        CUS_SEL_POS -> byValue LI_LimitTransaction:LIMIT_FX_PROFIT_LOSS__VALUE_DATE__CUS_SEL_POS *
+        PROFIT_LOSS -> byValue LI_LimitTransaction:LIMIT_FX_PROFIT_LOSS__VALUE_DATE__PROFIT_LOSS *
+    }
+    LIMIT_FX_PROFIT_LOSS__VALUE_DATE__NET_CURRENCY
+    {
+        NET_CURRENCY -> ST_CurrencyConfig:CURRENCY required
+            @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=2.0, core=true, businessType=CCY, t24Name=NET.CURRENCY)
+    }
+    LIMIT_FX_PROFIT_LOSS__VALUE_DATE__TOT_BUY_POS
+    {
+        TOT_BUY_POS : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=3.0, core=true, t24Name=TOT.BUY.POS)
+    }
+    LIMIT_FX_PROFIT_LOSS__VALUE_DATE__TOT_SELL_POS
+    {
+        TOT_SELL_POS : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=4.0, core=true, t24Name=TOT.SELL.POS)
+    }
+    LIMIT_FX_PROFIT_LOSS__VALUE_DATE__CUS_BUY_CCY
+    {
+        CUS_BUY_CCY -> ST_CurrencyConfig:CURRENCY required
+            @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=5.0, core=true, businessType=CCY, t24Name=CUS.BUY.CCY)
+    }
+    LIMIT_FX_PROFIT_LOSS__VALUE_DATE__CUS_BUY_POS
+    {
+        CUS_BUY_POS : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=6.0, core=true, t24Name=CUS.BUY.POS)
+    }
+    LIMIT_FX_PROFIT_LOSS__VALUE_DATE__CUS_SEL_CCY
+    {
+        CUS_SEL_CCY -> ST_CurrencyConfig:CURRENCY required
+            @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=7.0, core=true, businessType=CCY, t24Name=CUS.SEL.CCY)
+    }
+    LIMIT_FX_PROFIT_LOSS__VALUE_DATE__CUS_SEL_POS
+    {
+        CUS_SEL_POS : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=8.0, core=true, t24Name=CUS.SEL.POS)
+    }
+    LIMIT_FX_PROFIT_LOSS__VALUE_DATE__PROFIT_LOSS
+    {
+        PROFIT_LOSS : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=9.0, core=true, t24Name=PROFIT.LOSS)
+        MARGIN_AMT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=10.0, core=true, t24Name=MARGIN.AMT)
+    }
+    LIMIT_CURRENCY
+        @i18n:Description (en="")
+        @t24:i (t24Name=LIMIT.CURRENCY, level=C, type=H, allowedFunctions="A C D E H I L P Q R S", localRefAllowed=true)
+    {
+        CURRENCY_CODE -> LI_LimitTransaction:LIMIT_CURRENCY PK required
+            @i18n:Label (en="Ccy Code")
+            @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=0.0, core=true, businessType=CCY, t24Name=CURRENCY.CODE)
+        DESCRIPTION -> byValue LI_LimitTransaction:LIMIT_CURRENCY__DESCRIPTION *
+        GRADE_CURRENCY -> ST_Customer:CUSTOMER_STATUS
+            @i18n:Label (en="Currency Grade")
+            @i18n:Tooltip (en="Status to be associated with a Currency Limit")
+            @t24:i (align=R, inputBehaviour=I, maxLength=4, sysNumber=2.0, core=true, t24Name=GRADE.CURRENCY)
+        PRODUCT_GROUP -> byValue LI_LimitTransaction:LIMIT_CURRENCY__PRODUCT_GROUP *
+        REPORT_PROD_GRP -> byValue LI_LimitTransaction:LIMIT_CURRENCY__REPORT_PROD_GRP *
+        RESERVED_1 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=10.0, core=true, t24Name=RESERVED.1)
+        RESERVED_2 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=11.0, core=true, t24Name=RESERVED.2)
+        RESERVED_3 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=12.0, core=true, t24Name=RESERVED.3)
+        RESERVED_4 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=13.0, core=true, t24Name=RESERVED.4)
+        OVERRIDE -> byValue LI_LimitTransaction:LIMIT_CURRENCY__OVERRIDE *
+        RECORD_STATUS : T24BusinessTypes:N
+            @i18n:Label (en="Record Status")
+            @t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=16.0, core=true, t24Name=RECORD.STATUS)
+        CURR_NO : T24BusinessTypes:N
+            @i18n:Label (en="Curr No")
+            @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=17.0, core=true, t24Name=CURR.NO)
+        INPUTTER -> byValue LI_LimitTransaction:LIMIT_CURRENCY__INPUTTER *
+        DATE_TIME -> byValue LI_LimitTransaction:LIMIT_CURRENCY__DATE_TIME *
+        AUTHORISER : T24BusinessTypes:N
+            @i18n:Label (en=Authoriser)
+            @i18n:Tooltip (en="Indicates the User who Authorises the record")
+            @t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=20.0, core=true, t24Name=AUTHORISER)
+        CO_CODE -> ST_CompanyCreation:COMPANY
+            @i18n:Label (en=Company)
+            @t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=21.0, core=true, businessType=A, t24Name=CO.CODE, mask="R##-###-####")
+        DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+            @i18n:Label (en="Dept Code")
+            @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=22.0, core=true, t24Name=DEPT.CODE)
+        AUDITOR_CODE : T24BusinessTypes:A
+            @i18n:Label (en="Auditor Code")
+            @i18n:Tooltip (en="Auditor Code")
+            @t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=23.0, core=true, t24Name=AUDITOR.CODE)
+        AUDIT_DATE_TIME : T24BusinessTypes:RELTIME
+            @i18n:Label (en="Audit Date Time")
+            @i18n:Tooltip (en="Date and time when record was audited")
+            @t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=24.0, core=true, t24Name=AUDIT.DATE.TIME, mask="RDD DD  DD ##:##")
+    }
+    LIMIT_CURRENCY__DESCRIPTION
+    {
+        DESCRIPTION : T24BusinessTypes:A required
+            @i18n:Label (en=Description)
+            @i18n:Tooltip (en=Description)
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, multiLanguage=true, sysNumber=1.0, core=true, t24Name=DESCRIPTION)
+    }
+    LIMIT_CURRENCY__PRODUCT_GROUP
+    {
+        PRODUCT_GROUP : T24BusinessTypes:MNE required
+            @i18n:Label (en="Product Group")
+            @t24:i (align=L, inputBehaviour=I, maxLength=15, sysNumber=3.0, core=true, t24Name=PRODUCT.GROUP)
+        LIMIT_AMOUNT : T24BusinessTypes:AMT required
+            @i18n:Label (en="Limit Amount")
+            @i18n:Tooltip (en="It shows the limit amount")
+            @t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=4.0, core=true, t24Name=LIMIT.AMOUNT)
+        GRADE_PRODUCT -> ST_Customer:CUSTOMER_STATUS
+            @i18n:Label (en="Product Grade")
+            @t24:i (align=R, inputBehaviour=I, maxLength=4, sysNumber=5.0, core=true, t24Name=GRADE.PRODUCT)
+    }
+    LIMIT_CURRENCY__REPORT_PROD_GRP
+    {
+        REPORT_PROD_GRP : T24BusinessTypes:MNE
+            @i18n:Label (en="Report Product Group")
+            @t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=6.0, core=true, t24Name=REPORT.PROD.GRP)
+        REPRT_LIMIT_AMT : T24BusinessTypes:AMT
+            @i18n:Label (en="Report Limit Amount")
+            @t24:i (align=R, inputBehaviour=E, maxLength=18, sysNumber=7.0, core=true, t24Name=REPRT.LIMIT.AMT)
+        REPRT_OUTSTANDG : T24BusinessTypes:AMT
+            @i18n:Label (en="Report Outstanding")
+            @t24:i (align=R, inputBehaviour=E, maxLength=19, sysNumber=8.0, core=true, t24Name=REPRT.OUTSTANDG)
+        REPRT_AVAILABLE : T24BusinessTypes:AMT
+            @i18n:Label (en="Report Available")
+            @t24:i (align=R, inputBehaviour=E, maxLength=19, sysNumber=9.0, core=true, t24Name=REPRT.AVAILABLE)
+    }
+    LIMIT_CURRENCY__OVERRIDE
+    {
+        OVERRIDE : T24BusinessTypes:N
+            @i18n:Label (en=Override)
+            @i18n:Tooltip (en="Overrides generated by this transaction")
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=15.0, core=true, t24Name=OVERRIDE)
+    }
+    LIMIT_CURRENCY__INPUTTER
+    {
+        INPUTTER : T24BusinessTypes:N
+            @i18n:Label (en=Inputter)
+            @i18n:Tooltip (en="The user who last updated the record")
+            @t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=18.0, core=true, t24Name=INPUTTER)
+    }
+    LIMIT_CURRENCY__DATE_TIME
+    {
+        DATE_TIME : T24BusinessTypes:N
+            @i18n:Label (en="Date time")
+            @i18n:Tooltip (en="Date and time when record was input or authorised")
+            @t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=19.0, core=true, t24Name=DATE.TIME, mask="RDD DD  DD ##:##")
+    }
+    LIMIT_CROSS_USAGE
+        @i18n:Description (en="")
+        @t24:i (t24Name=LIMIT.CROSS.USAGE, level=C, type=L, allowedFunctions="L P S", localRefAllowed=false)
+    {
+        CUSTOMER_PRODUCT -> LI_LimitTransaction:LIMIT_CROSS_USAGE PK required
+            @t24:i (align=L, inputBehaviour=I, maxLength=18, sysNumber=0.0, core=true, businessType=S, t24Name=CUSTOMER.PRODUCT)
+        NEXT_SEQ_NO : mml:Integer
+            @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=1.0, core=true, t24Name=NEXT.SEQ.NO)
+        NEXT_PROD_REF : mml:Integer
+            @t24:i (align=R, inputBehaviour=I, maxLength=4, sysNumber=2.0, core=true, t24Name=NEXT.PROD.REF)
+        PRODUCT_SEQ_NO -> byValue LI_LimitTransaction:LIMIT_CROSS_USAGE__PRODUCT_SEQ_NO *
+    }
+    LIMIT_CROSS_USAGE__PRODUCT_SEQ_NO
+    {
+        PRODUCT_SEQ_NO : mml:Integer
+            @t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=3.0, core=true, t24Name=PRODUCT.SEQ.NO)
+        NXT_PROD_LINK : mml:Integer
+            @t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=4.0, core=true, t24Name=NXT.PROD.LINK)
+        NXT_CROSS_LIMIT : T24BusinessTypes:A required
+            @t24:i (align=L, inputBehaviour=I, maxLength=32, sysNumber=5.0, core=true, t24Name=NXT.CROSS.LIMIT)
+        SEQ_NOS_USED -> byValue LI_LimitTransaction:LIMIT_CROSS_USAGE__PRODUCT_SEQ_NO__SEQ_NOS_USED *
+        CROSS_LIMITS -> byValue LI_LimitTransaction:LIMIT_CROSS_USAGE__PRODUCT_SEQ_NO__CROSS_LIMITS *
+        SUB_LIMITS -> byValue LI_LimitTransaction:LIMIT_CROSS_USAGE__PRODUCT_SEQ_NO__SUB_LIMITS *
+    }
+    LIMIT_CROSS_USAGE__PRODUCT_SEQ_NO__SEQ_NOS_USED
+    {
+        SEQ_NOS_USED : mml:Integer
+            @t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=6.0, core=true, t24Name=SEQ.NOS.USED)
+    }
+    LIMIT_CROSS_USAGE__PRODUCT_SEQ_NO__CROSS_LIMITS
+    {
+        CROSS_LIMITS : T24BusinessTypes:A required
+            @t24:i (align=L, inputBehaviour=I, maxLength=32, sysNumber=7.0, core=true, t24Name=CROSS.LIMITS)
+    }
+    LIMIT_CROSS_USAGE__PRODUCT_SEQ_NO__SUB_LIMITS
+    {
+        SUB_LIMITS : T24BusinessTypes:A required
+            @t24:i (align=L, inputBehaviour=I, maxLength=32, sysNumber=8.0, core=true, t24Name=SUB.LIMITS)
+    }
+    LIMIT_TXNS
+        @i18n:Description (en="")
+        @t24:i (t24Name=LIMIT.TXNS, level=C, type=T, allowedFunctions="L P S", localRefAllowed=false)
+    {
+        CREDIT_LINE_NO -> LI_LimitTransaction:LIMIT_TXNS PK required
+            @i18n:Label (en="Credit Line No.")
+            @t24:i (align=L, inputBehaviour=I, maxLength=40, sysNumber=0.0, core=true, businessType=S, t24Name=CREDIT.LINE.NO)
+        TXN_DATA : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=I, maxLength=59, sysNumber=1.0, core=true, t24Name=TXN.DATA)
+        LIAB_NO : T24BusinessTypes:N
+            @i18n:Label (en="Liability Number")
+            @t24:i (align=R, inputBehaviour=N, maxLength=10, core=false, t24Name=LIAB.NO, genOperation="@ID[\'.\',1,1]")
+        REF_NO : T24BusinessTypes:N
+            @i18n:Label (en="Reference Number")
+            @t24:i (align=L, inputBehaviour=N, maxLength=7, core=false, t24Name=REF.NO, genOperation="@ID[\'.\',2,1]")
+        SER_NO : T24BusinessTypes:N
+            @i18n:Label (en="Serial Number")
+            @t24:i (align=L, inputBehaviour=N, maxLength=5, core=false, t24Name=SER.NO, genOperation="@ID[\'.\',3,1]")
+        CUST_NO : T24BusinessTypes:N
+            @i18n:Label (en="Customer Number")
+            @t24:i (align=R, inputBehaviour=N, maxLength=10, core=false, t24Name=CUST.NO, genOperation="@ID[\'.\',4,1]")
+    }
+    LIMIT_CCY_LINK
+        @i18n:Description (en="")
+        @t24:i (t24Name=LIMIT.CCY.LINK, level=C, type=L, allowedFunctions="L P S", localRefAllowed=false)
+    {
+        LINK_CCY -> LI_LimitTransaction:LIMIT_CCY_LINK PK required
+            @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=0.0, core=true, businessType=CCY, t24Name=LINK.CCY)
+        MNE_COMPANY : T24BusinessTypes:MNE required
+            @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=1.0, core=true, t24Name=MNE.COMPANY)
+        LOCAL_CCY : T24BusinessTypes:CCY required
+            @i18n:Label (en=Lcy)
+            @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=2.0, core=true, t24Name=LOCAL.CCY)
+    }
+    LIMIT_EXPIRY
+        @i18n:Description (en="")
+        @t24:i (t24Name=LIMIT.EXPIRY, level=C, type=T, allowedFunctions="L P S", localRefAllowed=false)
+    {
+        EXPIRY_DATE -> LI_LimitTransaction:LIMIT_EXPIRY PK required
+            @i18n:Label (en="Expiry Date")
+            @i18n:Tooltip (en="Indicates the Expiry Date of the Transaction")
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=0.0, core=true, businessType=D, t24Name=EXPIRY.DATE)
+        CREDIT_LINE_NO : T24BusinessTypes:S
+            @i18n:Label (en="Credit Line No.")
+            @t24:i (align=L, inputBehaviour=I, maxLength=24, sysNumber=1.0, core=true, t24Name=CREDIT.LINE.NO)
+    }
+    LIMIT_DAILY_OS
+        @i18n:Description (en="")
+        @t24:i (t24Name=LIMIT.DAILY.OS, level=C, type=L, allowedFunctions="L P S", localRefAllowed=false)
+    {
+        CREDIT_LINE_NO -> LI_LimitTransaction:LIMIT_DAILY_OS PK required
+            @i18n:Label (en="Credit Line No.")
+            @t24:i (align=L, inputBehaviour=I, maxLength=44, sysNumber=0.0, core=true, businessType=S, t24Name=CREDIT.LINE.NO)
+        TXN_REF_COMPANY -> byValue LI_LimitTransaction:LIMIT_DAILY_OS__TXN_REF_COMPANY *
+        FROM_CURRENCY -> byValue LI_LimitTransaction:LIMIT_DAILY_OS__FROM_CURRENCY *
+        NET_CCY -> byValue LI_LimitTransaction:LIMIT_DAILY_OS__NET_CCY *
+        CLEAN_RISK_USED : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=16.0, core=true, t24Name=CLEAN.RISK.USED)
+        CLEAN_RISK_AVAIL : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=17.0, core=true, t24Name=CLEAN.RISK.AVAIL)
+        LIAB_NO : T24BusinessTypes:N
+            @i18n:Label (en="Liability Number")
+            @t24:i (align=R, inputBehaviour=N, maxLength=10, core=false, t24Name=LIAB.NO, genOperation="@ID[\'.\',1,1]")
+        REF_NO : T24BusinessTypes:N
+            @i18n:Label (en="Reference Number")
+            @t24:i (align=L, inputBehaviour=N, maxLength=7, core=false, t24Name=REF.NO, genOperation="@ID[\'.\',2,1]")
+        SER_NO : T24BusinessTypes:N
+            @i18n:Label (en="Serial Number")
+            @t24:i (align=L, inputBehaviour=N, maxLength=5, core=false, t24Name=SER.NO, genOperation="@ID[\'.\',3,1]")
+        CUST_NO : T24BusinessTypes:N
+            @i18n:Label (en="Customer Number")
+            @t24:i (align=R, inputBehaviour=N, maxLength=10, core=false, t24Name=CUST.NO, genOperation="@ID[\'.\',4,1]")
+    }
+    LIMIT_DAILY_OS__TXN_REF_COMPANY
+    {
+        TXN_REF_COMPANY : T24BusinessTypes:MNE required
+            @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=1.0, core=true, t24Name=TXN.REF.COMPANY)
+        TXN_REFERENCE : T24BusinessTypes:AA
+            @t24:i (align=L, inputBehaviour=I, maxLength=12, sysNumber=2.0, core=true, t24Name=TXN.REFERENCE)
+        TXN_CURRENCY -> ST_CurrencyConfig:CURRENCY required
+            @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=3.0, core=true, businessType=CCY, t24Name=TXN.CURRENCY)
+        TXN_AMOUNT : T24BusinessTypes:AMT required
+            @i18n:Label (en="Transaction Amount")
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=4.0, core=true, t24Name=TXN.AMOUNT, typeModifiers="3.X")
+        TXN_FULL_AMT : T24BusinessTypes:AMT required
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=5.0, core=true, t24Name=TXN.FULL.AMT, typeModifiers="3.X")
+        OTHER_CURRENCY -> ST_CurrencyConfig:CURRENCY required
+            @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=6.0, core=true, businessType=CCY, t24Name=OTHER.CURRENCY)
+        OTHER_AMOUNT : T24BusinessTypes:AMT required
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=7.0, core=true, t24Name=OTHER.AMOUNT, typeModifiers="6.X")
+        OTHER_FULL_AMT : T24BusinessTypes:AMT required
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=8.0, core=true, t24Name=OTHER.FULL.AMT, typeModifiers="6.X")
+        REPL_VALUE : T24BusinessTypes:AMT required
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=9.0, core=true, t24Name=REPL.VALUE)
+    }
+    LIMIT_DAILY_OS__FROM_CURRENCY
+    {
+        FROM_CURRENCY -> ST_CurrencyConfig:CURRENCY required
+            @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=10.0, core=true, businessType=CCY, t24Name=FROM.CURRENCY)
+        TO_CURRENCY -> ST_CurrencyConfig:CURRENCY required
+            @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=11.0, core=true, businessType=CCY, t24Name=TO.CURRENCY)
+        FROM_AMOUNT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=12.0, core=true, t24Name=FROM.AMOUNT, typeModifiers="10.X")
+        TO_AMOUNT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=13.0, core=true, t24Name=TO.AMOUNT, typeModifiers="11.X")
+    }
+    LIMIT_DAILY_OS__NET_CCY
+    {
+        NET_CCY -> ST_CurrencyConfig:CURRENCY
+            @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=14.0, core=true, businessType=CCY, t24Name=NET.CCY)
+        NET_AMOUNT : T24BusinessTypes:AMT
+            @i18n:Label (en="Net Amount")
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=15.0, core=true, t24Name=NET.AMOUNT, typeModifiers="14.X")
+    }
+    LIMIT_RANGE
+        @i18n:Description (en="")
+        @t24:i (t24Name=LIMIT.RANGE, level=C, type=H, allowedFunctions="A C D E H I L P Q R S", localRefAllowed=false)
+    {
+        MNEMONIC_NAME -> LI_LimitTransaction:LIMIT_RANGE PK required
+            @t24:i (align=L, inputBehaviour=I, maxLength=20, sysNumber=0.0, core=true, businessType=A, t24Name=MNEMONIC.NAME)
+        DESCRIPTION -> byValue LI_LimitTransaction:LIMIT_RANGE__DESCRIPTION *
+        COMP_OR_CCY : LI_LimitTransaction:LIMIT_RANGE__COMP_OR_CCY required
+            @t24:i (align=L, inputBehaviour=F, maxLength=8, sysNumber=2.0, core=true, t24Name=COMP.OR.CCY)
+        DISCR_VALUE -> byValue LI_LimitTransaction:LIMIT_RANGE__DISCR_VALUE *
+        START_VALUE -> byValue LI_LimitTransaction:LIMIT_RANGE__START_VALUE *
+        RESERVED2 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=6.0, core=true, t24Name=RESERVED2)
+        RESERVED1 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=7.0, core=true, t24Name=RESERVED1)
+        RECORD_STATUS : T24BusinessTypes:N
+            @i18n:Label (en="Record Status")
+            @t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=8.0, core=true, t24Name=RECORD.STATUS)
+        CURR_NO : T24BusinessTypes:N
+            @i18n:Label (en="Curr No")
+            @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=9.0, core=true, t24Name=CURR.NO)
+        INPUTTER -> byValue LI_LimitTransaction:LIMIT_RANGE__INPUTTER *
+        DATE_TIME -> byValue LI_LimitTransaction:LIMIT_RANGE__DATE_TIME *
+        AUTHORISER : T24BusinessTypes:N
+            @i18n:Label (en=Authoriser)
+            @i18n:Tooltip (en="Indicates the User who Authorises the record")
+            @t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=12.0, core=true, t24Name=AUTHORISER)
+        CO_CODE -> ST_CompanyCreation:COMPANY
+            @i18n:Label (en=Company)
+            @t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=13.0, core=true, businessType=A, t24Name=CO.CODE, mask="R##-###-####")
+        DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+            @i18n:Label (en="Dept Code")
+            @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=14.0, core=true, t24Name=DEPT.CODE)
+        AUDITOR_CODE : T24BusinessTypes:A
+            @i18n:Label (en="Auditor Code")
+            @i18n:Tooltip (en="Auditor Code")
+            @t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=15.0, core=true, t24Name=AUDITOR.CODE)
+        AUDIT_DATE_TIME : T24BusinessTypes:RELTIME
+            @i18n:Label (en="Audit Date Time")
+            @i18n:Tooltip (en="Date and time when record was audited")
+            @t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=16.0, core=true, t24Name=AUDIT.DATE.TIME, mask="RDD DD  DD ##:##")
+    }
+    LIMIT_RANGE__DESCRIPTION
+    {
+        DESCRIPTION : T24BusinessTypes:A required
+            @i18n:Label (en=Description)
+            @i18n:Tooltip (en=Description)
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, multiLanguage=true, sysNumber=1.0, core=true, t24Name=DESCRIPTION)
+    }
+    LIMIT_RANGE__DISCR_VALUE
+    {
+        DISCR_VALUE : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=I, maxLength=9, sysNumber=3.0, core=true, t24Name=DISCR.VALUE)
+    }
+    LIMIT_RANGE__START_VALUE
+    {
+        START_VALUE : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=I, maxLength=9, sysNumber=4.0, core=true, t24Name=START.VALUE)
+        END_VALUE : T24BusinessTypes:A
+            @i18n:Label (en="End Value")
+            @t24:i (align=L, inputBehaviour=I, maxLength=9, sysNumber=5.0, core=true, t24Name=END.VALUE)
+    }
+    LIMIT_RANGE__INPUTTER
+    {
+        INPUTTER : T24BusinessTypes:N
+            @i18n:Label (en=Inputter)
+            @i18n:Tooltip (en="The user who last updated the record")
+            @t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=10.0, core=true, t24Name=INPUTTER)
+    }
+    LIMIT_RANGE__DATE_TIME
+    {
+        DATE_TIME : T24BusinessTypes:N
+            @i18n:Label (en="Date time")
+            @i18n:Tooltip (en="Date and time when record was input or authorised")
+            @t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=11.0, core=true, t24Name=DATE.TIME, mask="RDD DD  DD ##:##")
+    }
+NOFILE_LIMIT_ALLOW_EXCESS
+        @i18n:Description (en="")
+        @t24:i (t24Name=NOFILE.LIMIT.ALLOW.EXCESS, level=I, type=T, allowedFunctions="L P S", localRefAllowed=false)
+    {
+        LIABILITY_NUMBER : T24BusinessTypes:CUS required
+            @i18n:Label (en="Liability No.")
+            @t24:i (align=L, inputBehaviour=N, maxLength=10, core=false, t24Name=LIABILITY.NUMBER, genOperation=E.LIM.ALLOW.EXCESS.SELECTION)
+    }
 }
 Enumerations {
-	LIMIT_RANGE__COMP_OR_CCY : mml:string
-		CURRENCY=CURRENCY
-		COMPANY=COMPANY
-	LIMIT_SUB_ALLOC__AUTO_RESTORE_ALLOC : mml:string
-		Y=Y
-		N=N
+    FX_LIMIT_PARAMS__FX_LIMIT_PARAMS : mml:string
+        FOREX=FOREX
+    LIMIT_SUB_ALLOC__AUTO_RESTORE_ALLOC : mml:string
+        Y=Y
+        N=N
+    LIMIT_RANGE__COMP_OR_CCY : mml:string
+        CURRENCY=CURRENCY
+        COMPANY=COMPANY
 }

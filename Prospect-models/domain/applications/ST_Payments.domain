@@ -1,0 +1,293 @@
+# UTF-8
+/* Setup appln for Pymt Processing */
+Domain ST_Payments
+    @t24:i (module=ST)
+    @java:Package (value=com.temenos.t24.datamodel.st.st_payments)
+namespace "http://www.temenos.com/t24/ST_Payments"
+metamodelVersion 1.30.6
+Classes {
+    BENEFICIARY
+        @i18n:Description (en="")
+        @t24:i (t24Name=BENEFICIARY, level=F, type=H, additionalInfo="IDA UNP OEU", allowedFunctions="A C D E H I L P Q R S", localRefAllowed=true)
+    {
+        BENEFICIARY_ID -> ST_Payments:BENEFICIARY PK required
+            @t24:i (align=L, inputBehaviour=I, maxLength=17, sysNumber=0.0, core=true, businessType=A, t24Name=BENEFICIARY.ID)
+        NICKNAME -> byValue ST_Payments:BENEFICIARY__NICKNAME *
+        OWNING_CUSTOMER -> ST_Customer:CUSTOMER
+            @i18n:Label (en="Owning Customer")
+            @i18n:Tooltip (en="Owning Customer")
+            @t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=2.0, core=true, businessType=CUS, t24Name=OWNING.CUSTOMER)
+        LINK_TO_BENEFICIARY -> ST_Payments:BENEFICIARY
+            @i18n:Label (en="Link to Beneficiary")
+            @i18n:Tooltip (en="Link to Beneficiary")
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=3.0, core=true, businessType=A, t24Name=LINK.TO.BENEFICIARY)
+        CATEGORY : T24BusinessTypes:A
+            @i18n:Label (en=Category)
+            @i18n:Tooltip (en="Specifies the Category")
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=4.0, core=true, t24Name=CATEGORY)
+        HINT_TEXT : T24BusinessTypes:A
+            @i18n:Label (en=Hint)
+            @i18n:Tooltip (en="Indicates the free text for Beneficiary")
+            @t24:i (align=L, inputBehaviour=I, maxLength=50, sysNumber=5.0, core=true, t24Name=HINT.TEXT, isTextarea=true)
+        CUSTOMER_REF : T24BusinessTypes:SW
+            @i18n:Label (en="Customer Ref")
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=6.0, core=true, t24Name=CUSTOMER.REF)
+        DEFAULT_NARRATIVE : T24BusinessTypes:SW
+            @i18n:Label (en="Comment for Utility payee")
+            @i18n:Tooltip (en="free text in Beneficary Customer")
+            @t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=7.0, core=true, t24Name=DEFAULT.NARRATIVE)
+        BENEFICIARY_RISK : mml:Integer
+            @t24:i (align=R, inputBehaviour=I, maxLength=1, sysNumber=8.0, core=true, t24Name=BENEFICIARY.RISK)
+        BEN_ACCT_NO : T24BusinessTypes:S
+            @i18n:Label (en="Ben Acct No")
+            @t24:i (align=L, inputBehaviour=I, maxLength=34, sysNumber=9.0, core=true, t24Name=BEN.ACCT.NO)
+        ACCOUNT_NAME : T24BusinessTypes:A
+            @i18n:Label (en="Portfolio Name")
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=10.0, core=true, t24Name=ACCOUNT.NAME)
+        BEN_CUSTOMER : T24BusinessTypes:CUST_BIC
+            @i18n:Label (en="Beneficiary Name")
+            @i18n:Tooltip (en="Indicates the Beneficary\'s name")
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=11.0, core=true, t24Name=BEN.CUSTOMER, typeModifiers="SWBIC")
+        ACCT_WITH_BANK : T24BusinessTypes:CUST_BIC
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=12.0, core=true, t24Name=ACCT.WITH.BANK, typeModifiers="SWBIC")
+        AC_WITH_BK_SHORT_NAME -> byValue ST_Payments:BENEFICIARY__AC_WITH_BK_SHORT_NAME *
+        BK_NAME_1 -> byValue ST_Payments:BENEFICIARY__BK_NAME_1 *
+        BK_NAME_2 -> byValue ST_Payments:BENEFICIARY__BK_NAME_2 *
+        BK_STREET_ADDR -> byValue ST_Payments:BENEFICIARY__BK_STREET_ADDR *
+        BK_TOWN_COUNTRY -> byValue ST_Payments:BENEFICIARY__BK_TOWN_COUNTRY *
+        BK_POST_CODE -> byValue ST_Payments:BENEFICIARY__BK_POST_CODE *
+        BK_COUNTRY -> byValue ST_Payments:BENEFICIARY__BK_COUNTRY *
+        BANK_SORT_CODE -> FT_LocalClearing:BC_SORT_CODE
+            @i18n:Label (en="Bank Sort Code")
+            @t24:i (align=L, inputBehaviour=I, maxLength=20, sysNumber=20.0, core=true, businessType=SORT.CODE, t24Name=BANK.SORT.CODE)
+        TRANSACTION_TYPE -> FT_Config:FT_TXN_TYPE_CONDITION
+            @i18n:Label (en="Transaction Type")
+            @i18n:Tooltip (en="Indicates the Transaction Type")
+            @t24:i (align=L, inputBehaviour=I, maxLength=4, sysNumber=21.0, core=true, businessType=A, t24Name=TRANSACTION.TYPE)
+        BIC -> DE_Config:DE_BIC
+            @i18n:Label (en="Receiver\'s Bank")
+            @i18n:Tooltip (en="Indicates the BIC id of receiver\'s Bank ")
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=22.0, core=true, businessType=CUST.BIC, t24Name=BIC, typeModifiers="SW")
+        BEN_SHORT_NAME -> byValue ST_Payments:BENEFICIARY__BEN_SHORT_NAME *
+        NAME_1 -> byValue ST_Payments:BENEFICIARY__NAME_1 *
+        NAME_2 -> byValue ST_Payments:BENEFICIARY__NAME_2 *
+        STREET_ADDR -> byValue ST_Payments:BENEFICIARY__STREET_ADDR *
+        TOWN_COUNTRY -> byValue ST_Payments:BENEFICIARY__TOWN_COUNTRY *
+        POST_CODE -> byValue ST_Payments:BENEFICIARY__POST_CODE *
+        COUNTRY -> byValue ST_Payments:BENEFICIARY__COUNTRY *
+        PAYMENT_DETAILS -> byValue ST_Payments:BENEFICIARY__PAYMENT_DETAILS *
+        IBAN_BEN : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=31.0, core=true, t24Name=IBAN.BEN)
+        BIC_IBAN_BEN : T24BusinessTypes:SW
+            @i18n:Label (en="BIC of Beneficiary Bank")
+            @i18n:Tooltip (en="Indicates the BIC code derived from IBAN of Ben")
+            @t24:i (align=L, inputBehaviour=N, maxLength=12, sysNumber=32.0, core=true, t24Name=BIC.IBAN.BEN)
+        BIC_IBAN_BEN_NAME -> byValue ST_Payments:BENEFICIARY__BIC_IBAN_BEN_NAME *
+        BIC_IBAN_BEN_CITY : T24BusinessTypes:SW
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=34.0, core=true, t24Name=BIC.IBAN.BEN.CITY)
+        BEN_PYMT_COUNTRY -> ST_Config:COUNTRY
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=35.0, core=true, businessType=A, t24Name=BEN.PYMT.COUNTRY)
+        PAYMENT_CCY -> ST_CurrencyConfig:CURRENCY
+            @i18n:Label (en="Payment Currency")
+            @i18n:Tooltip (en="Indicates the payment currency")
+            @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=36.0, core=true, businessType=CCY, t24Name=PAYMENT.CCY)
+        PREF_PYMT_AMOUNT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=50, sysNumber=37.0, core=true, t24Name=PREF.PYMT.AMOUNT, isTextarea=true)
+        CLEARING_TYPE -> DE_Config:DE_BIC
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=38.0, core=true, businessType=A, t24Name=CLEARING.TYPE)
+        BC_SORT_CODE -> DE_Config:DE_BIC
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=39.0, core=true, businessType=A, t24Name=BC.SORT.CODE, isTextarea=true)
+        BEN_OUR_CHARGES : ST_Payments:BENEFICIARY__BEN_OUR_CHARGES
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=40.0, core=true, t24Name=BEN.OUR.CHARGES)
+        ACCT_WITH_BK_SORT_CODE : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=41.0, core=true, t24Name=ACCT.WITH.BK.SORT.CODE)
+        ACCT_WITH_BANK_IBAN : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=42.0, core=true, t24Name=ACCT.WITH.BANK.IBAN)
+        PREF_PYMT_PRODUCT : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=I, maxLength=10, sysNumber=43.0, core=true, t24Name=PREF.PYMT.PRODUCT)
+        RESERVED_1 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=44.0, core=true, t24Name=RESERVED.1)
+        RESERVED_2 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=45.0, core=true, t24Name=RESERVED.2)
+        RESERVED_3 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=46.0, core=true, t24Name=RESERVED.3)
+        RESERVED_4 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=47.0, core=true, t24Name=RESERVED.4)
+        RESERVED_5 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=48.0, core=true, t24Name=RESERVED.5)
+        RESERVED_6 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=49.0, core=true, t24Name=RESERVED.6)
+        RESERVED_7 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=50.0, core=true, t24Name=RESERVED.7)
+        RESERVED_8 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=51.0, core=true, t24Name=RESERVED.8)
+        RESERVED_9 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=52.0, core=true, t24Name=RESERVED.9)
+        RESERVED_10 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=53.0, core=true, t24Name=RESERVED.10)
+        OVERRIDE -> byValue ST_Payments:BENEFICIARY__OVERRIDE *
+        RECORD_STATUS : T24BusinessTypes:STAT
+            @i18n:Label (en="Record Status")
+            @t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=56.0, core=true, t24Name=RECORD.STATUS)
+        CURR_NO : T24BusinessTypes:N
+            @i18n:Label (en="Curr No")
+            @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=57.0, core=true, t24Name=CURR.NO)
+        INPUTTER -> byValue ST_Payments:BENEFICIARY__INPUTTER *
+        DATE_TIME -> byValue ST_Payments:BENEFICIARY__DATE_TIME *
+        AUTHORISER : T24BusinessTypes:A
+            @i18n:Label (en=Authoriser)
+            @i18n:Tooltip (en="Indicates the User who Authorises the record")
+            @t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=60.0, core=true, t24Name=AUTHORISER)
+        CO_CODE -> ST_CompanyCreation:COMPANY
+            @i18n:Label (en=Company)
+            @t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=61.0, core=true, businessType=A, t24Name=CO.CODE, mask="R##-###-####")
+        DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+            @i18n:Label (en="Dept Code")
+            @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=62.0, core=true, t24Name=DEPT.CODE)
+        AUDITOR_CODE : T24BusinessTypes:A
+            @i18n:Label (en="Auditor Code")
+            @i18n:Tooltip (en="Auditor Code")
+            @t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=63.0, core=true, t24Name=AUDITOR.CODE)
+        AUDIT_DATE_TIME : T24BusinessTypes:RELTIME
+            @i18n:Label (en="Audit Date Time")
+            @i18n:Tooltip (en="Date and time when record was audited")
+            @t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=64.0, core=true, t24Name=AUDIT.DATE.TIME, mask="RDD DD  DD ##:##")
+        BEN_ALT_KEY : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=I, maxLength=20, sysNumber=54.1, core=false, t24Name=BEN.ALT.KEY)
+        SIGNATORY -> byValue ST_Payments:BENEFICIARY__SIGNATORY *
+    }
+    BENEFICIARY__NICKNAME
+    {
+        NICKNAME : T24BusinessTypes:A
+            @i18n:Label (en="Nick Name")
+            @i18n:Tooltip (en="Indicates the name of the Beneficiary ")
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, multiLanguage=true, sysNumber=1.0, core=true, t24Name=NICKNAME)
+    }
+    BENEFICIARY__AC_WITH_BK_SHORT_NAME
+    {
+        AC_WITH_BK_SHORT_NAME : T24BusinessTypes:SWI
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, multiLanguage=true, sysNumber=13.0, core=true, t24Name=AC.WITH.BK.SHORT.NAME)
+    }
+    BENEFICIARY__BK_NAME_1
+    {
+        BK_NAME_1 : T24BusinessTypes:SWI
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, multiLanguage=true, sysNumber=14.0, core=true, t24Name=BK.NAME.1)
+    }
+    BENEFICIARY__BK_NAME_2
+    {
+        BK_NAME_2 : T24BusinessTypes:SWI
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, multiLanguage=true, sysNumber=15.0, core=true, t24Name=BK.NAME.2)
+    }
+    BENEFICIARY__BK_STREET_ADDR
+    {
+        BK_STREET_ADDR : T24BusinessTypes:S
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, multiLanguage=true, sysNumber=16.0, core=true, t24Name=BK.STREET.ADDR)
+    }
+    BENEFICIARY__BK_TOWN_COUNTRY
+    {
+        BK_TOWN_COUNTRY : T24BusinessTypes:S
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, multiLanguage=true, sysNumber=17.0, core=true, t24Name=BK.TOWN.COUNTRY)
+    }
+    BENEFICIARY__BK_POST_CODE
+    {
+        BK_POST_CODE : T24BusinessTypes:S
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, multiLanguage=true, sysNumber=18.0, core=true, t24Name=BK.POST.CODE)
+    }
+    BENEFICIARY__BK_COUNTRY
+    {
+        BK_COUNTRY : T24BusinessTypes:S
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, multiLanguage=true, sysNumber=19.0, core=true, t24Name=BK.COUNTRY)
+    }
+    BENEFICIARY__BEN_SHORT_NAME
+    {
+        BEN_SHORT_NAME : T24BusinessTypes:SWI
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, multiLanguage=true, sysNumber=23.0, core=true, t24Name=BEN.SHORT.NAME)
+    }
+    BENEFICIARY__NAME_1
+    {
+        NAME_1 : T24BusinessTypes:SWI
+            @i18n:Label (en=Name)
+            @i18n:Tooltip (en="Indicates the first line of a customer\'s or company\'s full name")
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, multiLanguage=true, sysNumber=24.0, core=true, t24Name=NAME.1)
+    }
+    BENEFICIARY__NAME_2
+    {
+        NAME_2 : T24BusinessTypes:SWI
+            @i18n:Label (en="Name 2")
+            @i18n:Tooltip (en="Indicates the second line of a customer\'s or company\'s full name")
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, multiLanguage=true, sysNumber=25.0, core=true, t24Name=NAME.2)
+    }
+    BENEFICIARY__STREET_ADDR
+    {
+        STREET_ADDR : T24BusinessTypes:S
+            @i18n:Label (en=Street)
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, multiLanguage=true, sysNumber=26.0, core=true, t24Name=STREET.ADDR)
+    }
+    BENEFICIARY__TOWN_COUNTRY
+    {
+        TOWN_COUNTRY : T24BusinessTypes:S
+            @i18n:Label (en=Town)
+            @i18n:Tooltip (en="Indicates a customer or company\'s town and country")
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, multiLanguage=true, sysNumber=27.0, core=true, t24Name=TOWN.COUNTRY)
+    }
+    BENEFICIARY__POST_CODE
+    {
+        POST_CODE : T24BusinessTypes:S
+            @i18n:Label (en="Post Code")
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, multiLanguage=true, sysNumber=28.0, core=true, t24Name=POST.CODE)
+    }
+    BENEFICIARY__COUNTRY
+    {
+        COUNTRY : T24BusinessTypes:S
+            @i18n:Label (en=Country)
+            @i18n:Tooltip (en="Holds the country code")
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, multiLanguage=true, sysNumber=29.0, core=true, t24Name=COUNTRY)
+    }
+    BENEFICIARY__PAYMENT_DETAILS
+    {
+        PAYMENT_DETAILS : T24BusinessTypes:SW
+            @i18n:Label (en="Payment Details")
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=30.0, core=true, t24Name=PAYMENT.DETAILS)
+    }
+    BENEFICIARY__BIC_IBAN_BEN_NAME
+    {
+        BIC_IBAN_BEN_NAME : T24BusinessTypes:SW
+            @i18n:Label (en="Beneficiary Bank Name")
+            @i18n:Tooltip (en="Indicates the Bank name derived from IBAN of Ben")
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=33.0, core=true, t24Name=BIC.IBAN.BEN.NAME, isTextarea=true)
+    }
+    BENEFICIARY__OVERRIDE
+    {
+        OVERRIDE : T24BusinessTypes:A
+            @i18n:Label (en=Override)
+            @i18n:Tooltip (en="Overrides generated by this transaction")
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=55.0, core=true, t24Name=OVERRIDE)
+    }
+    BENEFICIARY__INPUTTER
+    {
+        INPUTTER : T24BusinessTypes:A
+            @i18n:Label (en=Inputter)
+            @i18n:Tooltip (en="The user who last updated the record")
+            @t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=58.0, core=true, t24Name=INPUTTER)
+    }
+    BENEFICIARY__DATE_TIME
+    {
+        DATE_TIME : T24BusinessTypes:RELTIME
+            @i18n:Label (en="Date time")
+            @i18n:Tooltip (en="Date and time when record was input or authorised")
+            @t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=59.0, core=true, t24Name=DATE.TIME, mask="RDD DD  DD ##:##")
+    }
+    BENEFICIARY__SIGNATORY
+    {
+        SIGNATORY -> ST_Customer:CUSTOMER
+            @i18n:Label (en=Signatory)
+            @i18n:Tooltip (en="Customers signing this particular transaction .")
+            @t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=54.2, core=false, businessType=CUS, t24Name=SIGNATORY)
+    }
+}
+Enumerations {
+    BENEFICIARY__BEN_OUR_CHARGES : mml:string
+        BEN=BEN
+        OUR=OUR
+        SHA=SHA
+}

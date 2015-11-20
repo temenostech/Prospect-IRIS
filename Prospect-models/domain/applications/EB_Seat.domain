@@ -1,290 +1,324 @@
 # UTF-8
 /* Core Infrastructure Supporting Seat */
 Domain EB_Seat
-	@t24:i (module=EB)
-	@java:Package (value=com.temenos.t24.datamodel.eb.eb_seat)
+    @t24:i (module=EB)
+    @java:Package (value=com.temenos.t24.datamodel.eb.eb_seat)
 namespace "http://www.temenos.com/t24/EB_Seat"
 metamodelVersion 1.30.6
 Classes {
-	NOFILE_SEAT_ERROR_REPORT
-		@t24:i (t24Name=NOFILE.SEAT.ERROR.REPORT, level=I, type=T, allowedFunctions="L P S", localRefAllowed=false)
-	{
-		ID : mml:Integer required
-			@i18n:Label (en="Transaction Ref")
-			@i18n:Tooltip (en="Transaction Reference")
-			@t24:i (align=L, inputBehaviour=N, maxLength=20, core=false, t24Name="@ID", genOperation=E.SEAT.SCRIPT.ERROR.REPORT)
-	}
-	SEAT_APPLICATION_MANAGER
-		@t24:i (t24Name=SEAT.APPLICATION.MANAGER, level=I, type=U, allowedFunctions="A C D E I L P Q R S", localRefAllowed=false)
-	{
-		SAM_ID -> EB_Seat:SEAT_APPLICATION_MANAGER PK required
-			@i18n:Label (en="Portfolio Id")
-			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=0.0, core=true, businessType=ANY, t24Name=SAM.ID)
-		DEF_EVENT_MGR -> byValue EB_Seat:SEAT_APPLICATION_MANAGER__DEF_EVENT_MGR *
-		DECIS_FIELD -> byValue EB_Seat:SEAT_APPLICATION_MANAGER__DECIS_FIELD *
-		RESULT_FILES -> byValue EB_Seat:SEAT_APPLICATION_MANAGER__RESULT_FILES *
-		RELATED_APPLICATION -> byValue EB_Seat:SEAT_APPLICATION_MANAGER__RELATED_APPLICATION *
-		COB_RESULTS : EB_Seat:SEAT_APPLICATION_MANAGER__COB_RESULTS
-			@t24:i (align=L, inputBehaviour=I, maxLength=12, sysNumber=17.0, core=true, t24Name=COB.RESULTS)
-		MASTER_APPLICATION -> EB_SystemTables:PGM_FILE
-			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=18.0, core=true, businessType=ANY, t24Name=MASTER.APPLICATION)
-		BASE_RELEASE : mml:Integer
-			@t24:i (align=R, inputBehaviour=N, maxLength=12, sysNumber=19.0, core=true, t24Name=BASE.RELEASE)
-		RECORD_STATUS : T24BusinessTypes:STAT
-			@i18n:Label (en="Record Status")
-			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=20.0, core=true, t24Name=RECORD.STATUS)
-		CURR_NO : mml:Integer
-			@i18n:Label (en="Curr No")
-			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=21.0, core=true, t24Name=CURR.NO)
-		INPUTTER -> byValue EB_Seat:SEAT_APPLICATION_MANAGER__INPUTTER *
-		DATE_TIME -> byValue EB_Seat:SEAT_APPLICATION_MANAGER__DATE_TIME *
-		AUTHORISER : T24BusinessTypes:A
-			@i18n:Label (en=Authoriser)
-			@i18n:Tooltip (en="Indicates the User who Authorises the record")
-			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=24.0, core=true, t24Name=AUTHORISER)
-		CO_CODE -> ST_CompanyCreation:COMPANY
-			@i18n:Label (en=Company)
-			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=25.0, core=true, businessType=A, t24Name=CO.CODE, mask="R##-###-####")
-		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
-			@i18n:Label (en="Dept Code")
-			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=26.0, core=true, t24Name=DEPT.CODE)
-		AUDITOR_CODE : T24BusinessTypes:A
-			@i18n:Label (en="Auditor Code")
-			@i18n:Tooltip (en="Auditor Code")
-			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=27.0, core=true, t24Name=AUDITOR.CODE)
-		AUDIT_DATE_TIME : T24BusinessTypes:RELTIME
-			@i18n:Label (en="Audit Date Time")
-			@i18n:Tooltip (en="Date and time when record was audited")
-			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=28.0, core=true, t24Name=AUDIT.DATE.TIME, mask="RDD DD  DD ##:##")
-	}
-	SEAT_APPLICATION_MANAGER__DEF_EVENT_MGR
-	{
-		DEF_EVENT_MGR : T24BusinessTypes:A
-			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=1.0, core=true, t24Name=DEF.EVENT.MGR)
-	}
-	SEAT_APPLICATION_MANAGER__DECIS_FIELD
-	{
-		DECIS_FIELD -> byValue EB_Seat:SEAT_APPLICATION_MANAGER__DECIS_FIELD__DECIS_FIELD *
-		DECIS_EVENT : T24BusinessTypes:ANY
-			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=6.0, core=true, t24Name=DECIS.EVENT)
-	}
-	SEAT_APPLICATION_MANAGER__DECIS_FIELD__DECIS_FIELD
-	{
-		DECIS_FIELD : T24BusinessTypes:ANY
-			@t24:i (align=L, inputBehaviour=I, maxLength=60, sysNumber=2.0, core=true, t24Name=DECIS.FIELD)
-		DECISION : T24BusinessTypes:ANY
-			@i18n:Label (en=Decision)
-			@i18n:Tooltip (en="Indicates the type of function to perform")
-			@t24:i (align=L, inputBehaviour=I, maxLength=32, sysNumber=3.0, core=true, t24Name=DECISION)
-		DECIS_VAL_FRM : T24BusinessTypes:ANY
-			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=4.0, core=true, t24Name=DECIS.VAL.FRM)
-		DECIS_VAL_TO : T24BusinessTypes:ANY
-			@t24:i (align=L, inputBehaviour=I, maxLength=20, sysNumber=5.0, core=true, t24Name=DECIS.VAL.TO)
-	}
-	SEAT_APPLICATION_MANAGER__RESULT_FILES
-	{
-		RESULT_FILES : T24BusinessTypes:ANY
-			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=7.0, core=true, t24Name=RESULT.FILES)
-		CONCAT_FILE : EB_Seat:SEAT_APPLICATION_MANAGER__RESULT_FILES__CONCAT_FILE
-			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=8.0, core=true, t24Name=CONCAT.FILE)
-		FIELD_NAME -> byValue EB_Seat:SEAT_APPLICATION_MANAGER__RESULT_FILES__FIELD_NAME *
-	}
-	SEAT_APPLICATION_MANAGER__RESULT_FILES__FIELD_NAME
-	{
-		FIELD_NAME : T24BusinessTypes:ANY
-			@i18n:Label (en="Field Name")
-			@i18n:Tooltip (en="Name of the field(used mostly for SWIFT)")
-			@t24:i (align=L, inputBehaviour=I, maxLength=60, sysNumber=9.0, core=true, t24Name=FIELD.NAME)
-		INDEX_FIELD : EB_Seat:SEAT_APPLICATION_MANAGER__RESULT_FILES__FIELD_NAME__INDEX_FIELD
-			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=10.0, core=true, t24Name=INDEX.FIELD)
-		UPDATE_TYPE : EB_Seat:SEAT_APPLICATION_MANAGER__RESULT_FILES__FIELD_NAME__UPDATE_TYPE
-			@t24:i (align=L, inputBehaviour=I, maxLength=25, sysNumber=11.0, core=true, t24Name=UPDATE.TYPE)
-		FIELD_SCOPE : EB_Seat:SEAT_APPLICATION_MANAGER__RESULT_FILES__FIELD_NAME__FIELD_SCOPE
-			@t24:i (align=L, inputBehaviour=I, maxLength=20, sysNumber=12.0, core=true, t24Name=FIELD.SCOPE)
-		FIELD_TYPE : EB_Seat:SEAT_APPLICATION_MANAGER__RESULT_FILES__FIELD_NAME__FIELD_TYPE
-			@t24:i (align=L, inputBehaviour=I, maxLength=12, sysNumber=13.0, core=true, t24Name=FIELD.TYPE)
-		UPDATE_FROM_FILE : T24BusinessTypes:ANY
-			@t24:i (align=L, inputBehaviour=I, maxLength=50, sysNumber=14.0, core=true, t24Name=UPDATE.FROM.FILE)
-	}
-	SEAT_APPLICATION_MANAGER__RELATED_APPLICATION
-	{
-		RELATED_APPLICATION : T24BusinessTypes:ANY
-			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=15.0, core=true, t24Name=RELATED.APPLICATION)
-		RELATED_APPLN_RTN -> EB_SystemTables:PGM_FILE
-			@t24:i (align=L, inputBehaviour=I, maxLength=50, sysNumber=16.0, core=true, businessType=ANY, t24Name=RELATED.APPLN.RTN)
-	}
-	SEAT_APPLICATION_MANAGER__INPUTTER
-	{
-		INPUTTER : T24BusinessTypes:A
-			@i18n:Label (en=Inputter)
-			@i18n:Tooltip (en="The user who last updated the record")
-			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=22.0, core=true, t24Name=INPUTTER)
-	}
-	SEAT_APPLICATION_MANAGER__DATE_TIME
-	{
-		DATE_TIME : T24BusinessTypes:RELTIME
-			@i18n:Label (en="Date time")
-			@i18n:Tooltip (en="Date and time when record was input or authorised")
-			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=23.0, core=true, t24Name=DATE.TIME, mask="RDD DD  DD ##:##")
-	}
-	SEAT_ERROR_REPORT
-		@t24:i (t24Name=SEAT.ERROR.REPORT, level=I, type=L, allowedFunctions="L P S", localRefAllowed=false)
-	{
-		VERSION_ID -> EB_Seat:SEAT_ERROR_REPORT PK required
-			@t24:i (align=L, inputBehaviour=I, maxLength=50, sysNumber=0.0, core=true, businessType=ANY, t24Name=VERSION.ID)
-		SCRIPT_ID -> byValue EB_Seat:SEAT_ERROR_REPORT__SCRIPT_ID *
-		RESERVED_6 : mml:Integer
-			@t24:i (align=R, inputBehaviour=N, maxLength=12, sysNumber=2.0, core=true, t24Name=RESERVED.6)
-		RESERVED_5 : mml:Integer
-			@t24:i (align=R, inputBehaviour=N, maxLength=12, sysNumber=3.0, core=true, t24Name=RESERVED.5)
-		RESERVED_4 : mml:Integer
-			@t24:i (align=R, inputBehaviour=N, maxLength=12, sysNumber=4.0, core=true, t24Name=RESERVED.4)
-		RESERVED_3 : mml:Integer
-			@t24:i (align=R, inputBehaviour=N, maxLength=12, sysNumber=5.0, core=true, t24Name=RESERVED.3)
-		RESERVED_2 : mml:Integer
-			@t24:i (align=R, inputBehaviour=N, maxLength=12, sysNumber=6.0, core=true, t24Name=RESERVED.2)
-		RESERVED_1 : mml:Integer
-			@t24:i (align=R, inputBehaviour=N, maxLength=12, sysNumber=7.0, core=true, t24Name=RESERVED.1)
-	}
-	SEAT_ERROR_REPORT__SCRIPT_ID
-	{
-		SCRIPT_ID : T24BusinessTypes:ANY
-			@i18n:Label (en="SEAT Scripts Id")
-			@t24:i (align=L, inputBehaviour=I, maxLength=50, sysNumber=1.0, core=true, t24Name=SCRIPT.ID)
-	}
-	SEAT_RESULTS
-		@t24:i (t24Name=SEAT.RESULTS, level=I, type=L, allowedFunctions="L P S", localRefAllowed=false)
-	{
-		TEST_ID -> EB_Seat:SEAT_RESULTS PK required
-			@t24:i (align=L, inputBehaviour=I, maxLength=60, sysNumber=0.0, core=true, businessType=ANY, t24Name=TEST.ID)
-		TOTAL_PATHLENGTH : mml:Integer
-			@t24:i (align=R, inputBehaviour=I, maxLength=9, sysNumber=1.0, core=true, t24Name=TOTAL.PATHLENGTH)
-		TOTAL_ELAPSED : mml:Integer
-			@t24:i (align=R, inputBehaviour=I, maxLength=9, sysNumber=2.0, core=true, t24Name=TOTAL.ELAPSED)
-		TOTAL_IO : mml:Integer
-			@t24:i (align=R, inputBehaviour=I, maxLength=9, sysNumber=3.0, core=true, t24Name=TOTAL.IO)
-		TOTAL_CALLS : mml:Integer
-			@t24:i (align=R, inputBehaviour=I, maxLength=9, sysNumber=4.0, core=true, t24Name=TOTAL.CALLS)
-		SUBROUTINE -> byValue EB_Seat:SEAT_RESULTS__SUBROUTINE *
-		WARNINGS -> byValue EB_Seat:SEAT_RESULTS__WARNINGS *
-		EXECUTES -> byValue EB_Seat:SEAT_RESULTS__EXECUTES *
-		OVERALL_RESULT : mml:Integer
-			@i18n:Label (en="Overall Result")
-			@t24:i (align=R, inputBehaviour=I, maxLength=9, sysNumber=13.0, core=true, t24Name=OVERALL.RESULT)
-		SEAT_RTN_ID -> byValue EB_Seat:SEAT_RESULTS__SEAT_RTN_ID *
-		UPLOAD_STATUS : T24BusinessTypes:ANY
-			@t24:i (align=L, inputBehaviour=I, maxLength=15, sysNumber=19.0, core=true, t24Name=UPLOAD.STATUS)
-		MACHINE_DATE : T24BusinessTypes:D
-			@t24:i (align=R, inputBehaviour=I, maxLength=8, sysNumber=20.0, core=true, t24Name=MACHINE.DATE)
-		MACHINE_TIME : T24BusinessTypes:ANY
-			@t24:i (align=L, inputBehaviour=I, maxLength=8, sysNumber=21.0, core=true, t24Name=MACHINE.TIME)
-		COMPANY : T24BusinessTypes:A
-			@i18n:Label (en=Company)
-			@t24:i (align=L, inputBehaviour=I, maxLength=15, sysNumber=22.0, core=true, t24Name=COMPANY)
-		APPLICATION : T24BusinessTypes:ANY
-			@i18n:Label (en=Application)
-			@t24:i (align=L, inputBehaviour=I, maxLength=32, sysNumber=23.0, core=true, t24Name=APPLICATION)
-		FUNCTION : T24BusinessTypes:ANY
-			@i18n:Label (en="Function Allowed")
-			@t24:i (align=L, inputBehaviour=I, maxLength=32, sysNumber=24.0, core=true, t24Name=FUNCTION)
-		CONTRACT_ID -> byValue EB_Seat:SEAT_RESULTS__CONTRACT_ID *
-		RELEASE : T24BusinessTypes:ANY
-			@t24:i (align=L, inputBehaviour=I, maxLength=32, sysNumber=26.0, core=true, t24Name=RELEASE)
-		OFS_MESSAGE -> byValue EB_Seat:SEAT_RESULTS__OFS_MESSAGE *
-		SEAT_ID : T24BusinessTypes:A
-			@t24:i (align=L, inputBehaviour=I, maxLength=40, sysNumber=28.0, core=true, t24Name=SEAT.ID)
-		BANK_DATE : T24BusinessTypes:D
-			@i18n:Label (en="Bank Date")
-			@t24:i (align=R, inputBehaviour=I, maxLength=8, sysNumber=29.0, core=true, t24Name=BANK.DATE)
-	}
-	SEAT_RESULTS__SUBROUTINE
-	{
-		SUBROUTINE : T24BusinessTypes:ANY
-			@i18n:Label (en=Subroutine)
-			@t24:i (align=L, inputBehaviour=I, maxLength=32, sysNumber=5.0, core=true, t24Name=SUBROUTINE)
-		PATHLENGTH : mml:Integer
-			@i18n:Label (en=PATHLENGTH)
-			@t24:i (align=R, inputBehaviour=I, maxLength=9, sysNumber=6.0, core=true, t24Name=PATHLENGTH)
-		ITERATIONS : mml:Integer
-			@i18n:Label (en=Iterations)
-			@t24:i (align=R, inputBehaviour=I, maxLength=9, sysNumber=7.0, core=true, t24Name=ITERATIONS)
-		ELAPSED : mml:Integer
-			@i18n:Label (en=Elapsed)
-			@t24:i (align=R, inputBehaviour=I, maxLength=9, sysNumber=8.0, core=true, t24Name=ELAPSED)
-		IO -> byValue EB_Seat:SEAT_RESULTS__SUBROUTINE__IO *
-	}
-	SEAT_RESULTS__SUBROUTINE__IO
-	{
-		IO : T24BusinessTypes:ANY
-			@i18n:Label (en=IO)
-			@t24:i (align=L, inputBehaviour=I, maxLength=60, sysNumber=9.0, core=true, t24Name=IO)
-		IO_COUNT : mml:Integer
-			@i18n:Label (en="IO Count")
-			@t24:i (align=R, inputBehaviour=I, maxLength=9, sysNumber=10.0, core=true, t24Name=IO.COUNT)
-	}
-	SEAT_RESULTS__WARNINGS
-	{
-		WARNINGS : T24BusinessTypes:ANY
-			@t24:i (align=L, inputBehaviour=I, maxLength=40, sysNumber=11.0, core=true, t24Name=WARNINGS)
-	}
-	SEAT_RESULTS__EXECUTES
-	{
-		EXECUTES : T24BusinessTypes:ANY
-			@t24:i (align=L, inputBehaviour=I, maxLength=40, sysNumber=12.0, core=true, t24Name=EXECUTES)
-	}
-	SEAT_RESULTS__SEAT_RTN_ID
-	{
-		SEAT_RTN_ID : T24BusinessTypes:ANY
-			@t24:i (align=L, inputBehaviour=I, maxLength=40, sysNumber=14.0, core=true, t24Name=SEAT.RTN.ID)
-		RESULT : mml:Integer
-			@t24:i (align=R, inputBehaviour=I, maxLength=9, sysNumber=15.0, core=true, t24Name=RESULT)
-		REASON -> byValue EB_Seat:SEAT_RESULTS__SEAT_RTN_ID__REASON *
-	}
-	SEAT_RESULTS__SEAT_RTN_ID__REASON
-	{
-		REASON : T24BusinessTypes:ANY
-			@i18n:Label (en=Reason)
-			@t24:i (align=L, inputBehaviour=I, maxLength=40, sysNumber=16.0, core=true, t24Name=REASON)
-		EXPECTED : T24BusinessTypes:ANY
-			@t24:i (align=L, inputBehaviour=I, maxLength=40, sysNumber=17.0, core=true, t24Name=EXPECTED)
-		ACTUAL : T24BusinessTypes:ANY
-			@t24:i (align=L, inputBehaviour=I, maxLength=40, sysNumber=18.0, core=true, t24Name=ACTUAL)
-	}
-	SEAT_RESULTS__CONTRACT_ID
-	{
-		CONTRACT_ID : T24BusinessTypes:ANY
-			@i18n:Label (en="Contract Id")
-			@t24:i (align=L, inputBehaviour=I, maxLength=32, sysNumber=25.0, core=true, t24Name=CONTRACT.ID)
-	}
-	SEAT_RESULTS__OFS_MESSAGE
-	{
-		OFS_MESSAGE : T24BusinessTypes:ANY
-			@t24:i (align=L, inputBehaviour=I, maxLength=50, sysNumber=27.0, core=true, t24Name=OFS.MESSAGE)
-	}
+    NOFILE_SEAT_ERROR_REPORT
+        @i18n:Description (en="")
+        @t24:i (t24Name=NOFILE.SEAT.ERROR.REPORT, level=I, type=T, allowedFunctions="L P S", localRefAllowed=false)
+    {
+        ID : T24BusinessTypes:N required
+            @i18n:Label (en="Transaction Ref")
+            @i18n:Tooltip (en="Transaction Reference")
+            @t24:i (align=L, inputBehaviour=N, maxLength=20, core=false, t24Name="@ID", genOperation=E.SEAT.SCRIPT.ERROR.REPORT)
+    }
+SEAT_APPLICATION_MANAGER
+        @i18n:Description (en="")
+        @t24:i (t24Name=SEAT.APPLICATION.MANAGER, level=I, type=U, allowedFunctions="A C D E I L P Q R S", localRefAllowed=false)
+    {
+        SAM_ID -> EB_Seat:SEAT_APPLICATION_MANAGER PK required
+            @i18n:Label (en="Portfolio Id")
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=0.0, core=true, businessType=ANY, t24Name=SAM.ID)
+        DEF_EVENT_MGR -> byValue EB_Seat:SEAT_APPLICATION_MANAGER__DEF_EVENT_MGR *
+        DECIS_FIELD -> byValue EB_Seat:SEAT_APPLICATION_MANAGER__DECIS_FIELD *
+        RESULT_FILES -> byValue EB_Seat:SEAT_APPLICATION_MANAGER__RESULT_FILES *
+        RELATED_APPLICATION -> byValue EB_Seat:SEAT_APPLICATION_MANAGER__RELATED_APPLICATION *
+        COB_RESULTS : EB_Seat:SEAT_APPLICATION_MANAGER__COB_RESULTS
+            @t24:i (align=L, inputBehaviour=I, maxLength=12, sysNumber=17.0, core=true, t24Name=COB.RESULTS)
+        MASTER_APPLICATION -> EB_SystemTables:PGM_FILE
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=18.0, core=true, businessType=ANY, t24Name=MASTER.APPLICATION)
+        BASE_RELEASE : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=12, sysNumber=19.0, core=true, t24Name=BASE.RELEASE)
+        RECORD_STATUS : T24BusinessTypes:STAT
+            @i18n:Label (en="Record Status")
+            @t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=20.0, core=true, t24Name=RECORD.STATUS)
+        CURR_NO : T24BusinessTypes:N
+            @i18n:Label (en="Curr No")
+            @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=21.0, core=true, t24Name=CURR.NO)
+        INPUTTER -> byValue EB_Seat:SEAT_APPLICATION_MANAGER__INPUTTER *
+        DATE_TIME -> byValue EB_Seat:SEAT_APPLICATION_MANAGER__DATE_TIME *
+        AUTHORISER : T24BusinessTypes:A
+            @i18n:Label (en=Authoriser)
+            @i18n:Tooltip (en="Indicates the User who Authorises the record")
+            @t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=24.0, core=true, t24Name=AUTHORISER)
+        CO_CODE -> ST_CompanyCreation:COMPANY
+            @i18n:Label (en=Company)
+            @t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=25.0, core=true, businessType=A, t24Name=CO.CODE, mask="R##-###-####")
+        DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+            @i18n:Label (en="Dept Code")
+            @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=26.0, core=true, t24Name=DEPT.CODE)
+        AUDITOR_CODE : T24BusinessTypes:A
+            @i18n:Label (en="Auditor Code")
+            @i18n:Tooltip (en="Auditor Code")
+            @t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=27.0, core=true, t24Name=AUDITOR.CODE)
+        AUDIT_DATE_TIME : T24BusinessTypes:RELTIME
+            @i18n:Label (en="Audit Date Time")
+            @i18n:Tooltip (en="Date and time when record was audited")
+            @t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=28.0, core=true, t24Name=AUDIT.DATE.TIME, mask="RDD DD  DD ##:##")
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    SEAT_RESULTS
+        @i18n:Description (en="")
+        @t24:i (t24Name=SEAT.RESULTS, level=I, type=L, allowedFunctions="L P S", localRefAllowed=false)
+    {
+        TEST_ID -> EB_Seat:SEAT_RESULTS PK required
+            @t24:i (align=L, inputBehaviour=I, maxLength=60, sysNumber=0.0, core=true, businessType=ANY, t24Name=TEST.ID)
+        TOTAL_PATHLENGTH : mml:Integer
+            @t24:i (align=R, inputBehaviour=I, maxLength=9, sysNumber=1.0, core=true, t24Name=TOTAL.PATHLENGTH)
+        TOTAL_ELAPSED : mml:Integer
+            @t24:i (align=R, inputBehaviour=I, maxLength=9, sysNumber=2.0, core=true, t24Name=TOTAL.ELAPSED)
+        TOTAL_IO : mml:Integer
+            @t24:i (align=R, inputBehaviour=I, maxLength=9, sysNumber=3.0, core=true, t24Name=TOTAL.IO)
+        TOTAL_CALLS : mml:Integer
+            @t24:i (align=R, inputBehaviour=I, maxLength=9, sysNumber=4.0, core=true, t24Name=TOTAL.CALLS)
+        SUBROUTINE -> byValue EB_Seat:SEAT_RESULTS__SUBROUTINE *
+        WARNINGS -> byValue EB_Seat:SEAT_RESULTS__WARNINGS *
+        EXECUTES -> byValue EB_Seat:SEAT_RESULTS__EXECUTES *
+        OVERALL_RESULT : mml:Integer
+            @i18n:Label (en="Overall Result")
+            @t24:i (align=R, inputBehaviour=I, maxLength=9, sysNumber=13.0, core=true, t24Name=OVERALL.RESULT)
+        SEAT_RTN_ID -> byValue EB_Seat:SEAT_RESULTS__SEAT_RTN_ID *
+        UPLOAD_STATUS : T24BusinessTypes:ANY
+            @t24:i (align=L, inputBehaviour=I, maxLength=15, sysNumber=19.0, core=true, t24Name=UPLOAD.STATUS)
+        MACHINE_DATE : T24BusinessTypes:D
+            @t24:i (align=R, inputBehaviour=I, maxLength=8, sysNumber=20.0, core=true, t24Name=MACHINE.DATE)
+        MACHINE_TIME : T24BusinessTypes:ANY
+            @t24:i (align=L, inputBehaviour=I, maxLength=8, sysNumber=21.0, core=true, t24Name=MACHINE.TIME)
+        COMPANY : T24BusinessTypes:A
+            @i18n:Label (en=Company)
+            @t24:i (align=L, inputBehaviour=I, maxLength=15, sysNumber=22.0, core=true, t24Name=COMPANY)
+        APPLICATION : T24BusinessTypes:ANY
+            @i18n:Label (en=Application)
+            @t24:i (align=L, inputBehaviour=I, maxLength=32, sysNumber=23.0, core=true, t24Name=APPLICATION)
+        FUNCTION : T24BusinessTypes:ANY
+            @i18n:Label (en="Function Allowed")
+            @t24:i (align=L, inputBehaviour=I, maxLength=32, sysNumber=24.0, core=true, t24Name=FUNCTION)
+        CONTRACT_ID -> byValue EB_Seat:SEAT_RESULTS__CONTRACT_ID *
+        RELEASE : T24BusinessTypes:ANY
+            @t24:i (align=L, inputBehaviour=I, maxLength=32, sysNumber=26.0, core=true, t24Name=RELEASE)
+        OFS_MESSAGE -> byValue EB_Seat:SEAT_RESULTS__OFS_MESSAGE *
+        SEAT_ID : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=I, maxLength=40, sysNumber=28.0, core=true, t24Name=SEAT.ID)
+        BANK_DATE : T24BusinessTypes:D
+            @i18n:Label (en="Bank Date")
+            @t24:i (align=R, inputBehaviour=I, maxLength=8, sysNumber=29.0, core=true, t24Name=BANK.DATE)
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    SEAT_ERROR_REPORT
+        @i18n:Description (en="")
+        @t24:i (t24Name=SEAT.ERROR.REPORT, level=I, type=L, allowedFunctions="L P S", localRefAllowed=false)
+    {
+        VERSION_ID -> EB_Seat:SEAT_ERROR_REPORT PK required
+            @t24:i (align=L, inputBehaviour=I, maxLength=50, sysNumber=0.0, core=true, businessType=ANY, t24Name=VERSION.ID)
+        SCRIPT_ID -> byValue EB_Seat:SEAT_ERROR_REPORT__SCRIPT_ID *
+        RESERVED_6 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=12, sysNumber=2.0, core=true, t24Name=RESERVED.6)
+        RESERVED_5 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=12, sysNumber=3.0, core=true, t24Name=RESERVED.5)
+        RESERVED_4 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=12, sysNumber=4.0, core=true, t24Name=RESERVED.4)
+        RESERVED_3 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=12, sysNumber=5.0, core=true, t24Name=RESERVED.3)
+        RESERVED_2 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=12, sysNumber=6.0, core=true, t24Name=RESERVED.2)
+        RESERVED_1 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=12, sysNumber=7.0, core=true, t24Name=RESERVED.1)
+    }
+    
+SEAT_RESULTS__SUBROUTINE
+    {
+        SUBROUTINE : T24BusinessTypes:ANY
+            @i18n:Label (en=Subroutine)
+            @t24:i (align=L, inputBehaviour=I, maxLength=32, sysNumber=5.0, core=true, t24Name=SUBROUTINE)
+        PATHLENGTH : mml:Integer
+            @i18n:Label (en=PATHLENGTH)
+            @t24:i (align=R, inputBehaviour=I, maxLength=9, sysNumber=6.0, core=true, t24Name=PATHLENGTH)
+        ITERATIONS : mml:Integer
+            @i18n:Label (en=Iterations)
+            @t24:i (align=R, inputBehaviour=I, maxLength=9, sysNumber=7.0, core=true, t24Name=ITERATIONS)
+        ELAPSED : mml:Integer
+            @i18n:Label (en=Elapsed)
+            @t24:i (align=R, inputBehaviour=I, maxLength=9, sysNumber=8.0, core=true, t24Name=ELAPSED)
+        IO -> byValue EB_Seat:SEAT_RESULTS__SUBROUTINE__IO *
+    }
+    SEAT_RESULTS__SUBROUTINE__IO
+    {
+        IO : T24BusinessTypes:ANY
+            @i18n:Label (en=IO)
+            @t24:i (align=L, inputBehaviour=I, maxLength=60, sysNumber=9.0, core=true, t24Name=IO)
+        IO_COUNT : mml:Integer
+            @i18n:Label (en="IO Count")
+            @t24:i (align=R, inputBehaviour=I, maxLength=9, sysNumber=10.0, core=true, t24Name=IO.COUNT)
+    }
+    SEAT_RESULTS__WARNINGS
+    {
+        WARNINGS : T24BusinessTypes:ANY
+            @t24:i (align=L, inputBehaviour=I, maxLength=40, sysNumber=11.0, core=true, t24Name=WARNINGS)
+    }
+    SEAT_RESULTS__EXECUTES
+    {
+        EXECUTES : T24BusinessTypes:ANY
+            @t24:i (align=L, inputBehaviour=I, maxLength=40, sysNumber=12.0, core=true, t24Name=EXECUTES)
+    }
+    SEAT_RESULTS__SEAT_RTN_ID
+    {
+        SEAT_RTN_ID : T24BusinessTypes:ANY
+            @t24:i (align=L, inputBehaviour=I, maxLength=40, sysNumber=14.0, core=true, t24Name=SEAT.RTN.ID)
+        RESULT : mml:Integer
+            @t24:i (align=R, inputBehaviour=I, maxLength=9, sysNumber=15.0, core=true, t24Name=RESULT)
+        REASON -> byValue EB_Seat:SEAT_RESULTS__SEAT_RTN_ID__REASON *
+    }
+    SEAT_RESULTS__SEAT_RTN_ID__REASON
+    {
+        REASON : T24BusinessTypes:ANY
+            @i18n:Label (en=Reason)
+            @t24:i (align=L, inputBehaviour=I, maxLength=40, sysNumber=16.0, core=true, t24Name=REASON)
+        EXPECTED : T24BusinessTypes:ANY
+            @t24:i (align=L, inputBehaviour=I, maxLength=40, sysNumber=17.0, core=true, t24Name=EXPECTED)
+        ACTUAL : T24BusinessTypes:ANY
+            @t24:i (align=L, inputBehaviour=I, maxLength=40, sysNumber=18.0, core=true, t24Name=ACTUAL)
+    }
+    SEAT_RESULTS__CONTRACT_ID
+    {
+        CONTRACT_ID : T24BusinessTypes:ANY
+            @i18n:Label (en="Contract Id")
+            @t24:i (align=L, inputBehaviour=I, maxLength=32, sysNumber=25.0, core=true, t24Name=CONTRACT.ID)
+    }
+    SEAT_RESULTS__OFS_MESSAGE
+    {
+        OFS_MESSAGE : T24BusinessTypes:ANY
+            @t24:i (align=L, inputBehaviour=I, maxLength=50, sysNumber=27.0, core=true, t24Name=OFS.MESSAGE)
+    }
+    SEAT_ERROR_REPORT__SCRIPT_ID
+    {
+        SCRIPT_ID : T24BusinessTypes:ANY
+            @i18n:Label (en="SEAT Scripts Id")
+            @t24:i (align=L, inputBehaviour=I, maxLength=50, sysNumber=1.0, core=true, t24Name=SCRIPT.ID)
+    }
+    SEAT_APPLICATION_MANAGER__DEF_EVENT_MGR
+    {
+        DEF_EVENT_MGR : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=1.0, core=true, t24Name=DEF.EVENT.MGR)
+    }
+    SEAT_APPLICATION_MANAGER__DECIS_FIELD
+    {
+        DECIS_FIELD -> byValue EB_Seat:SEAT_APPLICATION_MANAGER__DECIS_FIELD__DECIS_FIELD *
+        DECIS_EVENT : T24BusinessTypes:ANY
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=6.0, core=true, t24Name=DECIS.EVENT)
+    }
+    SEAT_APPLICATION_MANAGER__DECIS_FIELD__DECIS_FIELD
+    {
+        DECIS_FIELD : T24BusinessTypes:ANY
+            @t24:i (align=L, inputBehaviour=I, maxLength=60, sysNumber=2.0, core=true, t24Name=DECIS.FIELD)
+        DECISION : T24BusinessTypes:ANY
+            @i18n:Label (en=Decision)
+            @i18n:Tooltip (en="Indicates the type of function to perform")
+            @t24:i (align=L, inputBehaviour=I, maxLength=32, sysNumber=3.0, core=true, t24Name=DECISION)
+        DECIS_VAL_FRM : T24BusinessTypes:ANY
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=4.0, core=true, t24Name=DECIS.VAL.FRM)
+        DECIS_VAL_TO : T24BusinessTypes:ANY
+            @t24:i (align=L, inputBehaviour=I, maxLength=20, sysNumber=5.0, core=true, t24Name=DECIS.VAL.TO)
+    }
+    SEAT_APPLICATION_MANAGER__RESULT_FILES
+    {
+        RESULT_FILES : T24BusinessTypes:ANY
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=7.0, core=true, t24Name=RESULT.FILES)
+        CONCAT_FILE : EB_Seat:SEAT_APPLICATION_MANAGER__RESULT_FILES__CONCAT_FILE
+            @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=8.0, core=true, t24Name=CONCAT.FILE)
+        FIELD_NAME -> byValue EB_Seat:SEAT_APPLICATION_MANAGER__RESULT_FILES__FIELD_NAME *
+    }
+    SEAT_APPLICATION_MANAGER__RESULT_FILES__FIELD_NAME
+    {
+        FIELD_NAME : T24BusinessTypes:ANY
+            @i18n:Label (en="Field Name")
+            @i18n:Tooltip (en="Name of the field(used mostly for SWIFT)")
+            @t24:i (align=L, inputBehaviour=I, maxLength=60, sysNumber=9.0, core=true, t24Name=FIELD.NAME)
+        INDEX_FIELD : EB_Seat:SEAT_APPLICATION_MANAGER__RESULT_FILES__FIELD_NAME__INDEX_FIELD
+            @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=10.0, core=true, t24Name=INDEX.FIELD)
+        UPDATE_TYPE : EB_Seat:SEAT_APPLICATION_MANAGER__RESULT_FILES__FIELD_NAME__UPDATE_TYPE
+            @t24:i (align=L, inputBehaviour=I, maxLength=25, sysNumber=11.0, core=true, t24Name=UPDATE.TYPE)
+        FIELD_SCOPE : EB_Seat:SEAT_APPLICATION_MANAGER__RESULT_FILES__FIELD_NAME__FIELD_SCOPE
+            @t24:i (align=L, inputBehaviour=I, maxLength=20, sysNumber=12.0, core=true, t24Name=FIELD.SCOPE)
+        FIELD_TYPE : EB_Seat:SEAT_APPLICATION_MANAGER__RESULT_FILES__FIELD_NAME__FIELD_TYPE
+            @t24:i (align=L, inputBehaviour=I, maxLength=12, sysNumber=13.0, core=true, t24Name=FIELD.TYPE)
+        UPDATE_FROM_FILE : T24BusinessTypes:ANY
+            @t24:i (align=L, inputBehaviour=I, maxLength=50, sysNumber=14.0, core=true, t24Name=UPDATE.FROM.FILE)
+    }
+    SEAT_APPLICATION_MANAGER__RELATED_APPLICATION
+    {
+        RELATED_APPLICATION : T24BusinessTypes:ANY
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=15.0, core=true, t24Name=RELATED.APPLICATION)
+        RELATED_APPLN_RTN -> EB_SystemTables:PGM_FILE
+            @t24:i (align=L, inputBehaviour=I, maxLength=50, sysNumber=16.0, core=true, businessType=ANY, t24Name=RELATED.APPLN.RTN)
+    }
+    SEAT_APPLICATION_MANAGER__INPUTTER
+    {
+        INPUTTER : T24BusinessTypes:A
+            @i18n:Label (en=Inputter)
+            @i18n:Tooltip (en="The user who last updated the record")
+            @t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=22.0, core=true, t24Name=INPUTTER)
+    }
+    SEAT_APPLICATION_MANAGER__DATE_TIME
+    {
+        DATE_TIME : T24BusinessTypes:RELTIME
+            @i18n:Label (en="Date time")
+            @i18n:Tooltip (en="Date and time when record was input or authorised")
+            @t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=23.0, core=true, t24Name=DATE.TIME, mask="RDD DD  DD ##:##")
+    }
 }
 Enumerations {
-	SEAT_APPLICATION_MANAGER__RESULT_FILES__CONCAT_FILE : mml:string
-		Y=Y
-		N=N
-	SEAT_APPLICATION_MANAGER__RESULT_FILES__FIELD_NAME__INDEX_FIELD : mml:string
-		Y=Y
-		N=N
-	SEAT_APPLICATION_MANAGER__RESULT_FILES__FIELD_NAME__UPDATE_TYPE : mml:string
-		ABSOLUTE=ABSOLUTE
-		INCREMENT=INCREMENT
-		LOCATE=LOCATE
-	SEAT_APPLICATION_MANAGER__RESULT_FILES__FIELD_NAME__FIELD_SCOPE : mml:string
-		INPUT=INPUT
-		AUTHORISATION=AUTHORISATION
-		DELETE=DELETE
-		REVERSAL=REVERSAL
-		ALL=ALL
-		COB=COB
-	SEAT_APPLICATION_MANAGER__RESULT_FILES__FIELD_NAME__FIELD_TYPE : mml:string
-		UPDATE=UPDATE
-		CALCULATED=CALCULATED
-	SEAT_APPLICATION_MANAGER__COB_RESULTS : mml:string
-		NO=NO
-		END_OF_DAY=END.OF.DAY
-		START_OF_DAY=START.OF.DAY
+    SEAT_APPLICATION_MANAGER__RESULT_FILES__CONCAT_FILE : mml:string
+        
+        Y=Y
+        N=N
+    SEAT_APPLICATION_MANAGER__RESULT_FILES__FIELD_NAME__INDEX_FIELD : mml:string
+        
+        Y=Y
+        N=N
+    SEAT_APPLICATION_MANAGER__RESULT_FILES__FIELD_NAME__UPDATE_TYPE : mml:string
+        
+        
+        ABSOLUTE=ABSOLUTE
+        INCREMENT=INCREMENT
+        LOCATE=LOCATE
+    SEAT_APPLICATION_MANAGER__RESULT_FILES__FIELD_NAME__FIELD_SCOPE : mml:string
+        
+        
+        
+        
+        
+        INPUT=INPUT
+        AUTHORISATION=AUTHORISATION
+        DELETE=DELETE
+        REVERSAL=REVERSAL
+        ALL=ALL
+        COB=COB
+    SEAT_APPLICATION_MANAGER__RESULT_FILES__FIELD_NAME__FIELD_TYPE : mml:string
+        
+        UPDATE=UPDATE
+        CALCULATED=CALCULATED
+    SEAT_APPLICATION_MANAGER__COB_RESULTS : mml:string
+        
+        
+        
+NO=NO
+        END_OF_DAY=END.OF.DAY
+        START_OF_DAY=START.OF.DAY
 }

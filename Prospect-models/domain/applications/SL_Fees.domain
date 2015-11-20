@@ -1,405 +1,435 @@
 # UTF-8
 /* Fee Calculation for Syndicated Loans */
 Domain SL_Fees
-	@t24:i (module=SL)
-	@java:Package (value=com.temenos.t24.datamodel.sl.sl_fees)
+    @t24:i (module=SL)
+    @java:Package (value=com.temenos.t24.datamodel.sl.sl_fees)
 namespace "http://www.temenos.com/t24/SL_Fees"
 metamodelVersion 1.30.6
 Classes {
-	SL_CHARGE
-		@t24:i (t24Name=SL.CHARGE, level=F, type=H, additionalInfo="UNP OEU", allowedFunctions="A C D E H I L P Q R S", localRefAllowed=true)
-	{
-		CONTRACT_ID -> SL_Fees:SL_CHARGE PK required
-			@i18n:Label (en="Contract Id")
-			@i18n:Tooltip (en="Contract Id")
-			@t24:i (align=L, inputBehaviour=I, maxLength=50, sysNumber=0.0, core=true, businessType=A, t24Name=CONTRACT.ID)
-		CUSTOMER -> ST_Customer:CUSTOMER
-			@i18n:Label (en=Customer)
-			@i18n:Tooltip (en="Customer Liability")
-			@t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=1.0, core=true, businessType=CUS, t24Name=CUSTOMER)
-		CHG_ACTIVITY -> SL_Fees:SL_CHARGE_ACTIVITY required
-			@i18n:Label (en="Chg Activity")
-			@t24:i (align=L, inputBehaviour=F, maxLength=10, sysNumber=2.0, core=true, businessType=A, t24Name=CHG.ACTIVITY)
-		CHG_CODE -> byValue SL_Fees:SL_CHARGE__CHG_CODE *
-		DELIVERY_CUST -> byValue SL_Fees:SL_CHARGE__DELIVERY_CUST *
-		DELIVERY_REF -> byValue SL_Fees:SL_CHARGE__DELIVERY_REF *
-		ROUNDING_RULE -> ST_Config:EB_ROUNDING_RULE
-			@i18n:Label (en="Rounding Rule")
-			@i18n:Tooltip (en="Indicates the rounding rule")
-			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=40.0, core=true, businessType=A, t24Name=ROUNDING.RULE)
-		RESERVED_9 : mml:Integer
-			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=41.0, core=true, t24Name=RESERVED.9)
-		RESERVED_8 : mml:Integer
-			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=42.0, core=true, t24Name=RESERVED.8)
-		RESERVED_7 : mml:Integer
-			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=43.0, core=true, t24Name=RESERVED.7)
-		RESERVED_6 : mml:Integer
-			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=44.0, core=true, t24Name=RESERVED.6)
-		RESERVED_5 : mml:Integer
-			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=45.0, core=true, t24Name=RESERVED.5)
-		RESERVED_4 : mml:Integer
-			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=46.0, core=true, t24Name=RESERVED.4)
-		RESERVED_3 : mml:Integer
-			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=47.0, core=true, t24Name=RESERVED.3)
-		RESERVED_2 : mml:Integer
-			@t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=48.0, core=true, t24Name=RESERVED.2)
-		STMT_NO -> byValue SL_Fees:SL_CHARGE__STMT_NO *
-		OVERRIDE -> byValue SL_Fees:SL_CHARGE__OVERRIDE *
-		RECORD_STATUS : T24BusinessTypes:STAT
-			@i18n:Label (en="Record Status")
-			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=52.0, core=true, t24Name=RECORD.STATUS)
-		CURR_NO : mml:Integer
-			@i18n:Label (en="Curr No")
-			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=53.0, core=true, t24Name=CURR.NO)
-		INPUTTER -> byValue SL_Fees:SL_CHARGE__INPUTTER *
-		DATE_TIME -> byValue SL_Fees:SL_CHARGE__DATE_TIME *
-		AUTHORISER : T24BusinessTypes:A
-			@i18n:Label (en=Authoriser)
-			@i18n:Tooltip (en="Indicates the User who Authorises the record")
-			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=56.0, core=true, t24Name=AUTHORISER)
-		CO_CODE -> ST_CompanyCreation:COMPANY
-			@i18n:Label (en=Company)
-			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=57.0, core=true, businessType=A, t24Name=CO.CODE, mask="R##-###-####")
-		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
-			@i18n:Label (en="Dept Code")
-			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=58.0, core=true, t24Name=DEPT.CODE)
-		AUDITOR_CODE : T24BusinessTypes:A
-			@i18n:Label (en="Auditor Code")
-			@i18n:Tooltip (en="Auditor Code")
-			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=59.0, core=true, t24Name=AUDITOR.CODE)
-		AUDIT_DATE_TIME : T24BusinessTypes:RELTIME
-			@i18n:Label (en="Audit Date Time")
-			@i18n:Tooltip (en="Date and time when record was audited")
-			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=60.0, core=true, t24Name=AUDIT.DATE.TIME, mask="RDD DD  DD ##:##")
-	}
-	SL_CHARGE__CHG_CODE
-	{
-		CHG_CODE : T24BusinessTypes:A
-			@i18n:Label (en="Charge Code")
-			@i18n:Tooltip (en="Charge Code")
-			@t24:i (align=L, inputBehaviour=I, maxLength=11, sysNumber=3.0, core=true, t24Name=CHG.CODE)
-		APPLY_TO_ALL : SL_Fees:SL_CHARGE__CHG_CODE__APPLY_TO_ALL
-			@i18n:Label (en="Charges apply to All")
-			@i18n:Tooltip (en="Whether the charges applied to All participants$")
-			@t24:i (align=L, inputBehaviour=F, maxLength=3, sysNumber=4.0, core=true, t24Name=APPLY.TO.ALL)
-		CHG_CALC_BASIS : SL_Fees:SL_CHARGE__CHG_CODE__CHG_CALC_BASIS required
-			@i18n:Label (en="Chg Calc Basis")
-			@t24:i (align=L, inputBehaviour=I, maxLength=15, sysNumber=5.0, core=true, t24Name=CHG.CALC.BASIS)
-		CHG_BASE_AMT : T24BusinessTypes:AMT
-			@i18n:Label (en="Charge base amount")
-			@i18n:Tooltip (en="Indicates base amount for charge calculation")
-			@t24:i (align=R, inputBehaviour=I, maxLength=15, sysNumber=6.0, core=true, t24Name=CHG.BASE.AMT)
-		CHG_CURRENCY -> FIN_CurrencyConfig:CURRENCY
-			@i18n:Label (en="Chg Currency")
-			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=7.0, core=true, businessType=CCY, t24Name=CHG.CURRENCY)
-		CHG_AMOUNT : T24BusinessTypes:AMT
-			@i18n:Label (en="Charge Amount")
-			@i18n:Tooltip (en="Defines charge amount")
-			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=8.0, core=true, t24Name=CHG.AMOUNT, typeModifiers="7.X")
-		CHG_ACCOUNT -> ACM_AccountOpening:ACCOUNT
-			@i18n:Label (en="Charge Account")
-			@t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=9.0, core=true, businessType=ANT, t24Name=CHG.ACCOUNT)
-		CHG_XCHANGE : T24BusinessTypes:R
-			@i18n:Label (en="Charge Exchange Rate")
-			@i18n:Tooltip (en="Charge Exchange Rate")
-			@t24:i (align=R, inputBehaviour=N, maxLength=16, sysNumber=10.0, core=true, t24Name=CHG.XCHANGE)
-		CHG_STRT_DTE : T24BusinessTypes:D
-			@i18n:Label (en="Chg Start Date")
-			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=11.0, core=true, t24Name=CHG.STRT.DTE)
-		CHG_FQY : T24BusinessTypes:FQF
-			@i18n:Label (en="Chg Frequency")
-			@t24:i (align=L, inputBehaviour=I, maxLength=19, sysNumber=12.0, core=true, t24Name=CHG.FQY)
-		CHG_END_DATE : T24BusinessTypes:D
-			@i18n:Label (en="Chg End Date")
-			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=13.0, core=true, t24Name=CHG.END.DATE)
-		NXT_CHG_DTE : T24BusinessTypes:FQU
-			@i18n:Label (en="Next Charge Date")
-			@i18n:Tooltip (en="Define Next Charge Date")
-			@t24:i (align=L, inputBehaviour=I, maxLength=19, sysNumber=14.0, core=true, t24Name=NXT.CHG.DTE, mask="RDDDD DD  D #####")
-		AMORT_CHARGE : SL_Fees:SL_CHARGE__CHG_CODE__AMORT_CHARGE
-			@i18n:Label (en="Amort Charge")
-			@t24:i (align=L, inputBehaviour=F, maxLength=3, sysNumber=15.0, core=true, t24Name=AMORT.CHARGE)
-		AMORT_PERIOD : T24BusinessTypes:A
-			@i18n:Label (en="Amort Period")
-			@t24:i (align=L, inputBehaviour=F, maxLength=4, sysNumber=16.0, core=true, t24Name=AMORT.PERIOD)
-		AMORT_FREQ : T24BusinessTypes:FQF
-			@i18n:Label (en="Amort Freq")
-			@t24:i (align=L, inputBehaviour=F, maxLength=19, sysNumber=17.0, core=true, t24Name=AMORT.FREQ)
-		CHG_LCY_AMT : T24BusinessTypes:AMT
-			@i18n:Label (en="Charge Lcy Amount")
-			@i18n:Tooltip (en="Charge Lcy Amount")
-			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=18.0, core=true, t24Name=CHG.LCY.AMT, typeModifiers="7.X")
-		CHG_ACC_AMT : T24BusinessTypes:AMT
-			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=19.0, core=true, t24Name=CHG.ACC.AMT, typeModifiers="7.X")
-		TAX_CODE : T24BusinessTypes:TAX
-			@i18n:Label (en="Tax Code")
-			@t24:i (align=L, inputBehaviour=N, maxLength=2, sysNumber=20.0, core=true, t24Name=TAX.CODE)
-		TAX_CCY : T24BusinessTypes:CCY
-			@i18n:Label (en="Tax Currency")
-			@t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=21.0, core=true, t24Name=TAX.CCY)
-		TAX_AMT : T24BusinessTypes:AMT
-			@i18n:Label (en="Tax Amount")
-			@i18n:Tooltip (en="Indicates the tax amount")
-			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=22.0, core=true, t24Name=TAX.AMT, typeModifiers="7.X")
-		TAX_ACC_AMT : T24BusinessTypes:AMT
-			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=23.0, core=true, t24Name=TAX.ACC.AMT, typeModifiers="7.X")
-		TAX_LCY_AMT : T24BusinessTypes:AMT
-			@t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=24.0, core=true, t24Name=TAX.LCY.AMT, typeModifiers="7.X")
-		PART_ID -> byValue SL_Fees:SL_CHARGE__CHG_CODE__PART_ID *
-		MANUAL : T24BusinessTypes:A
-			@i18n:Label (en="Charges are Manual")
-			@i18n:Tooltip (en="Charges are Manual")
-			@t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=29.0, core=true, t24Name=MANUAL)
-	}
-	SL_CHARGE__CHG_CODE__PART_ID
-	{
-		PART_ID -> ST_Customer:CUSTOMER
-			@i18n:Label (en="Participant Id")
-			@t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=25.0, core=true, businessType=CUS, t24Name=PART.ID)
-		PART_SHARE : T24BusinessTypes:R
-			@i18n:Label (en="Participant Share")
-			@t24:i (align=R, inputBehaviour=I, maxLength=13, sysNumber=26.0, core=true, t24Name=PART.SHARE, typeModifiers="7.X")
-		PART_CHG_AMT : T24BusinessTypes:AMT
-			@i18n:Label (en="Part Chg Amt")
-			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=27.0, core=true, t24Name=PART.CHG.AMT, typeModifiers="7.X")
-		PART_TAX_AMT : T24BusinessTypes:AMT
-			@i18n:Label (en="Part Tax Amt")
-			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=28.0, core=true, t24Name=PART.TAX.AMT, typeModifiers="7.X")
-	}
-	SL_CHARGE__DELIVERY_CUST
-	{
-		DELIVERY_CUST -> ST_Customer:CUSTOMER
-			@i18n:Label (en="Delivery Cust")
-			@i18n:Tooltip (en="Customer for whom delivery message is to be sent")
-			@t24:i (align=R, inputBehaviour=N, maxLength=10, sysNumber=30.0, core=true, businessType=CUS, t24Name=DELIVERY.CUST)
-		ACTIVITY_CODE -> EB_Delivery:EB_ACTIVITY
-			@i18n:Label (en="Activity Code")
-			@i18n:Tooltip (en="Indicates activity code")
-			@t24:i (align=L, inputBehaviour=N, maxLength=7, sysNumber=31.0, core=true, businessType=A, t24Name=ACTIVITY.CODE)
-		ACTIVITY_DATE : T24BusinessTypes:D
-			@i18n:Label (en="Activity Date")
-			@i18n:Tooltip (en="indicates the date on which activity is generated")
-			@t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=32.0, core=true, t24Name=ACTIVITY.DATE)
-		PRIOR_DAYS : mml:Integer
-			@i18n:Label (en="Prior Days")
-			@i18n:Tooltip (en="Change product event on the date stated")
-			@t24:i (align=R, inputBehaviour=N, maxLength=3, sysNumber=33.0, core=true, t24Name=PRIOR.DAYS)
-		MSG_TYPE -> byValue SL_Fees:SL_CHARGE__DELIVERY_CUST__MSG_TYPE *
-	}
-	SL_CHARGE__DELIVERY_CUST__MSG_TYPE
-	{
-		MSG_TYPE -> DE_Config:DE_MESSAGE
-			@i18n:Label (en="Message Type")
-			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=34.0, core=true, businessType=A, t24Name=MSG.TYPE)
-		MSG_CLASS -> EB_Delivery:EB_MESSAGE_CLASS
-			@i18n:Label (en="Message Class")
-			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=35.0, core=true, businessType=A, t24Name=MSG.CLASS)
-		OVR_CARRIER -> DE_Config:DE_CARRIER
-			@i18n:Label (en="Delivery Mode")
-			@t24:i (align=L, inputBehaviour=N, maxLength=8, sysNumber=36.0, core=true, businessType=A, t24Name=OVR.CARRIER)
-		SEND_MSG : SL_Fees:SL_CHARGE__DELIVERY_CUST__MSG_TYPE__SEND_MSG
-			@i18n:Label (en="Send Msg")
-			@t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=37.0, core=true, t24Name=SEND.MSG)
-		MSG_DATE : T24BusinessTypes:D
-			@i18n:Label (en="Message Date")
-			@t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=38.0, core=true, t24Name=MSG.DATE)
-	}
-	SL_CHARGE__DELIVERY_REF
-	{
-		DELIVERY_REF : T24BusinessTypes:A
-			@i18n:Label (en="Delivery Ref")
-			@i18n:Tooltip (en="System generated Delivery ref key")
-			@t24:i (align=L, inputBehaviour=N, maxLength=46, sysNumber=39.0, core=true, t24Name=DELIVERY.REF)
-	}
-	SL_CHARGE__STMT_NO
-	{
-		STMT_NO : T24BusinessTypes:A
-			@i18n:Label (en="Statement number")
-			@t24:i (align=L, inputBehaviour=N, maxLength=29, sysNumber=50.0, core=true, t24Name=STMT.NO)
-	}
-	SL_CHARGE__OVERRIDE
-	{
-		OVERRIDE : T24BusinessTypes:A
-			@i18n:Label (en=Override)
-			@i18n:Tooltip (en="Overrides generated by this transaction")
-			@t24:i (align=L, inputBehaviour=E, maxLength=35, sysNumber=51.0, core=true, t24Name=OVERRIDE)
-	}
-	SL_CHARGE__INPUTTER
-	{
-		INPUTTER : T24BusinessTypes:A
-			@i18n:Label (en=Inputter)
-			@i18n:Tooltip (en="The user who last updated the record")
-			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=54.0, core=true, t24Name=INPUTTER)
-	}
-	SL_CHARGE__DATE_TIME
-	{
-		DATE_TIME : T24BusinessTypes:RELTIME
-			@i18n:Label (en="Date time")
-			@i18n:Tooltip (en="Date and time when record was input or authorised")
-			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=55.0, core=true, t24Name=DATE.TIME, mask="RDD DD  DD ##:##")
-	}
-	SL_CHARGE_ACTIVITY
-		@t24:i (t24Name=SL.CHARGE.ACTIVITY, level=I, type=H, allowedFunctions="A C D E H I L P Q R S", localRefAllowed=false)
-	{
-		CHRG_ACTIVITY -> SL_Fees:SL_CHARGE_ACTIVITY PK required
-			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=0.0, core=true, businessType=A, t24Name=CHRG.ACTIVITY)
-		DESCRIPTION -> byValue SL_Fees:SL_CHARGE_ACTIVITY__DESCRIPTION *
-		SHORT_DESCR -> byValue SL_Fees:SL_CHARGE_ACTIVITY__SHORT_DESCR *
-		CHG_TYPE -> byValue SL_Fees:SL_CHARGE_ACTIVITY__CHG_TYPE *
-		RECORD_STATUS : T24BusinessTypes:STAT
-			@i18n:Label (en="Record Status")
-			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=9.0, core=true, t24Name=RECORD.STATUS)
-		CURR_NO : mml:Integer
-			@i18n:Label (en="Curr No")
-			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=10.0, core=true, t24Name=CURR.NO)
-		INPUTTER -> byValue SL_Fees:SL_CHARGE_ACTIVITY__INPUTTER *
-		DATE_TIME -> byValue SL_Fees:SL_CHARGE_ACTIVITY__DATE_TIME *
-		AUTHORISER : T24BusinessTypes:A
-			@i18n:Label (en=Authoriser)
-			@i18n:Tooltip (en="Indicates the User who Authorises the record")
-			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=13.0, core=true, t24Name=AUTHORISER)
-		CO_CODE -> ST_CompanyCreation:COMPANY
-			@i18n:Label (en=Company)
-			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=14.0, core=true, businessType=A, t24Name=CO.CODE, mask="R##-###-####")
-		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
-			@i18n:Label (en="Dept Code")
-			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=15.0, core=true, t24Name=DEPT.CODE)
-		AUDITOR_CODE : T24BusinessTypes:A
-			@i18n:Label (en="Auditor Code")
-			@i18n:Tooltip (en="Auditor Code")
-			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=16.0, core=true, t24Name=AUDITOR.CODE)
-		AUDIT_DATE_TIME : T24BusinessTypes:RELTIME
-			@i18n:Label (en="Audit Date Time")
-			@i18n:Tooltip (en="Date and time when record was audited")
-			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=17.0, core=true, t24Name=AUDIT.DATE.TIME, mask="RDD DD  DD ##:##")
-	}
-	SL_CHARGE_ACTIVITY__DESCRIPTION
-	{
-		DESCRIPTION : T24BusinessTypes:A required
-			@i18n:Label (en=Description)
-			@i18n:Tooltip (en=Description)
-			@t24:i (align=L, inputBehaviour=I, maxLength=35, multiLanguage=true, sysNumber=1.0, core=true, t24Name=DESCRIPTION)
-	}
-	SL_CHARGE_ACTIVITY__SHORT_DESCR
-	{
-		SHORT_DESCR : T24BusinessTypes:A required
-			@i18n:Label (en="Short Descr")
-			@t24:i (align=L, inputBehaviour=I, maxLength=15, multiLanguage=true, sysNumber=2.0, core=true, t24Name=SHORT.DESCR)
-	}
-	SL_CHARGE_ACTIVITY__CHG_TYPE
-	{
-		CHG_TYPE : T24BusinessTypes:A
-			@i18n:Label (en="Charge Type")
-			@i18n:Tooltip (en="Indicates what type of charge is being collected")
-			@t24:i (align=L, inputBehaviour=I, maxLength=11, sysNumber=3.0, core=true, t24Name=CHG.TYPE)
-		CHARGE_FREQ : T24BusinessTypes:FQF
-			@i18n:Label (en="Charge Frequency")
-			@i18n:Tooltip (en="Defines the frequency of debiting charges")
-			@t24:i (align=L, inputBehaviour=I, maxLength=19, sysNumber=4.0, core=true, t24Name=CHARGE.FREQ)
-		AMORT_CHARGE : SL_Fees:SL_CHARGE_ACTIVITY__CHG_TYPE__AMORT_CHARGE
-			@i18n:Label (en="Amortise Charges")
-			@t24:i (align=L, inputBehaviour=F, maxLength=3, sysNumber=5.0, core=true, t24Name=AMORT.CHARGE)
-		AMORT_PERIOD : T24BusinessTypes:A
-			@i18n:Label (en="Amortise Period")
-			@t24:i (align=L, inputBehaviour=I, maxLength=4, sysNumber=6.0, core=true, t24Name=AMORT.PERIOD)
-		AMORT_FREQ : T24BusinessTypes:FQF
-			@i18n:Label (en="Amortise Frequency")
-			@t24:i (align=L, inputBehaviour=I, maxLength=19, sysNumber=7.0, core=true, t24Name=AMORT.FREQ)
-		APPLY_TO_ALL : SL_Fees:SL_CHARGE_ACTIVITY__CHG_TYPE__APPLY_TO_ALL
-			@i18n:Label (en="Apply To All")
-			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=8.0, core=true, t24Name=APPLY.TO.ALL)
-	}
-	SL_CHARGE_ACTIVITY__INPUTTER
-	{
-		INPUTTER : T24BusinessTypes:A
-			@i18n:Label (en=Inputter)
-			@i18n:Tooltip (en="The user who last updated the record")
-			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=11.0, core=true, t24Name=INPUTTER)
-	}
-	SL_CHARGE_ACTIVITY__DATE_TIME
-	{
-		DATE_TIME : T24BusinessTypes:RELTIME
-			@i18n:Label (en="Date time")
-			@i18n:Tooltip (en="Date and time when record was input or authorised")
-			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=12.0, core=true, t24Name=DATE.TIME, mask="RDD DD  DD ##:##")
-	}
-	SL_CHARGE_BALANCES
-		@t24:i (t24Name=SL.CHARGE.BALANCES, level=F, type=L, allowedFunctions="L P S", localRefAllowed=false)
-	{
-		CONT_BAL_ID -> SL_Fees:SL_CHARGE_BALANCES PK required
-			@t24:i (align=L, inputBehaviour=I, maxLength=45, sysNumber=0.0, core=true, businessType=A, t24Name=CONT.BAL.ID)
-		CHG_CODE -> byValue SL_Fees:SL_CHARGE_BALANCES__CHG_CODE *
-	}
-	SL_CHARGE_BALANCES__CHG_CODE
-	{
-		CHG_CODE : T24BusinessTypes:A
-			@i18n:Label (en="Charge Code")
-			@i18n:Tooltip (en="Charge Code")
-			@t24:i (align=L, inputBehaviour=I, maxLength=11, sysNumber=1.0, core=true, t24Name=CHG.CODE)
-		CHG_CURRENCY : T24BusinessTypes:CCY
-			@i18n:Label (en="Chg Currency")
-			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=2.0, core=true, t24Name=CHG.CURRENCY)
-		TOT_CHRG_AMT : T24BusinessTypes:AMT
-			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=3.0, core=true, t24Name=TOT.CHRG.AMT, typeModifiers="2.X")
-		TAX_CODE : T24BusinessTypes:A
-			@i18n:Label (en="Tax Code")
-			@t24:i (align=L, inputBehaviour=I, maxLength=11, sysNumber=4.0, core=true, t24Name=TAX.CODE)
-		TAX_CURRENCY : T24BusinessTypes:CCY
-			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=5.0, core=true, t24Name=TAX.CURRENCY)
-		TAX_AMT : T24BusinessTypes:AMT
-			@i18n:Label (en="Tax Amount")
-			@i18n:Tooltip (en="Indicates the tax amount")
-			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=6.0, core=true, t24Name=TAX.AMT, typeModifiers="5.X")
-		PART_ID -> byValue SL_Fees:SL_CHARGE_BALANCES__CHG_CODE__PART_ID *
-	}
-	SL_CHARGE_BALANCES__CHG_CODE__PART_ID
-	{
-		PART_ID : T24BusinessTypes:CUS
-			@i18n:Label (en="Participant Id")
-			@t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=7.0, core=true, t24Name=PART.ID)
-		PART_CHG_AMT : T24BusinessTypes:AMT
-			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=8.0, core=true, t24Name=PART.CHG.AMT, typeModifiers="2.X")
-		PART_TAX_AMT : T24BusinessTypes:AMT
-			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=9.0, core=true, t24Name=PART.TAX.AMT, typeModifiers="2.X")
-		CATEG_CODE : T24BusinessTypes:CAT
-			@t24:i (align=L, inputBehaviour=I, maxLength=5, sysNumber=10.0, core=true, t24Name=CATEG.CODE)
-		TOT_AMRT_PRD : mml:Integer
-			@t24:i (align=R, inputBehaviour=I, maxLength=4, sysNumber=11.0, core=true, t24Name=TOT.AMRT.PRD)
-		TOT_AMRT_AMT : T24BusinessTypes:AMT
-			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=12.0, core=true, t24Name=TOT.AMRT.AMT, typeModifiers="2.X")
-		MTH_AMRT_AMT : T24BusinessTypes:AMT
-			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=13.0, core=true, t24Name=MTH.AMRT.AMT, typeModifiers="2.X")
-		BAL_AMRT_PRD : mml:Integer
-			@t24:i (align=R, inputBehaviour=I, maxLength=4, sysNumber=14.0, core=true, t24Name=BAL.AMRT.PRD)
-		BAL_AMRT_AMT : T24BusinessTypes:AMT
-			@t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=15.0, core=true, t24Name=BAL.AMRT.AMT, typeModifiers="2.X")
-		NXT_AMRT_DTE : T24BusinessTypes:D
-			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=16.0, core=true, t24Name=NXT.AMRT.DTE)
-		END_AMRT_DTE : T24BusinessTypes:D
-			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=17.0, core=true, t24Name=END.AMRT.DTE)
-	}
+    SL_CHARGE_BALANCES
+        @i18n:Description (en="")
+        @t24:i (t24Name=SL.CHARGE.BALANCES, level=F, type=L, allowedFunctions="L P S", localRefAllowed=false)
+    {
+        CONT_BAL_ID -> SL_Fees:SL_CHARGE_BALANCES PK required
+            @t24:i (align=L, inputBehaviour=I, maxLength=45, sysNumber=0.0, core=true, businessType=A, t24Name=CONT.BAL.ID)
+        CHG_CODE -> byValue SL_Fees:SL_CHARGE_BALANCES__CHG_CODE *
+    }
+    
+    
+    SL_CHARGE_ACTIVITY
+        @i18n:Description (en="")
+        @t24:i (t24Name=SL.CHARGE.ACTIVITY, level=I, type=H, allowedFunctions="A C D E H I L P Q R S", localRefAllowed=false)
+    {
+        CHRG_ACTIVITY -> SL_Fees:SL_CHARGE_ACTIVITY PK required
+            @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=0.0, core=true, businessType=A, t24Name=CHRG.ACTIVITY)
+        DESCRIPTION -> byValue SL_Fees:SL_CHARGE_ACTIVITY__DESCRIPTION *
+        SHORT_DESCR -> byValue SL_Fees:SL_CHARGE_ACTIVITY__SHORT_DESCR *
+        CHG_TYPE -> byValue SL_Fees:SL_CHARGE_ACTIVITY__CHG_TYPE *
+        RECORD_STATUS : T24BusinessTypes:STAT
+            @i18n:Label (en="Record Status")
+            @t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=9.0, core=true, t24Name=RECORD.STATUS)
+        CURR_NO : T24BusinessTypes:N
+            @i18n:Label (en="Curr No")
+            @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=10.0, core=true, t24Name=CURR.NO)
+        INPUTTER -> byValue SL_Fees:SL_CHARGE_ACTIVITY__INPUTTER *
+        DATE_TIME -> byValue SL_Fees:SL_CHARGE_ACTIVITY__DATE_TIME *
+        AUTHORISER : T24BusinessTypes:A
+            @i18n:Label (en=Authoriser)
+            @i18n:Tooltip (en="Indicates the User who Authorises the record")
+            @t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=13.0, core=true, t24Name=AUTHORISER)
+        CO_CODE -> ST_CompanyCreation:COMPANY
+            @i18n:Label (en=Company)
+            @t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=14.0, core=true, businessType=A, t24Name=CO.CODE, mask="R##-###-####")
+        DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+            @i18n:Label (en="Dept Code")
+            @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=15.0, core=true, t24Name=DEPT.CODE)
+        AUDITOR_CODE : T24BusinessTypes:A
+            @i18n:Label (en="Auditor Code")
+            @i18n:Tooltip (en="Auditor Code")
+            @t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=16.0, core=true, t24Name=AUDITOR.CODE)
+        AUDIT_DATE_TIME : T24BusinessTypes:RELTIME
+            @i18n:Label (en="Audit Date Time")
+            @i18n:Tooltip (en="Date and time when record was audited")
+            @t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=17.0, core=true, t24Name=AUDIT.DATE.TIME, mask="RDD DD  DD ##:##")
+    }
+    
+    
+    
+    
+    
+    SL_CHARGE
+        @i18n:Description (en="")
+        @t24:i (t24Name=SL.CHARGE, level=F, type=H, additionalInfo="UNP OEU", allowedFunctions="A C D E H I L P Q R S", localRefAllowed=true)
+    {
+        CONTRACT_ID -> SL_Fees:SL_CHARGE PK required
+            @i18n:Label (en="Contract Id")
+            @i18n:Tooltip (en="Contract Id")
+            @t24:i (align=L, inputBehaviour=I, maxLength=50, sysNumber=0.0, core=true, businessType=A, t24Name=CONTRACT.ID)
+        CUSTOMER -> ST_Customer:CUSTOMER
+            @i18n:Label (en=Customer)
+            @i18n:Tooltip (en="Customer Liability")
+            @t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=1.0, core=true, businessType=CUS, t24Name=CUSTOMER)
+        CHG_ACTIVITY -> SL_Fees:SL_CHARGE_ACTIVITY required
+            @i18n:Label (en="Chg Activity")
+            @t24:i (align=L, inputBehaviour=F, maxLength=10, sysNumber=2.0, core=true, businessType=A, t24Name=CHG.ACTIVITY)
+        CHG_CODE -> byValue SL_Fees:SL_CHARGE__CHG_CODE *
+        DELIVERY_CUST -> byValue SL_Fees:SL_CHARGE__DELIVERY_CUST *
+        DELIVERY_REF -> byValue SL_Fees:SL_CHARGE__DELIVERY_REF *
+        ROUNDING_RULE -> ST_Config:EB_ROUNDING_RULE
+            @i18n:Label (en="Rounding Rule")
+            @i18n:Tooltip (en="Indicates the rounding rule")
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=40.0, core=true, businessType=A, t24Name=ROUNDING.RULE)
+        RESERVED_9 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=41.0, core=true, t24Name=RESERVED.9)
+        RESERVED_8 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=42.0, core=true, t24Name=RESERVED.8)
+        RESERVED_7 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=43.0, core=true, t24Name=RESERVED.7)
+        RESERVED_6 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=44.0, core=true, t24Name=RESERVED.6)
+        RESERVED_5 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=45.0, core=true, t24Name=RESERVED.5)
+        RESERVED_4 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=46.0, core=true, t24Name=RESERVED.4)
+        RESERVED_3 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=47.0, core=true, t24Name=RESERVED.3)
+        RESERVED_2 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=48.0, core=true, t24Name=RESERVED.2)
+        STMT_NO -> byValue SL_Fees:SL_CHARGE__STMT_NO *
+        OVERRIDE -> byValue SL_Fees:SL_CHARGE__OVERRIDE *
+        RECORD_STATUS : T24BusinessTypes:STAT
+            @i18n:Label (en="Record Status")
+            @t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=52.0, core=true, t24Name=RECORD.STATUS)
+        CURR_NO : T24BusinessTypes:N
+            @i18n:Label (en="Curr No")
+            @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=53.0, core=true, t24Name=CURR.NO)
+        INPUTTER -> byValue SL_Fees:SL_CHARGE__INPUTTER *
+        DATE_TIME -> byValue SL_Fees:SL_CHARGE__DATE_TIME *
+        AUTHORISER : T24BusinessTypes:A
+            @i18n:Label (en=Authoriser)
+            @i18n:Tooltip (en="Indicates the User who Authorises the record")
+            @t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=56.0, core=true, t24Name=AUTHORISER)
+        CO_CODE -> ST_CompanyCreation:COMPANY
+            @i18n:Label (en=Company)
+            @t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=57.0, core=true, businessType=A, t24Name=CO.CODE, mask="R##-###-####")
+        DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+            @i18n:Label (en="Dept Code")
+            @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=58.0, core=true, t24Name=DEPT.CODE)
+        AUDITOR_CODE : T24BusinessTypes:A
+            @i18n:Label (en="Auditor Code")
+            @i18n:Tooltip (en="Auditor Code")
+            @t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=59.0, core=true, t24Name=AUDITOR.CODE)
+        AUDIT_DATE_TIME : T24BusinessTypes:RELTIME
+            @i18n:Label (en="Audit Date Time")
+            @i18n:Tooltip (en="Date and time when record was audited")
+            @t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=60.0, core=true, t24Name=AUDIT.DATE.TIME, mask="RDD DD  DD ##:##")
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+SL_CHARGE__CHG_CODE
+    {
+        CHG_CODE : T24BusinessTypes:A
+            @i18n:Label (en="Charge Code")
+            @i18n:Tooltip (en="Charge Code")
+            @t24:i (align=L, inputBehaviour=I, maxLength=11, sysNumber=3.0, core=true, t24Name=CHG.CODE)
+        APPLY_TO_ALL : SL_Fees:SL_CHARGE__CHG_CODE__APPLY_TO_ALL
+            @i18n:Label (en="Charges apply to All")
+            @i18n:Tooltip (en="Whether the charges applied to All participants$")
+            @t24:i (align=L, inputBehaviour=F, maxLength=3, sysNumber=4.0, core=true, t24Name=APPLY.TO.ALL)
+        CHG_CALC_BASIS : SL_Fees:SL_CHARGE__CHG_CODE__CHG_CALC_BASIS required
+            @i18n:Label (en="Chg Calc Basis")
+            @t24:i (align=L, inputBehaviour=I, maxLength=15, sysNumber=5.0, core=true, t24Name=CHG.CALC.BASIS)
+        CHG_BASE_AMT : T24BusinessTypes:AMT
+            @i18n:Label (en="Charge base amount")
+            @i18n:Tooltip (en="Indicates base amount for charge calculation")
+            @t24:i (align=R, inputBehaviour=I, maxLength=15, sysNumber=6.0, core=true, t24Name=CHG.BASE.AMT)
+        CHG_CURRENCY -> ST_CurrencyConfig:CURRENCY
+            @i18n:Label (en="Chg Currency")
+            @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=7.0, core=true, businessType=CCY, t24Name=CHG.CURRENCY)
+        CHG_AMOUNT : T24BusinessTypes:AMT
+            @i18n:Label (en="Charge Amount")
+            @i18n:Tooltip (en="Defines charge amount")
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=8.0, core=true, t24Name=CHG.AMOUNT, typeModifiers="7.X")
+        CHG_ACCOUNT -> AC_AccountOpening:ACCOUNT
+            @i18n:Label (en="Charge Account")
+            @t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=9.0, core=true, businessType=ANT, t24Name=CHG.ACCOUNT)
+        CHG_XCHANGE : T24BusinessTypes:R
+            @i18n:Label (en="Charge Exchange Rate")
+            @i18n:Tooltip (en="Charge Exchange Rate")
+            @t24:i (align=R, inputBehaviour=N, maxLength=16, sysNumber=10.0, core=true, t24Name=CHG.XCHANGE)
+        CHG_STRT_DTE : T24BusinessTypes:D
+            @i18n:Label (en="Chg Start Date")
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=11.0, core=true, t24Name=CHG.STRT.DTE)
+        CHG_FQY : T24BusinessTypes:FQF
+            @i18n:Label (en="Chg Frequency")
+            @t24:i (align=L, inputBehaviour=I, maxLength=19, sysNumber=12.0, core=true, t24Name=CHG.FQY)
+        CHG_END_DATE : T24BusinessTypes:D
+            @i18n:Label (en="Chg End Date")
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=13.0, core=true, t24Name=CHG.END.DATE)
+        NXT_CHG_DTE : T24BusinessTypes:FQU
+            @i18n:Label (en="Next Charge Date")
+            @i18n:Tooltip (en="Define Next Charge Date")
+            @t24:i (align=L, inputBehaviour=I, maxLength=19, sysNumber=14.0, core=true, t24Name=NXT.CHG.DTE, mask="RDDDD DD  D #####")
+        AMORT_CHARGE : SL_Fees:SL_CHARGE__CHG_CODE__AMORT_CHARGE
+            @i18n:Label (en="Amort Charge")
+            @t24:i (align=L, inputBehaviour=F, maxLength=3, sysNumber=15.0, core=true, t24Name=AMORT.CHARGE)
+        AMORT_PERIOD : T24BusinessTypes:A
+            @i18n:Label (en="Amort Period")
+            @t24:i (align=L, inputBehaviour=F, maxLength=4, sysNumber=16.0, core=true, t24Name=AMORT.PERIOD)
+        AMORT_FREQ : T24BusinessTypes:FQF
+            @i18n:Label (en="Amort Freq")
+            @t24:i (align=L, inputBehaviour=F, maxLength=19, sysNumber=17.0, core=true, t24Name=AMORT.FREQ)
+        CHG_LCY_AMT : T24BusinessTypes:AMT
+            @i18n:Label (en="Charge Lcy Amount")
+            @i18n:Tooltip (en="Charge Lcy Amount")
+            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=18.0, core=true, t24Name=CHG.LCY.AMT, typeModifiers="7.X")
+        CHG_ACC_AMT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=19.0, core=true, t24Name=CHG.ACC.AMT, typeModifiers="7.X")
+        TAX_CODE : T24BusinessTypes:TAX
+            @i18n:Label (en="Tax Code")
+            @t24:i (align=L, inputBehaviour=N, maxLength=2, sysNumber=20.0, core=true, t24Name=TAX.CODE)
+        TAX_CCY : T24BusinessTypes:CCY
+            @i18n:Label (en="Tax Currency")
+            @t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=21.0, core=true, t24Name=TAX.CCY)
+        TAX_AMT : T24BusinessTypes:AMT
+            @i18n:Label (en="Tax Amount")
+            @i18n:Tooltip (en="Indicates the tax amount")
+            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=22.0, core=true, t24Name=TAX.AMT, typeModifiers="7.X")
+        TAX_ACC_AMT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=23.0, core=true, t24Name=TAX.ACC.AMT, typeModifiers="7.X")
+        TAX_LCY_AMT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=24.0, core=true, t24Name=TAX.LCY.AMT, typeModifiers="7.X")
+        PART_ID -> byValue SL_Fees:SL_CHARGE__CHG_CODE__PART_ID *
+        MANUAL : T24BusinessTypes:A
+            @i18n:Label (en="Charges are Manual")
+            @i18n:Tooltip (en="Charges are Manual")
+            @t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=29.0, core=true, t24Name=MANUAL)
+    }
+    SL_CHARGE__CHG_CODE__PART_ID
+    {
+        PART_ID -> ST_Customer:CUSTOMER
+            @i18n:Label (en="Participant Id")
+            @t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=25.0, core=true, businessType=CUS, t24Name=PART.ID)
+        PART_SHARE : T24BusinessTypes:R
+            @i18n:Label (en="Participant Share")
+            @t24:i (align=R, inputBehaviour=I, maxLength=13, sysNumber=26.0, core=true, t24Name=PART.SHARE, typeModifiers="7.X")
+        PART_CHG_AMT : T24BusinessTypes:AMT
+            @i18n:Label (en="Part Chg Amt")
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=27.0, core=true, t24Name=PART.CHG.AMT, typeModifiers="7.X")
+        PART_TAX_AMT : T24BusinessTypes:AMT
+            @i18n:Label (en="Part Tax Amt")
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=28.0, core=true, t24Name=PART.TAX.AMT, typeModifiers="7.X")
+    }
+    SL_CHARGE__DELIVERY_CUST
+    {
+        DELIVERY_CUST -> ST_Customer:CUSTOMER
+            @i18n:Label (en="Delivery Cust")
+            @i18n:Tooltip (en="Customer for whom delivery message is to be sent")
+            @t24:i (align=R, inputBehaviour=N, maxLength=10, sysNumber=30.0, core=true, businessType=CUS, t24Name=DELIVERY.CUST)
+        ACTIVITY_CODE -> EB_Delivery:EB_ACTIVITY
+            @i18n:Label (en="Activity Code")
+            @i18n:Tooltip (en="Indicates activity code")
+            @t24:i (align=L, inputBehaviour=N, maxLength=7, sysNumber=31.0, core=true, businessType=A, t24Name=ACTIVITY.CODE)
+        ACTIVITY_DATE : T24BusinessTypes:D
+            @i18n:Label (en="Activity Date")
+            @i18n:Tooltip (en="indicates the date on which activity is generated")
+            @t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=32.0, core=true, t24Name=ACTIVITY.DATE)
+        PRIOR_DAYS : T24BusinessTypes:N
+            @i18n:Label (en="Prior Days")
+            @i18n:Tooltip (en="Change product event on the date stated")
+            @t24:i (align=R, inputBehaviour=N, maxLength=3, sysNumber=33.0, core=true, t24Name=PRIOR.DAYS)
+        MSG_TYPE -> byValue SL_Fees:SL_CHARGE__DELIVERY_CUST__MSG_TYPE *
+    }
+    SL_CHARGE__DELIVERY_CUST__MSG_TYPE
+    {
+        MSG_TYPE -> DE_Config:DE_MESSAGE
+            @i18n:Label (en="Message Type")
+            @t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=34.0, core=true, businessType=A, t24Name=MSG.TYPE)
+        MSG_CLASS -> EB_Delivery:EB_MESSAGE_CLASS
+            @i18n:Label (en="Message Class")
+            @t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=35.0, core=true, businessType=A, t24Name=MSG.CLASS)
+        OVR_CARRIER -> DE_Config:DE_CARRIER
+            @i18n:Label (en="Delivery Mode")
+            @t24:i (align=L, inputBehaviour=N, maxLength=8, sysNumber=36.0, core=true, businessType=A, t24Name=OVR.CARRIER)
+        SEND_MSG : SL_Fees:SL_CHARGE__DELIVERY_CUST__MSG_TYPE__SEND_MSG
+            @i18n:Label (en="Send Msg")
+            @t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=37.0, core=true, t24Name=SEND.MSG)
+        MSG_DATE : T24BusinessTypes:D
+            @i18n:Label (en="Message Date")
+            @t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=38.0, core=true, t24Name=MSG.DATE)
+    }
+    SL_CHARGE__DELIVERY_REF
+    {
+        DELIVERY_REF : T24BusinessTypes:A
+            @i18n:Label (en="Delivery Ref")
+            @i18n:Tooltip (en="System generated Delivery ref key")
+            @t24:i (align=L, inputBehaviour=N, maxLength=46, sysNumber=39.0, core=true, t24Name=DELIVERY.REF)
+    }
+    SL_CHARGE__STMT_NO
+    {
+        STMT_NO : T24BusinessTypes:A
+            @i18n:Label (en="Statement number")
+            @t24:i (align=L, inputBehaviour=N, maxLength=29, sysNumber=50.0, core=true, t24Name=STMT.NO)
+    }
+    SL_CHARGE__OVERRIDE
+    {
+        OVERRIDE : T24BusinessTypes:A
+            @i18n:Label (en=Override)
+            @i18n:Tooltip (en="Overrides generated by this transaction")
+            @t24:i (align=L, inputBehaviour=E, maxLength=35, sysNumber=51.0, core=true, t24Name=OVERRIDE)
+    }
+    SL_CHARGE__INPUTTER
+    {
+        INPUTTER : T24BusinessTypes:A
+            @i18n:Label (en=Inputter)
+            @i18n:Tooltip (en="The user who last updated the record")
+            @t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=54.0, core=true, t24Name=INPUTTER)
+    }
+    SL_CHARGE__DATE_TIME
+    {
+        DATE_TIME : T24BusinessTypes:RELTIME
+            @i18n:Label (en="Date time")
+            @i18n:Tooltip (en="Date and time when record was input or authorised")
+            @t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=55.0, core=true, t24Name=DATE.TIME, mask="RDD DD  DD ##:##")
+    }
+    SL_CHARGE_ACTIVITY__DESCRIPTION
+    {
+        DESCRIPTION : T24BusinessTypes:A required
+            @i18n:Label (en=Description)
+            @i18n:Tooltip (en=Description)
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, multiLanguage=true, sysNumber=1.0, core=true, t24Name=DESCRIPTION)
+    }
+    SL_CHARGE_ACTIVITY__SHORT_DESCR
+    {
+        SHORT_DESCR : T24BusinessTypes:A required
+            @i18n:Label (en="Short Descr")
+            @t24:i (align=L, inputBehaviour=I, maxLength=15, multiLanguage=true, sysNumber=2.0, core=true, t24Name=SHORT.DESCR)
+    }
+    SL_CHARGE_ACTIVITY__CHG_TYPE
+    {
+        CHG_TYPE : T24BusinessTypes:A
+            @i18n:Label (en="Charge Type")
+            @i18n:Tooltip (en="Indicates what type of charge is being collected")
+            @t24:i (align=L, inputBehaviour=I, maxLength=11, sysNumber=3.0, core=true, t24Name=CHG.TYPE)
+        CHARGE_FREQ : T24BusinessTypes:FQF
+            @i18n:Label (en="Charge Frequency")
+            @i18n:Tooltip (en="Defines the frequency of debiting charges")
+            @t24:i (align=L, inputBehaviour=I, maxLength=19, sysNumber=4.0, core=true, t24Name=CHARGE.FREQ)
+        AMORT_CHARGE : SL_Fees:SL_CHARGE_ACTIVITY__CHG_TYPE__AMORT_CHARGE
+            @i18n:Label (en="Amortise Charges")
+            @t24:i (align=L, inputBehaviour=F, maxLength=3, sysNumber=5.0, core=true, t24Name=AMORT.CHARGE)
+        AMORT_PERIOD : T24BusinessTypes:A
+            @i18n:Label (en="Amortise Period")
+            @t24:i (align=L, inputBehaviour=I, maxLength=4, sysNumber=6.0, core=true, t24Name=AMORT.PERIOD)
+        AMORT_FREQ : T24BusinessTypes:FQF
+            @i18n:Label (en="Amortise Frequency")
+            @t24:i (align=L, inputBehaviour=I, maxLength=19, sysNumber=7.0, core=true, t24Name=AMORT.FREQ)
+        APPLY_TO_ALL : SL_Fees:SL_CHARGE_ACTIVITY__CHG_TYPE__APPLY_TO_ALL
+            @i18n:Label (en="Apply To All")
+            @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=8.0, core=true, t24Name=APPLY.TO.ALL)
+    }
+    SL_CHARGE_ACTIVITY__INPUTTER
+    {
+        INPUTTER : T24BusinessTypes:A
+            @i18n:Label (en=Inputter)
+            @i18n:Tooltip (en="The user who last updated the record")
+            @t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=11.0, core=true, t24Name=INPUTTER)
+    }
+    SL_CHARGE_ACTIVITY__DATE_TIME
+    {
+        DATE_TIME : T24BusinessTypes:RELTIME
+            @i18n:Label (en="Date time")
+            @i18n:Tooltip (en="Date and time when record was input or authorised")
+            @t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=12.0, core=true, t24Name=DATE.TIME, mask="RDD DD  DD ##:##")
+    }
+    SL_CHARGE_BALANCES__CHG_CODE
+    {
+        CHG_CODE : T24BusinessTypes:A
+            @i18n:Label (en="Charge Code")
+            @i18n:Tooltip (en="Charge Code")
+            @t24:i (align=L, inputBehaviour=I, maxLength=11, sysNumber=1.0, core=true, t24Name=CHG.CODE)
+        CHG_CURRENCY : T24BusinessTypes:CCY
+            @i18n:Label (en="Chg Currency")
+            @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=2.0, core=true, t24Name=CHG.CURRENCY)
+        TOT_CHRG_AMT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=3.0, core=true, t24Name=TOT.CHRG.AMT, typeModifiers="2.X")
+        TAX_CODE : T24BusinessTypes:A
+            @i18n:Label (en="Tax Code")
+            @t24:i (align=L, inputBehaviour=I, maxLength=11, sysNumber=4.0, core=true, t24Name=TAX.CODE)
+        TAX_CURRENCY : T24BusinessTypes:CCY
+            @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=5.0, core=true, t24Name=TAX.CURRENCY)
+        TAX_AMT : T24BusinessTypes:AMT
+            @i18n:Label (en="Tax Amount")
+            @i18n:Tooltip (en="Indicates the tax amount")
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=6.0, core=true, t24Name=TAX.AMT, typeModifiers="5.X")
+        PART_ID -> byValue SL_Fees:SL_CHARGE_BALANCES__CHG_CODE__PART_ID *
+    }
+    SL_CHARGE_BALANCES__CHG_CODE__PART_ID
+    {
+        PART_ID : T24BusinessTypes:CUS
+            @i18n:Label (en="Participant Id")
+            @t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=7.0, core=true, t24Name=PART.ID)
+        PART_CHG_AMT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=8.0, core=true, t24Name=PART.CHG.AMT, typeModifiers="2.X")
+        PART_TAX_AMT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=9.0, core=true, t24Name=PART.TAX.AMT, typeModifiers="2.X")
+        CATEG_CODE : T24BusinessTypes:CAT
+            @t24:i (align=L, inputBehaviour=I, maxLength=5, sysNumber=10.0, core=true, t24Name=CATEG.CODE)
+        TOT_AMRT_PRD : mml:Integer
+            @t24:i (align=R, inputBehaviour=I, maxLength=4, sysNumber=11.0, core=true, t24Name=TOT.AMRT.PRD)
+        TOT_AMRT_AMT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=12.0, core=true, t24Name=TOT.AMRT.AMT, typeModifiers="2.X")
+        MTH_AMRT_AMT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=13.0, core=true, t24Name=MTH.AMRT.AMT, typeModifiers="2.X")
+        BAL_AMRT_PRD : mml:Integer
+            @t24:i (align=R, inputBehaviour=I, maxLength=4, sysNumber=14.0, core=true, t24Name=BAL.AMRT.PRD)
+        BAL_AMRT_AMT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=15.0, core=true, t24Name=BAL.AMRT.AMT, typeModifiers="2.X")
+        NXT_AMRT_DTE : T24BusinessTypes:D
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=16.0, core=true, t24Name=NXT.AMRT.DTE)
+        END_AMRT_DTE : T24BusinessTypes:D
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=17.0, core=true, t24Name=END.AMRT.DTE)
+    }
 }
 Enumerations {
-	SL_CHARGE__CHG_CODE__APPLY_TO_ALL : mml:string
-		YES=YES
-		NO=NO
-	SL_CHARGE__CHG_CODE__CHG_CALC_BASIS : mml:string
-		FACILITY_ORIG=FACILITY.ORIG
-		FACILITY_OS=FACILITY.OS
-		LOAN_ORIG=LOAN.ORIG
-		LOAN_OS=LOAN.OS
-		PART_SHARE=PART.SHARE
-		ADHOC=ADHOC
-	SL_CHARGE__CHG_CODE__AMORT_CHARGE : mml:string
-		YES=YES
-		NO=NO
-	SL_CHARGE__DELIVERY_CUST__MSG_TYPE__SEND_MSG : mml:string
-		NO=NO
-		NULL=NULL
-	SL_CHARGE_ACTIVITY__CHG_TYPE__AMORT_CHARGE : mml:string
-		YES=YES
-		NO=NO
-	SL_CHARGE_ACTIVITY__CHG_TYPE__APPLY_TO_ALL : mml:string
-		YES=YES
-		NO=NO
+    SL_CHARGE_ACTIVITY__CHG_TYPE__AMORT_CHARGE : mml:string
+        
+        YES=YES
+        NO=NO
+    SL_CHARGE_ACTIVITY__CHG_TYPE__APPLY_TO_ALL : mml:string
+        
+        YES=YES
+        NO=NO
+    SL_CHARGE__CHG_CODE__APPLY_TO_ALL : mml:string
+        
+        YES=YES
+        NO=NO
+    SL_CHARGE__CHG_CODE__CHG_CALC_BASIS : mml:string
+        
+        
+        
+        
+        
+        FACILITY_ORIG=FACILITY.ORIG
+        FACILITY_OS=FACILITY.OS
+        LOAN_ORIG=LOAN.ORIG
+        LOAN_OS=LOAN.OS
+        PART_SHARE=PART.SHARE
+        ADHOC=ADHOC
+    SL_CHARGE__CHG_CODE__AMORT_CHARGE : mml:string
+        
+        YES=YES
+        NO=NO
+    SL_CHARGE__DELIVERY_CUST__MSG_TYPE__SEND_MSG : mml:string
+        
+        
+NO=NO
+        NULL=NULL
 }

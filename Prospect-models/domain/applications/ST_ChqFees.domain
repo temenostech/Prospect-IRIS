@@ -1,0 +1,253 @@
+# UTF-8
+/* Charge processing for cheques */
+Domain ST_ChqFees
+    @t24:i (module=ST)
+    @java:Package (value=com.temenos.t24.datamodel.st.st_chqfees)
+namespace "http://www.temenos.com/t24/ST_ChqFees"
+metamodelVersion 1.30.6
+Classes {
+    CHEQUE_CHARGE
+        @i18n:Description (en="")
+        @t24:i (t24Name=CHEQUE.CHARGE, level=F, type=H, allowedFunctions="A C D E H I L P Q R S", localRefAllowed=true)
+    {
+        CHEQUE_TYPE -> ST_ChqFees:CHEQUE_CHARGE PK required
+            @i18n:Label (en="Cheque Type")
+            @t24:i (align=L, inputBehaviour=I, maxLength=4, sysNumber=0.0, core=true, businessType=A, t24Name=CHEQUE.TYPE)
+        PL_CATEGORY -> ST_Config:CATEGORY required
+            @i18n:Label (en="PL Category")
+            @t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=1.0, core=true, t24Name=PL.CATEGORY, mask="R##-###")
+        TRANSACTION_DR -> ST_Config:TRANSACTION required
+            @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=2.0, core=true, businessType=A, t24Name=TRANSACTION.DR)
+        TRANSACTION_CR -> ST_Config:TRANSACTION required
+            @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=3.0, core=true, businessType=A, t24Name=TRANSACTION.CR)
+        FLAT_ISSUE_CHG : T24BusinessTypes:AMT
+            @i18n:Label (en="Flat Issue Chg")
+            @i18n:Tooltip (en="Indicates flat charges for cheque issue")
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=4.0, core=true, t24Name=FLAT.ISSUE.CHG, typeModifiers="USD")
+        ISSUE_BAND_LEVEL : ST_ChqFees:CHEQUE_CHARGE__ISSUE_BAND_LEVEL required
+            @i18n:Label (en="Issue Band Level")
+            @i18n:Tooltip (en="Calculation of charges on a banded or level basis")
+            @t24:i (align=L, inputBehaviour=I, maxLength=5, sysNumber=5.0, core=true, t24Name=ISSUE.BAND.LEVEL)
+        ISSUE_UPTO -> byValue ST_ChqFees:CHEQUE_CHARGE__ISSUE_UPTO *
+        ISSUE_START_DATE : T24BusinessTypes:DDMM
+            @t24:i (align=R, inputBehaviour=I, maxLength=17, sysNumber=8.0, core=true, t24Name=ISSUE.START.DATE)
+        ISSUE_CHG_FQU : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=I, maxLength=5, sysNumber=9.0, core=true, t24Name=ISSUE.CHG.FQU)
+        FLAT_PERIOD_CHG : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=10.0, core=true, t24Name=FLAT.PERIOD.CHG, typeModifiers="USD")
+        PERIOD_BAND_LEVEL : ST_ChqFees:CHEQUE_CHARGE__PERIOD_BAND_LEVEL
+            @i18n:Label (en="Period Band Level")
+            @i18n:Tooltip (en="Period Band Level")
+            @t24:i (align=L, inputBehaviour=I, maxLength=5, sysNumber=11.0, core=true, t24Name=PERIOD.BAND.LEVEL)
+        PERIOD_UPTO -> byValue ST_ChqFees:CHEQUE_CHARGE__PERIOD_UPTO *
+        PERIOD_CHG_CYCLE : T24BusinessTypes:FQU
+            @i18n:Label (en="Period Chg Cycle")
+            @i18n:Tooltip (en="Period Charge Cycle")
+            @t24:i (align=L, inputBehaviour=I, maxLength=17, sysNumber=14.0, core=true, t24Name=PERIOD.CHG.CYCLE, mask="RDD DDD DDDD #####")
+        PERIOD_CHG_FQU : T24BusinessTypes:A
+            @i18n:Label (en="Period Chg Fqu")
+            @i18n:Tooltip (en="Period Charge Fqu")
+            @t24:i (align=L, inputBehaviour=I, maxLength=5, sysNumber=15.0, core=true, t24Name=PERIOD.CHG.FQU)
+        CURRENCY_MARKET -> ST_CurrencyConfig:CURRENCY_MARKET
+            @i18n:Label (en=Market)
+            @t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=16.0, core=true, t24Name=CURRENCY.MARKET)
+        RATE_TYPE : ST_ChqFees:CHEQUE_CHARGE__RATE_TYPE
+            @i18n:Label (en="Rate Type")
+            @i18n:Tooltip (en="Is the Rate quoted net of tax or gross of tax")
+            @t24:i (align=L, inputBehaviour=I, maxLength=4, sysNumber=17.0, core=true, t24Name=RATE.TYPE)
+        CHEQUE_STATUS -> byValue ST_ChqFees:CHEQUE_CHARGE__CHEQUE_STATUS *
+        RESERVED5 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=21.0, core=true, t24Name=RESERVED5)
+        RESERVED4 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=22.0, core=true, t24Name=RESERVED4)
+        RESERVED3 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=23.0, core=true, t24Name=RESERVED3)
+        RESERVED2 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=24.0, core=true, t24Name=RESERVED2)
+        RESERVED1 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=25.0, core=true, t24Name=RESERVED1)
+        RECORD_STATUS : T24BusinessTypes:STAT
+            @i18n:Label (en="Record Status")
+            @t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=26.0, core=true, t24Name=RECORD.STATUS)
+        CURR_NO : T24BusinessTypes:N
+            @i18n:Label (en="Curr No")
+            @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=27.0, core=true, t24Name=CURR.NO)
+        INPUTTER -> byValue ST_ChqFees:CHEQUE_CHARGE__INPUTTER *
+        DATE_TIME -> byValue ST_ChqFees:CHEQUE_CHARGE__DATE_TIME *
+        AUTHORISER : T24BusinessTypes:A
+            @i18n:Label (en=Authoriser)
+            @i18n:Tooltip (en="Indicates the User who Authorises the record")
+            @t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=30.0, core=true, t24Name=AUTHORISER)
+        CO_CODE -> ST_CompanyCreation:COMPANY
+            @i18n:Label (en=Company)
+            @t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=31.0, core=true, businessType=A, t24Name=CO.CODE, mask="R##-###-####")
+        DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+            @i18n:Label (en="Dept Code")
+            @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=32.0, core=true, t24Name=DEPT.CODE)
+        AUDITOR_CODE : T24BusinessTypes:A
+            @i18n:Label (en="Auditor Code")
+            @i18n:Tooltip (en="Auditor Code")
+            @t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=33.0, core=true, t24Name=AUDITOR.CODE)
+        AUDIT_DATE_TIME : T24BusinessTypes:RELTIME
+            @i18n:Label (en="Audit Date Time")
+            @i18n:Tooltip (en="Date and time when record was audited")
+            @t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=34.0, core=true, t24Name=AUDIT.DATE.TIME, mask="RDD DD  DD ##:##")
+    }
+    CHEQUE_CHARGE__ISSUE_UPTO
+    {
+        ISSUE_UPTO : mml:Integer
+            @i18n:Label (en="Issue Upto")
+            @i18n:Tooltip (en="Issue Upto")
+            @t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=6.0, core=true, t24Name=ISSUE.UPTO)
+        ISSUE_CHG_AMT : T24BusinessTypes:AMT
+            @i18n:Label (en="Issue Chg Amt")
+            @i18n:Tooltip (en="Indicates the amount per cheque to be charged")
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=7.0, core=true, t24Name=ISSUE.CHG.AMT, typeModifiers="USD")
+    }
+    CHEQUE_CHARGE__PERIOD_UPTO
+    {
+        PERIOD_UPTO : mml:Integer
+            @i18n:Label (en="Period Upto")
+            @i18n:Tooltip (en="Period Upto")
+            @t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=12.0, core=true, t24Name=PERIOD.UPTO)
+        PERIOD_CHG_AMT : T24BusinessTypes:AMT
+            @i18n:Label (en="Period Charge Amt")
+            @i18n:Tooltip (en="Period Charge Amt")
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=13.0, core=true, t24Name=PERIOD.CHG.AMT, typeModifiers="USD")
+    }
+    CHEQUE_CHARGE__CHEQUE_STATUS
+    {
+        CHEQUE_STATUS -> ST_ChqConfig:CHEQUE_STATUS
+            @t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=18.0, core=true, businessType=A, t24Name=CHEQUE.STATUS)
+        CHARGE_CODE -> byValue ST_ChqFees:CHEQUE_CHARGE__CHEQUE_STATUS__CHARGE_CODE *
+    }
+    CHEQUE_CHARGE__CHEQUE_STATUS__CHARGE_CODE
+    {
+        CHARGE_CODE : T24BusinessTypes:CHG
+            @i18n:Label (en="Charge Code")
+            @i18n:Tooltip (en="Indicates the Charge code")
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=19.0, core=true, t24Name=CHARGE.CODE, typeModifiers="CHGCOM")
+    }
+    CHEQUE_CHARGE__INPUTTER
+    {
+        INPUTTER : T24BusinessTypes:A
+            @i18n:Label (en=Inputter)
+            @i18n:Tooltip (en="The user who last updated the record")
+            @t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=28.0, core=true, t24Name=INPUTTER)
+    }
+    CHEQUE_CHARGE__DATE_TIME
+    {
+        DATE_TIME : T24BusinessTypes:RELTIME
+            @i18n:Label (en="Date time")
+            @i18n:Tooltip (en="Date and time when record was input or authorised")
+            @t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=29.0, core=true, t24Name=DATE.TIME, mask="RDD DD  DD ##:##")
+    }
+    CHEQUE_CHARGE_BAL_HOLD
+        @i18n:Description (en="")
+        @t24:i (t24Name=CHEQUE.CHARGE.BAL.HOLD, level=F, type=L, additionalInfo=GUI, allowedFunctions="L P S", localRefAllowed=false)
+    {
+        CHEQUE_BAL_ID -> ST_ChqFees:CHEQUE_CHARGE_BAL_HOLD PK required
+            @t24:i (align=L, inputBehaviour=I, maxLength=47, sysNumber=0.0, core=true, businessType=A, t24Name=CHEQUE.BAL.ID)
+        CHEQUE_STATUS -> byValue ST_ChqFees:CHEQUE_CHARGE_BAL_HOLD__CHEQUE_STATUS *
+    }
+    CHEQUE_CHARGE_BAL_HOLD__CHEQUE_STATUS
+    {
+        CHEQUE_STATUS : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=2, sysNumber=1.0, core=true, t24Name=CHEQUE.STATUS)
+        STATUS_DATE : T24BusinessTypes:D
+            @i18n:Label (en="Status Date")
+            @t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=2.0, core=true, t24Name=STATUS.DATE)
+        CHRG_ACCOUNT : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=16, sysNumber=3.0, core=true, t24Name=CHRG.ACCOUNT)
+        CHRG_CCY : T24BusinessTypes:N
+            @i18n:Label (en="Charge Currency")
+            @t24:i (align=R, inputBehaviour=N, maxLength=3, sysNumber=4.0, core=true, t24Name=CHRG.CCY)
+        EXCH_RATE : T24BusinessTypes:AMT
+            @i18n:Label (en="Exchange Rate")
+            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=5.0, core=true, t24Name=EXCH.RATE)
+        CHRG_CODE -> byValue ST_ChqFees:CHEQUE_CHARGE_BAL_HOLD__CHEQUE_STATUS__CHRG_CODE *
+        TAX_CODE -> byValue ST_ChqFees:CHEQUE_CHARGE_BAL_HOLD__CHEQUE_STATUS__TAX_CODE *
+    }
+    CHEQUE_CHARGE_BAL_HOLD__CHEQUE_STATUS__CHRG_CODE
+    {
+        CHRG_CODE : T24BusinessTypes:A
+            @i18n:Label (en="Charge Code")
+            @t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=6.0, core=true, t24Name=CHRG.CODE)
+        CHRG_LCY_AMT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=7.0, core=true, t24Name=CHRG.LCY.AMT, typeModifiers="USD")
+        CHRG_FCY_AMT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=8.0, core=true, t24Name=CHRG.FCY.AMT)
+        CHRG_DATE : T24BusinessTypes:D
+            @t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=9.0, core=true, t24Name=CHRG.DATE)
+    }
+    CHEQUE_CHARGE_BAL_HOLD__CHEQUE_STATUS__TAX_CODE
+    {
+        TAX_CODE : T24BusinessTypes:A
+            @i18n:Label (en="Tax Code")
+            @t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=10.0, core=true, t24Name=TAX.CODE)
+        TAX_LCY_AMT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=11.0, core=true, t24Name=TAX.LCY.AMT, typeModifiers="USD")
+        TAX_FCY_AMT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=12.0, core=true, t24Name=TAX.FCY.AMT)
+    }
+    CHEQUE_CHARGE_BAL
+        @i18n:Description (en="")
+        @t24:i (t24Name=CHEQUE.CHARGE.BAL, level=F, type=L, additionalInfo=GUI, allowedFunctions="L P S", localRefAllowed=false)
+    {
+        CHEQUE_BAL_ID -> ST_ChqFees:CHEQUE_CHARGE_BAL PK required
+            @t24:i (align=L, inputBehaviour=I, maxLength=47, sysNumber=0.0, core=true, businessType=A, t24Name=CHEQUE.BAL.ID)
+        CHEQUE_STATUS -> byValue ST_ChqFees:CHEQUE_CHARGE_BAL__CHEQUE_STATUS *
+    }
+    CHEQUE_CHARGE_BAL__CHEQUE_STATUS
+    {
+        CHEQUE_STATUS : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=2, sysNumber=1.0, core=true, t24Name=CHEQUE.STATUS)
+        STATUS_DATE : T24BusinessTypes:D
+            @i18n:Label (en="Status Date")
+            @t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=2.0, core=true, t24Name=STATUS.DATE)
+        CHRG_ACCOUNT : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=16, sysNumber=3.0, core=true, t24Name=CHRG.ACCOUNT)
+        CHRG_CCY : T24BusinessTypes:N
+            @i18n:Label (en="Charge Currency")
+            @t24:i (align=R, inputBehaviour=N, maxLength=3, sysNumber=4.0, core=true, t24Name=CHRG.CCY)
+        EXCH_RATE : T24BusinessTypes:AMT
+            @i18n:Label (en="Exchange Rate")
+            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=5.0, core=true, t24Name=EXCH.RATE)
+        CHRG_CODE -> byValue ST_ChqFees:CHEQUE_CHARGE_BAL__CHEQUE_STATUS__CHRG_CODE *
+        TAX_CODE -> byValue ST_ChqFees:CHEQUE_CHARGE_BAL__CHEQUE_STATUS__TAX_CODE *
+    }
+    CHEQUE_CHARGE_BAL__CHEQUE_STATUS__CHRG_CODE
+    {
+        CHRG_CODE : T24BusinessTypes:A
+            @i18n:Label (en="Charge Code")
+            @t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=6.0, core=true, t24Name=CHRG.CODE)
+        CHRG_LCY_AMT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=7.0, core=true, t24Name=CHRG.LCY.AMT, typeModifiers="USD")
+        CHRG_FCY_AMT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=8.0, core=true, t24Name=CHRG.FCY.AMT)
+        CHRG_DATE : T24BusinessTypes:D
+            @t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=9.0, core=true, t24Name=CHRG.DATE)
+    }
+    CHEQUE_CHARGE_BAL__CHEQUE_STATUS__TAX_CODE
+    {
+        TAX_CODE : T24BusinessTypes:A
+            @i18n:Label (en="Tax Code")
+            @t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=10.0, core=true, t24Name=TAX.CODE)
+        TAX_LCY_AMT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=11.0, core=true, t24Name=TAX.LCY.AMT, typeModifiers="USD")
+        TAX_FCY_AMT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=12.0, core=true, t24Name=TAX.FCY.AMT)
+    }
+}
+Enumerations {
+    CHEQUE_CHARGE__ISSUE_BAND_LEVEL : mml:string
+        BAND=BAND
+        LEVEL=LEVEL
+    CHEQUE_CHARGE__PERIOD_BAND_LEVEL : mml:string
+        BAND=BAND
+        LEVEL=LEVEL
+    CHEQUE_CHARGE__RATE_TYPE : mml:string
+        BUY=BUY
+        MID=MID
+        SELL=SELL
+}

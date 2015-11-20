@@ -1,0 +1,224 @@
+# UTF-8
+/* Balance Aggregation for Regulatory Reporting */
+Domain ST_BalanceAggregation
+    @t24:i (module=ST)
+    @java:Package (value=com.temenos.t24.datamodel.st.st_balanceaggregation)
+namespace "http://www.temenos.com/t24/ST_BalanceAggregation"
+metamodelVersion 1.30.6
+Classes {
+    ST_AGGREGATION_PARAM
+        @i18n:Description (en="")
+        @t24:i (t24Name=ST.AGGREGATION.PARAM, level=I, type=H, allowedFunctions="A C D E H I L P Q R S", localRefAllowed=true)
+    {
+        ST_AGGR_PARAM_ID -> ST_BalanceAggregation:ST_AGGREGATION_PARAM PK required
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=0.0, core=true, businessType=A, t24Name=ST.AGGR.PARAM.ID)
+        RELATION_LEVEL : ST_BalanceAggregation:ST_AGGREGATION_PARAM__RELATION_LEVEL required
+            @t24:i (align=L, inputBehaviour=I, maxLength=10, sysNumber=1.0, core=true, t24Name=RELATION.LEVEL)
+        RELATION_CODE -> byValue ST_BalanceAggregation:ST_AGGREGATION_PARAM__RELATION_CODE *
+        EXCLD_FOR_ACCT_AGG -> byValue ST_BalanceAggregation:ST_AGGREGATION_PARAM__EXCLD_FOR_ACCT_AGG *
+        EXC_RULE_APPL -> byValue ST_BalanceAggregation:ST_AGGREGATION_PARAM__EXC_RULE_APPL *
+        ENT_CUST_FIELD -> byValue ST_BalanceAggregation:ST_AGGREGATION_PARAM__ENT_CUST_FIELD *
+        ACCT_AGGR_RTN -> EB_SystemTables:EB_API
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=11.0, core=true, businessType=A, t24Name=ACCT.AGGR.RTN)
+        BALANCE_BUILD_RTN -> EB_SystemTables:EB_API
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=12.0, core=true, businessType=A, t24Name=BALANCE.BUILD.RTN)
+        RESERVED_10 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=13.0, core=true, t24Name=RESERVED.10)
+        RESERVED_09 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=14.0, core=true, t24Name=RESERVED.09)
+        RESERVED_08 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=15.0, core=true, t24Name=RESERVED.08)
+        RESERVED_07 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=16.0, core=true, t24Name=RESERVED.07)
+        RESERVED_06 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=17.0, core=true, t24Name=RESERVED.06)
+        RESERVED_05 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=18.0, core=true, t24Name=RESERVED.05)
+        RESERVED_04 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=19.0, core=true, t24Name=RESERVED.04)
+        RESERVED_03 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=20.0, core=true, t24Name=RESERVED.03)
+        OVERRIDE -> byValue ST_BalanceAggregation:ST_AGGREGATION_PARAM__OVERRIDE *
+        RECORD_STATUS : T24BusinessTypes:STAT
+            @i18n:Label (en="Record Status")
+            @t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=23.0, core=true, t24Name=RECORD.STATUS)
+        CURR_NO : T24BusinessTypes:N
+            @i18n:Label (en="Curr No")
+            @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=24.0, core=true, t24Name=CURR.NO)
+        INPUTTER -> byValue ST_BalanceAggregation:ST_AGGREGATION_PARAM__INPUTTER *
+        DATE_TIME -> byValue ST_BalanceAggregation:ST_AGGREGATION_PARAM__DATE_TIME *
+        AUTHORISER : T24BusinessTypes:A
+            @i18n:Label (en=Authoriser)
+            @i18n:Tooltip (en="Indicates the User who Authorises the record")
+            @t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=27.0, core=true, t24Name=AUTHORISER)
+        CO_CODE -> ST_CompanyCreation:COMPANY
+            @i18n:Label (en=Company)
+            @t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=28.0, core=true, businessType=A, t24Name=CO.CODE, mask="R##-###-####")
+        DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+            @i18n:Label (en="Dept Code")
+            @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=29.0, core=true, t24Name=DEPT.CODE)
+        AUDITOR_CODE : T24BusinessTypes:A
+            @i18n:Label (en="Auditor Code")
+            @i18n:Tooltip (en="Auditor Code")
+            @t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=30.0, core=true, t24Name=AUDITOR.CODE)
+        AUDIT_DATE_TIME : T24BusinessTypes:RELTIME
+            @i18n:Label (en="Audit Date Time")
+            @i18n:Tooltip (en="Date and time when record was audited")
+            @t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=31.0, core=true, t24Name=AUDIT.DATE.TIME, mask="RDD DD  DD ##:##")
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    ST_AGGREGATE_BALANCES
+        @i18n:Description (en="")
+        @t24:i (t24Name=ST.AGGREGATE.BALANCES, level=C, type=L, allowedFunctions="L P S", localRefAllowed=false)
+    {
+        ST_REG_CUST_ID -> ST_BalanceAggregation:ST_AGGREGATE_BALANCES PK required
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=0.0, core=true, businessType=A, t24Name=ST.REG.CUST.ID)
+        CUSTOMER_TYPE : T24BusinessTypes:AAA
+            @i18n:Label (en="Customer Type")
+            @t24:i (align=L, inputBehaviour=I, maxLength=12, sysNumber=1.0, core=true, t24Name=CUSTOMER.TYPE)
+        SECTOR : mml:Integer
+            @i18n:Label (en=Sector)
+            @i18n:Tooltip (en="Indicates the sector")
+            @t24:i (align=R, inputBehaviour=I, maxLength=4, sysNumber=2.0, core=true, t24Name=SECTOR)
+        INDUSTRY : mml:Integer
+            @i18n:Label (en=Industry)
+            @i18n:Tooltip (en="Indicates the Industry")
+            @t24:i (align=R, inputBehaviour=I, maxLength=4, sysNumber=3.0, core=true, t24Name=INDUSTRY)
+        CUSTOMER_STATUS : mml:Integer
+            @i18n:Label (en="Customer status")
+            @t24:i (align=R, inputBehaviour=I, maxLength=4, sysNumber=4.0, core=true, t24Name=CUSTOMER.STATUS)
+        RELATED_CUSTOMER -> byValue ST_BalanceAggregation:ST_AGGREGATE_BALANCES__RELATED_CUSTOMER *
+        ACCT_PORTFOLIO_NO -> byValue ST_BalanceAggregation:ST_AGGREGATE_BALANCES__ACCT_PORTFOLIO_NO *
+        TOT_AC_BAL_DEP_RCY : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=16.0, core=true, t24Name=TOT.AC.BAL.DEP.RCY)
+        TOT_AC_BAL_DEP_LCY : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=17.0, core=true, t24Name=TOT.AC.BAL.DEP.LCY)
+        TOT_AC_BAL_CUS_RCY : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=18.0, core=true, t24Name=TOT.AC.BAL.CUS.RCY)
+        TOT_AC_BAL_CUS_LCY : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=19.0, core=true, t24Name=TOT.AC.BAL.CUS.LCY)
+        INDIVIDUAL_ENTITY : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=I, maxLength=10, sysNumber=20.0, core=true, t24Name=INDIVIDUAL.ENTITY)
+        BALANCE_STATUS : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=I, maxLength=10, sysNumber=21.0, core=true, t24Name=BALANCE.STATUS)
+    }
+    
+    
+ST_AGGREGATION_PARAM__RELATION_CODE
+    {
+        RELATION_CODE -> ST_Customer:RELATION
+            @i18n:Label (en="Relation code")
+            @t24:i (align=R, inputBehaviour=I, maxLength=35, sysNumber=2.0, core=true, t24Name=RELATION.CODE)
+    }
+    ST_AGGREGATION_PARAM__EXCLD_FOR_ACCT_AGG
+    {
+        EXCLD_FOR_ACCT_AGG -> ST_Config:CATEGORY
+            @t24:i (align=L, inputBehaviour=I, maxLength=6, sysNumber=3.0, core=true, businessType=CAT, t24Name=EXCLD.FOR.ACCT.AGG)
+    }
+    ST_AGGREGATION_PARAM__EXC_RULE_APPL
+    {
+        EXC_RULE_APPL : ST_BalanceAggregation:ST_AGGREGATION_PARAM__EXC_RULE_APPL__EXC_RULE_APPL
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=4.0, core=true, t24Name=EXC.RULE.APPL)
+        EXC_RULE_FIELD : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=5.0, core=true, t24Name=EXC.RULE.FIELD)
+        EXC_RULE_OPERAND : ST_BalanceAggregation:ST_AGGREGATION_PARAM__EXC_RULE_APPL__EXC_RULE_OPERAND
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=6.0, core=true, t24Name=EXC.RULE.OPERAND)
+        EXC_RULE_VALUE -> byValue ST_BalanceAggregation:ST_AGGREGATION_PARAM__EXC_RULE_APPL__EXC_RULE_VALUE *
+    }
+    ST_AGGREGATION_PARAM__EXC_RULE_APPL__EXC_RULE_VALUE
+    {
+        EXC_RULE_VALUE : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=7.0, core=true, t24Name=EXC.RULE.VALUE)
+    }
+    ST_AGGREGATION_PARAM__ENT_CUST_FIELD
+    {
+        ENT_CUST_FIELD : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=8.0, core=true, t24Name=ENT.CUST.FIELD)
+        ENT_CUST_OPERAND : ST_BalanceAggregation:ST_AGGREGATION_PARAM__ENT_CUST_FIELD__ENT_CUST_OPERAND
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=9.0, core=true, t24Name=ENT.CUST.OPERAND)
+        ENT_CUST_VALUE -> byValue ST_BalanceAggregation:ST_AGGREGATION_PARAM__ENT_CUST_FIELD__ENT_CUST_VALUE *
+    }
+    ST_AGGREGATION_PARAM__ENT_CUST_FIELD__ENT_CUST_VALUE
+    {
+        ENT_CUST_VALUE : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=10.0, core=true, t24Name=ENT.CUST.VALUE)
+    }
+    ST_AGGREGATION_PARAM__OVERRIDE
+    {
+        OVERRIDE : T24BusinessTypes:N
+            @i18n:Label (en=Override)
+            @i18n:Tooltip (en="Overrides generated by this transaction")
+            @t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=22.0, core=true, t24Name=OVERRIDE)
+    }
+    ST_AGGREGATION_PARAM__INPUTTER
+    {
+        INPUTTER : T24BusinessTypes:A
+            @i18n:Label (en=Inputter)
+            @i18n:Tooltip (en="The user who last updated the record")
+            @t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=25.0, core=true, t24Name=INPUTTER)
+    }
+    ST_AGGREGATION_PARAM__DATE_TIME
+    {
+        DATE_TIME : T24BusinessTypes:RELTIME
+            @i18n:Label (en="Date time")
+            @i18n:Tooltip (en="Date and time when record was input or authorised")
+            @t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=26.0, core=true, t24Name=DATE.TIME, mask="RDD DD  DD ##:##")
+    }
+    ST_AGGREGATE_BALANCES__RELATED_CUSTOMER
+    {
+        RELATED_CUSTOMER : T24BusinessTypes:CUS
+            @t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=5.0, core=true, t24Name=RELATED.CUSTOMER)
+        RELATION_CODE : mml:Integer
+            @i18n:Label (en="Relation code")
+            @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=6.0, core=true, t24Name=RELATION.CODE)
+    }
+    ST_AGGREGATE_BALANCES__ACCT_PORTFOLIO_NO
+    {
+        ACCT_PORTFOLIO_NO : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=I, maxLength=19, sysNumber=7.0, core=true, t24Name=ACCT.PORTFOLIO.NO)
+        ACCOUNT_TYPE : T24BusinessTypes:A
+            @i18n:Label (en="Account Type")
+            @t24:i (align=L, inputBehaviour=I, maxLength=10, sysNumber=8.0, core=true, t24Name=ACCOUNT.TYPE)
+        JOINT_OWNER : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=9.0, core=true, t24Name=JOINT.OWNER)
+        JOINT_OWN_REL_CODE : mml:Integer
+            @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=10.0, core=true, t24Name=JOINT.OWN.REL.CODE)
+        ACC_PORTFOLIO_CCY : T24BusinessTypes:CCY
+            @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=11.0, core=true, t24Name=ACC.PORTFOLIO.CCY)
+        ACC_BALANCE : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=12.0, core=true, t24Name=ACC.BALANCE)
+        ACC_EXCH_RATE : T24BusinessTypes:R
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=13.0, core=true, t24Name=ACC.EXCH.RATE)
+        ACC_REPORTING_CCY : T24BusinessTypes:CCY
+            @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=14.0, core=true, t24Name=ACC.REPORTING.CCY)
+        ACC_BAL_IN_REP_CCY : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=15.0, core=true, t24Name=ACC.BAL.IN.REP.CCY)
+    }
+}
+Enumerations {
+    ST_AGGREGATION_PARAM__RELATION_LEVEL : mml:string
+        
+        CUSTOMER=CUSTOMER
+        ACCOUNT=ACCOUNT
+    ST_AGGREGATION_PARAM__EXC_RULE_APPL__EXC_RULE_APPL : mml:string
+        
+        SEC_ACC_MASTER=SEC.ACC.MASTER
+        NULL=NULL
+    ST_AGGREGATION_PARAM__EXC_RULE_APPL__EXC_RULE_OPERAND : mml:string
+        
+        EQ=EQ
+        NE=NE
+    ST_AGGREGATION_PARAM__ENT_CUST_FIELD__ENT_CUST_OPERAND : mml:string
+        
+        
+EQ=EQ
+        NE=NE
+}

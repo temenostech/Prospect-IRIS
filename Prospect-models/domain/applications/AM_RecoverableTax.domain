@@ -1,85 +1,87 @@
 # UTF-8
 /* Recoverable Tax Calculations */
 Domain AM_RecoverableTax
-	@t24:i (module=AM)
-	@java:Package (value=com.temenos.t24.datamodel.am.am_recoverabletax)
+    @t24:i (module=AM)
+    @java:Package (value=com.temenos.t24.datamodel.am.am_recoverabletax)
 namespace "http://www.temenos.com/t24/AM_RecoverableTax"
 metamodelVersion 1.30.6
 Classes {
-	AM_REC_RESET_LOG
-		@t24:i (t24Name=AM.REC.RESET.LOG, level=F, type=L, allowedFunctions="L P S", localRefAllowed=false)
-	{
-		AM_REC_LOG_ID -> AM_RecoverableTax:AM_REC_RESET_LOG PK required
-			@t24:i (align=L, inputBehaviour=I, maxLength=50, sysNumber=0.0, core=true, businessType=A, t24Name=AM.REC.LOG.ID)
-		REC_TAX_CUM_AMT : T24BusinessTypes:AMT
-			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=1.0, core=true, t24Name=REC.TAX.CUM.AMT)
-		LAST_RESET_DATE : T24BusinessTypes:D
-			@t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=2.0, core=true, t24Name=LAST.RESET.DATE)
-		LAST_RESET_AMT : T24BusinessTypes:AMT
-			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=3.0, core=true, t24Name=LAST.RESET.AMT)
-		PREV_RESET_DATE -> byValue AM_RecoverableTax:AM_REC_RESET_LOG__PREV_RESET_DATE *
-	}
-	AM_REC_RESET_LOG__PREV_RESET_DATE
-	{
-		PREV_RESET_DATE : T24BusinessTypes:D
-			@t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=4.0, core=true, t24Name=PREV.RESET.DATE)
-		PREV_RESET_AMT : T24BusinessTypes:AMT
-			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=5.0, core=true, t24Name=PREV.RESET.AMT)
-	}
-	AM_REC_TAX_RESET
-		@t24:i (t24Name=AM.REC.TAX.RESET, level=I, type=H, allowedFunctions="A C D E H I L P Q R S", localRefAllowed=false)
-	{
-		AM_REC_TAX_ID -> AM_RecoverableTax:AM_REC_TAX_RESET PK required
-			@t24:i (align=L, inputBehaviour=I, maxLength=12, sysNumber=0.0, core=true, businessType=COM, t24Name=AM.REC.TAX.ID, mask="##-###-####")
-		RESET_FREQ -> byValue AM_RecoverableTax:AM_REC_TAX_RESET__RESET_FREQ *
-		RECORD_STATUS : T24BusinessTypes:STAT
-			@i18n:Label (en="Record Status")
-			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=4.0, core=true, t24Name=RECORD.STATUS)
-		CURR_NO : mml:Integer
-			@i18n:Label (en="Curr No")
-			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=5.0, core=true, t24Name=CURR.NO)
-		INPUTTER -> byValue AM_RecoverableTax:AM_REC_TAX_RESET__INPUTTER *
-		DATE_TIME -> byValue AM_RecoverableTax:AM_REC_TAX_RESET__DATE_TIME *
-		AUTHORISER : T24BusinessTypes:A
-			@i18n:Label (en=Authoriser)
-			@i18n:Tooltip (en="Indicates the User who Authorises the record")
-			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=8.0, core=true, t24Name=AUTHORISER)
-		CO_CODE -> ST_CompanyCreation:COMPANY
-			@i18n:Label (en=Company)
-			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=9.0, core=true, businessType=A, t24Name=CO.CODE, mask="R##-###-####")
-		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
-			@i18n:Label (en="Dept Code")
-			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=10.0, core=true, t24Name=DEPT.CODE)
-		AUDITOR_CODE : T24BusinessTypes:A
-			@i18n:Label (en="Auditor Code")
-			@i18n:Tooltip (en="Auditor Code")
-			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=11.0, core=true, t24Name=AUDITOR.CODE)
-		AUDIT_DATE_TIME : T24BusinessTypes:RELTIME
-			@i18n:Label (en="Audit Date Time")
-			@i18n:Tooltip (en="Date and time when record was audited")
-			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=12.0, core=true, t24Name=AUDIT.DATE.TIME, mask="RDD DD  DD ##:##")
-	}
-	AM_REC_TAX_RESET__RESET_FREQ
-	{
-		RESET_FREQ : T24BusinessTypes:FQU required
-			@t24:i (align=L, inputBehaviour=I, maxLength=17, sysNumber=1.0, core=true, t24Name=RESET.FREQ, mask="RDDDD DD  DD #####")
-		PORT_CRIT_ID : T24BusinessTypes:A
-			@t24:i (align=L, inputBehaviour=I, maxLength=20, sysNumber=2.0, core=true, t24Name=PORT.CRIT.ID)
-		INSTR_CRIT_ID : T24BusinessTypes:A
-			@t24:i (align=L, inputBehaviour=I, maxLength=20, sysNumber=3.0, core=true, t24Name=INSTR.CRIT.ID)
-	}
-	AM_REC_TAX_RESET__INPUTTER
-	{
-		INPUTTER : T24BusinessTypes:A
-			@i18n:Label (en=Inputter)
-			@i18n:Tooltip (en="The user who last updated the record")
-			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=6.0, core=true, t24Name=INPUTTER)
-	}
-	AM_REC_TAX_RESET__DATE_TIME
-	{
-		DATE_TIME : T24BusinessTypes:RELTIME
-			@i18n:Label (en="Date time")
-			@i18n:Tooltip (en="Date and time when record was input or authorised")
-			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=7.0, core=true, t24Name=DATE.TIME, mask="RDD DD  DD ##:##")
-	}
+    AM_REC_RESET_LOG
+        @i18n:Description (en="")
+        @t24:i (t24Name=AM.REC.RESET.LOG, level=F, type=L, allowedFunctions="L P S", localRefAllowed=false)
+    {
+        AM_REC_LOG_ID -> AM_RecoverableTax:AM_REC_RESET_LOG PK required
+            @t24:i (align=L, inputBehaviour=I, maxLength=50, sysNumber=0.0, core=true, businessType=A, t24Name=AM.REC.LOG.ID)
+        REC_TAX_CUM_AMT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=1.0, core=true, t24Name=REC.TAX.CUM.AMT)
+        LAST_RESET_DATE : T24BusinessTypes:D
+            @t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=2.0, core=true, t24Name=LAST.RESET.DATE)
+        LAST_RESET_AMT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=3.0, core=true, t24Name=LAST.RESET.AMT)
+        PREV_RESET_DATE -> byValue AM_RecoverableTax:AM_REC_RESET_LOG__PREV_RESET_DATE *
+    }
+    AM_REC_RESET_LOG__PREV_RESET_DATE
+    {
+        PREV_RESET_DATE : T24BusinessTypes:D
+            @t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=4.0, core=true, t24Name=PREV.RESET.DATE)
+        PREV_RESET_AMT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=5.0, core=true, t24Name=PREV.RESET.AMT)
+    }
+    AM_REC_TAX_RESET
+        @i18n:Description (en="")
+        @t24:i (t24Name=AM.REC.TAX.RESET, level=I, type=H, allowedFunctions="A C D E H I L P Q R S", localRefAllowed=false)
+    {
+        AM_REC_TAX_ID -> AM_RecoverableTax:AM_REC_TAX_RESET PK required
+            @t24:i (align=L, inputBehaviour=I, maxLength=12, sysNumber=0.0, core=true, businessType=COM, t24Name=AM.REC.TAX.ID, mask="##-###-####")
+        RESET_FREQ -> byValue AM_RecoverableTax:AM_REC_TAX_RESET__RESET_FREQ *
+        RECORD_STATUS : T24BusinessTypes:STAT
+            @i18n:Label (en="Record Status")
+            @t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=4.0, core=true, t24Name=RECORD.STATUS)
+        CURR_NO : T24BusinessTypes:N
+            @i18n:Label (en="Curr No")
+            @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=5.0, core=true, t24Name=CURR.NO)
+        INPUTTER -> byValue AM_RecoverableTax:AM_REC_TAX_RESET__INPUTTER *
+        DATE_TIME -> byValue AM_RecoverableTax:AM_REC_TAX_RESET__DATE_TIME *
+        AUTHORISER : T24BusinessTypes:A
+            @i18n:Label (en=Authoriser)
+            @i18n:Tooltip (en="Indicates the User who Authorises the record")
+            @t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=8.0, core=true, t24Name=AUTHORISER)
+        CO_CODE -> ST_CompanyCreation:COMPANY
+            @i18n:Label (en=Company)
+            @t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=9.0, core=true, businessType=A, t24Name=CO.CODE, mask="R##-###-####")
+        DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+            @i18n:Label (en="Dept Code")
+            @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=10.0, core=true, t24Name=DEPT.CODE)
+        AUDITOR_CODE : T24BusinessTypes:A
+            @i18n:Label (en="Auditor Code")
+            @i18n:Tooltip (en="Auditor Code")
+            @t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=11.0, core=true, t24Name=AUDITOR.CODE)
+        AUDIT_DATE_TIME : T24BusinessTypes:RELTIME
+            @i18n:Label (en="Audit Date Time")
+            @i18n:Tooltip (en="Date and time when record was audited")
+            @t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=12.0, core=true, t24Name=AUDIT.DATE.TIME, mask="RDD DD  DD ##:##")
+    }
+    AM_REC_TAX_RESET__RESET_FREQ
+    {
+        RESET_FREQ : T24BusinessTypes:FQU required
+            @t24:i (align=L, inputBehaviour=I, maxLength=17, sysNumber=1.0, core=true, t24Name=RESET.FREQ, mask="RDDDD DD  DD #####")
+        PORT_CRIT_ID : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=I, maxLength=20, sysNumber=2.0, core=true, t24Name=PORT.CRIT.ID)
+        INSTR_CRIT_ID : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=I, maxLength=20, sysNumber=3.0, core=true, t24Name=INSTR.CRIT.ID)
+    }
+    AM_REC_TAX_RESET__INPUTTER
+    {
+        INPUTTER : T24BusinessTypes:A
+            @i18n:Label (en=Inputter)
+            @i18n:Tooltip (en="The user who last updated the record")
+            @t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=6.0, core=true, t24Name=INPUTTER)
+    }
+    AM_REC_TAX_RESET__DATE_TIME
+    {
+        DATE_TIME : T24BusinessTypes:RELTIME
+            @i18n:Label (en="Date time")
+            @i18n:Tooltip (en="Date and time when record was input or authorised")
+            @t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=7.0, core=true, t24Name=DATE.TIME, mask="RDD DD  DD ##:##")
+    }
 }

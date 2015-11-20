@@ -1,461 +1,486 @@
 # UTF-8
 /* Order Completion and Execution for Mutual Funds */
 Domain MF_Orders
-	@t24:i (module=MF)
-	@java:Package (value=com.temenos.t24.datamodel.mf.mf_orders)
+    @t24:i (module=MF)
+    @java:Package (value=com.temenos.t24.datamodel.mf.mf_orders)
 namespace "http://www.temenos.com/t24/MF_Orders"
 metamodelVersion 1.30.6
 Classes {
-	MF_EXECUTE_ORDERS
-		@t24:i (t24Name=MF.EXECUTE.ORDERS, level=F, type=W, allowedFunctions="C I L P Q R S V", localRefAllowed=true)
-	{
-		KEY -> MF_Orders:MF_EXECUTE_ORDERS PK required
-			@i18n:Label (en=Key)
-			@i18n:Tooltip (en="Indicates th transaction key")
-			@t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=0.0, core=true, businessType=S, t24Name=KEY)
-		ORDER_ID -> byValue MF_Orders:MF_EXECUTE_ORDERS__ORDER_ID *
-		FUND_ID -> MF_Config:MF_FUND_MASTER
-			@i18n:Label (en="Fund Id")
-			@i18n:Tooltip (en="Indicates Id of the fund to be subscribed.")
-			@t24:i (align=L, inputBehaviour=I, maxLength=12, sysNumber=2.0, core=true, businessType=SEC, t24Name=FUND.ID)
-		CUSTOMER_ID -> SC_Config:CUSTOMER_SECURITY
-			@i18n:Label (en="Customer Id")
-			@i18n:Tooltip (en="Identifies the Customer for the transaction.")
-			@t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=3.0, core=true, businessType=CUS, t24Name=CUSTOMER.ID)
-		PARTICIPATION_ACC -> SCO_PortfolioMaintenance:SEC_ACC_MASTER
-			@i18n:Label (en=Portfolio)
-			@t24:i (align=L, inputBehaviour=I, maxLength=14, sysNumber=4.0, core=true, businessType=SAM, t24Name=PARTICIPATION.ACC)
-		ACCOUNT_OFFICER -> ST_Config:DEPT_ACCT_OFFICER
-			@i18n:Label (en="Account Officer")
-			@i18n:Tooltip (en="Indicates Account Officer responsible")
-			@t24:i (align=R, inputBehaviour=I, maxLength=4, sysNumber=5.0, core=true, businessType=DAO, t24Name=ACCOUNT.OFFICER)
-		TRANS_TYPE : T24BusinessTypes:A
-			@i18n:Label (en="Trans Type")
-			@i18n:Tooltip (en="Indicates the Transaction Type")
-			@t24:i (align=L, inputBehaviour=I, maxLength=10, sysNumber=6.0, core=true, t24Name=TRANS.TYPE)
-		LIMIT_TYPE : MF_Orders:MF_EXECUTE_ORDERS__LIMIT_TYPE
-			@i18n:Label (en="Limit Type")
-			@i18n:Tooltip (en="Indicates the Limit Type")
-			@t24:i (align=L, inputBehaviour=I, maxLength=6, sysNumber=7.0, core=true, t24Name=LIMIT.TYPE)
-		FROM_ORD_DATE : T24BusinessTypes:D
-			@i18n:Label (en="From Order Date")
-			@i18n:Tooltip (en="Starting date of orders to be executed")
-			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=8.0, core=true, t24Name=FROM.ORD.DATE)
-		TO_ORD_DATE : T24BusinessTypes:D
-			@i18n:Label (en="To Order Date")
-			@i18n:Tooltip (en="Indicates the end date of orders to be executed")
-			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=9.0, core=true, t24Name=TO.ORD.DATE)
-		TRADE_STATUS : MF_Orders:MF_EXECUTE_ORDERS__TRADE_STATUS
-			@i18n:Label (en="Trade Status")
-			@i18n:Tooltip (en="Status of the transaction in the system")
-			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=10.0, core=true, t24Name=TRADE.STATUS)
-		REMARKS : T24BusinessTypes:A
-			@i18n:Label (en=Remarks)
-			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=11.0, core=true, t24Name=REMARKS)
-		TRADE_DATE : T24BusinessTypes:D
-			@i18n:Label (en="Trade Date")
-			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=12.0, core=true, t24Name=TRADE.DATE)
-		RESERVED09 : T24BusinessTypes:A
-			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=13.0, core=true, t24Name=RESERVED09)
-		RESERVED08 : T24BusinessTypes:A
-			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=14.0, core=true, t24Name=RESERVED08)
-		RESERVED07 : T24BusinessTypes:A
-			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=15.0, core=true, t24Name=RESERVED07)
-		RESERVED06 : T24BusinessTypes:A
-			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=16.0, core=true, t24Name=RESERVED06)
-		RESERVED05 : T24BusinessTypes:A
-			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=17.0, core=true, t24Name=RESERVED05)
-		RESERVED04 : T24BusinessTypes:A
-			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=18.0, core=true, t24Name=RESERVED04)
-		RESERVED03 : T24BusinessTypes:A
-			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=19.0, core=true, t24Name=RESERVED03)
-		RESERVED02 : T24BusinessTypes:A
-			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=20.0, core=true, t24Name=RESERVED02)
-		RESERVED01 : T24BusinessTypes:A
-			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=21.0, core=true, t24Name=RESERVED01)
-		OVERRIDE -> byValue MF_Orders:MF_EXECUTE_ORDERS__OVERRIDE *
-		RECORD_STATUS : T24BusinessTypes:STAT
-			@i18n:Label (en="Record Status")
-			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=24.0, core=true, t24Name=RECORD.STATUS)
-		CURR_NO : mml:Integer
-			@i18n:Label (en="Curr No")
-			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=25.0, core=true, t24Name=CURR.NO)
-		INPUTTER -> byValue MF_Orders:MF_EXECUTE_ORDERS__INPUTTER *
-		DATE_TIME -> byValue MF_Orders:MF_EXECUTE_ORDERS__DATE_TIME *
-		AUTHORISER : T24BusinessTypes:A
-			@i18n:Label (en=Authoriser)
-			@i18n:Tooltip (en="Indicates the User who Authorises the record")
-			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=28.0, core=true, t24Name=AUTHORISER)
-		CO_CODE -> ST_CompanyCreation:COMPANY
-			@i18n:Label (en=Company)
-			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=29.0, core=true, businessType=A, t24Name=CO.CODE, mask="R##-###-####")
-		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
-			@i18n:Label (en="Dept Code")
-			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=30.0, core=true, t24Name=DEPT.CODE)
-		AUDITOR_CODE : T24BusinessTypes:A
-			@i18n:Label (en="Auditor Code")
-			@i18n:Tooltip (en="Auditor Code")
-			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=31.0, core=true, t24Name=AUDITOR.CODE)
-		AUDIT_DATE_TIME : T24BusinessTypes:RELTIME
-			@i18n:Label (en="Audit Date Time")
-			@i18n:Tooltip (en="Date and time when record was audited")
-			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=32.0, core=true, t24Name=AUDIT.DATE.TIME, mask="RDD DD  DD ##:##")
-	}
-	MF_EXECUTE_ORDERS__ORDER_ID
-	{
-		ORDER_ID -> MF_Orders:MF_ORDER
-			@i18n:Label (en="Order ID")
-			@t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=1.0, core=true, businessType=S, t24Name=ORDER.ID)
-	}
-	MF_EXECUTE_ORDERS__OVERRIDE
-	{
-		OVERRIDE : T24BusinessTypes:A
-			@i18n:Label (en=Override)
-			@i18n:Tooltip (en="Overrides generated by this transaction")
-			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=23.0, core=true, t24Name=OVERRIDE)
-	}
-	MF_EXECUTE_ORDERS__INPUTTER
-	{
-		INPUTTER : T24BusinessTypes:A
-			@i18n:Label (en=Inputter)
-			@i18n:Tooltip (en="The user who last updated the record")
-			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=26.0, core=true, t24Name=INPUTTER)
-	}
-	MF_EXECUTE_ORDERS__DATE_TIME
-	{
-		DATE_TIME : T24BusinessTypes:RELTIME
-			@i18n:Label (en="Date time")
-			@i18n:Tooltip (en="Date and time when record was input or authorised")
-			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=27.0, core=true, t24Name=DATE.TIME, mask="RDD DD  DD ##:##")
-	}
-	MF_ORDER
-		@t24:i (t24Name=MF.ORDER, level=F, type=H, additionalInfo="UNP OEU", allowedFunctions="A C D E H I L P Q R S", localRefAllowed=true)
-	{
-		ORDER_NO -> MF_Orders:MF_ORDER PK required
-			@i18n:Label (en="Order No")
-			@i18n:Tooltip (en="Indicates the order number")
-			@t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=0.0, core=true, businessType=S, t24Name=ORDER.NO)
-		ORDER_DATE : T24BusinessTypes:D
-			@i18n:Label (en="Order Date")
-			@t24:i (align=R, inputBehaviour=F, maxLength=11, sysNumber=1.0, core=true, t24Name=ORDER.DATE)
-		CUSTOMER_ID -> SC_Config:CUSTOMER_SECURITY required
-			@i18n:Label (en="Customer Id")
-			@i18n:Tooltip (en="Identifies the Customer for the transaction.")
-			@t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=2.0, core=true, businessType=CUS, t24Name=CUSTOMER.ID)
-		PARTICIPATION_ACC -> SCO_PortfolioMaintenance:SEC_ACC_MASTER
-			@i18n:Label (en=Portfolio)
-			@t24:i (align=L, inputBehaviour=I, maxLength=14, sysNumber=3.0, core=true, businessType=SAM, t24Name=PARTICIPATION.ACC)
-		ORDER_TYPE : MF_Orders:MF_ORDER__ORDER_TYPE
-			@i18n:Label (en="Order Type")
-			@t24:i (align=L, inputBehaviour=N, maxLength=6, sysNumber=4.0, core=true, t24Name=ORDER.TYPE)
-		FUND_ID -> MF_Config:MF_FUND_MASTER required
-			@i18n:Label (en="Fund Id")
-			@i18n:Tooltip (en="Indicates Id of the fund to be subscribed.")
-			@t24:i (align=L, inputBehaviour=I, maxLength=12, sysNumber=5.0, core=true, businessType=SEC, t24Name=FUND.ID)
-		FUND_CCY -> FIN_CurrencyConfig:CURRENCY
-			@i18n:Label (en="Fund Ccy")
-			@i18n:Tooltip (en="Indicates currency of the fund ")
-			@t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=6.0, core=true, businessType=CCY, t24Name=FUND.CCY)
-		ACCOUNT_OFFICER -> ST_Config:DEPT_ACCT_OFFICER
-			@i18n:Label (en="Account Officer")
-			@i18n:Tooltip (en="Indicates Account Officer responsible")
-			@t24:i (align=R, inputBehaviour=I, maxLength=4, sysNumber=7.0, core=true, businessType=DAO, t24Name=ACCOUNT.OFFICER)
-		AGENT -> SC_Config:CUSTOMER_SECURITY required
-			@i18n:Label (en=Agent)
-			@i18n:Tooltip (en="Agent through whom the order is being placed")
-			@t24:i (align=R, inputBehaviour=F, maxLength=10, sysNumber=8.0, core=true, businessType=CUS, t24Name=AGENT)
-		TRANS_TYPE -> SC_Config:SC_TRANS_NAME required
-			@i18n:Label (en="Trans Type")
-			@i18n:Tooltip (en="Indicates the Transaction Type")
-			@t24:i (align=L, inputBehaviour=F, maxLength=3, sysNumber=9.0, core=true, businessType=S, t24Name=TRANS.TYPE)
-		ORDER_CCY -> FIN_CurrencyConfig:CURRENCY
-			@i18n:Label (en="Order Ccy")
-			@i18n:Tooltip (en="Currency in which the order is being placed.")
-			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=10.0, core=true, businessType=CCY, t24Name=ORDER.CCY)
-		ORDER_AMOUNT : T24BusinessTypes:NOMAMT required
-			@i18n:Label (en="Order Amt")
-			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=11.0, core=true, t24Name=ORDER.AMOUNT)
-		UNIT_AMOUNT : MF_Orders:MF_ORDER__UNIT_AMOUNT
-			@i18n:Label (en="Unit Amt")
-			@t24:i (align=L, inputBehaviour=I, maxLength=6, sysNumber=12.0, core=true, t24Name=UNIT.AMOUNT)
-		WAIVE_FEES : MF_Orders:MF_ORDER__WAIVE_FEES
-			@i18n:Label (en="Waive Fees")
-			@i18n:Tooltip (en="Indicates whether the fees is waived or not.")
-			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=13.0, core=true, t24Name=WAIVE.FEES)
-		FEE_INCLUSIVE : MF_Orders:MF_ORDER__FEE_INCLUSIVE
-			@i18n:Label (en="Fee Inclusive")
-			@i18n:Tooltip (en="The order amount is inclusive of fee or not,")
-			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=14.0, core=true, t24Name=FEE.INCLUSIVE)
-		CREDIT_TXN_ID -> byValue MF_Orders:MF_ORDER__CREDIT_TXN_ID *
-		LIMIT_TYPE : MF_Orders:MF_ORDER__LIMIT_TYPE
-			@i18n:Label (en="Limit Type")
-			@i18n:Tooltip (en="Indicates the Limit Type")
-			@t24:i (align=L, inputBehaviour=I, maxLength=6, sysNumber=16.0, core=true, t24Name=LIMIT.TYPE)
-		ORDER_PRICE : T24BusinessTypes:PRICE
-			@i18n:Label (en="Order Price")
-			@i18n:Tooltip (en="Specifies the price Cap if it is a Limit Order.")
-			@t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=17.0, core=true, t24Name=ORDER.PRICE)
-		ORDER_EXP_DATE : T24BusinessTypes:D
-			@i18n:Label (en="Order Expiry Date")
-			@i18n:Tooltip (en="Indicates the expiry date of the order")
-			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=18.0, core=true, t24Name=ORDER.EXP.DATE)
-		PAYMENT_MODE : MF_Orders:MF_ORDER__PAYMENT_MODE required
-			@i18n:Label (en="Payment Mode")
-			@i18n:Tooltip (en="Mode of payment like account, cash, cheque etc.")
-			@t24:i (align=L, inputBehaviour=I, maxLength=8, sysNumber=19.0, core=true, t24Name=PAYMENT.MODE)
-		CHEQUE_NO -> byValue MF_Orders:MF_ORDER__CHEQUE_NO *
-		CARD_NO : mml:Integer
-			@i18n:Label (en="Card No")
-			@i18n:Tooltip (en="Credit card number, if payment mode is card.")
-			@t24:i (align=R, inputBehaviour=I, maxLength=16, sysNumber=24.0, core=true, t24Name=CARD.NO)
-		CARD_EXP_DATE : T24BusinessTypes:D
-			@i18n:Label (en="Card Expiry Date")
-			@i18n:Tooltip (en="Identifies the expiry date of the card.")
-			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=25.0, core=true, t24Name=CARD.EXP.DATE)
-		CARD_ISSUE_BNK : T24BusinessTypes:A
-			@i18n:Label (en="Card Issue Bank")
-			@i18n:Tooltip (en="Identifies the bank which issued the card.")
-			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=26.0, core=true, t24Name=CARD.ISSUE.BNK)
-		CARD_AMOUNT : T24BusinessTypes:AMT
-			@i18n:Label (en="Card Amount")
-			@i18n:Tooltip (en="Identifes the amount of payment made by card")
-			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=27.0, core=true, t24Name=CARD.AMOUNT)
-		CASH_PYMT_RECD : T24BusinessTypes:AMT
-			@i18n:Label (en="Cash Payment Recd")
-			@i18n:Tooltip (en="Indicates the amount of cash payment received")
-			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=28.0, core=true, t24Name=CASH.PYMT.RECD)
-		CASH_RECPT_NO : T24BusinessTypes:A
-			@i18n:Label (en="Cash Receipt No")
-			@i18n:Tooltip (en="Identifies the cash receipt no")
-			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=29.0, core=true, t24Name=CASH.RECPT.NO)
-		CASH_PYMT_DATE : T24BusinessTypes:D
-			@i18n:Label (en="Cash Payment Date")
-			@i18n:Tooltip (en="Identifies the date of cash payment")
-			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=30.0, core=true, t24Name=CASH.PYMT.DATE)
-		SETTLEMENT_ACC : T24BusinessTypes:ANT
-			@i18n:Label (en="Settlement Account")
-			@i18n:Tooltip (en="Account from which customer makes payment")
-			@t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=31.0, core=true, t24Name=SETTLEMENT.ACC)
-		SETTLEMENT_CCY -> FIN_CurrencyConfig:CURRENCY
-			@i18n:Label (en="Settle Ccy")
-			@t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=32.0, core=true, businessType=CCY, t24Name=SETTLEMENT.CCY)
-		EXT_ACCT_NO : T24BusinessTypes:A
-			@i18n:Label (en="External Acc No")
-			@i18n:Tooltip (en="The external account no held by the customer")
-			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=33.0, core=true, t24Name=EXT.ACCT.NO)
-		EXT_ACCT_CCY -> FIN_CurrencyConfig:CURRENCY
-			@i18n:Label (en="External Acc Ccy")
-			@i18n:Tooltip (en="Indicates the external account currency")
-			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=34.0, core=true, businessType=CCY, t24Name=EXT.ACCT.CCY)
-		EXT_ACCT_BANK : T24BusinessTypes:A
-			@i18n:Label (en="External Acc Bank")
-			@i18n:Tooltip (en="Bank with which external account is maintained")
-			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=35.0, core=true, t24Name=EXT.ACCT.BANK)
-		EXT_ACCT_BRANCH : T24BusinessTypes:A
-			@i18n:Label (en="External Acc Branch")
-			@i18n:Tooltip (en="Branch of the bank holding the external account ")
-			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=36.0, core=true, t24Name=EXT.ACCT.BRANCH)
-		TRADE_ID -> byValue MF_Orders:MF_ORDER__TRADE_ID *
-		CUST_ORDER_ID : T24BusinessTypes:S
-			@i18n:Label (en="Cust Order Id")
-			@t24:i (align=L, inputBehaviour=N, maxLength=16, sysNumber=41.0, core=true, t24Name=CUST.ORDER.ID)
-		SWITCH_ORDER_ID -> byValue MF_Orders:MF_ORDER__SWITCH_ORDER_ID *
-		DEAL_STATUS : MF_Orders:MF_ORDER__DEAL_STATUS
-			@i18n:Label (en="Deal Status")
-			@i18n:Tooltip (en="Indicates the status of the deal")
-			@t24:i (align=L, inputBehaviour=I, maxLength=7, sysNumber=45.0, core=true, t24Name=DEAL.STATUS)
-		PRICING_METHOD : MF_Orders:MF_ORDER__PRICING_METHOD
-			@i18n:Label (en="Pricing Method")
-			@i18n:Tooltip (en="Indicates the pricing method")
-			@t24:i (align=L, inputBehaviour=I, maxLength=10, sysNumber=46.0, core=true, t24Name=PRICING.METHOD)
-		TRADE_STATUS : MF_Orders:MF_ORDER__TRADE_STATUS
-			@i18n:Label (en="Trade Status")
-			@i18n:Tooltip (en="Status of the transaction in the system")
-			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=47.0, core=true, t24Name=TRADE.STATUS)
-		CU_NARRATIVE : T24BusinessTypes:A
-			@i18n:Label (en="Customer Narrative")
-			@i18n:Tooltip (en="Narrative concerning the customer or transaction")
-			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=48.0, core=true, t24Name=CU.NARRATIVE)
-		SEND_CONFIRMATION : MF_Orders:MF_ORDER__SEND_CONFIRMATION
-			@i18n:Label (en="Send Confirmation")
-			@i18n:Tooltip (en="Send confirmation - Y/N ?")
-			@t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=49.0, core=true, t24Name=SEND.CONFIRMATION)
-		ORDER_NOMINAL : T24BusinessTypes:NOMAMT
-			@i18n:Label (en="Order Nominal")
-			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=50.0, core=true, t24Name=ORDER.NOMINAL)
-		RESERVED14 : T24BusinessTypes:A
-			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=51.0, core=true, t24Name=RESERVED14)
-		RESERVED13 : T24BusinessTypes:A
-			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=52.0, core=true, t24Name=RESERVED13)
-		RESERVED12 : T24BusinessTypes:A
-			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=53.0, core=true, t24Name=RESERVED12)
-		RESERVED11 : T24BusinessTypes:A
-			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=54.0, core=true, t24Name=RESERVED11)
-		RESERVED10 : T24BusinessTypes:A
-			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=55.0, core=true, t24Name=RESERVED10)
-		RESERVED09 : T24BusinessTypes:A
-			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=56.0, core=true, t24Name=RESERVED09)
-		RESERVED08 : T24BusinessTypes:A
-			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=57.0, core=true, t24Name=RESERVED08)
-		RESERVED07 : T24BusinessTypes:A
-			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=58.0, core=true, t24Name=RESERVED07)
-		RESERVED06 : T24BusinessTypes:A
-			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=59.0, core=true, t24Name=RESERVED06)
-		RESERVED05 : T24BusinessTypes:A
-			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=60.0, core=true, t24Name=RESERVED05)
-		RESERVED04 : T24BusinessTypes:A
-			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=61.0, core=true, t24Name=RESERVED04)
-		RESERVED03 : T24BusinessTypes:A
-			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=62.0, core=true, t24Name=RESERVED03)
-		RESERVED02 : T24BusinessTypes:A
-			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=63.0, core=true, t24Name=RESERVED02)
-		RESERVED01 : T24BusinessTypes:A
-			@t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=64.0, core=true, t24Name=RESERVED01)
-		OVERRIDE -> byValue MF_Orders:MF_ORDER__OVERRIDE *
-		RECORD_STATUS : T24BusinessTypes:STAT
-			@i18n:Label (en="Record Status")
-			@t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=67.0, core=true, t24Name=RECORD.STATUS)
-		CURR_NO : mml:Integer
-			@i18n:Label (en="Curr No")
-			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=68.0, core=true, t24Name=CURR.NO)
-		INPUTTER -> byValue MF_Orders:MF_ORDER__INPUTTER *
-		DATE_TIME -> byValue MF_Orders:MF_ORDER__DATE_TIME *
-		AUTHORISER : T24BusinessTypes:A
-			@i18n:Label (en=Authoriser)
-			@i18n:Tooltip (en="Indicates the User who Authorises the record")
-			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=71.0, core=true, t24Name=AUTHORISER)
-		CO_CODE -> ST_CompanyCreation:COMPANY
-			@i18n:Label (en=Company)
-			@t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=72.0, core=true, businessType=A, t24Name=CO.CODE, mask="R##-###-####")
-		DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
-			@i18n:Label (en="Dept Code")
-			@t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=73.0, core=true, t24Name=DEPT.CODE)
-		AUDITOR_CODE : T24BusinessTypes:A
-			@i18n:Label (en="Auditor Code")
-			@i18n:Tooltip (en="Auditor Code")
-			@t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=74.0, core=true, t24Name=AUDITOR.CODE)
-		AUDIT_DATE_TIME : T24BusinessTypes:RELTIME
-			@i18n:Label (en="Audit Date Time")
-			@i18n:Tooltip (en="Date and time when record was audited")
-			@t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=75.0, core=true, t24Name=AUDIT.DATE.TIME, mask="RDD DD  DD ##:##")
-		CR_OR_DR : mml:Integer
-			@t24:i (align=R, inputBehaviour=N, maxLength=2, core=false, t24Name=CR.OR.DR, genOperation="SUBR(\"SCT.CR.OR.DR.IDESC\",TRANS.TYPE)")
-	}
-	MF_ORDER__CREDIT_TXN_ID
-	{
-		CREDIT_TXN_ID : T24BusinessTypes:S
-			@i18n:Label (en="Credit Transacton ID")
-			@i18n:Tooltip (en="Credit transaction ID for redemptions")
-			@t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=15.0, core=true, t24Name=CREDIT.TXN.ID)
-	}
-	MF_ORDER__CHEQUE_NO
-	{
-		CHEQUE_NO : T24BusinessTypes:A
-			@i18n:Label (en="Cheque No")
-			@i18n:Tooltip (en="Cheque no, if payment is through cheque.")
-			@t24:i (align=L, inputBehaviour=I, maxLength=14, sysNumber=20.0, core=true, t24Name=CHEQUE.NO)
-		CHEQUE_DATE : T24BusinessTypes:D
-			@i18n:Label (en="Cheque Date")
-			@i18n:Tooltip (en="Identifies date of the cheque.")
-			@t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=21.0, core=true, t24Name=CHEQUE.DATE)
-		DRAWN_ON : T24BusinessTypes:A
-			@i18n:Label (en="Drawn On")
-			@i18n:Tooltip (en="Identifies the bank on which the cheque is drawn.")
-			@t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=22.0, core=true, t24Name=DRAWN.ON)
-		CHEQUE_AMOUNT : T24BusinessTypes:AMT
-			@i18n:Label (en="Cheque Amount")
-			@i18n:Tooltip (en="Identifies the cheque amount.")
-			@t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=23.0, core=true, t24Name=CHEQUE.AMOUNT)
-	}
-	MF_ORDER__TRADE_ID
-	{
-		TRADE_ID : T24BusinessTypes:S
-			@i18n:Label (en="Trade Id")
-			@t24:i (align=L, inputBehaviour=N, maxLength=16, sysNumber=37.0, core=true, t24Name=TRADE.ID)
-		TRAN_UNITS : T24BusinessTypes:NOMAMT
-			@i18n:Label (en="Transaction Units")
-			@t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=38.0, core=true, t24Name=TRAN.UNITS)
-		TRAN_DATE : T24BusinessTypes:D
-			@i18n:Label (en="Trn date")
-			@t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=39.0, core=true, t24Name=TRAN.DATE)
-		TRAN_PRICE : T24BusinessTypes:PRICE
-			@i18n:Label (en="Transaction Price")
-			@t24:i (align=L, inputBehaviour=N, maxLength=16, sysNumber=40.0, core=true, t24Name=TRAN.PRICE)
-	}
-	MF_ORDER__SWITCH_ORDER_ID
-	{
-		SWITCH_ORDER_ID : T24BusinessTypes:S
-			@i18n:Label (en="Switch Order ID")
-			@i18n:Tooltip (en="Identifies the related switch order ID")
-			@t24:i (align=L, inputBehaviour=N, maxLength=16, sysNumber=42.0, core=true, t24Name=SWITCH.ORDER.ID)
-		SWITCH_FUND_ID -> MF_Config:MF_FUND_MASTER
-			@i18n:Label (en="Switch Fund ID")
-			@i18n:Tooltip (en="Identifies the related switch fund ID")
-			@t24:i (align=L, inputBehaviour=N, maxLength=12, sysNumber=43.0, core=true, businessType=SEC, t24Name=SWITCH.FUND.ID)
-		SWITCH_SHARE : MF_Orders:MF_ORDER__SWITCH_ORDER_ID__SWITCH_SHARE
-			@i18n:Label (en="Switch Share")
-			@t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=44.0, core=true, t24Name=SWITCH.SHARE)
-	}
-	MF_ORDER__OVERRIDE
-	{
-		OVERRIDE : T24BusinessTypes:A
-			@i18n:Label (en=Override)
-			@i18n:Tooltip (en="Overrides generated by this transaction")
-			@t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=66.0, core=true, t24Name=OVERRIDE)
-	}
-	MF_ORDER__INPUTTER
-	{
-		INPUTTER : T24BusinessTypes:A
-			@i18n:Label (en=Inputter)
-			@i18n:Tooltip (en="The user who last updated the record")
-			@t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=69.0, core=true, t24Name=INPUTTER)
-	}
-	MF_ORDER__DATE_TIME
-	{
-		DATE_TIME : T24BusinessTypes:RELTIME
-			@i18n:Label (en="Date time")
-			@i18n:Tooltip (en="Date and time when record was input or authorised")
-			@t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=70.0, core=true, t24Name=DATE.TIME, mask="RDD DD  DD ##:##")
-	}
+    MF_ORDER
+        @i18n:Description (en="")
+        @t24:i (t24Name=MF.ORDER, level=F, type=H, additionalInfo="UNP OEU", allowedFunctions="A C D E H I L P Q R S", localRefAllowed=true)
+    {
+        ORDER_NO -> MF_Orders:MF_ORDER PK required
+            @i18n:Label (en="Order No")
+            @i18n:Tooltip (en="Indicates the order number")
+            @t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=0.0, core=true, businessType=S, t24Name=ORDER.NO)
+        ORDER_DATE : T24BusinessTypes:D
+            @i18n:Label (en="Order Date")
+            @t24:i (align=R, inputBehaviour=F, maxLength=11, sysNumber=1.0, core=true, t24Name=ORDER.DATE)
+        CUSTOMER_ID -> SC_Config:CUSTOMER_SECURITY required
+            @i18n:Label (en="Customer Id")
+            @i18n:Tooltip (en="Identifies the Customer for the transaction.")
+            @t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=2.0, core=true, businessType=CUS, t24Name=CUSTOMER.ID)
+        PARTICIPATION_ACC -> SC_ScoPortfolioMaintenance:SEC_ACC_MASTER
+            @i18n:Label (en=Portfolio)
+            @t24:i (align=L, inputBehaviour=I, maxLength=14, sysNumber=3.0, core=true, businessType=SAM, t24Name=PARTICIPATION.ACC)
+        ORDER_TYPE : MF_Orders:MF_ORDER__ORDER_TYPE
+            @i18n:Label (en="Order Type")
+            @t24:i (align=L, inputBehaviour=N, maxLength=6, sysNumber=4.0, core=true, t24Name=ORDER.TYPE)
+        FUND_ID -> MF_Config:MF_FUND_MASTER required
+            @i18n:Label (en="Fund Id")
+            @i18n:Tooltip (en="Indicates Id of the fund to be subscribed.")
+            @t24:i (align=L, inputBehaviour=I, maxLength=12, sysNumber=5.0, core=true, businessType=SEC, t24Name=FUND.ID)
+        FUND_CCY -> ST_CurrencyConfig:CURRENCY
+            @i18n:Label (en="Fund Ccy")
+            @i18n:Tooltip (en="Indicates currency of the fund ")
+            @t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=6.0, core=true, businessType=CCY, t24Name=FUND.CCY)
+        ACCOUNT_OFFICER -> ST_Config:DEPT_ACCT_OFFICER
+            @i18n:Label (en="Account Officer")
+            @i18n:Tooltip (en="Indicates Account Officer responsible")
+            @t24:i (align=R, inputBehaviour=I, maxLength=4, sysNumber=7.0, core=true, businessType=DAO, t24Name=ACCOUNT.OFFICER)
+        AGENT -> SC_Config:CUSTOMER_SECURITY required
+            @i18n:Label (en=Agent)
+            @i18n:Tooltip (en="Agent through whom the order is being placed")
+            @t24:i (align=R, inputBehaviour=F, maxLength=10, sysNumber=8.0, core=true, businessType=CUS, t24Name=AGENT)
+        TRANS_TYPE -> SC_Config:SC_TRANS_NAME required
+            @i18n:Label (en="Trans Type")
+            @i18n:Tooltip (en="Indicates the Transaction Type")
+            @t24:i (align=L, inputBehaviour=F, maxLength=3, sysNumber=9.0, core=true, businessType=S, t24Name=TRANS.TYPE)
+        ORDER_CCY -> ST_CurrencyConfig:CURRENCY
+            @i18n:Label (en="Order Ccy")
+            @i18n:Tooltip (en="Currency in which the order is being placed.")
+            @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=10.0, core=true, businessType=CCY, t24Name=ORDER.CCY)
+        ORDER_AMOUNT : T24BusinessTypes:NOMAMT required
+            @i18n:Label (en="Order Amt")
+            @t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=11.0, core=true, t24Name=ORDER.AMOUNT)
+        UNIT_AMOUNT : MF_Orders:MF_ORDER__UNIT_AMOUNT
+            @i18n:Label (en="Unit Amt")
+            @t24:i (align=L, inputBehaviour=I, maxLength=6, sysNumber=12.0, core=true, t24Name=UNIT.AMOUNT)
+        WAIVE_FEES : MF_Orders:MF_ORDER__WAIVE_FEES
+            @i18n:Label (en="Waive Fees")
+            @i18n:Tooltip (en="Indicates whether the fees is waived or not.")
+            @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=13.0, core=true, t24Name=WAIVE.FEES)
+        FEE_INCLUSIVE : MF_Orders:MF_ORDER__FEE_INCLUSIVE
+            @i18n:Label (en="Fee Inclusive")
+            @i18n:Tooltip (en="The order amount is inclusive of fee or not,")
+            @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=14.0, core=true, t24Name=FEE.INCLUSIVE)
+        CREDIT_TXN_ID -> byValue MF_Orders:MF_ORDER__CREDIT_TXN_ID *
+        LIMIT_TYPE : MF_Orders:MF_ORDER__LIMIT_TYPE
+            @i18n:Label (en="Limit Type")
+            @i18n:Tooltip (en="Indicates the Limit Type")
+            @t24:i (align=L, inputBehaviour=I, maxLength=6, sysNumber=16.0, core=true, t24Name=LIMIT.TYPE)
+        ORDER_PRICE : T24BusinessTypes:PRICE
+            @i18n:Label (en="Order Price")
+            @i18n:Tooltip (en="Specifies the price Cap if it is a Limit Order.")
+            @t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=17.0, core=true, t24Name=ORDER.PRICE)
+        ORDER_EXP_DATE : T24BusinessTypes:D
+            @i18n:Label (en="Order Expiry Date")
+            @i18n:Tooltip (en="Indicates the expiry date of the order")
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=18.0, core=true, t24Name=ORDER.EXP.DATE)
+        PAYMENT_MODE : MF_Orders:MF_ORDER__PAYMENT_MODE required
+            @i18n:Label (en="Payment Mode")
+            @i18n:Tooltip (en="Mode of payment like account, cash, cheque etc.")
+            @t24:i (align=L, inputBehaviour=I, maxLength=8, sysNumber=19.0, core=true, t24Name=PAYMENT.MODE)
+        CHEQUE_NO -> byValue MF_Orders:MF_ORDER__CHEQUE_NO *
+        CARD_NO : mml:Integer
+            @i18n:Label (en="Card No")
+            @i18n:Tooltip (en="Credit card number, if payment mode is card.")
+            @t24:i (align=R, inputBehaviour=I, maxLength=16, sysNumber=24.0, core=true, t24Name=CARD.NO)
+        CARD_EXP_DATE : T24BusinessTypes:D
+            @i18n:Label (en="Card Expiry Date")
+            @i18n:Tooltip (en="Identifies the expiry date of the card.")
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=25.0, core=true, t24Name=CARD.EXP.DATE)
+        CARD_ISSUE_BNK : T24BusinessTypes:A
+            @i18n:Label (en="Card Issue Bank")
+            @i18n:Tooltip (en="Identifies the bank which issued the card.")
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=26.0, core=true, t24Name=CARD.ISSUE.BNK)
+        CARD_AMOUNT : T24BusinessTypes:AMT
+            @i18n:Label (en="Card Amount")
+            @i18n:Tooltip (en="Identifes the amount of payment made by card")
+            @t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=27.0, core=true, t24Name=CARD.AMOUNT)
+        CASH_PYMT_RECD : T24BusinessTypes:AMT
+            @i18n:Label (en="Cash Payment Recd")
+            @i18n:Tooltip (en="Indicates the amount of cash payment received")
+            @t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=28.0, core=true, t24Name=CASH.PYMT.RECD)
+        CASH_RECPT_NO : T24BusinessTypes:A
+            @i18n:Label (en="Cash Receipt No")
+            @i18n:Tooltip (en="Identifies the cash receipt no")
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=29.0, core=true, t24Name=CASH.RECPT.NO)
+        CASH_PYMT_DATE : T24BusinessTypes:D
+            @i18n:Label (en="Cash Payment Date")
+            @i18n:Tooltip (en="Identifies the date of cash payment")
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=30.0, core=true, t24Name=CASH.PYMT.DATE)
+        SETTLEMENT_ACC : T24BusinessTypes:ANT
+            @i18n:Label (en="Settlement Account")
+            @i18n:Tooltip (en="Account from which customer makes payment")
+            @t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=31.0, core=true, t24Name=SETTLEMENT.ACC)
+        SETTLEMENT_CCY -> ST_CurrencyConfig:CURRENCY
+            @i18n:Label (en="Settle Ccy")
+            @t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=32.0, core=true, businessType=CCY, t24Name=SETTLEMENT.CCY)
+        EXT_ACCT_NO : T24BusinessTypes:A
+            @i18n:Label (en="External Acc No")
+            @i18n:Tooltip (en="The external account no held by the customer")
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=33.0, core=true, t24Name=EXT.ACCT.NO)
+        EXT_ACCT_CCY -> ST_CurrencyConfig:CURRENCY
+            @i18n:Label (en="External Acc Ccy")
+            @i18n:Tooltip (en="Indicates the external account currency")
+            @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=34.0, core=true, businessType=CCY, t24Name=EXT.ACCT.CCY)
+        EXT_ACCT_BANK : T24BusinessTypes:A
+            @i18n:Label (en="External Acc Bank")
+            @i18n:Tooltip (en="Bank with which external account is maintained")
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=35.0, core=true, t24Name=EXT.ACCT.BANK)
+        EXT_ACCT_BRANCH : T24BusinessTypes:A
+            @i18n:Label (en="External Acc Branch")
+            @i18n:Tooltip (en="Branch of the bank holding the external account ")
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=36.0, core=true, t24Name=EXT.ACCT.BRANCH)
+        TRADE_ID -> byValue MF_Orders:MF_ORDER__TRADE_ID *
+        CUST_ORDER_ID : T24BusinessTypes:S
+            @i18n:Label (en="Cust Order Id")
+            @t24:i (align=L, inputBehaviour=N, maxLength=16, sysNumber=41.0, core=true, t24Name=CUST.ORDER.ID)
+        SWITCH_ORDER_ID -> byValue MF_Orders:MF_ORDER__SWITCH_ORDER_ID *
+        DEAL_STATUS : MF_Orders:MF_ORDER__DEAL_STATUS
+            @i18n:Label (en="Deal Status")
+            @i18n:Tooltip (en="Indicates the status of the deal")
+            @t24:i (align=L, inputBehaviour=I, maxLength=7, sysNumber=45.0, core=true, t24Name=DEAL.STATUS)
+        PRICING_METHOD : MF_Orders:MF_ORDER__PRICING_METHOD
+            @i18n:Label (en="Pricing Method")
+            @i18n:Tooltip (en="Indicates the pricing method")
+            @t24:i (align=L, inputBehaviour=I, maxLength=10, sysNumber=46.0, core=true, t24Name=PRICING.METHOD)
+        TRADE_STATUS : MF_Orders:MF_ORDER__TRADE_STATUS
+            @i18n:Label (en="Trade Status")
+            @i18n:Tooltip (en="Status of the transaction in the system")
+            @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=47.0, core=true, t24Name=TRADE.STATUS)
+        CU_NARRATIVE : T24BusinessTypes:A
+            @i18n:Label (en="Customer Narrative")
+            @i18n:Tooltip (en="Narrative concerning the customer or transaction")
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=48.0, core=true, t24Name=CU.NARRATIVE)
+        SEND_CONFIRMATION : MF_Orders:MF_ORDER__SEND_CONFIRMATION
+            @i18n:Label (en="Send Confirmation")
+            @i18n:Tooltip (en="Send confirmation - Y/N ?")
+            @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=49.0, core=true, t24Name=SEND.CONFIRMATION)
+        ORDER_NOMINAL : T24BusinessTypes:NOMAMT
+            @i18n:Label (en="Order Nominal")
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=50.0, core=true, t24Name=ORDER.NOMINAL)
+        RESERVED14 : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=51.0, core=true, t24Name=RESERVED14)
+        RESERVED13 : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=52.0, core=true, t24Name=RESERVED13)
+        RESERVED12 : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=53.0, core=true, t24Name=RESERVED12)
+        RESERVED11 : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=54.0, core=true, t24Name=RESERVED11)
+        RESERVED10 : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=55.0, core=true, t24Name=RESERVED10)
+        RESERVED09 : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=56.0, core=true, t24Name=RESERVED09)
+        RESERVED08 : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=57.0, core=true, t24Name=RESERVED08)
+        RESERVED07 : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=58.0, core=true, t24Name=RESERVED07)
+        RESERVED06 : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=59.0, core=true, t24Name=RESERVED06)
+        RESERVED05 : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=60.0, core=true, t24Name=RESERVED05)
+        RESERVED04 : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=61.0, core=true, t24Name=RESERVED04)
+        RESERVED03 : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=62.0, core=true, t24Name=RESERVED03)
+        RESERVED02 : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=63.0, core=true, t24Name=RESERVED02)
+        RESERVED01 : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=64.0, core=true, t24Name=RESERVED01)
+        OVERRIDE -> byValue MF_Orders:MF_ORDER__OVERRIDE *
+        RECORD_STATUS : T24BusinessTypes:STAT
+            @i18n:Label (en="Record Status")
+            @t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=67.0, core=true, t24Name=RECORD.STATUS)
+        CURR_NO : T24BusinessTypes:N
+            @i18n:Label (en="Curr No")
+            @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=68.0, core=true, t24Name=CURR.NO)
+        INPUTTER -> byValue MF_Orders:MF_ORDER__INPUTTER *
+        DATE_TIME -> byValue MF_Orders:MF_ORDER__DATE_TIME *
+        AUTHORISER : T24BusinessTypes:A
+            @i18n:Label (en=Authoriser)
+            @i18n:Tooltip (en="Indicates the User who Authorises the record")
+            @t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=71.0, core=true, t24Name=AUTHORISER)
+        CO_CODE -> ST_CompanyCreation:COMPANY
+            @i18n:Label (en=Company)
+            @t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=72.0, core=true, businessType=A, t24Name=CO.CODE, mask="R##-###-####")
+        DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+            @i18n:Label (en="Dept Code")
+            @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=73.0, core=true, t24Name=DEPT.CODE)
+        AUDITOR_CODE : T24BusinessTypes:A
+            @i18n:Label (en="Auditor Code")
+            @i18n:Tooltip (en="Auditor Code")
+            @t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=74.0, core=true, t24Name=AUDITOR.CODE)
+        AUDIT_DATE_TIME : T24BusinessTypes:RELTIME
+            @i18n:Label (en="Audit Date Time")
+            @i18n:Tooltip (en="Date and time when record was audited")
+            @t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=75.0, core=true, t24Name=AUDIT.DATE.TIME, mask="RDD DD  DD ##:##")
+    }
+    
+    
+    
+    
+    
+    
+    
+    MF_EXECUTE_ORDERS
+        @i18n:Description (en="")
+        @t24:i (t24Name=MF.EXECUTE.ORDERS, level=F, type=W, allowedFunctions="C I L P Q R S V", localRefAllowed=true)
+    {
+        KEY -> MF_Orders:MF_EXECUTE_ORDERS PK required
+            @i18n:Label (en=Key)
+            @i18n:Tooltip (en="Indicates th transaction key")
+            @t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=0.0, core=true, businessType=S, t24Name=KEY)
+        ORDER_ID -> byValue MF_Orders:MF_EXECUTE_ORDERS__ORDER_ID *
+        FUND_ID -> MF_Config:MF_FUND_MASTER
+            @i18n:Label (en="Fund Id")
+            @i18n:Tooltip (en="Indicates Id of the fund to be subscribed.")
+            @t24:i (align=L, inputBehaviour=I, maxLength=12, sysNumber=2.0, core=true, businessType=SEC, t24Name=FUND.ID)
+        CUSTOMER_ID -> SC_Config:CUSTOMER_SECURITY
+            @i18n:Label (en="Customer Id")
+            @i18n:Tooltip (en="Identifies the Customer for the transaction.")
+            @t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=3.0, core=true, businessType=CUS, t24Name=CUSTOMER.ID)
+        PARTICIPATION_ACC -> SC_ScoPortfolioMaintenance:SEC_ACC_MASTER
+            @i18n:Label (en=Portfolio)
+            @t24:i (align=L, inputBehaviour=I, maxLength=14, sysNumber=4.0, core=true, businessType=SAM, t24Name=PARTICIPATION.ACC)
+        ACCOUNT_OFFICER -> ST_Config:DEPT_ACCT_OFFICER
+            @i18n:Label (en="Account Officer")
+            @i18n:Tooltip (en="Indicates Account Officer responsible")
+            @t24:i (align=R, inputBehaviour=I, maxLength=4, sysNumber=5.0, core=true, businessType=DAO, t24Name=ACCOUNT.OFFICER)
+        TRANS_TYPE : T24BusinessTypes:A
+            @i18n:Label (en="Trans Type")
+            @i18n:Tooltip (en="Indicates the Transaction Type")
+            @t24:i (align=L, inputBehaviour=I, maxLength=10, sysNumber=6.0, core=true, t24Name=TRANS.TYPE)
+        LIMIT_TYPE : MF_Orders:MF_EXECUTE_ORDERS__LIMIT_TYPE
+            @i18n:Label (en="Limit Type")
+            @i18n:Tooltip (en="Indicates the Limit Type")
+            @t24:i (align=L, inputBehaviour=I, maxLength=6, sysNumber=7.0, core=true, t24Name=LIMIT.TYPE)
+        FROM_ORD_DATE : T24BusinessTypes:D
+            @i18n:Label (en="From Order Date")
+            @i18n:Tooltip (en="Starting date of orders to be executed")
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=8.0, core=true, t24Name=FROM.ORD.DATE)
+        TO_ORD_DATE : T24BusinessTypes:D
+            @i18n:Label (en="To Order Date")
+            @i18n:Tooltip (en="Indicates the end date of orders to be executed")
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=9.0, core=true, t24Name=TO.ORD.DATE)
+        TRADE_STATUS : MF_Orders:MF_EXECUTE_ORDERS__TRADE_STATUS
+            @i18n:Label (en="Trade Status")
+            @i18n:Tooltip (en="Status of the transaction in the system")
+            @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=10.0, core=true, t24Name=TRADE.STATUS)
+        REMARKS : T24BusinessTypes:A
+            @i18n:Label (en=Remarks)
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=11.0, core=true, t24Name=REMARKS)
+        TRADE_DATE : T24BusinessTypes:D
+            @i18n:Label (en="Trade Date")
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=12.0, core=true, t24Name=TRADE.DATE)
+        RESERVED09 : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=13.0, core=true, t24Name=RESERVED09)
+        RESERVED08 : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=14.0, core=true, t24Name=RESERVED08)
+        RESERVED07 : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=15.0, core=true, t24Name=RESERVED07)
+        RESERVED06 : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=16.0, core=true, t24Name=RESERVED06)
+        RESERVED05 : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=17.0, core=true, t24Name=RESERVED05)
+        RESERVED04 : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=18.0, core=true, t24Name=RESERVED04)
+        RESERVED03 : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=19.0, core=true, t24Name=RESERVED03)
+        RESERVED02 : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=20.0, core=true, t24Name=RESERVED02)
+        RESERVED01 : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=N, maxLength=55, sysNumber=21.0, core=true, t24Name=RESERVED01)
+        OVERRIDE -> byValue MF_Orders:MF_EXECUTE_ORDERS__OVERRIDE *
+        RECORD_STATUS : T24BusinessTypes:STAT
+            @i18n:Label (en="Record Status")
+            @t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=24.0, core=true, t24Name=RECORD.STATUS)
+        CURR_NO : T24BusinessTypes:N
+            @i18n:Label (en="Curr No")
+            @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=25.0, core=true, t24Name=CURR.NO)
+        INPUTTER -> byValue MF_Orders:MF_EXECUTE_ORDERS__INPUTTER *
+        DATE_TIME -> byValue MF_Orders:MF_EXECUTE_ORDERS__DATE_TIME *
+        AUTHORISER : T24BusinessTypes:A
+            @i18n:Label (en=Authoriser)
+            @i18n:Tooltip (en="Indicates the User who Authorises the record")
+            @t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=28.0, core=true, t24Name=AUTHORISER)
+        CO_CODE -> ST_CompanyCreation:COMPANY
+            @i18n:Label (en=Company)
+            @t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=29.0, core=true, businessType=A, t24Name=CO.CODE, mask="R##-###-####")
+        DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+            @i18n:Label (en="Dept Code")
+            @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=30.0, core=true, t24Name=DEPT.CODE)
+        AUDITOR_CODE : T24BusinessTypes:A
+            @i18n:Label (en="Auditor Code")
+            @i18n:Tooltip (en="Auditor Code")
+            @t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=31.0, core=true, t24Name=AUDITOR.CODE)
+        AUDIT_DATE_TIME : T24BusinessTypes:RELTIME
+            @i18n:Label (en="Audit Date Time")
+            @i18n:Tooltip (en="Date and time when record was audited")
+            @t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=32.0, core=true, t24Name=AUDIT.DATE.TIME, mask="RDD DD  DD ##:##")
+    }
+    
+    
+    
+    
+MF_EXECUTE_ORDERS__ORDER_ID
+    {
+        ORDER_ID -> MF_Orders:MF_ORDER
+            @i18n:Label (en="Order ID")
+            @t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=1.0, core=true, businessType=S, t24Name=ORDER.ID)
+    }
+    MF_EXECUTE_ORDERS__OVERRIDE
+    {
+        OVERRIDE : T24BusinessTypes:A
+            @i18n:Label (en=Override)
+            @i18n:Tooltip (en="Overrides generated by this transaction")
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=23.0, core=true, t24Name=OVERRIDE)
+    }
+    MF_EXECUTE_ORDERS__INPUTTER
+    {
+        INPUTTER : T24BusinessTypes:A
+            @i18n:Label (en=Inputter)
+            @i18n:Tooltip (en="The user who last updated the record")
+            @t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=26.0, core=true, t24Name=INPUTTER)
+    }
+    MF_EXECUTE_ORDERS__DATE_TIME
+    {
+        DATE_TIME : T24BusinessTypes:RELTIME
+            @i18n:Label (en="Date time")
+            @i18n:Tooltip (en="Date and time when record was input or authorised")
+            @t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=27.0, core=true, t24Name=DATE.TIME, mask="RDD DD  DD ##:##")
+    }
+    MF_ORDER__CREDIT_TXN_ID
+    {
+        CREDIT_TXN_ID : T24BusinessTypes:S
+            @i18n:Label (en="Credit Transacton ID")
+            @i18n:Tooltip (en="Credit transaction ID for redemptions")
+            @t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=15.0, core=true, t24Name=CREDIT.TXN.ID)
+    }
+    MF_ORDER__CHEQUE_NO
+    {
+        CHEQUE_NO : T24BusinessTypes:A
+            @i18n:Label (en="Cheque No")
+            @i18n:Tooltip (en="Cheque no, if payment is through cheque.")
+            @t24:i (align=L, inputBehaviour=I, maxLength=14, sysNumber=20.0, core=true, t24Name=CHEQUE.NO)
+        CHEQUE_DATE : T24BusinessTypes:D
+            @i18n:Label (en="Cheque Date")
+            @i18n:Tooltip (en="Identifies date of the cheque.")
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=21.0, core=true, t24Name=CHEQUE.DATE)
+        DRAWN_ON : T24BusinessTypes:A
+            @i18n:Label (en="Drawn On")
+            @i18n:Tooltip (en="Identifies the bank on which the cheque is drawn.")
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=22.0, core=true, t24Name=DRAWN.ON)
+        CHEQUE_AMOUNT : T24BusinessTypes:AMT
+            @i18n:Label (en="Cheque Amount")
+            @i18n:Tooltip (en="Identifies the cheque amount.")
+            @t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=23.0, core=true, t24Name=CHEQUE.AMOUNT)
+    }
+    MF_ORDER__TRADE_ID
+    {
+        TRADE_ID : T24BusinessTypes:S
+            @i18n:Label (en="Trade Id")
+            @t24:i (align=L, inputBehaviour=N, maxLength=16, sysNumber=37.0, core=true, t24Name=TRADE.ID)
+        TRAN_UNITS : T24BusinessTypes:NOMAMT
+            @i18n:Label (en="Transaction Units")
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=38.0, core=true, t24Name=TRAN.UNITS)
+        TRAN_DATE : T24BusinessTypes:D
+            @i18n:Label (en="Trn date")
+            @t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=39.0, core=true, t24Name=TRAN.DATE)
+        TRAN_PRICE : T24BusinessTypes:PRICE
+            @i18n:Label (en="Transaction Price")
+            @t24:i (align=L, inputBehaviour=N, maxLength=16, sysNumber=40.0, core=true, t24Name=TRAN.PRICE)
+    }
+    MF_ORDER__SWITCH_ORDER_ID
+    {
+        SWITCH_ORDER_ID : T24BusinessTypes:S
+            @i18n:Label (en="Switch Order ID")
+            @i18n:Tooltip (en="Identifies the related switch order ID")
+            @t24:i (align=L, inputBehaviour=N, maxLength=16, sysNumber=42.0, core=true, t24Name=SWITCH.ORDER.ID)
+        SWITCH_FUND_ID -> MF_Config:MF_FUND_MASTER
+            @i18n:Label (en="Switch Fund ID")
+            @i18n:Tooltip (en="Identifies the related switch fund ID")
+            @t24:i (align=L, inputBehaviour=N, maxLength=12, sysNumber=43.0, core=true, businessType=SEC, t24Name=SWITCH.FUND.ID)
+        SWITCH_SHARE : MF_Orders:MF_ORDER__SWITCH_ORDER_ID__SWITCH_SHARE
+            @i18n:Label (en="Switch Share")
+            @t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=44.0, core=true, t24Name=SWITCH.SHARE)
+    }
+    MF_ORDER__OVERRIDE
+    {
+        OVERRIDE : T24BusinessTypes:A
+            @i18n:Label (en=Override)
+            @i18n:Tooltip (en="Overrides generated by this transaction")
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=66.0, core=true, t24Name=OVERRIDE)
+    }
+    MF_ORDER__INPUTTER
+    {
+        INPUTTER : T24BusinessTypes:A
+            @i18n:Label (en=Inputter)
+            @i18n:Tooltip (en="The user who last updated the record")
+            @t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=69.0, core=true, t24Name=INPUTTER)
+    }
+    MF_ORDER__DATE_TIME
+    {
+        DATE_TIME : T24BusinessTypes:RELTIME
+            @i18n:Label (en="Date time")
+            @i18n:Tooltip (en="Date and time when record was input or authorised")
+            @t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=70.0, core=true, t24Name=DATE.TIME, mask="RDD DD  DD ##:##")
+    }
 }
 Enumerations {
-	MF_EXECUTE_ORDERS__LIMIT_TYPE : mml:string
-		MARKET=MARKET
-		PRICE=PRICE
-	MF_EXECUTE_ORDERS__TRADE_STATUS : mml:string
-		HLD=HLD
-		NAU=NAU
-	MF_ORDER__ORDER_TYPE : mml:string
-		SINGLE=SINGLE
-		BULK=BULK
-		SWITCH=SWITCH
-	MF_ORDER__UNIT_AMOUNT : mml:string
-		UNIT=UNIT
-		AMOUNT=AMOUNT
-	MF_ORDER__WAIVE_FEES : mml:string
-		YES=YES
-	MF_ORDER__FEE_INCLUSIVE : mml:string
-		YES=YES
-	MF_ORDER__LIMIT_TYPE : mml:string
-		MARKET=MARKET
-		PRICE=PRICE
-	MF_ORDER__PAYMENT_MODE : mml:string
-		CHEQUE=CHEQUE
-		CASH=CASH
-		CARD=CARD
-		ACCOUNT=ACCOUNT
-		TRANSFER=TRANSFER
-		OTHER=OTHER
-	MF_ORDER__SWITCH_ORDER_ID__SWITCH_SHARE : mml:string
-		1__100=1..100
-	MF_ORDER__DEAL_STATUS : mml:string
-		EXECUTE=EXECUTE
-	MF_ORDER__PRICING_METHOD : mml:string
-		FORWARD=FORWARD
-		HISTORICAL=HISTORICAL
-	MF_ORDER__TRADE_STATUS : mml:string
-		HLD=HLD
-		NAU=NAU
-	MF_ORDER__SEND_CONFIRMATION : mml:string
-		YES=YES
+    MF_ORDER__ORDER_TYPE : mml:string
+        
+        
+        SINGLE=SINGLE
+        BULK=BULK
+        SWITCH=SWITCH
+    MF_ORDER__UNIT_AMOUNT : mml:string
+        
+        UNIT=UNIT
+        AMOUNT=AMOUNT
+    MF_ORDER__WAIVE_FEES : mml:string
+        YES=YES
+    MF_ORDER__FEE_INCLUSIVE : mml:string
+        YES=YES
+    MF_ORDER__LIMIT_TYPE : mml:string
+        
+        MARKET=MARKET
+        PRICE=PRICE
+    MF_ORDER__PAYMENT_MODE : mml:string
+        
+        
+        
+        
+        
+        CHEQUE=CHEQUE
+        CASH=CASH
+        CARD=CARD
+        ACCOUNT=ACCOUNT
+        TRANSFER=TRANSFER
+        OTHER=OTHER
+    MF_ORDER__SWITCH_ORDER_ID__SWITCH_SHARE : mml:string
+        1__100=1..100
+    MF_ORDER__DEAL_STATUS : mml:string
+        EXECUTE=EXECUTE
+    MF_ORDER__PRICING_METHOD : mml:string
+        
+        FORWARD=FORWARD
+        HISTORICAL=HISTORICAL
+    MF_ORDER__TRADE_STATUS : mml:string
+        
+        HLD=HLD
+        NAU=NAU
+    MF_ORDER__SEND_CONFIRMATION : mml:string
+        YES=YES
+    MF_EXECUTE_ORDERS__LIMIT_TYPE : mml:string
+        
+        MARKET=MARKET
+        PRICE=PRICE
+    MF_EXECUTE_ORDERS__TRADE_STATUS : mml:string
+        
+        
+HLD=HLD
+        NAU=NAU
 }
