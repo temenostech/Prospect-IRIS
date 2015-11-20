@@ -40,7 +40,7 @@ domain Prospect {
 			GET -> T24.verPersonEntity_ProspectInput.verPersonEntity_ProspectInputs
 			GET -> T24.verSaScoreTxn_RiskProfilingHp.verSaScoreTxn_RiskProfilingHps
 			GET -> T24.verAccount_InternetAccount.verAccount_InternetAccounts
-			GET -> Errors
+			GET -> common.Errors.Errors
 		}
 
 		exception resource InteractionException {
@@ -49,12 +49,24 @@ domain Prospect {
 			view: GETException
 		}
 
-		resource Errors {
-			type: collection
-			entity: Errors
-			view: NoopGET
-		}
-
+        resource T24FieldMetadata {
+            type: collection
+            entity: T24FieldMetadata
+            actions [T24FieldMetadata]
+            relations [ "http://temenostech.temenos.com/rels/metadata" ]
+            path: "/T24FieldMetadata()"
+        }
 	}
-
+	
+    rim Metadata {
+        initial resource MetadataBase {
+            type: item
+            entity: Metadata
+            view: GETMetadata
+            path: "/$metadata"
+            GET ->> Prospect.ODataMetadata {
+                parameters [ companyid="{DefaultCompany}" ]
+            }
+        }
+    }
 }

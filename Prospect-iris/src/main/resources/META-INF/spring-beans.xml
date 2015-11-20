@@ -1,569 +1,325 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:util="http://www.springframework.org/schema/util"
-	xsi:schemaLocation="
-		http://www.springframework.org/schema/util 
-		http://www.springframework.org/schema/util/spring-util-3.0.xsd
-		http://www.springframework.org/schema/beans
-		http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
-		http://www.springframework.org/schema/context
-		http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:util="http://www.springframework.org/schema/util"
+    xsi:schemaLocation="
+        http://www.springframework.org/schema/util 
+        http://www.springframework.org/schema/util/spring-util-3.0.xsd
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 
-	<!-- Metadata -->	
-    <bean id="termFactory" class="com.temenos.interaction.commands.vocabulary.T24TermFactory" />
-	<bean id="metadataManager" class="com.temenos.interaction.core.resource.ResourceMetadataManager">
-        <constructor-arg ref="termFactory" />
-	</bean>
-	
-	<bean id="metadataEntity" class="com.temenos.interaction.core.entity.Metadata">
-		<constructor-arg ref="metadataManager" />
-	</bean>
-	<bean id="metadata" factory-bean="metadataEntity" factory-method="getMetadata"/>
-	
-	<!-- Odata4j Metadata -->
-	<bean id="metadataOData4j" class="com.temenos.interaction.odataext.entity.MetadataOData4j">
-        <constructor-arg ref="metadata" />
-        <constructor-arg ref="srvdoc_stateMachine" />
-    </bean>
-	<!-- ResourceStateMachine built out of ServiceDocument only for EdmMetadata -->
-	<bean id="srvdoc_stateMachine" class="com.temenos.interaction.core.hypermedia.ResourceStateMachine">
-		<constructor-arg ref="ServiceDocument" />
-    	<constructor-arg ref="exceptionState" />
-		<constructor-arg ><null /></constructor-arg>
-    	<constructor-arg ref="resourceStateProvider" />
-	</bean>
-	
-	<!-- Import TAFC standalone context, will run standalone if tafc.hosts is set in properties	-->
-	<import resource="classpath*:tafc-standalone-context.xml" />
-	<!-- Import Resource manager context -->
-	<import resource="classpath:/META-INF/resourcemanager-context.xml" />
-	
-	<!-- An extension of org.apache.wink.spring.Registrar with support for singletons -->
-	<bean class="com.temenos.interaction.winkext.RegistrarWithSingletons">
-		<property name="singletons">
-			<list>
-				<ref local="atomProvider" />
-				<ref local="edmxProvider" />
-				<ref local="serviceDocumentProvider" />
-				<ref local="errorProvider" />
-				<ref local="xhtmlProvider" />
-				<ref local="halProvider" />
- 			</list>
-   		</property>
-		<property name="serviceRootFactory" ref="serviceRootFactory" />
-        <property name="serviceRoots">
-            <set>
-                <ref local="Metadata" />
-            </set>
-        </property>
-	</bean>
-	<bean id="entityTransformer" class="com.temenos.interaction.core.hypermedia.StrategyBasedTransformer">
-		<constructor-arg>
-			<list>
-				<bean class="com.temenos.interaction.core.hypermedia.EntityTransformer" />
-				<bean class="com.temenos.interaction.commands.odata.OEntityTransformer" />
-				<bean class="com.temenos.interaction.core.hypermedia.BeanTransformer" />
-			</list>
-		</constructor-arg>
-	</bean>
-
-	<bean id="atomProvider" class="com.temenos.interaction.media.odata.xml.atom.AtomXMLProvider">
-    	<constructor-arg name="metadataOData4j" ref="metadataOData4j" />
-		<constructor-arg name="metadata" ref="metadata" />
-		<constructor-arg name="resourceStateProvider" ref="resourceStateProvider" />
-		<constructor-arg name="serviceDocument" ref="ServiceDocument" />
-		<constructor-arg ref="entityTransformer" />
-	</bean>
-    <bean id="edmxProvider" class="com.temenos.interaction.media.odata.xml.edmx.EdmxMetaDataProvider" />
-	<bean id="serviceDocumentProvider" class="com.temenos.interaction.media.odata.xml.atomsvc.ServiceDocumentProvider">
-        <constructor-arg name="hypermediaEngine" ref="stateMachine" />
-	</bean>
-    <bean id="errorProvider" class="com.temenos.interaction.media.odata.xml.error.ErrorProvider" />
- 	<bean id="xhtmlProvider" class="com.temenos.interaction.media.xhtml.XHTMLProvider">
-    	<constructor-arg ref="metadata" />
-	</bean>
-	<bean id="halProvider" class="com.temenos.interaction.media.hal.HALProvider">
-    	<constructor-arg ref="metadata" />
-        <constructor-arg ref="stateMachine" />
-	</bean>
-
-
-	<bean id="ServiceDocument" factory-bean="resourceStateProvider" factory-method="getResourceState">
-		<constructor-arg type="java.lang.String" value="Prospect_Prospect-ServiceDocument" />
-	</bean>
-	<bean id="initialState" factory-bean="resourceStateProvider" factory-method="getResourceState">
-		<constructor-arg type="java.lang.String" value="Prospect_Prospect-ServiceDocument" />
-	</bean>
-	<bean id="exceptionState" factory-bean="resourceStateProvider" factory-method="getResourceState">
-		<constructor-arg type="java.lang.String" value="Prospect_Prospect-InteractionException" />
-	</bean>
-
-	<!-- 
-		Import the main SpringDSL entry point for IRIS
-		
-		Initialises the ResourceStateProvider and understands how to construct
-		ResourceState instances using Spring
-	-->
-	<import resource="classpath*:IRIS-SpringDSL-main.xml" />
-
-	<bean id="serviceRootFactory" class="com.temenos.interaction.winkext.LazyServiceRootFactory">
-		<property name="commandController" ref="commands" />
-		<property name="metadata" ref="metadata" />
-		<property name="transformer" ref="entityTransformer" />
-		<property name="resourceStateProvider" ref="resourceStateProvider" />
-	</bean>
-
-	<!-- Create a complete state machine for the OData ServiceDocument and Metadata -->
-	<bean id="stateMachine" class="com.temenos.interaction.core.hypermedia.ResourceStateMachine">
-		<constructor-arg name="initialState" ref="initialState" />
-    	<constructor-arg name="exceptionState" ref="exceptionState" />
-		<constructor-arg name="transformer" ref="entityTransformer" />
-    	<constructor-arg name="resourceLocatorProvider"><null /></constructor-arg>
-		<constructor-arg name="resourceStateProvider" ref="resourceStateProvider" />
-	</bean>
-
-    <!-- Define the $metadata resource for OData (note, this is out of band meaning there are no links to the metadata from our service -->
-    <bean id="Metadata" class="com.temenos.interaction.core.rim.HTTPHypermediaRIM">
-        <constructor-arg ref="commands" />
-        <constructor-arg>
-            <bean class="com.temenos.interaction.core.hypermedia.ResourceStateMachine">
-                <constructor-arg>
-                    <bean class="com.temenos.interaction.core.hypermedia.ResourceState">
-                        <constructor-arg name="entityName" value="Metadata" />
-                        <constructor-arg name="name" value="initial" />
-                        <constructor-arg>
-                            <list>
-                                <bean class="com.temenos.interaction.core.hypermedia.Action">
-                                    <constructor-arg value="GETMetadata" />
-                                    <constructor-arg value="VIEW" />
-                                </bean>
-                            </list>
-                        </constructor-arg>
-                        <constructor-arg name="path" value="/{companyid}/$metadata" />
-                    </bean>
-                </constructor-arg>
-            </bean>
-        </constructor-arg>
-        <constructor-arg ref="metadata" />
-    </bean>
-	
-	<!-- Properties for retry workflow strategy -->
-	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-    	<property name="properties">
-        	<util:properties>
-            	<prop key="maxRetryCount">3</prop>
-            	<prop key="maxRetryInterval">2</prop>
-            	<prop key="retryWorkflowClass">com.temenos.interaction.core.workflow.RetryWorkflowStrategyCommand</prop>
-        	</util:properties>
-    	</property>
-	</bean>
-	
-	<!-- T24 Configuration -->
-	<bean id="t24Config" class="com.temenos.interaction.t24.T24Configuration" />
-
-	<!-- Commands -->
-	<bean id="GETServiceDocument" class="com.temenos.interaction.commands.odata.GETMetadataCommand">
-		<constructor-arg value="ServiceDocument" />
-		<constructor-arg ref="metadataOData4j" />
-	</bean>
-	
-	<bean id="GETMetadata" class="com.temenos.interaction.commands.odata.GETMetadataCommand">
-		<constructor-arg value="Metadata" />
-		<constructor-arg ref="metadataOData4j" />
-	</bean>
-	
-	<bean id="GETExceptionCommand" class="com.temenos.interaction.core.command.GETExceptionCommand" />
-	
-	<bean id="NoopGETCommand" class="com.temenos.interaction.core.command.NoopGETCommand" />
-	
-	<bean id="IRISGETEntities" class="com.temenos.interaction.commands.odata.GETEntitiesCommand">
-		<constructor-arg ref="metadataOData4j" />
-		<constructor-arg ref="producer" />
-	</bean>
-	
-	<bean id="IRISGETEntity" class="com.temenos.interaction.commands.odata.GETEntityCommand">
-		<constructor-arg ref="metadataOData4j" />
-		<constructor-arg ref="producer" />
-	</bean>
-	
-	<bean id="IRISGETNavProperty" class="com.temenos.interaction.commands.odata.GETNavPropertyCommand">
-		<constructor-arg ref="producer" />
-	</bean>
-	
-	<bean id="T24GetLiveEntities" class="com.temenos.interaction.commands.t24.T24GetLiveEntitiesCommand">
-		<constructor-arg ref="metadata" />
-		<constructor-arg ref="t24Config" />
-		<constructor-arg ref="producer" />
-	</bean>
-	
-	<bean id="T24GetLiveEntity" class="com.temenos.interaction.commands.t24.T24GetLiveEntityCommand">
-		<constructor-arg ref="metadata" />
-		<constructor-arg ref="t24Config" />
-		<constructor-arg ref="producer" />
-	</bean>
-	
-	<bean id="T24GetIauthEntities" class="com.temenos.interaction.commands.t24.T24GetIAuthEntitiesCommand">
-		<constructor-arg ref="metadata" />
-		<constructor-arg ref="t24Config" />
-		<constructor-arg ref="producer" />
-	</bean>
-	
-	<bean id="T24GetIauthEntity" class="com.temenos.interaction.commands.t24.T24GetIAuthEntityCommand">
-		<constructor-arg ref="metadata" />
-		<constructor-arg ref="t24Config" />
-		<constructor-arg ref="producer" />
-	</bean>
-	
-	<bean id="T24GetHauthEntities" class="com.temenos.interaction.commands.t24.T24GetHAuthEntitiesCommand">
-		<constructor-arg ref="metadata" />
-		<constructor-arg ref="t24Config" />
-		<constructor-arg ref="producer" />
-	</bean>
-	
-	<bean id="T24GetHauthEntity" class="com.temenos.interaction.commands.t24.T24GetHAuthEntityCommand">
-		<constructor-arg ref="metadata" />
-		<constructor-arg ref="t24Config" />
-		<constructor-arg ref="producer" />
-	</bean>
-	
-	<bean id="T24GetRauthEntities" class="com.temenos.interaction.commands.t24.T24GetRAuthEntitiesCommand">
-		<constructor-arg ref="metadata" />
-		<constructor-arg ref="t24Config" />
-		<constructor-arg ref="producer" />
-	</bean>
-	
-	<bean id="T24GetRauthEntity" class="com.temenos.interaction.commands.t24.T24GetRAuthEntityCommand">
-		<constructor-arg ref="metadata" />
-		<constructor-arg ref="t24Config" />
-		<constructor-arg ref="producer" />
-	</bean>
-	
-	<bean id="T24GetReversedEntities" class="com.temenos.interaction.commands.t24.T24GetReversedEntitiesCommand">
-		<constructor-arg ref="metadata" />
-		<constructor-arg ref="t24Config" />
-		<constructor-arg ref="producer" />
-	</bean>
-	
-	<bean id="T24GetReversedEntity" class="com.temenos.interaction.commands.t24.T24GetReversedEntityCommand">
-		<constructor-arg ref="metadata" />
-		<constructor-arg ref="t24Config" />
-		<constructor-arg ref="producer" />
-	</bean>
-	
-	<bean id="T24GetHeldEntities" class="com.temenos.interaction.commands.t24.T24GetHeldEntitiesCommand">
-		<constructor-arg ref="metadata" />
-		<constructor-arg ref="t24Config" />
-		<constructor-arg ref="producer" />
-	</bean>
-	
-	<bean id="T24GetHeldEntity" class="com.temenos.interaction.commands.t24.T24GetHeldEntityCommand">
-		<constructor-arg ref="metadata" />
-		<constructor-arg ref="t24Config" />
-		<constructor-arg ref="producer" />
-	</bean>
-	
-	<bean id="T24InputEntity" class="com.temenos.interaction.commands.t24.T24InputCommand">
-		<constructor-arg ref="metadata" />
-		<constructor-arg ref="t24Config" />
-		<constructor-arg ref="metadataOData4j" />
-	</bean>
-	
-	<bean id="T24CreateEntity" class="com.temenos.interaction.commands.t24.T24GetNewEntityCommand">
-		<constructor-arg ref="metadata" />
-		<constructor-arg ref="t24Config" />
-	</bean>
-	
-	<bean id="T24AuthoriseEntity" class="com.temenos.interaction.commands.t24.T24AuthoriseCommand">
-		<constructor-arg ref="metadata" />
-		<constructor-arg ref="t24Config" />
-	</bean>
-	
-	<bean id="T24DeleteEntity" class="com.temenos.interaction.commands.t24.T24DeleteCommand">
-		<constructor-arg ref="metadata" />
-		<constructor-arg ref="t24Config" />
-	</bean>
-	
-	<bean id="T24HoldEntity" class="com.temenos.interaction.commands.t24.T24HoldCommand">
-		<constructor-arg ref="metadata" />
-		<constructor-arg ref="t24Config" />
-		<constructor-arg ref="metadataOData4j" />
-	</bean>
-	
-	<bean id="T24ReverseEntity" class="com.temenos.interaction.commands.t24.T24ReverseCommand">
-		<constructor-arg ref="metadata" />
-		<constructor-arg ref="t24Config" />
-	</bean>
-	
-	<bean id="T24RestoreEntity" class="com.temenos.interaction.commands.t24.T24RestoreCommand">
-		<constructor-arg ref="metadata" />
-		<constructor-arg ref="t24Config" />
-	</bean>
-	
-	<bean id="T24ReviewEntity" class="com.temenos.interaction.commands.t24.T24AuditorReviewCommand">
-		<constructor-arg ref="metadata" />
-		<constructor-arg ref="t24Config" />
-	</bean>
-	
-	<bean id="T24VerifyEntity" class="com.temenos.interaction.commands.t24.T24VerifyCommand">
-		<constructor-arg ref="metadata" />
-		<constructor-arg ref="t24Config" />
-	</bean>
-
-	<bean id="T24EntityMetadata" class="com.temenos.interaction.commands.t24.T24EntityMetadataCommand">
-		<constructor-arg ref="metadata" />
-		<constructor-arg ref="t24Config" />
-	</bean>
-	
-    <bean id="T24Validation" class="com.temenos.interaction.commands.t24.T24ValidationCommand">
-        <constructor-arg ref="metadata" />
-        <constructor-arg ref="t24Config" />
-        <constructor-arg ref="metadataOData4j" />
-    </bean>
-
-   	<bean id="T24FieldMetadata" class="com.temenos.interaction.commands.t24.T24FieldMetadataCommand">
-        <constructor-arg ref="metadata" />
-        <constructor-arg ref="metadataOData4j" />
-        <constructor-arg ref="t24Config" />
+    <!-- Metadata -->    
+    <bean id="metadataManager" class="com.temenos.interaction.core.resource.ResourceMetadataManager">
+        <constructor-arg ref="t24TermFactory" />
     </bean>
     
-    <bean id="GETNoop" class="com.temenos.interaction.core.command.NoopGETCommand" />
+    <bean id="metadataEntity" class="com.temenos.interaction.core.entity.Metadata">
+        <constructor-arg ref="metadataManager" />
+    </bean>
+    <bean id="metadata" factory-bean="metadataEntity" factory-method="getMetadata"/>
+    
+    <!-- Odata4j Metadata -->
+    <bean id="metadataOData4j" class="com.temenos.interaction.odataext.entity.MetadataOData4j">
+        <constructor-arg ref="metadata" />
+        <constructor-arg ref="srvdoc_stateMachine" />
+        <property name="odataVersion" value="V2"/>
+    </bean>
+    <!-- ResourceStateMachine built out of ServiceDocument only for EdmMetadata -->
+    <bean id="srvdoc_stateMachine" class="com.temenos.interaction.core.hypermedia.ResourceStateMachine">
+        <constructor-arg ref="serviceDocument" />
+        <constructor-arg ref="exceptionState" />
+        <constructor-arg name="transformer"><null/></constructor-arg>
+        <constructor-arg  ref= "resourceLocatorProvider" />
+        <constructor-arg ref="resourceStateProvider" />
+    </bean>
+    
+    <!-- Import Resource manager context -->
+    <import resource="classpath:/META-INF/resourcemanager-context.xml" />
+    
+    <!-- An extension of org.apache.wink.spring.Registrar with support for singletons -->
+    <bean class="com.temenos.interaction.winkext.RegistrarWithSingletons">
+        <property name="singletons">
+            <list>
+                <ref local="atomProvider" />
+                <ref local="edmxProvider" />
+                <ref local="serviceDocumentProvider" />
+                <ref local="errorProvider" />
+                <ref local="xhtmlProvider" />
+                <ref local="halProvider" />
+             </list>
+           </property>
+        <property name="serviceRootFactory" ref="serviceRootFactory" />
+        <property name="serviceRoots">
+            <list>
+                <ref local="Metadata" />
+            </list>
+        </property>
+    </bean>
+    <bean id="entityTransformer" class="com.temenos.interaction.core.hypermedia.StrategyBasedTransformer">
+        <constructor-arg>
+            <list>
+                <bean class="com.temenos.interaction.core.hypermedia.EntityTransformer" />
+                <bean class="com.temenos.interaction.commands.odata.OEntityTransformer" />
+                <bean class="com.temenos.interaction.core.hypermedia.BeanTransformer" />
+            </list>
+        </constructor-arg>
+    </bean>
 
-	<bean id="T24CreateEntityCommand" class="com.temenos.interaction.commands.t24.T24GetNewEntityCommand" >
-		<constructor-arg ref="metadata" />
-		<constructor-arg ref="t24Config" />
-	</bean>
-	
-	<bean id="GETEntities" class="${retryWorkflowClass}">
-		<constructor-arg ref="IRISGETEntities" />
-		<constructor-arg value="${maxRetryCount}" />
-		<constructor-arg value="${maxRetryInterval}" />		
-	</bean>
-	
-	<bean id="GETEntity" class="${retryWorkflowClass}">
-		<constructor-arg ref="IRISGETEntity" />
-		<constructor-arg value="${maxRetryCount}" />
-		<constructor-arg value="${maxRetryInterval}" />		
-	</bean>
-	
-	<bean id="GETNavProperty" class="${retryWorkflowClass}">
-		<constructor-arg ref="IRISGETNavProperty" />
-		<constructor-arg value="${maxRetryCount}" />
-		<constructor-arg value="${maxRetryInterval}" />		
-	</bean>
-	
-	<bean id="GetLiveEntities" class="${retryWorkflowClass}">
-		<constructor-arg ref="T24GetLiveEntities" />
-		<constructor-arg value="${maxRetryCount}" />
-		<constructor-arg value="${maxRetryInterval}" />
-	</bean>
-	
-	<bean id="GetLiveEntity" class="${retryWorkflowClass}">
-		<constructor-arg ref="T24GetLiveEntity" />
-		<constructor-arg value="${maxRetryCount}" />
-		<constructor-arg value="${maxRetryInterval}" />		
-	</bean>
+    <bean id="atomProvider" class="com.temenos.interaction.media.odata.xml.atom.AtomXMLProvider">
+        <constructor-arg name="metadataOData4j" ref="metadataOData4j" />
+        <constructor-arg name="metadata" ref="metadata" />
+        <constructor-arg name="resourceStateProvider" ref="resourceStateProvider" />
+        <constructor-arg name="serviceDocument" ref="serviceDocument" />
+        <constructor-arg ref="entityTransformer" />
+    </bean>
+    <bean id="edmxProvider" class="com.temenos.interaction.media.odata.xml.edmx.EdmxMetaDataProvider" />
+    <bean id="serviceDocumentProvider" class="com.temenos.interaction.media.odata.xml.atomsvc.ServiceDocumentProvider">
+        <constructor-arg name="hypermediaEngine" ref="stateMachine" />
+    </bean>
+    <bean id="errorProvider" class="com.temenos.interaction.media.odata.xml.error.ErrorProvider" />
+     <bean id="xhtmlProvider" class="com.temenos.interaction.media.xhtml.XHTMLProvider">
+        <constructor-arg ref="metadata" />
+    </bean>
+    <bean id="halProvider" class="com.temenos.interaction.media.hal.HALProvider">
+        <constructor-arg ref="metadata" />
+        <constructor-arg ref="resourceStateProvider" />
+    </bean>
 
-	<bean id="GetIauthEntities" class="${retryWorkflowClass}">
-		<constructor-arg ref="T24GetIauthEntities" />
-		<constructor-arg value="${maxRetryCount}" />
-		<constructor-arg value="${maxRetryInterval}" />		
-	</bean>
+    <bean id="serviceDocument" factory-bean="resourceStateProvider" factory-method="getResourceState">
+        <constructor-arg type="java.lang.String" value="Prospect_Prospect-ServiceDocument" />
+    </bean>
+    <bean id="initialState" factory-bean="resourceStateProvider" factory-method="getResourceState">
+        <constructor-arg type="java.lang.String" value="Prospect_Prospect-ServiceDocument" />
+    </bean>
+    <bean id="exceptionState" factory-bean="resourceStateProvider" factory-method="getResourceState">
+        <constructor-arg type="java.lang.String" value="Prospect_Prospect-InteractionException" />
+    </bean>
 
-	<bean id="GetIauthEntity" class="${retryWorkflowClass}">
-		<constructor-arg ref="T24GetIauthEntity" />
-		<constructor-arg value="${maxRetryCount}" />
-		<constructor-arg value="${maxRetryInterval}" />		
-	</bean>
-		
-	<bean id="GetHauthEntities" class="${retryWorkflowClass}">
-		<constructor-arg ref="T24GetHauthEntities" />
-		<constructor-arg value="${maxRetryCount}" />
-		<constructor-arg value="${maxRetryInterval}" />		
-	</bean>
-	
-	<bean id="GetHauthEntity" class="${retryWorkflowClass}">
-		<constructor-arg ref="T24GetHauthEntity" />
-		<constructor-arg value="${maxRetryCount}" />
-		<constructor-arg value="${maxRetryInterval}" />		
-	</bean>
-	
-	<bean id="GetRauthEntities" class="${retryWorkflowClass}">
-		<constructor-arg ref="T24GetRauthEntities" />
-		<constructor-arg value="${maxRetryCount}" />
-		<constructor-arg value="${maxRetryInterval}" />		
-	</bean>
-	
-	<bean id="GetRauthEntity" class="${retryWorkflowClass}">
-		<constructor-arg ref="T24GetRauthEntity" />
-		<constructor-arg value="${maxRetryCount}" />
-		<constructor-arg value="${maxRetryInterval}" />		
-	</bean>
-	
-	<bean id="GetReversedEntities" class="${retryWorkflowClass}">
-		<constructor-arg ref="T24GetReversedEntities" />
-		<constructor-arg value="${maxRetryCount}" />
-		<constructor-arg value="${maxRetryInterval}" />		
-	</bean>
-	
-	<bean id="GetReversedEntity" class="${retryWorkflowClass}">
-		<constructor-arg ref="T24GetReversedEntity" />
-		<constructor-arg value="${maxRetryCount}" />
-		<constructor-arg value="${maxRetryInterval}" />		
-	</bean>
-	
-	<bean id="GetHeldEntities" class="${retryWorkflowClass}">
-		<constructor-arg ref="T24GetHeldEntities" />
-		<constructor-arg value="${maxRetryCount}" />
-		<constructor-arg value="${maxRetryInterval}" />		
-	</bean>
-	
-	<bean id="GetHeldEntity" class="${retryWorkflowClass}">
-		<constructor-arg ref="T24GetHeldEntity" />
-		<constructor-arg value="${maxRetryCount}" />
-		<constructor-arg value="${maxRetryInterval}" />		
-	</bean>
-	
-	<bean id="InputEntity" class="${retryWorkflowClass}">
-		<constructor-arg ref="T24InputEntity" />
-		<constructor-arg value="${maxRetryCount}" />
-		<constructor-arg value="${maxRetryInterval}" />		
-	</bean>
-	
-	<bean id="CreateEntity" class="${retryWorkflowClass}">
-		<constructor-arg ref="T24CreateEntity" />
-		<constructor-arg value="${maxRetryCount}" />
-		<constructor-arg value="${maxRetryInterval}" />		
-	</bean>
-	
-	<bean id="AuthoriseEntity" class="${retryWorkflowClass}">
-		<constructor-arg ref="T24AuthoriseEntity" />
-		<constructor-arg value="${maxRetryCount}" />
-		<constructor-arg value="${maxRetryInterval}" />		
-	</bean>
-	
-	<bean id="DeleteEntity" class="${retryWorkflowClass}">
-		<constructor-arg ref="T24DeleteEntity" />
-		<constructor-arg value="${maxRetryCount}" />
-		<constructor-arg value="${maxRetryInterval}" />		
-	</bean>
-	
-	<bean id="HoldEntity" class="${retryWorkflowClass}">
-		<constructor-arg ref="T24HoldEntity" />
-		<constructor-arg value="${maxRetryCount}" />
-		<constructor-arg value="${maxRetryInterval}" />		
-	</bean>
-	
-	<bean id="ReverseEntity" class="${retryWorkflowClass}">
-		<constructor-arg ref="T24ReverseEntity" />
-		<constructor-arg value="${maxRetryCount}" />
-		<constructor-arg value="${maxRetryInterval}" />		
-	</bean>
-	
-	<bean id="RestoreEntity" class="${retryWorkflowClass}">
-		<constructor-arg ref="T24RestoreEntity" />
-		<constructor-arg value="${maxRetryCount}" />
-		<constructor-arg value="${maxRetryInterval}" />		
-	</bean>
-	
-	<bean id="ReviewEntity" class="${retryWorkflowClass}">
-		<constructor-arg ref="T24ReviewEntity" />
-		<constructor-arg value="${maxRetryCount}" />
-		<constructor-arg value="${maxRetryInterval}" />		
-	</bean>
-	
-	<bean id="VerifyEntity" class="${retryWorkflowClass}">
-		<constructor-arg ref="T24VerifyEntity" />
-		<constructor-arg value="${maxRetryCount}" />
-		<constructor-arg value="${maxRetryInterval}" />		
-	</bean>
-	
-	<bean id="Validation" class="${retryWorkflowClass}">
-		<constructor-arg ref="T24Validation" />
-		<constructor-arg value="${maxRetryCount}" />
-		<constructor-arg value="${maxRetryInterval}" />		
-	</bean>
-	
-	<bean id="CreateEntityCommand" class="${retryWorkflowClass}">
-		<constructor-arg ref="T24CreateEntityCommand" />
-		<constructor-arg value="${maxRetryCount}" />
-		<constructor-arg value="${maxRetryInterval}" />		
-	</bean>
-	
-	<!-- Image download (EFS) -->
-  	<!--
-  	<bean id="downloadProviderFS" class="com.efstech.temenos.inputstreamprovidertocf.PDMInputStreamProviderTOCFTestServlet" />
- 	-->
-    	
-	<!-- TEMENOS Interface -->
-	<bean id="downloadProviderFS" class="com.temenos.tocf.datatransfer.file.TOCFDocXferFileInputStreamProvider" />
-  	<!--
-	<bean id="downloadProviderDB" class="com.temenos.tocf.datatransfer.db.TOCFDocXferDbInputStreamProvider" />
-	<bean id="uploadProviderFS" class="com.temenos.tocf.datatransfer.file.TOCFDocXferFileOutputStreamWriter" />
-	<bean id="uploadProviderDB" class="com.temenos.tocf.datatransfer.db.TOCFDocXferDbOutputStreamWriter" />
- 	-->
-	<bean id="T24ImageDownloadFS" class="com.temenos.interaction.commands.t24.datatransfer.T24ImageDownloadCommandFS">
-		<constructor-arg ref="metadata" />
+    <!-- 
+        Import the main SpringDSL entry point for IRIS
+        
+        Initialises the ResourceStateProvider and understands how to construct
+        ResourceState instances using Spring
+    -->
+    <import resource="classpath*:IRIS-SpringDSL-main.xml" />
+    <import resource="classpath*:META-INF/**/*-Dynamic-Load.xml" />        
+    <import resource="classpath*:META-INF/**/T24Commands-Spring.xml" />
+     
+    <bean id="serviceRootFactory" class="com.temenos.interaction.winkext.LazyServiceRootFactory">
+        <property name="commandController" ref="commands" />
+        <property name="metadata" ref="metadata" />
+        <property name="transformer" ref="entityTransformer" />
+        <property name="resourceLocatorProvider" ref="resourceLocatorProvider" />
+        <property name="resourceStateProvider" ref="resourceStateProvider" />
+        <property name="resourceParameterResolverProvider"  ref="resourceParameterResolverProvider" />
+    </bean>
+
+    <!-- Create a complete state machine for the OData ServiceDocument and Metadata -->
+    <bean id="stateMachine" class="com.temenos.interaction.core.hypermedia.ResourceStateMachine">
+        <constructor-arg name="initialState" ref="initialState" />
+        <constructor-arg name="exceptionState" ref="exceptionState" />
+        <constructor-arg name="transformer" ref="entityTransformer" />
+        <constructor-arg name="resourceLocatorProvider" ref= "resourceLocatorProvider" />
+        <constructor-arg name="resourceStateProvider" ref="resourceStateProvider" />
+    </bean>
+    
+    
+    <bean id="resourceParameterResolverProvider" class="com.temenos.interaction.core.hypermedia.MapResourceParameterResolverProvider">
+        <constructor-arg>
+            <util:map>
+                <entry key="t24ResourceLocator" value-ref="t24ResourceParameterResolver" />
+                <entry key="locatorNextState" value-ref="t24NextResourceParameterResolver" />            
+            </util:map>
+        </constructor-arg>
+    </bean>
+
+    <bean id="resourceLocatorProvider" class="com.temenos.interaction.core.hypermedia.MapResourceLocatorProvider">
+        <constructor-arg>
+            <util:map>
+                <entry key="t24ResourceLocator" value-ref="t24ResourceLocator" />
+                <entry key="locatorNextState" value-ref="t24NextStateResourceLocator" />
+            </util:map>
+        </constructor-arg>
+    </bean>
+
+    <bean id="m_interaction" factory-bean="resourceStateProvider" factory-method="getResourceState">
+        <constructor-arg type="java.lang.String" value="Prospect_Metadata-MetadataBase" />
+    </bean>
+    <bean id="m_stateMachine" class="com.temenos.interaction.core.hypermedia.ResourceStateMachine">
+        <constructor-arg ref="m_interaction" />
+        <constructor-arg><null/></constructor-arg>
+        <constructor-arg ref="entityTransformer" />
+        <constructor-arg  ref= "resourceLocatorProvider" />        
+        <constructor-arg name="resourceStateProvider" ref="resourceStateProvider" />
+    </bean>
+    <bean id="Metadata" class="com.temenos.interaction.core.rim.HTTPHypermediaRIM">
+        <constructor-arg ref="commands" />
+        <constructor-arg ref="m_stateMachine" />
+        <constructor-arg ref="metadata" />
+    </bean>
+    
+    <!-- Properties for retry workflow strategy -->
+    <bean id="configuration" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+            <property name="properties">
+                <util:properties>
+                    <prop key="maxRetryCount">3</prop>
+                    <prop key="maxRetryInterval">2</prop>
+                    <prop key="retryWorkflowClass">com.temenos.interaction.core.workflow.RetryWorkflowStrategyCommand</prop>
+                </util:properties>
+            </property>
+        <property name="ignoreUnresolvablePlaceholders" value="true"/>
+    </bean>
+    
+    <!-- T24 Configuration -->
+    <bean id="modelName" factory-bean="metadata" factory-method="getModelName"/>
+    
+    <!-- Commands -->
+    <bean id="GETServiceDocument" class="com.temenos.interaction.commands.odata.GETMetadataCommand">
+        <constructor-arg value="ServiceDocument" />
         <constructor-arg ref="metadataOData4j" />
-        <constructor-arg ref="downloadProviderFS" />
-        <constructor-arg name="downloadPath" value="c:\temp\download" />
-	</bean>
-	
-	<bean id="ImageDownload" class="${retryWorkflowClass}">
-		<constructor-arg ref="T24ImageDownloadFS" />
-		<constructor-arg value="${maxRetryCount}" />
-		<constructor-arg value="${maxRetryInterval}" />		
-	</bean>
-	
-	<bean id="ValidateAddress" class="com.temenos.demo.prospect.ValidateAddressCommand" />
-	<bean id="MatchCommand" class="com.temenos.interaction.core.command.MatchCommand" />
-	
-	<!-- Command controller -->
-	<bean id="commands" class="com.temenos.interaction.core.command.NewCommandController">
-		<constructor-arg name="commands">
-			<util:map id="commandsMap" map-class="java.util.Hashtable">
-				<entry key="ValidateAddress" value-ref="ValidateAddress" />
-				<entry key="MatchCommand" value-ref="MatchCommand" />
-				<entry key="GETServiceDocument" value-ref="GETServiceDocument" />
-				<entry key="GETMetadata" value-ref="GETMetadata" />
-				<entry key="GETException" value-ref="GETExceptionCommand" />
-				<entry key="NoopGET" value-ref="NoopGETCommand" />
-				<entry key="GETEntities" value-ref="GETEntities" />
-				<entry key="GETEntity" value-ref="GETEntity" />
-				<entry key="GETNavProperty" value-ref="GETNavProperty" />
-				<entry key="GetLiveEntities" value-ref="GetLiveEntities" />
-				<entry key="GetLiveEntity" value-ref="GetLiveEntity" />
-				<entry key="GetIauthEntities" value-ref="GetIauthEntities" />
-				<entry key="GetIauthEntity" value-ref="GetIauthEntity" />
-				<entry key="GetHauthEntities" value-ref="GetHauthEntities" />
-				<entry key="GetHauthEntity" value-ref="GetHauthEntity" />
-				<entry key="GetRauthEntities" value-ref="GetRauthEntities" />
-				<entry key="GetRauthEntity" value-ref="GetRauthEntity" />
-				<entry key="GetReversedEntities" value-ref="GetReversedEntities" />
-				<entry key="GetReversedEntity" value-ref="GetReversedEntity" />
-				<entry key="GetHeldEntities" value-ref="GetHeldEntities" />
-				<entry key="GetHeldEntity" value-ref="GetHeldEntity" />
-				<entry key="InputEntity" value-ref="InputEntity" />
-				<entry key="CreateEntity" value-ref="CreateEntity" />
-				<entry key="AuthoriseEntity" value-ref="AuthoriseEntity" />
-				<entry key="DeleteEntity" value-ref="DeleteEntity" />
-				<entry key="HoldEntity" value-ref="HoldEntity" />
-				<entry key="ReverseEntity" value-ref="ReverseEntity" />
-				<entry key="RestoreEntity" value-ref="RestoreEntity" />
-				<entry key="ReviewEntity" value-ref="ReviewEntity" />
-				<entry key="ValidateEntity" value-ref="T24Validation" />
-				<entry key="VerifyEntity" value-ref="VerifyEntity" />
-				<entry key="T24EntityMetadata" value-ref="T24EntityMetadata" />
-				<entry key="CreateEntityCommand" value-ref="CreateEntityCommand" />
+    </bean>
+    
+    <bean id="GETMetadata" class="com.temenos.interaction.commands.odata.GETMetadataCommand">
+        <constructor-arg value="Metadata" />
+        <constructor-arg ref="metadataOData4j" />
+    </bean>
+    
+    <bean id="GETExceptionCommand" class="com.temenos.interaction.core.command.GETExceptionCommand" />
+    
+    <bean id="NoopGETCommand" class="com.temenos.interaction.core.command.NoopGETCommand" />
+    
+    <bean id="IRISGETEntities" class="com.temenos.interaction.commands.odata.GETEntitiesCommand">
+        <constructor-arg ref="metadataOData4j" />
+        <constructor-arg ref="producer" />
+    </bean>
+    
+    <bean id="IRISGETEntity" class="com.temenos.interaction.commands.odata.GETEntityCommand">
+        <constructor-arg ref="metadataOData4j" />
+        <constructor-arg ref="producer" />
+    </bean>
+    
+    <bean id="IRISGETNavProperty" class="com.temenos.interaction.commands.odata.GETNavPropertyCommand">    
+        <constructor-arg ref="producer" />
+    </bean>
+        
+    <bean id="GETMenu" class="com.temenos.interaction.core.command.NoopGETCommand" />
+    <bean id="GETNoop" class="com.temenos.interaction.core.command.NoopGETCommand" />
+    
+    <!-- 
+    <bean id="MuleViewCommand" class="com.temenos.interaction.commands.mule.ViewCommand">
+        <constructor-arg ref="muleClient" />
+    </bean>
+     -->
+
+    <!-- Root URL of the external Solr server -->
+    <bean id="GETSearchResults" class="com.temenos.interaction.commands.solr.SolrSearchCommand">
+        <!-- Solr server URL -->
+        <constructor-arg value="http://localhost:8983/solr" />
+    </bean>
+    
+    <!-- New configuration for retry -->
+    <bean id="GETEntities" class="${retryWorkflowClass}" depends-on="configuration">
+        <constructor-arg ref="IRISGETEntities" />
+        <constructor-arg value="${maxRetryCount}" />
+        <constructor-arg value="${maxRetryInterval}" />        
+    </bean>
+    
+    <bean id="GETEntity" class="${retryWorkflowClass}" depends-on="configuration">
+        <constructor-arg ref="IRISGETEntity" />
+        <constructor-arg value="${maxRetryCount}" />
+        <constructor-arg value="${maxRetryInterval}" />        
+    </bean>
+    
+    <bean id="GETNavProperty" class="${retryWorkflowClass}" depends-on="configuration">
+        <constructor-arg ref="IRISGETNavProperty" />
+        <constructor-arg value="${maxRetryCount}" />
+        <constructor-arg value="${maxRetryInterval}" />        
+    </bean>
+
+    <!-- TODO: We should be able to merge IRIS and T24Commands at deployment -->
+    <bean id="commandsMap" class="org.springframework.beans.factory.config.MapFactoryBean">
+        <property name="targetMapClass">
+            <value>java.util.Hashtable</value>
+        </property>
+        <property name="sourceMap">
+            <util:map>
+                <entry key="GETServiceDocument" value-ref="GETServiceDocument" />
+                <entry key="GETMetadata" value-ref="GETMetadata" />
+                <entry key="GETException" value-ref="GETExceptionCommand" />
+                <entry key="NoopGET" value-ref="NoopGETCommand" />
+                <entry key="GETEntities" value-ref="GETEntities" />
+                <entry key="GETEntity" value-ref="GETEntity" />
+                <entry key="GETNavProperty" value-ref="GETNavProperty" />
+                <entry key="GETMenu" value-ref="GETMenu" />
+                <!-- 
+                <entry key="MuleViewCommand" value-ref="MuleViewCommand" />
+                 -->
+                <entry key="GETSearchResults" value-ref="GETSearchResults" />
+    
                 <entry key="GETNoop" value-ref="GETNoop" />
+                
+                <!-- ========================================================== -->
+                <!-- Folowing commands should come from T24Commands Spring file --> 
+                <!-- ========================================================== -->
+                <entry key="GetLiveEntities" value-ref="GetLiveEntities" />
+                <entry key="GetLiveEntity" value-ref="GetLiveEntity" />
+                <entry key="GetLiveAAEntity" value-ref="GetLiveAAEntity" />
+                <entry key="GetIauthEntities" value-ref="GetIauthEntities" />
+                <entry key="GetIauthEntity" value-ref="GetIauthEntity" />
+                <entry key="GetIauthAAEntity" value-ref="GetIauthAAEntity" />
+                <entry key="GetHauthEntities" value-ref="GetHauthEntities" />
+                <entry key="GetHauthEntity" value-ref="GetHauthEntity" />
+                <entry key="GetHauthAAEntity" value-ref="GetHauthAAEntity" />
+                <entry key="GetRauthEntities" value-ref="GetRauthEntities" />
+                <entry key="GetRauthEntity" value-ref="GetRauthEntity" />
+                <entry key="GetReversedEntities" value-ref="GetReversedEntities" />
+                <entry key="GetReversedEntity" value-ref="GetReversedEntity" />
+                <entry key="GetHeldEntities" value-ref="GetHeldEntities" />
+                <entry key="GetHeldEntity" value-ref="GetHeldEntity" />
+                <entry key="InputEntity" value-ref="InputEntity" />
+                <entry key="CreateEntity" value-ref="CreateEntity" />
+                <entry key="AuthoriseEntity" value-ref="AuthoriseEntity" />
+                <entry key="DeleteEntity" value-ref="DeleteEntity" />
+                <entry key="HoldEntity" value-ref="HoldEntity" />
+                <entry key="HoldAAEntity" value-ref="HoldAAEntity" />
+                <entry key="ReverseEntity" value-ref="ReverseEntity" />
+                <entry key="ReverseAAEntity" value-ref="ReverseAAEntity" />
+                <entry key="RestoreEntity" value-ref="RestoreEntity" />
+                <entry key="ReviewEntity" value-ref="ReviewEntity" />
+                <entry key="ValidateEntity" value-ref="ValidateEntity" />
+                <entry key="VerifyEntity" value-ref="VerifyEntity" />
+                <entry key="T24EntityMetadata" value-ref="T24EntityMetadata" />
+                <entry key="T24Enrichment" value-ref="T24Enrichment" />
+                <entry key="T24Enrichments" value-ref="T24Enrichments" />
                 <entry key="T24FieldMetadata" value-ref="T24FieldMetadata" />
-                
-                <!-- Image Download-->
-				<entry key="ImageDownload" value-ref="ImageDownload" />
-                
-			</util:map> 
-		</constructor-arg>
-	</bean>
-	
+                <entry key="T24NextState" value-ref="T24NextState" />
+                <entry key="CreateAAEntity" value-ref="CreateAAEntity" />
+                <entry key="PopulateAAEntity" value-ref="PopulateAAEntity" />
+                <entry key="ValidateAAEntity" value-ref="ValidateAAEntity" />
+                <entry key="InputAAEntity" value-ref="InputAAEntity" />
+                <entry key="AAFieldMetadata" value-ref="AAFieldMetadata" />
+                <entry key="ImageDownload" value-ref="ImageDownload" />
+                <entry key="CheckAutoIdSupport" value-ref="CheckAutoIdSupport" />
+                <entry key="CheckIfError" value-ref="CheckIfError" />
+                <entry key="ErrorCommand" value-ref="T24ErrorCommand" />
+                <entry key="CopyEntity" value-ref="CopyEntity" />
+                <entry key="CopyAAEntity" value-ref="CopyAAEntity" />
+                <entry key="PasteEntity" value-ref="PasteEntity" />
+                <entry key="PasteAAEntity" value-ref="PasteAAEntity" />
+                <entry key="GetDealSlipEntities" value-ref="GetDealSlipEntities" />
+                <entry key="GetChangedValues" value-ref="GetChangedValuesEntities" />
+                <entry key="GetAAChangedValues" value-ref="GetAAChangedValuesEntities"/>
+                <!-- ========================================================== -->
+            </util:map>
+        </property>
+    </bean>
+    
+    <!-- Command controller -->
+    <bean id="commands" class="com.temenos.interaction.core.command.NewCommandController">
+        <constructor-arg name="commands" ref="commandsMap" />
+    </bean>
+    
 </beans>
