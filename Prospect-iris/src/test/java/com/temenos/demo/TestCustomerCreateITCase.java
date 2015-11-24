@@ -24,7 +24,7 @@ public class TestCustomerCreateITCase extends FunctionalTestBase {
 	@Test
 	public void testSuccessfulCreate() throws Exception {
 		AtomHelper atomHelper = new AtomHelper();
-		String newCustomersHref = BASE_URI + "verCustomer_Creates()/new";
+		String newCustomersHref = getBaseUri() + "verCustomer_Creates()/new";
 //		Entry blankEntry = new Abdera().newEntry();
 //		ClientResponse newResponse = getAbderaClient().post(newCustomersHref, blankEntry, buildAutomXmlRequestOptions());
 //		Document<Entry> responseDoc = newResponse.getDocument();
@@ -47,7 +47,7 @@ public class TestCustomerCreateITCase extends FunctionalTestBase {
 		
 		//Validate the entity
 		Link inputLink = newEntry.getLink("http://temenostech.temenos.com/rels/input");
-		ClientResponse inputResponse = getAbderaClient().post(BASE_URI + inputLink.getHref().toString(), newEntry, buildAutomXmlRequestOptions());
+		ClientResponse inputResponse = getAbderaClient().post(getBaseUri() + inputLink.getHref().toString(), newEntry, buildAutomXmlRequestOptions());
 		assertEquals(201, inputResponse.getStatus());
 		
 		//Parse response
@@ -61,7 +61,7 @@ public class TestCustomerCreateITCase extends FunctionalTestBase {
 	@Test
 	public void testSuccessfulCreateWithAddress() throws Exception {
 		AtomHelper atomHelper = new AtomHelper();
-		String newCustomersHref = BASE_URI + "verCustomer_Creates()/new";
+		String newCustomersHref = getBaseUri() + "verCustomer_Creates()/new";
 //		Entry blankEntry = new Abdera().newEntry();
 //		ClientResponse newResponse = getAbderaClient().post(newCustomersHref, blankEntry, buildAutomXmlRequestOptions());
 //		Document<Entry> responseDoc = newResponse.getDocument();
@@ -91,7 +91,7 @@ public class TestCustomerCreateITCase extends FunctionalTestBase {
 		
 		//Validate the entity
 		Link inputLink = newEntry.getLink("http://temenostech.temenos.com/rels/input");
-		ClientResponse inputResponse = getAbderaClient().post(BASE_URI + inputLink.getHref().toString(), newEntry, buildAutomXmlRequestOptions());
+		ClientResponse inputResponse = getAbderaClient().post(getBaseUri() + inputLink.getHref().toString(), newEntry, buildAutomXmlRequestOptions());
 		assertEquals(201, inputResponse.getStatus());
 		
 		//Parse response
@@ -103,7 +103,7 @@ public class TestCustomerCreateITCase extends FunctionalTestBase {
 	@Test
 	public void testCreateWithBadAddress() throws Exception {
 		AtomHelper atomHelper = new AtomHelper();
-		String newCustomersHref = BASE_URI + "verCustomer_Creates()/new";
+		String newCustomersHref = getBaseUri() + "verCustomer_Creates()/new";
 //		Entry blankEntry = new Abdera().newEntry();
 //		ClientResponse newResponse = getAbderaClient().post(newCustomersHref, blankEntry, buildAutomXmlRequestOptions());
 //		Document<Entry> responseDoc = newResponse.getDocument();
@@ -133,7 +133,7 @@ public class TestCustomerCreateITCase extends FunctionalTestBase {
 		
 		//Validate the entity
 		Link inputLink = newEntry.getLink("http://temenostech.temenos.com/rels/input");
-		ClientResponse inputResponse = getAbderaClient().post(BASE_URI + inputLink.getHref().toString(), newEntry, buildAutomXmlRequestOptions());
+		ClientResponse inputResponse = getAbderaClient().post(getBaseUri() + inputLink.getHref().toString(), newEntry, buildAutomXmlRequestOptions());
 		assertEquals(400, inputResponse.getStatus());
 	}
 

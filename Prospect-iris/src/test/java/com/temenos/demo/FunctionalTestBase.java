@@ -43,6 +43,23 @@ public abstract class FunctionalTestBase {
 		httpClient = getHttpClient();
 	}
 	
+	public String getUser() {
+		if (System.getProperties().get("USERNAME") != null)
+			return System.getProperties().get("USERNAME").toString();
+		return USERNAME;
+	}
+	
+	public String getPassword() {
+		if (System.getProperties().get("PASSWORD") != null)
+			return System.getProperties().get("PASSWORD").toString();
+		return PASSWORD;
+	}
+	
+	public String getBaseUri() {
+		if (System.getProperties().get("BASE_URI") != null)
+			return System.getProperties().get("BASE_URI").toString();
+		return BASE_URI;
+	}
 
 	protected Entry post(String href, NameValuePair[] params) throws Exception {
 
@@ -79,7 +96,7 @@ public abstract class FunctionalTestBase {
 	 */
 	protected AbderaClient getAbderaClient() {
 		if(abderaClient == null) {
-			abderaClient = createAbderaClient(USERNAME, PASSWORD);
+			abderaClient = createAbderaClient(getUser(), getPassword());
 		}
 		return abderaClient;
 	}
@@ -117,7 +134,7 @@ public abstract class FunctionalTestBase {
 			httpClient = new HttpClient();
 			httpClient.getState().setCredentials(
                 new AuthScope(AuthScope.ANY_HOST, AuthScope.ANY_PORT),
-                new UsernamePasswordCredentials(USERNAME, PASSWORD));
+                new UsernamePasswordCredentials(getUser(), getPassword()));
 		}
     	return httpClient;
 	}

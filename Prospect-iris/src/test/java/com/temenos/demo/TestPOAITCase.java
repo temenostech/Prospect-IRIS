@@ -23,7 +23,7 @@ public class TestPOAITCase extends FunctionalTestBase {
 	@Test
 	public void testSuccessfulCreate() throws Exception {
 		AtomHelper atomHelper = new AtomHelper();
-		String newCustomersHref = BASE_URI + "verCrContactLog_CaptureContacts()/new";
+		String newCustomersHref = getBaseUri() + "verCrContactLog_CaptureContacts()/new";
 //		Entry blankEntry = new Abdera().newEntry();
 //		ClientResponse newResponse = getAbderaClient().post(newCustomersHref, blankEntry, buildAutomXmlRequestOptions());
 //		Document<Entry> responseDoc = newResponse.getDocument();
@@ -51,7 +51,7 @@ public class TestPOAITCase extends FunctionalTestBase {
 		
 		//Validate the entity
 		Link inputLink = newEntry.getLink("http://temenostech.temenos.com/rels/input");
-		ClientResponse inputResponse = getAbderaClient().post(BASE_URI + inputLink.getHref().toString(), newEntry, buildAutomXmlRequestOptions());
+		ClientResponse inputResponse = getAbderaClient().post(getBaseUri() + inputLink.getHref().toString(), newEntry, buildAutomXmlRequestOptions());
 		assertEquals(201, inputResponse.getStatus());
 		
 		//Parse response
