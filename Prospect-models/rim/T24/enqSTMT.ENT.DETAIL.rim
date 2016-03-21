@@ -1,0 +1,38 @@
+domain T24 {
+	use common.CoreCommands.*
+	use common.HTTPEvents.*
+	use common.ODataCommands.*
+	use common.T24Commands.*
+	use common.T24Events.*
+	use common.NextState.*
+	rim enqStmtEntDetail {
+		command GETEntities
+		command GETEntity
+		basepath: "/{companyid}"
+	
+		resource enqStmtEntDetails {
+			type: collection
+			entity: enqStmtEntDetail
+			commands [ GET : GETEntities {
+				properties [ filter = "{filter}" ]
+				} ]
+			path: "/enqStmtEntDetails()"
+			GET *-> enqStmtEntDetail {
+				parameters [ id = "{StmtEntryId}" ]
+			}
+			GET *-> locator t24ResourceLocator("{DrillProduct}") {
+				parameters [ id = "{TxnRef}",t24Intent = "View" ]
+				title: "View"
+			}
+		}
+	
+		resource enqStmtEntDetail {
+			type: item
+			entity: enqStmtEntDetail
+			commands [ GET : GETEntity ]
+			path: "/enqStmtEntDetails('{id}')"
+		}
+	
+	}
+	
+}

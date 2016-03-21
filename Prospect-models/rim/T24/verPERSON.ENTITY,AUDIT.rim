@@ -1,0 +1,616 @@
+domain T24 {
+	use common.CoreCommands.*
+	use common.HTTPEvents.*
+	use common.ODataCommands.*
+	use common.T24Commands.*
+	use common.T24Events.*
+	use common.NextState.*
+	use common.Errors.*
+	use T24.ContextEnquiry.*
+	rim verPersonEntity_Audit {
+		command T24FieldMetadata
+		command NoopGET
+		command GETEntities
+		command GetLiveEntity
+		command GetIauthEntity
+		command GetHauthEntity
+		command GetIauthEntities
+		command CreateEntity
+		command InputEntity
+		command HoldEntity
+		command AuthoriseEntity
+		command GetChangedValues
+		command ReviewEntity
+		command ReverseEntity
+		command ValidateEntity
+		command RestoreEntity
+		command DeleteEntity
+		command CopyEntity
+		command PasteEntity
+		command CreateDEPreview
+		command GetDealSlipEntities
+		command T24Enrichment
+		command CheckAutoIdSupport
+		command GetHauthEntities
+		command T24NextState
+		basepath: "/{companyid}"
+	
+		resource verPersonEntity_Audit_errorHandler {
+			type: item
+			entity: verPersonEntity_Audit
+			commands [ GET : NoopGET ]
+			relations [ "http://temenostech.temenos.com/rels/error" ]
+			path: "/verPersonEntity_Audits('{id}')/error"
+			GET +-> ProcessErrors {
+				title: "errors"
+			}
+			POST +-> verPersonEntity_Audit_metadata {
+				title: "metadata"
+			}
+		}
+	
+		resource verPersonEntity_Audits {
+			type: collection
+			entity: verPersonEntity_Audit
+			commands [ GET : GETEntities {
+				properties [ filter = "{filter}" ]
+				} ]
+			path: "/verPersonEntity_Audits()"
+			GET *-> verPersonEntity_Audit {
+				parameters [ id = "{PersonEntityId}" ]
+			}
+			GET *-> verPersonEntity_Audit_see {
+				parameters [ id = "{PersonEntityId}" ]
+				title: "see record"
+			}
+			POST -> verPersonEntity_Audit_new {
+				title: "create new deal"
+				condition: OK(verPersonEntity_Audit_autoId)
+			}
+			POST -> verPersonEntity_Audit_populate {
+				title: "populate existing deal"
+			}
+			PUT *-> verPersonEntity_Audit_input {
+				parameters [ id = "{PersonEntityId}" ]
+				title: "input deal"
+			}
+			POST *-> verPersonEntity_Audit_audit {
+				parameters [ id = "{PersonEntityId}" ]
+				title: "audit deal"
+			}
+			POST *-> verPersonEntity_Audit_reverse {
+				parameters [ id = "{PersonEntityId}" ]
+				title: "reverse deal"
+			}
+		}
+	
+		resource verPersonEntity_Audit {
+			type: item
+			entity: verPersonEntity_Audit
+			commands [ GET : GetLiveEntity ]
+			path: "/verPersonEntity_Audits('{id}')"
+			POST +-> verPersonEntity_Audit_metadata {
+				title: "metadata"
+			}
+			GET --> verPersonEntity_Audit_IAuth {
+				parameters [ id = "{PersonEntityId}" ]
+				condition: OK(verPersonEntity_Audit_IAuth)
+			}
+			POST -> verPersonEntity_Audit_validate {
+				parameters [ id = "{PersonEntityId}" ]
+				title: "validate deal"
+			}
+			PUT -> verPersonEntity_Audit_input {
+				parameters [ id = "{PersonEntityId}" ]
+				title: "input deal"
+			}
+			POST -> verPersonEntity_Audit_audit {
+				parameters [ id = "{PersonEntityId}" ]
+				title: "audit deal"
+			}
+			POST -> verPersonEntity_Audit_reverse {
+				parameters [ id = "{PersonEntityId}" ]
+				title: "reverse deal"
+			}
+			GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+				parameters [ entity = "verPersonEntity_Audit" ]
+				title: "Context Enquiries"
+			}
+		}
+	
+		resource verPersonEntity_Audit_see {
+			type: item
+			entity: verPersonEntity_Audit
+			commands [ GET : GetLiveEntity ]
+			relations [ "http://schemas.microsoft.com/ado/2007/08/dataservices/related/verPersonEntity_Audit","http://temenostech.temenos.com/rels/see" ]
+			path: "/verPersonEntity_Audits('{id}')/see"
+			POST +-> verPersonEntity_Audit_metadata {
+				title: "metadata"
+			}
+		}
+	
+		resource verPersonEntity_Audit_IAuth_see {
+			type: item
+			entity: verPersonEntity_Audit
+			commands [ GET : GetIauthEntity ]
+			relations [ "http://schemas.microsoft.com/ado/2007/08/dataservices/related/verPersonEntity_Audit_IAuth","http://temenostech.temenos.com/rels/see" ]
+			path: "/verPersonEntity_Audits_IAuth('{id}')/see"
+		}
+	
+		resource verPersonEntity_Audit_HAuth_see {
+			type: item
+			entity: verPersonEntity_Audit
+			commands [ GET : GetHauthEntity ]
+			relations [ "http://schemas.microsoft.com/ado/2007/08/dataservices/related/verPersonEntity_Audit_HAuth","http://temenostech.temenos.com/rels/see" ]
+			path: "/verPersonEntity_Audits_HAuth('{id}')/see"
+		}
+	
+		resource verPersonEntity_Audit_ContextEnquiries {
+			type: item
+			entity: verPersonEntity_Audit
+			commands [ GET : NoopGET ]
+			path: "/verPersonEntity_Audit/ContextEnquiries"
+			GET -> "T24.enqlistPersonEntity.enqlistPersonEntitys" {
+				parameters [ param = "list" ]
+				title: "List live deals"
+			}
+			GET -> "T24.enqlistPersonEntity.enqlistPersonEntitysUnauth" {
+				parameters [ param = "list" ]
+				title: "List unauthorised deals"
+			}
+			GET -> "T24.enqlistPersonEntity.enqlistPersonEntitysHist" {
+				parameters [ param = "list" ]
+				title: "List history deals"
+			}
+			GET -> "T24.enqlistPersonEntity.enqlistPersonEntitys" {
+				title: "Search live deals"
+			}
+			GET -> "T24.enqlistPersonEntity.enqlistPersonEntitysUnauth" {
+				title: "Search unauthorised deals"
+			}
+			GET -> "T24.enqlistPersonEntity.enqlistPersonEntitysHist" {
+				title: "Search history deals"
+			}
+			GET +-> "ContextEnquiryList" {
+				parameters [ entity = "verPersonEntity_Audit" ]
+				title: "Other context Enquiries"
+			}
+		}
+	
+		resource verPersonEntity_Audit_metadata {
+			type: collection
+			entity: T24FieldMetadata
+			commands [ POST : T24FieldMetadata ]
+			relations [ "http://temenostech.temenos.com/rels/metadata" ]
+			path: "/verPersonEntity_Audits()/metadata"
+		}
+	
+		resource verPersonEntity_Audits_IAuth {
+			type: collection
+			entity: verPersonEntity_Audit
+			commands [ GET : GetIauthEntities {
+				properties [ filter = "{filter}" ]
+				} ]
+			path: "/verPersonEntity_Audits_IAuth()"
+			GET *-> verPersonEntity_Audit_IAuth {
+				parameters [ id = "{PersonEntityId}" ]
+			}
+			POST -> verPersonEntity_Audit_new {
+				title: "create new deal"
+				condition: OK(verPersonEntity_Audit_autoId)
+			}
+			POST -> verPersonEntity_Audit_populate {
+				title: "populate existing deal"
+			}
+			PUT *-> verPersonEntity_Audit_input {
+				parameters [ id = "{PersonEntityId}" ]
+				title: "input deal"
+			}
+			DELETE *-> verPersonEntity_Audit_delete {
+				parameters [ id = "{PersonEntityId}" ]
+				title: "delete"
+			}
+			PUT *-> verPersonEntity_Audit_authorise {
+				parameters [ id = "{PersonEntityId}" ]
+				title: "authorise deal"
+			}
+		}
+	
+		resource verPersonEntity_Audit_new {
+			type: item
+			entity: verPersonEntity_Audit
+			commands [ POST : CreateEntity ]
+			relations [ "http://schemas.microsoft.com/ado/2007/08/dataservices/related/verPersonEntity_Audit","http://temenostech.temenos.com/rels/new" ]
+			path: "/verPersonEntity_Audits()/new"
+			POST +-> verPersonEntity_Audit_metadata {
+				title: "metadata"
+			}
+			POST -> verPersonEntity_Audit_validate {
+				parameters [ id = "{PersonEntityId}" ]
+				title: "validate deal"
+			}
+			PUT -> verPersonEntity_Audit_input {
+				parameters [ id = "{PersonEntityId}" ]
+				title: "input deal"
+			}
+			POST -> verPersonEntity_Audit_hold {
+				parameters [ id = "{PersonEntityId}" ]
+				title: "hold deal"
+			}
+			GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+				parameters [ entity = "verPersonEntity_Audit" ]
+				title: "Context Enquiries"
+			}
+		}
+	
+		resource verPersonEntity_Audit_input {
+			type: item
+			entity: verPersonEntity_Audit
+			commands [ PUT : InputEntity, POST : InputEntity ]
+			relations [ "http://temenostech.temenos.com/rels/input" ]
+			path: "/verPersonEntity_Audits('{id}')"
+			GET --> nextState {
+				condition: OK(nextState)
+			}
+			GET --> verPersonEntity_Audit_IAuth {
+				parameters [ id = "{PersonEntityId}" ]
+				condition: OK(verPersonEntity_Audit_IAuth)
+			}
+			GET --> verPersonEntity_Audit {
+				parameters [ id = "{PersonEntityId}" ]
+				condition: OK(verPersonEntity_Audit)
+			}
+			GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+				parameters [ entity = "verPersonEntity_Audit" ]
+				title: "Context Enquiries"
+			}
+			onerror --> T24.verPersonEntity_Audit.verPersonEntity_Audit_errorHandler
+		}
+	
+		resource verPersonEntity_Audit_hold {
+			type: item
+			entity: verPersonEntity_Audit
+			commands [ POST : HoldEntity ]
+			relations [ "http://temenostech.temenos.com/rels/hold" ]
+			path: "/verPersonEntity_Audits('{id}')/hold"
+			PUT -> verPersonEntity_Audit_input {
+				parameters [ id = "{PersonEntityId}" ]
+				title: "input deal"
+			}
+			DELETE -> verPersonEntity_Audit_delete {
+				parameters [ id = "{PersonEntityId}" ]
+				title: "delete"
+			}
+			onerror --> common.Errors.Errors
+		}
+	
+		resource verPersonEntity_Audit_authorise {
+			type: item
+			entity: verPersonEntity_Audit
+			commands [ PUT : AuthoriseEntity ]
+			relations [ "http://temenostech.temenos.com/rels/authorise" ]
+			path: "/verPersonEntity_Audits('{id}')/authorise"
+			GET --> verPersonEntity_Audit_IAuth {
+				parameters [ id = "{PersonEntityId}" ]
+				condition: OK(verPersonEntity_Audit_IAuth)
+			}
+			GET --> verPersonEntity_Audit {
+				parameters [ id = "{PersonEntityId}" ]
+				condition: OK(verPersonEntity_Audit)
+			}
+			GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+				parameters [ entity = "verPersonEntity_Audit" ]
+				title: "Context Enquiries"
+			}
+			onerror --> T24.verPersonEntity_Audit.verPersonEntity_Audit_errorHandler
+		}
+	
+		resource verPersonEntity_Audit_changedValues {
+			type: item
+			entity: verPersonEntity_Audit
+			commands [ GET : GetChangedValues ]
+			relations [ "http://temenostech.temenos.com/rels/changedValues" ]
+			path: "/verPersonEntity_Audits('{id}')/changedValues"
+		}
+	
+		resource verPersonEntity_Audit_audit {
+			type: item
+			entity: verPersonEntity_Audit
+			commands [ POST : ReviewEntity ]
+			relations [ "http://temenostech.temenos.com/rels/review" ]
+			path: "/verPersonEntity_Audits('{id}')/review"
+			GET -> verPersonEntity_Audit {
+				parameters [ id = "{PersonEntityId}" ]
+			}
+			onerror --> common.Errors.Errors
+		}
+	
+		resource verPersonEntity_Audit_reverse {
+			type: item
+			entity: verPersonEntity_Audit
+			commands [ PUT : ReverseEntity ]
+			relations [ "http://temenostech.temenos.com/rels/reverse" ]
+			path: "/verPersonEntity_Audits('{id}')/reverse"
+			GET --> verPersonEntity_Audit_IAuth {
+				parameters [ id = "{PersonEntityId}" ]
+				condition: OK(verPersonEntity_Audit_IAuth)
+			}
+			GET --> verPersonEntity_Audit_HAuth {
+				parameters [ id = "{PersonEntityId}" ]
+				condition: OK(verPersonEntity_Audit_HAuth)
+			}
+			onerror --> T24.verPersonEntity_Audit.verPersonEntity_Audit_errorHandler
+		}
+	
+		resource verPersonEntity_Audit_validate {
+			type: item
+			entity: verPersonEntity_Audit
+			commands [ POST : ValidateEntity ]
+			relations [ "http://temenostech.temenos.com/rels/validate" ]
+			path: "/verPersonEntity_Audits('{id}')/validate"
+			GET +-> ProcessErrors {
+				title: "errors"
+				condition: OK(CheckIfError)
+			}
+			POST +-> verPersonEntity_Audit_metadata {
+				title: "metadata"
+			}
+			PUT -> verPersonEntity_Audit_input {
+				parameters [ id = "{PersonEntityId}" ]
+				title: "input deal"
+			}
+			POST -> verPersonEntity_Audit_hold {
+				parameters [ id = "{PersonEntityId}" ]
+				title: "hold deal"
+			}
+		}
+	
+		resource verPersonEntity_Audit_IAuth {
+			type: item
+			entity: verPersonEntity_Audit
+			commands [ GET : GetIauthEntity ]
+			path: "/verPersonEntity_Audits_IAuth('{id}')"
+			POST +-> verPersonEntity_Audit_metadata {
+				title: "metadata"
+			}
+			GET +-> verPersonEntity_Audit_changedValues {
+				parameters [ id = "{PersonEntityId}" ]
+				title: "changed values"
+			}
+			POST -> verPersonEntity_Audit_validate {
+				parameters [ id = "{PersonEntityId}" ]
+				title: "validate deal"
+			}
+			PUT -> verPersonEntity_Audit_input {
+				parameters [ id = "{PersonEntityId}" ]
+				title: "input deal"
+			}
+			POST -> verPersonEntity_Audit_hold {
+				parameters [ id = "{PersonEntityId}" ]
+				title: "hold deal"
+			}
+			POST -> verPersonEntity_Audit_authorise {
+				parameters [ id = "{PersonEntityId}" ]
+				title: "authorise deal"
+			}
+			DELETE -> verPersonEntity_Audit_delete {
+				parameters [ id = "{PersonEntityId}" ]
+				title: "delete"
+			}
+			GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+				parameters [ entity = "verPersonEntity_Audit" ]
+				title: "Context Enquiries"
+			}
+		}
+	
+		resource verPersonEntity_Audit_delete {
+			type: item
+			entity: verPersonEntity_Audit
+			commands [ DELETE : DeleteEntity ]
+			relations [ "http://temenostech.temenos.com/rels/delete" ]
+			path: "/verPersonEntity_Audits('{id}')/delete"
+		}
+	
+		resource verPersonEntity_AuditEntry {
+			type: item
+			entity: verPersonEntity_Audit
+			commands [ GET : NoopGET ]
+			relations [ "http://schemas.microsoft.com/ado/2007/08/dataservices/related/verPersonEntity_Audit","http://temenostech.temenos.com/rels/contract" ]
+			path: "/verPersonEntity_AuditEntry"
+			POST -> verPersonEntity_Audit_new {
+				title: "create new deal"
+				condition: OK(verPersonEntity_Audit_autoId)
+			}
+			POST -> verPersonEntity_Audit_populate {
+				title: "populate existing deal"
+			}
+			GET -> "verPersonEntity_Audit_see" {
+				parameters [ id = "@" ]
+				title: "See transaction"
+			}
+			GET -> "verPersonEntity_Audit_IAuth_see" {
+				parameters [ id = "@" ]
+				title: "GetIauthEntity"
+			}
+			GET -> "verPersonEntity_Audit_HAuth_see" {
+				parameters [ id = "@" ]
+				title: "GetHauthEntity"
+			}
+			GET -> "verPersonEntity_Audit_IAuth" {
+				parameters [ id = "@" ]
+				title: "GetIauthEntity"
+			}
+			GET -> "verPersonEntity_Audit_HAuth" {
+				parameters [ id = "@" ]
+				title: "GetHauthEntity"
+			}
+			GET +-> "verPersonEntity_Audit_ContextEnquiries" {
+				title: "All context Enquiries"
+			}
+			POST -> verPersonEntity_Audit_copy {
+				title: "Copy deal"
+			}
+			POST -> verPersonEntity_Audit_paste {
+				title: "Paste deal"
+			}
+		}
+	
+		resource verPersonEntity_Audit_populate {
+			type: item
+			entity: verPersonEntity_Audit
+			commands [ POST : CreateEntity ]
+			relations [ "http://schemas.microsoft.com/ado/2007/08/dataservices/related/verPersonEntity_Audit","http://temenostech.temenos.com/rels/populate" ]
+			path: "/verPersonEntity_Audits()/populate"
+			POST -> verPersonEntity_Audit_validate {
+				parameters [ id = "{PersonEntityId}" ]
+				title: "validate deal"
+			}
+			POST -> verPersonEntity_Audit_input {
+				parameters [ id = "{PersonEntityId}" ]
+				title: "input deal"
+			}
+			DELETE -> verPersonEntity_Audit_delete {
+				parameters [ id = "{PersonEntityId}" ]
+				title: "delete"
+				condition: OK(verPersonEntity_Audit_IAuth)
+			}
+			POST -> verPersonEntity_Audit_metadata {
+				title: "metadata"
+			}
+			GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+				parameters [ entity = "verPersonEntity_Audit" ]
+				title: "Context Enquiries"
+			}
+		}
+	
+		resource verPersonEntity_Audit_copy {
+			type: item
+			entity: verPersonEntity_Audit
+			commands [ POST : CopyEntity ]
+			relations [ "http://temenostech.temenos.com/rels/copy" ]
+			path: "/verPersonEntity_Audits()/copy"
+		}
+	
+		resource verPersonEntity_Audit_paste {
+			type: item
+			entity: verPersonEntity_Audit
+			commands [ POST : PasteEntity ]
+			relations [ "http://temenostech.temenos.com/rels/paste" ]
+			path: "/verPersonEntity_Audits()/paste"
+			POST +-> verPersonEntity_Audit_metadata {
+				title: "metadata"
+			}
+			POST -> verPersonEntity_Audit_validate {
+				parameters [ id = "{PersonEntityId}" ]
+				title: "validate deal"
+			}
+			PUT -> verPersonEntity_Audit_input {
+				parameters [ id = "{PersonEntityId}" ]
+				title: "input deal"
+			}
+			POST -> verPersonEntity_Audit_hold {
+				parameters [ id = "{PersonEntityId}" ]
+				title: "hold deal"
+			}
+		}
+	
+		resource verPersonEntity_Audits_enrichment {
+			type: item
+			entity: Enrichment
+			commands [ GET : T24Enrichment {
+				properties [ entity = "verPersonEntity_Audit" ]
+				} ]
+			relations [ "http://temenostech.temenos.com/rels/enrichment" ]
+			path: "/verPersonEntity_Audits()/enrichment"
+		}
+	
+		resource verPersonEntity_Audit_autoId {
+			type: item
+			entity: verPersonEntity_Audit
+			commands [ GET : CheckAutoIdSupport ]
+		}
+	
+		resource verPersonEntity_Audit_restore {
+			type: item
+			entity: verPersonEntity_Audit
+			commands [ POST : RestoreEntity ]
+			relations [ "http://temenostech.temenos.com/rels/restore" ]
+			path: "/verPersonEntity_Audits('{id}')/restore"
+			GET --> verPersonEntity_Audit_IAuth {
+				parameters [ id = "{PersonEntityId}" ]
+				condition: OK(verPersonEntity_Audit_IAuth)
+			}
+			GET --> verPersonEntity_Audit {
+				parameters [ id = "{PersonEntityId}" ]
+				condition: OK(verPersonEntity_Audit)
+			}
+			POST -> verPersonEntity_Audit_metadata {
+				title: "metadata"
+			}
+			GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+				parameters [ entity = "verPersonEntity_Audit" ]
+				title: "Context Enquiries"
+			}
+			onerror --> common.Errors.Errors
+		}
+	
+		resource verPersonEntity_Audits_HAuth {
+			type: collection
+			entity: verPersonEntity_Audit
+			commands [ GET : GetHauthEntities {
+				properties [ filter = "{filter}" ]
+				} ]
+			path: "/verPersonEntity_Audits_HAuth()"
+			GET *-> verPersonEntity_Audit_HAuth {
+				parameters [ id = "{PersonEntityId}" ]
+			}
+			POST -> verPersonEntity_Audit_new {
+				title: "create new deal"
+				condition: OK(verPersonEntity_Audit_autoId)
+			}
+			POST -> verPersonEntity_Audit_populate {
+				title: "populate existing deal"
+			}
+			POST *-> verPersonEntity_Audit_restore {
+				parameters [ id = "{PersonEntityId}" ]
+				title: "restore deal"
+			}
+		}
+	
+		resource verPersonEntity_Audit_HAuth {
+			type: item
+			entity: verPersonEntity_Audit
+			commands [ GET : GetHauthEntity ]
+			path: "/verPersonEntity_Audits_HAuth('{id}')"
+			POST +-> verPersonEntity_Audit_metadata {
+				title: "metadata"
+			}
+			POST -> verPersonEntity_Audit_validate {
+				parameters [ id = "{PersonEntityId}" ]
+				title: "validate deal"
+			}
+			PUT -> verPersonEntity_Audit_input {
+				parameters [ id = "{PersonEntityId}" ]
+				title: "input deal"
+			}
+			POST -> verPersonEntity_Audit_hold {
+				parameters [ id = "{PersonEntityId}" ]
+				title: "hold deal"
+			}
+			POST -> verPersonEntity_Audit_authorise {
+				parameters [ id = "{PersonEntityId}" ]
+				title: "authorise deal"
+			}
+			DELETE -> verPersonEntity_Audit_delete {
+				parameters [ id = "{PersonEntityId}" ]
+				title: "delete"
+			}
+			GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+				parameters [ entity = "verPersonEntity_Audit" ]
+				title: "Context Enquiries"
+			}
+		}
+	
+	}
+	
+}

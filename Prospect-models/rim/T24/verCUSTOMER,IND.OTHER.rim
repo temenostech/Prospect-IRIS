@@ -1,0 +1,616 @@
+domain T24 {
+	use common.CoreCommands.*
+	use common.HTTPEvents.*
+	use common.ODataCommands.*
+	use common.T24Commands.*
+	use common.T24Events.*
+	use common.NextState.*
+	use common.Errors.*
+	use T24.ContextEnquiry.*
+	rim verCustomer_IndOther {
+		command T24FieldMetadata
+		command NoopGET
+		command GETEntities
+		command GetLiveEntity
+		command GetIauthEntity
+		command GetHauthEntity
+		command GetIauthEntities
+		command CreateEntity
+		command InputEntity
+		command HoldEntity
+		command AuthoriseEntity
+		command GetChangedValues
+		command ReviewEntity
+		command ReverseEntity
+		command ValidateEntity
+		command RestoreEntity
+		command DeleteEntity
+		command CopyEntity
+		command PasteEntity
+		command CreateDEPreview
+		command GetDealSlipEntities
+		command T24Enrichment
+		command CheckAutoIdSupport
+		command GetHauthEntities
+		command T24NextState
+		basepath: "/{companyid}"
+	
+		resource verCustomer_IndOther_errorHandler {
+			type: item
+			entity: verCustomer_IndOther
+			commands [ GET : NoopGET ]
+			relations [ "http://temenostech.temenos.com/rels/error" ]
+			path: "/verCustomer_IndOthers('{id}')/error"
+			GET +-> ProcessErrors {
+				title: "errors"
+			}
+			POST +-> verCustomer_IndOther_metadata {
+				title: "metadata"
+			}
+		}
+	
+		resource verCustomer_IndOthers {
+			type: collection
+			entity: verCustomer_IndOther
+			commands [ GET : GETEntities {
+				properties [ filter = "{filter}" ]
+				} ]
+			path: "/verCustomer_IndOthers()"
+			GET *-> verCustomer_IndOther {
+				parameters [ id = "{CustomerCode}" ]
+			}
+			GET *-> verCustomer_IndOther_see {
+				parameters [ id = "{CustomerCode}" ]
+				title: "see record"
+			}
+			POST -> verCustomer_IndOther_new {
+				title: "create new deal"
+				condition: OK(verCustomer_IndOther_autoId)
+			}
+			POST -> verCustomer_IndOther_populate {
+				title: "populate existing deal"
+			}
+			PUT *-> verCustomer_IndOther_input {
+				parameters [ id = "{CustomerCode}" ]
+				title: "input deal"
+			}
+			POST *-> verCustomer_IndOther_audit {
+				parameters [ id = "{CustomerCode}" ]
+				title: "audit deal"
+			}
+			POST *-> verCustomer_IndOther_reverse {
+				parameters [ id = "{CustomerCode}" ]
+				title: "reverse deal"
+			}
+		}
+	
+		resource verCustomer_IndOther {
+			type: item
+			entity: verCustomer_IndOther
+			commands [ GET : GetLiveEntity ]
+			path: "/verCustomer_IndOthers('{id}')"
+			POST +-> verCustomer_IndOther_metadata {
+				title: "metadata"
+			}
+			GET --> verCustomer_IndOther_IAuth {
+				parameters [ id = "{CustomerCode}" ]
+				condition: OK(verCustomer_IndOther_IAuth)
+			}
+			POST -> verCustomer_IndOther_validate {
+				parameters [ id = "{CustomerCode}" ]
+				title: "validate deal"
+			}
+			PUT -> verCustomer_IndOther_input {
+				parameters [ id = "{CustomerCode}" ]
+				title: "input deal"
+			}
+			POST -> verCustomer_IndOther_audit {
+				parameters [ id = "{CustomerCode}" ]
+				title: "audit deal"
+			}
+			POST -> verCustomer_IndOther_reverse {
+				parameters [ id = "{CustomerCode}" ]
+				title: "reverse deal"
+			}
+			GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+				parameters [ entity = "verCustomer_IndOther" ]
+				title: "Context Enquiries"
+			}
+		}
+	
+		resource verCustomer_IndOther_see {
+			type: item
+			entity: verCustomer_IndOther
+			commands [ GET : GetLiveEntity ]
+			relations [ "http://schemas.microsoft.com/ado/2007/08/dataservices/related/verCustomer_IndOther","http://temenostech.temenos.com/rels/see" ]
+			path: "/verCustomer_IndOthers('{id}')/see"
+			POST +-> verCustomer_IndOther_metadata {
+				title: "metadata"
+			}
+		}
+	
+		resource verCustomer_IndOther_IAuth_see {
+			type: item
+			entity: verCustomer_IndOther
+			commands [ GET : GetIauthEntity ]
+			relations [ "http://schemas.microsoft.com/ado/2007/08/dataservices/related/verCustomer_IndOther_IAuth","http://temenostech.temenos.com/rels/see" ]
+			path: "/verCustomer_IndOthers_IAuth('{id}')/see"
+		}
+	
+		resource verCustomer_IndOther_HAuth_see {
+			type: item
+			entity: verCustomer_IndOther
+			commands [ GET : GetHauthEntity ]
+			relations [ "http://schemas.microsoft.com/ado/2007/08/dataservices/related/verCustomer_IndOther_HAuth","http://temenostech.temenos.com/rels/see" ]
+			path: "/verCustomer_IndOthers_HAuth('{id}')/see"
+		}
+	
+		resource verCustomer_IndOther_ContextEnquiries {
+			type: item
+			entity: verCustomer_IndOther
+			commands [ GET : NoopGET ]
+			path: "/verCustomer_IndOther/ContextEnquiries"
+			GET -> "T24.enqlistCustomer.enqlistCustomers" {
+				parameters [ param = "list" ]
+				title: "List live deals"
+			}
+			GET -> "T24.enqlistCustomer.enqlistCustomersUnauth" {
+				parameters [ param = "list" ]
+				title: "List unauthorised deals"
+			}
+			GET -> "T24.enqlistCustomer.enqlistCustomersHist" {
+				parameters [ param = "list" ]
+				title: "List history deals"
+			}
+			GET -> "T24.enqlistCustomer.enqlistCustomers" {
+				title: "Search live deals"
+			}
+			GET -> "T24.enqlistCustomer.enqlistCustomersUnauth" {
+				title: "Search unauthorised deals"
+			}
+			GET -> "T24.enqlistCustomer.enqlistCustomersHist" {
+				title: "Search history deals"
+			}
+			GET +-> "ContextEnquiryList" {
+				parameters [ entity = "verCustomer_IndOther" ]
+				title: "Other context Enquiries"
+			}
+		}
+	
+		resource verCustomer_IndOther_metadata {
+			type: collection
+			entity: T24FieldMetadata
+			commands [ POST : T24FieldMetadata ]
+			relations [ "http://temenostech.temenos.com/rels/metadata" ]
+			path: "/verCustomer_IndOthers()/metadata"
+		}
+	
+		resource verCustomer_IndOthers_IAuth {
+			type: collection
+			entity: verCustomer_IndOther
+			commands [ GET : GetIauthEntities {
+				properties [ filter = "{filter}" ]
+				} ]
+			path: "/verCustomer_IndOthers_IAuth()"
+			GET *-> verCustomer_IndOther_IAuth {
+				parameters [ id = "{CustomerCode}" ]
+			}
+			POST -> verCustomer_IndOther_new {
+				title: "create new deal"
+				condition: OK(verCustomer_IndOther_autoId)
+			}
+			POST -> verCustomer_IndOther_populate {
+				title: "populate existing deal"
+			}
+			PUT *-> verCustomer_IndOther_input {
+				parameters [ id = "{CustomerCode}" ]
+				title: "input deal"
+			}
+			DELETE *-> verCustomer_IndOther_delete {
+				parameters [ id = "{CustomerCode}" ]
+				title: "delete"
+			}
+			PUT *-> verCustomer_IndOther_authorise {
+				parameters [ id = "{CustomerCode}" ]
+				title: "authorise deal"
+			}
+		}
+	
+		resource verCustomer_IndOther_new {
+			type: item
+			entity: verCustomer_IndOther
+			commands [ POST : CreateEntity ]
+			relations [ "http://schemas.microsoft.com/ado/2007/08/dataservices/related/verCustomer_IndOther","http://temenostech.temenos.com/rels/new" ]
+			path: "/verCustomer_IndOthers()/new"
+			POST +-> verCustomer_IndOther_metadata {
+				title: "metadata"
+			}
+			POST -> verCustomer_IndOther_validate {
+				parameters [ id = "{CustomerCode}" ]
+				title: "validate deal"
+			}
+			PUT -> verCustomer_IndOther_input {
+				parameters [ id = "{CustomerCode}" ]
+				title: "input deal"
+			}
+			POST -> verCustomer_IndOther_hold {
+				parameters [ id = "{CustomerCode}" ]
+				title: "hold deal"
+			}
+			GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+				parameters [ entity = "verCustomer_IndOther" ]
+				title: "Context Enquiries"
+			}
+		}
+	
+		resource verCustomer_IndOther_input {
+			type: item
+			entity: verCustomer_IndOther
+			commands [ PUT : InputEntity, POST : InputEntity ]
+			relations [ "http://temenostech.temenos.com/rels/input" ]
+			path: "/verCustomer_IndOthers('{id}')"
+			GET --> nextState {
+				condition: OK(nextState)
+			}
+			GET --> verCustomer_IndOther_IAuth {
+				parameters [ id = "{CustomerCode}" ]
+				condition: OK(verCustomer_IndOther_IAuth)
+			}
+			GET --> verCustomer_IndOther {
+				parameters [ id = "{CustomerCode}" ]
+				condition: OK(verCustomer_IndOther)
+			}
+			GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+				parameters [ entity = "verCustomer_IndOther" ]
+				title: "Context Enquiries"
+			}
+			onerror --> T24.verCustomer_IndOther.verCustomer_IndOther_errorHandler
+		}
+	
+		resource verCustomer_IndOther_hold {
+			type: item
+			entity: verCustomer_IndOther
+			commands [ POST : HoldEntity ]
+			relations [ "http://temenostech.temenos.com/rels/hold" ]
+			path: "/verCustomer_IndOthers('{id}')/hold"
+			PUT -> verCustomer_IndOther_input {
+				parameters [ id = "{CustomerCode}" ]
+				title: "input deal"
+			}
+			DELETE -> verCustomer_IndOther_delete {
+				parameters [ id = "{CustomerCode}" ]
+				title: "delete"
+			}
+			onerror --> common.Errors.Errors
+		}
+	
+		resource verCustomer_IndOther_authorise {
+			type: item
+			entity: verCustomer_IndOther
+			commands [ PUT : AuthoriseEntity ]
+			relations [ "http://temenostech.temenos.com/rels/authorise" ]
+			path: "/verCustomer_IndOthers('{id}')/authorise"
+			GET --> verCustomer_IndOther_IAuth {
+				parameters [ id = "{CustomerCode}" ]
+				condition: OK(verCustomer_IndOther_IAuth)
+			}
+			GET --> verCustomer_IndOther {
+				parameters [ id = "{CustomerCode}" ]
+				condition: OK(verCustomer_IndOther)
+			}
+			GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+				parameters [ entity = "verCustomer_IndOther" ]
+				title: "Context Enquiries"
+			}
+			onerror --> T24.verCustomer_IndOther.verCustomer_IndOther_errorHandler
+		}
+	
+		resource verCustomer_IndOther_changedValues {
+			type: item
+			entity: verCustomer_IndOther
+			commands [ GET : GetChangedValues ]
+			relations [ "http://temenostech.temenos.com/rels/changedValues" ]
+			path: "/verCustomer_IndOthers('{id}')/changedValues"
+		}
+	
+		resource verCustomer_IndOther_audit {
+			type: item
+			entity: verCustomer_IndOther
+			commands [ POST : ReviewEntity ]
+			relations [ "http://temenostech.temenos.com/rels/review" ]
+			path: "/verCustomer_IndOthers('{id}')/review"
+			GET -> verCustomer_IndOther {
+				parameters [ id = "{CustomerCode}" ]
+			}
+			onerror --> common.Errors.Errors
+		}
+	
+		resource verCustomer_IndOther_reverse {
+			type: item
+			entity: verCustomer_IndOther
+			commands [ PUT : ReverseEntity ]
+			relations [ "http://temenostech.temenos.com/rels/reverse" ]
+			path: "/verCustomer_IndOthers('{id}')/reverse"
+			GET --> verCustomer_IndOther_IAuth {
+				parameters [ id = "{CustomerCode}" ]
+				condition: OK(verCustomer_IndOther_IAuth)
+			}
+			GET --> verCustomer_IndOther_HAuth {
+				parameters [ id = "{CustomerCode}" ]
+				condition: OK(verCustomer_IndOther_HAuth)
+			}
+			onerror --> T24.verCustomer_IndOther.verCustomer_IndOther_errorHandler
+		}
+	
+		resource verCustomer_IndOther_validate {
+			type: item
+			entity: verCustomer_IndOther
+			commands [ POST : ValidateEntity ]
+			relations [ "http://temenostech.temenos.com/rels/validate" ]
+			path: "/verCustomer_IndOthers('{id}')/validate"
+			GET +-> ProcessErrors {
+				title: "errors"
+				condition: OK(CheckIfError)
+			}
+			POST +-> verCustomer_IndOther_metadata {
+				title: "metadata"
+			}
+			PUT -> verCustomer_IndOther_input {
+				parameters [ id = "{CustomerCode}" ]
+				title: "input deal"
+			}
+			POST -> verCustomer_IndOther_hold {
+				parameters [ id = "{CustomerCode}" ]
+				title: "hold deal"
+			}
+		}
+	
+		resource verCustomer_IndOther_IAuth {
+			type: item
+			entity: verCustomer_IndOther
+			commands [ GET : GetIauthEntity ]
+			path: "/verCustomer_IndOthers_IAuth('{id}')"
+			POST +-> verCustomer_IndOther_metadata {
+				title: "metadata"
+			}
+			GET +-> verCustomer_IndOther_changedValues {
+				parameters [ id = "{CustomerCode}" ]
+				title: "changed values"
+			}
+			POST -> verCustomer_IndOther_validate {
+				parameters [ id = "{CustomerCode}" ]
+				title: "validate deal"
+			}
+			PUT -> verCustomer_IndOther_input {
+				parameters [ id = "{CustomerCode}" ]
+				title: "input deal"
+			}
+			POST -> verCustomer_IndOther_hold {
+				parameters [ id = "{CustomerCode}" ]
+				title: "hold deal"
+			}
+			POST -> verCustomer_IndOther_authorise {
+				parameters [ id = "{CustomerCode}" ]
+				title: "authorise deal"
+			}
+			DELETE -> verCustomer_IndOther_delete {
+				parameters [ id = "{CustomerCode}" ]
+				title: "delete"
+			}
+			GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+				parameters [ entity = "verCustomer_IndOther" ]
+				title: "Context Enquiries"
+			}
+		}
+	
+		resource verCustomer_IndOther_delete {
+			type: item
+			entity: verCustomer_IndOther
+			commands [ DELETE : DeleteEntity ]
+			relations [ "http://temenostech.temenos.com/rels/delete" ]
+			path: "/verCustomer_IndOthers('{id}')/delete"
+		}
+	
+		resource verCustomer_IndOtherEntry {
+			type: item
+			entity: verCustomer_IndOther
+			commands [ GET : NoopGET ]
+			relations [ "http://schemas.microsoft.com/ado/2007/08/dataservices/related/verCustomer_IndOther","http://temenostech.temenos.com/rels/contract" ]
+			path: "/verCustomer_IndOtherEntry"
+			POST -> verCustomer_IndOther_new {
+				title: "create new deal"
+				condition: OK(verCustomer_IndOther_autoId)
+			}
+			POST -> verCustomer_IndOther_populate {
+				title: "populate existing deal"
+			}
+			GET -> "verCustomer_IndOther_see" {
+				parameters [ id = "@" ]
+				title: "See transaction"
+			}
+			GET -> "verCustomer_IndOther_IAuth_see" {
+				parameters [ id = "@" ]
+				title: "GetIauthEntity"
+			}
+			GET -> "verCustomer_IndOther_HAuth_see" {
+				parameters [ id = "@" ]
+				title: "GetHauthEntity"
+			}
+			GET -> "verCustomer_IndOther_IAuth" {
+				parameters [ id = "@" ]
+				title: "GetIauthEntity"
+			}
+			GET -> "verCustomer_IndOther_HAuth" {
+				parameters [ id = "@" ]
+				title: "GetHauthEntity"
+			}
+			GET +-> "verCustomer_IndOther_ContextEnquiries" {
+				title: "All context Enquiries"
+			}
+			POST -> verCustomer_IndOther_copy {
+				title: "Copy deal"
+			}
+			POST -> verCustomer_IndOther_paste {
+				title: "Paste deal"
+			}
+		}
+	
+		resource verCustomer_IndOther_populate {
+			type: item
+			entity: verCustomer_IndOther
+			commands [ POST : CreateEntity ]
+			relations [ "http://schemas.microsoft.com/ado/2007/08/dataservices/related/verCustomer_IndOther","http://temenostech.temenos.com/rels/populate" ]
+			path: "/verCustomer_IndOthers()/populate"
+			POST -> verCustomer_IndOther_validate {
+				parameters [ id = "{CustomerCode}" ]
+				title: "validate deal"
+			}
+			POST -> verCustomer_IndOther_input {
+				parameters [ id = "{CustomerCode}" ]
+				title: "input deal"
+			}
+			DELETE -> verCustomer_IndOther_delete {
+				parameters [ id = "{CustomerCode}" ]
+				title: "delete"
+				condition: OK(verCustomer_IndOther_IAuth)
+			}
+			POST -> verCustomer_IndOther_metadata {
+				title: "metadata"
+			}
+			GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+				parameters [ entity = "verCustomer_IndOther" ]
+				title: "Context Enquiries"
+			}
+		}
+	
+		resource verCustomer_IndOther_copy {
+			type: item
+			entity: verCustomer_IndOther
+			commands [ POST : CopyEntity ]
+			relations [ "http://temenostech.temenos.com/rels/copy" ]
+			path: "/verCustomer_IndOthers()/copy"
+		}
+	
+		resource verCustomer_IndOther_paste {
+			type: item
+			entity: verCustomer_IndOther
+			commands [ POST : PasteEntity ]
+			relations [ "http://temenostech.temenos.com/rels/paste" ]
+			path: "/verCustomer_IndOthers()/paste"
+			POST +-> verCustomer_IndOther_metadata {
+				title: "metadata"
+			}
+			POST -> verCustomer_IndOther_validate {
+				parameters [ id = "{CustomerCode}" ]
+				title: "validate deal"
+			}
+			PUT -> verCustomer_IndOther_input {
+				parameters [ id = "{CustomerCode}" ]
+				title: "input deal"
+			}
+			POST -> verCustomer_IndOther_hold {
+				parameters [ id = "{CustomerCode}" ]
+				title: "hold deal"
+			}
+		}
+	
+		resource verCustomer_IndOthers_enrichment {
+			type: item
+			entity: Enrichment
+			commands [ GET : T24Enrichment {
+				properties [ entity = "verCustomer_IndOther" ]
+				} ]
+			relations [ "http://temenostech.temenos.com/rels/enrichment" ]
+			path: "/verCustomer_IndOthers()/enrichment"
+		}
+	
+		resource verCustomer_IndOther_autoId {
+			type: item
+			entity: verCustomer_IndOther
+			commands [ GET : CheckAutoIdSupport ]
+		}
+	
+		resource verCustomer_IndOther_restore {
+			type: item
+			entity: verCustomer_IndOther
+			commands [ POST : RestoreEntity ]
+			relations [ "http://temenostech.temenos.com/rels/restore" ]
+			path: "/verCustomer_IndOthers('{id}')/restore"
+			GET --> verCustomer_IndOther_IAuth {
+				parameters [ id = "{CustomerCode}" ]
+				condition: OK(verCustomer_IndOther_IAuth)
+			}
+			GET --> verCustomer_IndOther {
+				parameters [ id = "{CustomerCode}" ]
+				condition: OK(verCustomer_IndOther)
+			}
+			POST -> verCustomer_IndOther_metadata {
+				title: "metadata"
+			}
+			GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+				parameters [ entity = "verCustomer_IndOther" ]
+				title: "Context Enquiries"
+			}
+			onerror --> common.Errors.Errors
+		}
+	
+		resource verCustomer_IndOthers_HAuth {
+			type: collection
+			entity: verCustomer_IndOther
+			commands [ GET : GetHauthEntities {
+				properties [ filter = "{filter}" ]
+				} ]
+			path: "/verCustomer_IndOthers_HAuth()"
+			GET *-> verCustomer_IndOther_HAuth {
+				parameters [ id = "{CustomerCode}" ]
+			}
+			POST -> verCustomer_IndOther_new {
+				title: "create new deal"
+				condition: OK(verCustomer_IndOther_autoId)
+			}
+			POST -> verCustomer_IndOther_populate {
+				title: "populate existing deal"
+			}
+			POST *-> verCustomer_IndOther_restore {
+				parameters [ id = "{CustomerCode}" ]
+				title: "restore deal"
+			}
+		}
+	
+		resource verCustomer_IndOther_HAuth {
+			type: item
+			entity: verCustomer_IndOther
+			commands [ GET : GetHauthEntity ]
+			path: "/verCustomer_IndOthers_HAuth('{id}')"
+			POST +-> verCustomer_IndOther_metadata {
+				title: "metadata"
+			}
+			POST -> verCustomer_IndOther_validate {
+				parameters [ id = "{CustomerCode}" ]
+				title: "validate deal"
+			}
+			PUT -> verCustomer_IndOther_input {
+				parameters [ id = "{CustomerCode}" ]
+				title: "input deal"
+			}
+			POST -> verCustomer_IndOther_hold {
+				parameters [ id = "{CustomerCode}" ]
+				title: "hold deal"
+			}
+			POST -> verCustomer_IndOther_authorise {
+				parameters [ id = "{CustomerCode}" ]
+				title: "authorise deal"
+			}
+			DELETE -> verCustomer_IndOther_delete {
+				parameters [ id = "{CustomerCode}" ]
+				title: "delete"
+			}
+			GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+				parameters [ entity = "verCustomer_IndOther" ]
+				title: "Context Enquiries"
+			}
+		}
+	
+	}
+	
+}

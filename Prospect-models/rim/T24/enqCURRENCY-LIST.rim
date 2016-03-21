@@ -1,0 +1,34 @@
+domain T24 {
+	use common.CoreCommands.*
+	use common.HTTPEvents.*
+	use common.ODataCommands.*
+	use common.T24Commands.*
+	use common.T24Events.*
+	use common.NextState.*
+	rim enqCurrencyList {
+		command GETEntities
+		command GETEntity
+		basepath: "/{companyid}"
+	
+		resource enqCurrencyLists {
+			type: collection
+			entity: enqCurrencyList
+			commands [ GET : GETEntities {
+				properties [ filter = "{filter}" ]
+				} ]
+			path: "/enqCurrencyLists()"
+			GET *-> enqCurrencyList {
+				parameters [ id = "{Id}" ]
+			}
+		}
+	
+		resource enqCurrencyList {
+			type: item
+			entity: enqCurrencyList
+			commands [ GET : GETEntity ]
+			path: "/enqCurrencyLists('{id}')"
+		}
+	
+	}
+	
+}

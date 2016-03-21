@@ -1,0 +1,616 @@
+domain T24 {
+	use common.CoreCommands.*
+	use common.HTTPEvents.*
+	use common.ODataCommands.*
+	use common.T24Commands.*
+	use common.T24Events.*
+	use common.NextState.*
+	use common.Errors.*
+	use T24.ContextEnquiry.*
+	rim verTeller_Audit {
+		command T24FieldMetadata
+		command NoopGET
+		command GETEntities
+		command GetLiveEntity
+		command GetIauthEntity
+		command GetHauthEntity
+		command GetIauthEntities
+		command CreateEntity
+		command InputEntity
+		command HoldEntity
+		command AuthoriseEntity
+		command GetChangedValues
+		command ReviewEntity
+		command ReverseEntity
+		command ValidateEntity
+		command RestoreEntity
+		command DeleteEntity
+		command CopyEntity
+		command PasteEntity
+		command CreateDEPreview
+		command GetDealSlipEntities
+		command T24Enrichment
+		command CheckAutoIdSupport
+		command GetHauthEntities
+		command T24NextState
+		basepath: "/{companyid}"
+	
+		resource verTeller_Audit_errorHandler {
+			type: item
+			entity: verTeller_Audit
+			commands [ GET : NoopGET ]
+			relations [ "http://temenostech.temenos.com/rels/error" ]
+			path: "/verTeller_Audits('{id}')/error"
+			GET +-> ProcessErrors {
+				title: "errors"
+			}
+			POST +-> verTeller_Audit_metadata {
+				title: "metadata"
+			}
+		}
+	
+		resource verTeller_Audits {
+			type: collection
+			entity: verTeller_Audit
+			commands [ GET : GETEntities {
+				properties [ filter = "{filter}" ]
+				} ]
+			path: "/verTeller_Audits()"
+			GET *-> verTeller_Audit {
+				parameters [ id = "{TransactionNumber}" ]
+			}
+			GET *-> verTeller_Audit_see {
+				parameters [ id = "{TransactionNumber}" ]
+				title: "see record"
+			}
+			POST -> verTeller_Audit_new {
+				title: "create new deal"
+				condition: OK(verTeller_Audit_autoId)
+			}
+			POST -> verTeller_Audit_populate {
+				title: "populate existing deal"
+			}
+			PUT *-> verTeller_Audit_input {
+				parameters [ id = "{TransactionNumber}" ]
+				title: "input deal"
+			}
+			POST *-> verTeller_Audit_audit {
+				parameters [ id = "{TransactionNumber}" ]
+				title: "audit deal"
+			}
+			POST *-> verTeller_Audit_reverse {
+				parameters [ id = "{TransactionNumber}" ]
+				title: "reverse deal"
+			}
+		}
+	
+		resource verTeller_Audit {
+			type: item
+			entity: verTeller_Audit
+			commands [ GET : GetLiveEntity ]
+			path: "/verTeller_Audits('{id}')"
+			POST +-> verTeller_Audit_metadata {
+				title: "metadata"
+			}
+			GET --> verTeller_Audit_IAuth {
+				parameters [ id = "{TransactionNumber}" ]
+				condition: OK(verTeller_Audit_IAuth)
+			}
+			POST -> verTeller_Audit_validate {
+				parameters [ id = "{TransactionNumber}" ]
+				title: "validate deal"
+			}
+			PUT -> verTeller_Audit_input {
+				parameters [ id = "{TransactionNumber}" ]
+				title: "input deal"
+			}
+			POST -> verTeller_Audit_audit {
+				parameters [ id = "{TransactionNumber}" ]
+				title: "audit deal"
+			}
+			POST -> verTeller_Audit_reverse {
+				parameters [ id = "{TransactionNumber}" ]
+				title: "reverse deal"
+			}
+			GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+				parameters [ entity = "verTeller_Audit" ]
+				title: "Context Enquiries"
+			}
+		}
+	
+		resource verTeller_Audit_see {
+			type: item
+			entity: verTeller_Audit
+			commands [ GET : GetLiveEntity ]
+			relations [ "http://schemas.microsoft.com/ado/2007/08/dataservices/related/verTeller_Audit","http://temenostech.temenos.com/rels/see" ]
+			path: "/verTeller_Audits('{id}')/see"
+			POST +-> verTeller_Audit_metadata {
+				title: "metadata"
+			}
+		}
+	
+		resource verTeller_Audit_IAuth_see {
+			type: item
+			entity: verTeller_Audit
+			commands [ GET : GetIauthEntity ]
+			relations [ "http://schemas.microsoft.com/ado/2007/08/dataservices/related/verTeller_Audit_IAuth","http://temenostech.temenos.com/rels/see" ]
+			path: "/verTeller_Audits_IAuth('{id}')/see"
+		}
+	
+		resource verTeller_Audit_HAuth_see {
+			type: item
+			entity: verTeller_Audit
+			commands [ GET : GetHauthEntity ]
+			relations [ "http://schemas.microsoft.com/ado/2007/08/dataservices/related/verTeller_Audit_HAuth","http://temenostech.temenos.com/rels/see" ]
+			path: "/verTeller_Audits_HAuth('{id}')/see"
+		}
+	
+		resource verTeller_Audit_ContextEnquiries {
+			type: item
+			entity: verTeller_Audit
+			commands [ GET : NoopGET ]
+			path: "/verTeller_Audit/ContextEnquiries"
+			GET -> "T24.enqlistTeller.enqlistTellers" {
+				parameters [ param = "list" ]
+				title: "List live deals"
+			}
+			GET -> "T24.enqlistTeller.enqlistTellersUnauth" {
+				parameters [ param = "list" ]
+				title: "List unauthorised deals"
+			}
+			GET -> "T24.enqlistTeller.enqlistTellersHist" {
+				parameters [ param = "list" ]
+				title: "List history deals"
+			}
+			GET -> "T24.enqlistTeller.enqlistTellers" {
+				title: "Search live deals"
+			}
+			GET -> "T24.enqlistTeller.enqlistTellersUnauth" {
+				title: "Search unauthorised deals"
+			}
+			GET -> "T24.enqlistTeller.enqlistTellersHist" {
+				title: "Search history deals"
+			}
+			GET +-> "ContextEnquiryList" {
+				parameters [ entity = "verTeller_Audit" ]
+				title: "Other context Enquiries"
+			}
+		}
+	
+		resource verTeller_Audit_metadata {
+			type: collection
+			entity: T24FieldMetadata
+			commands [ POST : T24FieldMetadata ]
+			relations [ "http://temenostech.temenos.com/rels/metadata" ]
+			path: "/verTeller_Audits()/metadata"
+		}
+	
+		resource verTeller_Audits_IAuth {
+			type: collection
+			entity: verTeller_Audit
+			commands [ GET : GetIauthEntities {
+				properties [ filter = "{filter}" ]
+				} ]
+			path: "/verTeller_Audits_IAuth()"
+			GET *-> verTeller_Audit_IAuth {
+				parameters [ id = "{TransactionNumber}" ]
+			}
+			POST -> verTeller_Audit_new {
+				title: "create new deal"
+				condition: OK(verTeller_Audit_autoId)
+			}
+			POST -> verTeller_Audit_populate {
+				title: "populate existing deal"
+			}
+			PUT *-> verTeller_Audit_input {
+				parameters [ id = "{TransactionNumber}" ]
+				title: "input deal"
+			}
+			DELETE *-> verTeller_Audit_delete {
+				parameters [ id = "{TransactionNumber}" ]
+				title: "delete"
+			}
+			PUT *-> verTeller_Audit_authorise {
+				parameters [ id = "{TransactionNumber}" ]
+				title: "authorise deal"
+			}
+		}
+	
+		resource verTeller_Audit_new {
+			type: item
+			entity: verTeller_Audit
+			commands [ POST : CreateEntity ]
+			relations [ "http://schemas.microsoft.com/ado/2007/08/dataservices/related/verTeller_Audit","http://temenostech.temenos.com/rels/new" ]
+			path: "/verTeller_Audits()/new"
+			POST +-> verTeller_Audit_metadata {
+				title: "metadata"
+			}
+			POST -> verTeller_Audit_validate {
+				parameters [ id = "{TransactionNumber}" ]
+				title: "validate deal"
+			}
+			PUT -> verTeller_Audit_input {
+				parameters [ id = "{TransactionNumber}" ]
+				title: "input deal"
+			}
+			POST -> verTeller_Audit_hold {
+				parameters [ id = "{TransactionNumber}" ]
+				title: "hold deal"
+			}
+			GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+				parameters [ entity = "verTeller_Audit" ]
+				title: "Context Enquiries"
+			}
+		}
+	
+		resource verTeller_Audit_input {
+			type: item
+			entity: verTeller_Audit
+			commands [ PUT : InputEntity, POST : InputEntity ]
+			relations [ "http://temenostech.temenos.com/rels/input" ]
+			path: "/verTeller_Audits('{id}')"
+			GET --> nextState {
+				condition: OK(nextState)
+			}
+			GET --> verTeller_Audit_IAuth {
+				parameters [ id = "{TransactionNumber}" ]
+				condition: OK(verTeller_Audit_IAuth)
+			}
+			GET --> verTeller_Audit {
+				parameters [ id = "{TransactionNumber}" ]
+				condition: OK(verTeller_Audit)
+			}
+			GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+				parameters [ entity = "verTeller_Audit" ]
+				title: "Context Enquiries"
+			}
+			onerror --> T24.verTeller_Audit.verTeller_Audit_errorHandler
+		}
+	
+		resource verTeller_Audit_hold {
+			type: item
+			entity: verTeller_Audit
+			commands [ POST : HoldEntity ]
+			relations [ "http://temenostech.temenos.com/rels/hold" ]
+			path: "/verTeller_Audits('{id}')/hold"
+			PUT -> verTeller_Audit_input {
+				parameters [ id = "{TransactionNumber}" ]
+				title: "input deal"
+			}
+			DELETE -> verTeller_Audit_delete {
+				parameters [ id = "{TransactionNumber}" ]
+				title: "delete"
+			}
+			onerror --> common.Errors.Errors
+		}
+	
+		resource verTeller_Audit_authorise {
+			type: item
+			entity: verTeller_Audit
+			commands [ PUT : AuthoriseEntity ]
+			relations [ "http://temenostech.temenos.com/rels/authorise" ]
+			path: "/verTeller_Audits('{id}')/authorise"
+			GET --> verTeller_Audit_IAuth {
+				parameters [ id = "{TransactionNumber}" ]
+				condition: OK(verTeller_Audit_IAuth)
+			}
+			GET --> verTeller_Audit {
+				parameters [ id = "{TransactionNumber}" ]
+				condition: OK(verTeller_Audit)
+			}
+			GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+				parameters [ entity = "verTeller_Audit" ]
+				title: "Context Enquiries"
+			}
+			onerror --> T24.verTeller_Audit.verTeller_Audit_errorHandler
+		}
+	
+		resource verTeller_Audit_changedValues {
+			type: item
+			entity: verTeller_Audit
+			commands [ GET : GetChangedValues ]
+			relations [ "http://temenostech.temenos.com/rels/changedValues" ]
+			path: "/verTeller_Audits('{id}')/changedValues"
+		}
+	
+		resource verTeller_Audit_audit {
+			type: item
+			entity: verTeller_Audit
+			commands [ POST : ReviewEntity ]
+			relations [ "http://temenostech.temenos.com/rels/review" ]
+			path: "/verTeller_Audits('{id}')/review"
+			GET -> verTeller_Audit {
+				parameters [ id = "{TransactionNumber}" ]
+			}
+			onerror --> common.Errors.Errors
+		}
+	
+		resource verTeller_Audit_reverse {
+			type: item
+			entity: verTeller_Audit
+			commands [ PUT : ReverseEntity ]
+			relations [ "http://temenostech.temenos.com/rels/reverse" ]
+			path: "/verTeller_Audits('{id}')/reverse"
+			GET --> verTeller_Audit_IAuth {
+				parameters [ id = "{TransactionNumber}" ]
+				condition: OK(verTeller_Audit_IAuth)
+			}
+			GET --> verTeller_Audit_HAuth {
+				parameters [ id = "{TransactionNumber}" ]
+				condition: OK(verTeller_Audit_HAuth)
+			}
+			onerror --> T24.verTeller_Audit.verTeller_Audit_errorHandler
+		}
+	
+		resource verTeller_Audit_validate {
+			type: item
+			entity: verTeller_Audit
+			commands [ POST : ValidateEntity ]
+			relations [ "http://temenostech.temenos.com/rels/validate" ]
+			path: "/verTeller_Audits('{id}')/validate"
+			GET +-> ProcessErrors {
+				title: "errors"
+				condition: OK(CheckIfError)
+			}
+			POST +-> verTeller_Audit_metadata {
+				title: "metadata"
+			}
+			PUT -> verTeller_Audit_input {
+				parameters [ id = "{TransactionNumber}" ]
+				title: "input deal"
+			}
+			POST -> verTeller_Audit_hold {
+				parameters [ id = "{TransactionNumber}" ]
+				title: "hold deal"
+			}
+		}
+	
+		resource verTeller_Audit_IAuth {
+			type: item
+			entity: verTeller_Audit
+			commands [ GET : GetIauthEntity ]
+			path: "/verTeller_Audits_IAuth('{id}')"
+			POST +-> verTeller_Audit_metadata {
+				title: "metadata"
+			}
+			GET +-> verTeller_Audit_changedValues {
+				parameters [ id = "{TransactionNumber}" ]
+				title: "changed values"
+			}
+			POST -> verTeller_Audit_validate {
+				parameters [ id = "{TransactionNumber}" ]
+				title: "validate deal"
+			}
+			PUT -> verTeller_Audit_input {
+				parameters [ id = "{TransactionNumber}" ]
+				title: "input deal"
+			}
+			POST -> verTeller_Audit_hold {
+				parameters [ id = "{TransactionNumber}" ]
+				title: "hold deal"
+			}
+			POST -> verTeller_Audit_authorise {
+				parameters [ id = "{TransactionNumber}" ]
+				title: "authorise deal"
+			}
+			DELETE -> verTeller_Audit_delete {
+				parameters [ id = "{TransactionNumber}" ]
+				title: "delete"
+			}
+			GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+				parameters [ entity = "verTeller_Audit" ]
+				title: "Context Enquiries"
+			}
+		}
+	
+		resource verTeller_Audit_delete {
+			type: item
+			entity: verTeller_Audit
+			commands [ DELETE : DeleteEntity ]
+			relations [ "http://temenostech.temenos.com/rels/delete" ]
+			path: "/verTeller_Audits('{id}')/delete"
+		}
+	
+		resource verTeller_AuditEntry {
+			type: item
+			entity: verTeller_Audit
+			commands [ GET : NoopGET ]
+			relations [ "http://schemas.microsoft.com/ado/2007/08/dataservices/related/verTeller_Audit","http://temenostech.temenos.com/rels/contract" ]
+			path: "/verTeller_AuditEntry"
+			POST -> verTeller_Audit_new {
+				title: "create new deal"
+				condition: OK(verTeller_Audit_autoId)
+			}
+			POST -> verTeller_Audit_populate {
+				title: "populate existing deal"
+			}
+			GET -> "verTeller_Audit_see" {
+				parameters [ id = "@" ]
+				title: "See transaction"
+			}
+			GET -> "verTeller_Audit_IAuth_see" {
+				parameters [ id = "@" ]
+				title: "GetIauthEntity"
+			}
+			GET -> "verTeller_Audit_HAuth_see" {
+				parameters [ id = "@" ]
+				title: "GetHauthEntity"
+			}
+			GET -> "verTeller_Audit_IAuth" {
+				parameters [ id = "@" ]
+				title: "GetIauthEntity"
+			}
+			GET -> "verTeller_Audit_HAuth" {
+				parameters [ id = "@" ]
+				title: "GetHauthEntity"
+			}
+			GET +-> "verTeller_Audit_ContextEnquiries" {
+				title: "All context Enquiries"
+			}
+			POST -> verTeller_Audit_copy {
+				title: "Copy deal"
+			}
+			POST -> verTeller_Audit_paste {
+				title: "Paste deal"
+			}
+		}
+	
+		resource verTeller_Audit_populate {
+			type: item
+			entity: verTeller_Audit
+			commands [ POST : CreateEntity ]
+			relations [ "http://schemas.microsoft.com/ado/2007/08/dataservices/related/verTeller_Audit","http://temenostech.temenos.com/rels/populate" ]
+			path: "/verTeller_Audits()/populate"
+			POST -> verTeller_Audit_validate {
+				parameters [ id = "{TransactionNumber}" ]
+				title: "validate deal"
+			}
+			POST -> verTeller_Audit_input {
+				parameters [ id = "{TransactionNumber}" ]
+				title: "input deal"
+			}
+			DELETE -> verTeller_Audit_delete {
+				parameters [ id = "{TransactionNumber}" ]
+				title: "delete"
+				condition: OK(verTeller_Audit_IAuth)
+			}
+			POST -> verTeller_Audit_metadata {
+				title: "metadata"
+			}
+			GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+				parameters [ entity = "verTeller_Audit" ]
+				title: "Context Enquiries"
+			}
+		}
+	
+		resource verTeller_Audit_copy {
+			type: item
+			entity: verTeller_Audit
+			commands [ POST : CopyEntity ]
+			relations [ "http://temenostech.temenos.com/rels/copy" ]
+			path: "/verTeller_Audits()/copy"
+		}
+	
+		resource verTeller_Audit_paste {
+			type: item
+			entity: verTeller_Audit
+			commands [ POST : PasteEntity ]
+			relations [ "http://temenostech.temenos.com/rels/paste" ]
+			path: "/verTeller_Audits()/paste"
+			POST +-> verTeller_Audit_metadata {
+				title: "metadata"
+			}
+			POST -> verTeller_Audit_validate {
+				parameters [ id = "{TransactionNumber}" ]
+				title: "validate deal"
+			}
+			PUT -> verTeller_Audit_input {
+				parameters [ id = "{TransactionNumber}" ]
+				title: "input deal"
+			}
+			POST -> verTeller_Audit_hold {
+				parameters [ id = "{TransactionNumber}" ]
+				title: "hold deal"
+			}
+		}
+	
+		resource verTeller_Audits_enrichment {
+			type: item
+			entity: Enrichment
+			commands [ GET : T24Enrichment {
+				properties [ entity = "verTeller_Audit" ]
+				} ]
+			relations [ "http://temenostech.temenos.com/rels/enrichment" ]
+			path: "/verTeller_Audits()/enrichment"
+		}
+	
+		resource verTeller_Audit_autoId {
+			type: item
+			entity: verTeller_Audit
+			commands [ GET : CheckAutoIdSupport ]
+		}
+	
+		resource verTeller_Audit_restore {
+			type: item
+			entity: verTeller_Audit
+			commands [ POST : RestoreEntity ]
+			relations [ "http://temenostech.temenos.com/rels/restore" ]
+			path: "/verTeller_Audits('{id}')/restore"
+			GET --> verTeller_Audit_IAuth {
+				parameters [ id = "{TransactionNumber}" ]
+				condition: OK(verTeller_Audit_IAuth)
+			}
+			GET --> verTeller_Audit {
+				parameters [ id = "{TransactionNumber}" ]
+				condition: OK(verTeller_Audit)
+			}
+			POST -> verTeller_Audit_metadata {
+				title: "metadata"
+			}
+			GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+				parameters [ entity = "verTeller_Audit" ]
+				title: "Context Enquiries"
+			}
+			onerror --> common.Errors.Errors
+		}
+	
+		resource verTeller_Audits_HAuth {
+			type: collection
+			entity: verTeller_Audit
+			commands [ GET : GetHauthEntities {
+				properties [ filter = "{filter}" ]
+				} ]
+			path: "/verTeller_Audits_HAuth()"
+			GET *-> verTeller_Audit_HAuth {
+				parameters [ id = "{TransactionNumber}" ]
+			}
+			POST -> verTeller_Audit_new {
+				title: "create new deal"
+				condition: OK(verTeller_Audit_autoId)
+			}
+			POST -> verTeller_Audit_populate {
+				title: "populate existing deal"
+			}
+			POST *-> verTeller_Audit_restore {
+				parameters [ id = "{TransactionNumber}" ]
+				title: "restore deal"
+			}
+		}
+	
+		resource verTeller_Audit_HAuth {
+			type: item
+			entity: verTeller_Audit
+			commands [ GET : GetHauthEntity ]
+			path: "/verTeller_Audits_HAuth('{id}')"
+			POST +-> verTeller_Audit_metadata {
+				title: "metadata"
+			}
+			POST -> verTeller_Audit_validate {
+				parameters [ id = "{TransactionNumber}" ]
+				title: "validate deal"
+			}
+			PUT -> verTeller_Audit_input {
+				parameters [ id = "{TransactionNumber}" ]
+				title: "input deal"
+			}
+			POST -> verTeller_Audit_hold {
+				parameters [ id = "{TransactionNumber}" ]
+				title: "hold deal"
+			}
+			POST -> verTeller_Audit_authorise {
+				parameters [ id = "{TransactionNumber}" ]
+				title: "authorise deal"
+			}
+			DELETE -> verTeller_Audit_delete {
+				parameters [ id = "{TransactionNumber}" ]
+				title: "delete"
+			}
+			GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+				parameters [ entity = "verTeller_Audit" ]
+				title: "Context Enquiries"
+			}
+		}
+	
+	}
+	
+}
