@@ -1,0 +1,190 @@
+Enquiry "STMT.ENT.DETAIL" for "name:/AC_EntryCreation:STMT.ENTRY.DETAIL#" {
+    metamodelVersion: "1.30.6"
+    header {
+        label {
+            en = " Statement Entry Details"
+        }
+
+        column: 25
+        line: 1
+    }
+
+    full-description {
+        en = "Statement Entry Details"
+    }
+
+    description {
+        en = "Statement Entry Details"
+    }
+
+    no-selection: true
+    start-line: 4
+    end-line: 19
+    build-routines {
+        jBC: "MB.E.STMT.ENT.DETAIL"
+    }
+
+    custom-selection {
+
+        field "STMT.ENTRY.ID" {
+            operands: Equals
+        }
+
+        None
+    }
+
+    field "BOOKING.DATE" {
+        label {
+            en = "Booking Date"
+        }
+
+        format: Date
+        length: 11
+        alignment: Right
+        comma-separator: false
+        position {
+            column: 1
+        }
+
+        processing-mode: Single
+        operation: application-field-name "BOOKING.DATE"
+    }
+
+    field "TXN.CODE" {
+        length: 3
+        alignment: Right
+        comma-separator: false
+        processing-mode: Single
+        operation: application-field-name "TRANSACTION.CODE"
+    }
+
+    field "TXN.REF" {
+        label {
+            en = "Reference"
+        }
+
+        length: 18
+        alignment: Left
+        comma-separator: false
+        position {
+            column: 15
+        }
+
+        processing-mode: Single
+        operation: application-field-name "TRANS.REFERENCE"
+    }
+
+    field "TXN.DESC" {
+        label {
+            en = "Narrative"
+        }
+
+        format: User
+        length: 35
+        alignment: Left
+        comma-separator: false
+        position {
+            column: 52
+        }
+
+        operation: field-extract "TXN.CODE"
+        conversion: getFrom "TRANSACTION" "NARRATIVE" false
+    }
+
+    field "VALUE.DATE" {
+        label {
+            en = "Value Date"
+        }
+
+        format: Date
+        length: 11
+        alignment: Right
+        comma-separator: false
+        position {
+            column: 80
+        }
+
+        processing-mode: Single
+        operation: application-field-name "VALUE.DATE"
+    }
+
+    field "AMOUNT.FCY" {
+        length: 19
+        alignment: Right
+        comma-separator: false
+        processing-mode: Single
+        operation: application-field-name "AMOUNT.FCY"
+    }
+
+    field "AMOUNT.LCY" {
+        length: 19
+        alignment: Right
+        comma-separator: false
+        processing-mode: Single
+        operation: application-field-name "AMOUNT.LCY"
+    }
+
+    field "NULL" {
+        comma-separator: false
+        operation: constant "\"\""
+    }
+
+    field "CURR" {
+        label {
+            en = "Currency"
+        }
+
+        length: 3
+        alignment: Left
+        comma-separator: false
+        position {
+            column: 95
+        }
+
+        processing-mode: Single
+        operation: application-field-name "CURRENCY"
+    }
+
+    field "DISP.AMT" {
+        label {
+            en = "Txn Amount"
+        }
+
+        format: Currency "CURR" negative-pattern -#
+        length: 20
+        alignment: Right
+        comma-separator: true
+        position {
+            column: 100
+        }
+
+        operation: if "AMOUNT.FCY" Equals "NULL" process "AMOUNT.LCY" "AMOUNT.FCY"
+    }
+
+    field "TOT.AMT" {
+        display-type: "CLASS-POSNEG"
+        format: Currency "CURR" negative-pattern -# break-condition {
+            break: End
+        }
+
+        length: 20
+        alignment: Right
+        comma-separator: true
+        position {
+            column: 100
+            line: + 2
+        }
+
+        operation: application-field-name "TOT DISP.AMT"
+    }
+
+    field "DRILL.PRODUCT" {
+        comma-separator: false
+        processing-mode: Single
+        operation: application-field-name "SYSTEM.ID"
+        conversion: call
+        jBC: "@ E.READ.EB.SYSTEM.ID"
+    }
+
+
+}

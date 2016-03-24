@@ -1,0 +1,43 @@
+domain T24 {
+	use common.CoreCommands.*
+	use common.HTTPEvents.*
+	use common.ODataCommands.*
+	use common.T24Commands.*
+	use common.T24Events.*
+	use common.NextState.*
+	rim enqAccount {
+		command GETEntities
+		command GETEntity
+		basepath: "/{companyid}"
+	
+		resource enqAccounts {
+			type: collection
+			entity: enqAccount
+			commands [ GET : GETEntities {
+				properties [ filter = "{filter}" ]
+				} ]
+			path: "/enqAccounts()"
+			GET *-> enqAccount {
+				parameters [ id = "{Id}" ]
+			}
+			GET *-> "T24.verAccount.verAccountEntry" {
+				title: "Account details"
+				id: "1"
+			}
+			GET *-> "T24.verEbContractBalances_Ac.verEbContractBalances_Ac_see" {
+				parameters [ id = "{Id}",t24Intent = "View" ]
+				title: "Balance details"
+				id: "2"
+			}
+		}
+	
+		resource enqAccount {
+			type: item
+			entity: enqAccount
+			commands [ GET : GETEntity ]
+			path: "/enqAccounts('{id}')"
+		}
+	
+	}
+	
+}

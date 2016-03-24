@@ -1,0 +1,47 @@
+domain T24 {
+	use common.CoreCommands.*
+	use common.HTTPEvents.*
+	use common.ODataCommands.*
+	use common.T24Commands.*
+	use common.T24Events.*
+	use common.NextState.*
+	rim enqDePreview {
+		command GETEntities
+		command GETEntity
+		command GetEnquiryReport
+		basepath: "/{companyid}"
+	
+		resource enqDePreviews {
+			type: collection
+			entity: enqDePreview
+			commands [ GET : GETEntities {
+				properties [ filter = "{filter}" ]
+				} ]
+			path: "/enqDePreviews()"
+			GET *-> enqDePreview {
+				parameters [ id = "{PrimaryKey}" ]
+			}
+			GET *-> "enqDePreview_enquiryReport" {
+				parameters [ id = "{ReportId}" ]
+				title: "Preview message"
+				id: "1"
+			}
+		}
+	
+		resource enqDePreview_enquiryReport {
+			type: item
+			entity: EnquiryReport
+			commands [ GET : GetEnquiryReport ]
+			relations [ "http://www.temenos.com/rels/enquiryReport" ]
+		}
+	
+		resource enqDePreview {
+			type: item
+			entity: enqDePreview
+			commands [ GET : GETEntity ]
+			path: "/enqDePreviews('{id}')"
+		}
+	
+	}
+	
+}

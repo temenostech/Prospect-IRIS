@@ -1,0 +1,616 @@
+domain T24 {
+	use common.CoreCommands.*
+	use common.HTTPEvents.*
+	use common.ODataCommands.*
+	use common.T24Commands.*
+	use common.T24Events.*
+	use common.NextState.*
+	use common.Errors.*
+	use T24.ContextEnquiry.*
+	rim verSaScoreTxn_Audit {
+		command T24FieldMetadata
+		command NoopGET
+		command GETEntities
+		command GetLiveEntity
+		command GetIauthEntity
+		command GetHauthEntity
+		command GetIauthEntities
+		command CreateEntity
+		command InputEntity
+		command HoldEntity
+		command AuthoriseEntity
+		command GetChangedValues
+		command ReviewEntity
+		command ReverseEntity
+		command ValidateEntity
+		command RestoreEntity
+		command DeleteEntity
+		command CopyEntity
+		command PasteEntity
+		command CreateDEPreview
+		command GetDealSlipEntities
+		command T24Enrichment
+		command CheckAutoIdSupport
+		command GetHauthEntities
+		command T24NextState
+		basepath: "/{companyid}"
+	
+		resource verSaScoreTxn_Audit_errorHandler {
+			type: item
+			entity: verSaScoreTxn_Audit
+			commands [ GET : NoopGET ]
+			relations [ "http://temenostech.temenos.com/rels/error" ]
+			path: "/verSaScoreTxn_Audits('{id}')/error"
+			GET +-> ProcessErrors {
+				title: "errors"
+			}
+			POST +-> verSaScoreTxn_Audit_metadata {
+				title: "metadata"
+			}
+		}
+	
+		resource verSaScoreTxn_Audits {
+			type: collection
+			entity: verSaScoreTxn_Audit
+			commands [ GET : GETEntities {
+				properties [ filter = "{filter}" ]
+				} ]
+			path: "/verSaScoreTxn_Audits()"
+			GET *-> verSaScoreTxn_Audit {
+				parameters [ id = "{Id}" ]
+			}
+			GET *-> verSaScoreTxn_Audit_see {
+				parameters [ id = "{Id}" ]
+				title: "see record"
+			}
+			POST -> verSaScoreTxn_Audit_new {
+				title: "create new deal"
+				condition: OK(verSaScoreTxn_Audit_autoId)
+			}
+			POST -> verSaScoreTxn_Audit_populate {
+				title: "populate existing deal"
+			}
+			PUT *-> verSaScoreTxn_Audit_input {
+				parameters [ id = "{Id}" ]
+				title: "input deal"
+			}
+			POST *-> verSaScoreTxn_Audit_audit {
+				parameters [ id = "{Id}" ]
+				title: "audit deal"
+			}
+			POST *-> verSaScoreTxn_Audit_reverse {
+				parameters [ id = "{Id}" ]
+				title: "reverse deal"
+			}
+		}
+	
+		resource verSaScoreTxn_Audit {
+			type: item
+			entity: verSaScoreTxn_Audit
+			commands [ GET : GetLiveEntity ]
+			path: "/verSaScoreTxn_Audits('{id}')"
+			POST +-> verSaScoreTxn_Audit_metadata {
+				title: "metadata"
+			}
+			GET --> verSaScoreTxn_Audit_IAuth {
+				parameters [ id = "{Id}" ]
+				condition: OK(verSaScoreTxn_Audit_IAuth)
+			}
+			POST -> verSaScoreTxn_Audit_validate {
+				parameters [ id = "{Id}" ]
+				title: "validate deal"
+			}
+			PUT -> verSaScoreTxn_Audit_input {
+				parameters [ id = "{Id}" ]
+				title: "input deal"
+			}
+			POST -> verSaScoreTxn_Audit_audit {
+				parameters [ id = "{Id}" ]
+				title: "audit deal"
+			}
+			POST -> verSaScoreTxn_Audit_reverse {
+				parameters [ id = "{Id}" ]
+				title: "reverse deal"
+			}
+			GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+				parameters [ entity = "verSaScoreTxn_Audit" ]
+				title: "Context Enquiries"
+			}
+		}
+	
+		resource verSaScoreTxn_Audit_see {
+			type: item
+			entity: verSaScoreTxn_Audit
+			commands [ GET : GetLiveEntity ]
+			relations [ "http://schemas.microsoft.com/ado/2007/08/dataservices/related/verSaScoreTxn_Audit","http://temenostech.temenos.com/rels/see" ]
+			path: "/verSaScoreTxn_Audits('{id}')/see"
+			POST +-> verSaScoreTxn_Audit_metadata {
+				title: "metadata"
+			}
+		}
+	
+		resource verSaScoreTxn_Audit_IAuth_see {
+			type: item
+			entity: verSaScoreTxn_Audit
+			commands [ GET : GetIauthEntity ]
+			relations [ "http://schemas.microsoft.com/ado/2007/08/dataservices/related/verSaScoreTxn_Audit_IAuth","http://temenostech.temenos.com/rels/see" ]
+			path: "/verSaScoreTxn_Audits_IAuth('{id}')/see"
+		}
+	
+		resource verSaScoreTxn_Audit_HAuth_see {
+			type: item
+			entity: verSaScoreTxn_Audit
+			commands [ GET : GetHauthEntity ]
+			relations [ "http://schemas.microsoft.com/ado/2007/08/dataservices/related/verSaScoreTxn_Audit_HAuth","http://temenostech.temenos.com/rels/see" ]
+			path: "/verSaScoreTxn_Audits_HAuth('{id}')/see"
+		}
+	
+		resource verSaScoreTxn_Audit_ContextEnquiries {
+			type: item
+			entity: verSaScoreTxn_Audit
+			commands [ GET : NoopGET ]
+			path: "/verSaScoreTxn_Audit/ContextEnquiries"
+			GET -> "T24.enqlistSaScoreTxn.enqlistSaScoreTxns" {
+				parameters [ param = "list" ]
+				title: "List live deals"
+			}
+			GET -> "T24.enqlistSaScoreTxn.enqlistSaScoreTxnsUnauth" {
+				parameters [ param = "list" ]
+				title: "List unauthorised deals"
+			}
+			GET -> "T24.enqlistSaScoreTxn.enqlistSaScoreTxnsHist" {
+				parameters [ param = "list" ]
+				title: "List history deals"
+			}
+			GET -> "T24.enqlistSaScoreTxn.enqlistSaScoreTxns" {
+				title: "Search live deals"
+			}
+			GET -> "T24.enqlistSaScoreTxn.enqlistSaScoreTxnsUnauth" {
+				title: "Search unauthorised deals"
+			}
+			GET -> "T24.enqlistSaScoreTxn.enqlistSaScoreTxnsHist" {
+				title: "Search history deals"
+			}
+			GET +-> "ContextEnquiryList" {
+				parameters [ entity = "verSaScoreTxn_Audit" ]
+				title: "Other context Enquiries"
+			}
+		}
+	
+		resource verSaScoreTxn_Audit_metadata {
+			type: collection
+			entity: T24FieldMetadata
+			commands [ POST : T24FieldMetadata ]
+			relations [ "http://temenostech.temenos.com/rels/metadata" ]
+			path: "/verSaScoreTxn_Audits()/metadata"
+		}
+	
+		resource verSaScoreTxn_Audits_IAuth {
+			type: collection
+			entity: verSaScoreTxn_Audit
+			commands [ GET : GetIauthEntities {
+				properties [ filter = "{filter}" ]
+				} ]
+			path: "/verSaScoreTxn_Audits_IAuth()"
+			GET *-> verSaScoreTxn_Audit_IAuth {
+				parameters [ id = "{Id}" ]
+			}
+			POST -> verSaScoreTxn_Audit_new {
+				title: "create new deal"
+				condition: OK(verSaScoreTxn_Audit_autoId)
+			}
+			POST -> verSaScoreTxn_Audit_populate {
+				title: "populate existing deal"
+			}
+			PUT *-> verSaScoreTxn_Audit_input {
+				parameters [ id = "{Id}" ]
+				title: "input deal"
+			}
+			DELETE *-> verSaScoreTxn_Audit_delete {
+				parameters [ id = "{Id}" ]
+				title: "delete"
+			}
+			PUT *-> verSaScoreTxn_Audit_authorise {
+				parameters [ id = "{Id}" ]
+				title: "authorise deal"
+			}
+		}
+	
+		resource verSaScoreTxn_Audit_new {
+			type: item
+			entity: verSaScoreTxn_Audit
+			commands [ POST : CreateEntity ]
+			relations [ "http://schemas.microsoft.com/ado/2007/08/dataservices/related/verSaScoreTxn_Audit","http://temenostech.temenos.com/rels/new" ]
+			path: "/verSaScoreTxn_Audits()/new"
+			POST +-> verSaScoreTxn_Audit_metadata {
+				title: "metadata"
+			}
+			POST -> verSaScoreTxn_Audit_validate {
+				parameters [ id = "{Id}" ]
+				title: "validate deal"
+			}
+			PUT -> verSaScoreTxn_Audit_input {
+				parameters [ id = "{Id}" ]
+				title: "input deal"
+			}
+			POST -> verSaScoreTxn_Audit_hold {
+				parameters [ id = "{Id}" ]
+				title: "hold deal"
+			}
+			GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+				parameters [ entity = "verSaScoreTxn_Audit" ]
+				title: "Context Enquiries"
+			}
+		}
+	
+		resource verSaScoreTxn_Audit_input {
+			type: item
+			entity: verSaScoreTxn_Audit
+			commands [ PUT : InputEntity, POST : InputEntity ]
+			relations [ "http://temenostech.temenos.com/rels/input" ]
+			path: "/verSaScoreTxn_Audits('{id}')"
+			GET --> nextState {
+				condition: OK(nextState)
+			}
+			GET --> verSaScoreTxn_Audit_IAuth {
+				parameters [ id = "{Id}" ]
+				condition: OK(verSaScoreTxn_Audit_IAuth)
+			}
+			GET --> verSaScoreTxn_Audit {
+				parameters [ id = "{Id}" ]
+				condition: OK(verSaScoreTxn_Audit)
+			}
+			GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+				parameters [ entity = "verSaScoreTxn_Audit" ]
+				title: "Context Enquiries"
+			}
+			onerror --> T24.verSaScoreTxn_Audit.verSaScoreTxn_Audit_errorHandler
+		}
+	
+		resource verSaScoreTxn_Audit_hold {
+			type: item
+			entity: verSaScoreTxn_Audit
+			commands [ POST : HoldEntity ]
+			relations [ "http://temenostech.temenos.com/rels/hold" ]
+			path: "/verSaScoreTxn_Audits('{id}')/hold"
+			PUT -> verSaScoreTxn_Audit_input {
+				parameters [ id = "{Id}" ]
+				title: "input deal"
+			}
+			DELETE -> verSaScoreTxn_Audit_delete {
+				parameters [ id = "{Id}" ]
+				title: "delete"
+			}
+			onerror --> common.Errors.Errors
+		}
+	
+		resource verSaScoreTxn_Audit_authorise {
+			type: item
+			entity: verSaScoreTxn_Audit
+			commands [ PUT : AuthoriseEntity ]
+			relations [ "http://temenostech.temenos.com/rels/authorise" ]
+			path: "/verSaScoreTxn_Audits('{id}')/authorise"
+			GET --> verSaScoreTxn_Audit_IAuth {
+				parameters [ id = "{Id}" ]
+				condition: OK(verSaScoreTxn_Audit_IAuth)
+			}
+			GET --> verSaScoreTxn_Audit {
+				parameters [ id = "{Id}" ]
+				condition: OK(verSaScoreTxn_Audit)
+			}
+			GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+				parameters [ entity = "verSaScoreTxn_Audit" ]
+				title: "Context Enquiries"
+			}
+			onerror --> T24.verSaScoreTxn_Audit.verSaScoreTxn_Audit_errorHandler
+		}
+	
+		resource verSaScoreTxn_Audit_changedValues {
+			type: item
+			entity: verSaScoreTxn_Audit
+			commands [ GET : GetChangedValues ]
+			relations [ "http://temenostech.temenos.com/rels/changedValues" ]
+			path: "/verSaScoreTxn_Audits('{id}')/changedValues"
+		}
+	
+		resource verSaScoreTxn_Audit_audit {
+			type: item
+			entity: verSaScoreTxn_Audit
+			commands [ POST : ReviewEntity ]
+			relations [ "http://temenostech.temenos.com/rels/review" ]
+			path: "/verSaScoreTxn_Audits('{id}')/review"
+			GET -> verSaScoreTxn_Audit {
+				parameters [ id = "{Id}" ]
+			}
+			onerror --> common.Errors.Errors
+		}
+	
+		resource verSaScoreTxn_Audit_reverse {
+			type: item
+			entity: verSaScoreTxn_Audit
+			commands [ PUT : ReverseEntity ]
+			relations [ "http://temenostech.temenos.com/rels/reverse" ]
+			path: "/verSaScoreTxn_Audits('{id}')/reverse"
+			GET --> verSaScoreTxn_Audit_IAuth {
+				parameters [ id = "{Id}" ]
+				condition: OK(verSaScoreTxn_Audit_IAuth)
+			}
+			GET --> verSaScoreTxn_Audit_HAuth {
+				parameters [ id = "{Id}" ]
+				condition: OK(verSaScoreTxn_Audit_HAuth)
+			}
+			onerror --> T24.verSaScoreTxn_Audit.verSaScoreTxn_Audit_errorHandler
+		}
+	
+		resource verSaScoreTxn_Audit_validate {
+			type: item
+			entity: verSaScoreTxn_Audit
+			commands [ POST : ValidateEntity ]
+			relations [ "http://temenostech.temenos.com/rels/validate" ]
+			path: "/verSaScoreTxn_Audits('{id}')/validate"
+			GET +-> ProcessErrors {
+				title: "errors"
+				condition: OK(CheckIfError)
+			}
+			POST +-> verSaScoreTxn_Audit_metadata {
+				title: "metadata"
+			}
+			PUT -> verSaScoreTxn_Audit_input {
+				parameters [ id = "{Id}" ]
+				title: "input deal"
+			}
+			POST -> verSaScoreTxn_Audit_hold {
+				parameters [ id = "{Id}" ]
+				title: "hold deal"
+			}
+		}
+	
+		resource verSaScoreTxn_Audit_IAuth {
+			type: item
+			entity: verSaScoreTxn_Audit
+			commands [ GET : GetIauthEntity ]
+			path: "/verSaScoreTxn_Audits_IAuth('{id}')"
+			POST +-> verSaScoreTxn_Audit_metadata {
+				title: "metadata"
+			}
+			GET +-> verSaScoreTxn_Audit_changedValues {
+				parameters [ id = "{Id}" ]
+				title: "changed values"
+			}
+			POST -> verSaScoreTxn_Audit_validate {
+				parameters [ id = "{Id}" ]
+				title: "validate deal"
+			}
+			PUT -> verSaScoreTxn_Audit_input {
+				parameters [ id = "{Id}" ]
+				title: "input deal"
+			}
+			POST -> verSaScoreTxn_Audit_hold {
+				parameters [ id = "{Id}" ]
+				title: "hold deal"
+			}
+			POST -> verSaScoreTxn_Audit_authorise {
+				parameters [ id = "{Id}" ]
+				title: "authorise deal"
+			}
+			DELETE -> verSaScoreTxn_Audit_delete {
+				parameters [ id = "{Id}" ]
+				title: "delete"
+			}
+			GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+				parameters [ entity = "verSaScoreTxn_Audit" ]
+				title: "Context Enquiries"
+			}
+		}
+	
+		resource verSaScoreTxn_Audit_delete {
+			type: item
+			entity: verSaScoreTxn_Audit
+			commands [ DELETE : DeleteEntity ]
+			relations [ "http://temenostech.temenos.com/rels/delete" ]
+			path: "/verSaScoreTxn_Audits('{id}')/delete"
+		}
+	
+		resource verSaScoreTxn_AuditEntry {
+			type: item
+			entity: verSaScoreTxn_Audit
+			commands [ GET : NoopGET ]
+			relations [ "http://schemas.microsoft.com/ado/2007/08/dataservices/related/verSaScoreTxn_Audit","http://temenostech.temenos.com/rels/contract" ]
+			path: "/verSaScoreTxn_AuditEntry"
+			POST -> verSaScoreTxn_Audit_new {
+				title: "create new deal"
+				condition: OK(verSaScoreTxn_Audit_autoId)
+			}
+			POST -> verSaScoreTxn_Audit_populate {
+				title: "populate existing deal"
+			}
+			GET -> "verSaScoreTxn_Audit_see" {
+				parameters [ id = "@" ]
+				title: "See transaction"
+			}
+			GET -> "verSaScoreTxn_Audit_IAuth_see" {
+				parameters [ id = "@" ]
+				title: "GetIauthEntity"
+			}
+			GET -> "verSaScoreTxn_Audit_HAuth_see" {
+				parameters [ id = "@" ]
+				title: "GetHauthEntity"
+			}
+			GET -> "verSaScoreTxn_Audit_IAuth" {
+				parameters [ id = "@" ]
+				title: "GetIauthEntity"
+			}
+			GET -> "verSaScoreTxn_Audit_HAuth" {
+				parameters [ id = "@" ]
+				title: "GetHauthEntity"
+			}
+			GET +-> "verSaScoreTxn_Audit_ContextEnquiries" {
+				title: "All context Enquiries"
+			}
+			POST -> verSaScoreTxn_Audit_copy {
+				title: "Copy deal"
+			}
+			POST -> verSaScoreTxn_Audit_paste {
+				title: "Paste deal"
+			}
+		}
+	
+		resource verSaScoreTxn_Audit_populate {
+			type: item
+			entity: verSaScoreTxn_Audit
+			commands [ POST : CreateEntity ]
+			relations [ "http://schemas.microsoft.com/ado/2007/08/dataservices/related/verSaScoreTxn_Audit","http://temenostech.temenos.com/rels/populate" ]
+			path: "/verSaScoreTxn_Audits()/populate"
+			POST -> verSaScoreTxn_Audit_validate {
+				parameters [ id = "{Id}" ]
+				title: "validate deal"
+			}
+			POST -> verSaScoreTxn_Audit_input {
+				parameters [ id = "{Id}" ]
+				title: "input deal"
+			}
+			DELETE -> verSaScoreTxn_Audit_delete {
+				parameters [ id = "{Id}" ]
+				title: "delete"
+				condition: OK(verSaScoreTxn_Audit_IAuth)
+			}
+			POST -> verSaScoreTxn_Audit_metadata {
+				title: "metadata"
+			}
+			GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+				parameters [ entity = "verSaScoreTxn_Audit" ]
+				title: "Context Enquiries"
+			}
+		}
+	
+		resource verSaScoreTxn_Audit_copy {
+			type: item
+			entity: verSaScoreTxn_Audit
+			commands [ POST : CopyEntity ]
+			relations [ "http://temenostech.temenos.com/rels/copy" ]
+			path: "/verSaScoreTxn_Audits()/copy"
+		}
+	
+		resource verSaScoreTxn_Audit_paste {
+			type: item
+			entity: verSaScoreTxn_Audit
+			commands [ POST : PasteEntity ]
+			relations [ "http://temenostech.temenos.com/rels/paste" ]
+			path: "/verSaScoreTxn_Audits()/paste"
+			POST +-> verSaScoreTxn_Audit_metadata {
+				title: "metadata"
+			}
+			POST -> verSaScoreTxn_Audit_validate {
+				parameters [ id = "{Id}" ]
+				title: "validate deal"
+			}
+			PUT -> verSaScoreTxn_Audit_input {
+				parameters [ id = "{Id}" ]
+				title: "input deal"
+			}
+			POST -> verSaScoreTxn_Audit_hold {
+				parameters [ id = "{Id}" ]
+				title: "hold deal"
+			}
+		}
+	
+		resource verSaScoreTxn_Audits_enrichment {
+			type: item
+			entity: Enrichment
+			commands [ GET : T24Enrichment {
+				properties [ entity = "verSaScoreTxn_Audit" ]
+				} ]
+			relations [ "http://temenostech.temenos.com/rels/enrichment" ]
+			path: "/verSaScoreTxn_Audits()/enrichment"
+		}
+	
+		resource verSaScoreTxn_Audit_autoId {
+			type: item
+			entity: verSaScoreTxn_Audit
+			commands [ GET : CheckAutoIdSupport ]
+		}
+	
+		resource verSaScoreTxn_Audit_restore {
+			type: item
+			entity: verSaScoreTxn_Audit
+			commands [ POST : RestoreEntity ]
+			relations [ "http://temenostech.temenos.com/rels/restore" ]
+			path: "/verSaScoreTxn_Audits('{id}')/restore"
+			GET --> verSaScoreTxn_Audit_IAuth {
+				parameters [ id = "{Id}" ]
+				condition: OK(verSaScoreTxn_Audit_IAuth)
+			}
+			GET --> verSaScoreTxn_Audit {
+				parameters [ id = "{Id}" ]
+				condition: OK(verSaScoreTxn_Audit)
+			}
+			POST -> verSaScoreTxn_Audit_metadata {
+				title: "metadata"
+			}
+			GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+				parameters [ entity = "verSaScoreTxn_Audit" ]
+				title: "Context Enquiries"
+			}
+			onerror --> common.Errors.Errors
+		}
+	
+		resource verSaScoreTxn_Audits_HAuth {
+			type: collection
+			entity: verSaScoreTxn_Audit
+			commands [ GET : GetHauthEntities {
+				properties [ filter = "{filter}" ]
+				} ]
+			path: "/verSaScoreTxn_Audits_HAuth()"
+			GET *-> verSaScoreTxn_Audit_HAuth {
+				parameters [ id = "{Id}" ]
+			}
+			POST -> verSaScoreTxn_Audit_new {
+				title: "create new deal"
+				condition: OK(verSaScoreTxn_Audit_autoId)
+			}
+			POST -> verSaScoreTxn_Audit_populate {
+				title: "populate existing deal"
+			}
+			POST *-> verSaScoreTxn_Audit_restore {
+				parameters [ id = "{Id}" ]
+				title: "restore deal"
+			}
+		}
+	
+		resource verSaScoreTxn_Audit_HAuth {
+			type: item
+			entity: verSaScoreTxn_Audit
+			commands [ GET : GetHauthEntity ]
+			path: "/verSaScoreTxn_Audits_HAuth('{id}')"
+			POST +-> verSaScoreTxn_Audit_metadata {
+				title: "metadata"
+			}
+			POST -> verSaScoreTxn_Audit_validate {
+				parameters [ id = "{Id}" ]
+				title: "validate deal"
+			}
+			PUT -> verSaScoreTxn_Audit_input {
+				parameters [ id = "{Id}" ]
+				title: "input deal"
+			}
+			POST -> verSaScoreTxn_Audit_hold {
+				parameters [ id = "{Id}" ]
+				title: "hold deal"
+			}
+			POST -> verSaScoreTxn_Audit_authorise {
+				parameters [ id = "{Id}" ]
+				title: "authorise deal"
+			}
+			DELETE -> verSaScoreTxn_Audit_delete {
+				parameters [ id = "{Id}" ]
+				title: "delete"
+			}
+			GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+				parameters [ entity = "verSaScoreTxn_Audit" ]
+				title: "Context Enquiries"
+			}
+		}
+	
+	}
+	
+}

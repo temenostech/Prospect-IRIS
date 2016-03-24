@@ -1,0 +1,130 @@
+Enquiry "ACCOUNT-LIST" for "name:/AC_AccountOpening:ACCOUNT#" {
+    metamodelVersion: "1.30.6"
+    description {
+        en = "ACCOUNT Drop Down List"
+    }
+
+    start-line: 4
+    end-line: 19
+    fixed-sort: "MNEMONIC" Null
+    custom-selection {
+
+        field "@ID" {
+            label {
+                en = "Account No"
+            }
+
+        }
+
+        None
+    }
+
+    field "@ID" {
+        label {
+            en = "Account No"
+        }
+
+        length: 16
+        alignment: Right
+        comma-separator: false
+        position {
+            column: 4
+        }
+
+        processing-mode: Single
+        operation: application-field-name "@ID"
+    }
+
+    field "HEADER" {
+        display-type: "CLASS-ENQ.H.TITLE" break-condition {
+            break: NewPage
+        }
+
+        comma-separator: false
+        display-section: Header
+        position {
+            column: 15
+            line: 0
+        }
+
+        operation: constant "\"Account List\""
+    }
+
+    field "CCY" {
+        label {
+            en = "Ccy"
+        }
+
+        length: 3
+        alignment: Left
+        comma-separator: false
+        position {
+            column: 21
+        }
+
+        processing-mode: Single
+        operation: application-field-name "CURRENCY"
+    }
+
+    field "CUSTOMER" {
+        label {
+            en = "Customer Id"
+        }
+
+        length: 10
+        alignment: Right
+        comma-separator: false
+        position {
+            column: 25
+        }
+
+        processing-mode: Single
+        operation: application-field-name "CUSTOMER"
+    }
+
+    field "CUST MNEMONIC" {
+        label {
+            en = "Mnemonic"
+        }
+
+        length: 10
+        alignment: Right
+        comma-separator: false
+        position {
+            column: 36
+        }
+
+        processing-mode: Single
+        operation: application-field-name "CUSTOMER"
+        conversion: getFrom "CUSTOMER" "MNEMONIC" false
+    }
+
+    field "WORK BALANCE" {
+        label {
+            en = "Working Balance"
+        }
+
+        format: Currency "AC.CCY" negative-pattern -#
+        length: 19
+        alignment: Right
+        comma-separator: false
+        position {
+            column: 47
+        }
+
+        processing-mode: Single
+        operation: application-field-name "WORKING.BALANCE"
+    }
+
+    field "AC.CCY" {
+        break-condition {
+            break: Once
+        }
+
+        length: 3
+        alignment: Left
+        comma-separator: false
+        processing-mode: Single
+        operation: application-field-name "CURRENCY"
+    }
+}
