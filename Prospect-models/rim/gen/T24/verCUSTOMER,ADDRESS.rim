@@ -1,0 +1,616 @@
+domain T24 {
+	use common.CoreCommands.*
+	use common.HTTPEvents.*
+	use common.ODataCommands.*
+	use common.T24Commands.*
+	use common.T24Events.*
+	use common.NextState.*
+	use common.Errors.*
+	use T24.ContextEnquiry.*
+	rim verCustomer_Address {
+		command T24FieldMetadata
+		command NoopGET
+		command GETEntities
+		command GetLiveEntity
+		command GetIauthEntity
+		command GetHauthEntity
+		command GetIauthEntities
+		command CreateEntity
+		command InputEntity
+		command HoldEntity
+		command AuthoriseEntity
+		command GetChangedValues
+		command ReviewEntity
+		command ReverseEntity
+		command ValidateEntity
+		command RestoreEntity
+		command DeleteEntity
+		command CopyEntity
+		command PasteEntity
+		command CreateDEPreview
+		command GetDealSlipEntities
+		command T24Enrichment
+		command CheckAutoIdSupport
+		command GetHauthEntities
+		command T24NextState
+		basepath: "/{companyid}"
+	
+		resource verCustomer_Address_errorHandler {
+			type: item
+			entity: verCustomer_Address
+			commands [ GET : NoopGET ]
+			relations [ "http://temenostech.temenos.com/rels/error" ]
+			path: "/verCustomer_Addresss('{id}')/error"
+			GET +-> ProcessErrors {
+				title: "errors"
+			}
+			POST +-> verCustomer_Address_metadata {
+				title: "metadata"
+			}
+		}
+	
+		resource verCustomer_Addresss {
+			type: collection
+			entity: verCustomer_Address
+			commands [ GET : GETEntities {
+				properties [ filter = "{filter}" ]
+				} ]
+			path: "/verCustomer_Addresss()"
+			GET *-> verCustomer_Address {
+				parameters [ id = "{CustomerCode}" ]
+			}
+			GET *-> verCustomer_Address_see {
+				parameters [ id = "{CustomerCode}" ]
+				title: "see record"
+			}
+			POST -> verCustomer_Address_new {
+				title: "create new deal"
+				condition: OK(verCustomer_Address_autoId)
+			}
+			POST -> verCustomer_Address_populate {
+				title: "populate existing deal"
+			}
+			PUT *-> verCustomer_Address_input {
+				parameters [ id = "{CustomerCode}" ]
+				title: "input deal"
+			}
+			POST *-> verCustomer_Address_audit {
+				parameters [ id = "{CustomerCode}" ]
+				title: "audit deal"
+			}
+			POST *-> verCustomer_Address_reverse {
+				parameters [ id = "{CustomerCode}" ]
+				title: "reverse deal"
+			}
+		}
+	
+		resource verCustomer_Address {
+			type: item
+			entity: verCustomer_Address
+			commands [ GET : GetLiveEntity ]
+			path: "/verCustomer_Addresss('{id}')"
+			POST +-> verCustomer_Address_metadata {
+				title: "metadata"
+			}
+			GET --> verCustomer_Address_IAuth {
+				parameters [ id = "{CustomerCode}" ]
+				condition: OK(verCustomer_Address_IAuth)
+			}
+			POST -> verCustomer_Address_validate {
+				parameters [ id = "{CustomerCode}" ]
+				title: "validate deal"
+			}
+			PUT -> verCustomer_Address_input {
+				parameters [ id = "{CustomerCode}" ]
+				title: "input deal"
+			}
+			POST -> verCustomer_Address_audit {
+				parameters [ id = "{CustomerCode}" ]
+				title: "audit deal"
+			}
+			POST -> verCustomer_Address_reverse {
+				parameters [ id = "{CustomerCode}" ]
+				title: "reverse deal"
+			}
+			GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+				parameters [ entity = "verCustomer_Address" ]
+				title: "Context Enquiries"
+			}
+		}
+	
+		resource verCustomer_Address_see {
+			type: item
+			entity: verCustomer_Address
+			commands [ GET : GetLiveEntity ]
+			relations [ "http://schemas.microsoft.com/ado/2007/08/dataservices/related/verCustomer_Address","http://temenostech.temenos.com/rels/see" ]
+			path: "/verCustomer_Addresss('{id}')/see"
+			POST +-> verCustomer_Address_metadata {
+				title: "metadata"
+			}
+		}
+	
+		resource verCustomer_Address_IAuth_see {
+			type: item
+			entity: verCustomer_Address
+			commands [ GET : GetIauthEntity ]
+			relations [ "http://schemas.microsoft.com/ado/2007/08/dataservices/related/verCustomer_Address_IAuth","http://temenostech.temenos.com/rels/see" ]
+			path: "/verCustomer_Addresss_IAuth('{id}')/see"
+		}
+	
+		resource verCustomer_Address_HAuth_see {
+			type: item
+			entity: verCustomer_Address
+			commands [ GET : GetHauthEntity ]
+			relations [ "http://schemas.microsoft.com/ado/2007/08/dataservices/related/verCustomer_Address_HAuth","http://temenostech.temenos.com/rels/see" ]
+			path: "/verCustomer_Addresss_HAuth('{id}')/see"
+		}
+	
+		resource verCustomer_Address_ContextEnquiries {
+			type: item
+			entity: verCustomer_Address
+			commands [ GET : NoopGET ]
+			path: "/verCustomer_Address/ContextEnquiries"
+			GET -> "T24.enqlistCustomer.enqlistCustomers" {
+				parameters [ param = "list" ]
+				title: "List live deals"
+			}
+			GET -> "T24.enqlistCustomer.enqlistCustomersUnauth" {
+				parameters [ param = "list" ]
+				title: "List unauthorised deals"
+			}
+			GET -> "T24.enqlistCustomer.enqlistCustomersHist" {
+				parameters [ param = "list" ]
+				title: "List history deals"
+			}
+			GET -> "T24.enqlistCustomer.enqlistCustomers" {
+				title: "Search live deals"
+			}
+			GET -> "T24.enqlistCustomer.enqlistCustomersUnauth" {
+				title: "Search unauthorised deals"
+			}
+			GET -> "T24.enqlistCustomer.enqlistCustomersHist" {
+				title: "Search history deals"
+			}
+			GET +-> "ContextEnquiryList" {
+				parameters [ entity = "verCustomer_Address" ]
+				title: "Other context Enquiries"
+			}
+		}
+	
+		resource verCustomer_Address_metadata {
+			type: collection
+			entity: T24FieldMetadata
+			commands [ POST : T24FieldMetadata ]
+			relations [ "http://temenostech.temenos.com/rels/metadata" ]
+			path: "/verCustomer_Addresss()/metadata"
+		}
+	
+		resource verCustomer_Addresss_IAuth {
+			type: collection
+			entity: verCustomer_Address
+			commands [ GET : GetIauthEntities {
+				properties [ filter = "{filter}" ]
+				} ]
+			path: "/verCustomer_Addresss_IAuth()"
+			GET *-> verCustomer_Address_IAuth {
+				parameters [ id = "{CustomerCode}" ]
+			}
+			POST -> verCustomer_Address_new {
+				title: "create new deal"
+				condition: OK(verCustomer_Address_autoId)
+			}
+			POST -> verCustomer_Address_populate {
+				title: "populate existing deal"
+			}
+			PUT *-> verCustomer_Address_input {
+				parameters [ id = "{CustomerCode}" ]
+				title: "input deal"
+			}
+			DELETE *-> verCustomer_Address_delete {
+				parameters [ id = "{CustomerCode}" ]
+				title: "delete"
+			}
+			PUT *-> verCustomer_Address_authorise {
+				parameters [ id = "{CustomerCode}" ]
+				title: "authorise deal"
+			}
+		}
+	
+		resource verCustomer_Address_new {
+			type: item
+			entity: verCustomer_Address
+			commands [ POST : CreateEntity ]
+			relations [ "http://schemas.microsoft.com/ado/2007/08/dataservices/related/verCustomer_Address","http://temenostech.temenos.com/rels/new" ]
+			path: "/verCustomer_Addresss()/new"
+			POST +-> verCustomer_Address_metadata {
+				title: "metadata"
+			}
+			POST -> verCustomer_Address_validate {
+				parameters [ id = "{CustomerCode}" ]
+				title: "validate deal"
+			}
+			PUT -> verCustomer_Address_input {
+				parameters [ id = "{CustomerCode}" ]
+				title: "input deal"
+			}
+			POST -> verCustomer_Address_hold {
+				parameters [ id = "{CustomerCode}" ]
+				title: "hold deal"
+			}
+			GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+				parameters [ entity = "verCustomer_Address" ]
+				title: "Context Enquiries"
+			}
+		}
+	
+		resource verCustomer_Address_input {
+			type: item
+			entity: verCustomer_Address
+			commands [ PUT : InputEntity, POST : InputEntity ]
+			relations [ "http://temenostech.temenos.com/rels/input" ]
+			path: "/verCustomer_Addresss('{id}')"
+			GET --> nextState {
+				condition: OK(nextState)
+			}
+			GET --> verCustomer_Address_IAuth {
+				parameters [ id = "{CustomerCode}" ]
+				condition: OK(verCustomer_Address_IAuth)
+			}
+			GET --> verCustomer_Address {
+				parameters [ id = "{CustomerCode}" ]
+				condition: OK(verCustomer_Address)
+			}
+			GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+				parameters [ entity = "verCustomer_Address" ]
+				title: "Context Enquiries"
+			}
+			onerror --> T24.verCustomer_Address.verCustomer_Address_errorHandler
+		}
+	
+		resource verCustomer_Address_hold {
+			type: item
+			entity: verCustomer_Address
+			commands [ POST : HoldEntity ]
+			relations [ "http://temenostech.temenos.com/rels/hold" ]
+			path: "/verCustomer_Addresss('{id}')/hold"
+			PUT -> verCustomer_Address_input {
+				parameters [ id = "{CustomerCode}" ]
+				title: "input deal"
+			}
+			DELETE -> verCustomer_Address_delete {
+				parameters [ id = "{CustomerCode}" ]
+				title: "delete"
+			}
+			onerror --> common.Errors.Errors
+		}
+	
+		resource verCustomer_Address_authorise {
+			type: item
+			entity: verCustomer_Address
+			commands [ PUT : AuthoriseEntity ]
+			relations [ "http://temenostech.temenos.com/rels/authorise" ]
+			path: "/verCustomer_Addresss('{id}')/authorise"
+			GET --> verCustomer_Address_IAuth {
+				parameters [ id = "{CustomerCode}" ]
+				condition: OK(verCustomer_Address_IAuth)
+			}
+			GET --> verCustomer_Address {
+				parameters [ id = "{CustomerCode}" ]
+				condition: OK(verCustomer_Address)
+			}
+			GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+				parameters [ entity = "verCustomer_Address" ]
+				title: "Context Enquiries"
+			}
+			onerror --> T24.verCustomer_Address.verCustomer_Address_errorHandler
+		}
+	
+		resource verCustomer_Address_changedValues {
+			type: item
+			entity: verCustomer_Address
+			commands [ GET : GetChangedValues ]
+			relations [ "http://temenostech.temenos.com/rels/changedValues" ]
+			path: "/verCustomer_Addresss('{id}')/changedValues"
+		}
+	
+		resource verCustomer_Address_audit {
+			type: item
+			entity: verCustomer_Address
+			commands [ POST : ReviewEntity ]
+			relations [ "http://temenostech.temenos.com/rels/review" ]
+			path: "/verCustomer_Addresss('{id}')/review"
+			GET -> verCustomer_Address {
+				parameters [ id = "{CustomerCode}" ]
+			}
+			onerror --> common.Errors.Errors
+		}
+	
+		resource verCustomer_Address_reverse {
+			type: item
+			entity: verCustomer_Address
+			commands [ PUT : ReverseEntity ]
+			relations [ "http://temenostech.temenos.com/rels/reverse" ]
+			path: "/verCustomer_Addresss('{id}')/reverse"
+			GET --> verCustomer_Address_IAuth {
+				parameters [ id = "{CustomerCode}" ]
+				condition: OK(verCustomer_Address_IAuth)
+			}
+			GET --> verCustomer_Address_HAuth {
+				parameters [ id = "{CustomerCode}" ]
+				condition: OK(verCustomer_Address_HAuth)
+			}
+			onerror --> T24.verCustomer_Address.verCustomer_Address_errorHandler
+		}
+	
+		resource verCustomer_Address_validate {
+			type: item
+			entity: verCustomer_Address
+			commands [ POST : ValidateEntity ]
+			relations [ "http://temenostech.temenos.com/rels/validate" ]
+			path: "/verCustomer_Addresss('{id}')/validate"
+			GET +-> ProcessErrors {
+				title: "errors"
+				condition: OK(CheckIfError)
+			}
+			POST +-> verCustomer_Address_metadata {
+				title: "metadata"
+			}
+			PUT -> verCustomer_Address_input {
+				parameters [ id = "{CustomerCode}" ]
+				title: "input deal"
+			}
+			POST -> verCustomer_Address_hold {
+				parameters [ id = "{CustomerCode}" ]
+				title: "hold deal"
+			}
+		}
+	
+		resource verCustomer_Address_IAuth {
+			type: item
+			entity: verCustomer_Address
+			commands [ GET : GetIauthEntity ]
+			path: "/verCustomer_Addresss_IAuth('{id}')"
+			POST +-> verCustomer_Address_metadata {
+				title: "metadata"
+			}
+			GET +-> verCustomer_Address_changedValues {
+				parameters [ id = "{CustomerCode}" ]
+				title: "changed values"
+			}
+			POST -> verCustomer_Address_validate {
+				parameters [ id = "{CustomerCode}" ]
+				title: "validate deal"
+			}
+			PUT -> verCustomer_Address_input {
+				parameters [ id = "{CustomerCode}" ]
+				title: "input deal"
+			}
+			POST -> verCustomer_Address_hold {
+				parameters [ id = "{CustomerCode}" ]
+				title: "hold deal"
+			}
+			POST -> verCustomer_Address_authorise {
+				parameters [ id = "{CustomerCode}" ]
+				title: "authorise deal"
+			}
+			DELETE -> verCustomer_Address_delete {
+				parameters [ id = "{CustomerCode}" ]
+				title: "delete"
+			}
+			GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+				parameters [ entity = "verCustomer_Address" ]
+				title: "Context Enquiries"
+			}
+		}
+	
+		resource verCustomer_Address_delete {
+			type: item
+			entity: verCustomer_Address
+			commands [ DELETE : DeleteEntity ]
+			relations [ "http://temenostech.temenos.com/rels/delete" ]
+			path: "/verCustomer_Addresss('{id}')/delete"
+		}
+	
+		resource verCustomer_AddressEntry {
+			type: item
+			entity: verCustomer_Address
+			commands [ GET : NoopGET ]
+			relations [ "http://schemas.microsoft.com/ado/2007/08/dataservices/related/verCustomer_Address","http://temenostech.temenos.com/rels/contract" ]
+			path: "/verCustomer_AddressEntry"
+			POST -> verCustomer_Address_new {
+				title: "create new deal"
+				condition: OK(verCustomer_Address_autoId)
+			}
+			POST -> verCustomer_Address_populate {
+				title: "populate existing deal"
+			}
+			GET -> "verCustomer_Address_see" {
+				parameters [ id = "@" ]
+				title: "See transaction"
+			}
+			GET -> "verCustomer_Address_IAuth_see" {
+				parameters [ id = "@" ]
+				title: "GetIauthEntity"
+			}
+			GET -> "verCustomer_Address_HAuth_see" {
+				parameters [ id = "@" ]
+				title: "GetHauthEntity"
+			}
+			GET -> "verCustomer_Address_IAuth" {
+				parameters [ id = "@" ]
+				title: "GetIauthEntity"
+			}
+			GET -> "verCustomer_Address_HAuth" {
+				parameters [ id = "@" ]
+				title: "GetHauthEntity"
+			}
+			GET +-> "verCustomer_Address_ContextEnquiries" {
+				title: "All context Enquiries"
+			}
+			POST -> verCustomer_Address_copy {
+				title: "Copy deal"
+			}
+			POST -> verCustomer_Address_paste {
+				title: "Paste deal"
+			}
+		}
+	
+		resource verCustomer_Address_populate {
+			type: item
+			entity: verCustomer_Address
+			commands [ POST : CreateEntity ]
+			relations [ "http://schemas.microsoft.com/ado/2007/08/dataservices/related/verCustomer_Address","http://temenostech.temenos.com/rels/populate" ]
+			path: "/verCustomer_Addresss()/populate"
+			POST -> verCustomer_Address_validate {
+				parameters [ id = "{CustomerCode}" ]
+				title: "validate deal"
+			}
+			POST -> verCustomer_Address_input {
+				parameters [ id = "{CustomerCode}" ]
+				title: "input deal"
+			}
+			DELETE -> verCustomer_Address_delete {
+				parameters [ id = "{CustomerCode}" ]
+				title: "delete"
+				condition: OK(verCustomer_Address_IAuth)
+			}
+			POST -> verCustomer_Address_metadata {
+				title: "metadata"
+			}
+			GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+				parameters [ entity = "verCustomer_Address" ]
+				title: "Context Enquiries"
+			}
+		}
+	
+		resource verCustomer_Address_copy {
+			type: item
+			entity: verCustomer_Address
+			commands [ POST : CopyEntity ]
+			relations [ "http://temenostech.temenos.com/rels/copy" ]
+			path: "/verCustomer_Addresss()/copy"
+		}
+	
+		resource verCustomer_Address_paste {
+			type: item
+			entity: verCustomer_Address
+			commands [ POST : PasteEntity ]
+			relations [ "http://temenostech.temenos.com/rels/paste" ]
+			path: "/verCustomer_Addresss()/paste"
+			POST +-> verCustomer_Address_metadata {
+				title: "metadata"
+			}
+			POST -> verCustomer_Address_validate {
+				parameters [ id = "{CustomerCode}" ]
+				title: "validate deal"
+			}
+			PUT -> verCustomer_Address_input {
+				parameters [ id = "{CustomerCode}" ]
+				title: "input deal"
+			}
+			POST -> verCustomer_Address_hold {
+				parameters [ id = "{CustomerCode}" ]
+				title: "hold deal"
+			}
+		}
+	
+		resource verCustomer_Addresss_enrichment {
+			type: item
+			entity: Enrichment
+			commands [ GET : T24Enrichment {
+				properties [ entity = "verCustomer_Address" ]
+				} ]
+			relations [ "http://temenostech.temenos.com/rels/enrichment" ]
+			path: "/verCustomer_Addresss()/enrichment"
+		}
+	
+		resource verCustomer_Address_autoId {
+			type: item
+			entity: verCustomer_Address
+			commands [ GET : CheckAutoIdSupport ]
+		}
+	
+		resource verCustomer_Address_restore {
+			type: item
+			entity: verCustomer_Address
+			commands [ POST : RestoreEntity ]
+			relations [ "http://temenostech.temenos.com/rels/restore" ]
+			path: "/verCustomer_Addresss('{id}')/restore"
+			GET --> verCustomer_Address_IAuth {
+				parameters [ id = "{CustomerCode}" ]
+				condition: OK(verCustomer_Address_IAuth)
+			}
+			GET --> verCustomer_Address {
+				parameters [ id = "{CustomerCode}" ]
+				condition: OK(verCustomer_Address)
+			}
+			POST -> verCustomer_Address_metadata {
+				title: "metadata"
+			}
+			GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+				parameters [ entity = "verCustomer_Address" ]
+				title: "Context Enquiries"
+			}
+			onerror --> common.Errors.Errors
+		}
+	
+		resource verCustomer_Addresss_HAuth {
+			type: collection
+			entity: verCustomer_Address
+			commands [ GET : GetHauthEntities {
+				properties [ filter = "{filter}" ]
+				} ]
+			path: "/verCustomer_Addresss_HAuth()"
+			GET *-> verCustomer_Address_HAuth {
+				parameters [ id = "{CustomerCode}" ]
+			}
+			POST -> verCustomer_Address_new {
+				title: "create new deal"
+				condition: OK(verCustomer_Address_autoId)
+			}
+			POST -> verCustomer_Address_populate {
+				title: "populate existing deal"
+			}
+			POST *-> verCustomer_Address_restore {
+				parameters [ id = "{CustomerCode}" ]
+				title: "restore deal"
+			}
+		}
+	
+		resource verCustomer_Address_HAuth {
+			type: item
+			entity: verCustomer_Address
+			commands [ GET : GetHauthEntity ]
+			path: "/verCustomer_Addresss_HAuth('{id}')"
+			POST +-> verCustomer_Address_metadata {
+				title: "metadata"
+			}
+			POST -> verCustomer_Address_validate {
+				parameters [ id = "{CustomerCode}" ]
+				title: "validate deal"
+			}
+			PUT -> verCustomer_Address_input {
+				parameters [ id = "{CustomerCode}" ]
+				title: "input deal"
+			}
+			POST -> verCustomer_Address_hold {
+				parameters [ id = "{CustomerCode}" ]
+				title: "hold deal"
+			}
+			POST -> verCustomer_Address_authorise {
+				parameters [ id = "{CustomerCode}" ]
+				title: "authorise deal"
+			}
+			DELETE -> verCustomer_Address_delete {
+				parameters [ id = "{CustomerCode}" ]
+				title: "delete"
+			}
+			GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+				parameters [ entity = "verCustomer_Address" ]
+				title: "Context Enquiries"
+			}
+		}
+	
+	}
+	
+}

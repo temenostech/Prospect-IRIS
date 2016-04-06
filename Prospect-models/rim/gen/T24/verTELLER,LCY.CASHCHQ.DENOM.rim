@@ -1,0 +1,627 @@
+domain T24 {
+	use common.CoreCommands.*
+	use common.HTTPEvents.*
+	use common.ODataCommands.*
+	use common.T24Commands.*
+	use common.T24Events.*
+	use common.NextState.*
+	use common.Errors.*
+	use T24.ContextEnquiry.*
+	rim verTeller_LcyCashchqDenom {
+		command T24FieldMetadata
+		command NoopGET
+		command GETEntities
+		command GetLiveEntity
+		command GetIauthEntity
+		command GetHauthEntity
+		command GetIauthEntities
+		command CreateEntity
+		command InputEntity
+		command HoldEntity
+		command AuthoriseEntity
+		command GetChangedValues
+		command ReviewEntity
+		command ReverseEntity
+		command ValidateEntity
+		command RestoreEntity
+		command DeleteEntity
+		command CopyEntity
+		command PasteEntity
+		command CreateDEPreview
+		command GetDealSlipEntities
+		command T24Enrichment
+		command CheckAutoIdSupport
+		command GetHauthEntities
+		command T24NextState
+		basepath: "/{companyid}"
+	
+		resource verTeller_LcyCashchqDenom_errorHandler {
+			type: item
+			entity: verTeller_LcyCashchqDenom
+			commands [ GET : NoopGET ]
+			relations [ "http://temenostech.temenos.com/rels/error" ]
+			path: "/verTeller_LcyCashchqDenoms('{id}')/error"
+			GET +-> ProcessErrors {
+				title: "errors"
+			}
+			POST +-> verTeller_LcyCashchqDenom_metadata {
+				title: "metadata"
+			}
+		}
+	
+		resource verTeller_LcyCashchqDenoms {
+			type: collection
+			entity: verTeller_LcyCashchqDenom
+			commands [ GET : GETEntities {
+				properties [ filter = "{filter}" ]
+				} ]
+			path: "/verTeller_LcyCashchqDenoms()"
+			GET *-> verTeller_LcyCashchqDenom {
+				parameters [ id = "{TransactionNumber}" ]
+			}
+			GET *-> verTeller_LcyCashchqDenom_see {
+				parameters [ id = "{TransactionNumber}" ]
+				title: "see record"
+			}
+			POST -> verTeller_LcyCashchqDenom_new {
+				title: "create new deal"
+				condition: OK(verTeller_LcyCashchqDenom_autoId)
+			}
+			POST -> verTeller_LcyCashchqDenom_populate {
+				title: "populate existing deal"
+			}
+			PUT *-> verTeller_LcyCashchqDenom_input {
+				parameters [ id = "{TransactionNumber}" ]
+				title: "input deal"
+			}
+			POST *-> verTeller_LcyCashchqDenom_audit {
+				parameters [ id = "{TransactionNumber}" ]
+				title: "audit deal"
+			}
+			POST *-> verTeller_LcyCashchqDenom_reverse {
+				parameters [ id = "{TransactionNumber}" ]
+				title: "reverse deal"
+			}
+		}
+	
+		resource verTeller_LcyCashchqDenom {
+			type: item
+			entity: verTeller_LcyCashchqDenom
+			commands [ GET : GetLiveEntity ]
+			path: "/verTeller_LcyCashchqDenoms('{id}')"
+			POST +-> verTeller_LcyCashchqDenom_metadata {
+				title: "metadata"
+			}
+			GET --> verTeller_LcyCashchqDenom_IAuth {
+				parameters [ id = "{TransactionNumber}" ]
+				condition: OK(verTeller_LcyCashchqDenom_IAuth)
+			}
+			POST -> verTeller_LcyCashchqDenom_validate {
+				parameters [ id = "{TransactionNumber}" ]
+				title: "validate deal"
+			}
+			PUT -> verTeller_LcyCashchqDenom_input {
+				parameters [ id = "{TransactionNumber}" ]
+				title: "input deal"
+			}
+			POST -> verTeller_LcyCashchqDenom_audit {
+				parameters [ id = "{TransactionNumber}" ]
+				title: "audit deal"
+			}
+			POST -> verTeller_LcyCashchqDenom_reverse {
+				parameters [ id = "{TransactionNumber}" ]
+				title: "reverse deal"
+			}
+			GET +-> verTeller_LcyCashchqDenom_dealSlips {
+				parameters [ id = "{TransactionNumber}" ]
+				title: "deal slips"
+			}
+			GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+				parameters [ entity = "verTeller_LcyCashchqDenom" ]
+				title: "Context Enquiries"
+			}
+		}
+	
+		resource verTeller_LcyCashchqDenom_see {
+			type: item
+			entity: verTeller_LcyCashchqDenom
+			commands [ GET : GetLiveEntity ]
+			relations [ "http://schemas.microsoft.com/ado/2007/08/dataservices/related/verTeller_LcyCashchqDenom","http://temenostech.temenos.com/rels/see" ]
+			path: "/verTeller_LcyCashchqDenoms('{id}')/see"
+			POST +-> verTeller_LcyCashchqDenom_metadata {
+				title: "metadata"
+			}
+		}
+	
+		resource verTeller_LcyCashchqDenom_IAuth_see {
+			type: item
+			entity: verTeller_LcyCashchqDenom
+			commands [ GET : GetIauthEntity ]
+			relations [ "http://schemas.microsoft.com/ado/2007/08/dataservices/related/verTeller_LcyCashchqDenom_IAuth","http://temenostech.temenos.com/rels/see" ]
+			path: "/verTeller_LcyCashchqDenoms_IAuth('{id}')/see"
+		}
+	
+		resource verTeller_LcyCashchqDenom_HAuth_see {
+			type: item
+			entity: verTeller_LcyCashchqDenom
+			commands [ GET : GetHauthEntity ]
+			relations [ "http://schemas.microsoft.com/ado/2007/08/dataservices/related/verTeller_LcyCashchqDenom_HAuth","http://temenostech.temenos.com/rels/see" ]
+			path: "/verTeller_LcyCashchqDenoms_HAuth('{id}')/see"
+		}
+	
+		resource verTeller_LcyCashchqDenom_ContextEnquiries {
+			type: item
+			entity: verTeller_LcyCashchqDenom
+			commands [ GET : NoopGET ]
+			path: "/verTeller_LcyCashchqDenom/ContextEnquiries"
+			GET -> "T24.enqlistTeller.enqlistTellers" {
+				parameters [ param = "list" ]
+				title: "List live deals"
+			}
+			GET -> "T24.enqlistTeller.enqlistTellersUnauth" {
+				parameters [ param = "list" ]
+				title: "List unauthorised deals"
+			}
+			GET -> "T24.enqlistTeller.enqlistTellersHist" {
+				parameters [ param = "list" ]
+				title: "List history deals"
+			}
+			GET -> "T24.enqlistTeller.enqlistTellers" {
+				title: "Search live deals"
+			}
+			GET -> "T24.enqlistTeller.enqlistTellersUnauth" {
+				title: "Search unauthorised deals"
+			}
+			GET -> "T24.enqlistTeller.enqlistTellersHist" {
+				title: "Search history deals"
+			}
+			GET +-> "ContextEnquiryList" {
+				parameters [ entity = "verTeller_LcyCashchqDenom" ]
+				title: "Other context Enquiries"
+			}
+		}
+	
+		resource verTeller_LcyCashchqDenom_metadata {
+			type: collection
+			entity: T24FieldMetadata
+			commands [ POST : T24FieldMetadata ]
+			relations [ "http://temenostech.temenos.com/rels/metadata" ]
+			path: "/verTeller_LcyCashchqDenoms()/metadata"
+		}
+	
+		resource verTeller_LcyCashchqDenoms_IAuth {
+			type: collection
+			entity: verTeller_LcyCashchqDenom
+			commands [ GET : GetIauthEntities {
+				properties [ filter = "{filter}" ]
+				} ]
+			path: "/verTeller_LcyCashchqDenoms_IAuth()"
+			GET *-> verTeller_LcyCashchqDenom_IAuth {
+				parameters [ id = "{TransactionNumber}" ]
+			}
+			POST -> verTeller_LcyCashchqDenom_new {
+				title: "create new deal"
+				condition: OK(verTeller_LcyCashchqDenom_autoId)
+			}
+			POST -> verTeller_LcyCashchqDenom_populate {
+				title: "populate existing deal"
+			}
+			PUT *-> verTeller_LcyCashchqDenom_input {
+				parameters [ id = "{TransactionNumber}" ]
+				title: "input deal"
+			}
+			DELETE *-> verTeller_LcyCashchqDenom_delete {
+				parameters [ id = "{TransactionNumber}" ]
+				title: "delete"
+			}
+			PUT *-> verTeller_LcyCashchqDenom_authorise {
+				parameters [ id = "{TransactionNumber}" ]
+				title: "authorise deal"
+			}
+		}
+	
+		resource verTeller_LcyCashchqDenom_new {
+			type: item
+			entity: verTeller_LcyCashchqDenom
+			commands [ POST : CreateEntity ]
+			relations [ "http://schemas.microsoft.com/ado/2007/08/dataservices/related/verTeller_LcyCashchqDenom","http://temenostech.temenos.com/rels/new" ]
+			path: "/verTeller_LcyCashchqDenoms()/new"
+			POST +-> verTeller_LcyCashchqDenom_metadata {
+				title: "metadata"
+			}
+			POST -> verTeller_LcyCashchqDenom_validate {
+				parameters [ id = "{TransactionNumber}" ]
+				title: "validate deal"
+			}
+			PUT -> verTeller_LcyCashchqDenom_input {
+				parameters [ id = "{TransactionNumber}" ]
+				title: "input deal"
+			}
+			POST -> verTeller_LcyCashchqDenom_hold {
+				parameters [ id = "{TransactionNumber}" ]
+				title: "hold deal"
+			}
+			GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+				parameters [ entity = "verTeller_LcyCashchqDenom" ]
+				title: "Context Enquiries"
+			}
+		}
+	
+		resource verTeller_LcyCashchqDenom_input {
+			type: item
+			entity: verTeller_LcyCashchqDenom
+			commands [ PUT : InputEntity, POST : InputEntity ]
+			relations [ "http://temenostech.temenos.com/rels/input" ]
+			path: "/verTeller_LcyCashchqDenoms('{id}')"
+			GET --> nextState {
+				condition: OK(nextState)
+			}
+			GET --> verTeller_LcyCashchqDenom_IAuth {
+				parameters [ id = "{TransactionNumber}" ]
+				condition: OK(verTeller_LcyCashchqDenom_IAuth)
+			}
+			GET --> verTeller_LcyCashchqDenom {
+				parameters [ id = "{TransactionNumber}" ]
+				condition: OK(verTeller_LcyCashchqDenom)
+			}
+			GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+				parameters [ entity = "verTeller_LcyCashchqDenom" ]
+				title: "Context Enquiries"
+			}
+			onerror --> T24.verTeller_LcyCashchqDenom.verTeller_LcyCashchqDenom_errorHandler
+		}
+	
+		resource verTeller_LcyCashchqDenom_hold {
+			type: item
+			entity: verTeller_LcyCashchqDenom
+			commands [ POST : HoldEntity ]
+			relations [ "http://temenostech.temenos.com/rels/hold" ]
+			path: "/verTeller_LcyCashchqDenoms('{id}')/hold"
+			PUT -> verTeller_LcyCashchqDenom_input {
+				parameters [ id = "{TransactionNumber}" ]
+				title: "input deal"
+			}
+			DELETE -> verTeller_LcyCashchqDenom_delete {
+				parameters [ id = "{TransactionNumber}" ]
+				title: "delete"
+			}
+			onerror --> common.Errors.Errors
+		}
+	
+		resource verTeller_LcyCashchqDenom_authorise {
+			type: item
+			entity: verTeller_LcyCashchqDenom
+			commands [ PUT : AuthoriseEntity ]
+			relations [ "http://temenostech.temenos.com/rels/authorise" ]
+			path: "/verTeller_LcyCashchqDenoms('{id}')/authorise"
+			GET --> verTeller_LcyCashchqDenom_IAuth {
+				parameters [ id = "{TransactionNumber}" ]
+				condition: OK(verTeller_LcyCashchqDenom_IAuth)
+			}
+			GET --> verTeller_LcyCashchqDenom {
+				parameters [ id = "{TransactionNumber}" ]
+				condition: OK(verTeller_LcyCashchqDenom)
+			}
+			GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+				parameters [ entity = "verTeller_LcyCashchqDenom" ]
+				title: "Context Enquiries"
+			}
+			onerror --> T24.verTeller_LcyCashchqDenom.verTeller_LcyCashchqDenom_errorHandler
+		}
+	
+		resource verTeller_LcyCashchqDenom_changedValues {
+			type: item
+			entity: verTeller_LcyCashchqDenom
+			commands [ GET : GetChangedValues ]
+			relations [ "http://temenostech.temenos.com/rels/changedValues" ]
+			path: "/verTeller_LcyCashchqDenoms('{id}')/changedValues"
+		}
+	
+		resource verTeller_LcyCashchqDenom_audit {
+			type: item
+			entity: verTeller_LcyCashchqDenom
+			commands [ POST : ReviewEntity ]
+			relations [ "http://temenostech.temenos.com/rels/review" ]
+			path: "/verTeller_LcyCashchqDenoms('{id}')/review"
+			GET -> verTeller_LcyCashchqDenom {
+				parameters [ id = "{TransactionNumber}" ]
+			}
+			onerror --> common.Errors.Errors
+		}
+	
+		resource verTeller_LcyCashchqDenom_reverse {
+			type: item
+			entity: verTeller_LcyCashchqDenom
+			commands [ PUT : ReverseEntity ]
+			relations [ "http://temenostech.temenos.com/rels/reverse" ]
+			path: "/verTeller_LcyCashchqDenoms('{id}')/reverse"
+			GET --> verTeller_LcyCashchqDenom_IAuth {
+				parameters [ id = "{TransactionNumber}" ]
+				condition: OK(verTeller_LcyCashchqDenom_IAuth)
+			}
+			GET --> verTeller_LcyCashchqDenom_HAuth {
+				parameters [ id = "{TransactionNumber}" ]
+				condition: OK(verTeller_LcyCashchqDenom_HAuth)
+			}
+			onerror --> T24.verTeller_LcyCashchqDenom.verTeller_LcyCashchqDenom_errorHandler
+		}
+	
+		resource verTeller_LcyCashchqDenom_validate {
+			type: item
+			entity: verTeller_LcyCashchqDenom
+			commands [ POST : ValidateEntity ]
+			relations [ "http://temenostech.temenos.com/rels/validate" ]
+			path: "/verTeller_LcyCashchqDenoms('{id}')/validate"
+			GET +-> ProcessErrors {
+				title: "errors"
+				condition: OK(CheckIfError)
+			}
+			POST +-> verTeller_LcyCashchqDenom_metadata {
+				title: "metadata"
+			}
+			PUT -> verTeller_LcyCashchqDenom_input {
+				parameters [ id = "{TransactionNumber}" ]
+				title: "input deal"
+			}
+			POST -> verTeller_LcyCashchqDenom_hold {
+				parameters [ id = "{TransactionNumber}" ]
+				title: "hold deal"
+			}
+		}
+	
+		resource verTeller_LcyCashchqDenom_IAuth {
+			type: item
+			entity: verTeller_LcyCashchqDenom
+			commands [ GET : GetIauthEntity ]
+			path: "/verTeller_LcyCashchqDenoms_IAuth('{id}')"
+			POST +-> verTeller_LcyCashchqDenom_metadata {
+				title: "metadata"
+			}
+			GET +-> verTeller_LcyCashchqDenom_changedValues {
+				parameters [ id = "{TransactionNumber}" ]
+				title: "changed values"
+			}
+			POST -> verTeller_LcyCashchqDenom_validate {
+				parameters [ id = "{TransactionNumber}" ]
+				title: "validate deal"
+			}
+			PUT -> verTeller_LcyCashchqDenom_input {
+				parameters [ id = "{TransactionNumber}" ]
+				title: "input deal"
+			}
+			POST -> verTeller_LcyCashchqDenom_hold {
+				parameters [ id = "{TransactionNumber}" ]
+				title: "hold deal"
+			}
+			POST -> verTeller_LcyCashchqDenom_authorise {
+				parameters [ id = "{TransactionNumber}" ]
+				title: "authorise deal"
+			}
+			DELETE -> verTeller_LcyCashchqDenom_delete {
+				parameters [ id = "{TransactionNumber}" ]
+				title: "delete"
+			}
+			GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+				parameters [ entity = "verTeller_LcyCashchqDenom" ]
+				title: "Context Enquiries"
+			}
+		}
+	
+		resource verTeller_LcyCashchqDenom_delete {
+			type: item
+			entity: verTeller_LcyCashchqDenom
+			commands [ DELETE : DeleteEntity ]
+			relations [ "http://temenostech.temenos.com/rels/delete" ]
+			path: "/verTeller_LcyCashchqDenoms('{id}')/delete"
+		}
+	
+		resource verTeller_LcyCashchqDenomEntry {
+			type: item
+			entity: verTeller_LcyCashchqDenom
+			commands [ GET : NoopGET ]
+			relations [ "http://schemas.microsoft.com/ado/2007/08/dataservices/related/verTeller_LcyCashchqDenom","http://temenostech.temenos.com/rels/contract" ]
+			path: "/verTeller_LcyCashchqDenomEntry"
+			POST -> verTeller_LcyCashchqDenom_new {
+				title: "create new deal"
+				condition: OK(verTeller_LcyCashchqDenom_autoId)
+			}
+			POST -> verTeller_LcyCashchqDenom_populate {
+				title: "populate existing deal"
+			}
+			GET -> "verTeller_LcyCashchqDenom_see" {
+				parameters [ id = "@" ]
+				title: "See transaction"
+			}
+			GET -> "verTeller_LcyCashchqDenom_IAuth_see" {
+				parameters [ id = "@" ]
+				title: "GetIauthEntity"
+			}
+			GET -> "verTeller_LcyCashchqDenom_HAuth_see" {
+				parameters [ id = "@" ]
+				title: "GetHauthEntity"
+			}
+			GET -> "verTeller_LcyCashchqDenom_IAuth" {
+				parameters [ id = "@" ]
+				title: "GetIauthEntity"
+			}
+			GET -> "verTeller_LcyCashchqDenom_HAuth" {
+				parameters [ id = "@" ]
+				title: "GetHauthEntity"
+			}
+			GET +-> "verTeller_LcyCashchqDenom_ContextEnquiries" {
+				title: "All context Enquiries"
+			}
+			POST -> verTeller_LcyCashchqDenom_copy {
+				title: "Copy deal"
+			}
+			POST -> verTeller_LcyCashchqDenom_paste {
+				title: "Paste deal"
+			}
+		}
+	
+		resource verTeller_LcyCashchqDenom_populate {
+			type: item
+			entity: verTeller_LcyCashchqDenom
+			commands [ POST : CreateEntity ]
+			relations [ "http://schemas.microsoft.com/ado/2007/08/dataservices/related/verTeller_LcyCashchqDenom","http://temenostech.temenos.com/rels/populate" ]
+			path: "/verTeller_LcyCashchqDenoms()/populate"
+			POST -> verTeller_LcyCashchqDenom_validate {
+				parameters [ id = "{TransactionNumber}" ]
+				title: "validate deal"
+			}
+			POST -> verTeller_LcyCashchqDenom_input {
+				parameters [ id = "{TransactionNumber}" ]
+				title: "input deal"
+			}
+			DELETE -> verTeller_LcyCashchqDenom_delete {
+				parameters [ id = "{TransactionNumber}" ]
+				title: "delete"
+				condition: OK(verTeller_LcyCashchqDenom_IAuth)
+			}
+			POST -> verTeller_LcyCashchqDenom_metadata {
+				title: "metadata"
+			}
+			GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+				parameters [ entity = "verTeller_LcyCashchqDenom" ]
+				title: "Context Enquiries"
+			}
+		}
+	
+		resource verTeller_LcyCashchqDenom_copy {
+			type: item
+			entity: verTeller_LcyCashchqDenom
+			commands [ POST : CopyEntity ]
+			relations [ "http://temenostech.temenos.com/rels/copy" ]
+			path: "/verTeller_LcyCashchqDenoms()/copy"
+		}
+	
+		resource verTeller_LcyCashchqDenom_paste {
+			type: item
+			entity: verTeller_LcyCashchqDenom
+			commands [ POST : PasteEntity ]
+			relations [ "http://temenostech.temenos.com/rels/paste" ]
+			path: "/verTeller_LcyCashchqDenoms()/paste"
+			POST +-> verTeller_LcyCashchqDenom_metadata {
+				title: "metadata"
+			}
+			POST -> verTeller_LcyCashchqDenom_validate {
+				parameters [ id = "{TransactionNumber}" ]
+				title: "validate deal"
+			}
+			PUT -> verTeller_LcyCashchqDenom_input {
+				parameters [ id = "{TransactionNumber}" ]
+				title: "input deal"
+			}
+			POST -> verTeller_LcyCashchqDenom_hold {
+				parameters [ id = "{TransactionNumber}" ]
+				title: "hold deal"
+			}
+		}
+	
+		resource verTeller_LcyCashchqDenom_dealSlips {
+			type: collection
+			entity: DealSlip
+			commands [ GET : GetDealSlipEntities ]
+			relations [ "http://temenostech.temenos.com/rels/dealSlip" ]
+		}
+	
+		resource verTeller_LcyCashchqDenoms_enrichment {
+			type: item
+			entity: Enrichment
+			commands [ GET : T24Enrichment {
+				properties [ entity = "verTeller_LcyCashchqDenom" ]
+				} ]
+			relations [ "http://temenostech.temenos.com/rels/enrichment" ]
+			path: "/verTeller_LcyCashchqDenoms()/enrichment"
+		}
+	
+		resource verTeller_LcyCashchqDenom_autoId {
+			type: item
+			entity: verTeller_LcyCashchqDenom
+			commands [ GET : CheckAutoIdSupport ]
+		}
+	
+		resource verTeller_LcyCashchqDenom_restore {
+			type: item
+			entity: verTeller_LcyCashchqDenom
+			commands [ POST : RestoreEntity ]
+			relations [ "http://temenostech.temenos.com/rels/restore" ]
+			path: "/verTeller_LcyCashchqDenoms('{id}')/restore"
+			GET --> verTeller_LcyCashchqDenom_IAuth {
+				parameters [ id = "{TransactionNumber}" ]
+				condition: OK(verTeller_LcyCashchqDenom_IAuth)
+			}
+			GET --> verTeller_LcyCashchqDenom {
+				parameters [ id = "{TransactionNumber}" ]
+				condition: OK(verTeller_LcyCashchqDenom)
+			}
+			POST -> verTeller_LcyCashchqDenom_metadata {
+				title: "metadata"
+			}
+			GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+				parameters [ entity = "verTeller_LcyCashchqDenom" ]
+				title: "Context Enquiries"
+			}
+			onerror --> common.Errors.Errors
+		}
+	
+		resource verTeller_LcyCashchqDenoms_HAuth {
+			type: collection
+			entity: verTeller_LcyCashchqDenom
+			commands [ GET : GetHauthEntities {
+				properties [ filter = "{filter}" ]
+				} ]
+			path: "/verTeller_LcyCashchqDenoms_HAuth()"
+			GET *-> verTeller_LcyCashchqDenom_HAuth {
+				parameters [ id = "{TransactionNumber}" ]
+			}
+			POST -> verTeller_LcyCashchqDenom_new {
+				title: "create new deal"
+				condition: OK(verTeller_LcyCashchqDenom_autoId)
+			}
+			POST -> verTeller_LcyCashchqDenom_populate {
+				title: "populate existing deal"
+			}
+			POST *-> verTeller_LcyCashchqDenom_restore {
+				parameters [ id = "{TransactionNumber}" ]
+				title: "restore deal"
+			}
+		}
+	
+		resource verTeller_LcyCashchqDenom_HAuth {
+			type: item
+			entity: verTeller_LcyCashchqDenom
+			commands [ GET : GetHauthEntity ]
+			path: "/verTeller_LcyCashchqDenoms_HAuth('{id}')"
+			POST +-> verTeller_LcyCashchqDenom_metadata {
+				title: "metadata"
+			}
+			POST -> verTeller_LcyCashchqDenom_validate {
+				parameters [ id = "{TransactionNumber}" ]
+				title: "validate deal"
+			}
+			PUT -> verTeller_LcyCashchqDenom_input {
+				parameters [ id = "{TransactionNumber}" ]
+				title: "input deal"
+			}
+			POST -> verTeller_LcyCashchqDenom_hold {
+				parameters [ id = "{TransactionNumber}" ]
+				title: "hold deal"
+			}
+			POST -> verTeller_LcyCashchqDenom_authorise {
+				parameters [ id = "{TransactionNumber}" ]
+				title: "authorise deal"
+			}
+			DELETE -> verTeller_LcyCashchqDenom_delete {
+				parameters [ id = "{TransactionNumber}" ]
+				title: "delete"
+			}
+			GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+				parameters [ entity = "verTeller_LcyCashchqDenom" ]
+				title: "Context Enquiries"
+			}
+		}
+	
+	}
+	
+}

@@ -1,0 +1,636 @@
+domain T24 {
+	use common.CoreCommands.*
+	use common.HTTPEvents.*
+	use common.ODataCommands.*
+	use common.T24Commands.*
+	use common.T24Events.*
+	use common.NextState.*
+	use common.Errors.*
+	use T24.ContextEnquiry.*
+	rim verFundsTransfer_Audit {
+		command T24FieldMetadata
+		command NoopGET
+		command GETEntities
+		command GetLiveEntity
+		command GetIauthEntity
+		command GetHauthEntity
+		command GetIauthEntities
+		command CreateEntity
+		command InputEntity
+		command HoldEntity
+		command AuthoriseEntity
+		command GetChangedValues
+		command ReviewEntity
+		command ReverseEntity
+		command ValidateEntity
+		command RestoreEntity
+		command DeleteEntity
+		command CopyEntity
+		command PasteEntity
+		command CreateDEPreview
+		command GetDealSlipEntities
+		command T24Enrichment
+		command CheckAutoIdSupport
+		command GetHauthEntities
+		command T24NextState
+		basepath: "/{companyid}"
+	
+		resource verFundsTransfer_Audit_errorHandler {
+			type: item
+			entity: verFundsTransfer_Audit
+			commands [ GET : NoopGET ]
+			relations [ "http://temenostech.temenos.com/rels/error" ]
+			path: "/verFundsTransfer_Audits('{id}')/error"
+			GET +-> ProcessErrors {
+				title: "errors"
+			}
+			POST +-> verFundsTransfer_Audit_metadata {
+				title: "metadata"
+			}
+		}
+	
+		resource verFundsTransfer_Audits {
+			type: collection
+			entity: verFundsTransfer_Audit
+			commands [ GET : GETEntities {
+				properties [ filter = "{filter}" ]
+				} ]
+			path: "/verFundsTransfer_Audits()"
+			GET *-> verFundsTransfer_Audit {
+				parameters [ id = "{RefNo}" ]
+			}
+			GET *-> verFundsTransfer_Audit_see {
+				parameters [ id = "{RefNo}" ]
+				title: "see record"
+			}
+			POST -> verFundsTransfer_Audit_new {
+				title: "create new deal"
+				condition: OK(verFundsTransfer_Audit_autoId)
+			}
+			POST -> verFundsTransfer_Audit_populate {
+				title: "populate existing deal"
+			}
+			PUT *-> verFundsTransfer_Audit_input {
+				parameters [ id = "{RefNo}" ]
+				title: "input deal"
+			}
+			POST *-> verFundsTransfer_Audit_audit {
+				parameters [ id = "{RefNo}" ]
+				title: "audit deal"
+			}
+			POST *-> verFundsTransfer_Audit_reverse {
+				parameters [ id = "{RefNo}" ]
+				title: "reverse deal"
+			}
+		}
+	
+		resource verFundsTransfer_Audit {
+			type: item
+			entity: verFundsTransfer_Audit
+			commands [ GET : GetLiveEntity ]
+			path: "/verFundsTransfer_Audits('{id}')"
+			POST +-> verFundsTransfer_Audit_metadata {
+				title: "metadata"
+			}
+			GET --> verFundsTransfer_Audit_IAuth {
+				parameters [ id = "{RefNo}" ]
+				condition: OK(verFundsTransfer_Audit_IAuth)
+			}
+			POST -> verFundsTransfer_Audit_validate {
+				parameters [ id = "{RefNo}" ]
+				title: "validate deal"
+			}
+			PUT -> verFundsTransfer_Audit_input {
+				parameters [ id = "{RefNo}" ]
+				title: "input deal"
+			}
+			POST -> verFundsTransfer_Audit_audit {
+				parameters [ id = "{RefNo}" ]
+				title: "audit deal"
+			}
+			POST -> verFundsTransfer_Audit_reverse {
+				parameters [ id = "{RefNo}" ]
+				title: "reverse deal"
+			}
+			POST -> verFundsTransfer_Audit_deliveryPreview {
+				parameters [ id = "{RefNo}" ]
+				title: "delivery preview"
+			}
+			GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+				parameters [ entity = "verFundsTransfer_Audit" ]
+				title: "Context Enquiries"
+			}
+		}
+	
+		resource verFundsTransfer_Audit_see {
+			type: item
+			entity: verFundsTransfer_Audit
+			commands [ GET : GetLiveEntity ]
+			relations [ "http://schemas.microsoft.com/ado/2007/08/dataservices/related/verFundsTransfer_Audit","http://temenostech.temenos.com/rels/see" ]
+			path: "/verFundsTransfer_Audits('{id}')/see"
+			POST +-> verFundsTransfer_Audit_metadata {
+				title: "metadata"
+			}
+		}
+	
+		resource verFundsTransfer_Audit_IAuth_see {
+			type: item
+			entity: verFundsTransfer_Audit
+			commands [ GET : GetIauthEntity ]
+			relations [ "http://schemas.microsoft.com/ado/2007/08/dataservices/related/verFundsTransfer_Audit_IAuth","http://temenostech.temenos.com/rels/see" ]
+			path: "/verFundsTransfer_Audits_IAuth('{id}')/see"
+		}
+	
+		resource verFundsTransfer_Audit_HAuth_see {
+			type: item
+			entity: verFundsTransfer_Audit
+			commands [ GET : GetHauthEntity ]
+			relations [ "http://schemas.microsoft.com/ado/2007/08/dataservices/related/verFundsTransfer_Audit_HAuth","http://temenostech.temenos.com/rels/see" ]
+			path: "/verFundsTransfer_Audits_HAuth('{id}')/see"
+		}
+	
+		resource verFundsTransfer_Audit_ContextEnquiries {
+			type: item
+			entity: verFundsTransfer_Audit
+			commands [ GET : NoopGET ]
+			path: "/verFundsTransfer_Audit/ContextEnquiries"
+			GET -> "T24.enqlistFundsTransfer.enqlistFundsTransfers" {
+				parameters [ param = "list" ]
+				title: "List live deals"
+			}
+			GET -> "T24.enqlistFundsTransfer.enqlistFundsTransfersUnauth" {
+				parameters [ param = "list" ]
+				title: "List unauthorised deals"
+			}
+			GET -> "T24.enqlistFundsTransfer.enqlistFundsTransfersHist" {
+				parameters [ param = "list" ]
+				title: "List history deals"
+			}
+			GET -> "T24.enqlistFundsTransfer.enqlistFundsTransfers" {
+				title: "Search live deals"
+			}
+			GET -> "T24.enqlistFundsTransfer.enqlistFundsTransfersUnauth" {
+				title: "Search unauthorised deals"
+			}
+			GET -> "T24.enqlistFundsTransfer.enqlistFundsTransfersHist" {
+				title: "Search history deals"
+			}
+			GET +-> "ContextEnquiryList" {
+				parameters [ entity = "verFundsTransfer_Audit" ]
+				title: "Other context Enquiries"
+			}
+		}
+	
+		resource verFundsTransfer_Audit_metadata {
+			type: collection
+			entity: T24FieldMetadata
+			commands [ POST : T24FieldMetadata ]
+			relations [ "http://temenostech.temenos.com/rels/metadata" ]
+			path: "/verFundsTransfer_Audits()/metadata"
+		}
+	
+		resource verFundsTransfer_Audits_IAuth {
+			type: collection
+			entity: verFundsTransfer_Audit
+			commands [ GET : GetIauthEntities {
+				properties [ filter = "{filter}" ]
+				} ]
+			path: "/verFundsTransfer_Audits_IAuth()"
+			GET *-> verFundsTransfer_Audit_IAuth {
+				parameters [ id = "{RefNo}" ]
+			}
+			POST -> verFundsTransfer_Audit_new {
+				title: "create new deal"
+				condition: OK(verFundsTransfer_Audit_autoId)
+			}
+			POST -> verFundsTransfer_Audit_populate {
+				title: "populate existing deal"
+			}
+			PUT *-> verFundsTransfer_Audit_input {
+				parameters [ id = "{RefNo}" ]
+				title: "input deal"
+			}
+			DELETE *-> verFundsTransfer_Audit_delete {
+				parameters [ id = "{RefNo}" ]
+				title: "delete"
+			}
+			PUT *-> verFundsTransfer_Audit_authorise {
+				parameters [ id = "{RefNo}" ]
+				title: "authorise deal"
+			}
+		}
+	
+		resource verFundsTransfer_Audit_new {
+			type: item
+			entity: verFundsTransfer_Audit
+			commands [ POST : CreateEntity ]
+			relations [ "http://schemas.microsoft.com/ado/2007/08/dataservices/related/verFundsTransfer_Audit","http://temenostech.temenos.com/rels/new" ]
+			path: "/verFundsTransfer_Audits()/new"
+			POST +-> verFundsTransfer_Audit_metadata {
+				title: "metadata"
+			}
+			POST -> verFundsTransfer_Audit_validate {
+				parameters [ id = "{RefNo}" ]
+				title: "validate deal"
+			}
+			PUT -> verFundsTransfer_Audit_input {
+				parameters [ id = "{RefNo}" ]
+				title: "input deal"
+			}
+			POST -> verFundsTransfer_Audit_hold {
+				parameters [ id = "{RefNo}" ]
+				title: "hold deal"
+			}
+			POST -> verFundsTransfer_Audit_deliveryPreview {
+				parameters [ id = "{RefNo}" ]
+				title: "delivery preview"
+			}
+			GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+				parameters [ entity = "verFundsTransfer_Audit" ]
+				title: "Context Enquiries"
+			}
+		}
+	
+		resource verFundsTransfer_Audit_input {
+			type: item
+			entity: verFundsTransfer_Audit
+			commands [ PUT : InputEntity, POST : InputEntity ]
+			relations [ "http://temenostech.temenos.com/rels/input" ]
+			path: "/verFundsTransfer_Audits('{id}')"
+			GET --> nextState {
+				condition: OK(nextState)
+			}
+			GET --> verFundsTransfer_Audit_IAuth {
+				parameters [ id = "{RefNo}" ]
+				condition: OK(verFundsTransfer_Audit_IAuth)
+			}
+			GET --> verFundsTransfer_Audit {
+				parameters [ id = "{RefNo}" ]
+				condition: OK(verFundsTransfer_Audit)
+			}
+			GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+				parameters [ entity = "verFundsTransfer_Audit" ]
+				title: "Context Enquiries"
+			}
+			onerror --> T24.verFundsTransfer_Audit.verFundsTransfer_Audit_errorHandler
+		}
+	
+		resource verFundsTransfer_Audit_hold {
+			type: item
+			entity: verFundsTransfer_Audit
+			commands [ POST : HoldEntity ]
+			relations [ "http://temenostech.temenos.com/rels/hold" ]
+			path: "/verFundsTransfer_Audits('{id}')/hold"
+			PUT -> verFundsTransfer_Audit_input {
+				parameters [ id = "{RefNo}" ]
+				title: "input deal"
+			}
+			DELETE -> verFundsTransfer_Audit_delete {
+				parameters [ id = "{RefNo}" ]
+				title: "delete"
+			}
+			onerror --> common.Errors.Errors
+		}
+	
+		resource verFundsTransfer_Audit_authorise {
+			type: item
+			entity: verFundsTransfer_Audit
+			commands [ PUT : AuthoriseEntity ]
+			relations [ "http://temenostech.temenos.com/rels/authorise" ]
+			path: "/verFundsTransfer_Audits('{id}')/authorise"
+			GET --> verFundsTransfer_Audit_IAuth {
+				parameters [ id = "{RefNo}" ]
+				condition: OK(verFundsTransfer_Audit_IAuth)
+			}
+			GET --> verFundsTransfer_Audit {
+				parameters [ id = "{RefNo}" ]
+				condition: OK(verFundsTransfer_Audit)
+			}
+			GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+				parameters [ entity = "verFundsTransfer_Audit" ]
+				title: "Context Enquiries"
+			}
+			onerror --> T24.verFundsTransfer_Audit.verFundsTransfer_Audit_errorHandler
+		}
+	
+		resource verFundsTransfer_Audit_changedValues {
+			type: item
+			entity: verFundsTransfer_Audit
+			commands [ GET : GetChangedValues ]
+			relations [ "http://temenostech.temenos.com/rels/changedValues" ]
+			path: "/verFundsTransfer_Audits('{id}')/changedValues"
+		}
+	
+		resource verFundsTransfer_Audit_audit {
+			type: item
+			entity: verFundsTransfer_Audit
+			commands [ POST : ReviewEntity ]
+			relations [ "http://temenostech.temenos.com/rels/review" ]
+			path: "/verFundsTransfer_Audits('{id}')/review"
+			GET -> verFundsTransfer_Audit {
+				parameters [ id = "{RefNo}" ]
+			}
+			onerror --> common.Errors.Errors
+		}
+	
+		resource verFundsTransfer_Audit_reverse {
+			type: item
+			entity: verFundsTransfer_Audit
+			commands [ PUT : ReverseEntity ]
+			relations [ "http://temenostech.temenos.com/rels/reverse" ]
+			path: "/verFundsTransfer_Audits('{id}')/reverse"
+			GET --> verFundsTransfer_Audit_IAuth {
+				parameters [ id = "{RefNo}" ]
+				condition: OK(verFundsTransfer_Audit_IAuth)
+			}
+			GET --> verFundsTransfer_Audit_HAuth {
+				parameters [ id = "{RefNo}" ]
+				condition: OK(verFundsTransfer_Audit_HAuth)
+			}
+			onerror --> T24.verFundsTransfer_Audit.verFundsTransfer_Audit_errorHandler
+		}
+	
+		resource verFundsTransfer_Audit_validate {
+			type: item
+			entity: verFundsTransfer_Audit
+			commands [ POST : ValidateEntity ]
+			relations [ "http://temenostech.temenos.com/rels/validate" ]
+			path: "/verFundsTransfer_Audits('{id}')/validate"
+			GET +-> ProcessErrors {
+				title: "errors"
+				condition: OK(CheckIfError)
+			}
+			POST +-> verFundsTransfer_Audit_metadata {
+				title: "metadata"
+			}
+			PUT -> verFundsTransfer_Audit_input {
+				parameters [ id = "{RefNo}" ]
+				title: "input deal"
+			}
+			POST -> verFundsTransfer_Audit_hold {
+				parameters [ id = "{RefNo}" ]
+				title: "hold deal"
+			}
+		}
+	
+		resource verFundsTransfer_Audit_IAuth {
+			type: item
+			entity: verFundsTransfer_Audit
+			commands [ GET : GetIauthEntity ]
+			path: "/verFundsTransfer_Audits_IAuth('{id}')"
+			POST +-> verFundsTransfer_Audit_metadata {
+				title: "metadata"
+			}
+			GET +-> verFundsTransfer_Audit_changedValues {
+				parameters [ id = "{RefNo}" ]
+				title: "changed values"
+			}
+			POST -> verFundsTransfer_Audit_validate {
+				parameters [ id = "{RefNo}" ]
+				title: "validate deal"
+			}
+			PUT -> verFundsTransfer_Audit_input {
+				parameters [ id = "{RefNo}" ]
+				title: "input deal"
+			}
+			POST -> verFundsTransfer_Audit_hold {
+				parameters [ id = "{RefNo}" ]
+				title: "hold deal"
+			}
+			POST -> verFundsTransfer_Audit_authorise {
+				parameters [ id = "{RefNo}" ]
+				title: "authorise deal"
+			}
+			DELETE -> verFundsTransfer_Audit_delete {
+				parameters [ id = "{RefNo}" ]
+				title: "delete"
+			}
+			GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+				parameters [ entity = "verFundsTransfer_Audit" ]
+				title: "Context Enquiries"
+			}
+		}
+	
+		resource verFundsTransfer_Audit_delete {
+			type: item
+			entity: verFundsTransfer_Audit
+			commands [ DELETE : DeleteEntity ]
+			relations [ "http://temenostech.temenos.com/rels/delete" ]
+			path: "/verFundsTransfer_Audits('{id}')/delete"
+		}
+	
+		resource verFundsTransfer_AuditEntry {
+			type: item
+			entity: verFundsTransfer_Audit
+			commands [ GET : NoopGET ]
+			relations [ "http://schemas.microsoft.com/ado/2007/08/dataservices/related/verFundsTransfer_Audit","http://temenostech.temenos.com/rels/contract" ]
+			path: "/verFundsTransfer_AuditEntry"
+			POST -> verFundsTransfer_Audit_new {
+				title: "create new deal"
+				condition: OK(verFundsTransfer_Audit_autoId)
+			}
+			POST -> verFundsTransfer_Audit_populate {
+				title: "populate existing deal"
+			}
+			GET -> "verFundsTransfer_Audit_see" {
+				parameters [ id = "@" ]
+				title: "See transaction"
+			}
+			GET -> "verFundsTransfer_Audit_IAuth_see" {
+				parameters [ id = "@" ]
+				title: "GetIauthEntity"
+			}
+			GET -> "verFundsTransfer_Audit_HAuth_see" {
+				parameters [ id = "@" ]
+				title: "GetHauthEntity"
+			}
+			GET -> "verFundsTransfer_Audit_IAuth" {
+				parameters [ id = "@" ]
+				title: "GetIauthEntity"
+			}
+			GET -> "verFundsTransfer_Audit_HAuth" {
+				parameters [ id = "@" ]
+				title: "GetHauthEntity"
+			}
+			GET +-> "verFundsTransfer_Audit_ContextEnquiries" {
+				title: "All context Enquiries"
+			}
+			POST -> verFundsTransfer_Audit_copy {
+				title: "Copy deal"
+			}
+			POST -> verFundsTransfer_Audit_paste {
+				title: "Paste deal"
+			}
+		}
+	
+		resource verFundsTransfer_Audit_populate {
+			type: item
+			entity: verFundsTransfer_Audit
+			commands [ POST : CreateEntity ]
+			relations [ "http://schemas.microsoft.com/ado/2007/08/dataservices/related/verFundsTransfer_Audit","http://temenostech.temenos.com/rels/populate" ]
+			path: "/verFundsTransfer_Audits()/populate"
+			POST -> verFundsTransfer_Audit_validate {
+				parameters [ id = "{RefNo}" ]
+				title: "validate deal"
+			}
+			POST -> verFundsTransfer_Audit_input {
+				parameters [ id = "{RefNo}" ]
+				title: "input deal"
+			}
+			DELETE -> verFundsTransfer_Audit_delete {
+				parameters [ id = "{RefNo}" ]
+				title: "delete"
+				condition: OK(verFundsTransfer_Audit_IAuth)
+			}
+			POST -> verFundsTransfer_Audit_metadata {
+				title: "metadata"
+			}
+			GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+				parameters [ entity = "verFundsTransfer_Audit" ]
+				title: "Context Enquiries"
+			}
+		}
+	
+		resource verFundsTransfer_Audit_copy {
+			type: item
+			entity: verFundsTransfer_Audit
+			commands [ POST : CopyEntity ]
+			relations [ "http://temenostech.temenos.com/rels/copy" ]
+			path: "/verFundsTransfer_Audits()/copy"
+		}
+	
+		resource verFundsTransfer_Audit_paste {
+			type: item
+			entity: verFundsTransfer_Audit
+			commands [ POST : PasteEntity ]
+			relations [ "http://temenostech.temenos.com/rels/paste" ]
+			path: "/verFundsTransfer_Audits()/paste"
+			POST +-> verFundsTransfer_Audit_metadata {
+				title: "metadata"
+			}
+			POST -> verFundsTransfer_Audit_validate {
+				parameters [ id = "{RefNo}" ]
+				title: "validate deal"
+			}
+			PUT -> verFundsTransfer_Audit_input {
+				parameters [ id = "{RefNo}" ]
+				title: "input deal"
+			}
+			POST -> verFundsTransfer_Audit_hold {
+				parameters [ id = "{RefNo}" ]
+				title: "hold deal"
+			}
+		}
+	
+		resource verFundsTransfer_Audit_deliveryPreview {
+			type: item
+			entity: verFundsTransfer_Audit
+			commands [ POST : CreateDEPreview ]
+			relations [ "http://temenostech.temenos.com/rels/deliveryPreview" ]
+			path: "/verFundsTransfer_Audits('{id}')/deliveryPreview"
+			GET +-> "T24.enqDePreview.enqDePreviews" {
+				parameters [ filter = "ContractId eq '{id}'" ]
+				title: "delivery preview enquiry"
+			}
+		}
+	
+		resource verFundsTransfer_Audits_enrichment {
+			type: item
+			entity: Enrichment
+			commands [ GET : T24Enrichment {
+				properties [ entity = "verFundsTransfer_Audit" ]
+				} ]
+			relations [ "http://temenostech.temenos.com/rels/enrichment" ]
+			path: "/verFundsTransfer_Audits()/enrichment"
+		}
+	
+		resource verFundsTransfer_Audit_autoId {
+			type: item
+			entity: verFundsTransfer_Audit
+			commands [ GET : CheckAutoIdSupport ]
+		}
+	
+		resource verFundsTransfer_Audit_restore {
+			type: item
+			entity: verFundsTransfer_Audit
+			commands [ POST : RestoreEntity ]
+			relations [ "http://temenostech.temenos.com/rels/restore" ]
+			path: "/verFundsTransfer_Audits('{id}')/restore"
+			GET --> verFundsTransfer_Audit_IAuth {
+				parameters [ id = "{RefNo}" ]
+				condition: OK(verFundsTransfer_Audit_IAuth)
+			}
+			GET --> verFundsTransfer_Audit {
+				parameters [ id = "{RefNo}" ]
+				condition: OK(verFundsTransfer_Audit)
+			}
+			POST -> verFundsTransfer_Audit_metadata {
+				title: "metadata"
+			}
+			GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+				parameters [ entity = "verFundsTransfer_Audit" ]
+				title: "Context Enquiries"
+			}
+			onerror --> common.Errors.Errors
+		}
+	
+		resource verFundsTransfer_Audits_HAuth {
+			type: collection
+			entity: verFundsTransfer_Audit
+			commands [ GET : GetHauthEntities {
+				properties [ filter = "{filter}" ]
+				} ]
+			path: "/verFundsTransfer_Audits_HAuth()"
+			GET *-> verFundsTransfer_Audit_HAuth {
+				parameters [ id = "{RefNo}" ]
+			}
+			POST -> verFundsTransfer_Audit_new {
+				title: "create new deal"
+				condition: OK(verFundsTransfer_Audit_autoId)
+			}
+			POST -> verFundsTransfer_Audit_populate {
+				title: "populate existing deal"
+			}
+			POST *-> verFundsTransfer_Audit_restore {
+				parameters [ id = "{RefNo}" ]
+				title: "restore deal"
+			}
+		}
+	
+		resource verFundsTransfer_Audit_HAuth {
+			type: item
+			entity: verFundsTransfer_Audit
+			commands [ GET : GetHauthEntity ]
+			path: "/verFundsTransfer_Audits_HAuth('{id}')"
+			POST +-> verFundsTransfer_Audit_metadata {
+				title: "metadata"
+			}
+			POST -> verFundsTransfer_Audit_validate {
+				parameters [ id = "{RefNo}" ]
+				title: "validate deal"
+			}
+			PUT -> verFundsTransfer_Audit_input {
+				parameters [ id = "{RefNo}" ]
+				title: "input deal"
+			}
+			POST -> verFundsTransfer_Audit_hold {
+				parameters [ id = "{RefNo}" ]
+				title: "hold deal"
+			}
+			POST -> verFundsTransfer_Audit_authorise {
+				parameters [ id = "{RefNo}" ]
+				title: "authorise deal"
+			}
+			DELETE -> verFundsTransfer_Audit_delete {
+				parameters [ id = "{RefNo}" ]
+				title: "delete"
+			}
+			GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+				parameters [ entity = "verFundsTransfer_Audit" ]
+				title: "Context Enquiries"
+			}
+		}
+	
+	}
+	
+}

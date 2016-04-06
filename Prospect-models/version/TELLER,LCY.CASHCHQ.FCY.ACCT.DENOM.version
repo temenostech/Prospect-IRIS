@@ -1,0 +1,99 @@
+Screen TT_Contract:TELLER, LCY_CASHCHQ_FCY_ACCT_DENOM
+    t24Name: "TELLER,LCY.CASHCHQ.FCY.ACCT.DENOM"
+    metamodelVersion: "1.30.6"
+    numberOfAuthorisers: 1
+    description: en = "Cash Denom"
+reportLocks: Yes
+refNoInFirstLine: Yes
+
+TransactionFlow {
+    otherCompanyAccess: Yes
+    dealSlips:
+    format: "TT.WITHDRAWLC" dealSlipFunction:  I
+    dealSlipsTrigger: RQ
+    dealSlipStyleSheet: "/transforms/custom/clientEnquiry.xsl"
+}
+
+Presentation {
+    recordsPerPage: "1"
+    fieldsPerLine: "MULTI"
+    language: en
+    header2: en = "Cash Denom"
+}
+
+API {
+    includeVersionControl: No
+}
+
+Fields {
+    "*" {
+
+        Presentation {
+            maxLength: 35
+            column: 0
+            row: 0
+        }
+
+        Translations:
+            label: en = "            Denomination Details"
+    }
+
+    "DENOMINATION" {
+
+        Presentation {
+            column: 1
+            row: 1
+        }
+
+        Translations:
+            toolTip: en = "Denomination Value"
+        MV: 1
+    }
+
+    "UNIT" {
+
+        Presentation {
+            maxLength: 25
+            enrichmentLength: 25
+            column: 25
+            row: 1
+        }
+
+        Translations:
+            label: en = "Units"
+            toolTip: en = "Units paid on the above denomination"
+        MV: 1
+    }
+
+    "DR_CR_MARKER" {
+
+        Presentation {
+            displayType: NoDisplay
+            maxLength: 25
+            enrichmentLength: 25
+            column: 1
+            row: 2
+        }
+
+        Translations:
+            label: en = "Dr / Cr Marker"
+            toolTip: en = "Debit Credit Marker"
+    }
+
+    "CURRENCY_1" {
+
+        Presentation {
+            inputBehaviour: NoInput
+        }
+
+    }
+
+    "WAIVE_CHARGES" {
+        default: IF ( ) "NULL" THEN "YES"
+    }
+
+    "TRANSACTION_CODE" {
+        default: IF ( ) "NULL" THEN "5"
+    }
+
+}

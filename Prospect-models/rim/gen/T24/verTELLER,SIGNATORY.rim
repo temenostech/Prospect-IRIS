@@ -1,0 +1,616 @@
+domain T24 {
+	use common.CoreCommands.*
+	use common.HTTPEvents.*
+	use common.ODataCommands.*
+	use common.T24Commands.*
+	use common.T24Events.*
+	use common.NextState.*
+	use common.Errors.*
+	use T24.ContextEnquiry.*
+	rim verTeller_Signatory {
+		command T24FieldMetadata
+		command NoopGET
+		command GETEntities
+		command GetLiveEntity
+		command GetIauthEntity
+		command GetHauthEntity
+		command GetIauthEntities
+		command CreateEntity
+		command InputEntity
+		command HoldEntity
+		command AuthoriseEntity
+		command GetChangedValues
+		command ReviewEntity
+		command ReverseEntity
+		command ValidateEntity
+		command RestoreEntity
+		command DeleteEntity
+		command CopyEntity
+		command PasteEntity
+		command CreateDEPreview
+		command GetDealSlipEntities
+		command T24Enrichment
+		command CheckAutoIdSupport
+		command GetHauthEntities
+		command T24NextState
+		basepath: "/{companyid}"
+	
+		resource verTeller_Signatory_errorHandler {
+			type: item
+			entity: verTeller_Signatory
+			commands [ GET : NoopGET ]
+			relations [ "http://temenostech.temenos.com/rels/error" ]
+			path: "/verTeller_Signatorys('{id}')/error"
+			GET +-> ProcessErrors {
+				title: "errors"
+			}
+			POST +-> verTeller_Signatory_metadata {
+				title: "metadata"
+			}
+		}
+	
+		resource verTeller_Signatorys {
+			type: collection
+			entity: verTeller_Signatory
+			commands [ GET : GETEntities {
+				properties [ filter = "{filter}" ]
+				} ]
+			path: "/verTeller_Signatorys()"
+			GET *-> verTeller_Signatory {
+				parameters [ id = "{TransactionNumber}" ]
+			}
+			GET *-> verTeller_Signatory_see {
+				parameters [ id = "{TransactionNumber}" ]
+				title: "see record"
+			}
+			POST -> verTeller_Signatory_new {
+				title: "create new deal"
+				condition: OK(verTeller_Signatory_autoId)
+			}
+			POST -> verTeller_Signatory_populate {
+				title: "populate existing deal"
+			}
+			PUT *-> verTeller_Signatory_input {
+				parameters [ id = "{TransactionNumber}" ]
+				title: "input deal"
+			}
+			POST *-> verTeller_Signatory_audit {
+				parameters [ id = "{TransactionNumber}" ]
+				title: "audit deal"
+			}
+			POST *-> verTeller_Signatory_reverse {
+				parameters [ id = "{TransactionNumber}" ]
+				title: "reverse deal"
+			}
+		}
+	
+		resource verTeller_Signatory {
+			type: item
+			entity: verTeller_Signatory
+			commands [ GET : GetLiveEntity ]
+			path: "/verTeller_Signatorys('{id}')"
+			POST +-> verTeller_Signatory_metadata {
+				title: "metadata"
+			}
+			GET --> verTeller_Signatory_IAuth {
+				parameters [ id = "{TransactionNumber}" ]
+				condition: OK(verTeller_Signatory_IAuth)
+			}
+			POST -> verTeller_Signatory_validate {
+				parameters [ id = "{TransactionNumber}" ]
+				title: "validate deal"
+			}
+			PUT -> verTeller_Signatory_input {
+				parameters [ id = "{TransactionNumber}" ]
+				title: "input deal"
+			}
+			POST -> verTeller_Signatory_audit {
+				parameters [ id = "{TransactionNumber}" ]
+				title: "audit deal"
+			}
+			POST -> verTeller_Signatory_reverse {
+				parameters [ id = "{TransactionNumber}" ]
+				title: "reverse deal"
+			}
+			GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+				parameters [ entity = "verTeller_Signatory" ]
+				title: "Context Enquiries"
+			}
+		}
+	
+		resource verTeller_Signatory_see {
+			type: item
+			entity: verTeller_Signatory
+			commands [ GET : GetLiveEntity ]
+			relations [ "http://schemas.microsoft.com/ado/2007/08/dataservices/related/verTeller_Signatory","http://temenostech.temenos.com/rels/see" ]
+			path: "/verTeller_Signatorys('{id}')/see"
+			POST +-> verTeller_Signatory_metadata {
+				title: "metadata"
+			}
+		}
+	
+		resource verTeller_Signatory_IAuth_see {
+			type: item
+			entity: verTeller_Signatory
+			commands [ GET : GetIauthEntity ]
+			relations [ "http://schemas.microsoft.com/ado/2007/08/dataservices/related/verTeller_Signatory_IAuth","http://temenostech.temenos.com/rels/see" ]
+			path: "/verTeller_Signatorys_IAuth('{id}')/see"
+		}
+	
+		resource verTeller_Signatory_HAuth_see {
+			type: item
+			entity: verTeller_Signatory
+			commands [ GET : GetHauthEntity ]
+			relations [ "http://schemas.microsoft.com/ado/2007/08/dataservices/related/verTeller_Signatory_HAuth","http://temenostech.temenos.com/rels/see" ]
+			path: "/verTeller_Signatorys_HAuth('{id}')/see"
+		}
+	
+		resource verTeller_Signatory_ContextEnquiries {
+			type: item
+			entity: verTeller_Signatory
+			commands [ GET : NoopGET ]
+			path: "/verTeller_Signatory/ContextEnquiries"
+			GET -> "T24.enqlistTeller.enqlistTellers" {
+				parameters [ param = "list" ]
+				title: "List live deals"
+			}
+			GET -> "T24.enqlistTeller.enqlistTellersUnauth" {
+				parameters [ param = "list" ]
+				title: "List unauthorised deals"
+			}
+			GET -> "T24.enqlistTeller.enqlistTellersHist" {
+				parameters [ param = "list" ]
+				title: "List history deals"
+			}
+			GET -> "T24.enqlistTeller.enqlistTellers" {
+				title: "Search live deals"
+			}
+			GET -> "T24.enqlistTeller.enqlistTellersUnauth" {
+				title: "Search unauthorised deals"
+			}
+			GET -> "T24.enqlistTeller.enqlistTellersHist" {
+				title: "Search history deals"
+			}
+			GET +-> "ContextEnquiryList" {
+				parameters [ entity = "verTeller_Signatory" ]
+				title: "Other context Enquiries"
+			}
+		}
+	
+		resource verTeller_Signatory_metadata {
+			type: collection
+			entity: T24FieldMetadata
+			commands [ POST : T24FieldMetadata ]
+			relations [ "http://temenostech.temenos.com/rels/metadata" ]
+			path: "/verTeller_Signatorys()/metadata"
+		}
+	
+		resource verTeller_Signatorys_IAuth {
+			type: collection
+			entity: verTeller_Signatory
+			commands [ GET : GetIauthEntities {
+				properties [ filter = "{filter}" ]
+				} ]
+			path: "/verTeller_Signatorys_IAuth()"
+			GET *-> verTeller_Signatory_IAuth {
+				parameters [ id = "{TransactionNumber}" ]
+			}
+			POST -> verTeller_Signatory_new {
+				title: "create new deal"
+				condition: OK(verTeller_Signatory_autoId)
+			}
+			POST -> verTeller_Signatory_populate {
+				title: "populate existing deal"
+			}
+			PUT *-> verTeller_Signatory_input {
+				parameters [ id = "{TransactionNumber}" ]
+				title: "input deal"
+			}
+			DELETE *-> verTeller_Signatory_delete {
+				parameters [ id = "{TransactionNumber}" ]
+				title: "delete"
+			}
+			PUT *-> verTeller_Signatory_authorise {
+				parameters [ id = "{TransactionNumber}" ]
+				title: "authorise deal"
+			}
+		}
+	
+		resource verTeller_Signatory_new {
+			type: item
+			entity: verTeller_Signatory
+			commands [ POST : CreateEntity ]
+			relations [ "http://schemas.microsoft.com/ado/2007/08/dataservices/related/verTeller_Signatory","http://temenostech.temenos.com/rels/new" ]
+			path: "/verTeller_Signatorys()/new"
+			POST +-> verTeller_Signatory_metadata {
+				title: "metadata"
+			}
+			POST -> verTeller_Signatory_validate {
+				parameters [ id = "{TransactionNumber}" ]
+				title: "validate deal"
+			}
+			PUT -> verTeller_Signatory_input {
+				parameters [ id = "{TransactionNumber}" ]
+				title: "input deal"
+			}
+			POST -> verTeller_Signatory_hold {
+				parameters [ id = "{TransactionNumber}" ]
+				title: "hold deal"
+			}
+			GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+				parameters [ entity = "verTeller_Signatory" ]
+				title: "Context Enquiries"
+			}
+		}
+	
+		resource verTeller_Signatory_input {
+			type: item
+			entity: verTeller_Signatory
+			commands [ PUT : InputEntity, POST : InputEntity ]
+			relations [ "http://temenostech.temenos.com/rels/input" ]
+			path: "/verTeller_Signatorys('{id}')"
+			GET --> nextState {
+				condition: OK(nextState)
+			}
+			GET --> verTeller_Signatory_IAuth {
+				parameters [ id = "{TransactionNumber}" ]
+				condition: OK(verTeller_Signatory_IAuth)
+			}
+			GET --> verTeller_Signatory {
+				parameters [ id = "{TransactionNumber}" ]
+				condition: OK(verTeller_Signatory)
+			}
+			GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+				parameters [ entity = "verTeller_Signatory" ]
+				title: "Context Enquiries"
+			}
+			onerror --> T24.verTeller_Signatory.verTeller_Signatory_errorHandler
+		}
+	
+		resource verTeller_Signatory_hold {
+			type: item
+			entity: verTeller_Signatory
+			commands [ POST : HoldEntity ]
+			relations [ "http://temenostech.temenos.com/rels/hold" ]
+			path: "/verTeller_Signatorys('{id}')/hold"
+			PUT -> verTeller_Signatory_input {
+				parameters [ id = "{TransactionNumber}" ]
+				title: "input deal"
+			}
+			DELETE -> verTeller_Signatory_delete {
+				parameters [ id = "{TransactionNumber}" ]
+				title: "delete"
+			}
+			onerror --> common.Errors.Errors
+		}
+	
+		resource verTeller_Signatory_authorise {
+			type: item
+			entity: verTeller_Signatory
+			commands [ PUT : AuthoriseEntity ]
+			relations [ "http://temenostech.temenos.com/rels/authorise" ]
+			path: "/verTeller_Signatorys('{id}')/authorise"
+			GET --> verTeller_Signatory_IAuth {
+				parameters [ id = "{TransactionNumber}" ]
+				condition: OK(verTeller_Signatory_IAuth)
+			}
+			GET --> verTeller_Signatory {
+				parameters [ id = "{TransactionNumber}" ]
+				condition: OK(verTeller_Signatory)
+			}
+			GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+				parameters [ entity = "verTeller_Signatory" ]
+				title: "Context Enquiries"
+			}
+			onerror --> T24.verTeller_Signatory.verTeller_Signatory_errorHandler
+		}
+	
+		resource verTeller_Signatory_changedValues {
+			type: item
+			entity: verTeller_Signatory
+			commands [ GET : GetChangedValues ]
+			relations [ "http://temenostech.temenos.com/rels/changedValues" ]
+			path: "/verTeller_Signatorys('{id}')/changedValues"
+		}
+	
+		resource verTeller_Signatory_audit {
+			type: item
+			entity: verTeller_Signatory
+			commands [ POST : ReviewEntity ]
+			relations [ "http://temenostech.temenos.com/rels/review" ]
+			path: "/verTeller_Signatorys('{id}')/review"
+			GET -> verTeller_Signatory {
+				parameters [ id = "{TransactionNumber}" ]
+			}
+			onerror --> common.Errors.Errors
+		}
+	
+		resource verTeller_Signatory_reverse {
+			type: item
+			entity: verTeller_Signatory
+			commands [ PUT : ReverseEntity ]
+			relations [ "http://temenostech.temenos.com/rels/reverse" ]
+			path: "/verTeller_Signatorys('{id}')/reverse"
+			GET --> verTeller_Signatory_IAuth {
+				parameters [ id = "{TransactionNumber}" ]
+				condition: OK(verTeller_Signatory_IAuth)
+			}
+			GET --> verTeller_Signatory_HAuth {
+				parameters [ id = "{TransactionNumber}" ]
+				condition: OK(verTeller_Signatory_HAuth)
+			}
+			onerror --> T24.verTeller_Signatory.verTeller_Signatory_errorHandler
+		}
+	
+		resource verTeller_Signatory_validate {
+			type: item
+			entity: verTeller_Signatory
+			commands [ POST : ValidateEntity ]
+			relations [ "http://temenostech.temenos.com/rels/validate" ]
+			path: "/verTeller_Signatorys('{id}')/validate"
+			GET +-> ProcessErrors {
+				title: "errors"
+				condition: OK(CheckIfError)
+			}
+			POST +-> verTeller_Signatory_metadata {
+				title: "metadata"
+			}
+			PUT -> verTeller_Signatory_input {
+				parameters [ id = "{TransactionNumber}" ]
+				title: "input deal"
+			}
+			POST -> verTeller_Signatory_hold {
+				parameters [ id = "{TransactionNumber}" ]
+				title: "hold deal"
+			}
+		}
+	
+		resource verTeller_Signatory_IAuth {
+			type: item
+			entity: verTeller_Signatory
+			commands [ GET : GetIauthEntity ]
+			path: "/verTeller_Signatorys_IAuth('{id}')"
+			POST +-> verTeller_Signatory_metadata {
+				title: "metadata"
+			}
+			GET +-> verTeller_Signatory_changedValues {
+				parameters [ id = "{TransactionNumber}" ]
+				title: "changed values"
+			}
+			POST -> verTeller_Signatory_validate {
+				parameters [ id = "{TransactionNumber}" ]
+				title: "validate deal"
+			}
+			PUT -> verTeller_Signatory_input {
+				parameters [ id = "{TransactionNumber}" ]
+				title: "input deal"
+			}
+			POST -> verTeller_Signatory_hold {
+				parameters [ id = "{TransactionNumber}" ]
+				title: "hold deal"
+			}
+			POST -> verTeller_Signatory_authorise {
+				parameters [ id = "{TransactionNumber}" ]
+				title: "authorise deal"
+			}
+			DELETE -> verTeller_Signatory_delete {
+				parameters [ id = "{TransactionNumber}" ]
+				title: "delete"
+			}
+			GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+				parameters [ entity = "verTeller_Signatory" ]
+				title: "Context Enquiries"
+			}
+		}
+	
+		resource verTeller_Signatory_delete {
+			type: item
+			entity: verTeller_Signatory
+			commands [ DELETE : DeleteEntity ]
+			relations [ "http://temenostech.temenos.com/rels/delete" ]
+			path: "/verTeller_Signatorys('{id}')/delete"
+		}
+	
+		resource verTeller_SignatoryEntry {
+			type: item
+			entity: verTeller_Signatory
+			commands [ GET : NoopGET ]
+			relations [ "http://schemas.microsoft.com/ado/2007/08/dataservices/related/verTeller_Signatory","http://temenostech.temenos.com/rels/contract" ]
+			path: "/verTeller_SignatoryEntry"
+			POST -> verTeller_Signatory_new {
+				title: "create new deal"
+				condition: OK(verTeller_Signatory_autoId)
+			}
+			POST -> verTeller_Signatory_populate {
+				title: "populate existing deal"
+			}
+			GET -> "verTeller_Signatory_see" {
+				parameters [ id = "@" ]
+				title: "See transaction"
+			}
+			GET -> "verTeller_Signatory_IAuth_see" {
+				parameters [ id = "@" ]
+				title: "GetIauthEntity"
+			}
+			GET -> "verTeller_Signatory_HAuth_see" {
+				parameters [ id = "@" ]
+				title: "GetHauthEntity"
+			}
+			GET -> "verTeller_Signatory_IAuth" {
+				parameters [ id = "@" ]
+				title: "GetIauthEntity"
+			}
+			GET -> "verTeller_Signatory_HAuth" {
+				parameters [ id = "@" ]
+				title: "GetHauthEntity"
+			}
+			GET +-> "verTeller_Signatory_ContextEnquiries" {
+				title: "All context Enquiries"
+			}
+			POST -> verTeller_Signatory_copy {
+				title: "Copy deal"
+			}
+			POST -> verTeller_Signatory_paste {
+				title: "Paste deal"
+			}
+		}
+	
+		resource verTeller_Signatory_populate {
+			type: item
+			entity: verTeller_Signatory
+			commands [ POST : CreateEntity ]
+			relations [ "http://schemas.microsoft.com/ado/2007/08/dataservices/related/verTeller_Signatory","http://temenostech.temenos.com/rels/populate" ]
+			path: "/verTeller_Signatorys()/populate"
+			POST -> verTeller_Signatory_validate {
+				parameters [ id = "{TransactionNumber}" ]
+				title: "validate deal"
+			}
+			POST -> verTeller_Signatory_input {
+				parameters [ id = "{TransactionNumber}" ]
+				title: "input deal"
+			}
+			DELETE -> verTeller_Signatory_delete {
+				parameters [ id = "{TransactionNumber}" ]
+				title: "delete"
+				condition: OK(verTeller_Signatory_IAuth)
+			}
+			POST -> verTeller_Signatory_metadata {
+				title: "metadata"
+			}
+			GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+				parameters [ entity = "verTeller_Signatory" ]
+				title: "Context Enquiries"
+			}
+		}
+	
+		resource verTeller_Signatory_copy {
+			type: item
+			entity: verTeller_Signatory
+			commands [ POST : CopyEntity ]
+			relations [ "http://temenostech.temenos.com/rels/copy" ]
+			path: "/verTeller_Signatorys()/copy"
+		}
+	
+		resource verTeller_Signatory_paste {
+			type: item
+			entity: verTeller_Signatory
+			commands [ POST : PasteEntity ]
+			relations [ "http://temenostech.temenos.com/rels/paste" ]
+			path: "/verTeller_Signatorys()/paste"
+			POST +-> verTeller_Signatory_metadata {
+				title: "metadata"
+			}
+			POST -> verTeller_Signatory_validate {
+				parameters [ id = "{TransactionNumber}" ]
+				title: "validate deal"
+			}
+			PUT -> verTeller_Signatory_input {
+				parameters [ id = "{TransactionNumber}" ]
+				title: "input deal"
+			}
+			POST -> verTeller_Signatory_hold {
+				parameters [ id = "{TransactionNumber}" ]
+				title: "hold deal"
+			}
+		}
+	
+		resource verTeller_Signatorys_enrichment {
+			type: item
+			entity: Enrichment
+			commands [ GET : T24Enrichment {
+				properties [ entity = "verTeller_Signatory" ]
+				} ]
+			relations [ "http://temenostech.temenos.com/rels/enrichment" ]
+			path: "/verTeller_Signatorys()/enrichment"
+		}
+	
+		resource verTeller_Signatory_autoId {
+			type: item
+			entity: verTeller_Signatory
+			commands [ GET : CheckAutoIdSupport ]
+		}
+	
+		resource verTeller_Signatory_restore {
+			type: item
+			entity: verTeller_Signatory
+			commands [ POST : RestoreEntity ]
+			relations [ "http://temenostech.temenos.com/rels/restore" ]
+			path: "/verTeller_Signatorys('{id}')/restore"
+			GET --> verTeller_Signatory_IAuth {
+				parameters [ id = "{TransactionNumber}" ]
+				condition: OK(verTeller_Signatory_IAuth)
+			}
+			GET --> verTeller_Signatory {
+				parameters [ id = "{TransactionNumber}" ]
+				condition: OK(verTeller_Signatory)
+			}
+			POST -> verTeller_Signatory_metadata {
+				title: "metadata"
+			}
+			GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+				parameters [ entity = "verTeller_Signatory" ]
+				title: "Context Enquiries"
+			}
+			onerror --> common.Errors.Errors
+		}
+	
+		resource verTeller_Signatorys_HAuth {
+			type: collection
+			entity: verTeller_Signatory
+			commands [ GET : GetHauthEntities {
+				properties [ filter = "{filter}" ]
+				} ]
+			path: "/verTeller_Signatorys_HAuth()"
+			GET *-> verTeller_Signatory_HAuth {
+				parameters [ id = "{TransactionNumber}" ]
+			}
+			POST -> verTeller_Signatory_new {
+				title: "create new deal"
+				condition: OK(verTeller_Signatory_autoId)
+			}
+			POST -> verTeller_Signatory_populate {
+				title: "populate existing deal"
+			}
+			POST *-> verTeller_Signatory_restore {
+				parameters [ id = "{TransactionNumber}" ]
+				title: "restore deal"
+			}
+		}
+	
+		resource verTeller_Signatory_HAuth {
+			type: item
+			entity: verTeller_Signatory
+			commands [ GET : GetHauthEntity ]
+			path: "/verTeller_Signatorys_HAuth('{id}')"
+			POST +-> verTeller_Signatory_metadata {
+				title: "metadata"
+			}
+			POST -> verTeller_Signatory_validate {
+				parameters [ id = "{TransactionNumber}" ]
+				title: "validate deal"
+			}
+			PUT -> verTeller_Signatory_input {
+				parameters [ id = "{TransactionNumber}" ]
+				title: "input deal"
+			}
+			POST -> verTeller_Signatory_hold {
+				parameters [ id = "{TransactionNumber}" ]
+				title: "hold deal"
+			}
+			POST -> verTeller_Signatory_authorise {
+				parameters [ id = "{TransactionNumber}" ]
+				title: "authorise deal"
+			}
+			DELETE -> verTeller_Signatory_delete {
+				parameters [ id = "{TransactionNumber}" ]
+				title: "delete"
+			}
+			GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+				parameters [ entity = "verTeller_Signatory" ]
+				title: "Context Enquiries"
+			}
+		}
+	
+	}
+	
+}
