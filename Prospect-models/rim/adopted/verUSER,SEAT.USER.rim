@@ -1,0 +1,616 @@
+domain T24 {
+	use common.CoreCommands.*
+	use common.HTTPEvents.*
+	use common.ODataCommands.*
+	use common.T24Commands.*
+	use common.T24Events.*
+	use common.NextState.*
+	use common.Errors.*
+	use T24.ContextEnquiry.*
+	rim verUser_SeatUser {
+		command T24FieldMetadata
+		command NoopGET
+		command GETEntities
+		command GetLiveEntity
+		command GetIauthEntity
+		command GetHauthEntity
+		command GetIauthEntities
+		command CreateEntity
+		command InputEntity
+		command HoldEntity
+		command AuthoriseEntity
+		command GetChangedValues
+		command ReviewEntity
+		command ReverseEntity
+		command ValidateEntity
+		command RestoreEntity
+		command DeleteEntity
+		command CopyEntity
+		command PasteEntity
+		command CreateDEPreview
+		command GetDealSlipEntities
+		command T24Enrichment
+		command CheckAutoIdSupport
+		command GetHauthEntities
+		command T24NextState
+		basepath: "/{companyid}"
+	
+		resource verUser_SeatUser_errorHandler {
+			type: item
+			entity: verUser_SeatUser
+			commands [ GET : NoopGET ]
+			relations [ "http://temenostech.temenos.com/rels/error" ]
+			path: "/verUser_SeatUsers('{id}')/error"
+			GET +-> ProcessErrors {
+				title: "errors"
+			}
+			POST +-> verUser_SeatUser_metadata {
+				title: "metadata"
+			}
+		}
+	
+		resource verUser_SeatUsers {
+			type: collection
+			entity: verUser_SeatUser
+			commands [ GET : GETEntities {
+				properties [ filter = "{filter}" ]
+				} ]
+			path: "/verUser_SeatUsers()"
+			GET *-> verUser_SeatUser {
+				parameters [ id = "{UserId}" ]
+			}
+			GET *-> verUser_SeatUser_see {
+				parameters [ id = "{UserId}" ]
+				title: "see record"
+			}
+			POST -> verUser_SeatUser_new {
+				title: "create new deal"
+				condition: OK(verUser_SeatUser_autoId)
+			}
+			POST -> verUser_SeatUser_populate {
+				title: "populate existing deal"
+			}
+			PUT *-> verUser_SeatUser_input {
+				parameters [ id = "{UserId}" ]
+				title: "input deal"
+			}
+			POST *-> verUser_SeatUser_audit {
+				parameters [ id = "{UserId}" ]
+				title: "audit deal"
+			}
+			POST *-> verUser_SeatUser_reverse {
+				parameters [ id = "{UserId}" ]
+				title: "reverse deal"
+			}
+		}
+	
+		resource verUser_SeatUser {
+			type: item
+			entity: verUser_SeatUser
+			commands [ GET : GetLiveEntity ]
+			path: "/verUser_SeatUsers('{id}')"
+			POST +-> verUser_SeatUser_metadata {
+				title: "metadata"
+			}
+			GET --> verUser_SeatUser_IAuth {
+				parameters [ id = "{UserId}" ]
+				condition: OK(verUser_SeatUser_IAuth)
+			}
+			POST -> verUser_SeatUser_validate {
+				parameters [ id = "{UserId}" ]
+				title: "validate deal"
+			}
+			PUT -> verUser_SeatUser_input {
+				parameters [ id = "{UserId}" ]
+				title: "input deal"
+			}
+			POST -> verUser_SeatUser_audit {
+				parameters [ id = "{UserId}" ]
+				title: "audit deal"
+			}
+			POST -> verUser_SeatUser_reverse {
+				parameters [ id = "{UserId}" ]
+				title: "reverse deal"
+			}
+			GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+				parameters [ entity = "verUser_SeatUser" ]
+				title: "Context Enquiries"
+			}
+		}
+	
+		resource verUser_SeatUser_see {
+			type: item
+			entity: verUser_SeatUser
+			commands [ GET : GetLiveEntity ]
+			relations [ "http://schemas.microsoft.com/ado/2007/08/dataservices/related/verUser_SeatUser","http://temenostech.temenos.com/rels/see" ]
+			path: "/verUser_SeatUsers('{id}')/see"
+			POST +-> verUser_SeatUser_metadata {
+				title: "metadata"
+			}
+		}
+	
+		resource verUser_SeatUser_IAuth_see {
+			type: item
+			entity: verUser_SeatUser
+			commands [ GET : GetIauthEntity ]
+			relations [ "http://schemas.microsoft.com/ado/2007/08/dataservices/related/verUser_SeatUser_IAuth","http://temenostech.temenos.com/rels/see" ]
+			path: "/verUser_SeatUsers_IAuth('{id}')/see"
+		}
+	
+		resource verUser_SeatUser_HAuth_see {
+			type: item
+			entity: verUser_SeatUser
+			commands [ GET : GetHauthEntity ]
+			relations [ "http://schemas.microsoft.com/ado/2007/08/dataservices/related/verUser_SeatUser_HAuth","http://temenostech.temenos.com/rels/see" ]
+			path: "/verUser_SeatUsers_HAuth('{id}')/see"
+		}
+	
+		resource verUser_SeatUser_ContextEnquiries {
+			type: item
+			entity: verUser_SeatUser
+			commands [ GET : NoopGET ]
+			path: "/verUser_SeatUser/ContextEnquiries"
+			GET -> "T24.enqlistUser.enqlistUsers" {
+				parameters [ param = "list" ]
+				title: "List live deals"
+			}
+			GET -> "T24.enqlistUser.enqlistUsersUnauth" {
+				parameters [ param = "list" ]
+				title: "List unauthorised deals"
+			}
+			GET -> "T24.enqlistUser.enqlistUsersHist" {
+				parameters [ param = "list" ]
+				title: "List history deals"
+			}
+			GET -> "T24.enqlistUser.enqlistUsers" {
+				title: "Search live deals"
+			}
+			GET -> "T24.enqlistUser.enqlistUsersUnauth" {
+				title: "Search unauthorised deals"
+			}
+			GET -> "T24.enqlistUser.enqlistUsersHist" {
+				title: "Search history deals"
+			}
+			GET +-> "ContextEnquiryList" {
+				parameters [ entity = "verUser_SeatUser" ]
+				title: "Other context Enquiries"
+			}
+		}
+	
+		resource verUser_SeatUser_metadata {
+			type: collection
+			entity: T24FieldMetadata
+			commands [ POST : T24FieldMetadata ]
+			relations [ "http://temenostech.temenos.com/rels/metadata" ]
+			path: "/verUser_SeatUsers()/metadata"
+		}
+	
+		resource verUser_SeatUsers_IAuth {
+			type: collection
+			entity: verUser_SeatUser
+			commands [ GET : GetIauthEntities {
+				properties [ filter = "{filter}" ]
+				} ]
+			path: "/verUser_SeatUsers_IAuth()"
+			GET *-> verUser_SeatUser_IAuth {
+				parameters [ id = "{UserId}" ]
+			}
+			POST -> verUser_SeatUser_new {
+				title: "create new deal"
+				condition: OK(verUser_SeatUser_autoId)
+			}
+			POST -> verUser_SeatUser_populate {
+				title: "populate existing deal"
+			}
+			PUT *-> verUser_SeatUser_input {
+				parameters [ id = "{UserId}" ]
+				title: "input deal"
+			}
+			DELETE *-> verUser_SeatUser_delete {
+				parameters [ id = "{UserId}" ]
+				title: "delete"
+			}
+			PUT *-> verUser_SeatUser_authorise {
+				parameters [ id = "{UserId}" ]
+				title: "authorise deal"
+			}
+		}
+	
+		resource verUser_SeatUser_new {
+			type: item
+			entity: verUser_SeatUser
+			commands [ POST : CreateEntity ]
+			relations [ "http://schemas.microsoft.com/ado/2007/08/dataservices/related/verUser_SeatUser","http://temenostech.temenos.com/rels/new" ]
+			path: "/verUser_SeatUsers()/new"
+			POST +-> verUser_SeatUser_metadata {
+				title: "metadata"
+			}
+			POST -> verUser_SeatUser_validate {
+				parameters [ id = "{UserId}" ]
+				title: "validate deal"
+			}
+			PUT -> verUser_SeatUser_input {
+				parameters [ id = "{UserId}" ]
+				title: "input deal"
+			}
+			POST -> verUser_SeatUser_hold {
+				parameters [ id = "{UserId}" ]
+				title: "hold deal"
+			}
+			GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+				parameters [ entity = "verUser_SeatUser" ]
+				title: "Context Enquiries"
+			}
+		}
+	
+		resource verUser_SeatUser_input {
+			type: item
+			entity: verUser_SeatUser
+			commands [ PUT : InputEntity, POST : InputEntity ]
+			relations [ "http://temenostech.temenos.com/rels/input" ]
+			path: "/verUser_SeatUsers('{id}')"
+			GET --> nextState {
+				condition: OK(nextState)
+			}
+			GET --> verUser_SeatUser_IAuth {
+				parameters [ id = "{UserId}" ]
+				condition: OK(verUser_SeatUser_IAuth)
+			}
+			GET --> verUser_SeatUser {
+				parameters [ id = "{UserId}" ]
+				condition: OK(verUser_SeatUser)
+			}
+			GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+				parameters [ entity = "verUser_SeatUser" ]
+				title: "Context Enquiries"
+			}
+			onerror --> T24.verUser_SeatUser.verUser_SeatUser_errorHandler
+		}
+	
+		resource verUser_SeatUser_hold {
+			type: item
+			entity: verUser_SeatUser
+			commands [ POST : HoldEntity ]
+			relations [ "http://temenostech.temenos.com/rels/hold" ]
+			path: "/verUser_SeatUsers('{id}')/hold"
+			PUT -> verUser_SeatUser_input {
+				parameters [ id = "{UserId}" ]
+				title: "input deal"
+			}
+			DELETE -> verUser_SeatUser_delete {
+				parameters [ id = "{UserId}" ]
+				title: "delete"
+			}
+			onerror --> common.Errors.Errors
+		}
+	
+		resource verUser_SeatUser_authorise {
+			type: item
+			entity: verUser_SeatUser
+			commands [ PUT : AuthoriseEntity ]
+			relations [ "http://temenostech.temenos.com/rels/authorise" ]
+			path: "/verUser_SeatUsers('{id}')/authorise"
+			GET --> verUser_SeatUser_IAuth {
+				parameters [ id = "{UserId}" ]
+				condition: OK(verUser_SeatUser_IAuth)
+			}
+			GET --> verUser_SeatUser {
+				parameters [ id = "{UserId}" ]
+				condition: OK(verUser_SeatUser)
+			}
+			GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+				parameters [ entity = "verUser_SeatUser" ]
+				title: "Context Enquiries"
+			}
+			onerror --> T24.verUser_SeatUser.verUser_SeatUser_errorHandler
+		}
+	
+		resource verUser_SeatUser_changedValues {
+			type: item
+			entity: verUser_SeatUser
+			commands [ GET : GetChangedValues ]
+			relations [ "http://temenostech.temenos.com/rels/changedValues" ]
+			path: "/verUser_SeatUsers('{id}')/changedValues"
+		}
+	
+		resource verUser_SeatUser_audit {
+			type: item
+			entity: verUser_SeatUser
+			commands [ POST : ReviewEntity ]
+			relations [ "http://temenostech.temenos.com/rels/review" ]
+			path: "/verUser_SeatUsers('{id}')/review"
+			GET -> verUser_SeatUser {
+				parameters [ id = "{UserId}" ]
+			}
+			onerror --> common.Errors.Errors
+		}
+	
+		resource verUser_SeatUser_reverse {
+			type: item
+			entity: verUser_SeatUser
+			commands [ PUT : ReverseEntity ]
+			relations [ "http://temenostech.temenos.com/rels/reverse" ]
+			path: "/verUser_SeatUsers('{id}')/reverse"
+			GET --> verUser_SeatUser_IAuth {
+				parameters [ id = "{UserId}" ]
+				condition: OK(verUser_SeatUser_IAuth)
+			}
+			GET --> verUser_SeatUser_HAuth {
+				parameters [ id = "{UserId}" ]
+				condition: OK(verUser_SeatUser_HAuth)
+			}
+			onerror --> T24.verUser_SeatUser.verUser_SeatUser_errorHandler
+		}
+	
+		resource verUser_SeatUser_validate {
+			type: item
+			entity: verUser_SeatUser
+			commands [ POST : ValidateEntity ]
+			relations [ "http://temenostech.temenos.com/rels/validate" ]
+			path: "/verUser_SeatUsers('{id}')/validate"
+			GET +-> ProcessErrors {
+				title: "errors"
+				condition: OK(CheckIfError)
+			}
+			POST +-> verUser_SeatUser_metadata {
+				title: "metadata"
+			}
+			PUT -> verUser_SeatUser_input {
+				parameters [ id = "{UserId}" ]
+				title: "input deal"
+			}
+			POST -> verUser_SeatUser_hold {
+				parameters [ id = "{UserId}" ]
+				title: "hold deal"
+			}
+		}
+	
+		resource verUser_SeatUser_IAuth {
+			type: item
+			entity: verUser_SeatUser
+			commands [ GET : GetIauthEntity ]
+			path: "/verUser_SeatUsers_IAuth('{id}')"
+			POST +-> verUser_SeatUser_metadata {
+				title: "metadata"
+			}
+			GET +-> verUser_SeatUser_changedValues {
+				parameters [ id = "{UserId}" ]
+				title: "changed values"
+			}
+			POST -> verUser_SeatUser_validate {
+				parameters [ id = "{UserId}" ]
+				title: "validate deal"
+			}
+			PUT -> verUser_SeatUser_input {
+				parameters [ id = "{UserId}" ]
+				title: "input deal"
+			}
+			POST -> verUser_SeatUser_hold {
+				parameters [ id = "{UserId}" ]
+				title: "hold deal"
+			}
+			POST -> verUser_SeatUser_authorise {
+				parameters [ id = "{UserId}" ]
+				title: "authorise deal"
+			}
+			DELETE -> verUser_SeatUser_delete {
+				parameters [ id = "{UserId}" ]
+				title: "delete"
+			}
+			GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+				parameters [ entity = "verUser_SeatUser" ]
+				title: "Context Enquiries"
+			}
+		}
+	
+		resource verUser_SeatUser_delete {
+			type: item
+			entity: verUser_SeatUser
+			commands [ DELETE : DeleteEntity ]
+			relations [ "http://temenostech.temenos.com/rels/delete" ]
+			path: "/verUser_SeatUsers('{id}')/delete"
+		}
+	
+		resource verUser_SeatUserEntry {
+			type: item
+			entity: verUser_SeatUser
+			commands [ GET : NoopGET ]
+			relations [ "http://schemas.microsoft.com/ado/2007/08/dataservices/related/verUser_SeatUser","http://temenostech.temenos.com/rels/contract" ]
+			path: "/verUser_SeatUserEntry"
+			POST -> verUser_SeatUser_new {
+				title: "create new deal"
+				condition: OK(verUser_SeatUser_autoId)
+			}
+			POST -> verUser_SeatUser_populate {
+				title: "populate existing deal"
+			}
+			GET -> "verUser_SeatUser_see" {
+				parameters [ id = "@" ]
+				title: "See transaction"
+			}
+			GET -> "verUser_SeatUser_IAuth_see" {
+				parameters [ id = "@" ]
+				title: "GetIauthEntity"
+			}
+			GET -> "verUser_SeatUser_HAuth_see" {
+				parameters [ id = "@" ]
+				title: "GetHauthEntity"
+			}
+			GET -> "verUser_SeatUser_IAuth" {
+				parameters [ id = "@" ]
+				title: "GetIauthEntity"
+			}
+			GET -> "verUser_SeatUser_HAuth" {
+				parameters [ id = "@" ]
+				title: "GetHauthEntity"
+			}
+			GET +-> "verUser_SeatUser_ContextEnquiries" {
+				title: "All context Enquiries"
+			}
+			POST -> verUser_SeatUser_copy {
+				title: "Copy deal"
+			}
+			POST -> verUser_SeatUser_paste {
+				title: "Paste deal"
+			}
+		}
+	
+		resource verUser_SeatUser_populate {
+			type: item
+			entity: verUser_SeatUser
+			commands [ POST : CreateEntity ]
+			relations [ "http://schemas.microsoft.com/ado/2007/08/dataservices/related/verUser_SeatUser","http://temenostech.temenos.com/rels/populate" ]
+			path: "/verUser_SeatUsers()/populate"
+			POST -> verUser_SeatUser_validate {
+				parameters [ id = "{UserId}" ]
+				title: "validate deal"
+			}
+			POST -> verUser_SeatUser_input {
+				parameters [ id = "{UserId}" ]
+				title: "input deal"
+			}
+			DELETE -> verUser_SeatUser_delete {
+				parameters [ id = "{UserId}" ]
+				title: "delete"
+				condition: OK(verUser_SeatUser_IAuth)
+			}
+			POST -> verUser_SeatUser_metadata {
+				title: "metadata"
+			}
+			GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+				parameters [ entity = "verUser_SeatUser" ]
+				title: "Context Enquiries"
+			}
+		}
+	
+		resource verUser_SeatUser_copy {
+			type: item
+			entity: verUser_SeatUser
+			commands [ POST : CopyEntity ]
+			relations [ "http://temenostech.temenos.com/rels/copy" ]
+			path: "/verUser_SeatUsers()/copy"
+		}
+	
+		resource verUser_SeatUser_paste {
+			type: item
+			entity: verUser_SeatUser
+			commands [ POST : PasteEntity ]
+			relations [ "http://temenostech.temenos.com/rels/paste" ]
+			path: "/verUser_SeatUsers()/paste"
+			POST +-> verUser_SeatUser_metadata {
+				title: "metadata"
+			}
+			POST -> verUser_SeatUser_validate {
+				parameters [ id = "{UserId}" ]
+				title: "validate deal"
+			}
+			PUT -> verUser_SeatUser_input {
+				parameters [ id = "{UserId}" ]
+				title: "input deal"
+			}
+			POST -> verUser_SeatUser_hold {
+				parameters [ id = "{UserId}" ]
+				title: "hold deal"
+			}
+		}
+	
+		resource verUser_SeatUsers_enrichment {
+			type: item
+			entity: Enrichment
+			commands [ GET : T24Enrichment {
+				properties [ entity = "verUser_SeatUser" ]
+				} ]
+			relations [ "http://temenostech.temenos.com/rels/enrichment" ]
+			path: "/verUser_SeatUsers()/enrichment"
+		}
+	
+		resource verUser_SeatUser_autoId {
+			type: item
+			entity: verUser_SeatUser
+			commands [ GET : CheckAutoIdSupport ]
+		}
+	
+		resource verUser_SeatUser_restore {
+			type: item
+			entity: verUser_SeatUser
+			commands [ POST : RestoreEntity ]
+			relations [ "http://temenostech.temenos.com/rels/restore" ]
+			path: "/verUser_SeatUsers('{id}')/restore"
+			GET --> verUser_SeatUser_IAuth {
+				parameters [ id = "{UserId}" ]
+				condition: OK(verUser_SeatUser_IAuth)
+			}
+			GET --> verUser_SeatUser {
+				parameters [ id = "{UserId}" ]
+				condition: OK(verUser_SeatUser)
+			}
+			POST -> verUser_SeatUser_metadata {
+				title: "metadata"
+			}
+			GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+				parameters [ entity = "verUser_SeatUser" ]
+				title: "Context Enquiries"
+			}
+			onerror --> common.Errors.Errors
+		}
+	
+		resource verUser_SeatUsers_HAuth {
+			type: collection
+			entity: verUser_SeatUser
+			commands [ GET : GetHauthEntities {
+				properties [ filter = "{filter}" ]
+				} ]
+			path: "/verUser_SeatUsers_HAuth()"
+			GET *-> verUser_SeatUser_HAuth {
+				parameters [ id = "{UserId}" ]
+			}
+			POST -> verUser_SeatUser_new {
+				title: "create new deal"
+				condition: OK(verUser_SeatUser_autoId)
+			}
+			POST -> verUser_SeatUser_populate {
+				title: "populate existing deal"
+			}
+			POST *-> verUser_SeatUser_restore {
+				parameters [ id = "{UserId}" ]
+				title: "restore deal"
+			}
+		}
+	
+		resource verUser_SeatUser_HAuth {
+			type: item
+			entity: verUser_SeatUser
+			commands [ GET : GetHauthEntity ]
+			path: "/verUser_SeatUsers_HAuth('{id}')"
+			POST +-> verUser_SeatUser_metadata {
+				title: "metadata"
+			}
+			POST -> verUser_SeatUser_validate {
+				parameters [ id = "{UserId}" ]
+				title: "validate deal"
+			}
+			PUT -> verUser_SeatUser_input {
+				parameters [ id = "{UserId}" ]
+				title: "input deal"
+			}
+			POST -> verUser_SeatUser_hold {
+				parameters [ id = "{UserId}" ]
+				title: "hold deal"
+			}
+			POST -> verUser_SeatUser_authorise {
+				parameters [ id = "{UserId}" ]
+				title: "authorise deal"
+			}
+			DELETE -> verUser_SeatUser_delete {
+				parameters [ id = "{UserId}" ]
+				title: "delete"
+			}
+			GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+				parameters [ entity = "verUser_SeatUser" ]
+				title: "Context Enquiries"
+			}
+		}
+	
+	}
+	
+}
