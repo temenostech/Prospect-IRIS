@@ -7,7 +7,7 @@ domain T24 {
 	use common.NextState.*
 	use common.Errors.*
 	use T24.ContextEnquiry.*
-	rim verAccount {
+	rim verAccount_SbOpen {
 		command T24FieldMetadata
 		command NoopGET
 		command GETEntities
@@ -35,121 +35,121 @@ domain T24 {
 		command T24NextState
 		basepath: "/{companyid}"
 	
-		resource verAccount_errorHandler {
+		resource verAccount_SbOpen_errorHandler {
 			type: item
-			entity: verAccount
+			entity: verAccount_SbOpen
 			commands [ GET : NoopGET ]
 			relations [ "http://temenostech.temenos.com/rels/error" ]
-			path: "/verAccounts('{id}')/error"
+			path: "/verAccount_SbOpens('{id}')/error"
 			GET +-> ProcessErrors {
 				title: "errors"
 			}
-			POST +-> verAccount_metadata {
+			POST +-> verAccount_SbOpen_metadata {
 				title: "metadata"
 			}
 		}
 	
-		resource verAccounts {
+		resource verAccount_SbOpens {
 			type: collection
-			entity: verAccount
+			entity: verAccount_SbOpen
 			commands [ GET : GETEntities {
 				properties [ filter = "{filter}" ]
 				} ]
-			path: "/verAccounts()"
-			GET *-> verAccount {
+			path: "/verAccount_SbOpens()"
+			GET *-> verAccount_SbOpen {
 				parameters [ id = "{AccountNumber}" ]
 			}
-			GET *-> verAccount_see {
+			GET *-> verAccount_SbOpen_see {
 				parameters [ id = "{AccountNumber}" ]
 				title: "see record"
 			}
-			POST -> verAccount_new {
+			POST -> verAccount_SbOpen_new {
 				title: "create new deal"
-				condition: OK(verAccount_autoId)
+				condition: OK(verAccount_SbOpen_autoId)
 			}
-			POST -> verAccount_populate {
+			POST -> verAccount_SbOpen_populate {
 				title: "populate existing deal"
 			}
-			PUT *-> verAccount_input {
+			PUT *-> verAccount_SbOpen_input {
 				parameters [ id = "{AccountNumber}" ]
 				title: "input deal"
 			}
-			POST *-> verAccount_audit {
+			POST *-> verAccount_SbOpen_audit {
 				parameters [ id = "{AccountNumber}" ]
 				title: "audit deal"
 			}
-			POST *-> verAccount_reverse {
+			POST *-> verAccount_SbOpen_reverse {
 				parameters [ id = "{AccountNumber}" ]
 				title: "reverse deal"
 			}
 		}
 	
-		resource verAccount {
+		resource verAccount_SbOpen {
 			type: item
-			entity: verAccount
+			entity: verAccount_SbOpen
 			commands [ GET : GetLiveEntity ]
-			path: "/verAccounts('{id}')"
-			POST +-> verAccount_metadata {
+			path: "/verAccount_SbOpens('{id}')"
+			POST +-> verAccount_SbOpen_metadata {
 				title: "metadata"
 			}
-			GET --> verAccount_IAuth {
+			GET --> verAccount_SbOpen_IAuth {
 				parameters [ id = "{AccountNumber}" ]
-				condition: OK(verAccount_IAuth)
+				condition: OK(verAccount_SbOpen_IAuth)
 			}
-			POST -> verAccount_validate {
+			POST -> verAccount_SbOpen_validate {
 				parameters [ id = "{AccountNumber}" ]
 				title: "validate deal"
 			}
-			PUT -> verAccount_input {
+			PUT -> verAccount_SbOpen_input {
 				parameters [ id = "{AccountNumber}" ]
 				title: "input deal"
 			}
-			POST -> verAccount_audit {
+			POST -> verAccount_SbOpen_audit {
 				parameters [ id = "{AccountNumber}" ]
 				title: "audit deal"
 			}
-			POST -> verAccount_reverse {
+			POST -> verAccount_SbOpen_reverse {
 				parameters [ id = "{AccountNumber}" ]
 				title: "reverse deal"
 			}
 			GET -> "T24.ContextEnquiry.ContextEnquiryList" {
-				parameters [ entity = "verAccount" ]
+				parameters [ entity = "verAccount_SbOpen" ]
 				title: "Context Enquiries"
 			}
 		}
 	
-		resource verAccount_see {
+		resource verAccount_SbOpen_see {
 			type: item
-			entity: verAccount
+			entity: verAccount_SbOpen
 			commands [ GET : GetLiveEntity ]
-			relations [ "http://schemas.microsoft.com/ado/2007/08/dataservices/related/verAccount","http://temenostech.temenos.com/rels/see" ]
-			path: "/verAccounts('{id}')/see"
-			POST +-> verAccount_metadata {
+			relations [ "http://schemas.microsoft.com/ado/2007/08/dataservices/related/verAccount_SbOpen","http://temenostech.temenos.com/rels/see" ]
+			path: "/verAccount_SbOpens('{id}')/see"
+			POST +-> verAccount_SbOpen_metadata {
 				title: "metadata"
 			}
 		}
 	
-		resource verAccount_IAuth_see {
+		resource verAccount_SbOpen_IAuth_see {
 			type: item
-			entity: verAccount
+			entity: verAccount_SbOpen
 			commands [ GET : GetIauthEntity ]
-			relations [ "http://schemas.microsoft.com/ado/2007/08/dataservices/related/verAccount_IAuth","http://temenostech.temenos.com/rels/see" ]
-			path: "/verAccounts_IAuth('{id}')/see"
+			relations [ "http://schemas.microsoft.com/ado/2007/08/dataservices/related/verAccount_SbOpen_IAuth","http://temenostech.temenos.com/rels/see" ]
+			path: "/verAccount_SbOpens_IAuth('{id}')/see"
 		}
 	
-		resource verAccount_HAuth_see {
+		resource verAccount_SbOpen_HAuth_see {
 			type: item
-			entity: verAccount
+			entity: verAccount_SbOpen
 			commands [ GET : GetHauthEntity ]
-			relations [ "http://schemas.microsoft.com/ado/2007/08/dataservices/related/verAccount_HAuth","http://temenostech.temenos.com/rels/see" ]
-			path: "/verAccounts_HAuth('{id}')/see"
+			relations [ "http://schemas.microsoft.com/ado/2007/08/dataservices/related/verAccount_SbOpen_HAuth","http://temenostech.temenos.com/rels/see" ]
+			path: "/verAccount_SbOpens_HAuth('{id}')/see"
 		}
 	
-		resource verAccount_ContextEnquiries {
+		resource verAccount_SbOpen_ContextEnquiries {
 			type: item
-			entity: verAccount
+			entity: verAccount_SbOpen
 			commands [ GET : NoopGET ]
-			path: "/verAccount/ContextEnquiries"
+			path: "/verAccount_SbOpen/ContextEnquiries"
 			GET -> "T24.enqlistAccount.enqlistAccounts" {
 				parameters [ param = "list" ]
 				title: "List live deals"
@@ -172,441 +172,441 @@ domain T24 {
 				title: "Search history deals"
 			}
 			GET +-> "ContextEnquiryList" {
-				parameters [ entity = "verAccount" ]
+				parameters [ entity = "verAccount_SbOpen" ]
 				title: "Other context Enquiries"
 			}
 		}
 	
-		resource verAccount_metadata {
+		resource verAccount_SbOpen_metadata {
 			type: collection
 			entity: T24FieldMetadata
 			commands [ POST : T24FieldMetadata ]
 			relations [ "http://temenostech.temenos.com/rels/metadata" ]
-			path: "/verAccounts()/metadata"
+			path: "/verAccount_SbOpens()/metadata"
 		}
 	
-		resource verAccounts_IAuth {
+		resource verAccount_SbOpens_IAuth {
 			type: collection
-			entity: verAccount
+			entity: verAccount_SbOpen
 			commands [ GET : GetIauthEntities {
 				properties [ filter = "{filter}" ]
 				} ]
-			path: "/verAccounts_IAuth()"
-			GET *-> verAccount_IAuth {
+			path: "/verAccount_SbOpens_IAuth()"
+			GET *-> verAccount_SbOpen_IAuth {
 				parameters [ id = "{AccountNumber}" ]
 			}
-			POST -> verAccount_new {
+			POST -> verAccount_SbOpen_new {
 				title: "create new deal"
-				condition: OK(verAccount_autoId)
+				condition: OK(verAccount_SbOpen_autoId)
 			}
-			POST -> verAccount_populate {
+			POST -> verAccount_SbOpen_populate {
 				title: "populate existing deal"
 			}
-			PUT *-> verAccount_input {
+			PUT *-> verAccount_SbOpen_input {
 				parameters [ id = "{AccountNumber}" ]
 				title: "input deal"
 			}
-			DELETE *-> verAccount_delete {
+			DELETE *-> verAccount_SbOpen_delete {
 				parameters [ id = "{AccountNumber}" ]
 				title: "delete"
 			}
-			PUT *-> verAccount_authorise {
+			PUT *-> verAccount_SbOpen_authorise {
 				parameters [ id = "{AccountNumber}" ]
 				title: "authorise deal"
 			}
 		}
 	
-		resource verAccount_new {
+		resource verAccount_SbOpen_new {
 			type: item
-			entity: verAccount
+			entity: verAccount_SbOpen
 			commands [ POST : CreateEntity ]
-			relations [ "http://schemas.microsoft.com/ado/2007/08/dataservices/related/verAccount","http://temenostech.temenos.com/rels/new" ]
-			path: "/verAccounts()/new"
-			POST +-> verAccount_metadata {
+			relations [ "http://schemas.microsoft.com/ado/2007/08/dataservices/related/verAccount_SbOpen","http://temenostech.temenos.com/rels/new" ]
+			path: "/verAccount_SbOpens()/new"
+			POST +-> verAccount_SbOpen_metadata {
 				title: "metadata"
 			}
-			POST -> verAccount_validate {
+			POST -> verAccount_SbOpen_validate {
 				parameters [ id = "{AccountNumber}" ]
 				title: "validate deal"
 			}
-			PUT -> verAccount_input {
+			PUT -> verAccount_SbOpen_input {
 				parameters [ id = "{AccountNumber}" ]
 				title: "input deal"
 			}
-			POST -> verAccount_hold {
+			POST -> verAccount_SbOpen_hold {
 				parameters [ id = "{AccountNumber}" ]
 				title: "hold deal"
 			}
 			GET -> "T24.ContextEnquiry.ContextEnquiryList" {
-				parameters [ entity = "verAccount" ]
+				parameters [ entity = "verAccount_SbOpen" ]
 				title: "Context Enquiries"
 			}
 		}
 	
-		resource verAccount_input {
+		resource verAccount_SbOpen_input {
 			type: item
-			entity: verAccount
+			entity: verAccount_SbOpen
 			commands [ PUT : InputEntity, POST : InputEntity ]
 			relations [ "http://temenostech.temenos.com/rels/input" ]
-			path: "/verAccounts('{id}')"
+			path: "/verAccount_SbOpens('{id}')"
 			GET --> nextState {
 				condition: OK(nextState)
 			}
-			GET --> verAccount_IAuth {
+			GET --> verAccount_SbOpen_IAuth {
 				parameters [ id = "{AccountNumber}" ]
-				condition: OK(verAccount_IAuth)
+				condition: OK(verAccount_SbOpen_IAuth)
 			}
-			GET --> verAccount {
+			GET --> verAccount_SbOpen {
 				parameters [ id = "{AccountNumber}" ]
-				condition: OK(verAccount)
+				condition: OK(verAccount_SbOpen)
 			}
 			GET -> "T24.ContextEnquiry.ContextEnquiryList" {
-				parameters [ entity = "verAccount" ]
+				parameters [ entity = "verAccount_SbOpen" ]
 				title: "Context Enquiries"
 			}
-			onerror --> T24.verAccount.verAccount_errorHandler
+			onerror --> T24.verAccount_SbOpen.verAccount_SbOpen_errorHandler
 		}
 	
-		resource verAccount_hold {
+		resource verAccount_SbOpen_hold {
 			type: item
-			entity: verAccount
+			entity: verAccount_SbOpen
 			commands [ POST : HoldEntity ]
 			relations [ "http://temenostech.temenos.com/rels/hold" ]
-			path: "/verAccounts('{id}')/hold"
-			PUT -> verAccount_input {
+			path: "/verAccount_SbOpens('{id}')/hold"
+			PUT -> verAccount_SbOpen_input {
 				parameters [ id = "{AccountNumber}" ]
 				title: "input deal"
 			}
-			DELETE -> verAccount_delete {
+			DELETE -> verAccount_SbOpen_delete {
 				parameters [ id = "{AccountNumber}" ]
 				title: "delete"
 			}
 			onerror --> common.Errors.Errors
 		}
 	
-		resource verAccount_authorise {
+		resource verAccount_SbOpen_authorise {
 			type: item
-			entity: verAccount
+			entity: verAccount_SbOpen
 			commands [ PUT : AuthoriseEntity ]
 			relations [ "http://temenostech.temenos.com/rels/authorise" ]
-			path: "/verAccounts('{id}')/authorise"
-			GET --> verAccount_IAuth {
+			path: "/verAccount_SbOpens('{id}')/authorise"
+			GET --> verAccount_SbOpen_IAuth {
 				parameters [ id = "{AccountNumber}" ]
-				condition: OK(verAccount_IAuth)
+				condition: OK(verAccount_SbOpen_IAuth)
 			}
-			GET --> verAccount {
+			GET --> verAccount_SbOpen {
 				parameters [ id = "{AccountNumber}" ]
-				condition: OK(verAccount)
+				condition: OK(verAccount_SbOpen)
 			}
 			GET -> "T24.ContextEnquiry.ContextEnquiryList" {
-				parameters [ entity = "verAccount" ]
+				parameters [ entity = "verAccount_SbOpen" ]
 				title: "Context Enquiries"
 			}
-			onerror --> T24.verAccount.verAccount_errorHandler
+			onerror --> T24.verAccount_SbOpen.verAccount_SbOpen_errorHandler
 		}
 	
-		resource verAccount_changedValues {
+		resource verAccount_SbOpen_changedValues {
 			type: item
-			entity: verAccount
+			entity: verAccount_SbOpen
 			commands [ GET : GetChangedValues ]
 			relations [ "http://temenostech.temenos.com/rels/changedValues" ]
-			path: "/verAccounts('{id}')/changedValues"
+			path: "/verAccount_SbOpens('{id}')/changedValues"
 		}
 	
-		resource verAccount_audit {
+		resource verAccount_SbOpen_audit {
 			type: item
-			entity: verAccount
+			entity: verAccount_SbOpen
 			commands [ POST : ReviewEntity ]
 			relations [ "http://temenostech.temenos.com/rels/review" ]
-			path: "/verAccounts('{id}')/review"
-			GET -> verAccount {
+			path: "/verAccount_SbOpens('{id}')/review"
+			GET -> verAccount_SbOpen {
 				parameters [ id = "{AccountNumber}" ]
 			}
 			onerror --> common.Errors.Errors
 		}
 	
-		resource verAccount_reverse {
+		resource verAccount_SbOpen_reverse {
 			type: item
-			entity: verAccount
+			entity: verAccount_SbOpen
 			commands [ PUT : ReverseEntity ]
 			relations [ "http://temenostech.temenos.com/rels/reverse" ]
-			path: "/verAccounts('{id}')/reverse"
-			GET --> verAccount_IAuth {
+			path: "/verAccount_SbOpens('{id}')/reverse"
+			GET --> verAccount_SbOpen_IAuth {
 				parameters [ id = "{AccountNumber}" ]
-				condition: OK(verAccount_IAuth)
+				condition: OK(verAccount_SbOpen_IAuth)
 			}
-			GET --> verAccount_HAuth {
+			GET --> verAccount_SbOpen_HAuth {
 				parameters [ id = "{AccountNumber}" ]
-				condition: OK(verAccount_HAuth)
+				condition: OK(verAccount_SbOpen_HAuth)
 			}
-			onerror --> T24.verAccount.verAccount_errorHandler
+			onerror --> T24.verAccount_SbOpen.verAccount_SbOpen_errorHandler
 		}
 	
-		resource verAccount_validate {
+		resource verAccount_SbOpen_validate {
 			type: item
-			entity: verAccount
+			entity: verAccount_SbOpen
 			commands [ POST : ValidateEntity ]
 			relations [ "http://temenostech.temenos.com/rels/validate" ]
-			path: "/verAccounts('{id}')/validate"
+			path: "/verAccount_SbOpens('{id}')/validate"
 			GET +-> ProcessErrors {
 				title: "errors"
 				condition: OK(CheckIfError)
 			}
-			POST +-> verAccount_metadata {
+			POST +-> verAccount_SbOpen_metadata {
 				title: "metadata"
 			}
-			PUT -> verAccount_input {
+			PUT -> verAccount_SbOpen_input {
 				parameters [ id = "{AccountNumber}" ]
 				title: "input deal"
 			}
-			POST -> verAccount_hold {
+			POST -> verAccount_SbOpen_hold {
 				parameters [ id = "{AccountNumber}" ]
 				title: "hold deal"
 			}
 		}
 	
-		resource verAccount_IAuth {
+		resource verAccount_SbOpen_IAuth {
 			type: item
-			entity: verAccount
+			entity: verAccount_SbOpen
 			commands [ GET : GetIauthEntity ]
-			path: "/verAccounts_IAuth('{id}')"
-			POST +-> verAccount_metadata {
+			path: "/verAccount_SbOpens_IAuth('{id}')"
+			POST +-> verAccount_SbOpen_metadata {
 				title: "metadata"
 			}
-			GET +-> verAccount_changedValues {
+			GET +-> verAccount_SbOpen_changedValues {
 				parameters [ id = "{AccountNumber}" ]
 				title: "changed values"
 			}
-			POST -> verAccount_validate {
+			POST -> verAccount_SbOpen_validate {
 				parameters [ id = "{AccountNumber}" ]
 				title: "validate deal"
 			}
-			PUT -> verAccount_input {
+			PUT -> verAccount_SbOpen_input {
 				parameters [ id = "{AccountNumber}" ]
 				title: "input deal"
 			}
-			POST -> verAccount_hold {
+			POST -> verAccount_SbOpen_hold {
 				parameters [ id = "{AccountNumber}" ]
 				title: "hold deal"
 			}
-			POST -> verAccount_authorise {
+			POST -> verAccount_SbOpen_authorise {
 				parameters [ id = "{AccountNumber}" ]
 				title: "authorise deal"
 			}
-			DELETE -> verAccount_delete {
+			DELETE -> verAccount_SbOpen_delete {
 				parameters [ id = "{AccountNumber}" ]
 				title: "delete"
 			}
 			GET -> "T24.ContextEnquiry.ContextEnquiryList" {
-				parameters [ entity = "verAccount" ]
+				parameters [ entity = "verAccount_SbOpen" ]
 				title: "Context Enquiries"
 			}
 		}
 	
-		resource verAccount_delete {
+		resource verAccount_SbOpen_delete {
 			type: item
-			entity: verAccount
+			entity: verAccount_SbOpen
 			commands [ DELETE : DeleteEntity ]
 			relations [ "http://temenostech.temenos.com/rels/delete" ]
-			path: "/verAccounts('{id}')/delete"
+			path: "/verAccount_SbOpens('{id}')/delete"
 		}
 	
-		resource verAccountEntry {
+		resource verAccount_SbOpenEntry {
 			type: item
-			entity: verAccount
+			entity: verAccount_SbOpen
 			commands [ GET : NoopGET ]
-			relations [ "http://schemas.microsoft.com/ado/2007/08/dataservices/related/verAccount","http://temenostech.temenos.com/rels/contract" ]
-			path: "/verAccountEntry"
-			POST -> verAccount_new {
+			relations [ "http://schemas.microsoft.com/ado/2007/08/dataservices/related/verAccount_SbOpen","http://temenostech.temenos.com/rels/contract" ]
+			path: "/verAccount_SbOpenEntry"
+			POST -> verAccount_SbOpen_new {
 				title: "create new deal"
-				condition: OK(verAccount_autoId)
+				condition: OK(verAccount_SbOpen_autoId)
 			}
-			POST -> verAccount_populate {
+			POST -> verAccount_SbOpen_populate {
 				title: "populate existing deal"
 			}
-			GET -> "verAccount_see" {
+			GET -> "verAccount_SbOpen_see" {
 				parameters [ id = "@" ]
 				title: "See transaction"
 			}
-			GET -> "verAccount_IAuth_see" {
+			GET -> "verAccount_SbOpen_IAuth_see" {
 				parameters [ id = "@" ]
 				title: "GetIauthEntity"
 			}
-			GET -> "verAccount_HAuth_see" {
+			GET -> "verAccount_SbOpen_HAuth_see" {
 				parameters [ id = "@" ]
 				title: "GetHauthEntity"
 			}
-			GET -> "verAccount_IAuth" {
+			GET -> "verAccount_SbOpen_IAuth" {
 				parameters [ id = "@" ]
 				title: "GetIauthEntity"
 			}
-			GET -> "verAccount_HAuth" {
+			GET -> "verAccount_SbOpen_HAuth" {
 				parameters [ id = "@" ]
 				title: "GetHauthEntity"
 			}
-			GET +-> "verAccount_ContextEnquiries" {
+			GET +-> "verAccount_SbOpen_ContextEnquiries" {
 				title: "All context Enquiries"
 			}
-			POST -> verAccount_copy {
+			POST -> verAccount_SbOpen_copy {
 				title: "Copy deal"
 			}
-			POST -> verAccount_paste {
+			POST -> verAccount_SbOpen_paste {
 				title: "Paste deal"
 			}
 		}
 	
-		resource verAccount_populate {
+		resource verAccount_SbOpen_populate {
 			type: item
-			entity: verAccount
+			entity: verAccount_SbOpen
 			commands [ POST : CreateEntity ]
-			relations [ "http://schemas.microsoft.com/ado/2007/08/dataservices/related/verAccount","http://temenostech.temenos.com/rels/populate" ]
-			path: "/verAccounts()/populate"
-			POST -> verAccount_validate {
+			relations [ "http://schemas.microsoft.com/ado/2007/08/dataservices/related/verAccount_SbOpen","http://temenostech.temenos.com/rels/populate" ]
+			path: "/verAccount_SbOpens()/populate"
+			POST -> verAccount_SbOpen_validate {
 				parameters [ id = "{AccountNumber}" ]
 				title: "validate deal"
 			}
-			POST -> verAccount_input {
+			POST -> verAccount_SbOpen_input {
 				parameters [ id = "{AccountNumber}" ]
 				title: "input deal"
 			}
-			DELETE -> verAccount_delete {
+			DELETE -> verAccount_SbOpen_delete {
 				parameters [ id = "{AccountNumber}" ]
 				title: "delete"
-				condition: OK(verAccount_IAuth)
+				condition: OK(verAccount_SbOpen_IAuth)
 			}
-			POST -> verAccount_metadata {
+			POST -> verAccount_SbOpen_metadata {
 				title: "metadata"
 			}
 			GET -> "T24.ContextEnquiry.ContextEnquiryList" {
-				parameters [ entity = "verAccount" ]
+				parameters [ entity = "verAccount_SbOpen" ]
 				title: "Context Enquiries"
 			}
 		}
 	
-		resource verAccount_copy {
+		resource verAccount_SbOpen_copy {
 			type: item
-			entity: verAccount
+			entity: verAccount_SbOpen
 			commands [ POST : CopyEntity ]
 			relations [ "http://temenostech.temenos.com/rels/copy" ]
-			path: "/verAccounts()/copy"
+			path: "/verAccount_SbOpens()/copy"
 		}
 	
-		resource verAccount_paste {
+		resource verAccount_SbOpen_paste {
 			type: item
-			entity: verAccount
+			entity: verAccount_SbOpen
 			commands [ POST : PasteEntity ]
 			relations [ "http://temenostech.temenos.com/rels/paste" ]
-			path: "/verAccounts()/paste"
-			POST +-> verAccount_metadata {
+			path: "/verAccount_SbOpens()/paste"
+			POST +-> verAccount_SbOpen_metadata {
 				title: "metadata"
 			}
-			POST -> verAccount_validate {
+			POST -> verAccount_SbOpen_validate {
 				parameters [ id = "{AccountNumber}" ]
 				title: "validate deal"
 			}
-			PUT -> verAccount_input {
+			PUT -> verAccount_SbOpen_input {
 				parameters [ id = "{AccountNumber}" ]
 				title: "input deal"
 			}
-			POST -> verAccount_hold {
+			POST -> verAccount_SbOpen_hold {
 				parameters [ id = "{AccountNumber}" ]
 				title: "hold deal"
 			}
 		}
 	
-		resource verAccounts_enrichment {
+		resource verAccount_SbOpens_enrichment {
 			type: item
 			entity: Enrichment
 			commands [ GET : T24Enrichment {
-				properties [ entity = "verAccount" ]
+				properties [ entity = "verAccount_SbOpen" ]
 				} ]
 			relations [ "http://temenostech.temenos.com/rels/enrichment" ]
-			path: "/verAccounts()/enrichment"
+			path: "/verAccount_SbOpens()/enrichment"
 		}
 	
-		resource verAccount_autoId {
+		resource verAccount_SbOpen_autoId {
 			type: item
-			entity: verAccount
+			entity: verAccount_SbOpen
 			commands [ GET : CheckAutoIdSupport ]
 		}
 	
-		resource verAccount_restore {
+		resource verAccount_SbOpen_restore {
 			type: item
-			entity: verAccount
+			entity: verAccount_SbOpen
 			commands [ POST : RestoreEntity ]
 			relations [ "http://temenostech.temenos.com/rels/restore" ]
-			path: "/verAccounts('{id}')/restore"
-			GET --> verAccount_IAuth {
+			path: "/verAccount_SbOpens('{id}')/restore"
+			GET --> verAccount_SbOpen_IAuth {
 				parameters [ id = "{AccountNumber}" ]
-				condition: OK(verAccount_IAuth)
+				condition: OK(verAccount_SbOpen_IAuth)
 			}
-			GET --> verAccount {
+			GET --> verAccount_SbOpen {
 				parameters [ id = "{AccountNumber}" ]
-				condition: OK(verAccount)
+				condition: OK(verAccount_SbOpen)
 			}
-			POST -> verAccount_metadata {
+			POST -> verAccount_SbOpen_metadata {
 				title: "metadata"
 			}
 			GET -> "T24.ContextEnquiry.ContextEnquiryList" {
-				parameters [ entity = "verAccount" ]
+				parameters [ entity = "verAccount_SbOpen" ]
 				title: "Context Enquiries"
 			}
 			onerror --> common.Errors.Errors
 		}
 	
-		resource verAccounts_HAuth {
+		resource verAccount_SbOpens_HAuth {
 			type: collection
-			entity: verAccount
+			entity: verAccount_SbOpen
 			commands [ GET : GetHauthEntities {
 				properties [ filter = "{filter}" ]
 				} ]
-			path: "/verAccounts_HAuth()"
-			GET *-> verAccount_HAuth {
+			path: "/verAccount_SbOpens_HAuth()"
+			GET *-> verAccount_SbOpen_HAuth {
 				parameters [ id = "{AccountNumber}" ]
 			}
-			POST -> verAccount_new {
+			POST -> verAccount_SbOpen_new {
 				title: "create new deal"
-				condition: OK(verAccount_autoId)
+				condition: OK(verAccount_SbOpen_autoId)
 			}
-			POST -> verAccount_populate {
+			POST -> verAccount_SbOpen_populate {
 				title: "populate existing deal"
 			}
-			POST *-> verAccount_restore {
+			POST *-> verAccount_SbOpen_restore {
 				parameters [ id = "{AccountNumber}" ]
 				title: "restore deal"
 			}
 		}
 	
-		resource verAccount_HAuth {
+		resource verAccount_SbOpen_HAuth {
 			type: item
-			entity: verAccount
+			entity: verAccount_SbOpen
 			commands [ GET : GetHauthEntity ]
-			path: "/verAccounts_HAuth('{id}')"
-			POST +-> verAccount_metadata {
+			path: "/verAccount_SbOpens_HAuth('{id}')"
+			POST +-> verAccount_SbOpen_metadata {
 				title: "metadata"
 			}
-			POST -> verAccount_validate {
+			POST -> verAccount_SbOpen_validate {
 				parameters [ id = "{AccountNumber}" ]
 				title: "validate deal"
 			}
-			PUT -> verAccount_input {
+			PUT -> verAccount_SbOpen_input {
 				parameters [ id = "{AccountNumber}" ]
 				title: "input deal"
 			}
-			POST -> verAccount_hold {
+			POST -> verAccount_SbOpen_hold {
 				parameters [ id = "{AccountNumber}" ]
 				title: "hold deal"
 			}
-			POST -> verAccount_authorise {
+			POST -> verAccount_SbOpen_authorise {
 				parameters [ id = "{AccountNumber}" ]
 				title: "authorise deal"
 			}
-			DELETE -> verAccount_delete {
+			DELETE -> verAccount_SbOpen_delete {
 				parameters [ id = "{AccountNumber}" ]
 				title: "delete"
 			}
 			GET -> "T24.ContextEnquiry.ContextEnquiryList" {
-				parameters [ entity = "verAccount" ]
+				parameters [ entity = "verAccount_SbOpen" ]
 				title: "Context Enquiries"
 			}
 		}

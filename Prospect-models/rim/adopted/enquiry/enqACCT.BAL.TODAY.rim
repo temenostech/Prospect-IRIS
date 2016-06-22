@@ -5,31 +5,28 @@ domain T24 {
 	use common.T24Commands.*
 	use common.T24Events.*
 	use common.NextState.*
-	rim enqIntegrationEvents {
+	rim enqAcctBalToday {
 		command GETEntities
 		command GETEntity
 		basepath: "/{companyid}"
 	
-		resource enqIntegrationEventss {
+		resource enqAcctBalTodays {
 			type: collection
-			entity: enqIntegrationEvents
+			entity: enqAcctBalToday
 			commands [ GET : GETEntities {
 				properties [ filter = "{filter}" ]
 				} ]
-			path: "/enqIntegrationEventss()"
-			GET *-> enqIntegrationEvents {
-				parameters [ id = "{Id}" ]
-			}
-			GET *-> "T24.verIfEventsInterfaceTable.verIfEventsInterfaceTableEntry" {
-				id: "1"
+			path: "/enqAcctBalTodays()"
+			GET *-> enqAcctBalToday {
+				parameters [ id = "{Acc}" ]
 			}
 		}
 	
-		resource enqIntegrationEvents {
+		resource enqAcctBalToday {
 			type: item
-			entity: enqIntegrationEvents
+			entity: enqAcctBalToday
 			commands [ GET : GETEntity ]
-			path: "/enqIntegrationEventss('{id}')"
+			path: "/enqAcctBalTodays('{id}')"
 		}
 	
 	}

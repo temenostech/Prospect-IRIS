@@ -5,31 +5,32 @@ domain T24 {
 	use common.T24Commands.*
 	use common.T24Events.*
 	use common.NextState.*
-	rim enqStmtEntry {
+	rim enqStmtEntLast {
 		command GETEntities
 		command GETEntity
 		basepath: "/{companyid}"
 	
-		resource enqStmtEntrys {
+		resource enqStmtEntLasts {
 			type: collection
-			entity: enqStmtEntry
+			entity: enqStmtEntLast
 			commands [ GET : GETEntities {
 				properties [ filter = "{filter}" ]
 				} ]
-			path: "/enqStmtEntrys()"
-			GET *-> enqStmtEntry {
-				parameters [ id = "{Id}" ]
+			path: "/enqStmtEntLasts()"
+			GET *-> enqStmtEntLast {
+				parameters [ id = "{PrimaryKey}" ]
 			}
-			GET *-> "T24.verStmtEntry.verStmtEntryEntry" {
-				id: "1"
+			GET *-> locator t24ResourceLocator("{SId}") {
+				parameters [ id = "{SKey}",t24Intent = "View" ]
+				title: "Transaction details"
 			}
 		}
 	
-		resource enqStmtEntry {
+		resource enqStmtEntLast {
 			type: item
-			entity: enqStmtEntry
+			entity: enqStmtEntLast
 			commands [ GET : GETEntity ]
-			path: "/enqStmtEntrys('{id}')"
+			path: "/enqStmtEntLasts('{id}')"
 		}
 	
 	}

@@ -4,45 +4,29 @@ domain T24 {
 	use common.ODataCommands.*
 	use common.T24Commands.*
 	use common.T24Events.*
+	use common.NextState.*
 	rim enqCustomerInfo {
 		command GETEntities
 		command GETEntity
-		command MatchCommand
 		basepath: "/{companyid}"
 	
 		resource enqCustomerInfos {
 			type: collection
 			entity: enqCustomerInfo
-			view: GETEntities {
+			commands [ GET : GETEntities {
 				properties [ filter = "{filter}" ]
-			}
+				} ]
 			path: "/enqCustomerInfos()"
-
-			POST -> T24.verCustomer_Create.verCustomer_Create_new
-
 			GET *-> enqCustomerInfo {
 				parameters [ id = "{CusNo}" ]
-			}
-			POST *-> T24.verAccount_InternetAccount.verAccount_InternetAccount_new {
-				title: "Open Account"
-				condition: OK(CustomerKYCChecked)
 			}
 		}
 	
 		resource enqCustomerInfo {
 			type: item
 			entity: enqCustomerInfo
-			view: GETEntity
+			commands [ GET : GETEntity ]
 			path: "/enqCustomerInfos('{id}')"
-		}
-	
-		resource CustomerKYCChecked {
-		   type: item
-		   entity: Entity 
-		   view: MatchCommand {
-		      properties [ Expression="{KycComplete}='YES'" ]
-		   }
-		   path: "/CustomerKYCChecked/{KycComplete}"
 		}
 	
 	}

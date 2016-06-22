@@ -5,33 +5,28 @@ domain T24 {
 	use common.T24Commands.*
 	use common.T24Events.*
 	use common.NextState.*
-	rim enqAccountList {
+	rim enqStmtEntBook {
 		command GETEntities
 		command GETEntity
 		basepath: "/{companyid}"
 	
-		resource enqAccountLists {
+		resource enqStmtEntBooks {
 			type: collection
-			entity: enqAccountList
+			entity: enqStmtEntBook
 			commands [ GET : GETEntities {
 				properties [ filter = "{filter}" ]
 				} ]
-			path: "/enqAccountLists()"
-			GET *-> enqAccountList {
-				parameters [ id = "{Id}" ]
-			}
-			GET *-> "T24.verCustomerAccount.verCustomerAccount_see" {
-				parameters [ id = "{Customer}",t24Intent = "View" ]
-				title: "View "
-				id: "1"
+			path: "/enqStmtEntBooks()"
+			GET *-> enqStmtEntBook {
+				parameters [ id = "{PrimaryKey}" ]
 			}
 		}
 	
-		resource enqAccountList {
+		resource enqStmtEntBook {
 			type: item
-			entity: enqAccountList
+			entity: enqStmtEntBook
 			commands [ GET : GETEntity ]
-			path: "/enqAccountLists('{id}')"
+			path: "/enqStmtEntBooks('{id}')"
 		}
 	
 	}

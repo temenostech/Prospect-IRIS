@@ -4,29 +4,29 @@ domain T24 {
 	use common.ODataCommands.*
 	use common.T24Commands.*
 	use common.T24Events.*
+	use common.NextState.*
 	rim enqImageList {
 		command GETEntities
 		command GETEntity
+		command ImageDownload
 		basepath: "/{companyid}"
 	
 		resource enqImageLists {
 			type: collection
 			entity: enqImageList
-			view: GETEntities {
+			commands [ GET : GETEntities {
 				properties [ filter = "{filter}" ]
-			}
+				} ]
 			path: "/enqImageLists()"
 			GET *-> enqImageList {
 				parameters [ id = "{Key}" ]
-			}
-			GET *-> "T24.verImage_Default.verImage_DefaultEntry" {
 			}
 		}
 	
 		resource enqImageList {
 			type: item
 			entity: enqImageList
-			view: GETEntity
+			commands [ GET : GETEntity ]
 			path: "/enqImageLists('{id}')"
 		}
 	

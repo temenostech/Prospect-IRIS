@@ -5,32 +5,28 @@ domain T24 {
 	use common.T24Commands.*
 	use common.T24Events.*
 	use common.NextState.*
-	rim enqCustomerList {
+	rim enqIntegrationEvents {
 		command GETEntities
 		command GETEntity
 		basepath: "/{companyid}"
 	
-		resource enqCustomerLists {
+		resource enqIntegrationEventss {
 			type: collection
-			entity: enqCustomerList
+			entity: enqIntegrationEvents
 			commands [ GET : GETEntities {
 				properties [ filter = "{filter}" ]
 				} ]
-			path: "/enqCustomerLists()"
-			GET *-> enqCustomerList {
+			path: "/enqIntegrationEventss()"
+			GET *-> enqIntegrationEvents {
 				parameters [ id = "{Id}" ]
-			}
-			GET *-> locator t24ResourceLocator("{VerFinal}") {
-				parameters [ id = "{Id}",t24Intent = "View" ]
-				title: "View Record"
 			}
 		}
 	
-		resource enqCustomerList {
+		resource enqIntegrationEvents {
 			type: item
-			entity: enqCustomerList
+			entity: enqIntegrationEvents
 			commands [ GET : GETEntity ]
-			path: "/enqCustomerLists('{id}')"
+			path: "/enqIntegrationEventss('{id}')"
 		}
 	
 	}
