@@ -1,0 +1,362 @@
+# UTF-8
+/* Processing for Position Management */
+Domain PM_Engine
+    @t24:i (module=PM)
+    @java:Package (value=com.temenos.t24.datamodel.pm.pm_engine)
+namespace "http://www.temenos.com/t24/PM_Engine"
+metamodelVersion 1.30.6
+Classes {
+    CONTRACT_TRAN_ACTIVITY
+        @i18n:Description (en="")
+        @t24:i (t24Name=CONTRACT.TRAN.ACTIVITY, level=F, type=T, allowedFunctions="L P S", localRefAllowed=false)
+    {
+        CONTRACT_ID -> PM_Engine:CONTRACT_TRAN_ACTIVITY PK required
+            @i18n:Label (en="Contract Id")
+            @t24:i (align=L, inputBehaviour=I, maxLength=50, sysNumber=0.0, core=true, businessType=A, t24Name=CONTRACT.ID)
+        TRAN_ACTIVITY_ID : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=I, maxLength=44, sysNumber=1.0, core=true, t24Name=TRAN.ACTIVITY.ID)
+    }
+    PM_POSITION_CAPTURE
+        @i18n:Description (en="")
+        @t24:i (t24Name=PM.POSITION.CAPTURE, level=F, type=H, allowedFunctions="A C D E H I L P Q R S", localRefAllowed=false)
+    {
+        AMOUNT : T24BusinessTypes:AMT
+            @i18n:Label (en=Amount)
+            @i18n:Tooltip (en="Indicates the Amount")
+            @t24:i (align=R, inputBehaviour=F, maxLength=18, sysNumber=10.0, core=true, t24Name=AMOUNT, typeModifiers="9D")
+        ASST_LIAB_CD : PM_Engine:PM_POSITION_CAPTURE__ASST_LIAB_CD
+            @t24:i (align=R, inputBehaviour=F, maxLength=2, sysNumber=4.0, core=true, t24Name=ASST.LIAB.CD)
+        AUDITOR_CODE : T24BusinessTypes:A
+            @i18n:Label (en="Auditor Code")
+            @i18n:Tooltip (en="Auditor Code")
+            @t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=27.0, core=true, t24Name=AUDITOR.CODE)
+        AUDIT_DATE_TIME : T24BusinessTypes:RELTIME
+            @i18n:Label (en="Audit Date Time")
+            @i18n:Tooltip (en="Date and time when record was audited")
+            @t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=28.0, core=true, t24Name=AUDIT.DATE.TIME, mask="RDD DD  DD ##:##")
+        AUTHORISER : T24BusinessTypes:A
+            @i18n:Label (en=Authoriser)
+            @i18n:Tooltip (en="Indicates the User who Authorises the record")
+            @t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=24.0, core=true, t24Name=AUTHORISER)
+        CO_CODE -> ST_CompanyCreation:COMPANY
+            @i18n:Label (en=Company)
+            @t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=25.0, core=true, businessType=A, t24Name=CO.CODE, mask="R##-###-####")
+        CURRENCY -> ST_CurrencyConfig:CURRENCY
+            @i18n:Label (en=Ccy)
+            @t24:i (align=L, inputBehaviour=F, maxLength=3, sysNumber=9.0, core=true, businessType=A, t24Name=CURRENCY)
+        CURRENCY_MARKET -> ST_CurrencyConfig:CURRENCY_MARKET
+            @i18n:Label (en=Market)
+            @t24:i (align=R, inputBehaviour=F, maxLength=1, sysNumber=1.0, core=true, t24Name=CURRENCY.MARKET)
+        CURR_NO : T24BusinessTypes:N
+            @i18n:Label (en="Curr No")
+            @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=21.0, core=true, t24Name=CURR.NO)
+        DATE_TIME -> byValue PM_Engine:PM_POSITION_CAPTURE__DATE_TIME *
+            @t24:i (t24Name=DATE.TIME)
+        DEALER_DESK -> ST_Config:DEALER_DESK
+            @i18n:Label (en="Dealer Desk")
+            @i18n:Tooltip (en="Specifies the Dealer Desk handling the transaction")
+            @t24:i (align=L, inputBehaviour=F, maxLength=4, sysNumber=2.0, core=true, businessType=A, t24Name=DEALER.DESK)
+        DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+            @i18n:Label (en="Dept Code")
+            @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=26.0, core=true, t24Name=DEPT.CODE)
+        EXCHANGE_RATE : T24BusinessTypes:R
+            @i18n:Label (en="Exchange Rate")
+            @t24:i (align=R, inputBehaviour=F, maxLength=11, sysNumber=11.0, core=true, t24Name=EXCHANGE.RATE)
+        INPUTTER -> byValue PM_Engine:PM_POSITION_CAPTURE__INPUTTER *
+            @t24:i (t24Name=INPUTTER)
+        INTEREST_RATE : T24BusinessTypes:R
+            @i18n:Label (en="Interest Rate")
+            @i18n:Tooltip (en="Indicates interest rate")
+            @t24:i (align=R, inputBehaviour=F, maxLength=11, sysNumber=12.0, core=true, t24Name=INTEREST.RATE)
+        PM_POSN_TRAN_ID -> PM_Engine:PM_POSITION_CAPTURE PK required
+            @t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=0.0, core=true, businessType=A, t24Name=PM.POSN.TRAN.ID)
+        PM_PRODUCT : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=F, maxLength=2, sysNumber=6.0, core=true, t24Name=PM.PRODUCT)
+        POSITION_CLASS_ID -> PM_Config:PM_POSN_CLASS
+            @t24:i (align=L, inputBehaviour=F, maxLength=5, sysNumber=8.0, core=true, businessType=A, t24Name=POSITION.CLASS.ID)
+        POSITION_DATE : T24BusinessTypes:D
+            @i18n:Label (en="Spot Date")
+            @t24:i (align=R, inputBehaviour=F, maxLength=11, sysNumber=5.0, core=true, t24Name=POSITION.DATE)
+        POSITION_ID -> PM_Config:PM_POSN_REFERENCE
+            @t24:i (align=L, inputBehaviour=F, maxLength=7, sysNumber=7.0, core=true, businessType=A, t24Name=POSITION.ID)
+        POSITION_TYPE -> RE_Config:FX_POS_TYPE
+            @i18n:Label (en="Position Type")
+            @i18n:Tooltip (en="Position Type")
+            @t24:i (align=L, inputBehaviour=F, maxLength=2, sysNumber=3.0, core=true, businessType=IFRSPOSTYPE, t24Name=POSITION.TYPE)
+        PRODUCT_DESC : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=F, maxLength=35, sysNumber=13.0, core=true, t24Name=PRODUCT.DESC)
+        R1 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=14.0, core=true, t24Name=R1)
+        R2 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=15.0, core=true, t24Name=R2)
+        R3 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=16.0, core=true, t24Name=R3)
+        R4 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=17.0, core=true, t24Name=R4)
+        R5 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=18.0, core=true, t24Name=R5)
+        R6 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=19.0, core=true, t24Name=R6)
+        RECORD_STATUS : T24BusinessTypes:STAT
+            @i18n:Label (en="Record Status")
+            @t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=20.0, core=true, t24Name=RECORD.STATUS)
+    }
+    PM_POSITION_CAPTURE__DATE_TIME
+    {
+        DATE_TIME : T24BusinessTypes:RELTIME
+            @i18n:Label (en="Date time")
+            @i18n:Tooltip (en="Date and time when record was input or authorised")
+            @t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=23.0, core=true, t24Name=DATE.TIME, mask="RDD DD  DD ##:##")
+    }
+    PM_POSITION_CAPTURE__INPUTTER
+    {
+        INPUTTER : T24BusinessTypes:A
+            @i18n:Label (en=Inputter)
+            @i18n:Tooltip (en="The user who last updated the record")
+            @t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=22.0, core=true, t24Name=INPUTTER)
+    }
+    PM_TRAN_ACTIVITY
+        @i18n:Description (en="")
+        @t24:i (t24Name=PM.TRAN.ACTIVITY, level=F, type=L, allowedFunctions="L P S", localRefAllowed=false)
+    {
+        APPLICATION : T24BusinessTypes:A
+            @i18n:Label (en=Application)
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=20.0, core=true, t24Name=APPLICATION)
+        BOOKING_DATE : T24BusinessTypes:D
+            @i18n:Label (en="Booking Date")
+            @i18n:Tooltip (en="Booking Date")
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=21.0, core=true, t24Name=BOOKING.DATE)
+        CURRENCY_MARKET -> byValue PM_Engine:PM_TRAN_ACTIVITY__CURRENCY_MARKET *
+            @t24:i (t24Name=CURRENCY.MARKET)
+        DATE_TIME : T24BusinessTypes:N
+            @i18n:Label (en="Date time")
+            @i18n:Tooltip (en="Date and time when record was input or authorised")
+            @t24:i (align=R, inputBehaviour=N, maxLength=15, sysNumber=22.0, core=true, t24Name=DATE.TIME, mask="RDD DD  DD ##:##")
+        K_MARGIN -> byValue PM_Engine:PM_TRAN_ACTIVITY__K_MARGIN *
+            @t24:i (t24Name=K.MARGIN)
+        TRANSACTION_REF_NO -> PM_Engine:PM_TRAN_ACTIVITY PK required
+            @t24:i (align=L, inputBehaviour=I, maxLength=44, sysNumber=0.0, core=true, businessType=A, t24Name=TRANSACTION.REF.NO)
+        TRAN_PROC_CD -> byValue PM_Engine:PM_TRAN_ACTIVITY__TRAN_PROC_CD *
+            @t24:i (t24Name=TRAN.PROC.CD)
+    }
+    PM_TRAN_ACTIVITY_SAVE
+        @i18n:Description (en="")
+        @t24:i (t24Name=PM.TRAN.ACTIVITY.SAVE, level=F, type=L, allowedFunctions="L P S", localRefAllowed=false)
+    {
+        APPLICATION : T24BusinessTypes:A
+            @i18n:Label (en=Application)
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=20.0, core=true, t24Name=APPLICATION)
+        BOOKING_DATE : T24BusinessTypes:D
+            @i18n:Label (en="Booking Date")
+            @i18n:Tooltip (en="Booking Date")
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=21.0, core=true, t24Name=BOOKING.DATE)
+        CURRENCY_MARKET -> byValue PM_Engine:PM_TRAN_ACTIVITY_SAVE__CURRENCY_MARKET *
+            @t24:i (t24Name=CURRENCY.MARKET)
+        DATE_TIME : T24BusinessTypes:N
+            @i18n:Label (en="Date time")
+            @i18n:Tooltip (en="Date and time when record was input or authorised")
+            @t24:i (align=R, inputBehaviour=N, maxLength=15, sysNumber=22.0, core=true, t24Name=DATE.TIME, mask="RDD DD  DD ##:##")
+        TRANSACTION_REF_NO -> PM_Engine:PM_TRAN_ACTIVITY_SAVE PK required
+            @t24:i (align=L, inputBehaviour=I, maxLength=44, sysNumber=0.0, core=true, businessType=A, t24Name=TRANSACTION.REF.NO)
+        TRAN_PROC_CD -> byValue PM_Engine:PM_TRAN_ACTIVITY_SAVE__TRAN_PROC_CD *
+            @t24:i (t24Name=TRAN.PROC.CD)
+    }
+    PM_TRAN_ACTIVITY_SAVE__CURRENCY_MARKET
+    {
+        ACTY_PROC_CD : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=15.0, core=true, t24Name=ACTY.PROC.CD)
+        ASST_LIAB_CD : mml:Integer
+            @t24:i (align=R, inputBehaviour=I, maxLength=1, sysNumber=4.0, core=true, t24Name=ASST.LIAB.CD)
+        CCY_AMT : T24BusinessTypes:AMT
+            @i18n:Label (en="Ccy Amt")
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=9.0, core=true, t24Name=CCY.AMT, typeModifiers="-8.X")
+        CURRENCY : T24BusinessTypes:CCY
+            @i18n:Label (en=Ccy)
+            @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=8.0, core=true, t24Name=CURRENCY)
+        CURRENCY_MARKET : mml:Integer
+            @i18n:Label (en=Market)
+            @t24:i (align=R, inputBehaviour=I, maxLength=1, sysNumber=1.0, core=true, t24Name=CURRENCY.MARKET)
+        DEALER_DESK : mml:Integer
+            @i18n:Label (en="Dealer Desk")
+            @i18n:Tooltip (en="Specifies the Dealer Desk handling the transaction")
+            @t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=2.0, core=true, t24Name=DEALER.DESK)
+        EQUIV_CODE -> byValue PM_Engine:PM_TRAN_ACTIVITY_SAVE__CURRENCY_MARKET__EQUIV_CODE *
+            @t24:i (t24Name=EQUIV.CODE)
+        FIXED_AMT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=17.0, core=true, t24Name=FIXED.AMT)
+        FIXED_CCY : T24BusinessTypes:CCY
+            @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=16.0, core=true, t24Name=FIXED.CCY)
+        INT_KEY : mml:Integer
+            @i18n:Label (en="Interest Key")
+            @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=11.0, core=true, t24Name=INT.KEY)
+        MARGIN : T24BusinessTypes:A
+            @i18n:Label (en=Margin)
+            @t24:i (align=L, inputBehaviour=I, maxLength=12, sysNumber=12.0, core=true, t24Name=MARGIN)
+        POSN_CLASS : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=7.0, core=true, t24Name=POSN.CLASS)
+        POSN_TYPE : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=3.0, core=true, t24Name=POSN.TYPE)
+        RATE : T24BusinessTypes:R
+            @i18n:Label (en=Rate)
+            @i18n:Tooltip (en="Rate at which dividend/coupon is being paid")
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=10.0, core=true, t24Name=RATE)
+        VALUE_DATE : T24BusinessTypes:D
+            @i18n:Label (en="Value Date")
+            @i18n:Tooltip (en="Indicates the Value date of the Contract")
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=5.0, core=true, t24Name=VALUE.DATE)
+        VALUE_DATE_SFX : mml:Integer
+            @t24:i (align=R, inputBehaviour=I, maxLength=1, sysNumber=6.0, core=true, t24Name=VALUE.DATE.SFX)
+    }
+    PM_TRAN_ACTIVITY_SAVE__CURRENCY_MARKET__EQUIV_CODE
+    {
+        EQUIV_AMT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=14.0, core=true, t24Name=EQUIV.AMT, typeModifiers="-USD")
+        EQUIV_CODE : mml:Integer
+            @t24:i (align=R, inputBehaviour=I, maxLength=1, sysNumber=13.0, core=true, t24Name=EQUIV.CODE)
+    }
+    PM_TRAN_ACTIVITY_SAVE__TRAN_PROC_CD
+    {
+        TRAN_PROC_CD : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=18.0, core=true, t24Name=TRAN.PROC.CD)
+        TRAN_PROC_DETL : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=I, maxLength=11, sysNumber=19.0, core=true, t24Name=TRAN.PROC.DETL)
+    }
+    PM_TRAN_ACTIVITY__CURRENCY_MARKET
+    {
+        ACTY_PROC_CD : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=15.0, core=true, t24Name=ACTY.PROC.CD)
+        ASST_LIAB_CD : mml:Integer
+            @t24:i (align=R, inputBehaviour=I, maxLength=1, sysNumber=4.0, core=true, t24Name=ASST.LIAB.CD)
+        CCY_AMT : T24BusinessTypes:AMT
+            @i18n:Label (en="Ccy Amt")
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=9.0, core=true, t24Name=CCY.AMT, typeModifiers="-8.X")
+        CURRENCY : T24BusinessTypes:CCY
+            @i18n:Label (en=Ccy)
+            @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=8.0, core=true, t24Name=CURRENCY)
+        CURRENCY_MARKET -> ST_CurrencyConfig:CURRENCY_MARKET
+            @i18n:Label (en=Market)
+            @t24:i (align=R, inputBehaviour=I, maxLength=1, sysNumber=1.0, core=true, t24Name=CURRENCY.MARKET)
+        DEALER_DESK -> ST_Config:DEALER_DESK
+            @i18n:Label (en="Dealer Desk")
+            @i18n:Tooltip (en="Specifies the Dealer Desk handling the transaction")
+            @t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=2.0, core=true, t24Name=DEALER.DESK)
+        EQUIV_CODE -> byValue PM_Engine:PM_TRAN_ACTIVITY__CURRENCY_MARKET__EQUIV_CODE *
+            @t24:i (t24Name=EQUIV.CODE)
+        FIXED_AMT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=17.0, core=true, t24Name=FIXED.AMT)
+        FIXED_CCY : T24BusinessTypes:CCY
+            @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=16.0, core=true, t24Name=FIXED.CCY)
+        INT_KEY : mml:Integer
+            @i18n:Label (en="Interest Key")
+            @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=11.0, core=true, t24Name=INT.KEY)
+        MARGIN : T24BusinessTypes:A
+            @i18n:Label (en=Margin)
+            @t24:i (align=L, inputBehaviour=I, maxLength=12, sysNumber=12.0, core=true, t24Name=MARGIN)
+        POSN_CLASS -> PM_Config:PM_POSN_CLASS
+            @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=7.0, core=true, businessType=A, t24Name=POSN.CLASS)
+        POSN_TYPE -> RE_Config:FX_POS_TYPE
+            @t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=3.0, core=true, businessType=A, t24Name=POSN.TYPE)
+        RATE : T24BusinessTypes:R
+            @i18n:Label (en=Rate)
+            @i18n:Tooltip (en="Rate at which dividend/coupon is being paid")
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=10.0, core=true, t24Name=RATE)
+        VALUE_DATE : T24BusinessTypes:D
+            @i18n:Label (en="Value Date")
+            @i18n:Tooltip (en="Indicates the Value date of the Contract")
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=5.0, core=true, t24Name=VALUE.DATE)
+        VALUE_DATE_SFX : mml:Integer
+            @t24:i (align=R, inputBehaviour=I, maxLength=1, sysNumber=6.0, core=true, t24Name=VALUE.DATE.SFX)
+    }
+    PM_TRAN_ACTIVITY__CURRENCY_MARKET__EQUIV_CODE
+    {
+        EQUIV_AMT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=14.0, core=true, t24Name=EQUIV.AMT, typeModifiers="-USD")
+        EQUIV_CODE : mml:Integer
+            @t24:i (align=R, inputBehaviour=I, maxLength=1, sysNumber=13.0, core=true, t24Name=EQUIV.CODE)
+    }
+    PM_TRAN_ACTIVITY__K_MARGIN
+    {
+        K_MARGIN : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=N, maxLength=12, sysNumber=12.0, core=true, t24Name=K.MARGIN)
+    }
+    PM_TRAN_ACTIVITY__TRAN_PROC_CD
+    {
+        TRAN_PROC_CD : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=18.0, core=true, t24Name=TRAN.PROC.CD)
+        TRAN_PROC_DETL : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=I, maxLength=11, sysNumber=19.0, core=true, t24Name=TRAN.PROC.DETL)
+    }
+    PM_UPDATE_APPL
+        @i18n:Description (en="")
+        @t24:i (t24Name=PM.UPDATE.APPL, level=I, type=H, allowedFunctions="A C D E H I L P Q R S", localRefAllowed=false)
+    {
+        APPLICATION -> byValue PM_Engine:PM_UPDATE_APPL__APPLICATION *
+            @t24:i (t24Name=APPLICATION)
+        AUDITOR_CODE : T24BusinessTypes:A
+            @i18n:Label (en="Auditor Code")
+            @i18n:Tooltip (en="Auditor Code")
+            @t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=13.0, core=true, t24Name=AUDITOR.CODE)
+        AUDIT_DATE_TIME : T24BusinessTypes:RELTIME
+            @i18n:Label (en="Audit Date Time")
+            @i18n:Tooltip (en="Date and time when record was audited")
+            @t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=14.0, core=true, t24Name=AUDIT.DATE.TIME, mask="RDD DD  DD ##:##")
+        AUTHORISER : T24BusinessTypes:A
+            @i18n:Label (en=Authoriser)
+            @i18n:Tooltip (en="Indicates the User who Authorises the record")
+            @t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=10.0, core=true, t24Name=AUTHORISER)
+        CO_CODE -> ST_CompanyCreation:COMPANY
+            @i18n:Label (en=Company)
+            @t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=11.0, core=true, businessType=A, t24Name=CO.CODE, mask="R##-###-####")
+        CURR_NO : T24BusinessTypes:N
+            @i18n:Label (en="Curr No")
+            @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=7.0, core=true, t24Name=CURR.NO)
+        DATE_TIME -> byValue PM_Engine:PM_UPDATE_APPL__DATE_TIME *
+            @t24:i (t24Name=DATE.TIME)
+        DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+            @i18n:Label (en="Dept Code")
+            @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=12.0, core=true, t24Name=DEPT.CODE)
+        INPUTTER -> byValue PM_Engine:PM_UPDATE_APPL__INPUTTER *
+            @t24:i (t24Name=INPUTTER)
+        PM_CHANGE_KEY : PM_Engine:PM_UPDATE_APPL__PM_CHANGE_KEY PK required
+            @t24:i (align=L, inputBehaviour=I, maxLength=6, sysNumber=0.0, core=true, t24Name=PM.CHANGE.KEY)
+        PROCESSED_DATE : T24BusinessTypes:D
+            @t24:i (align=R, inputBehaviour=N, maxLength=12, sysNumber=2.0, core=true, t24Name=PROCESSED.DATE)
+        RECORD_STATUS : T24BusinessTypes:STAT
+            @i18n:Label (en="Record Status")
+            @t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=6.0, core=true, t24Name=RECORD.STATUS)
+        RESERVE_1 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=5.0, core=true, t24Name=RESERVE.1)
+        RESERVE_2 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=4.0, core=true, t24Name=RESERVE.2)
+        RESERVE_3 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=3.0, core=true, t24Name=RESERVE.3)
+    }
+    PM_UPDATE_APPL__APPLICATION
+    {
+        APPLICATION -> EB_SystemTables:EB_PRODUCT
+            @i18n:Label (en=Application)
+            @t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=1.0, core=true, businessType=A, t24Name=APPLICATION)
+    }
+    PM_UPDATE_APPL__DATE_TIME
+    {
+        DATE_TIME : T24BusinessTypes:RELTIME
+            @i18n:Label (en="Date time")
+            @i18n:Tooltip (en="Date and time when record was input or authorised")
+            @t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=9.0, core=true, t24Name=DATE.TIME, mask="RDD DD  DD ##:##")
+    }
+    PM_UPDATE_APPL__INPUTTER
+    {
+        INPUTTER : T24BusinessTypes:A
+            @i18n:Label (en=Inputter)
+            @i18n:Tooltip (en="The user who last updated the record")
+            @t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=8.0, core=true, t24Name=INPUTTER)
+    }
+}
+Enumerations {
+    PM_POSITION_CAPTURE__ASST_LIAB_CD : mml:string
+        1=1
+        2=2
+    PM_UPDATE_APPL__PM_CHANGE_KEY : mml:string
+        ADD=ADD
+        DELETE=DELETE
+}

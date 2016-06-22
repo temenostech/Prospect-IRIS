@@ -1,0 +1,960 @@
+Enquiry "STMT.ENT.TODAY" for "name:/AC_EntryCreation:STMT.ENTRY#" {
+    metamodelVersion: "1.30.6" full-description {
+        en = "Statement Entries Today"
+    }
+
+    description {
+        en = "Statement Entries Today"
+    }
+
+    zero-records-display: true
+    no-selection: true
+    start-line: 6
+    end-line: 20
+    build-routines {
+        jBC: "E.MB.STMT.TODAY.BUILD"
+    }
+
+    custom-selection {
+
+        field "ACCT.ID" {
+            mandatory: true
+            label {
+                en = "Account No"
+            }
+
+        }
+
+        None
+    }
+
+    field "NULLVAR" {
+        break-condition {
+            break: Once
+        }
+
+        comma-separator: false
+        operation: constant "\"\""
+    }
+
+    field "HDR.LINE1.1" {
+        display-type: "CLASS-ENQ.H.TITLE"
+        comma-separator: false
+        display-section: Header
+        position {
+            column: 1
+            line: 0
+        }
+
+        operation: constant "\"Entries Today\""
+    }
+
+    field "HDR.LINE2.1" {
+        display-type: "CLASS-ENQ.H.DATA.LABEL"
+        comma-separator: false
+        display-section: Header
+        position {
+            column: 1
+            line: 1
+        }
+
+        operation: constant "\"Account :\""
+    }
+
+    field "HDR.LINE2.2" {
+        display-type: "CLASS-ENQ.H.DATA.LABEL"
+        comma-separator: false
+        display-section: Header
+        position {
+            column: 1
+            line: 2
+        }
+
+        operation: constant "\"Customer :\""
+    }
+
+    field "HDR.LINE.3" {
+        display-type: "CLASS-ENQ.H.DATA.LABEL"
+        comma-separator: false
+        display-section: Header
+        position {
+            column: 1
+            line: 3
+        }
+
+        operation: constant "\"Currency :\""
+    }
+
+    field "@ID" {
+        length: 90
+        alignment: Left
+        comma-separator: false
+        processing-mode: Single
+        operation: application-field-name "@ID"
+    }
+
+    field "ACC" {
+        length: 19
+        alignment: Left
+        comma-separator: false
+        processing-mode: Single
+        operation: application-field-name "ACCOUNT.NUMBER"
+    }
+
+    field "ORIG.ACCT" {
+        comments: "The original account number"
+        comma-separator: false
+        operation: field-extract "ACC"
+        conversion: getFrom "ACCOUNT" "ORIGINAL.ACCT" false
+    }
+
+    field "AUTO.PAY.ACCT" {
+        comments: "Linked auto pay acct"
+        comma-separator: false
+        operation: field-extract "ACC"
+        conversion: getFrom "ACCOUNT" "AUTO.PAY.ACCT" false
+    }
+
+    field "B.ACC" {
+        comma-separator: false
+        operation: break-change "ACC"
+    }
+
+    field "D.ACC" {
+        display-type: "CLASS-ENQ.H.DATA" break-condition {
+            break: Page
+        }
+
+        length: 30
+        alignment: Left
+        comma-separator: false
+        display-section: Header
+        position {
+            column: 10
+            line: 1
+        }
+
+        operation: field-extract "ACC"
+    }
+
+    field "CUS" {
+        display-type: "CLASS-ENQ.H.DATA"
+        format: User break-condition {
+            break: Page
+        }
+
+        length: 10
+        alignment: Left
+        comma-separator: false
+        display-section: Header
+        position {
+            column: 10
+            line: 2
+        }
+
+        operation: field-extract "ACC"
+        conversion: getFrom "ACCOUNT" "CUSTOMER" false
+    }
+
+    field "CUSNM" {
+        format: User break-condition {
+            break: Page
+        }
+
+        comma-separator: false
+        operation: field-extract "CUS"
+        conversion: getFrom "CUSTOMER" "SHORT.NAME" false
+    }
+
+    field "ACCSNM" {
+        format: User break-condition {
+            break: Page
+        }
+
+        comma-separator: false
+        operation: field-extract "ACC"
+        conversion: getFrom "ACCOUNT" "SHORT.TITLE" false
+    }
+
+    field "SPACE" {
+        comma-separator: false
+        display-section: Header
+        position {
+            column: 35
+            line: 2
+        }
+
+        operation: constant "\" \""
+    }
+
+    field "PRTNM" {
+        display-type: "CLASS-ENQ.H.DATA"
+        length: 35
+        alignment: Left
+        comma-separator: false
+        display-section: Header
+        position {
+            column: 36
+            line: 2
+        }
+
+        operation: if "CUS" NotEquals "NULLVAR" process "CUSNM" "ACCSNM"
+    }
+
+    field "CCY" {
+        length: 3
+        alignment: Left
+        comma-separator: false
+        processing-mode: Single
+        operation: application-field-name "CURRENCY"
+    }
+
+    field "FIX.CCY" {
+        comments: "The fixed currency"
+        comma-separator: false
+        operation: field-extract "CCY"
+        conversion: getFixedCcy "CCY"
+    }
+
+    field "D.CCY" {
+        display-type: "CLASS-ENQ.H.DATA" break-condition {
+            break: Page
+        }
+
+        length: 3
+        alignment: Left
+        comma-separator: false
+        display-section: Header
+        position {
+            column: 10
+            line: 3
+        }
+
+        operation: field-extract "CCY"
+    }
+
+    field "COMP.CCY" {
+        length: 11
+        alignment: Left
+        comma-separator: false
+        processing-mode: Single
+        operation: application-field-name "COMPANY.CODE"
+        conversion: getFrom "COMPANY" "LOCAL.CURRENCY" false
+    }
+
+    field "AMOUNT" {
+        comma-separator: false
+        operation: if "COMP.CCY" Equals "CCY" process "AMOUNT.LCY" "AMOUNT.FCY"
+    }
+
+    field "LANG" {
+        break-condition {
+            break: Once
+        }
+
+        comma-separator: false
+        operation: language
+    }
+
+    field "TCODE" {
+        length: 5
+        alignment: Left
+        comma-separator: false
+        processing-mode: Single
+        operation: application-field-name "TRANSACTION.CODE"
+    }
+
+    field "CVDT" {
+        length: 11
+        alignment: Right
+        comma-separator: false
+        processing-mode: Single
+        operation: application-field-name "VALUE.DATE"
+        conversion: julian
+        conversion: oconv "D2"
+        conversion: replace {
+            oldData: "--"
+        }
+
+    }
+
+    field "DESC" {
+        comma-separator: false
+        operation: field-extract "@ID"
+        conversion: call
+        jBC: "@ E.GET.NARRATIVE"
+    }
+
+    field "TRANS.NARR" {
+        format: User
+        length: 3
+        alignment: Right
+        comma-separator: false
+        processing-mode: Single
+        operation: application-field-name "TRANSACTION.CODE"
+        conversion: getFrom "TRANSACTION" "NARRATIVE" false
+    }
+
+    field "VALID.DESC" {
+        comma-separator: false
+        operation: if "DESC" Equals "@ID" process "NULL" "DESC"
+    }
+
+    field "NOREC" {
+        break-condition {
+            break: Once
+        }
+
+        comma-separator: false
+        operation: constant "\"*** NO ENTRIES\""
+    }
+
+    field "NOREC1" {
+        break-condition {
+            break: Once
+        }
+
+        comma-separator: false
+        operation: constant "\"FOR PERIOD ***\""
+    }
+
+    field "NULL" {
+        break-condition {
+            break: Once
+        }
+
+        comma-separator: false
+        operation: constant "\"\""
+    }
+
+    field "DELIM" {
+        break-condition {
+            break: Once
+        }
+
+        comma-separator: false
+        operation: constant "\":\""
+    }
+
+    field "THEIR.REF" {
+        length: 16
+        alignment: Left
+        comma-separator: false
+        processing-mode: Single
+        operation: application-field-name "THEIR.REFERENCE"
+    }
+
+    field "B.AMT.BF" {
+        break-condition {
+            break: Once
+        }
+
+        length: 19
+        alignment: Left
+        comma-separator: false
+        processing-mode: Single
+        operation: application-field-name "ACCOUNT.NUMBER"
+        conversion: call
+        jBC: "@ E.CALC.OPEN.BALANCE"
+    }
+
+    field "BFWD" {
+        display-type: "CLASS-TITLE" break-condition {
+            break: Once
+        }
+
+        comma-separator: false
+        position {
+            column: 14
+            line: + 1
+        }
+
+        operation: constant "\"Balance at Period Start\""
+    }
+
+    field "POST" {
+        label {
+            en = "Booking Date"
+        }
+
+        format: Date
+        length: 9
+        alignment: Left
+        comma-separator: false
+        position {
+            column: 10
+        }
+
+        processing-mode: Single
+        operation: application-field-name "BOOKING.DATE"
+        conversion: julian
+        conversion: oconv "D2"
+        conversion: replace {
+            oldData: "--"
+        }
+
+    }
+
+    field "PDESC" {
+        label {
+            en = "Description"
+        }
+
+        length: 50
+        alignment: Left
+        comma-separator: false
+        position {
+            column: 14
+        }
+
+        operation: if "TCODE" NotEquals "NULL" process "TRANS.NARR" "NOREC"
+    }
+
+    field "EXTRA.NARR" {
+        comma-separator: false
+        position {
+            column: 14
+            line: + 1
+        }
+
+        operation: field-extract "VALID.DESC"
+    }
+
+    field "REFNO" {
+        label {
+            en = "Reference"
+        }
+
+        length: 60
+        alignment: Left
+        comma-separator: false
+        position {
+            column: 34
+        }
+
+        processing-mode: Single
+        operation: application-field-name "TRANS.REFERENCE"
+    }
+
+    field "VALDESC" {
+        label {
+            en = "Value Date"
+        }
+
+        format: Date
+        length: 25
+        alignment: Left
+        comma-separator: false
+        position {
+            column: 48
+        }
+
+        operation: if "TCODE" NotEquals "NULL" process "CVDT" "NOREC1"
+    }
+
+    field "COMP.CCY.02" {
+        length: 11
+        alignment: Left
+        comma-separator: false
+        processing-mode: Single
+        operation: application-field-name "COMPANY.CODE"
+        conversion: getFrom "COMPANY" "LOCAL.CURRENCY" false
+    }
+
+    field "AMOUNT.02" {
+        comma-separator: false
+        operation: if "COMP.CCY" Equals "CCY" process "AMOUNT.LCY" "AMOUNT.FCY"
+    }
+
+    field "ABS.DR.AMT" {
+        comma-separator: false
+        operation: field-extract "AMOUNT"
+        conversion: abs
+    }
+
+    field "DR.AMT" {
+        comma-separator: false
+        operation: if "AMOUNT" LessThan "ZERO" process "ABS.DR.AMT" "NULL"
+    }
+
+    field "DR.AMOUNT" {
+        label {
+            en = "Debit"
+        }
+
+        comma-separator: false
+        operation: field-extract "DR.AMT"
+    }
+
+    field "CR.AMOUNT" {
+        label {
+            en = "Credit"
+        }
+
+        comma-separator: false
+        operation: if "AMOUNT" Greater "ZERO" process "AMOUNT" "NULL"
+    }
+
+    field "AMT" {
+        label {
+            en = "Amount"
+        }
+
+        format: Currency "CCY" negative-pattern -#
+        length: 19
+        alignment: Right
+        comma-separator: false
+        position {
+            column: 60
+        }
+
+        processing-mode: Single
+        operation: field-extract "AMOUNT"
+    }
+
+    field "ZERO" {
+        comma-separator: false
+        operation: constant "\"0\""
+    }
+
+    field "ABS.DR.AMT.02" {
+        format: Currency "CCY" negative-pattern -#
+        comma-separator: false
+        operation: field-extract "AMT"
+        conversion: abs
+    }
+
+    field "DR.AMOUNT.02" {
+        comma-separator: false
+        operation: if "AMT" LessThan "ZERO" process "ABS.DR.AMT" "NULL"
+    }
+
+    field "DR.AMT.02" {
+        label {
+            en = "Debit"
+        }
+
+        comma-separator: false
+        operation: if "TCODE" NotEquals "NULL" process "DR.AMOUNT" "NULL"
+    }
+
+    field "CR.AMOUNT.02" {
+        label {
+            en = "Credit"
+        }
+
+        format: Currency "CCY" negative-pattern -#
+        comma-separator: false
+        operation: if "AMT" Greater "ZERO" process "AMT" "NULL"
+    }
+
+    field "OPENING.BALANCE" {
+        format: Currency "CCY" negative-pattern -# break-condition {
+            break: Once
+        }
+
+        length: 19
+        alignment: Right
+        comma-separator: false
+        position {
+            column: 60
+            line: + 1
+        }
+
+        operation: field-extract "B.AMT.BF"
+    }
+
+    field "ENTRY.BALANCE" {
+        comma-separator: false
+        operation: calc "AMT" + "ENTRY.BALANCE"
+    }
+
+    field "RUNNING.BALANCE" {
+        label {
+            en = "Closing Balance"
+        }
+
+        format: Currency "CCY" negative-pattern -#
+        length: 19
+        alignment: Right
+        comma-separator: false
+        operation: calc "B.AMT.BF" + "ENTRY.BALANCE"
+    }
+
+    field "HYPHN" {
+        break-condition {
+            break: Once
+        }
+
+        comma-separator: false
+        operation: constant "\"---------\""
+    }
+
+    field "AA" {
+        break-condition {
+            break: Once
+        }
+
+        comma-separator: false
+        operation: constant "\"AA\""
+    }
+
+    field "BALANCE" {
+        label {
+            en = "Closing Balance"
+        }
+
+        length: 19
+        alignment: Right
+        comma-separator: false
+        operation: if "TCODE" NotEquals "NULL" process "RUNNING.BALANCE" "HYPHN"
+    }
+
+    field "SYSTEM.ID" {
+        length: 4
+        alignment: Left
+        comma-separator: false
+        processing-mode: Single
+        operation: application-field-name "SYSTEM.ID"
+    }
+
+    field "TRANS.REF" {
+        length: 60
+        alignment: Left
+        comma-separator: false
+        processing-mode: Single
+        operation: application-field-name "TRANS.REFERENCE"
+    }
+
+    field "STMT.ID" {
+        comments: "Stmt entry id"
+        length: 90
+        alignment: Left
+        comma-separator: false
+        processing-mode: Single
+        operation: application-field-name "@ID"
+    }
+
+    field "BASE.APPL" {
+        comments: "Next level for drilldown"
+        comma-separator: false
+        operation: field-extract "SYSTEM.ID"
+        conversion: call
+        jBC: "@ E.READ.EB.SYSTEM.ID"
+    }
+
+    field "PS" {
+        break-condition {
+            break: Once
+        }
+
+        comma-separator: false
+        operation: constant "\"PS\""
+    }
+
+    field "FUN.SEE" {
+        comma-separator: false
+        operation: constant "\" S \""
+    }
+
+    field "PS.ID.CHK" {
+        comma-separator: false
+        operation: field-extract "REFNO"
+        conversion: extract from 2 to 1 delimited by "."
+    }
+
+    field "PS.ID.FIN1" {
+        comma-separator: false
+        operation: calc "BASE.APPL":"FUN.SEE"
+    }
+
+    field "PS.ID.FIN" {
+        comma-separator: false
+        operation: calc "PS.ID.FIN1":"PS.ID.CHK"
+    }
+
+    field "NET.ENTRY" {
+        comma-separator: false
+        operation: constant "\"NET...\""
+    }
+
+    field "STMT.ENT.DET" {
+        comma-separator: false
+        operation: constant "\"ENQ STMT.ENT.DETAIL\""
+    }
+
+    field "NET.SEL.ID" {
+        comma-separator: false
+        operation: constant "\"STMT.ENTRY.ID EQ \""
+    }
+
+    field "NET.SEL.CRIT" {
+        comma-separator: false
+        operation: calc "NET.SEL.ID":"STMT.ID"
+    }
+
+    field "NET.SEL.FORM" {
+        comma-separator: false
+        operation: if "REFNO" Matches "NET.ENTRY" process "NET.SEL.CRIT" "NULL"
+    }
+
+    field "Y.TRAN.ID" {
+        comma-separator: false
+        operation: calc "BASE.APPL":"FUN.SEE"
+    }
+
+    field "AA.ID.FORM" {
+        comma-separator: false
+        operation: constant "\"AA.ARRANGEMENT.ACTIVITY\""
+    }
+
+    field "AA.ID.FIN1" {
+        comma-separator: false
+        operation: calc "AA.ID.FORM":"FUN.SEE"
+    }
+
+    field "AA.ID.FIN" {
+        comma-separator: false
+        operation: calc "AA.ID.FIN1":"REFNO"
+    }
+
+    field "Y.TRAN.ID.FIN" {
+        comma-separator: false
+        operation: calc "Y.TRAN.ID":"REFNO"
+    }
+
+    field "Y.STMT.ID" {
+        comma-separator: false
+        operation: calc "STMT.ENTRY":"FUN.SEE"
+    }
+
+    field "Y.STMT.ID.FIN" {
+        comma-separator: false
+        operation: calc "Y.STMT.ID":"STMT.ID"
+    }
+
+    field "CQ.ID" {
+        comma-separator: false
+        operation: field-extract "SYSTEM.ID"
+        conversion: replace {
+            oldData: "CQ"
+            newData: "CHEQUE.COLLECTION"
+        }
+
+    }
+
+    field "CQ.RET" {
+        length: 60
+        alignment: Left
+        comma-separator: false
+        processing-mode: Single
+        operation: application-field-name "OUR.REFERENCE"
+        conversion: extract from 1 to 2
+    }
+
+    field "CHQ.COLL.ID" {
+        length: 36
+        alignment: Left
+        comma-separator: false
+        processing-mode: Single
+        operation: application-field-name "CHQ.COLL.ID"
+        conversion: extract from 1 to 0 delimited by "-"
+    }
+
+    field "CQ.REF" {
+        comma-separator: false
+        operation: calc "CQ.ID":"FUN.SEE":"CHQ.COLL.ID"
+    }
+
+    field "CASH.POOL.REF" {
+        comma-separator: false
+        operation: field-extract "TRANS.REF"
+        conversion: extract from 3 to 1 delimited by "-"
+    }
+
+    field "SWEEP.REF" {
+        comma-separator: false
+        operation: field-extract "TRANS.REF"
+        conversion: extract from 2 to 1 delimited by "-"
+    }
+
+    field "PO" {
+        comma-separator: false
+        operation: constant "\"PO\""
+    }
+
+    field "SW" {
+        comma-separator: false
+        operation: constant "\"SW\""
+    }
+
+    field "ACCP" {
+        comma-separator: false
+        operation: constant "\"ACCP\""
+    }
+
+    field "ACSW" {
+        comma-separator: false
+        operation: constant "\"ACSW\""
+    }
+
+    field "CHECK.ACCP" {
+        comma-separator: false
+        operation: if "CASH.POOL.REF" NotEquals "PO" process "Y.STMT.ID.FIN" "Y.TRAN.ID.FIN"
+    }
+
+    field "CHECK.ACSW.REF" {
+        comma-separator: false
+        operation: if "SWEEP.REF" NotEquals "SW" process "Y.STMT.ID.FIN" "Y.TRAN.ID.FIN"
+    }
+
+    field "CHECK.ACSW" {
+        comma-separator: false
+        operation: if "SYSTEM.ID" Equals "ACSW" process "CHECK.ACSW.REF" "Y.TRAN.ID.FIN"
+    }
+
+    field "Y.CHECK.TRAN.ID" {
+        comma-separator: false
+        operation: if "SYSTEM.ID" Equals "ACCP" process "CHECK.ACCP" "CHECK.ACSW"
+    }
+
+    field "CQ.MOD2" {
+        comma-separator: false
+        operation: if "CQ.RET" Equals "TT" process "CQ.REF" "Y.CHECK.TRAN.ID"
+    }
+
+    field "CQ.MOD" {
+        comma-separator: false
+        operation: if "SYSTEM.ID" Equals "CQ" process "CQ.MOD2" "NULL"
+    }
+
+    field "Y.PS.ID" {
+        comma-separator: false
+        operation: if "SYSTEM.ID" Equals "PS" process "PS.ID.FIN" "CQ.MOD2"
+    }
+
+    field "Y.AA.ID" {
+        comma-separator: false
+        operation: if "BASE.APPL" Equals "AA.ID.FORM" process "AA.ID.FIN" "Y.PS.ID"
+    }
+
+    field "NET.DET.ID" {
+        comma-separator: false
+        operation: if "REFNO" Matches "NET.ENTRY" process "STMT.ENT.DET" "Y.DRILL"
+    }
+
+    field "Y.DRILL" {
+        comma-separator: false
+        operation: if "BASE.APPL" Equals "NULL" process "Y.STMT.ID.FIN" "Y.AA.ID"
+    }
+
+    field "ENT.TOT" {
+        break-condition {
+            field: "B.ACC"
+        }
+
+        comma-separator: false
+        operation: total "AMT"
+    }
+
+    field "NO" {
+        break-condition {
+            break: Once
+        }
+
+        comma-separator: false
+        operation: constant "\"N\""
+    }
+
+    field "STMT.ENTRY" {
+        break-condition {
+            break: Once
+        }
+
+        comma-separator: false
+        operation: constant "\"STMT.ENTRY\""
+    }
+
+    field "ZERO.02" {
+        break-condition {
+            break: Once
+        }
+
+        comma-separator: false
+        operation: constant "\"0\""
+    }
+
+    field "ZER1" {
+        break-condition {
+            break: Once
+        }
+
+        comma-separator: false
+        operation: if "TOTAL" Equals "ZERO" process "TOTAL" "B.AMT.BF"
+    }
+
+    field "D.BAL" {
+        break-condition {
+            field: "B.ACC"
+        }
+
+        comma-separator: false
+        position {
+            column: 14
+            line: + 1
+        }
+
+        operation: constant "\"Balance at Period End\""
+    }
+
+    field "TOTAL" {
+        label {
+            en = "Closing Balance"
+        }
+
+        format: Currency "CCY" negative-pattern -# break-condition {
+            field: "B.ACC"
+        }
+
+        length: 19
+        alignment: Right
+        comma-separator: false
+        position {
+            column: 60
+            line: + 1
+        }
+
+        operation: calc "ENT.TOT" + "B.AMT.BF"
+    }
+
+    field "NULL.02" {
+        comma-separator: false
+        operation: constant "\"\""
+    }
+
+    field "ZERORECORDS" {
+        display-type: "CLASS-ENQ.NORECS" break-condition {
+            break: None
+        }
+
+        comma-separator: false
+        display-section: Header
+        position {
+            column: 1
+        }
+
+        operation: constant "\"Either incorrect account number or no entries\""
+    }
+
+    drilldown "1" {
+        description {
+            en = "Transaction Detail"
+        }
+
+        label-field: "VALDESC"
+        image: "view.gif"
+        criteria: "NET.SEL.FORM"
+        from-field: "NET.DET.ID"
+    }
+
+}

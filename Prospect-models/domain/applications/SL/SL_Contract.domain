@@ -1,0 +1,1487 @@
+# UTF-8
+/* Template Servicing of Syndicated Loans */
+Domain SL_Contract
+    @t24:i (module=SL)
+    @java:Package (value=com.temenos.t24.datamodel.sl.sl_contract)
+namespace "http://www.temenos.com/t24/SL_Contract"
+metamodelVersion 1.30.6
+Classes {
+    SL_ACCOUNT_BALANCES
+        @i18n:Description (en="")
+        @t24:i (t24Name=SL.ACCOUNT.BALANCES, level=F, type=L, allowedFunctions="L P S", localRefAllowed=false)
+    {
+        FAC_ID : T24BusinessTypes:N
+            @i18n:Label (en="Facility Id")
+            @t24:i (align=L, inputBehaviour=N, maxLength=12, core=false, t24Name=FAC.ID, genOperation="@ID[1,12]")
+        KEY -> SL_Contract:SL_ACCOUNT_BALANCES PK required
+            @i18n:Label (en=Key)
+            @i18n:Tooltip (en="Indicates th transaction key")
+            @t24:i (align=L, inputBehaviour=I, maxLength=14, sysNumber=0.0, core=true, businessType=A, t24Name=KEY)
+        SL_CCY : T24BusinessTypes:N
+            @i18n:Label (en=Ccy)
+            @t24:i (align=L, inputBehaviour=N, maxLength=3, core=false, t24Name=SL.CCY, genOperation="@ID>FACILITY>SL.CURRENCY")
+        SL_MARKER : T24BusinessTypes:N
+            @i18n:Label (en="Tranche Ind")
+            @t24:i (align=L, inputBehaviour=N, maxLength=3, core=false, t24Name=SL.MARKER, genOperation="@ID>SL.FACI.BALANCES>TRANCHE.IND")
+        SL_MNEMONIC : T24BusinessTypes:N
+            @i18n:Label (en="SL Mnemonic")
+            @t24:i (align=L, inputBehaviour=N, maxLength=10, core=false, t24Name=SL.MNEMONIC, genOperation="@ID>FACILITY>MNEMONIC")
+        TR_CODE -> byValue SL_Contract:SL_ACCOUNT_BALANCES__TR_CODE *
+            @t24:i (t24Name=TR.CODE)
+    }
+    SL_ACCOUNT_BALANCES__TR_CODE
+    {
+        PARTICIPANT -> byValue SL_Contract:SL_ACCOUNT_BALANCES__TR_CODE__PARTICIPANT *
+            @t24:i (t24Name=PARTICIPANT)
+        TR_AMOUNT : T24BusinessTypes:AMT
+            @i18n:Label (en="Tranche Amount")
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=2.0, core=true, t24Name=TR.AMOUNT)
+        TR_CODE : mml:Integer
+            @i18n:Label (en=Tranche)
+            @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=1.0, core=true, t24Name=TR.CODE)
+    }
+    SL_ACCOUNT_BALANCES__TR_CODE__PARTICIPANT
+    {
+        PARTICIPANT -> ST_Customer:CUSTOMER
+            @i18n:Label (en=Participant)
+            @t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=3.0, core=true, businessType=CUS, t24Name=PARTICIPANT)
+        PART_AMOUNT : T24BusinessTypes:AMT
+            @i18n:Label (en="Participant Amount")
+            @i18n:Tooltip (en="Define Participant\'s Amount")
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=4.0, core=true, t24Name=PART.AMOUNT)
+    }
+    SL_BS_AMORTISE_DETAILS
+        @i18n:Description (en="")
+        @t24:i (t24Name=SL.BS.AMORTISE.DETAILS, level=F, type=L, allowedFunctions="L P S", localRefAllowed=false)
+    {
+        AMORTISED_AMT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=5.0, core=true, t24Name=AMORTISED.AMT)
+        AMORTISE_FREQ : T24BusinessTypes:FQU
+            @i18n:Label (en="Amortize Frequency")
+            @i18n:Tooltip (en="Frequency for Amortisation")
+            @t24:i (align=L, inputBehaviour=I, maxLength=13, sysNumber=6.0, core=true, t24Name=AMORTISE.FREQ, mask="RDDDD DD  DD #####")
+        AMORT_DIS_AMT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=10.0, core=true, t24Name=AMORT.DIS.AMT)
+        AMT_DISCOUNT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=9.0, core=true, t24Name=AMT.DISCOUNT)
+        AMT_PREMIUM : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=8.0, core=true, t24Name=AMT.PREMIUM)
+        END_DATE : T24BusinessTypes:D
+            @i18n:Label (en="End Date")
+            @i18n:Tooltip (en="End Date")
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=2.0, core=true, t24Name=END.DATE)
+        ID -> SL_Contract:SL_BS_AMORTISE_DETAILS PK required
+            @i18n:Label (en="Transaction Ref")
+            @i18n:Tooltip (en="Transaction Reference")
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=0.0, core=true, businessType=A, t24Name=ID)
+        NEXT_AMORT_DATE : T24BusinessTypes:D
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=4.0, core=true, t24Name=NEXT.AMORT.DATE)
+        PRIN_CHANGE_DATE : T24BusinessTypes:D
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=7.0, core=true, t24Name=PRIN.CHANGE.DATE)
+        START_DATE : T24BusinessTypes:D
+            @i18n:Label (en="Start Date")
+            @i18n:Tooltip (en="Start Date")
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=1.0, core=true, t24Name=START.DATE)
+        TOT_AMT_TO_AMORT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=3.0, core=true, t24Name=TOT.AMT.TO.AMORT)
+    }
+    SL_CUSTOMER_LOANS
+        @i18n:Description (en="")
+        @t24:i (t24Name=SL.CUSTOMER.LOANS, level=F, type=L, allowedFunctions="L P S", localRefAllowed=false)
+    {
+        CUSTOMER_ID -> SL_Contract:SL_CUSTOMER_LOANS PK required
+            @i18n:Label (en="Customer Id")
+            @i18n:Tooltip (en="Identifies the Customer for the transaction.")
+            @t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=0.0, core=true, businessType=CUS, t24Name=CUSTOMER.ID)
+        LOAN_ID -> byValue SL_Contract:SL_CUSTOMER_LOANS__LOAN_ID *
+            @t24:i (t24Name=LOAN.ID)
+    }
+    SL_CUSTOMER_LOANS__LOAN_ID
+    {
+        LOAN_ID : T24BusinessTypes:A
+            @i18n:Label (en="Loan Id")
+            @t24:i (align=L, inputBehaviour=I, maxLength=25, sysNumber=1.0, core=true, t24Name=LOAN.ID)
+    }
+    SL_EXPOSURE_LEVEL
+        @i18n:Description (en="")
+        @t24:i (t24Name=SL.EXPOSURE.LEVEL, level=F, type=L, allowedFunctions="L P S", localRefAllowed=false)
+    {
+        EXP_DATE -> byValue SL_Contract:SL_EXPOSURE_LEVEL__EXP_DATE *
+            @t24:i (t24Name=EXP.DATE)
+        KEY -> SL_Contract:SL_EXPOSURE_LEVEL PK required
+            @i18n:Label (en=Key)
+            @i18n:Tooltip (en="Indicates th transaction key")
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=0.0, core=true, businessType=A, t24Name=KEY)
+    }
+    SL_EXPOSURE_LEVEL__EXP_DATE
+    {
+        DECREASE_AMT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=2.0, core=true, t24Name=DECREASE.AMT)
+        EXP_AMOUNT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=3.0, core=true, t24Name=EXP.AMOUNT)
+        EXP_DATE : T24BusinessTypes:D
+            @i18n:Label (en="Exposure Date")
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=1.0, core=true, t24Name=EXP.DATE)
+        UTIL_AMOUNT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=4.0, core=true, t24Name=UTIL.AMOUNT)
+    }
+    SL_FACILITY_LOANS
+        @i18n:Description (en="")
+        @t24:i (t24Name=SL.FACILITY.LOANS, level=F, type=L, allowedFunctions="L P S", localRefAllowed=false)
+    {
+        FACI_LN_CCY -> SL_Contract:SL_FACILITY_LOANS PK required
+            @t24:i (align=L, inputBehaviour=I, maxLength=14, sysNumber=0.0, core=true, businessType=A, t24Name=FACI.LN.CCY)
+        LOAN_ID -> byValue SL_Contract:SL_FACILITY_LOANS__LOAN_ID *
+            @t24:i (t24Name=LOAN.ID)
+    }
+    SL_FACILITY_LOANS__LOAN_ID
+    {
+        BASE_CCY_AMT : mml:Integer
+            @i18n:Label (en="Base CCY Amount")
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=4.0, core=true, t24Name=BASE.CCY.AMT)
+        DEAL_CURRENCY -> ST_CurrencyConfig:CURRENCY
+            @i18n:Label (en=Ccy)
+            @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=2.0, core=true, t24Name=DEAL.CURRENCY)
+        FAC_OWN_AMOUNT : mml:Integer
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=3.0, core=true, t24Name=FAC.OWN.AMOUNT)
+        LOAN_AMOUNT : mml:Integer
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=5.0, core=true, t24Name=LOAN.AMOUNT)
+        LOAN_ID : mml:Integer
+            @i18n:Label (en="Loan Id")
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=1.0, core=true, t24Name=LOAN.ID)
+        MATURITY_DATE : mml:Integer
+            @i18n:Label (en="Maturity Date")
+            @i18n:Tooltip (en="Indicates the Maturity Date of the Transaction")
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=6.0, core=true, t24Name=MATURITY.DATE)
+        SCH_DEFINED : mml:Integer
+            @t24:i (align=R, inputBehaviour=I, maxLength=1, sysNumber=7.0, core=true, t24Name=SCH.DEFINED)
+    }
+    SL_FACI_LOAN_CURRENCY
+        @i18n:Description (en="")
+        @t24:i (t24Name=SL.FACI.LOAN.CURRENCY, level=F, type=L, allowedFunctions="L P S", localRefAllowed=false)
+    {
+        FACI_LN_CCY -> SL_Contract:SL_FACI_LOAN_CURRENCY PK required
+            @t24:i (align=L, inputBehaviour=I, maxLength=18, sysNumber=0.0, core=true, businessType=A, t24Name=FACI.LN.CCY)
+        LOAN_ID -> byValue SL_Contract:SL_FACI_LOAN_CURRENCY__LOAN_ID *
+            @t24:i (t24Name=LOAN.ID)
+    }
+    SL_FACI_LOAN_CURRENCY__LOAN_ID
+    {
+        LOAN_ID : T24BusinessTypes:A
+            @i18n:Label (en="Loan Id")
+            @t24:i (align=L, inputBehaviour=I, maxLength=19, sysNumber=1.0, core=true, t24Name=LOAN.ID)
+    }
+    SL_FACI_LOAN_CUST_AMT
+        @i18n:Description (en="")
+        @t24:i (t24Name=SL.FACI.LOAN.CUST.AMT, level=F, type=L, allowedFunctions="L P S", localRefAllowed=false)
+    {
+        ALLOWED_AMT : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=I, maxLength=19, sysNumber=1.0, core=true, t24Name=ALLOWED.AMT)
+        KEY -> SL_Contract:SL_FACI_LOAN_CUST_AMT PK required
+            @i18n:Label (en=Key)
+            @i18n:Tooltip (en="Indicates th transaction key")
+            @t24:i (align=L, inputBehaviour=I, maxLength=25, sysNumber=0.0, core=true, businessType=A, t24Name=KEY, mask="##/#####/#####/###/##########")
+        LOAN_ID -> byValue SL_Contract:SL_FACI_LOAN_CUST_AMT__LOAN_ID *
+            @t24:i (t24Name=LOAN.ID)
+        RESERVED_AMT : T24BusinessTypes:A
+            @i18n:Label (en="Reserved Amount")
+            @t24:i (align=L, inputBehaviour=I, maxLength=19, sysNumber=2.0, core=true, t24Name=RESERVED.AMT)
+    }
+    SL_FACI_LOAN_CUST_AMT__LOAN_ID
+    {
+        LOAN_AMT : T24BusinessTypes:A
+            @i18n:Label (en="Loan Amt")
+            @t24:i (align=L, inputBehaviour=I, maxLength=19, sysNumber=4.0, core=true, t24Name=LOAN.AMT)
+        LOAN_ID : T24BusinessTypes:A
+            @i18n:Label (en="Loan Id")
+            @t24:i (align=L, inputBehaviour=I, maxLength=19, sysNumber=3.0, core=true, t24Name=LOAN.ID)
+    }
+    SL_FACI_SCHEDULES
+        @i18n:Description (en="")
+        @t24:i (t24Name=SL.FACI.SCHEDULES, level=F, type=L, allowedFunctions="L P S", localRefAllowed=false)
+    {
+        CHG_CURRENCY -> byValue SL_Contract:SL_FACI_SCHEDULES__CHG_CURRENCY *
+            @t24:i (t24Name=CHG.CURRENCY)
+        ID -> SL_Contract:SL_FACI_SCHEDULES PK required
+            @i18n:Label (en="Transaction Ref")
+            @i18n:Tooltip (en="Transaction Reference")
+            @t24:i (align=L, inputBehaviour=I, maxLength=40, sysNumber=0.0, core=true, businessType=A, t24Name=ID)
+        SCHED_DATE : T24BusinessTypes:N
+            @i18n:Label (en="Schedule Date")
+            @t24:i (align=L, inputBehaviour=N, maxLength=8, core=false, t24Name=SCHED.DATE, genOperation="@ID[8]")
+        SCH_TYPE -> byValue SL_Contract:SL_FACI_SCHEDULES__SCH_TYPE *
+            @t24:i (t24Name=SCH.TYPE)
+    }
+    SL_FACI_SCHEDULES_PAST_HIST
+        @i18n:Description (en="")
+        @t24:i (t24Name=SL.FACI.SCHEDULES.PAST.HIST, level=F, type=L, allowedFunctions="L P S", localRefAllowed=false)
+    {
+        CHG_CURRENCY -> byValue SL_Contract:SL_FACI_SCHEDULES_PAST_HIST__CHG_CURRENCY *
+            @t24:i (t24Name=CHG.CURRENCY)
+        ID -> SL_Contract:SL_FACI_SCHEDULES_PAST_HIST PK required
+            @i18n:Label (en="Transaction Ref")
+            @i18n:Tooltip (en="Transaction Reference")
+            @t24:i (align=L, inputBehaviour=I, maxLength=40, sysNumber=0.0, core=true, businessType=A, t24Name=ID)
+        SCH_TYPE -> byValue SL_Contract:SL_FACI_SCHEDULES_PAST_HIST__SCH_TYPE *
+            @t24:i (t24Name=SCH.TYPE)
+    }
+    SL_FACI_SCHEDULES_PAST_HIST__CHG_CURRENCY
+    {
+        BUY_SELL_ID -> byValue SL_Contract:SL_FACI_SCHEDULES_PAST_HIST__CHG_CURRENCY__BUY_SELL_ID *
+            @t24:i (t24Name=BUY.SELL.ID)
+        CHG_CODE -> byValue SL_Contract:SL_FACI_SCHEDULES_PAST_HIST__CHG_CURRENCY__CHG_CODE *
+        SCH_AMOUNT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=5.0, core=true, t24Name=SCH.AMOUNT)
+    }
+    SL_FACI_SCHEDULES_PAST_HIST__CHG_CURRENCY__BUY_SELL_ID
+    {
+        BUY_SELL_ID : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=I, maxLength=24, sysNumber=6.0, core=true, t24Name=BUY.SELL.ID)
+    }
+    SL_FACI_SCHEDULES_PAST_HIST__CHG_CURRENCY__CHG_CODE
+    {
+        CHG_AMOUNT : T24BusinessTypes:AMT
+            @i18n:Label (en="Charge Amount")
+            @i18n:Tooltip (en="Defines charge amount")
+            @t24:i (align=R, inputBehaviour=I, maxLength=16, sysNumber=4.0, core=true, t24Name=CHG.AMOUNT)
+        CHG_CURRENCY : T24BusinessTypes:CCY
+            @i18n:Label (en="Chg Currency")
+            @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=3.0, core=true, t24Name=CHG.CURRENCY)
+    }
+    SL_FACI_SCHEDULES_PAST_HIST__SCH_TYPE
+    {
+        CHG_CODE -> byValue SL_Contract:SL_FACI_SCHEDULES_PAST_HIST__SCH_TYPE__CHG_CODE *
+            @t24:i (t24Name=CHG.CODE)
+        SCH_TYPE : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=1.0, core=true, t24Name=SCH.TYPE)
+    }
+    SL_FACI_SCHEDULES_PAST_HIST__SCH_TYPE__CHG_CODE
+    {
+        CHG_CODE : T24BusinessTypes:A
+            @i18n:Label (en="Charge Code")
+            @i18n:Tooltip (en="Charge Code")
+            @t24:i (align=L, inputBehaviour=I, maxLength=11, sysNumber=2.0, core=true, t24Name=CHG.CODE)
+    }
+    SL_FACI_SCHEDULES__CHG_CURRENCY
+    {
+        BUY_SELL_ID -> byValue SL_Contract:SL_FACI_SCHEDULES__CHG_CURRENCY__BUY_SELL_ID *
+            @t24:i (t24Name=BUY.SELL.ID)
+        CHG_CODE -> byValue SL_Contract:SL_FACI_SCHEDULES__CHG_CURRENCY__CHG_CODE *
+        SCH_AMOUNT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=5.0, core=true, t24Name=SCH.AMOUNT)
+    }
+    SL_FACI_SCHEDULES__CHG_CURRENCY__BUY_SELL_ID
+    {
+        BUY_SELL_ID : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=I, maxLength=24, sysNumber=6.0, core=true, t24Name=BUY.SELL.ID)
+    }
+    SL_FACI_SCHEDULES__CHG_CURRENCY__CHG_CODE
+    {
+        CHG_AMOUNT : T24BusinessTypes:AMT
+            @i18n:Label (en="Charge Amount")
+            @i18n:Tooltip (en="Defines charge amount")
+            @t24:i (align=R, inputBehaviour=I, maxLength=16, sysNumber=4.0, core=true, t24Name=CHG.AMOUNT)
+        CHG_CURRENCY : T24BusinessTypes:CCY
+            @i18n:Label (en="Chg Currency")
+            @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=3.0, core=true, t24Name=CHG.CURRENCY)
+    }
+    SL_FACI_SCHEDULES__SCH_TYPE
+    {
+        CHG_CODE -> byValue SL_Contract:SL_FACI_SCHEDULES__SCH_TYPE__CHG_CODE *
+            @t24:i (t24Name=CHG.CODE)
+        SCH_TYPE : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=1.0, core=true, t24Name=SCH.TYPE)
+    }
+    SL_FACI_SCHEDULES__SCH_TYPE__CHG_CODE
+    {
+        CHG_CODE : T24BusinessTypes:A
+            @i18n:Label (en="Charge Code")
+            @i18n:Tooltip (en="Charge Code")
+            @t24:i (align=L, inputBehaviour=I, maxLength=11, sysNumber=2.0, core=true, t24Name=CHG.CODE)
+    }
+    SL_FACI_TR_END_LIST
+        @i18n:Description (en="")
+        @t24:i (t24Name=SL.FACI.TR.END.LIST, level=F, type=L, allowedFunctions="L P S", localRefAllowed=false)
+    {
+        END_DATE : T24BusinessTypes:N
+            @i18n:Label (en="End Date")
+            @i18n:Tooltip (en="End Date")
+            @t24:i (align=L, inputBehaviour=N, maxLength=7, core=false, t24Name=END.DATE, genOperation="@ID[15,7]")
+        FACI_TR -> byValue SL_Contract:SL_FACI_TR_END_LIST__FACI_TR *
+            @t24:i (t24Name=FACI.TR)
+        PROCESS_DATE -> SL_Contract:SL_FACI_TR_END_LIST PK required
+            @i18n:Label (en="Process Date")
+            @t24:i (align=L, inputBehaviour=I, maxLength=26, sysNumber=0.0, core=true, businessType=A, t24Name=PROCESS.DATE, mask="##/#####/#####/##/#######")
+    }
+    SL_FACI_TR_END_LIST__FACI_TR
+    {
+        FACI_TR : mml:Integer
+            @t24:i (align=R, inputBehaviour=I, maxLength=20, sysNumber=1.0, core=true, t24Name=FACI.TR)
+    }
+    SL_FACI_TR_IDS
+        @i18n:Description (en="")
+        @t24:i (t24Name=SL.FACI.TR.IDS, level=F, type=L, allowedFunctions="L P S", localRefAllowed=false)
+    {
+        FACILITY_NO -> byValue SL_Contract:SL_FACI_TR_IDS__FACILITY_NO *
+            @t24:i (t24Name=FACILITY.NO)
+        FACI_TR_IDS -> SL_Contract:SL_FACI_TR_IDS PK required
+            @t24:i (align=L, inputBehaviour=I, maxLength=14, sysNumber=0.0, core=true, businessType=A, t24Name=FACI.TR.IDS)
+    }
+    SL_FACI_TR_IDS__FACILITY_NO
+    {
+        FACILITY_NO : mml:Integer
+            @t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=1.0, core=true, t24Name=FACILITY.NO)
+        TRANCHE_CODE -> byValue SL_Contract:SL_FACI_TR_IDS__FACILITY_NO__TRANCHE_CODE *
+            @t24:i (t24Name=TRANCHE.CODE)
+    }
+    SL_FACI_TR_IDS__FACILITY_NO__TRANCHE_CODE
+    {
+        TRANCHE_CODE : mml:Integer
+            @i18n:Label (en="Tranche Code")
+            @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=2.0, core=true, t24Name=TRANCHE.CODE)
+    }
+    SL_FACI_TR_ST_LIST
+        @i18n:Description (en="")
+        @t24:i (t24Name=SL.FACI.TR.ST.LIST, level=F, type=L, allowedFunctions="L P S", localRefAllowed=false)
+    {
+        FACI_TR -> byValue SL_Contract:SL_FACI_TR_ST_LIST__FACI_TR *
+            @t24:i (t24Name=FACI.TR)
+        PROCESS_DATE -> SL_Contract:SL_FACI_TR_ST_LIST PK required
+            @i18n:Label (en="Process Date")
+            @t24:i (align=L, inputBehaviour=I, maxLength=26, sysNumber=0.0, core=true, businessType=A, t24Name=PROCESS.DATE, mask="##/#####/#####/##/#######")
+        START_DATE : T24BusinessTypes:N
+            @i18n:Label (en="Start Date")
+            @i18n:Tooltip (en="Start Date")
+            @t24:i (align=L, inputBehaviour=N, maxLength=7, core=false, t24Name=START.DATE, genOperation="@ID[15,7]")
+    }
+    SL_FACI_TR_ST_LIST__FACI_TR
+    {
+        FACI_TR : mml:Integer
+            @t24:i (align=R, inputBehaviour=I, maxLength=20, sysNumber=1.0, core=true, t24Name=FACI.TR)
+    }
+    SL_LOAN_BALANCES
+        @i18n:Description (en="")
+        @t24:i (t24Name=SL.LOAN.BALANCES, level=F, type=L, allowedFunctions="L P S", localRefAllowed=false)
+    {
+        CONTRACT_NO_ -> SL_Contract:SL_LOAN_BALANCES PK required
+            @i18n:Label (en="Contract No ")
+            @t24:i (align=L, inputBehaviour=I, maxLength=25, sysNumber=0.0, core=true, businessType=A, t24Name=CONTRACT.NO.)
+        INT_BASE_DT : mml:Integer
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=35.0, core=true, t24Name=INT.BASE.DT)
+        INT_RATE -> byValue SL_Contract:SL_LOAN_BALANCES__INT_RATE *
+            @t24:i (t24Name=INT.RATE)
+        LAST_BS_DATE : mml:Integer
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=32.0, core=true, t24Name=LAST.BS.DATE)
+        LAST_INT_REV_DT : mml:Integer
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=34.0, core=true, t24Name=LAST.INT.REV.DT)
+        NEXT_INT_REV_DT : mml:Integer
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=33.0, core=true, t24Name=NEXT.INT.REV.DT)
+        OUTS_CURR_AMT -> byValue SL_Contract:SL_LOAN_BALANCES__OUTS_CURR_AMT *
+            @t24:i (t24Name=OUTS.CURR.AMT)
+        PIK_REFERENCE -> byValue SL_Contract:SL_LOAN_BALANCES__PIK_REFERENCE *
+            @t24:i (t24Name=PIK.REFERENCE)
+        PRIN_BASE_DT : mml:Integer
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=36.0, core=true, t24Name=PRIN.BASE.DT)
+        RATE_BASE_DT : mml:Integer
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=37.0, core=true, t24Name=RATE.BASE.DT)
+        RET_INT_AMT -> byValue SL_Contract:SL_LOAN_BALANCES__RET_INT_AMT *
+            @t24:i (t24Name=RET.INT.AMT)
+        SL_CURRENCY -> ST_CurrencyConfig:CURRENCY
+            @i18n:Label (en="Sl Currency")
+            @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=1.0, core=true, t24Name=SL.CURRENCY)
+        SL_LOAN_INIT_AMT : mml:Integer
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=2.0, core=true, t24Name=SL.LOAN.INIT.AMT)
+        STRT_PRD_INT -> byValue SL_Contract:SL_LOAN_BALANCES__STRT_PRD_INT *
+            @t24:i (t24Name=STRT.PRD.INT)
+    }
+    SL_LOAN_BALANCES_HIST
+        @i18n:Description (en="")
+        @t24:i (t24Name=SL.LOAN.BALANCES.HIST, level=F, type=L, allowedFunctions="L P S", localRefAllowed=false)
+    {
+        CONTRACT_NO_ -> SL_Contract:SL_LOAN_BALANCES_HIST PK required
+            @i18n:Label (en="Contract No ")
+            @t24:i (align=L, inputBehaviour=I, maxLength=25, sysNumber=0.0, core=true, businessType=A, t24Name=CONTRACT.NO., mask="##/#####/#####-###-####")
+        INT_BASE_DT : T24BusinessTypes:D
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=35.0, core=true, t24Name=INT.BASE.DT)
+        INT_RATE -> byValue SL_Contract:SL_LOAN_BALANCES_HIST__INT_RATE *
+            @t24:i (t24Name=INT.RATE)
+        LAST_BS_DATE : T24BusinessTypes:D
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=32.0, core=true, t24Name=LAST.BS.DATE)
+        LAST_INT_REV_DT : T24BusinessTypes:D
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=34.0, core=true, t24Name=LAST.INT.REV.DT)
+        NEXT_INT_REV_DT : T24BusinessTypes:D
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=33.0, core=true, t24Name=NEXT.INT.REV.DT)
+        OUTS_CURR_AMT -> byValue SL_Contract:SL_LOAN_BALANCES_HIST__OUTS_CURR_AMT *
+            @t24:i (t24Name=OUTS.CURR.AMT)
+        PIK_REFERENCE -> byValue SL_Contract:SL_LOAN_BALANCES_HIST__PIK_REFERENCE *
+            @t24:i (t24Name=PIK.REFERENCE)
+        PRIN_BASE_DT : T24BusinessTypes:D
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=36.0, core=true, t24Name=PRIN.BASE.DT)
+        RATE_BASE_DT : T24BusinessTypes:D
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=37.0, core=true, t24Name=RATE.BASE.DT)
+        RET_INT_AMT -> byValue SL_Contract:SL_LOAN_BALANCES_HIST__RET_INT_AMT *
+            @t24:i (t24Name=RET.INT.AMT)
+        SL_CURRENCY -> ST_CurrencyConfig:CURRENCY
+            @i18n:Label (en="Sl Currency")
+            @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=1.0, core=true, businessType=CCY, t24Name=SL.CURRENCY)
+        SL_LOAN_INIT_AMT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=2.0, core=true, t24Name=SL.LOAN.INIT.AMT, typeModifiers="1")
+        STRT_PRD_INT -> byValue SL_Contract:SL_LOAN_BALANCES_HIST__STRT_PRD_INT *
+            @t24:i (t24Name=STRT.PRD.INT)
+    }
+    SL_LOAN_BALANCES_HIST__INT_RATE
+    {
+        CAP_RATE : T24BusinessTypes:R
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=21.0, core=true, t24Name=CAP.RATE)
+        INT_BASIS : T24BusinessTypes:A
+            @i18n:Label (en="Interest Basis")
+            @i18n:Tooltip (en="Interest basis for interest calculation")
+            @t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=26.0, core=true, t24Name=INT.BASIS)
+        INT_CAP_SPREAD : T24BusinessTypes:R
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=23.0, core=true, t24Name=INT.CAP.SPREAD)
+        INT_RATE : T24BusinessTypes:R
+            @i18n:Label (en="Interest Rate")
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=20.0, core=true, t24Name=INT.RATE)
+        INT_RATE_TYPE : mml:Integer
+            @i18n:Label (en="Interest Rate Type")
+            @i18n:Tooltip (en="Indicates the type of interest rate to be used")
+            @t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=27.0, core=true, t24Name=INT.RATE.TYPE)
+        INT_SPREAD : T24BusinessTypes:R
+            @i18n:Label (en="Interest Spread")
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=22.0, core=true, t24Name=INT.SPREAD)
+        RATE_EFF_DT : T24BusinessTypes:D
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=28.0, core=true, t24Name=RATE.EFF.DT)
+        SPL_INT_SPREAD -> byValue SL_Contract:SL_LOAN_BALANCES_HIST__INT_RATE__SPL_INT_SPREAD *
+            @t24:i (t24Name=SPL.INT.SPREAD)
+    }
+    SL_LOAN_BALANCES_HIST__INT_RATE__SPL_INT_SPREAD
+    {
+        SPL_INT_CAP_SPR : T24BusinessTypes:R
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=25.0, core=true, t24Name=SPL.INT.CAP.SPR)
+        SPL_INT_SPREAD : T24BusinessTypes:R
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=24.0, core=true, t24Name=SPL.INT.SPREAD)
+    }
+    SL_LOAN_BALANCES_HIST__OUTS_CURR_AMT
+    {
+        AMT_EFF_DATE : T24BusinessTypes:D
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=9.0, core=true, t24Name=AMT.EFF.DATE)
+        AMT_MOVED : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=4.0, core=true, t24Name=AMT.MOVED, typeModifiers="1")
+        DECR_AMT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=6.0, core=true, t24Name=DECR.AMT, typeModifiers="1")
+        INCR_AMT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=5.0, core=true, t24Name=INCR.AMT, typeModifiers="1")
+        MVT_TYPE -> byValue SL_Contract:SL_LOAN_BALANCES_HIST__OUTS_CURR_AMT__MVT_TYPE *
+            @t24:i (t24Name=MVT.TYPE)
+        OUTS_AMT_B_CCY : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=10.0, core=true, t24Name=OUTS.AMT.B.CCY, typeModifiers="1")
+        OUTS_CURR_AMT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=3.0, core=true, t24Name=OUTS.CURR.AMT, typeModifiers="1")
+    }
+    SL_LOAN_BALANCES_HIST__OUTS_CURR_AMT__MVT_TYPE
+    {
+        MVT_AMT : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=I, maxLength=19, sysNumber=8.0, core=true, t24Name=MVT.AMT)
+        MVT_TYPE : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=7.0, core=true, t24Name=MVT.TYPE, typeModifiers="1")
+    }
+    SL_LOAN_BALANCES_HIST__PIK_REFERENCE
+    {
+        PIK_RATE -> byValue SL_Contract:SL_LOAN_BALANCES_HIST__PIK_REFERENCE__PIK_RATE *
+            @t24:i (t24Name=PIK.RATE)
+        PIK_REFERENCE : T24BusinessTypes:A
+            @i18n:Label (en="Additional Int.Ref")
+            @i18n:Tooltip (en="Additional Interest Reference")
+            @t24:i (align=L, inputBehaviour=I, maxLength=10, sysNumber=38.0, core=true, t24Name=PIK.REFERENCE)
+        PIK_ST_DATE -> byValue SL_Contract:SL_LOAN_BALANCES_HIST__PIK_REFERENCE__PIK_ST_DATE *
+            @t24:i (t24Name=PIK.ST.DATE)
+    }
+    SL_LOAN_BALANCES_HIST__PIK_REFERENCE__PIK_RATE
+    {
+        PIK_RATE : T24BusinessTypes:R
+            @i18n:Label (en="Additional Interest")
+            @i18n:Tooltip (en="Additional Interest")
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=43.0, core=true, t24Name=PIK.RATE)
+        PIK_RATE_EFF_DT : T24BusinessTypes:D
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=44.0, core=true, t24Name=PIK.RATE.EFF.DT)
+    }
+    SL_LOAN_BALANCES_HIST__PIK_REFERENCE__PIK_ST_DATE
+    {
+        PIK_END_DATE : T24BusinessTypes:D
+            @i18n:Label (en="Addl.Int.End Date")
+            @i18n:Tooltip (en="Additional Interest")
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=40.0, core=true, t24Name=PIK.END.DATE)
+        PIK_INT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=41.0, core=true, t24Name=PIK.INT)
+        PIK_INT_CAP_AMT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=42.0, core=true, t24Name=PIK.INT.CAP.AMT)
+        PIK_ST_DATE : T24BusinessTypes:D
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=39.0, core=true, t24Name=PIK.ST.DATE)
+    }
+    SL_LOAN_BALANCES_HIST__RET_INT_AMT
+    {
+        RET_AC_OR_PL : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=30.0, core=true, t24Name=RET.AC.OR.PL)
+        RET_INT_AMT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=29.0, core=true, t24Name=RET.INT.AMT, typeModifiers="1")
+        RET_INT_DATE : T24BusinessTypes:D
+            @t24:i (align=R, inputBehaviour=I, maxLength=8, sysNumber=31.0, core=true, t24Name=RET.INT.DATE)
+    }
+    SL_LOAN_BALANCES_HIST__STRT_PRD_INT
+    {
+        BS_INT_AMT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=14.0, core=true, t24Name=BS.INT.AMT, typeModifiers="1")
+        CAP_INT_AMT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=19.0, core=true, t24Name=CAP.INT.AMT)
+        COMMITED_INT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=15.0, core=true, t24Name=COMMITED.INT, typeModifiers="1")
+        END_PRD_INT : T24BusinessTypes:D
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=12.0, core=true, t24Name=END.PRD.INT)
+        FLT_INT_AMT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=16.0, core=true, t24Name=FLT.INT.AMT, typeModifiers="1")
+        INT_ON_RPY_AMT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=18.0, core=true, t24Name=INT.ON.RPY.AMT, typeModifiers="1")
+        PRD_INT_AMT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=17.0, core=true, t24Name=PRD.INT.AMT, typeModifiers="1")
+        STRT_PRD_INT : T24BusinessTypes:D
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=11.0, core=true, t24Name=STRT.PRD.INT)
+        TAX_AMOUNT : T24BusinessTypes:AMT
+            @i18n:Label (en="Tax Amount")
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=13.0, core=true, t24Name=TAX.AMOUNT)
+    }
+    SL_LOAN_BALANCES_SAVE
+        @i18n:Description (en="")
+        @t24:i (t24Name=SL.LOAN.BALANCES.SAVE, level=F, type=L, allowedFunctions="L P S", localRefAllowed=false)
+    {
+        CONTRACT_NO_ -> SL_Contract:SL_LOAN_BALANCES_SAVE PK required
+            @i18n:Label (en="Contract No ")
+            @t24:i (align=L, inputBehaviour=I, maxLength=25, sysNumber=0.0, core=true, businessType=A, t24Name=CONTRACT.NO., mask="##/#####/#####-###-####")
+        INT_BASE_DT : T24BusinessTypes:D
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=35.0, core=true, t24Name=INT.BASE.DT)
+        INT_RATE -> byValue SL_Contract:SL_LOAN_BALANCES_SAVE__INT_RATE *
+            @t24:i (t24Name=INT.RATE)
+        LAST_BS_DATE : T24BusinessTypes:D
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=32.0, core=true, t24Name=LAST.BS.DATE)
+        LAST_INT_REV_DT : T24BusinessTypes:D
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=34.0, core=true, t24Name=LAST.INT.REV.DT)
+        NEXT_INT_REV_DT : T24BusinessTypes:D
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=33.0, core=true, t24Name=NEXT.INT.REV.DT)
+        OUTS_CURR_AMT -> byValue SL_Contract:SL_LOAN_BALANCES_SAVE__OUTS_CURR_AMT *
+            @t24:i (t24Name=OUTS.CURR.AMT)
+        PIK_REFERENCE -> byValue SL_Contract:SL_LOAN_BALANCES_SAVE__PIK_REFERENCE *
+            @t24:i (t24Name=PIK.REFERENCE)
+        PRIN_BASE_DT : T24BusinessTypes:D
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=36.0, core=true, t24Name=PRIN.BASE.DT)
+        RATE_BASE_DT : T24BusinessTypes:D
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=37.0, core=true, t24Name=RATE.BASE.DT)
+        RET_INT_AMT -> byValue SL_Contract:SL_LOAN_BALANCES_SAVE__RET_INT_AMT *
+            @t24:i (t24Name=RET.INT.AMT)
+        SL_CURRENCY -> ST_CurrencyConfig:CURRENCY
+            @i18n:Label (en="Sl Currency")
+            @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=1.0, core=true, businessType=CCY, t24Name=SL.CURRENCY)
+        SL_LOAN_INIT_AMT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=2.0, core=true, t24Name=SL.LOAN.INIT.AMT, typeModifiers="1")
+        STRT_PRD_INT -> byValue SL_Contract:SL_LOAN_BALANCES_SAVE__STRT_PRD_INT *
+            @t24:i (t24Name=STRT.PRD.INT)
+    }
+    SL_LOAN_BALANCES_SAVE__INT_RATE
+    {
+        CAP_RATE : T24BusinessTypes:R
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=21.0, core=true, t24Name=CAP.RATE)
+        INT_BASIS : T24BusinessTypes:A
+            @i18n:Label (en="Interest Basis")
+            @i18n:Tooltip (en="Interest basis for interest calculation")
+            @t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=26.0, core=true, t24Name=INT.BASIS)
+        INT_CAP_SPREAD : T24BusinessTypes:R
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=23.0, core=true, t24Name=INT.CAP.SPREAD)
+        INT_RATE : T24BusinessTypes:R
+            @i18n:Label (en="Interest Rate")
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=20.0, core=true, t24Name=INT.RATE)
+        INT_RATE_TYPE : mml:Integer
+            @i18n:Label (en="Interest Rate Type")
+            @i18n:Tooltip (en="Indicates the type of interest rate to be used")
+            @t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=27.0, core=true, t24Name=INT.RATE.TYPE)
+        INT_SPREAD : T24BusinessTypes:R
+            @i18n:Label (en="Interest Spread")
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=22.0, core=true, t24Name=INT.SPREAD)
+        RATE_EFF_DT : T24BusinessTypes:D
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=28.0, core=true, t24Name=RATE.EFF.DT)
+        SPL_INT_SPREAD -> byValue SL_Contract:SL_LOAN_BALANCES_SAVE__INT_RATE__SPL_INT_SPREAD *
+            @t24:i (t24Name=SPL.INT.SPREAD)
+    }
+    SL_LOAN_BALANCES_SAVE__INT_RATE__SPL_INT_SPREAD
+    {
+        SPL_INT_CAP_SPR : T24BusinessTypes:R
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=25.0, core=true, t24Name=SPL.INT.CAP.SPR)
+        SPL_INT_SPREAD : T24BusinessTypes:R
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=24.0, core=true, t24Name=SPL.INT.SPREAD)
+    }
+    SL_LOAN_BALANCES_SAVE__OUTS_CURR_AMT
+    {
+        AMT_EFF_DATE : T24BusinessTypes:D
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=9.0, core=true, t24Name=AMT.EFF.DATE)
+        AMT_MOVED : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=4.0, core=true, t24Name=AMT.MOVED, typeModifiers="1")
+        DECR_AMT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=6.0, core=true, t24Name=DECR.AMT, typeModifiers="1")
+        INCR_AMT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=5.0, core=true, t24Name=INCR.AMT, typeModifiers="1")
+        MVT_TYPE -> byValue SL_Contract:SL_LOAN_BALANCES_SAVE__OUTS_CURR_AMT__MVT_TYPE *
+            @t24:i (t24Name=MVT.TYPE)
+        OUTS_AMT_B_CCY : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=10.0, core=true, t24Name=OUTS.AMT.B.CCY, typeModifiers="1")
+        OUTS_CURR_AMT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=3.0, core=true, t24Name=OUTS.CURR.AMT, typeModifiers="1")
+    }
+    SL_LOAN_BALANCES_SAVE__OUTS_CURR_AMT__MVT_TYPE
+    {
+        MVT_AMT : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=I, maxLength=19, sysNumber=8.0, core=true, t24Name=MVT.AMT)
+        MVT_TYPE : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=7.0, core=true, t24Name=MVT.TYPE, typeModifiers="1")
+    }
+    SL_LOAN_BALANCES_SAVE__PIK_REFERENCE
+    {
+        PIK_RATE -> byValue SL_Contract:SL_LOAN_BALANCES_SAVE__PIK_REFERENCE__PIK_RATE *
+            @t24:i (t24Name=PIK.RATE)
+        PIK_REFERENCE : T24BusinessTypes:A
+            @i18n:Label (en="Additional Int.Ref")
+            @i18n:Tooltip (en="Additional Interest Reference")
+            @t24:i (align=L, inputBehaviour=I, maxLength=10, sysNumber=38.0, core=true, t24Name=PIK.REFERENCE)
+        PIK_ST_DATE -> byValue SL_Contract:SL_LOAN_BALANCES_SAVE__PIK_REFERENCE__PIK_ST_DATE *
+            @t24:i (t24Name=PIK.ST.DATE)
+    }
+    SL_LOAN_BALANCES_SAVE__PIK_REFERENCE__PIK_RATE
+    {
+        PIK_RATE : T24BusinessTypes:R
+            @i18n:Label (en="Additional Interest")
+            @i18n:Tooltip (en="Additional Interest")
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=43.0, core=true, t24Name=PIK.RATE)
+        PIK_RATE_EFF_DT : T24BusinessTypes:D
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=44.0, core=true, t24Name=PIK.RATE.EFF.DT)
+    }
+    SL_LOAN_BALANCES_SAVE__PIK_REFERENCE__PIK_ST_DATE
+    {
+        PIK_END_DATE : T24BusinessTypes:D
+            @i18n:Label (en="Addl.Int.End Date")
+            @i18n:Tooltip (en="Additional Interest")
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=40.0, core=true, t24Name=PIK.END.DATE)
+        PIK_INT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=41.0, core=true, t24Name=PIK.INT)
+        PIK_INT_CAP_AMT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=42.0, core=true, t24Name=PIK.INT.CAP.AMT)
+        PIK_ST_DATE : T24BusinessTypes:D
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=39.0, core=true, t24Name=PIK.ST.DATE)
+    }
+    SL_LOAN_BALANCES_SAVE__RET_INT_AMT
+    {
+        RET_AC_OR_PL : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=30.0, core=true, t24Name=RET.AC.OR.PL)
+        RET_INT_AMT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=29.0, core=true, t24Name=RET.INT.AMT, typeModifiers="1")
+        RET_INT_DATE : T24BusinessTypes:D
+            @t24:i (align=R, inputBehaviour=I, maxLength=8, sysNumber=31.0, core=true, t24Name=RET.INT.DATE)
+    }
+    SL_LOAN_BALANCES_SAVE__STRT_PRD_INT
+    {
+        BS_INT_AMT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=14.0, core=true, t24Name=BS.INT.AMT, typeModifiers="1")
+        CAP_INT_AMT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=19.0, core=true, t24Name=CAP.INT.AMT)
+        COMMITED_INT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=15.0, core=true, t24Name=COMMITED.INT, typeModifiers="1")
+        END_PRD_INT : T24BusinessTypes:D
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=12.0, core=true, t24Name=END.PRD.INT)
+        FLT_INT_AMT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=16.0, core=true, t24Name=FLT.INT.AMT, typeModifiers="1")
+        INT_ON_RPY_AMT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=18.0, core=true, t24Name=INT.ON.RPY.AMT, typeModifiers="1")
+        PRD_INT_AMT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=17.0, core=true, t24Name=PRD.INT.AMT, typeModifiers="1")
+        STRT_PRD_INT : T24BusinessTypes:D
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=11.0, core=true, t24Name=STRT.PRD.INT)
+        TAX_AMOUNT : T24BusinessTypes:AMT
+            @i18n:Label (en="Tax Amount")
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=13.0, core=true, t24Name=TAX.AMOUNT)
+    }
+    SL_LOAN_BALANCES__INT_RATE
+    {
+        CAP_RATE : mml:Integer
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=21.0, core=true, t24Name=CAP.RATE)
+        INT_BASIS : mml:Integer
+            @i18n:Label (en="Interest Basis")
+            @i18n:Tooltip (en="Interest basis for interest calculation")
+            @t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=26.0, core=true, t24Name=INT.BASIS)
+        INT_CAP_SPREAD : mml:Integer
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=23.0, core=true, t24Name=INT.CAP.SPREAD)
+        INT_RATE : mml:Integer
+            @i18n:Label (en="Interest Rate")
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=20.0, core=true, t24Name=INT.RATE)
+        INT_RATE_TYPE : mml:Integer
+            @i18n:Label (en="Interest Rate Type")
+            @i18n:Tooltip (en="Indicates the type of interest rate to be used")
+            @t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=27.0, core=true, t24Name=INT.RATE.TYPE)
+        INT_SPREAD : mml:Integer
+            @i18n:Label (en="Interest Spread")
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=22.0, core=true, t24Name=INT.SPREAD)
+        RATE_EFF_DT : mml:Integer
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=28.0, core=true, t24Name=RATE.EFF.DT)
+        SPL_INT_SPREAD -> byValue SL_Contract:SL_LOAN_BALANCES__INT_RATE__SPL_INT_SPREAD *
+            @t24:i (t24Name=SPL.INT.SPREAD)
+    }
+    SL_LOAN_BALANCES__INT_RATE__SPL_INT_SPREAD
+    {
+        SPL_INT_CAP_SPR : mml:Integer
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=25.0, core=true, t24Name=SPL.INT.CAP.SPR)
+        SPL_INT_SPREAD : mml:Integer
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=24.0, core=true, t24Name=SPL.INT.SPREAD)
+    }
+    SL_LOAN_BALANCES__OUTS_CURR_AMT
+    {
+        AMT_EFF_DATE : mml:Integer
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=9.0, core=true, t24Name=AMT.EFF.DATE)
+        AMT_MOVED : mml:Integer
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=4.0, core=true, t24Name=AMT.MOVED)
+        DECR_AMT : mml:Integer
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=6.0, core=true, t24Name=DECR.AMT)
+        INCR_AMT : mml:Integer
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=5.0, core=true, t24Name=INCR.AMT)
+        MVT_TYPE -> byValue SL_Contract:SL_LOAN_BALANCES__OUTS_CURR_AMT__MVT_TYPE *
+            @t24:i (t24Name=MVT.TYPE)
+        OUTS_AMT_B_CCY : mml:Integer
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=10.0, core=true, t24Name=OUTS.AMT.B.CCY)
+        OUTS_CURR_AMT : mml:Integer
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=3.0, core=true, t24Name=OUTS.CURR.AMT)
+    }
+    SL_LOAN_BALANCES__OUTS_CURR_AMT__MVT_TYPE
+    {
+        MVT_AMT : mml:Integer
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=8.0, core=true, t24Name=MVT.AMT)
+        MVT_TYPE : mml:Integer
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=7.0, core=true, t24Name=MVT.TYPE)
+    }
+    SL_LOAN_BALANCES__PIK_REFERENCE
+    {
+        PIK_RATE -> byValue SL_Contract:SL_LOAN_BALANCES__PIK_REFERENCE__PIK_RATE *
+            @t24:i (t24Name=PIK.RATE)
+        PIK_REFERENCE : mml:Integer
+            @i18n:Label (en="Additional Int.Ref")
+            @i18n:Tooltip (en="Additional Interest Reference")
+            @t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=38.0, core=true, t24Name=PIK.REFERENCE)
+        PIK_ST_DATE -> byValue SL_Contract:SL_LOAN_BALANCES__PIK_REFERENCE__PIK_ST_DATE *
+            @t24:i (t24Name=PIK.ST.DATE)
+    }
+    SL_LOAN_BALANCES__PIK_REFERENCE__PIK_RATE
+    {
+        PIK_RATE : mml:Integer
+            @i18n:Label (en="Additional Interest")
+            @i18n:Tooltip (en="Additional Interest")
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=43.0, core=true, t24Name=PIK.RATE)
+        PIK_RATE_EFF_DT : mml:Integer
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=44.0, core=true, t24Name=PIK.RATE.EFF.DT)
+    }
+    SL_LOAN_BALANCES__PIK_REFERENCE__PIK_ST_DATE
+    {
+        PIK_END_DATE : mml:Integer
+            @i18n:Label (en="Addl.Int.End Date")
+            @i18n:Tooltip (en="Additional Interest")
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=40.0, core=true, t24Name=PIK.END.DATE)
+        PIK_INT : mml:Integer
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=41.0, core=true, t24Name=PIK.INT)
+        PIK_INT_CAP_AMT : mml:Integer
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=42.0, core=true, t24Name=PIK.INT.CAP.AMT)
+        PIK_ST_DATE : mml:Integer
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=39.0, core=true, t24Name=PIK.ST.DATE)
+    }
+    SL_LOAN_BALANCES__RET_INT_AMT
+    {
+        RET_AC_OR_PL : mml:Integer
+            @t24:i (align=R, inputBehaviour=I, maxLength=35, sysNumber=30.0, core=true, t24Name=RET.AC.OR.PL)
+        RET_INT_AMT : mml:Integer
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=29.0, core=true, t24Name=RET.INT.AMT)
+        RET_INT_DATE : mml:Integer
+            @t24:i (align=R, inputBehaviour=I, maxLength=8, sysNumber=31.0, core=true, t24Name=RET.INT.DATE)
+    }
+    SL_LOAN_BALANCES__STRT_PRD_INT
+    {
+        BS_INT_AMT : mml:Integer
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=14.0, core=true, t24Name=BS.INT.AMT)
+        CAP_INT_AMT : mml:Integer
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=19.0, core=true, t24Name=CAP.INT.AMT)
+        COMMITED_INT : mml:Integer
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=15.0, core=true, t24Name=COMMITED.INT)
+        END_PRD_INT : mml:Integer
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=12.0, core=true, t24Name=END.PRD.INT)
+        FLT_INT_AMT : mml:Integer
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=16.0, core=true, t24Name=FLT.INT.AMT)
+        INT_ON_RPY_AMT : mml:Integer
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=18.0, core=true, t24Name=INT.ON.RPY.AMT)
+        PRD_INT_AMT : mml:Integer
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=17.0, core=true, t24Name=PRD.INT.AMT)
+        STRT_PRD_INT : mml:Integer
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=11.0, core=true, t24Name=STRT.PRD.INT)
+        TAX_AMOUNT : mml:Integer
+            @i18n:Label (en="Tax Amount")
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=13.0, core=true, t24Name=TAX.AMOUNT)
+    }
+    SL_LOAN_MATURITY
+        @i18n:Description (en="")
+        @t24:i (t24Name=SL.LOAN.MATURITY, level=F, type=L, allowedFunctions="L P S", localRefAllowed=false)
+    {
+        CONTRACT_ID -> byValue SL_Contract:SL_LOAN_MATURITY__CONTRACT_ID *
+            @t24:i (t24Name=CONTRACT.ID)
+        MATURITY_DATE -> SL_Contract:SL_LOAN_MATURITY PK required
+            @i18n:Label (en="Maturity Date")
+            @i18n:Tooltip (en="Indicates the Maturity Date of the Transaction")
+            @t24:i (align=R, inputBehaviour=I, maxLength=8, sysNumber=0.0, core=true, businessType=D, t24Name=MATURITY.DATE)
+    }
+    SL_LOAN_MATURITY__CONTRACT_ID
+    {
+        CONTRACT_ID : T24BusinessTypes:A
+            @i18n:Label (en="Contract Id")
+            @t24:i (align=L, inputBehaviour=I, maxLength=17, sysNumber=1.0, core=true, t24Name=CONTRACT.ID)
+    }
+    SL_LOAN_PART_BALANCES
+        @i18n:Description (en="")
+        @t24:i (t24Name=SL.LOAN.PART.BALANCES, level=F, type=L, allowedFunctions="L P S", localRefAllowed=false)
+    {
+        CONTRACT_NO_ -> SL_Contract:SL_LOAN_PART_BALANCES PK required
+            @i18n:Label (en="Contract No ")
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=0.0, core=true, businessType=A, t24Name=CONTRACT.NO.)
+        INT_RATE -> byValue SL_Contract:SL_LOAN_PART_BALANCES__INT_RATE *
+            @t24:i (t24Name=INT.RATE)
+        LOAN_CURRENCY -> ST_CurrencyConfig:CURRENCY
+            @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=1.0, core=true, t24Name=LOAN.CURRENCY)
+        PART_INIT_LO_AMT : mml:Integer
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=2.0, core=true, t24Name=PART.INIT.LO.AMT)
+        PIK_REFERENCE -> byValue SL_Contract:SL_LOAN_PART_BALANCES__PIK_REFERENCE *
+            @t24:i (t24Name=PIK.REFERENCE)
+        PR_OUTS_AMT -> byValue SL_Contract:SL_LOAN_PART_BALANCES__PR_OUTS_AMT *
+            @t24:i (t24Name=PR.OUTS.AMT)
+        RET_INT_AMT -> byValue SL_Contract:SL_LOAN_PART_BALANCES__RET_INT_AMT *
+            @t24:i (t24Name=RET.INT.AMT)
+        STRT_PRD_INT -> byValue SL_Contract:SL_LOAN_PART_BALANCES__STRT_PRD_INT *
+            @t24:i (t24Name=STRT.PRD.INT)
+    }
+    SL_LOAN_PART_BALANCES_HIST
+        @i18n:Description (en="")
+        @t24:i (t24Name=SL.LOAN.PART.BALANCES.HIST, level=F, type=L, allowedFunctions="L P S", localRefAllowed=false)
+    {
+        CONTRACT_NO_ -> SL_Contract:SL_LOAN_PART_BALANCES_HIST PK required
+            @i18n:Label (en="Contract No ")
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=0.0, core=true, businessType=A, t24Name=CONTRACT.NO., mask="##/#####/#####-###-####/##########")
+        INT_RATE -> byValue SL_Contract:SL_LOAN_PART_BALANCES_HIST__INT_RATE *
+            @t24:i (t24Name=INT.RATE)
+        LOAN_CURRENCY -> ST_CurrencyConfig:CURRENCY
+            @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=1.0, core=true, businessType=CCY, t24Name=LOAN.CURRENCY)
+        PART_INIT_LO_AMT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=2.0, core=true, t24Name=PART.INIT.LO.AMT, typeModifiers="1")
+        PIK_REFERENCE -> byValue SL_Contract:SL_LOAN_PART_BALANCES_HIST__PIK_REFERENCE *
+            @t24:i (t24Name=PIK.REFERENCE)
+        PR_OUTS_AMT -> byValue SL_Contract:SL_LOAN_PART_BALANCES_HIST__PR_OUTS_AMT *
+            @t24:i (t24Name=PR.OUTS.AMT)
+        RET_INT_AMT -> byValue SL_Contract:SL_LOAN_PART_BALANCES_HIST__RET_INT_AMT *
+            @t24:i (t24Name=RET.INT.AMT)
+        STRT_PRD_INT -> byValue SL_Contract:SL_LOAN_PART_BALANCES_HIST__STRT_PRD_INT *
+            @t24:i (t24Name=STRT.PRD.INT)
+    }
+    SL_LOAN_PART_BALANCES_HIST__INT_RATE
+    {
+        CAP_RATE : T24BusinessTypes:R
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=21.0, core=true, t24Name=CAP.RATE)
+        INT_BASIS : T24BusinessTypes:A
+            @i18n:Label (en="Interest Basis")
+            @i18n:Tooltip (en="Interest basis for interest calculation")
+            @t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=26.0, core=true, t24Name=INT.BASIS)
+        INT_CAP_SPREAD : T24BusinessTypes:R
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=23.0, core=true, t24Name=INT.CAP.SPREAD)
+        INT_RATE : T24BusinessTypes:R
+            @i18n:Label (en="Interest Rate")
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=20.0, core=true, t24Name=INT.RATE)
+        INT_RATE_TYPE : mml:Integer
+            @i18n:Label (en="Interest Rate Type")
+            @i18n:Tooltip (en="Indicates the type of interest rate to be used")
+            @t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=27.0, core=true, t24Name=INT.RATE.TYPE)
+        INT_SPREAD : T24BusinessTypes:R
+            @i18n:Label (en="Interest Spread")
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=22.0, core=true, t24Name=INT.SPREAD)
+        RATE_EFF_DT : T24BusinessTypes:D
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=28.0, core=true, t24Name=RATE.EFF.DT)
+        SPL_INT_SPREAD -> byValue SL_Contract:SL_LOAN_PART_BALANCES_HIST__INT_RATE__SPL_INT_SPREAD *
+            @t24:i (t24Name=SPL.INT.SPREAD)
+    }
+    SL_LOAN_PART_BALANCES_HIST__INT_RATE__SPL_INT_SPREAD
+    {
+        SPL_INT_CAP_SPR : T24BusinessTypes:R
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=25.0, core=true, t24Name=SPL.INT.CAP.SPR)
+        SPL_INT_SPREAD : T24BusinessTypes:R
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=24.0, core=true, t24Name=SPL.INT.SPREAD)
+    }
+    SL_LOAN_PART_BALANCES_HIST__PIK_REFERENCE
+    {
+        PIK_RATE -> byValue SL_Contract:SL_LOAN_PART_BALANCES_HIST__PIK_REFERENCE__PIK_RATE *
+            @t24:i (t24Name=PIK.RATE)
+        PIK_REFERENCE : T24BusinessTypes:A
+            @i18n:Label (en="Additional Int.Ref")
+            @i18n:Tooltip (en="Additional Interest Reference")
+            @t24:i (align=L, inputBehaviour=I, maxLength=10, sysNumber=32.0, core=true, t24Name=PIK.REFERENCE)
+        PIK_ST_DATE -> byValue SL_Contract:SL_LOAN_PART_BALANCES_HIST__PIK_REFERENCE__PIK_ST_DATE *
+            @t24:i (t24Name=PIK.ST.DATE)
+    }
+    SL_LOAN_PART_BALANCES_HIST__PIK_REFERENCE__PIK_RATE
+    {
+        PIK_RATE : T24BusinessTypes:R
+            @i18n:Label (en="Additional Interest")
+            @i18n:Tooltip (en="Additional Interest")
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=37.0, core=true, t24Name=PIK.RATE)
+        PIK_RATE_EFF_DT : T24BusinessTypes:D
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=38.0, core=true, t24Name=PIK.RATE.EFF.DT)
+    }
+    SL_LOAN_PART_BALANCES_HIST__PIK_REFERENCE__PIK_ST_DATE
+    {
+        PIK_CAP_INT_AMT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=36.0, core=true, t24Name=PIK.CAP.INT.AMT)
+        PIK_END_DATE : T24BusinessTypes:D
+            @i18n:Label (en="Addl.Int.End Date")
+            @i18n:Tooltip (en="Additional Interest")
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=34.0, core=true, t24Name=PIK.END.DATE)
+        PIK_INT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=35.0, core=true, t24Name=PIK.INT)
+        PIK_ST_DATE : T24BusinessTypes:D
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=33.0, core=true, t24Name=PIK.ST.DATE)
+    }
+    SL_LOAN_PART_BALANCES_HIST__PR_OUTS_AMT
+    {
+        MVT_TYPE -> byValue SL_Contract:SL_LOAN_PART_BALANCES_HIST__PR_OUTS_AMT__MVT_TYPE *
+            @t24:i (t24Name=MVT.TYPE)
+        PR_AMT_DECR : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=6.0, core=true, t24Name=PR.AMT.DECR, typeModifiers="1")
+        PR_AMT_EFF_DATE : T24BusinessTypes:D
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=9.0, core=true, t24Name=PR.AMT.EFF.DATE)
+        PR_AMT_INCR : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=5.0, core=true, t24Name=PR.AMT.INCR, typeModifiers="1")
+        PR_AMT_MOVED : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=4.0, core=true, t24Name=PR.AMT.MOVED, typeModifiers="1")
+        PR_OUTS_AMT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=3.0, core=true, t24Name=PR.OUTS.AMT, typeModifiers="1")
+    }
+    SL_LOAN_PART_BALANCES_HIST__PR_OUTS_AMT__MVT_TYPE
+    {
+        MVT_AMT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=8.0, core=true, t24Name=MVT.AMT, typeModifiers="1")
+        MVT_TYPE : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=I, maxLength=19, sysNumber=7.0, core=true, t24Name=MVT.TYPE)
+    }
+    SL_LOAN_PART_BALANCES_HIST__RET_INT_AMT
+    {
+        RET_AC_OR_PL : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=30.0, core=true, t24Name=RET.AC.OR.PL)
+        RET_INT_AMT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=29.0, core=true, t24Name=RET.INT.AMT, typeModifiers="1")
+        RET_INT_DATE : T24BusinessTypes:D
+            @t24:i (align=R, inputBehaviour=I, maxLength=8, sysNumber=31.0, core=true, t24Name=RET.INT.DATE)
+    }
+    SL_LOAN_PART_BALANCES_HIST__STRT_PRD_INT
+    {
+        BS_INT_AMT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=16.0, core=true, t24Name=BS.INT.AMT, typeModifiers="1")
+        CAP_INT_AMT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=17.0, core=true, t24Name=CAP.INT.AMT)
+        END_PRD_INT : T24BusinessTypes:D
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=11.0, core=true, t24Name=END.PRD.INT)
+        FLT_INT_AMT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=13.0, core=true, t24Name=FLT.INT.AMT, typeModifiers="1")
+        INT_ON_RPY_AMT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=15.0, core=true, t24Name=INT.ON.RPY.AMT, typeModifiers="1")
+        OUTS_ACCR_INT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=19.0, core=true, t24Name=OUTS.ACCR.INT, typeModifiers="1")
+        PRD_INT_AMT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=14.0, core=true, t24Name=PRD.INT.AMT, typeModifiers="1")
+        STRT_PRD_INT : T24BusinessTypes:D
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=10.0, core=true, t24Name=STRT.PRD.INT)
+        TAX_AMOUNT : T24BusinessTypes:AMT
+            @i18n:Label (en="Tax Amount")
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=18.0, core=true, t24Name=TAX.AMOUNT)
+        TOT_INT_AMT : T24BusinessTypes:AMT
+            @i18n:Label (en="Total Intt Amt")
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=12.0, core=true, t24Name=TOT.INT.AMT, typeModifiers="1")
+    }
+    SL_LOAN_PART_BALANCES_SAVE
+        @i18n:Description (en="")
+        @t24:i (t24Name=SL.LOAN.PART.BALANCES.SAVE, level=F, type=L, allowedFunctions="L P S", localRefAllowed=false)
+    {
+        CONTRACT_NO_ -> SL_Contract:SL_LOAN_PART_BALANCES_SAVE PK required
+            @i18n:Label (en="Contract No ")
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=0.0, core=true, businessType=A, t24Name=CONTRACT.NO., mask="##/#####/#####-###-####/##########")
+        INT_RATE -> byValue SL_Contract:SL_LOAN_PART_BALANCES_SAVE__INT_RATE *
+            @t24:i (t24Name=INT.RATE)
+        LOAN_CURRENCY -> ST_CurrencyConfig:CURRENCY
+            @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=1.0, core=true, businessType=CCY, t24Name=LOAN.CURRENCY)
+        PART_INIT_LO_AMT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=2.0, core=true, t24Name=PART.INIT.LO.AMT, typeModifiers="1")
+        PIK_REFERENCE -> byValue SL_Contract:SL_LOAN_PART_BALANCES_SAVE__PIK_REFERENCE *
+            @t24:i (t24Name=PIK.REFERENCE)
+        PR_OUTS_AMT -> byValue SL_Contract:SL_LOAN_PART_BALANCES_SAVE__PR_OUTS_AMT *
+            @t24:i (t24Name=PR.OUTS.AMT)
+        RET_INT_AMT -> byValue SL_Contract:SL_LOAN_PART_BALANCES_SAVE__RET_INT_AMT *
+            @t24:i (t24Name=RET.INT.AMT)
+        STRT_PRD_INT -> byValue SL_Contract:SL_LOAN_PART_BALANCES_SAVE__STRT_PRD_INT *
+            @t24:i (t24Name=STRT.PRD.INT)
+    }
+    SL_LOAN_PART_BALANCES_SAVE__INT_RATE
+    {
+        CAP_RATE : T24BusinessTypes:R
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=21.0, core=true, t24Name=CAP.RATE)
+        INT_BASIS : T24BusinessTypes:A
+            @i18n:Label (en="Interest Basis")
+            @i18n:Tooltip (en="Interest basis for interest calculation")
+            @t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=26.0, core=true, t24Name=INT.BASIS)
+        INT_CAP_SPREAD : T24BusinessTypes:R
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=23.0, core=true, t24Name=INT.CAP.SPREAD)
+        INT_RATE : T24BusinessTypes:R
+            @i18n:Label (en="Interest Rate")
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=20.0, core=true, t24Name=INT.RATE)
+        INT_RATE_TYPE : mml:Integer
+            @i18n:Label (en="Interest Rate Type")
+            @i18n:Tooltip (en="Indicates the type of interest rate to be used")
+            @t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=27.0, core=true, t24Name=INT.RATE.TYPE)
+        INT_SPREAD : T24BusinessTypes:R
+            @i18n:Label (en="Interest Spread")
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=22.0, core=true, t24Name=INT.SPREAD)
+        RATE_EFF_DT : T24BusinessTypes:D
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=28.0, core=true, t24Name=RATE.EFF.DT)
+        SPL_INT_SPREAD -> byValue SL_Contract:SL_LOAN_PART_BALANCES_SAVE__INT_RATE__SPL_INT_SPREAD *
+            @t24:i (t24Name=SPL.INT.SPREAD)
+    }
+    SL_LOAN_PART_BALANCES_SAVE__INT_RATE__SPL_INT_SPREAD
+    {
+        SPL_INT_CAP_SPR : T24BusinessTypes:R
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=25.0, core=true, t24Name=SPL.INT.CAP.SPR)
+        SPL_INT_SPREAD : T24BusinessTypes:R
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=24.0, core=true, t24Name=SPL.INT.SPREAD)
+    }
+    SL_LOAN_PART_BALANCES_SAVE__PIK_REFERENCE
+    {
+        PIK_RATE -> byValue SL_Contract:SL_LOAN_PART_BALANCES_SAVE__PIK_REFERENCE__PIK_RATE *
+            @t24:i (t24Name=PIK.RATE)
+        PIK_REFERENCE : T24BusinessTypes:A
+            @i18n:Label (en="Additional Int.Ref")
+            @i18n:Tooltip (en="Additional Interest Reference")
+            @t24:i (align=L, inputBehaviour=I, maxLength=10, sysNumber=32.0, core=true, t24Name=PIK.REFERENCE)
+        PIK_ST_DATE -> byValue SL_Contract:SL_LOAN_PART_BALANCES_SAVE__PIK_REFERENCE__PIK_ST_DATE *
+            @t24:i (t24Name=PIK.ST.DATE)
+    }
+    SL_LOAN_PART_BALANCES_SAVE__PIK_REFERENCE__PIK_RATE
+    {
+        PIK_RATE : T24BusinessTypes:R
+            @i18n:Label (en="Additional Interest")
+            @i18n:Tooltip (en="Additional Interest")
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=37.0, core=true, t24Name=PIK.RATE)
+        PIK_RATE_EFF_DT : T24BusinessTypes:D
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=38.0, core=true, t24Name=PIK.RATE.EFF.DT)
+    }
+    SL_LOAN_PART_BALANCES_SAVE__PIK_REFERENCE__PIK_ST_DATE
+    {
+        PIK_CAP_INT_AMT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=36.0, core=true, t24Name=PIK.CAP.INT.AMT)
+        PIK_END_DATE : T24BusinessTypes:D
+            @i18n:Label (en="Addl.Int.End Date")
+            @i18n:Tooltip (en="Additional Interest")
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=34.0, core=true, t24Name=PIK.END.DATE)
+        PIK_INT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=35.0, core=true, t24Name=PIK.INT)
+        PIK_ST_DATE : T24BusinessTypes:D
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=33.0, core=true, t24Name=PIK.ST.DATE)
+    }
+    SL_LOAN_PART_BALANCES_SAVE__PR_OUTS_AMT
+    {
+        MVT_TYPE -> byValue SL_Contract:SL_LOAN_PART_BALANCES_SAVE__PR_OUTS_AMT__MVT_TYPE *
+            @t24:i (t24Name=MVT.TYPE)
+        PR_AMT_DECR : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=6.0, core=true, t24Name=PR.AMT.DECR, typeModifiers="1")
+        PR_AMT_EFF_DATE : T24BusinessTypes:D
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=9.0, core=true, t24Name=PR.AMT.EFF.DATE)
+        PR_AMT_INCR : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=5.0, core=true, t24Name=PR.AMT.INCR, typeModifiers="1")
+        PR_AMT_MOVED : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=4.0, core=true, t24Name=PR.AMT.MOVED, typeModifiers="1")
+        PR_OUTS_AMT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=3.0, core=true, t24Name=PR.OUTS.AMT, typeModifiers="1")
+    }
+    SL_LOAN_PART_BALANCES_SAVE__PR_OUTS_AMT__MVT_TYPE
+    {
+        MVT_AMT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=8.0, core=true, t24Name=MVT.AMT, typeModifiers="1")
+        MVT_TYPE : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=I, maxLength=19, sysNumber=7.0, core=true, t24Name=MVT.TYPE)
+    }
+    SL_LOAN_PART_BALANCES_SAVE__RET_INT_AMT
+    {
+        RET_AC_OR_PL : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=30.0, core=true, t24Name=RET.AC.OR.PL)
+        RET_INT_AMT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=29.0, core=true, t24Name=RET.INT.AMT, typeModifiers="1")
+        RET_INT_DATE : T24BusinessTypes:D
+            @t24:i (align=R, inputBehaviour=I, maxLength=8, sysNumber=31.0, core=true, t24Name=RET.INT.DATE)
+    }
+    SL_LOAN_PART_BALANCES_SAVE__STRT_PRD_INT
+    {
+        BS_INT_AMT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=16.0, core=true, t24Name=BS.INT.AMT, typeModifiers="1")
+        CAP_INT_AMT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=17.0, core=true, t24Name=CAP.INT.AMT)
+        END_PRD_INT : T24BusinessTypes:D
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=11.0, core=true, t24Name=END.PRD.INT)
+        FLT_INT_AMT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=13.0, core=true, t24Name=FLT.INT.AMT, typeModifiers="1")
+        INT_ON_RPY_AMT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=15.0, core=true, t24Name=INT.ON.RPY.AMT, typeModifiers="1")
+        OUTS_ACCR_INT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=19.0, core=true, t24Name=OUTS.ACCR.INT, typeModifiers="1")
+        PRD_INT_AMT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=14.0, core=true, t24Name=PRD.INT.AMT, typeModifiers="1")
+        STRT_PRD_INT : T24BusinessTypes:D
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=10.0, core=true, t24Name=STRT.PRD.INT)
+        TAX_AMOUNT : T24BusinessTypes:AMT
+            @i18n:Label (en="Tax Amount")
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=18.0, core=true, t24Name=TAX.AMOUNT)
+        TOT_INT_AMT : T24BusinessTypes:AMT
+            @i18n:Label (en="Total Intt Amt")
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=12.0, core=true, t24Name=TOT.INT.AMT, typeModifiers="1")
+    }
+    SL_LOAN_PART_BALANCES__INT_RATE
+    {
+        CAP_RATE : mml:Integer
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=21.0, core=true, t24Name=CAP.RATE)
+        INT_BASIS : mml:Integer
+            @i18n:Label (en="Interest Basis")
+            @i18n:Tooltip (en="Interest basis for interest calculation")
+            @t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=26.0, core=true, t24Name=INT.BASIS)
+        INT_CAP_SPREAD : mml:Integer
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=23.0, core=true, t24Name=INT.CAP.SPREAD)
+        INT_RATE : mml:Integer
+            @i18n:Label (en="Interest Rate")
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=20.0, core=true, t24Name=INT.RATE)
+        INT_RATE_TYPE : mml:Integer
+            @i18n:Label (en="Interest Rate Type")
+            @i18n:Tooltip (en="Indicates the type of interest rate to be used")
+            @t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=27.0, core=true, t24Name=INT.RATE.TYPE)
+        INT_SPREAD : mml:Integer
+            @i18n:Label (en="Interest Spread")
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=22.0, core=true, t24Name=INT.SPREAD)
+        RATE_EFF_DT : mml:Integer
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=28.0, core=true, t24Name=RATE.EFF.DT)
+        SPL_INT_SPREAD -> byValue SL_Contract:SL_LOAN_PART_BALANCES__INT_RATE__SPL_INT_SPREAD *
+            @t24:i (t24Name=SPL.INT.SPREAD)
+    }
+    SL_LOAN_PART_BALANCES__INT_RATE__SPL_INT_SPREAD
+    {
+        SPL_INT_CAP_SPR : mml:Integer
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=25.0, core=true, t24Name=SPL.INT.CAP.SPR)
+        SPL_INT_SPREAD : mml:Integer
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=24.0, core=true, t24Name=SPL.INT.SPREAD)
+    }
+    SL_LOAN_PART_BALANCES__PIK_REFERENCE
+    {
+        PIK_RATE -> byValue SL_Contract:SL_LOAN_PART_BALANCES__PIK_REFERENCE__PIK_RATE *
+            @t24:i (t24Name=PIK.RATE)
+        PIK_REFERENCE : mml:Integer
+            @i18n:Label (en="Additional Int.Ref")
+            @i18n:Tooltip (en="Additional Interest Reference")
+            @t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=32.0, core=true, t24Name=PIK.REFERENCE)
+        PIK_ST_DATE -> byValue SL_Contract:SL_LOAN_PART_BALANCES__PIK_REFERENCE__PIK_ST_DATE *
+            @t24:i (t24Name=PIK.ST.DATE)
+    }
+    SL_LOAN_PART_BALANCES__PIK_REFERENCE__PIK_RATE
+    {
+        PIK_RATE : mml:Integer
+            @i18n:Label (en="Additional Interest")
+            @i18n:Tooltip (en="Additional Interest")
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=37.0, core=true, t24Name=PIK.RATE)
+        PIK_RATE_EFF_DT : mml:Integer
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=38.0, core=true, t24Name=PIK.RATE.EFF.DT)
+    }
+    SL_LOAN_PART_BALANCES__PIK_REFERENCE__PIK_ST_DATE
+    {
+        PIK_CAP_INT_AMT : mml:Integer
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=36.0, core=true, t24Name=PIK.CAP.INT.AMT)
+        PIK_END_DATE : mml:Integer
+            @i18n:Label (en="Addl.Int.End Date")
+            @i18n:Tooltip (en="Additional Interest")
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=34.0, core=true, t24Name=PIK.END.DATE)
+        PIK_INT : mml:Integer
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=35.0, core=true, t24Name=PIK.INT)
+        PIK_ST_DATE : mml:Integer
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=33.0, core=true, t24Name=PIK.ST.DATE)
+    }
+    SL_LOAN_PART_BALANCES__PR_OUTS_AMT
+    {
+        MVT_TYPE -> byValue SL_Contract:SL_LOAN_PART_BALANCES__PR_OUTS_AMT__MVT_TYPE *
+            @t24:i (t24Name=MVT.TYPE)
+        PR_AMT_DECR : mml:Integer
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=6.0, core=true, t24Name=PR.AMT.DECR)
+        PR_AMT_EFF_DATE : mml:Integer
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=9.0, core=true, t24Name=PR.AMT.EFF.DATE)
+        PR_AMT_INCR : mml:Integer
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=5.0, core=true, t24Name=PR.AMT.INCR)
+        PR_AMT_MOVED : mml:Integer
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=4.0, core=true, t24Name=PR.AMT.MOVED)
+        PR_OUTS_AMT : mml:Integer
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=3.0, core=true, t24Name=PR.OUTS.AMT)
+    }
+    SL_LOAN_PART_BALANCES__PR_OUTS_AMT__MVT_TYPE
+    {
+        MVT_AMT : mml:Integer
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=8.0, core=true, t24Name=MVT.AMT)
+        MVT_TYPE : mml:Integer
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=7.0, core=true, t24Name=MVT.TYPE)
+    }
+    SL_LOAN_PART_BALANCES__RET_INT_AMT
+    {
+        RET_AC_OR_PL : mml:Integer
+            @t24:i (align=R, inputBehaviour=I, maxLength=35, sysNumber=30.0, core=true, t24Name=RET.AC.OR.PL)
+        RET_INT_AMT : mml:Integer
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=29.0, core=true, t24Name=RET.INT.AMT)
+        RET_INT_DATE : mml:Integer
+            @t24:i (align=R, inputBehaviour=I, maxLength=8, sysNumber=31.0, core=true, t24Name=RET.INT.DATE)
+    }
+    SL_LOAN_PART_BALANCES__STRT_PRD_INT
+    {
+        BS_INT_AMT : mml:Integer
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=16.0, core=true, t24Name=BS.INT.AMT)
+        CAP_INT_AMT : mml:Integer
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=17.0, core=true, t24Name=CAP.INT.AMT)
+        END_PRD_INT : mml:Integer
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=11.0, core=true, t24Name=END.PRD.INT)
+        FLT_INT_AMT : mml:Integer
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=13.0, core=true, t24Name=FLT.INT.AMT)
+        INT_ON_RPY_AMT : mml:Integer
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=15.0, core=true, t24Name=INT.ON.RPY.AMT)
+        OUTS_ACCR_INT : mml:Integer
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=19.0, core=true, t24Name=OUTS.ACCR.INT)
+        PRD_INT_AMT : mml:Integer
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=14.0, core=true, t24Name=PRD.INT.AMT)
+        STRT_PRD_INT : mml:Integer
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=10.0, core=true, t24Name=STRT.PRD.INT)
+        TAX_AMOUNT : mml:Integer
+            @i18n:Label (en="Tax Amount")
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=18.0, core=true, t24Name=TAX.AMOUNT)
+        TOT_INT_AMT : mml:Integer
+            @i18n:Label (en="Total Intt Amt")
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=12.0, core=true, t24Name=TOT.INT.AMT)
+    }
+    SL_LOAN_RET_INT_DET
+        @i18n:Description (en="")
+        @t24:i (t24Name=SL.LOAN.RET.INT.DET, level=F, type=L, allowedFunctions="L P S", localRefAllowed=false)
+    {
+        CONTRACT_NO_ -> SL_Contract:SL_LOAN_RET_INT_DET PK required
+            @i18n:Label (en="Contract No ")
+            @t24:i (align=L, inputBehaviour=I, maxLength=25, sysNumber=0.0, core=true, businessType=A, t24Name=CONTRACT.NO.)
+        RET_INT_DATE -> byValue SL_Contract:SL_LOAN_RET_INT_DET__RET_INT_DATE *
+            @t24:i (t24Name=RET.INT.DATE)
+    }
+    SL_LOAN_RET_INT_DET_HIST
+        @i18n:Description (en="")
+        @t24:i (t24Name=SL.LOAN.RET.INT.DET.HIST, level=F, type=L, allowedFunctions="L P S", localRefAllowed=false)
+    {
+        CONTRACT_NO_ -> SL_Contract:SL_LOAN_RET_INT_DET_HIST PK required
+            @i18n:Label (en="Contract No ")
+            @t24:i (align=L, inputBehaviour=I, maxLength=25, sysNumber=0.0, core=true, businessType=A, t24Name=CONTRACT.NO., mask="##/#####/#####-###-####")
+        RET_INT_DATE -> byValue SL_Contract:SL_LOAN_RET_INT_DET_HIST__RET_INT_DATE *
+            @t24:i (t24Name=RET.INT.DATE)
+    }
+    SL_LOAN_RET_INT_DET_HIST__RET_INT_DATE
+    {
+        RET_INT_AMT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=2.0, core=true, t24Name=RET.INT.AMT)
+        RET_INT_DATE : T24BusinessTypes:D
+            @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=1.0, core=true, t24Name=RET.INT.DATE)
+    }
+    SL_LOAN_RET_INT_DET_SAVE
+        @i18n:Description (en="")
+        @t24:i (t24Name=SL.LOAN.RET.INT.DET.SAVE, level=F, type=L, allowedFunctions="L P S", localRefAllowed=false)
+    {
+        CONTRACT_NO_ -> SL_Contract:SL_LOAN_RET_INT_DET_SAVE PK required
+            @i18n:Label (en="Contract No ")
+            @t24:i (align=L, inputBehaviour=I, maxLength=25, sysNumber=0.0, core=true, businessType=A, t24Name=CONTRACT.NO., mask="##/#####/#####-###-####")
+        RET_INT_DATE -> byValue SL_Contract:SL_LOAN_RET_INT_DET_SAVE__RET_INT_DATE *
+            @t24:i (t24Name=RET.INT.DATE)
+    }
+    SL_LOAN_RET_INT_DET_SAVE__RET_INT_DATE
+    {
+        RET_INT_AMT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=2.0, core=true, t24Name=RET.INT.AMT)
+        RET_INT_DATE : T24BusinessTypes:D
+            @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=1.0, core=true, t24Name=RET.INT.DATE)
+    }
+    SL_LOAN_RET_INT_DET__RET_INT_DATE
+    {
+        RET_INT_AMT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=2.0, core=true, t24Name=RET.INT.AMT)
+        RET_INT_DATE : T24BusinessTypes:D
+            @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=1.0, core=true, t24Name=RET.INT.DATE)
+    }
+    SL_LOAN_SCHEDULES
+        @i18n:Description (en="")
+        @t24:i (t24Name=SL.LOAN.SCHEDULES, level=F, type=L, allowedFunctions="L P S", localRefAllowed=false)
+    {
+        FACI_REPAY_SCH : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=9.0, core=true, t24Name=FACI.REPAY.SCH)
+        ID -> SL_Contract:SL_LOAN_SCHEDULES PK required
+            @i18n:Label (en="Transaction Ref")
+            @i18n:Tooltip (en="Transaction Reference")
+            @t24:i (align=L, inputBehaviour=I, maxLength=40, sysNumber=0.0, core=true, businessType=A, t24Name=ID)
+        SCHED_DATE : T24BusinessTypes:N
+            @i18n:Label (en="Schedule Date")
+            @t24:i (align=L, inputBehaviour=N, maxLength=8, core=false, t24Name=SCHED.DATE, genOperation="@ID[8]")
+        SCH_TYPE -> byValue SL_Contract:SL_LOAN_SCHEDULES__SCH_TYPE *
+            @t24:i (t24Name=SCH.TYPE)
+    }
+    SL_LOAN_SCHEDULES_PAST
+        @i18n:Description (en="")
+        @t24:i (t24Name=SL.LOAN.SCHEDULES.PAST, level=F, type=L, allowedFunctions="L P S", localRefAllowed=false)
+    {
+        FACI_REPAY_SCH : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=9.0, core=true, t24Name=FACI.REPAY.SCH)
+        ID -> SL_Contract:SL_LOAN_SCHEDULES_PAST PK required
+            @i18n:Label (en="Transaction Ref")
+            @i18n:Tooltip (en="Transaction Reference")
+            @t24:i (align=L, inputBehaviour=I, maxLength=40, sysNumber=0.0, core=true, businessType=A, t24Name=ID, mask="##/#####/#####-###-####-########-####-########")
+        MAT_DATE : T24BusinessTypes:N
+            @i18n:Label (en="Maturity Date")
+            @i18n:Tooltip (en="Indicates maturity date ")
+            @t24:i (align=L, inputBehaviour=N, maxLength=15, core=false, t24Name=MAT.DATE, genOperation="@ID[20,27]")
+        SCH_TYPE -> byValue SL_Contract:SL_LOAN_SCHEDULES_PAST__SCH_TYPE *
+            @t24:i (t24Name=SCH.TYPE)
+    }
+    SL_LOAN_SCHEDULES_PAST_HIST
+        @i18n:Description (en="")
+        @t24:i (t24Name=SL.LOAN.SCHEDULES.PAST.HIST, level=F, type=L, allowedFunctions="L P S", localRefAllowed=false)
+    {
+        FACI_REPAY_SCH : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=9.0, core=true, t24Name=FACI.REPAY.SCH)
+        ID -> SL_Contract:SL_LOAN_SCHEDULES_PAST_HIST PK required
+            @i18n:Label (en="Transaction Ref")
+            @i18n:Tooltip (en="Transaction Reference")
+            @t24:i (align=L, inputBehaviour=I, maxLength=40, sysNumber=0.0, core=true, businessType=A, t24Name=ID, mask="##/#####/#####-###-####-########-####-########")
+        SCH_TYPE -> byValue SL_Contract:SL_LOAN_SCHEDULES_PAST_HIST__SCH_TYPE *
+            @t24:i (t24Name=SCH.TYPE)
+    }
+    SL_LOAN_SCHEDULES_PAST_HIST__SCH_TYPE
+    {
+        CHG_CODE -> byValue SL_Contract:SL_LOAN_SCHEDULES_PAST_HIST__SCH_TYPE__CHG_CODE *
+            @t24:i (t24Name=CHG.CODE)
+        PART_AMT : T24BusinessTypes:AMT
+            @i18n:Label (en="Participant Amt")
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=7.0, core=true, t24Name=PART.AMT)
+        PART_FAC_AMT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=8.0, core=true, t24Name=PART.FAC.AMT)
+        PART_ID -> ST_Customer:CUSTOMER
+            @i18n:Label (en="Participant Id")
+            @t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=6.0, core=true, businessType=CUS, t24Name=PART.ID)
+        SCH_AMOUNT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=5.0, core=true, t24Name=SCH.AMOUNT)
+        SCH_TYPE : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=1.0, core=true, t24Name=SCH.TYPE)
+    }
+    SL_LOAN_SCHEDULES_PAST_HIST__SCH_TYPE__CHG_CODE
+    {
+        CHG_AMOUNT : T24BusinessTypes:AMT
+            @i18n:Label (en="Charge Amount")
+            @i18n:Tooltip (en="Defines charge amount")
+            @t24:i (align=R, inputBehaviour=I, maxLength=16, sysNumber=4.0, core=true, t24Name=CHG.AMOUNT)
+        CHG_CODE : T24BusinessTypes:A
+            @i18n:Label (en="Charge Code")
+            @i18n:Tooltip (en="Charge Code")
+            @t24:i (align=L, inputBehaviour=I, maxLength=11, sysNumber=2.0, core=true, t24Name=CHG.CODE)
+        CHG_CURRENCY : T24BusinessTypes:CCY
+            @i18n:Label (en="Chg Currency")
+            @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=3.0, core=true, t24Name=CHG.CURRENCY)
+    }
+    SL_LOAN_SCHEDULES_PAST__SCH_TYPE
+    {
+        CHG_CODE -> byValue SL_Contract:SL_LOAN_SCHEDULES_PAST__SCH_TYPE__CHG_CODE *
+            @t24:i (t24Name=CHG.CODE)
+        PART_AMT : T24BusinessTypes:AMT
+            @i18n:Label (en="Participant Amt")
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=7.0, core=true, t24Name=PART.AMT)
+        PART_FAC_AMT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=8.0, core=true, t24Name=PART.FAC.AMT)
+        PART_ID -> ST_Customer:CUSTOMER
+            @i18n:Label (en="Participant Id")
+            @t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=6.0, core=true, businessType=CUS, t24Name=PART.ID)
+        SCH_AMOUNT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=5.0, core=true, t24Name=SCH.AMOUNT)
+        SCH_TYPE : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=1.0, core=true, t24Name=SCH.TYPE)
+    }
+    SL_LOAN_SCHEDULES_PAST__SCH_TYPE__CHG_CODE
+    {
+        CHG_AMOUNT : T24BusinessTypes:AMT
+            @i18n:Label (en="Charge Amount")
+            @i18n:Tooltip (en="Defines charge amount")
+            @t24:i (align=R, inputBehaviour=I, maxLength=16, sysNumber=4.0, core=true, t24Name=CHG.AMOUNT)
+        CHG_CODE : T24BusinessTypes:A
+            @i18n:Label (en="Charge Code")
+            @i18n:Tooltip (en="Charge Code")
+            @t24:i (align=L, inputBehaviour=I, maxLength=11, sysNumber=2.0, core=true, t24Name=CHG.CODE)
+        CHG_CURRENCY : T24BusinessTypes:CCY
+            @i18n:Label (en="Chg Currency")
+            @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=3.0, core=true, t24Name=CHG.CURRENCY)
+    }
+    SL_LOAN_SCHEDULES__SCH_TYPE
+    {
+        CHG_CODE -> byValue SL_Contract:SL_LOAN_SCHEDULES__SCH_TYPE__CHG_CODE *
+            @t24:i (t24Name=CHG.CODE)
+        PART_AMT : T24BusinessTypes:AMT
+            @i18n:Label (en="Participant Amt")
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=7.0, core=true, t24Name=PART.AMT)
+        PART_FAC_AMT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=8.0, core=true, t24Name=PART.FAC.AMT)
+        PART_ID -> ST_Customer:CUSTOMER
+            @i18n:Label (en="Participant Id")
+            @t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=6.0, core=true, businessType=CUS, t24Name=PART.ID)
+        SCH_AMOUNT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=5.0, core=true, t24Name=SCH.AMOUNT)
+        SCH_TYPE : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=1.0, core=true, t24Name=SCH.TYPE)
+    }
+    SL_LOAN_SCHEDULES__SCH_TYPE__CHG_CODE
+    {
+        CHG_AMOUNT : T24BusinessTypes:AMT
+            @i18n:Label (en="Charge Amount")
+            @i18n:Tooltip (en="Defines charge amount")
+            @t24:i (align=R, inputBehaviour=I, maxLength=16, sysNumber=4.0, core=true, t24Name=CHG.AMOUNT)
+        CHG_CODE : T24BusinessTypes:A
+            @i18n:Label (en="Charge Code")
+            @i18n:Tooltip (en="Charge Code")
+            @t24:i (align=L, inputBehaviour=I, maxLength=11, sysNumber=2.0, core=true, t24Name=CHG.CODE)
+        CHG_CURRENCY : T24BusinessTypes:CCY
+            @i18n:Label (en="Chg Currency")
+            @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=3.0, core=true, t24Name=CHG.CURRENCY)
+    }
+    SL_TR_LOANS
+        @i18n:Description (en="")
+        @t24:i (t24Name=SL.TR.LOANS, level=F, type=L, allowedFunctions="L P S", localRefAllowed=false)
+    {
+        ID -> SL_Contract:SL_TR_LOANS PK required
+            @i18n:Label (en="Transaction Ref")
+            @i18n:Tooltip (en="Transaction Reference")
+            @t24:i (align=L, inputBehaviour=I, maxLength=15, sysNumber=0.0, core=true, businessType=A, t24Name=ID)
+        LOAN_ID -> byValue SL_Contract:SL_TR_LOANS__LOAN_ID *
+            @t24:i (t24Name=LOAN.ID)
+    }
+    SL_TR_LOANS__LOAN_ID
+    {
+        DEAL_CURRENCY : T24BusinessTypes:CCY
+            @i18n:Label (en=Ccy)
+            @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=2.0, core=true, t24Name=DEAL.CURRENCY)
+        LOAN_ID : T24BusinessTypes:A
+            @i18n:Label (en="Loan Id")
+            @t24:i (align=L, inputBehaviour=I, maxLength=19, sysNumber=1.0, core=true, t24Name=LOAN.ID)
+        VALUE_DATE : T24BusinessTypes:D
+            @i18n:Label (en="Value Date")
+            @i18n:Tooltip (en="Indicates the Value date of the Contract")
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=3.0, core=true, t24Name=VALUE.DATE)
+    }
+}
