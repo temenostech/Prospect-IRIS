@@ -1,32 +1,47 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-	<modelVersion>4.0.0</modelVersion>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
 
-	<!-- This is needed so that the 'ds-models' packaging is understood -->
-  	<parent>
-		<groupId>com.temenos.examples</groupId>
-		<artifactId>Prospect-iris-parent</artifactId>
-		<version>1.0-SNAPSHOT</version>
-		<relativePath>../Prospect-iris-parent/pom.xml</relativePath>
-	</parent>
+    <!-- This is needed so that the 'ds-models' packaging is understood -->
+    <parent>
+        <groupId>com.temenos.examples</groupId>
+        <artifactId>Prospect-ds</artifactId>
+        <version>201608.0.0-SNAPSHOT</version>
+        <relativePath>../Prospect-iris-parent/pom.xml</relativePath>
+    </parent>
 
-	<groupId>com.temenos.ds.models</groupId>
-	<artifactId>Prospect-models-gen</artifactId>
-	<packaging>ds-generated</packaging>
-		
-	<dependencies>
-		<dependency>
-			<groupId>${project.groupId}</groupId>
-			<artifactId>Prospect-models</artifactId>
-			<version>${project.version}</version>
-			<type>ds-models</type>
-			<optional>true</optional>
-		</dependency>
-		<dependency>
-		  <groupId>com.temenos.interaction</groupId>
-		  <artifactId>interaction-core</artifactId>
-		  <version>0.8.0-SNAPSHOT</version>
-		</dependency>
-	</dependencies>
+    <groupId>com.temenos.ds.models</groupId>
+    <artifactId>Prospect-models-gen</artifactId>
+    <packaging>ds-generated</packaging>
+
+    <dependencies>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>Prospect-models</artifactId>
+            <version>${project.version}</version>
+            <type>ds-models</type>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>com.temenos.interaction</groupId>
+            <artifactId>interaction-core</artifactId>
+            <version>0.10.0</version>
+        </dependency>
+    </dependencies>
+    
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>com.odcgroup.maven.plugin</groupId>
+                    <artifactId>maven-ds-generator-plugin</artifactId>
+                    <configuration>
+                        <dsArtifactId>DesignStudioT24-Generator</dsArtifactId>
+                        <jvmArguments>-Xms128m -Xmx2048m -XX:PermSize=64m -XX:MaxPermSize=128m -XX:+DisableExplicitGC -Dds.domain.ecore=1 -Dfile.encoding=UTF-8 -Dds.skipRimGenerationForIRIS=${skipRIMGeneration} -Dds.t24.iris.metadata.selection.fields.only=${enqMetadataWithSelectionFieldsOnly} -Dds.skipDomainGenerationForIRIS=${skipDomainGenerationForIRIS}</jvmArguments>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
 
 </project>
