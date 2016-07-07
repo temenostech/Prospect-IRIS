@@ -60,22 +60,14 @@
                 </h4>
               </div>
               <div id="resources" class="panel-collapse collapse in">
-                <div class="panel-body"><a href="#">Users</a></div>
-                <div class="panel-body" style="background-color:#d9d9d9">Customers</div>
-                <div class="panel-body"><a href="#">Saving Accounts</a></div>
-                <div class="panel-body"><a href="#">Current Accounts</a></div>
-                <div class="panel-body"><a href="#">Cash Deposits</a></div>
-                <div class="panel-body"><a href="#">Cash Withdrawls</a></div>
-                <div class="panel-body"><a href="#">Funds Transfers</a></div>
-                <!--
                 <div class="panel-body"><a href="verUsers.html">Users</a></div>
                 <div class="panel-body" style="background-color:#d9d9d9">Customers</div>
                 <div class="panel-body"><a href="verAccount_SbOpens.html">Saving Accounts</a></div>
-                <div class="panel-body"><a href="verAccount_CaOpens">Current Accounts</a></div>
+                <div class="panel-body"><a href="verAccount_CaOpens.html">Current Accounts</a></div>
                 <div class="panel-body"><a href="verTeller_LcyCashins.html">Cash Deposits</a></div>
                 <div class="panel-body"><a href="verTeller_LcyCashwdls.html">Cash Withdrawls</a></div>
                 <div class="panel-body"><a href="verFundsTransfers.html">Funds Transfers</a></div>
-                -->
+                
               </div>
             </div><br />
             <div class="panel panel-info">
@@ -85,8 +77,8 @@
                 </h4>
               </div>
               <div id="events" class="panel-collapse collapse in">
-                <div class="panel-body"><a href="#">Payments</a></div>
-                <div class="panel-body"><a href="#">Funds Transfers</a></div>
+                <div class="panel-body"><a href="verPayments.html">Payments</a></div>
+                <div class="panel-body"><a href="verOutwardTransfers.html">Funds Transfers</a></div>
               </div>
             </div>
           </div>
@@ -538,14 +530,72 @@
                 <li><a data-toggle="tab" href="#csharp">C#</a></li>
                 <li><a data-toggle="tab" href="#javascript">Java Script</a></li>
               </ul>
-              <div class="tab-content">
+              <div class="tab-content"><br />
                 <div id="java" class="tab-pane fade in active">
-                  <h3>Example in Java</h3>
-                  <p>Java Code</p>
+                  <div class="panel panel-success">
+                    <div class="panel-heading">Add dependency in pom.xml</div>
+                      <div class="panel-body">
+                        <blockquote color="green"> 
+                            <pre>
+&lt;repositories&gt;
+    &lt;repository&gt;
+        &lt;id&gt;mjangid&lt;/id&gt;
+        &lt;name&gt;iris-repo&lt;/name&gt;
+        &lt;url&gt;https://github.com/mjangid/iris-repo/raw/master/&lt;/url&gt;
+    &lt;/repository&gt;
+&lt;/repositories&gt;
+
+
+&lt;dependencies&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;com.temenos.interaction&lt;/groupId&gt;
+        &lt;artifactId&gt;useragent-generic-java&lt;/artifactId&gt;
+        &lt;version&gt;0.10.0&lt;/version&gt;
+        &lt;scope&gt;compile&lt;/scope&gt;
+    &lt;/dependency&gt;
+&lt;/dependencies&gt;
+                            </pre>
+                        </blockquote>
+                      </div>
+                  </div>   
+
+
+                  <div class="panel panel-success">
+                    <div class="panel-heading">JAVA code</div>
+                      <div class="panel-body">
+                        <blockquote color="green"> 
+                            <pre>
+import com.temenos.useragent.generic.DefaultInteractionSession;
+import com.temenos.useragent.generic.InteractionSession;
+import com.temenos.useragent.generic.mediatype.AtomPayloadHandler;
+
+public class Customers {
+	
+	public Boolean createCustomer(String dataServiceUrl) {
+
+		InteractionSession session = DefaultInteractionSession.newSession();
+		session.registerHandler("application/atom+xml", AtomPayloadHandler.class)
+		.basicAuth("INPUTT", "123456")
+		.header("Content-Type", "application/atom+xml")
+		.header("Accept", "application/atom+xml").url()
+		.baseuri(dataServiceUrl).path("verCustomerInputs()/new")
+		.post();
+
+		if (201 == session.result().code()) {
+			return true;
+		}
+		return false;		
+	}
+}
+                            </pre>
+                        </blockquote>
+                      </div>
+                  </div>  
+
+
                 </div>
                 <div id="csharp" class="tab-pane fade">
-                  <h3>Example in C#</h3>
-                  <p>C# Code</p>
+                  
                 </div>
                 <div id="javascript" class="tab-pane fade">
                   <h3>Example in Java Script</h3>
