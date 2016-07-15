@@ -20,6 +20,7 @@
 
   <!-- Custom styles for this template -->
   <link href="stylesheets/dashboard.css" rel="stylesheet">
+  <link href="stylesheets/util.css" rel="stylesheet">
 
 </head>
 
@@ -94,529 +95,243 @@
         <!-- API Decription -->
         <h1 class="page-header">Query Parameters</h1>
         <div class="well well-lg">
-          <p>All available API follow OData standards and supports following OData filters.</p>
-          <a href="http://temenostech.temenos.com/iris-data-service-and-odata-filters/">OData Filter Guide</a>
+          <strong>Temenos banking API support OData protocol. Querying data from data service you need query options, these query options called filters. These filters can be used a query parameters.</strong>
+          <br /><br />
+          <p>The default URL of IRIS Data service is:</p>
+          <code>
+http://127.0.0.1/Prospect-iris/Prospect.svc/GB0010001/enqCustomerInfos()?$filter=CusNo eq ‘66052’<br />
+|—————————————–Service Root———————————————–|———SD———|———Resource Name——|—————————Filters————————|<br /><br />
+          </code>
+          <i>NOTE: GB0010001 is company name and T24 specific and SD stands for Service Document</i>
         </div>
 
-        <!-- Collection
-          <div class="panel-group" id="rightpanel">
-            <div class="panel panel-info">
-              <div class="panel-heading">
-                <h4 class="panel-title">
-                  <a data-toggle="collapse" data-parent="#rightpanel" href="#collection">Get Customer Collection</a>
-                </h4>
-              </div>
-              <div id="collection" class="panel-collapse collapse in">
-                <!-- Begin 
-                <table class="table">
-                  <tr>
-                    <td><strong>URL</strong></td>
-                    <td>http://127.0.0.1/Prospect-IRIS/Prospect.svc/GB0010001/verCustomerInputs()</td>
-                  </tr>
-                  <tr>
-                    <td><strong>Http Method<strong></td><td>GET</td>
-                    </tr>
-                    <tr>
-                      <td><strong>Http Request Headers</strong></td>
-                    <td>
-                      Accept: 'Application/atom+xml'<br/> Accept: 'Application/hal+json'<br/>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td><strong>Http Response Headers</strong></td>
-                    <td>
-                      Content-Type: 'Application/atom+xml'<br/> Content-Type: 'Application/hal+json'
-                    </td>
-                  </tr>
-                  <tr>
-                    <td><strong>Response Type</strong></td>
-                    <td>Collection</td>
-                  </tr>
-                  <tr>
-                    <td><strong>Response</strong></td>
-                    <td>
-                      <div id="Example" class="panel-collapse collapse in">
-                        <div class="panel-body">
-                          <ul class="nav nav-tabs">
-                            <li class="active"><a data-toggle="tab" href="#getxml">xml</a></li>
-                            <li><a data-toggle="tab" href="#getjson">json</a></li>
-                          </ul>
+        <div class="well well-lg">
+          System query options are prefixed with <code>$ character</code>, these filter options are used to control the amount
+          and order of the data. IRIS Data Service supports following System query options – all the filters self-explanatory
+          according to name.
+        </div>
+        <!-- Collection -->
+        <div class="panel-group" id="rightpanel">
+          <div class="panel panel-info">
+            <div class="panel-heading">
+              <h4 class="panel-title">
+                <a data-toggle="collapse" data-parent="#rightpanel" href="#filter">$filter system query option</a>
+              </h4>
+            </div>
+            <div id="filter" class="panel-collapse collapse in">
+              <!-- Begin -->
+              <table class="table">
+                <thead>
+                  <th>Filter</th>
+                  <th>Name</th>
+                  <th>Example</th>
+                </thead>
+                <tr>
+                  <td>eq</td>
+                  <td>Equal</td>
+                  <td>/GB0010001/enqCustomerInfos()?$filter=CusNo eq ‘66052’</td>
+                </tr>
+                <tr>
+                  <td>ne</td>
+                  <td>Not Equal</td>
+                  <td>/GB0010001/enqCustomerInfos()?$filter=CusNo ne ‘66052’</td>
+                </tr>
+                <tr>
+                  <td>le</td>
+                  <td>Less Then</td>
+                  <td>/GB0010001/enqCustomerInfos()?$filter=Sector le ‘1000’</td>
+                </tr>
+                <tr>
+                  <td>gt</td>
+                  <td>Greater Then</td>
+                  <td>/GB0010001/enqCustomerInfos()?$filter=Sector gt ‘2000’</td>
+                </tr>
+                <tr>
+                  <td>ge</td>
+                  <td>Greater then and Equal</td>
+                  <td>/GB0010001/enqCustomerInfos()?$filter=Sector ge ‘2000’</td>
+                </tr>
+                <tr>
+                  <td>le</td>
+                  <td>Less then and Equal</td>
+                  <td>/GB0010001/enqCustomerInfos()?$filter=Sector le ‘1000’</td>
+                </tr>
+                <tr>
+                  <td>or</td>
+                  <td>Logical or</td>
+                  <td>/GB0010001/enqCustomerInfos()?$filter=Sector eq ‘1000’ or Sector eq ‘1000’</td>
+                </tr>
+                <tr>
+                  <td>and </td>
+                  <td>Logical and</td>
+                  <td>/GB0010001/enqCustomerInfos()?$filter=Sector eq ‘1000’ and AccountOfficer eq ‘1’</td>
+                </tr>
+              </table>
+              <!-- End -->
+            </div>
+          </div>
 
-                          <div class="tab-content">
-                            <div id="getxml" class="tab-pane fade in active">
-                              <p><a href="">Show XML file</a></p>
-                            </div>
-
-                            <div id="getjson" class="tab-pane fade">
-                              <p><a href="">Show json file</a></p>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </td>
-                  </tr>
-                </table>
-                <!-- End 
-              </div>
+          <div class="panel panel-info">
+            <div class="panel-heading">
+              <h4 class="panel-title">
+                <a data-toggle="collapse" data-parent="#rightpanel" href="#orderby">$orderby system query option</a>
+              </h4>
             </div>
 
-            <!-- Item 
-            <div class="panel panel-info">
-              <div class="panel-heading">
-                <h4 class="panel-title">
-                  <a data-toggle="collapse" data-parent="#rightpanel" href="#item">Get Customer Item</a>
-                </h4>
-              </div>
-              <div id="item" class="panel-collapse collapse">
-                <!-- Begin 
-                <table class="table">
-                  <tr>
-                    <td><strong>URL</strong></td>
-                    <td>http://127.0.0.1/Prospect-IRIS/Prospect.svc/GB0010001/verCustomerInputs('CustomerCode')</td>
-                  </tr>
-                  <tr>
-                    <td><strong>Http Method<strong></td><td>GET</td>
-                    </tr>
-                    <tr>
-                      <td><strong>Http Request Headers</strong></td>
-                    <td>
-                      Accept: 'Application/atom+xml'<br/> Accept: 'Application/hal+json'<br/>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td><strong>Http Response Headers</strong></td>
-                    <td>
-                      Content-Type: 'Application/atom+xml'<br/> Content-Type: 'Application/hal+json'
-                    </td>
-                  </tr>
-                  <tr>
-                    <td><strong>Response Type</strong></td>
-                    <td>Single Item</td>
-                  </tr>
-                  <tr>
-                    <td><strong>Response</strong></td>
-                    <td>
-                      <div id="Example" class="panel-collapse collapse in">
-                        <div class="panel-body">
-                          <ul class="nav nav-tabs">
-                            <li class="active"><a data-toggle="tab" href="#getxmlcustmer">xml</a></li>
-                            <li><a data-toggle="tab" href="#getjsoncustmer">json</a></li>
-                          </ul>
+            <div id="orderby" class="panel-collapse collapse">
+              <!-- Begin 
+              
+                This filter works only on collection and return the data either ascending or descending on the field you are querying.
+                <br/><br/>
+                <h4><span class="label label-info">Examples:</span></h4>-->
 
-                          <div class="tab-content">
-                            <div id="getxmlcustomer" class="tab-pane fade in active">
-                              <p><a href="">Show XML file</a></p>
-                            </div>
+              <table class="table">
+                <thead>
+                  <th>Filter</th>
+                  <th>Name</th>
+                  <th>Example</th>
+                </thead>
+                <tr>
+                  <td>(default)</td>
+                  <td>Ascending</td>
+                  <td>/GB0010001/enqCustomerInfos()?$orderby=Sector</td>
+                </tr>
+                <tr>
+                  <td>asc</td>
+                  <td>Ascending</td>
+                  <td>/GB0010001/enqCustomerInfos()?$orderby=Sector asc</td>
+                </tr>
+                <tr>
+                  <td>eq</td>
+                  <td>Descending</td>
+                  <td>/GB0010001/enqCustomerInfos()?$orderby=Sector desc</td>
+                </tr>
+              </table>
 
-                            <div id="getjsoncustomer" class="tab-pane fade">
-                              <p><a href="">Show json file</a></p>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </td>
-                  </tr>
-                </table>
-                <!-- End 
-              </div>
+
+
+
+              <!-- End -->
             </div>
+          </div>
 
-            <!-- New resource
-            <div class="panel panel-info">
-              <div class="panel-heading">
-                <h4 class="panel-title">
-                  <a data-toggle="collapse" data-parent="#rightpanel" href="#new">Create New Customer</a>
-                </h4>
-              </div>
-              <div id="new" class="panel-collapse collapse">
-                <!-- Begin 
-                <table class="table">
-                  <tr>
-                    <td><strong>URL</strong></td>
-                    <td>http://127.0.0.1/Prospect-IRIS/Prospect.svc/GB0010001/verCustomerInputs()/new</td>
-                  </tr>
-                  <tr>
-                    <td><strong>Http Method</strong></td>
-                    <td>POST</td>
-                  </tr>
-                  <tr>
-                    <td><strong>Http Response Headers<strong></td><td>
-                      Accept: 'Application/atom+xml'<br/>
-                      Accept: 'Application/hal+json'
-                    </td>
-                  </tr>
-                  <tr><td><strong>URL Parameters<strong></td>
-                    <td>Optional: /verCustomerInputs()/new?CustomerCode='NumericValue'</td>
-                  </tr>
-                  <tr>
-                      <td><strong>Response Type</strong></td>
-                    <td>Single Item with CustomerCode</td>
-                  </tr>
-                  <tr>
-                    <td><strong>Response<strong></td>
-                    <td>
-                      <div id="Example" class="panel-collapse collapse in">
-                        <div class="panel-body">
-                          <ul class="nav nav-tabs">
-                            <li class="active"><a data-toggle="tab" href="#getxmlnew">xml</a></li>
-                            <li><a data-toggle="tab" href="#getjsonnew">json</a></li>
-                          </ul>
-
-                            <div class="tab-content">
-                              <div id="getxmlnew" class="tab-pane fade in active">
-                                <p><a href="">Show XML file</a></p>
-                              </div>
-                            
-                              <div id="getjsonnew" class="tab-pane fade">
-                                <p><a href="">Show json file</a></p>
-                              </div>
-                            </div>
-                        </div>
-                      </div>
-                    </td>
-                  </tr>
-                </table>
-                <!-- Fields 
-                <div class="panel-heading">
-                  <h4 class="panel-title">
-                    <a data-toggle="collapse" data-parent="#rightpanel-data" href="#dataparameter">Data Parameters</a>
-                  </h4>
-                </div>
-                <div id="dataparameter" class="panel-collapse collapse in">
-                  <div class="panel-body">
-                    <ul class="list-group">
-                      <li class="list-group-item"><strong>Mnemonic</strong><br />Specifies an alternative easy means of referencing
-                      the Customer. For countries where the Customer name should not be recorded (e.g. numbered Customers/accounts)
-                      any value can be entered in this field with the exception that the first character must be alpha. Like
-                      the ID, the Mnemonic must be unique across T24. Care should be taken when assigning Mnemonics to Customers
-                      and some rules should ideally be defined across the bank to allow easy identification of the Customers
-                      by their Mnemonics. Note : For each Customer, the System will automatically update the internal file
-                      "MNEMONIC.CUSTOMER" which allows the User to display the Customers in Mnemonic sequence instead of
-                      Customer number. Validation Rules: 3-10 type MNE (Uppercase alpha or numeric, first character alpha,
-                      or ".") characters.</li>
-                      <li class="list-group-item"><strong>ShortName</strong><br />Identifies the name of the Customer in a more descriptive form, and
-                        will be used for on-line enrichments in any field where a Customer ID or Mnemonic has been input.
-                        For countries where the Customer name should not be recorded (e.g. numbered Customers/ Accounts)
-                        any valid SWIFT character can be entered in this field with the exception that all characters cannot
-                        be spaces. A clear and unique identification of the Customer must be entered in this field. When
-                        entering or displaying data where a Customer ID or Mnemonic is involved, the content of this field
-                        will be used as the enrichment of the Customer number/Mnemonic. Validation Rules: 3-35 type S (uppercase
-                        alpha or numeric) characters. Special Characters "&" and "/" are also allowed, with the exception
-                        that "/" cannot be entered as first character. If SHORT.NAME is reported in SWIFT Messages, the character
-                        "&" would be replaced with spaces. (Mandatory input)
-                      </li>
-                      <li class="list-group-item"><strong>Name1</strong><br />Identifies the name of the Customer, which can be used for correspondence.
-                        This field together with the following three fields form the address for the Customer. The SWIFT
-                        standard of 4 lines of 35 characters each has been chosen by T24. Only in the fields NAME 1 and STREET
-                        is input mandatory. The input to field STREET is non mandatory if the field STREET.NON.MANDAT is
-                        defined as 'Y', in the CUSTOMER.DEFAULT record whose ID is equal to the value of the SECTOR field.
-                        Where no other additional address has been defined in the DELIVERY file, the address defined in these
-                        four fields will be used on any correspondence sent to the Customer. After authorisation of the Customer
-                        record, this address will be automatically created in the DELIVERY file as the Address No. 1 and
-                        further maintenance of the Customer Address No. 1 will be performed directly in the Customer file.
-                        Any additional address to be opened or to be maintained will be done by means of the DELIVERY file.
-                        Validation Rules: 3-35 type S (uppercase alpha or numeric) characters. Special Characters "&" and
-                        "/" are also allowed, with the exception that "/" cannot be entered as first character. If NAME.1
-                        is reported in SWIFT Messages, the character "&" would be replaced with spaces. (Mandatory input)</li>
-                      <li class="list-group-item"><strong>Sector</strong><br />Identifies the Sector code relating to the Customer. If the Sector code
-                        is defined on the Customer DEFAULT table the associated default values will be retrieved and added
-                        to a new Customer record during the Validation process except if some specific values have been input
-                        by the User. Validation Rules: 1-4 numeric character Sector code. (Mandatory input) It must be a
-                        valid code on the SECTOR table. The field must not be blank.</li>
-                      <li class="list-group-item"><strong>Gender</strong><br />Contains customer's gender. This additional client information is required
-                        by CRM. Validation Rules: Maximum of 6 characters is allowed Allowed values are MALE FEMALE</li>
-                      <li class="list-group-item"><strong>Title</strong><br />Holds the title for the customer name as the part of improved client information
-                        required by CRM A maximum of 6 characters may be entered. The following values are permitted: MR
-                        MRS MS MISS DR REV</li>
-                      <li class="list-group-item"><strong>GivenNames</strong><br />Specifies customer's given name. This additional client detail is
-                        required by CRM. Maximum of 50 character is allowed Characters must support swift format.</li>
-                      </ul>
-              </div>
+          <div class="panel panel-info">
+            <div class="panel-heading">
+              <h4 class="panel-title">
+                <a data-toggle="collapse" data-parent="#rightpanel" href="#select">$select system query option</a>
+              </h4>
             </div>
-            <!-- End 
-          </div>
-        </div>
-
-        <!-- validate resource 
-        <div class="panel panel-info">
-          <div class="panel-heading">
-            <h4 class="panel-title">
-              <a data-toggle="collapse" data-parent="#rightpanel" href="#validate">Validate Customer</a>
-            </h4>
-          </div>
-          <div id="validate" class="panel-collapse collapse">
-            <!-- Begin 
-            <table class="table">
-              <tr>
-                <td><strong>URL</strong></td>
-                <td>http://127.0.0.1/Prospect-IRIS/Prospect.svc/GB0010001/verCustomerInputs('CustomerCode')/validate</td>
-              </tr>
-              <tr>
-                <td><strong>Http Method</strong></td>
-                <td>POST</td>
-              </tr>
-              <tr>
-                <td><strong>Http Request Headers</strong></td>
-                <td>
-                  Accept: 'Application/atom+xml'<br /> Accept: 'Application/hal+json'<br /> Etag: 'returned by server'<br
-                  /></td>
-              </tr>
-              <tr>
-                <td><strong>Http Request Headers</strong></td>
-                <td>
-                  Content-Type: 'Application/atom+xml'<br /> Content-Type: 'Application/hal+json'<br /> If-Match: 'etag value'
-                </td>
-              </tr>
-              <tr>
-                <td><strong>Response</strong></td>
-                <td>
-                  <div id="Example" class="panel-collapse collapse in">
-                    <div class="panel-body">
-                      <ul class="nav nav-tabs">
-                        <li class="active"><a data-toggle="tab" href="#getxmlupdate">xml</a></li>
-                        <li><a data-toggle="tab" href="#getjsonupdate">json</a></li>
-                      </ul>
-
-                      <div class="tab-content">
-                        <div id="getxmlupdate" class="tab-pane fade in active">
-                          <p><a href="">Show XML file</a></p>
-                        </div>
-
-                        <div id="getjsonupdate" class="tab-pane fade">
-                          <p><a href="">Show json file</a></p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </td>
-              </tr>
-            </table>
-            <!-- End 
-          </div>
-        </div>
-
-        <!-- authorise resource 
-        <div class="panel panel-info">
-          <div class="panel-heading">
-            <h4 class="panel-title">
-              <a data-toggle="collapse" data-parent="#rightpanel" href="#authorise">Authorise Customer</a>
-            </h4>
-          </div>
-          <div id="authorise" class="panel-collapse collapse">
-            <!-- Begin 
-            <table class="table">
-              <tr>
-                <td><strong>URL</strong></td>
-                <td>http://127.0.0.1/Prospect-IRIS/Prospect.svc/GB0010001/verCustomerInputs('CustomerCode')/authorise</td>
-              </tr>
-              <tr>
-                <td><strong>Http Method</strong></td>
-                <td>POST</td>
-              </tr>
-              <tr>
-                <td><strong>Http Request Headers</strong></td>
-                <td>
-                  Accept: 'Application/atom+xml'<br /> Accept: 'Application/hal+json'<br /> Etag: 'returned by server'<br
-                  /></td>
-              </tr>
-              <tr>
-                <td><strong>Http Request Headers</strong></td>
-                <td>
-                  Content-Type: 'Application/atom+xml'<br /> Content-Type: 'Application/hal+json'<br /> If-Match: 'etag value'
-                </td>
-              </tr>
-              <tr>
-                <td><strong>Response</strong></td>
-                <td>
-                  <div id="Example" class="panel-collapse collapse in">
-                    <div class="panel-body">
-                      <ul class="nav nav-tabs">
-                        <li class="active"><a data-toggle="tab" href="#getxmlupdate">xml</a></li>
-                        <li><a data-toggle="tab" href="#getjsonupdate">json</a></li>
-                      </ul>
-
-                      <div class="tab-content">
-                        <div id="getxmlupdate" class="tab-pane fade in active">
-                          <p><a href="">Show XML file</a></p>
-                        </div>
-
-                        <div id="getjsonupdate" class="tab-pane fade">
-                          <p><a href="">Show json file</a></p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </td>
-              </tr>
-            </table>
-            <!-- End 
-          </div>
-        </div>
-
-        <!-- input resource 
-        <div class="panel panel-info">
-          <div class="panel-heading">
-            <h4 class="panel-title">
-              <a data-toggle="collapse" data-parent="#rightpanel" href="#input">Update Existing Customer</a>
-            </h4>
-          </div>
-          <div id="input" class="panel-collapse collapse">
-            <!-- Begin 
-            <table class="table">
-              <tr>
-                <td><strong>URL</strong></td>
-                <td>http://127.0.0.1/Prospect-IRIS/Prospect.svc/GB0010001/verCustomerInputs('CustomerCode')</td>
-              </tr>
-              <tr>
-                <td><strong>Http Method</strong></td>
-                <td>PUT</td>
-              </tr>
-              <tr>
-                <td><strong>Http Request Headers</strong></td>
-                <td>
-                  Accept: 'Application/atom+xml'<br /> Accept: 'Application/hal+json'<br /> Etag: 'returned by server'<br
-                  /></td>
-              </tr>
-              <tr>
-                <td><strong>Http Request Headers</strong></td>
-                <td>
-                  Content-Type: 'Application/atom+xml'<br /> Content-Type: 'Application/hal+json'<br /> If-Match: 'etag value'
-                </td>
-              </tr>
-              <tr>
-                <td><strong>Response</strong></td>
-                <td>
-                  <div id="Example" class="panel-collapse collapse in">
-                    <div class="panel-body">
-                      <ul class="nav nav-tabs">
-                        <li class="active"><a data-toggle="tab" href="#getxmlupdate">xml</a></li>
-                        <li><a data-toggle="tab" href="#getjsonupdate">json</a></li>
-                      </ul>
-
-                      <div class="tab-content">
-                        <div id="getxmlupdate" class="tab-pane fade in active">
-                          <p><a href="">Show XML file</a></p>
-                        </div>
-
-                        <div id="getjsonupdate" class="tab-pane fade">
-                          <p><a href="">Show json file</a></p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </td>
-              </tr>
-            </table>
-            <!-- End 
-          </div>
-        </div>
-
-        <!-- Example 
-        <div class="panel panel-info">
-          <div class="panel-heading">
-            <h4 class="panel-title">
-              <a data-toggle="collapse" data-parent="#rightpanel" href="#example">Example</a>
-            </h4>
-          </div>
-          <div id="example" class="panel-collapse collapse">
-            <!-- Begin
-            <div class="panel-body">
-              <ul class="nav nav-tabs">
-                <li class="active"><a data-toggle="tab" href="#java">Java</a></li>
-                <li><a data-toggle="tab" href="#csharp">C#</a></li>
-                <li><a data-toggle="tab" href="#javascript">Java Script</a></li>
-              </ul>
-              <div class="tab-content"><br />
-                <div id="java" class="tab-pane fade in active">
-                  <div class="panel panel-success">
-                    <div class="panel-heading">Add dependency in pom.xml</div>
-                      <div class="panel-body">
-                        <blockquote color="green"> 
-                            <pre>
-&lt;repositories&gt;
-    &lt;repository&gt;
-        &lt;id&gt;mjangid&lt;/id&gt;
-        &lt;name&gt;iris-repo&lt;/name&gt;
-        &lt;url&gt;https://github.com/mjangid/iris-repo/raw/master/&lt;/url&gt;
-    &lt;/repository&gt;
-&lt;/repositories&gt;
-
-
-&lt;dependencies&gt;
-    &lt;dependency&gt;
-        &lt;groupId&gt;com.temenos.interaction&lt;/groupId&gt;
-        &lt;artifactId&gt;useragent-generic-java&lt;/artifactId&gt;
-        &lt;version&gt;0.10.0&lt;/version&gt;
-        &lt;scope&gt;compile&lt;/scope&gt;
-    &lt;/dependency&gt;
-&lt;/dependencies&gt;
-                            </pre>
-                        </blockquote>
-                      </div>
-                  </div>   
-
-
-                  <div class="panel panel-success">
-                    <div class="panel-heading">JAVA code</div>
-                      <div class="panel-body">
-                        <blockquote color="green"> 
-                            <pre>
-import com.temenos.useragent.generic.DefaultInteractionSession;
-import com.temenos.useragent.generic.InteractionSession;
-import com.temenos.useragent.generic.mediatype.AtomPayloadHandler;
-
-public class Customer {
-	
-	public Boolean createCustomer(String dataServiceUrl) {
-
-		InteractionSession session = DefaultInteractionSession.newSession();
-		session.registerHandler("application/atom+xml", AtomPayloadHandler.class)
-		.basicAuth("INPUTT", "123456")
-		.header("Content-Type", "application/atom+xml")
-		.header("Accept", "application/atom+xml").url()
-		.baseuri(dataServiceUrl).path("verCustomerInputs()/new")
-		.post();
-
-		if (201 == session.result().code()) {
-			return true;
-		}
-		return false;		
-	}
-}
-                            </pre>
-                        </blockquote>
-                      </div>
-                  </div>  
-
-
-                </div>
-                <div id="csharp" class="tab-pane fade">
-                  
-                </div>
-                <div id="javascript" class="tab-pane fade">
-                  <h3>Example in Java Script</h3>
-                  <p>Java Script code</p>
-                </div>
-              </div>
+            <div id="select" class="panel-collapse collapse">
+              <!-- Begin -->
+              <table class="table">
+                <thead>
+                  <th>Example</th>
+                </thead>
+                <tr>
+                  <td>/GB0010001/enqCustomerInfos()?$select=CusNo</td>
+                </tr>
+                <tr>
+                  <td>/GB0010001/enqCustomerInfos()?$select=CusNo,Mnem</td>
+                </tr>
+                <tr>
+                  <td>/GB0010001/enqCustomerInfos(‘66052’)?$select=CusNo,Mnem</td>
+                </tr>
+              </table>
+              <!-- End -->
             </div>
-            <!-- End
+          </div>
+
+          <div class="panel panel-info">
+            <div class="panel-heading">
+              <h4 class="panel-title">
+                <a data-toggle="collapse" data-parent="#rightpanel" href="#top">$top system query option</a>
+              </h4>
+            </div>
+            <div id="top" class="panel-collapse collapse">
+              <!-- Begin -->
+              <table class="table">
+                <thead>
+                  <th>Example</th>
+                </thead>
+                <tr>
+                  <td>/GB0010001/enqCustomerInfos()?$top=5</td>
+                </tr>
+                <tr>
+                  <td>/GB0010001/enqCustomerInfos()?$top=5&$select=CusNo,Mnem</td>
+                </tr>
+                <tr>
+                  <td>/GB0010001/enqCustomerInfos()?$top=5&$select=CusNo,Mnem&$orderby=CusNo desc</td>
+                </tr>
+              </table>
+              <!-- End -->
+            </div>
+          </div>
+
+          <div class="panel panel-info">
+            <div class="panel-heading">
+              <h4 class="panel-title">
+                <a data-toggle="collapse" data-parent="#rightpanel" href="#skip">$skip system query option</a>
+              </h4>
+            </div>
+            <div id="skip" class="panel-collapse collapse">
+              <!-- Begin -->
+              <table class="table">
+                <thead>
+                  <th>Example</th>
+                </thead>
+                <tr>
+                  <td>/GB0010001/enqCustomerInfos()?$skip=1</td>
+                </tr>
+                <tr>
+                  <td>/GB0010001/enqCustomerInfos()?$skip=5&$select=CusNo,Mnem</td>
+                </tr>
+                <tr>
+                  <td>/GB0010001/enqCustomerInfos()?$skip=5&$select=CusNo,Mnem&$orderby=CusNo desc</td>
+                </tr>
+              </table>
+
+              <!-- End -->
+            </div>
+          </div>
+
+          <div class="panel panel-info">
+            <div class="panel-heading">
+              <h4 class="panel-title">
+                <a data-toggle="collapse" data-parent="#rightpanel" href="#skiptop">$skip & $skip system query option</a>
+              </h4>
+            </div>
+            <div id="skiptop" class="panel-collapse collapse">
+              <!-- Begin -->
+              <table class="table">
+                <thead>
+                  <th>Example</th>
+                </thead>
+                <tr>
+                  <td>/GB0010001/enqCustomerInfos()?$top=10 OR /GB0010001/enqCustomerInfos()?$skip=0&$top=10</td>
+                </tr>
+                <tr>
+                  <td>/GB0010001/enqCustomerInfos()?$skip=10&$top=10</td>
+                </tr>
+                <tr>
+                  <td>/GB0010001/enqCustomerInfos()?$skip=20&$top=10</td>
+                </tr>
+              </table>
+
+              <!-- End -->
+            </div>
           </div>
         </div>
-
       </div>
-
-
-
     </div>
   </div>
-  </div>
 
-  <!-- Bootstrap core JavaScript
-    ================================================== -->
-        <!-- Placed at the end of the document so the pages load faster -->
-        <script src="javascripts/jquery.min.js"></script>
-        <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
-        <script src="javascripts/bootstrap.min.js"></script>
+
+  <!-- Bootstrap core JavaScript -->
+  <!-- ================================================== -->
+  <!-- Placed at the end of the document so the pages load faster -->
+  <script src="javascripts/jquery.min.js"></script>
+  <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+  <script src="javascripts/bootstrap.min.js"></script>
 </body>
 
 </html>
