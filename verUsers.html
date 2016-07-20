@@ -347,52 +347,233 @@
               <div id="dataparameter" class="panel-collapse collapse in">
                 <div class="panel-body">
                   <ul class="list-group">
-                    <!--
-                      <li class="list-group-item"><strong>Mnemonic</strong><br />Specifies an alternative easy means of referencing
-                    the Customer. For countries where the Customer name should not be recorded (e.g. numbered Customers/accounts)
-                    any value can be entered in this field with the exception that the first character must be alpha. Like
-                    the ID, the Mnemonic must be unique across T24. Care should be taken when assigning Mnemonics to Customers
-                    and some rules should ideally be defined across the bank to allow easy identification of the Customers
-                    by their Mnemonics. Note : For each Customer, the System will automatically update the internal file
-                    "MNEMONIC.CUSTOMER" which allows the User to display the Customers in Mnemonic sequence instead of Customer
-                    number. Validation Rules: 3-10 type MNE (Uppercase alpha or numeric, first character alpha, or ".") characters.</li>
-                    <li class="list-group-item"><strong>ShortName</strong><br />Identifies the name of the Customer in a more descriptive form, and will
-                      be used for on-line enrichments in any field where a Customer ID or Mnemonic has been input. For countries
-                      where the Customer name should not be recorded (e.g. numbered Customers/ Accounts) any valid SWIFT
-                      character can be entered in this field with the exception that all characters cannot be spaces. A clear
-                      and unique identification of the Customer must be entered in this field. When entering or displaying
-                      data where a Customer ID or Mnemonic is involved, the content of this field will be used as the enrichment
-                      of the Customer number/Mnemonic. Validation Rules: 3-35 type S (uppercase alpha or numeric) characters.
-                      Special Characters "&" and "/" are also allowed, with the exception that "/" cannot be entered as first
-                      character. If SHORT.NAME is reported in SWIFT Messages, the character "&" would be replaced with spaces.
-                      (Mandatory input)
+                    <li class="list-group-item"><strong>UserName</strong> <br />
+Specifies the name by which the User is known and can be used for reporting purposes.
+Validation Rules:
+3-35 type A (alphanumeric) characters. (Mandatory input)
                     </li>
-                    <li class="list-group-item"><strong>Name1</strong><br />Identifies the name of the Customer, which can be used for correspondence.
-                      This field together with the following three fields form the address for the Customer. The SWIFT standard
-                      of 4 lines of 35 characters each has been chosen by T24. Only in the fields NAME 1 and STREET is input
-                      mandatory. The input to field STREET is non mandatory if the field STREET.NON.MANDAT is defined as
-                      'Y', in the CUSTOMER.DEFAULT record whose ID is equal to the value of the SECTOR field. Where no other
-                      additional address has been defined in the DELIVERY file, the address defined in these four fields
-                      will be used on any correspondence sent to the Customer. After authorisation of the Customer record,
-                      this address will be automatically created in the DELIVERY file as the Address No. 1 and further maintenance
-                      of the Customer Address No. 1 will be performed directly in the Customer file. Any additional address
-                      to be opened or to be maintained will be done by means of the DELIVERY file. Validation Rules: 3-35
-                      type S (uppercase alpha or numeric) characters. Special Characters "&" and "/" are also allowed, with
-                      the exception that "/" cannot be entered as first character. If NAME.1 is reported in SWIFT Messages,
-                      the character "&" would be replaced with spaces. (Mandatory input)</li>
-                    <li class="list-group-item"><strong>Sector</strong><br />Identifies the Sector code relating to the Customer. If the Sector code
-                      is defined on the Customer DEFAULT table the associated default values will be retrieved and added
-                      to a new Customer record during the Validation process except if some specific values have been input
-                      by the User. Validation Rules: 1-4 numeric character Sector code. (Mandatory input) It must be a valid
-                      code on the SECTOR table. The field must not be blank.</li>
-                    <li class="list-group-item"><strong>Gender</strong><br />Contains customer's gender. This additional client information is required
-                      by CRM. Validation Rules: Maximum of 6 characters is allowed Allowed values are MALE FEMALE</li>
-                    <li class="list-group-item"><strong>Title</strong><br />Holds the title for the customer name as the part of improved client information
-                      required by CRM A maximum of 6 characters may be entered. The following values are permitted: MR MRS
-                      MS MISS DR REV</li>
-                    <li class="list-group-item"><strong>GivenNames</strong><br />Specifies customer's given name. This additional client detail is required
-                      by CRM. Maximum of 50 character is allowed Characters must support swift format.</li>
-                      -->
+ <li class="list-group-item"><strong>SignOnName</strong> <br />
+   This is the name entered by the User to SIGN.ON to the System. It is used by the System as an alternative key to access User details.
+Validation Rules:
+6-16 type A (alphanumeric) characters. (Mandatory input)
+It must be different from the USER ID (Field 0) of this record.
+It must be different from the SIGN ON NAME (Field 2) of any other User record.
+ </li>
+
+ <li class="list-group-item"><strong>Language</strong> <br />
+
+   Indicates the Language in which the System should communicate with this User. All messages, instructions, Help Text etc. will be displayed when possible in the Language indicated by this code.
+ll information displayed by the System will be in the Language specified, provided the translation has been entered into the System. Any information for which the translation has not been entered into the System will be displayed in whichever Language has been defined as Language 1 in the LANGUAGE table (ref: General Tables).
+Validation Rules:
+1-2 numeric characters. (Mandatory input) The number entered must be the ID of an existing record in the LANGUAGE table.
+ </li>
+
+ <li class="list-group-item"><strong>CompanyCode</strong> <br />
+
+   Specifies the company or companies whose records this User can access.
+Whenever the User Signs On he will be able to access the records of the Company specified in this field. If more than one Company is specified, the User can access the records of another Company by using the PASSWORD Application or via "Tools/Change Company" in an environment using T24 Administration Company.
+Note: (i) It is always displayed reformatted, with the dashes.
+(ii) Any files, for which standard or special file mnemonics are specified in the COMPANY record, can only be accessed by Users Signed On to that Company.
+Validation Rules:
+Either: 1) Company ID: CCGGGLLLL where CC is alphabetic Country code GGG is numeric Company.Group LLLL is local Code or 2) Company Mnemonic: 2-3 type MNE (uppercase alpha or numeric or '.') characters Multi-value field (Mandatory input) It must be the ID or Mnemonic of an existing COMPANY record. The company may be in linked business entity where T24 Administration Company is active.
+ </li>
+
+ <li class="list-group-item"><strong>DepartmentCode</strong> <br />
+
+   Indicates the bank department in which the User works.
+This is used as a default in DATA.CAPTURE batch numbers and may be used for reporting purposes.
+Validation Rules:
+1-4 numeric characters. (Mandatory input) It must be the ID of an existing Department/Account Officer (DEPT.ACCT. OFFICER) record.
+ </li>
+
+ <li class="list-group-item"><strong>PasswordValidity</strong> <br />
+
+   Specifies how often and on what date the User must change his Password.
+1. Next Change Date If this is entered, it must be greater than today's date. It should be entered in the format DDMMYY or MMDDYY depending on the INPUT DAY MONTH (Field 29) format of the User record. Spaces between days, months and years are optional. Alternatively, the date may be entered in any of the standard formats permitted by the system. If you do not enter the year and/or the month, the System will assume that they are the same as today's date. Every time the Password is changed, the System recalculates this date depending on the change frequency.
+2. Change Frequency This can be daily, every 1-9 weeks, twice a month (on 15th and last day of each month) or every 1-6 Months. a) Daily Enter D or DAILY
+If you do not enter the Next Change Date, the System assumes the Next Change Date will be tomorrow.
+(b) Every 1-9 weeks Enter Wn where n is 1-9
+If you do not enter the Next Change Date, the System assumes the Next Change Date will be n x 7 days from today.
+c) Every 1-6 months Enter Mnndd
+Where nn is the number of months 01-06 and dd is the day in the month on which the password must be changed, (01-31). If this date does not exist (e.g. 30th February) the next day will be assumed (1st March)
+If you do not enter the Next Change Date, the System assumes day 'dd' in 'nn' months from the current month.
+Example:
+If today's date is 26 FEB 1985 and you enter M0215 the System will assume the Next Change Date should be 15 APRIL 1985.
+d) Twice a month Enter T
+If you do not enter the Next Change Date, the System assumes the 15th of the current month if today is not after the 15th, otherwise the last day of the current month is assumed.
+Validation Rules:
+This field is in two parts. 1) Next Change Date: 1-9 type D (date format in range 1950-2049) characters. Default value calculated by the System depending on change frequency. (Optional input) 2) Change Frequency: 1-5 type SS (uppercase alpha or numeric, first character alpha) characters (Mandatory input
+ </li>
+
+ <li class="list-group-item"><strong>StartDateProfile</strong> <br />
+   Specifies the earliest date on which the User represented by this record may have access to the System.
+Input may be all numeric DDMMYY or MMDDYY depending on the INPUT DAY MONTH format in Field 29 of the User record, or alphanumeric, DDMMMYYYY where the day and year are numeric and the month is the first 3 letters of the month, in capitals.
+If you omit the year and/or the month, the System assumes they are the same as today.
+Validation Rules:
+1-9 type D (date format in range 1950-2049) characters with optional spaces. (Mandatory input) It must not be less than today's date.
+ </li>
+
+ <li class="list-group-item"><strong>EndDateProfile</strong> <br />
+
+   Specifies the latest date on which the User represented by this record may have access to the System.
+The Input may be all numeric DDMMYY or MMDDYY depending on the INPUT DAY MONTH format in Field 29 of the User record, or alphanumeric, DDMMMYYYY where the day and year are numeric and the month is the first 3 letters of the month, in capitals.
+If you omit the year and/or the month, the System assumes they are the same as today.
+Validation Rules:
+1-9 type D (date format in range 1950-2049) characters with optional spaces. (Mandatory input) It must not be less than today's date or less than START DATE PROFILE (Field 8).
+ </li>
+
+ <li class="list-group-item"><strong>StartTime</strong> <br />
+Specifies the start of period each day at which the User is allowed access to the System.
+Input can be 0-2359 or 0000-2359 or 00:00-23:59
+Note: (1) This field is always displayed formatted with ':'
+(2) There may be two or more separate periods each day when the User is allowed to access the System, e.g. morning and afternoon, but not during lunch time.
+Note: If only 1 or 2 digits are entered, they correspond to minutes between midnight and 1 o'clock in the morning.
+Validation Rules:
+1-4 numeric characters with optional ':' i.e. HHMM or HH:MM Multi-value field associated with END TIME (Field 11) (Mandatory input)
+
+ </li>
+
+
+ <li class="list-group-item"><strong>EndTime</strong> <br />
+
+   Specifies the end of a period each day at which the User is allowed access to the System.
+Input can be 0-2359 or 0000-2359 or 00:00-23:59
+Note: 1. This field is always displayed formatted with ':' 2. For whole day/night login, start should be 00:00, end should be 24:00 (ie. 24 hours). 3. There may be two or more separate periods each day when the User is allowed to access the System, e.g. morning and afternoon, but not during lunchtime. 4. If only 1 or 2 digits are entered, they correspond to minutes between midnight and 1 o'clock in the morning.
+Validation Rules:
+1-4 numeric characters with optional ':' i.e. HHMM or HH:MM Multi-value field associated with START TIME (Field 10) (Mandatory input)
+ </li>
+
+ <li class="list-group-item"><strong>TimeOutMinutes</strong> <br />
+Specifies the maximum time in minutes during which the User may be inactive without being Signed Off automatically.
+If TIMEOUT.MODE in SPF is not defined as ACTIVE, and the User has Signed On to the System but has not been active for longer than the time specified in this field, the next time he attempts to do anything, the System will automatically SIGN.OFF and he will need to SIGN.ON again before continuing. The time count will be effective at all levels within T24. {In Classic - WAITING APPLICATION, AWAITING FUNCTION, AWAITING ID and AWAITING PAGE INSTRUCTIONS, whenever the cursor is located in the ACTION line}. During an input session, when the cursor is within the Data Section of the screen, the time count will not be initiated.
+If TIMEOUT.MODE is set to ACTIVE and the transaction is not in the authorisation/validation phase, an inactive user will be automatically signed off after this time. In the authorisation/validation phase the AUTOLOG.TIME.MINS period defined in SPF will be used as the inactivity period.
+Validation Rules:
+1-3 numeric characters. (Mandatory input)
+
+ </li>
+ <li class="list-group-item"><strong>Attempts</strong> <br />
+
+   Specifies the number of unsuccessful Attempts to SIGN.ON allowed using the SIGN ON NAME (Field 2) of this record, before the Password is Disabled.
+The System stores the number of unsuccessful Attempts to SIGN.ON since the last successful SIGN.ON. Once the number of unsuccessful Attempts is greater than or equal to the number specified in this field, the Password is DISABLED and all further Attempts result in a SECURITY VIOLATION. User records DISABLED in this way are shown in the PASSWORD.EXCEPTION list.
+(i) The PASSWORD.RESET Application can be used to allow a user who has forgotten his Password to enter a new one.
+(ii) Attempts to SIGN.ON may be unsuccessful for the following reasons:
+1. Incorrect Password
+2. Today's date less than START DATE PROFILE (Field 8)
+3. Today's date later than END DATE PROFILE (Field 9)
+4. Time is earlier than START TIME (Field 10)
+5. Time is later than END TIME (Field 11)
+6. The Password has been Deactivated (for further details see PASSWORD Application)
+7. The Password has been Disabled after too many unsuccessful attempts.
+8. The User record is not in Live status i.e new input or change has not yet been Authorised.
+Validation Rules:
+1 numeric character. (Mandatory input)
+ </li>
+
+ <li class="list-group-item"><strong>Classification</strong> <br />
+
+   Indicates whether the User is 'Internal', i.e. an employee of the bank using T24., or 'External', i.e. a customer.
+If the user is defined as EXT (external) then you should enter the valid customer and account numbers ino the fields CUSTOMER and ACCOUNT. You should also setup the table USER.EXTERNAL.FILED to indicate which fields in the applications you specify constitute a CUSTOMER and/or an ACCOUNT field.
+Validation Rules:
+1-3 uppercase alpha characters: I, IN or INT for an employee of the bank E, EX or EXT for a customer. (Mandatory input)
+ </li>
+
+ <li class="list-group-item">SignOnOffLog</strong> <br />
+   Specifies whether or not a record should be written to the PROTOCOL file recording every time this User SIGNS.ON or SIGNS.OFF.
+Note: Unsuccessful attempts to SIGN.ON are always logged, regardless of the value in this field.
+Validation Rules:
+Y (Yes) or N or NO (Mandatory input)
+ </li>
+
+ <li class="list-group-item"><strong>SecurityMgmtL</strong> <br />
+
+   Specifies whether or not a record should be written to the PROTOCOL file everytime this User accesses any of the Security Management Applications.
+If Y is entered, a record is written to the PROTOCOL file everytime this User accesses any of the following Applications:
+PASSWORD PASSWORD.ENABLE PASSWORD.RESET USER PASSWORD.RESET
+Note: Security Violations are always logged, regardless of the values in Fields 25-28.
+Validation Rules:
+Y (Yes) or N or NO (Mandatory input)
+ </li>
+
+ <li class="list-group-item"><strong>ApplicationLog</strong> <br />
+   Specifies whether or not records should be written to the PROTOCOL file recording every Application accessed by this User.
+If Y is entered, a record is written to the PROTOCOL file every time this User accesses a different Application.
+Validation Rules:
+Y (Yes) or N or NO (Mandatory input)
+Security Violations are always logged, regardless of this field.
+It must be NO if SECURITY MGMT LOG (Field 26) is NO.
+ </li>
+
+ <li class="list-group-item"><strong>FunctionIdLog</strong> <br />
+Specifies whether or not full details of every Application, Function and record ID accessed by this User should be recorded in the PROTOCOL file.
+Validation Rules:
+Y (Yes) or N or NO (Mandatory input)
+It must be NO if APPLICATION LOG (Field 27) is NO.
+Security Violations are always logged, regardless of this field
+ </li>
+
+ <li class="list-group-item"><strong>InputDayMonth</strong> <br />
+Specifies whether this User enters Days or Months first when entering dates.
+If DDMM is entered, the System will interpret 0102 as 1st February and 0419 as an invalid date. If MMDD is entered, the System will interpret 0102 as January 2nd and 0419 as April 19th.
+Validation Rules:
+DDMM or MMDD (Mandatory input)
+ </li>
+
+
+
+<li class="list-group-item"><strong>ClearScreen</strong> <br />
+Specifies whether or not the Screen is to be cleared whenever this User finishes processing a record.
+Validation Rules:
+Y (Yes) or N or NO (Mandatory input)
+</li>
+
+<li class="list-group-item"><strong>Attributes</strong> <br />
+This field to determine the attributes that are associated with a particular user.
+Valid settings in this field are;
+COMMAND.LINE	The user is allowed the use of the command line in T24 Desktop.
+EXPLORER	Allows the user to use the Application explorers
+ENQUIRY.INDEX	Allows access to the enquiry index
+REALTIMEENQUIRY	Allows the use of real time enquiries for this user. When signing onto T24, Desktop will create another session for use by the real time enquiries. This does use an additional database license, but not an additional T24 license.
+LOCK.PREFERENCES	If the user is given this option then the 'User Preferences' option under the 'Tools' menu on the Desktop toolbar will be disabled.This will prevent the user from gaining access to various Desktop settings including file locations and some system administrative functions.
+SUPER.USER	The user has access to all of the features detailed above, and for all future functionality with the exception of REALTIMEENQUIRY.
+LOCK.DEACTIVATION	To Disable "Deactivation profile" menu item on desktop menu Bar.
+LOCK.DESIGNERS	To disable all Designer's menu items on Desktop menu bar.
+LOCK.MISC.ITEMS	If the user is given this option then this will prevent the user from gaining access to user toolbar, list of enquiries and list of reports in desktop.
+COMMIT.DETAILS	This attribute is set as a diagnostic and displays the filenames updated when a transaction is updated
+</li>
+
+<li class="list-group-item"><strong>CompanyRestr</strong> <br />
+Specifies the Company to which the User must be Signed On in order to use the Applications, Versions and Functions specified in the related Fields 18 to 24.
+This field is used, together with the associated Fields 18-24, to specify for each Company to whose records this User has access, precisely which records in which Applications can be accessed using which Versions and Functions.
+The group of Fields, 17-24 can be repeated up to 999 times. Refer to APPLICATION (Field 18) for examples.
+Any files for which standard or special file mnemonics have been specified in the Company record can only be accessed by Users who have Signed On to that Company (or have used the PASSWORD Application to access that Company).
+Validation Rules:
+Permits "ALL" to allow the functions for all companies listed in the COMPANY.CODE field. In a Multi Book company set up, if this field is defined as "ALL" then it allow the functions for Lead company and all book companies under that Lead company.
+9 alphanumeric characters 'CCGGGLLLL' where: CC is 2 alpha characters Country code GGG is 3 numeric characters Company Group LLLL is 4 numeric local code. or 2-3 type MNE (uppercase alphanumeric or '.') Company Mnemonic characters. Multi-value field associated with Fields 18-24. Mandatory input. No Default Value. It must be a Company Code from the COMPANY.CODE field of this record.
+</li>
+
+
+<li class="list-group-item"><strong>Application</strong> <br />
+Specifies which Application may be used to access records belonging to the Company specified in the related COMPANY RESTR (Field 17).
+This field is used, together with the associated Fields 17 and 19-24 to specify precisely which records in which Applications can be accessed by the User using which Versions and Functions. It must be the name of an existing Application, the name of an existing USER.SMS.GROUP preceded by the '@' sign (in which case further input in fields 19.1 to 24.1 will not be allowed), ALL.PG to allow access to all Applications or ALL.PG (program type) to allow access to all Applications of a certain type (see below).
+The following program types may be used in conjunction with ALL.PG (e.g. ALL.PG.H) to give access to a particular type of program:-
+Program Type Meaning
+H Programs for which the standard 3 files exist - Live, Unauthorised and History, e.g. CUSTOMER.
+U Programs for which Live and Unauthorised files exist, but no History, e.g. VERSION.
+L Programs for which only a Live file exists (updated automatically by the system) e.g. STMT.ENTRY (only L, S and P functions can be used with this type of program).
+M Programs which are designed to do something other than processing the standard T24 functions using a specific file e.g. PASSWORD.ENABLE, End Of Day Batch programs.
+T Programs which handle automatically updated CONCAT files, e.g. CUSTOMER.ACCOUNT (only L, S and P functions can be used with this type of program). Note: The following 3 type M programs are available to all users and cannot be restricted:- SIGN.ON SIGN.OFF PASSWORD
+</li>
+
+
+<li class="list-group-item"><strong>Function</strong> <br />
+Specifies the Functions which may be used to access records of the Application entered in the corresponding Field 18.
+his field is used, together with the associated Fields 17-19 and 21-24 to specify precisely which Functions the User may be used to access which records in which Applications. Valid Function codes are: A 2 C D E H I L P Q R S V If NOT is entered, plus one or more Function codes, the System converts it to a list of all the Functions which are allowed. (See Fields 18, 19 and 21 for examples.)
+Note: Even if the function 'C' (copy) is not allowed, the user will still be able to transfer the ID (together with its enrichment) of a selected record when using the '!' facility during an input function.
+Validation Rules:
+0-29 type S (uppercase alpha or numeric) characters: 1. Function codes separated by spaces or 2. NOT + one or more Function codes or 3. N (No Functions allowed) or 4. ALL (All Functions allowed). Multi-value field associated with Fields 17-19, 21-24. Mandatory input except if a USER.SMS.GROUP was defined in field 18.1 in which case input is not allowed. No Default Value. If Function 2 (2nd Authorization) is allowed, but not A (1st Authorization) the User is allowed to enter Function Code A, a Security Violation is generated if the record requested is not ready for 2nd Authorization.
+</li>
+
+
                   </ul>
 
                 </div>
