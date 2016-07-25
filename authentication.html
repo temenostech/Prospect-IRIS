@@ -124,11 +124,18 @@
                 <td><strong>C#</strong>
                   <p>
                     <pre class="highlighter">
-        URL url = new URL(webPage);
-        URLConnection urlConnection = url.openConnection();
-        urlConnection.setRequestProperty("Authorization", "Basic " + authStringEnc);
-        InputStream is = urlConnection.getInputStream();
-        InputStreamReader isr = new InputStreamReader(is);</pre>
+            var TARGETURL = "http://en.wikipedia.org/";
+            HttpClientHandler handler = new HttpClientHandler() {
+                Proxy = new WebProxy("http://127.0.0.1:8080"),
+                UseProxy = true,
+            };            
+            HttpClient client = new HttpClient(handler);
+            var byteArray = Encoding.ASCII.GetBytes("username:password1234");
+            client.DefaultRequestHeaders.Authorization = 
+                    new System.Net.Http.Headers.AuthenticationHeaderValue("Basic", Convert.ToBase64String(byteArray));
+
+            HttpResponseMessage response = await client.GetAsync(TARGETURL);
+            HttpContent content = response.Content;</pre>
                 </td>
               </tr>      
               <tr>
