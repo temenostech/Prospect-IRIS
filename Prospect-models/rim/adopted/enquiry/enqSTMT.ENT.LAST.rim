@@ -1,0 +1,38 @@
+domain T24 {
+	use common.CoreCommands.*
+	use common.HTTPEvents.*
+	use common.ODataCommands.*
+	use common.T24Commands.*
+	use common.T24Events.*
+	use common.NextState.*
+	rim enqStmtEntLast {
+		command GETEntities
+		command GETEntity
+		basepath: "/{companyid}"
+	
+		resource enqStmtEntLasts {
+			type: collection
+			entity: enqStmtEntLast
+			commands [ GET : GETEntities {
+				properties [ filter = "{filter}" ]
+				} ]
+			path: "/enqStmtEntLasts()"
+			GET *-> enqStmtEntLast {
+				parameters [ id = "{PrimaryKey}" ]
+			}
+			GET *-> locator t24ResourceLocator("{SId}") {
+				parameters [ id = "{SKey}",t24Intent = "View" ]
+				title: "Transaction details"
+			}
+		}
+	
+		resource enqStmtEntLast {
+			type: item
+			entity: enqStmtEntLast
+			commands [ GET : GETEntity ]
+			path: "/enqStmtEntLasts('{id}')"
+		}
+	
+	}
+	
+}

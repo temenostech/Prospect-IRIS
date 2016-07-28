@@ -1,0 +1,39 @@
+domain T24 {
+	use common.CoreCommands.*
+	use common.HTTPEvents.*
+	use common.ODataCommands.*
+	use common.T24Commands.*
+	use common.T24Events.*
+	use common.NextState.*
+	rim enqAcctStmtHist {
+		command GETEntities
+		command GETEntity
+		basepath: "/{companyid}"
+	
+		resource enqAcctStmtHists {
+			type: collection
+			entity: enqAcctStmtHist
+			commands [ GET : GETEntities {
+				properties [ filter = "{filter}" ]
+				} ]
+			path: "/enqAcctStmtHists()"
+			GET *-> enqAcctStmtHist {
+				parameters [ id = "{StmtAccountNo}" ]
+			}
+			GET *-> "T24.enqAccountStatementScrn.enqAccountStatementScrns" {
+				parameters [ filter = "SelectAccount eq '{Id}' and StmtDate eq '{StatementDates}' and StmtFreq eq '1'" ]
+				title: "View Account Statement"
+				id: "1"
+			}
+		}
+	
+		resource enqAcctStmtHist {
+			type: item
+			entity: enqAcctStmtHist
+			commands [ GET : GETEntity ]
+			path: "/enqAcctStmtHists('{id}')"
+		}
+	
+	}
+	
+}

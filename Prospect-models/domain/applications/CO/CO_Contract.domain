@@ -1,0 +1,804 @@
+# UTF-8
+/* Template Servicing and Allocation Processing for Collateral */
+Domain CO_Contract
+    @t24:i (module=CO)
+    @java:Package (value=com.temenos.t24.datamodel.co.co_contract)
+namespace "http://www.temenos.com/t24/CO_Contract"
+metamodelVersion 1.30.6
+Classes {
+    BL_COLLATERAL
+        @i18n:Description (en="")
+        @t24:i (t24Name=BL.COLLATERAL, level=F, type=L, allowedFunctions="L P S", localRefAllowed=false)
+    {
+        BL_BILL -> CO_Contract:BL_COLLATERAL PK required
+            @t24:i (align=L, inputBehaviour=I, maxLength=14, sysNumber=0.0, core=true, businessType=A, t24Name=BL.BILL, mask="R##/#####/#####")
+        COLLATERAL -> CO_Contract:COLLATERAL
+            @t24:i (align=L, inputBehaviour=I, maxLength=22, sysNumber=1.0, core=true, businessType=A, t24Name=COLLATERAL)
+    }
+    BL_COLLATERAL_RIGHT
+        @i18n:Description (en="")
+        @t24:i (t24Name=BL.COLLATERAL.RIGHT, level=F, type=T, allowedFunctions="L P S", localRefAllowed=false)
+    {
+        BL_BILL -> CO_Contract:BL_COLLATERAL_RIGHT PK required
+            @t24:i (align=L, inputBehaviour=I, maxLength=15, sysNumber=0.0, core=true, businessType=A, t24Name=BL.BILL, mask="L##/#####/######")
+        COLLATERAL_RIGHT -> CO_Contract:COLLATERAL_RIGHT
+            @i18n:Label (en="Collateral Right")
+            @t24:i (align=L, inputBehaviour=I, maxLength=18, sysNumber=1.0, core=true, businessType=A, t24Name=COLLATERAL.RIGHT)
+    }
+    COLLATERAL
+        @i18n:Description (en="")
+        @t24:i (t24Name=COLLATERAL, level=C, type=H, allowedFunctions="A C D E H I L P Q R S", localRefAllowed=true)
+    {
+        ADDRESS -> byValue CO_Contract:COLLATERAL__ADDRESS *
+            @t24:i (t24Name=ADDRESS)
+        APPLICATION : T24BusinessTypes:A
+            @i18n:Label (en=Application)
+            @t24:i (align=L, inputBehaviour=N, maxLength=2, sysNumber=33.0, core=true, t24Name=APPLICATION)
+        APPLICATION_ID : T24BusinessTypes:A
+            @i18n:Label (en="Application Ref")
+            @i18n:Tooltip (en="Indicates the deposit number")
+            @t24:i (align=L, inputBehaviour=I, maxLength=34, sysNumber=4.0, core=true, t24Name=APPLICATION.ID)
+        AUDITOR_CODE : T24BusinessTypes:A
+            @i18n:Label (en="Auditor Code")
+            @i18n:Tooltip (en="Auditor Code")
+            @t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=45.0, core=true, t24Name=AUDITOR.CODE)
+        AUDIT_DATE_TIME : T24BusinessTypes:RELTIME
+            @i18n:Label (en="Audit Date Time")
+            @i18n:Tooltip (en="Date and time when record was audited")
+            @t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=46.0, core=true, t24Name=AUDIT.DATE.TIME, mask="RDD DD  DD ##:##")
+        AUTHORISER : T24BusinessTypes:A
+            @i18n:Label (en=Authoriser)
+            @i18n:Tooltip (en="Indicates the User who Authorises the record")
+            @t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=42.0, core=true, t24Name=AUTHORISER)
+        CENTRAL_BANK_VALUE : T24BusinessTypes:AMT
+            @i18n:Label (en="Central Bank Value")
+            @i18n:Tooltip (en="The collateral value for central bank reporting.")
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=14.0, core=true, t24Name=CENTRAL.BANK.VALUE, typeModifiers="-7")
+        CHASSIS_NUMBER : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=32.6, core=false, t24Name=CHASSIS.NUMBER)
+        COLLATERAL_CODE -> CO_Config:COLLATERAL_CODE
+            @i18n:Label (en="Collateral Code")
+            @i18n:Tooltip (en="Indicates the Collateral attached to the Limit")
+            @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=19.0, core=true, businessType=A, t24Name=COLLATERAL.CODE)
+        COLLATERAL_ID -> CO_Contract:COLLATERAL PK required
+            @t24:i (align=L, inputBehaviour=I, maxLength=22, sysNumber=0.0, core=true, businessType=A, t24Name=COLLATERAL.ID)
+        COLLATERAL_RIGHT : T24BusinessTypes:A
+            @i18n:Label (en="Collateral Right")
+            @t24:i (align=L, inputBehaviour=N, maxLength=9, core=false, t24Name=COLLATERAL.RIGHT, genOperation=RIGHT.COLLATERAL)
+        COLLATERAL_TYPE -> CO_Config:COLLATERAL_TYPE
+            @i18n:Label (en="Collateral Type")
+            @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=1.0, core=true, t24Name=COLLATERAL.TYPE)
+        COLL_RATING -> ST_Customer:EB_RATING
+            @t24:i (align=L, inputBehaviour=I, maxLength=10, sysNumber=20.0, core=true, businessType=A, t24Name=COLL.RATING)
+        COLL_RIGHT : T24BusinessTypes:N
+            @i18n:Label (en="Coll Right")
+            @t24:i (align=L, inputBehaviour=N, maxLength=19, core=false, t24Name=COLL.RIGHT, genOperation="FIELD(@ID,\'.\',1,2)")
+        COMPANY -> ST_CompanyCreation:MNEMONIC_COMPANY
+            @i18n:Label (en=Company)
+            @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=3.0, core=true, businessType=A, t24Name=COMPANY)
+        COUNTERPARTY -> ST_Customer:CUSTOMER
+            @i18n:Label (en=Counterparty)
+            @i18n:Tooltip (en="Counterparty with whom the deal is made")
+            @t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=23.0, core=true, businessType=CUS, t24Name=COUNTERPARTY)
+        COUNTRY -> ST_Config:COUNTRY
+            @i18n:Label (en=Country)
+            @i18n:Tooltip (en="Holds the country code")
+            @t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=8.0, core=true, businessType=A, t24Name=COUNTRY)
+        CO_CODE -> ST_CompanyCreation:COMPANY
+            @i18n:Label (en=Company)
+            @t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=43.0, core=true, businessType=A, t24Name=CO.CODE, mask="R##-###-####")
+        CURRENCY -> ST_CurrencyConfig:CURRENCY
+            @i18n:Label (en=Ccy)
+            @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=7.0, core=true, businessType=CCY, t24Name=CURRENCY)
+        CURR_NO : T24BusinessTypes:N
+            @i18n:Label (en="Curr No")
+            @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=39.0, core=true, t24Name=CURR.NO)
+        CUSTOMER_ID : T24BusinessTypes:N
+            @i18n:Label (en="Customer Id")
+            @i18n:Tooltip (en="Identifies the Customer for the transaction.")
+            @t24:i (align=L, inputBehaviour=N, maxLength=16, core=false, t24Name=CUSTOMER.ID, genOperation="FIELD(@ID,\'.\',1)")
+        DATE_TIME -> byValue CO_Contract:COLLATERAL__DATE_TIME *
+            @t24:i (t24Name=DATE.TIME)
+        DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+            @i18n:Label (en="Dept Code")
+            @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=44.0, core=true, t24Name=DEPT.CODE)
+        DESCRIPTION -> byValue CO_Contract:COLLATERAL__DESCRIPTION *
+            @t24:i (t24Name=DESCRIPTION)
+        ENGINE_NUMBER : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=32.5, core=false, t24Name=ENGINE.NUMBER)
+        EXCLUSION_ID -> byValue CO_Contract:COLLATERAL__EXCLUSION_ID *
+            @t24:i (t24Name=EXCLUSION.ID)
+        EXC_ID : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=24, core=false, t24Name=EXC.ID, genOperation=E.CO.EXCLUDE.LIST)
+        EXECUTION_VALUE : T24BusinessTypes:AMT
+            @i18n:Label (en="Execution Value")
+            @i18n:Tooltip (en="Indicates the accepted value of collateral")
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=11.0, core=true, t24Name=EXECUTION.VALUE, typeModifiers="-7")
+        EXPIRY_DATE : T24BusinessTypes:D
+            @i18n:Label (en="Expiry Date")
+            @i18n:Tooltip (en="Indicates the Expiry Date of the Transaction")
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=17.0, core=true, t24Name=EXPIRY.DATE)
+        GEN_LEDGER_VALUE : T24BusinessTypes:AMT
+            @i18n:Label (en="General Ledger Value")
+            @i18n:Tooltip (en="The collateral value for general ledger purposes.")
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=13.0, core=true, t24Name=GEN.LEDGER.VALUE, typeModifiers="-7")
+        INDUSTRY -> SC_Config:SC_INDUSTRY
+            @i18n:Label (en=Industry)
+            @i18n:Tooltip (en="Indicates the Industry")
+            @t24:i (align=L, inputBehaviour=I, maxLength=4, sysNumber=21.0, core=true, businessType=S, t24Name=INDUSTRY)
+        INPUTTER -> byValue CO_Contract:COLLATERAL__INPUTTER *
+            @t24:i (t24Name=INPUTTER)
+        INS_COVERAGE : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=32.8, core=false, t24Name=INS.COVERAGE)
+        INS_EXPIRY_DT : T24BusinessTypes:D_1000
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=32.9, core=false, t24Name=INS.EXPIRY.DT)
+        ISSUER -> byValue CO_Contract:COLLATERAL__ISSUER *
+            @t24:i (t24Name=ISSUER)
+        LICENCE_NO : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=32.2, core=false, t24Name=LICENCE.NO)
+        MANUFACTURER : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=32.4, core=false, t24Name=MANUFACTURER)
+        MANUFACTURE_YR : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=32.7, core=false, t24Name=MANUFACTURE.YR)
+        MAXIMUM_VALUE : T24BusinessTypes:AMT
+            @i18n:Label (en="Maximum Value")
+            @i18n:Tooltip (en="Maximum Value")
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=10.0, core=true, t24Name=MAXIMUM.VALUE, typeModifiers="-7")
+        NOMINAL_VALUE : T24BusinessTypes:AMT
+            @i18n:Label (en=Nominal)
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=9.0, core=true, t24Name=NOMINAL.VALUE, typeModifiers="-7")
+        NOTES -> byValue CO_Contract:COLLATERAL__NOTES *
+            @t24:i (t24Name=NOTES)
+        OVERRIDE -> byValue CO_Contract:COLLATERAL__OVERRIDE *
+            @t24:i (t24Name=OVERRIDE)
+        RECORD_STATUS : T24BusinessTypes:STAT
+            @i18n:Label (en="Record Status")
+            @t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=38.0, core=true, t24Name=RECORD.STATUS)
+        REGISTRATION_NO : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=32.3, core=false, t24Name=REGISTRATION.NO)
+        RESERVED1 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=30.0, core=true, t24Name=RESERVED1)
+        RESERVED13 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=6.0, core=true, t24Name=RESERVED13)
+        RESERVED14 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=5.0, core=true, t24Name=RESERVED14)
+        RESERVED2 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=29.0, core=true, t24Name=RESERVED2)
+        RESERVED3 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=28.0, core=true, t24Name=RESERVED3)
+        RESERVED4 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=27.0, core=true, t24Name=RESERVED4)
+        RESERVED5 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=26.0, core=true, t24Name=RESERVED5)
+        RESERVED6 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=25.0, core=true, t24Name=RESERVED6)
+        REVALUED_DATE -> byValue CO_Contract:COLLATERAL__REVALUED_DATE *
+            @t24:i (t24Name=REVALUED.DATE)
+        REVIEW_DATE_FQU : T24BusinessTypes:FQU
+            @i18n:Label (en="Review Frequency")
+            @i18n:Tooltip (en="Date and frequency for review of the collateral")
+            @t24:i (align=L, inputBehaviour=I, maxLength=17, sysNumber=16.0, core=true, t24Name=REVIEW.DATE.FQU, mask="RDD DDD DDDD #####")
+        SECURITY_CODE : T24BusinessTypes:N
+            @i18n:Label (en="Security No")
+            @i18n:Tooltip (en="Indicates a valid Security")
+            @t24:i (align=R, inputBehaviour=N, maxLength=2, core=false, t24Name=SECURITY.CODE)
+        STATUS : T24BusinessTypes:A
+            @i18n:Label (en=Status)
+            @t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=34.0, core=true, t24Name=STATUS)
+        THIRD_PARTY_VALUE : T24BusinessTypes:AMT
+            @i18n:Label (en="Third Party Value")
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=12.0, core=true, t24Name=THIRD.PARTY.VALUE, typeModifiers="-7")
+        VALUE_DATE : T24BusinessTypes:D
+            @i18n:Label (en="Value Date")
+            @i18n:Tooltip (en="Indicates the Value date of the Contract")
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=15.0, core=true, t24Name=VALUE.DATE)
+        VEHICLE_MODEL : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=32.1, core=false, t24Name=VEHICLE.MODEL)
+    }
+    COLLATERAL_RIGHT
+        @i18n:Description (en="")
+        @t24:i (t24Name=COLLATERAL.RIGHT, level=C, type=H, allowedFunctions="A C D E H I L P Q R S", localRefAllowed=true)
+    {
+        ALLOC_WORK_ID : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=N, maxLength=12, sysNumber=22.0, core=true, t24Name=ALLOC.WORK.ID)
+        AUDITOR_CODE : T24BusinessTypes:A
+            @i18n:Label (en="Auditor Code")
+            @i18n:Tooltip (en="Auditor Code")
+            @t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=34.0, core=true, t24Name=AUDITOR.CODE)
+        AUDIT_DATE_TIME : T24BusinessTypes:RELTIME
+            @i18n:Label (en="Audit Date Time")
+            @i18n:Tooltip (en="Date and time when record was audited")
+            @t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=35.0, core=true, t24Name=AUDIT.DATE.TIME, mask="RDD DD  DD ##:##")
+        AUTHORISER : T24BusinessTypes:A
+            @i18n:Label (en=Authoriser)
+            @i18n:Tooltip (en="Indicates the User who Authorises the record")
+            @t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=31.0, core=true, t24Name=AUTHORISER)
+        COLLATERAL_CODE -> CO_Config:COLLATERAL_CODE
+            @i18n:Label (en="Collateral Code")
+            @i18n:Tooltip (en="Indicates the Collateral attached to the Limit")
+            @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=1.0, core=true, t24Name=COLLATERAL.CODE)
+        COLLATERAL_RIGHT -> CO_Contract:COLLATERAL_RIGHT PK required
+            @i18n:Label (en="Collateral Right")
+            @t24:i (align=L, inputBehaviour=I, maxLength=18, sysNumber=0.0, core=true, businessType=A, t24Name=COLLATERAL.RIGHT)
+        COMPANY -> byValue CO_Contract:COLLATERAL_RIGHT__COMPANY *
+            @t24:i (t24Name=COMPANY)
+        CO_CODE -> ST_CompanyCreation:COMPANY
+            @i18n:Label (en=Company)
+            @t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=32.0, core=true, businessType=A, t24Name=CO.CODE, mask="R##-###-####")
+        CURR_NO : T24BusinessTypes:N
+            @i18n:Label (en="Curr No")
+            @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=28.0, core=true, t24Name=CURR.NO)
+        CUSTOMER -> byValue CO_Contract:COLLATERAL_RIGHT__CUSTOMER *
+            @t24:i (t24Name=CUSTOMER)
+        CUSTOMER_ID : T24BusinessTypes:N
+            @i18n:Label (en="Customer Id")
+            @i18n:Tooltip (en="Identifies the Customer for the transaction.")
+            @t24:i (align=L, inputBehaviour=N, maxLength=19, core=false, t24Name=CUSTOMER.ID, genOperation="FIELD(@ID,\'.\',1)")
+        DATE_TIME -> byValue CO_Contract:COLLATERAL_RIGHT__DATE_TIME *
+            @t24:i (t24Name=DATE.TIME)
+        DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+            @i18n:Label (en="Dept Code")
+            @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=33.0, core=true, t24Name=DEPT.CODE)
+        EXPIRY_DATE : T24BusinessTypes:D
+            @i18n:Label (en="Expiry Date")
+            @i18n:Tooltip (en="Indicates the Expiry Date of the Transaction")
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=14.0, core=true, t24Name=EXPIRY.DATE)
+        INPUTTER -> byValue CO_Contract:COLLATERAL_RIGHT__INPUTTER *
+            @t24:i (t24Name=INPUTTER)
+        LIMIT_ID -> byValue CO_Contract:COLLATERAL_RIGHT__LIMIT_ID *
+            @t24:i (t24Name=LIMIT.ID)
+        NOTARY -> ST_Customer:CUSTOMER
+            @t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=15.0, core=true, businessType=CUS, t24Name=NOTARY)
+        NOTES -> byValue CO_Contract:COLLATERAL_RIGHT__NOTES *
+            @t24:i (t24Name=NOTES)
+        OS_PERCENT_COVER : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=3, sysNumber=21.0, core=true, t24Name=OS.PERCENT.COVER)
+        OVERRIDE -> byValue CO_Contract:COLLATERAL_RIGHT__OVERRIDE *
+            @t24:i (t24Name=OVERRIDE)
+        PERCENTAGE_COVER : mml:Integer
+            @i18n:Label (en="% Cover")
+            @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=11.0, core=true, t24Name=PERCENTAGE.COVER)
+        RECORD_STATUS : T24BusinessTypes:STAT
+            @i18n:Label (en="Record Status")
+            @t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=27.0, core=true, t24Name=RECORD.STATUS)
+        RESERVED_1 : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=N, maxLength=32, sysNumber=25.0, core=true, t24Name=RESERVED.1)
+        RESERVED_2 : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=N, maxLength=32, sysNumber=24.0, core=true, t24Name=RESERVED.2)
+        RESERVED_3 : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=N, maxLength=32, sysNumber=23.0, core=true, t24Name=RESERVED.3)
+        REVIEW_DATE_FQU : T24BusinessTypes:FQU
+            @i18n:Label (en="Review Frequency")
+            @i18n:Tooltip (en="Indicates the review date and frequency")
+            @t24:i (align=L, inputBehaviour=I, maxLength=17, sysNumber=13.0, core=true, t24Name=REVIEW.DATE.FQU, mask="RDD DDD DDDD #####")
+        STATUS : CO_Contract:COLLATERAL_RIGHT__STATUS
+            @i18n:Label (en=Status)
+            @t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=19.0, core=true, t24Name=STATUS)
+        VALIDITY_CHK : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=10, core=false, t24Name=VALIDITY.CHK, genOperation="SUBR(\"MB.SS.VALIDITY.CHK\",@ID)")
+        VALIDITY_DATE : T24BusinessTypes:D
+            @i18n:Label (en="Valid Date")
+            @i18n:Tooltip (en="Indicates the date from which the link is valid")
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=12.0, core=true, t24Name=VALIDITY.DATE)
+    }
+    COLLATERAL_RIGHT_CUST
+        @i18n:Description (en="")
+        @t24:i (t24Name=COLLATERAL.RIGHT.CUST, level=C, type=T, allowedFunctions="L P S", localRefAllowed=false)
+    {
+        COLL_RIGHT_ID : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=I, maxLength=25, sysNumber=1.0, core=true, t24Name=COLL.RIGHT.ID)
+        CUSTOMER_NO -> CO_Contract:COLLATERAL_RIGHT_CUST PK required
+            @i18n:Label (en="Customer No")
+            @i18n:Tooltip (en="Identifies the Customer for the transaction.")
+            @t24:i (align=L, inputBehaviour=I, maxLength=10, sysNumber=0.0, core=true, businessType=A, t24Name=CUSTOMER.NO)
+    }
+    COLLATERAL_RIGHT__COMPANY
+    {
+        ALLOCATION_AMT : T24BusinessTypes:AMT
+            @i18n:Label (en="Allocation Amount")
+            @t24:i (align=R, inputBehaviour=I, maxLength=13, sysNumber=7.0, core=true, t24Name=ALLOCATION.AMT)
+        ALLOCATION_CCY : T24BusinessTypes:CCY
+            @i18n:Label (en="Allocation Currency")
+            @t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=6.0, core=true, t24Name=ALLOCATION.CCY)
+        COMPANY -> ST_CompanyCreation:MNEMONIC_COMPANY
+            @i18n:Tooltip (en="Indicates the company of the limit linked")
+            @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=2.0, core=true, businessType=A, t24Name=COMPANY)
+        LIMIT_REFERENCE : T24BusinessTypes:A
+            @i18n:Label (en="Limit Reference")
+            @i18n:Tooltip (en="Indicates the limit that will be updated")
+            @t24:i (align=L, inputBehaviour=I, maxLength=32, sysNumber=3.0, core=true, t24Name=LIMIT.REFERENCE)
+        LIMIT_REF_CUST : T24BusinessTypes:A
+            @i18n:Label (en="Limit Ref Cust")
+            @i18n:Tooltip (en="Indicates the Customer of the Limit")
+            @t24:i (align=L, inputBehaviour=I, maxLength=10, sysNumber=4.0, core=true, t24Name=LIMIT.REF.CUST)
+        PERCENT_ALLOC : mml:Integer
+            @i18n:Label (en="Allocation %")
+            @i18n:Tooltip (en="Percentage of collateral allocated to limit")
+            @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=5.0, core=true, t24Name=PERCENT.ALLOC)
+        RESERVED_4 : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=N, maxLength=32, sysNumber=8.0, core=true, t24Name=RESERVED.4)
+        RESERVED_5 : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=N, maxLength=32, sysNumber=9.0, core=true, t24Name=RESERVED.5)
+        RESERVED_6 : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=N, maxLength=32, sysNumber=10.0, core=true, t24Name=RESERVED.6)
+    }
+    COLLATERAL_RIGHT__CUSTOMER
+    {
+        CUSTOMER -> ST_Customer:CUSTOMER
+            @i18n:Label (en=Customer)
+            @i18n:Tooltip (en="Identifies customer other than the limit customer")
+            @t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=17.0, core=true, businessType=CUS, t24Name=CUSTOMER)
+    }
+    COLLATERAL_RIGHT__DATE_TIME
+    {
+        DATE_TIME : T24BusinessTypes:RELTIME
+            @i18n:Label (en="Date time")
+            @i18n:Tooltip (en="Date and time when record was input or authorised")
+            @t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=30.0, core=true, t24Name=DATE.TIME, mask="RDD DD  DD ##:##")
+    }
+    COLLATERAL_RIGHT__INPUTTER
+    {
+        INPUTTER : T24BusinessTypes:A
+            @i18n:Label (en=Inputter)
+            @i18n:Tooltip (en="The user who last updated the record")
+            @t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=29.0, core=true, t24Name=INPUTTER)
+    }
+    COLLATERAL_RIGHT__LIMIT_ID
+    {
+        LIMIT_ID : T24BusinessTypes:A
+            @i18n:Label (en="Limit Id")
+            @t24:i (align=L, inputBehaviour=N, maxLength=32, sysNumber=20.0, core=true, t24Name=LIMIT.ID)
+    }
+    COLLATERAL_RIGHT__NOTES
+    {
+        NOTES : T24BusinessTypes:A
+            @i18n:Label (en=Notes)
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=16.0, core=true, t24Name=NOTES)
+    }
+    COLLATERAL_RIGHT__OVERRIDE
+    {
+        OVERRIDE : T24BusinessTypes:A
+            @i18n:Label (en=Override)
+            @i18n:Tooltip (en="Overrides generated by this transaction")
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=26.0, core=true, t24Name=OVERRIDE)
+    }
+    COLLATERAL__ADDRESS
+    {
+        ADDRESS : T24BusinessTypes:A
+            @i18n:Label (en=Address)
+            @i18n:Tooltip (en="Define the address")
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=18.0, core=true, t24Name=ADDRESS)
+    }
+    COLLATERAL__DATE_TIME
+    {
+        DATE_TIME : T24BusinessTypes:RELTIME
+            @i18n:Label (en="Date time")
+            @i18n:Tooltip (en="Date and time when record was input or authorised")
+            @t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=41.0, core=true, t24Name=DATE.TIME, mask="RDD DD  DD ##:##")
+    }
+    COLLATERAL__DESCRIPTION
+    {
+        DESCRIPTION : T24BusinessTypes:A
+            @i18n:Label (en=Description)
+            @i18n:Tooltip (en=Description)
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=2.0, core=true, t24Name=DESCRIPTION)
+    }
+    COLLATERAL__EXCLUSION_ID
+    {
+        EXCLUSION_ID -> CO_Config:COLLATERAL_EXCLUSION
+            @t24:i (align=L, inputBehaviour=I, maxLength=12, sysNumber=24.0, core=true, businessType=A, t24Name=EXCLUSION.ID)
+    }
+    COLLATERAL__INPUTTER
+    {
+        INPUTTER : T24BusinessTypes:A
+            @i18n:Label (en=Inputter)
+            @i18n:Tooltip (en="The user who last updated the record")
+            @t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=40.0, core=true, t24Name=INPUTTER)
+    }
+    COLLATERAL__ISSUER
+    {
+        ISSUER : T24BusinessTypes:CUS
+            @i18n:Label (en=Issuer)
+            @i18n:Tooltip (en="Indicates the issuer of the security")
+            @t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=22.0, core=true, t24Name=ISSUER)
+    }
+    COLLATERAL__NOTES
+    {
+        NOTES : T24BusinessTypes:A
+            @i18n:Label (en=Notes)
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=31.0, core=true, t24Name=NOTES)
+    }
+    COLLATERAL__OVERRIDE
+    {
+        OVERRIDE : T24BusinessTypes:A
+            @i18n:Label (en=Override)
+            @i18n:Tooltip (en="Overrides generated by this transaction")
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=37.0, core=true, t24Name=OVERRIDE)
+    }
+    COLLATERAL__REVALUED_DATE
+    {
+        REVALUED_AMOUNT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=E, maxLength=19, sysNumber=36.0, core=true, t24Name=REVALUED.AMOUNT, typeModifiers="5")
+        REVALUED_DATE : T24BusinessTypes:D
+            @t24:i (align=R, inputBehaviour=E, maxLength=11, sysNumber=35.0, core=true, t24Name=REVALUED.DATE)
+    }
+    CO_ALLOCATION_PARAMETER
+        @i18n:Description (en="")
+        @t24:i (t24Name=CO.ALLOCATION.PARAMETER, level=C, type=H, allowedFunctions="A C D E H I L P Q R S", localRefAllowed=true)
+    {
+        ALLOCATION_KEY -> CO_Contract:CO_ALLOCATION_PARAMETER PK required
+            @t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=0.0, core=true, businessType=ANY, t24Name=ALLOCATION.KEY)
+        ASSET_ORDER -> byValue CO_Contract:CO_ALLOCATION_PARAMETER__ASSET_ORDER *
+            @t24:i (t24Name=ASSET.ORDER)
+        AUDITOR_CODE : T24BusinessTypes:A
+            @i18n:Label (en="Auditor Code")
+            @i18n:Tooltip (en="Auditor Code")
+            @t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=23.0, core=true, t24Name=AUDITOR.CODE)
+        AUDIT_DATE_TIME : T24BusinessTypes:RELTIME
+            @i18n:Label (en="Audit Date Time")
+            @i18n:Tooltip (en="Date and time when record was audited")
+            @t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=24.0, core=true, t24Name=AUDIT.DATE.TIME, mask="RDD DD  DD ##:##")
+        AUTHORISER : T24BusinessTypes:A
+            @i18n:Label (en=Authoriser)
+            @i18n:Tooltip (en="Indicates the User who Authorises the record")
+            @t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=20.0, core=true, t24Name=AUTHORISER)
+        COVER_LIABILITY : CO_Contract:CO_ALLOCATION_PARAMETER__COVER_LIABILITY
+            @i18n:Label (en="Cover Liability")
+            @t24:i (align=R, inputBehaviour=F, maxLength=1, sysNumber=1.0, core=true, t24Name=COVER.LIABILITY)
+        CO_CODE -> ST_CompanyCreation:COMPANY
+            @i18n:Label (en=Company)
+            @t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=21.0, core=true, businessType=A, t24Name=CO.CODE, mask="R##-###-####")
+        CURR_NO : T24BusinessTypes:N
+            @i18n:Label (en="Curr No")
+            @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=17.0, core=true, t24Name=CURR.NO)
+        DATE_TIME -> byValue CO_Contract:CO_ALLOCATION_PARAMETER__DATE_TIME *
+            @t24:i (t24Name=DATE.TIME)
+        DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+            @i18n:Label (en="Dept Code")
+            @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=22.0, core=true, t24Name=DEPT.CODE)
+        INPUTTER -> byValue CO_Contract:CO_ALLOCATION_PARAMETER__INPUTTER *
+            @t24:i (t24Name=INPUTTER)
+        PRIORITY_RECEIVE : CO_Contract:CO_ALLOCATION_PARAMETER__PRIORITY_RECEIVE
+            @i18n:Label (en="Priority Receive")
+            @t24:i (align=L, inputBehaviour=F, maxLength=16, sysNumber=3.0, core=true, t24Name=PRIORITY.RECEIVE)
+        RECORD_STATUS : T24BusinessTypes:STAT
+            @i18n:Label (en="Record Status")
+            @t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=16.0, core=true, t24Name=RECORD.STATUS)
+        RESERVED_1 : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=14.0, core=true, t24Name=RESERVED.1)
+        RESERVED_10 : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=5.0, core=true, t24Name=RESERVED.10)
+        RESERVED_2 : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=13.0, core=true, t24Name=RESERVED.2)
+        RESERVED_3 : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=12.0, core=true, t24Name=RESERVED.3)
+        RESERVED_4 : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=11.0, core=true, t24Name=RESERVED.4)
+        RESERVED_5 : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=10.0, core=true, t24Name=RESERVED.5)
+        RESERVED_6 : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=9.0, core=true, t24Name=RESERVED.6)
+        RESERVED_7 : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=8.0, core=true, t24Name=RESERVED.7)
+        RESERVED_8 : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=7.0, core=true, t24Name=RESERVED.8)
+        RESERVED_9 : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=6.0, core=true, t24Name=RESERVED.9)
+        USE_COLLATERAL : CO_Contract:CO_ALLOCATION_PARAMETER__USE_COLLATERAL
+            @i18n:Label (en="Use Collateral")
+            @t24:i (align=R, inputBehaviour=F, maxLength=1, sysNumber=2.0, core=true, t24Name=USE.COLLATERAL)
+    }
+    CO_ALLOCATION_PARAMETER__ASSET_ORDER
+    {
+        ASSET_ORDER -> CO_Config:COLLATERAL_CODE
+            @i18n:Label (en="Asset Order")
+            @t24:i (align=R, inputBehaviour=F, maxLength=3, sysNumber=4.0, core=true, t24Name=ASSET.ORDER)
+    }
+    CO_ALLOCATION_PARAMETER__DATE_TIME
+    {
+        DATE_TIME : T24BusinessTypes:RELTIME
+            @i18n:Label (en="Date time")
+            @i18n:Tooltip (en="Date and time when record was input or authorised")
+            @t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=19.0, core=true, t24Name=DATE.TIME, mask="RDD DD  DD ##:##")
+    }
+    CO_ALLOCATION_PARAMETER__INPUTTER
+    {
+        INPUTTER : T24BusinessTypes:A
+            @i18n:Label (en=Inputter)
+            @i18n:Tooltip (en="The user who last updated the record")
+            @t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=18.0, core=true, t24Name=INPUTTER)
+    }
+    CUSTOMER_COLLATERAL
+        @i18n:Description (en="")
+        @t24:i (t24Name=CUSTOMER.COLLATERAL, level=C, type=T, allowedFunctions="L P S", localRefAllowed=false)
+    {
+        COLLATERAL_RIGHT -> CO_Contract:COLLATERAL_RIGHT
+            @i18n:Label (en="Collateral Right")
+            @t24:i (align=L, inputBehaviour=I, maxLength=18, sysNumber=1.0, core=true, businessType=A, t24Name=COLLATERAL.RIGHT)
+        CUSTOMER -> CO_Contract:CUSTOMER_COLLATERAL PK required
+            @i18n:Label (en=Customer)
+            @i18n:Tooltip (en="Customer Liability")
+            @t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=0.0, core=true, businessType=CUS, t24Name=CUSTOMER)
+    }
+    CUSTOMER_PLEDGE
+        @i18n:Description (en="")
+        @t24:i (t24Name=CUSTOMER.PLEDGE, level=C, type=H, allowedFunctions="A C D E H I L P Q R S", localRefAllowed=false)
+    {
+        AUDITOR_CODE : T24BusinessTypes:A
+            @i18n:Label (en="Auditor Code")
+            @i18n:Tooltip (en="Auditor Code")
+            @t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=24.0, core=true, t24Name=AUDITOR.CODE)
+        AUDIT_DATE_TIME : T24BusinessTypes:RELTIME
+            @i18n:Label (en="Audit Date Time")
+            @i18n:Tooltip (en="Date and time when record was audited")
+            @t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=25.0, core=true, t24Name=AUDIT.DATE.TIME, mask="RDD DD  DD ##:##")
+        AUTHORISER : T24BusinessTypes:A
+            @i18n:Label (en=Authoriser)
+            @i18n:Tooltip (en="Indicates the User who Authorises the record")
+            @t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=21.0, core=true, t24Name=AUTHORISER)
+        CO_CODE -> ST_CompanyCreation:COMPANY
+            @i18n:Label (en=Company)
+            @t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=22.0, core=true, businessType=A, t24Name=CO.CODE, mask="R##-###-####")
+        CURR_NO : T24BusinessTypes:N
+            @i18n:Label (en="Curr No")
+            @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=18.0, core=true, t24Name=CURR.NO)
+        CUSTOMER -> CO_Contract:CUSTOMER_PLEDGE PK required
+            @i18n:Label (en=Customer)
+            @i18n:Tooltip (en="Customer Liability")
+            @t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=0.0, core=true, businessType=CUS, t24Name=CUSTOMER)
+        DATE_TIME -> byValue CO_Contract:CUSTOMER_PLEDGE__DATE_TIME *
+            @t24:i (t24Name=DATE.TIME)
+        DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+            @i18n:Label (en="Dept Code")
+            @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=23.0, core=true, t24Name=DEPT.CODE)
+        INPUTTER -> byValue CO_Contract:CUSTOMER_PLEDGE__INPUTTER *
+            @t24:i (t24Name=INPUTTER)
+        PLEDGE_CUSTOMER -> byValue CO_Contract:CUSTOMER_PLEDGE__PLEDGE_CUSTOMER *
+            @t24:i (t24Name=PLEDGE.CUSTOMER)
+        RECORD_STATUS : T24BusinessTypes:STAT
+            @i18n:Label (en="Record Status")
+            @t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=17.0, core=true, t24Name=RECORD.STATUS)
+        RESERVED1 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=16.0, core=true, t24Name=RESERVED1)
+        RESERVED10 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=7.0, core=true, t24Name=RESERVED10)
+        RESERVED11 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=6.0, core=true, t24Name=RESERVED11)
+        RESERVED12 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=5.0, core=true, t24Name=RESERVED12)
+        RESERVED2 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=15.0, core=true, t24Name=RESERVED2)
+        RESERVED3 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=14.0, core=true, t24Name=RESERVED3)
+        RESERVED4 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=13.0, core=true, t24Name=RESERVED4)
+        RESERVED5 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=12.0, core=true, t24Name=RESERVED5)
+        RESERVED6 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=11.0, core=true, t24Name=RESERVED6)
+        RESERVED7 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=10.0, core=true, t24Name=RESERVED7)
+        RESERVED8 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=9.0, core=true, t24Name=RESERVED8)
+        RESERVED9 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=8.0, core=true, t24Name=RESERVED9)
+    }
+    CUSTOMER_PLEDGE_GROUP
+        @i18n:Description (en="")
+        @t24:i (t24Name=CUSTOMER.PLEDGE.GROUP, level=C, type=L, allowedFunctions="L P S", localRefAllowed=false)
+    {
+        CUS_PLEDGE_GRP_ID -> CO_Contract:CUSTOMER_PLEDGE_GROUP PK required
+            @t24:i (align=L, inputBehaviour=I, maxLength=25, sysNumber=0.0, core=true, businessType=S, t24Name=CUS.PLEDGE.GRP.ID)
+        MAIN_CUSTOMER -> byValue CO_Contract:CUSTOMER_PLEDGE_GROUP__MAIN_CUSTOMER *
+            @t24:i (t24Name=MAIN.CUSTOMER)
+    }
+    CUSTOMER_PLEDGE_GROUP__MAIN_CUSTOMER
+    {
+        CUS_PRIORITY : T24BusinessTypes:S
+            @t24:i (align=L, inputBehaviour=I, maxLength=5, sysNumber=3.0, core=true, t24Name=CUS.PRIORITY)
+        MAIN_CUSTOMER : T24BusinessTypes:CUS
+            @t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=1.0, core=true, t24Name=MAIN.CUSTOMER)
+        PLEDGE_CUSTOMER : T24BusinessTypes:CUS
+            @t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=2.0, core=true, t24Name=PLEDGE.CUSTOMER)
+    }
+    CUSTOMER_PLEDGE__DATE_TIME
+    {
+        DATE_TIME : T24BusinessTypes:RELTIME
+            @i18n:Label (en="Date time")
+            @i18n:Tooltip (en="Date and time when record was input or authorised")
+            @t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=20.0, core=true, t24Name=DATE.TIME, mask="RDD DD  DD ##:##")
+    }
+    CUSTOMER_PLEDGE__INPUTTER
+    {
+        INPUTTER : T24BusinessTypes:A
+            @i18n:Label (en=Inputter)
+            @i18n:Tooltip (en="The user who last updated the record")
+            @t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=19.0, core=true, t24Name=INPUTTER)
+    }
+    CUSTOMER_PLEDGE__PLEDGE_CUSTOMER
+    {
+        INTERNAL_PLEDGE : CO_Contract:CUSTOMER_PLEDGE__PLEDGE_CUSTOMER__INTERNAL_PLEDGE
+            @t24:i (align=L, inputBehaviour=I, maxLength=10, sysNumber=4.0, core=true, t24Name=INTERNAL.PLEDGE)
+        MAX_PLEDGE_AMT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=3.0, core=true, t24Name=MAX.PLEDGE.AMT)
+        PLEDGE_CUSTOMER -> ST_Customer:CUSTOMER
+            @t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=1.0, core=true, businessType=CUS, t24Name=PLEDGE.CUSTOMER)
+        PLEDGE_PRIORITY : mml:Integer
+            @t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=2.0, core=true, t24Name=PLEDGE.PRIORITY)
+    }
+    CUST_COLLATERAL_ALLOCATION
+        @i18n:Description (en="")
+        @t24:i (t24Name=CUST.COLLATERAL.ALLOCATION, level=C, type=L, allowedFunctions="L P S", localRefAllowed=false)
+    {
+        CUSTOMER -> CO_Contract:CUST_COLLATERAL_ALLOCATION PK required
+            @i18n:Label (en=Customer)
+            @i18n:Tooltip (en="Customer Liability")
+            @t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=0.0, core=true, businessType=CUS, t24Name=CUSTOMER)
+        I_M_MKT_VALPAS -> byValue CO_Contract:CUST_COLLATERAL_ALLOCATION__I_M_MKT_VALPAS *
+            @t24:i (t24Name=I.M.MKT.VALPAS)
+        I_M_MKT_VAL_REC -> byValue CO_Contract:CUST_COLLATERAL_ALLOCATION__I_M_MKT_VAL_REC *
+            @t24:i (t24Name=I.M.MKT.VAL.REC)
+        LEND_VAL_ASSETS : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=21.0, core=true, t24Name=LEND.VAL.ASSETS, typeModifiers="1")
+        LEND_VAL_FREE_AMT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=22.0, core=true, t24Name=LEND.VAL.FREE.AMT, typeModifiers="1")
+        MKT_VAL_ASSETS : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=19.0, core=true, t24Name=MKT.VAL.ASSETS, typeModifiers="1")
+        MKT_VAL_FREE_AMT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=20.0, core=true, t24Name=MKT.VAL.FREE.AMT, typeModifiers="1")
+        MKT_VAL_PASS -> byValue CO_Contract:CUST_COLLATERAL_ALLOCATION__MKT_VAL_PASS *
+            @t24:i (t24Name=MKT.VAL.PASS)
+        MKT_VAL_REC -> byValue CO_Contract:CUST_COLLATERAL_ALLOCATION__MKT_VAL_REC *
+            @t24:i (t24Name=MKT.VAL.REC)
+        REFERENCE_CURRENCY : T24BusinessTypes:CCY
+            @i18n:Label (en="Ref Ccy")
+            @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=1.0, core=true, t24Name=REFERENCE.CURRENCY)
+        RESERVED1 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=34.0, core=true, t24Name=RESERVED1)
+        RESERVED10 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=25.0, core=true, t24Name=RESERVED10)
+        RESERVED11 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=24.0, core=true, t24Name=RESERVED11)
+        RESERVED12 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=23.0, core=true, t24Name=RESERVED12)
+        RESERVED2 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=33.0, core=true, t24Name=RESERVED2)
+        RESERVED3 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=32.0, core=true, t24Name=RESERVED3)
+        RESERVED4 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=31.0, core=true, t24Name=RESERVED4)
+        RESERVED5 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=30.0, core=true, t24Name=RESERVED5)
+        RESERVED6 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=29.0, core=true, t24Name=RESERVED6)
+        RESERVED7 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=28.0, core=true, t24Name=RESERVED7)
+        RESERVED8 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=27.0, core=true, t24Name=RESERVED8)
+        RESERVED9 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=26.0, core=true, t24Name=RESERVED9)
+        TOTAL_LIABILITIES : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=2.0, core=true, t24Name=TOTAL.LIABILITIES, typeModifiers="1")
+        TOT_ASSETS_MKT_VAL : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=3.0, core=true, t24Name=TOT.ASSETS.MKT.VAL, typeModifiers="1")
+        TOT_ASSET_LEND_VAL : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=4.0, core=true, t24Name=TOT.ASSET.LEND.VAL, typeModifiers="1")
+    }
+    CUST_COLLATERAL_ALLOCATION__I_M_MKT_VALPAS
+    {
+        I_M_LEND_VALPAS : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=14.0, core=true, t24Name=I.M.LEND.VALPAS, typeModifiers="1")
+        I_M_MKT_VALPAS : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=13.0, core=true, t24Name=I.M.MKT.VALPAS, typeModifiers="1")
+        I_M_PAS_CUS : T24BusinessTypes:CUS
+            @t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=15.0, core=true, t24Name=I.M.PAS.CUS)
+    }
+    CUST_COLLATERAL_ALLOCATION__I_M_MKT_VAL_REC
+    {
+        I_M_MKT_VAL_REC : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=16.0, core=true, t24Name=I.M.MKT.VAL.REC, typeModifiers="1")
+        I_M_REC_FRM_CUS : T24BusinessTypes:CUS
+            @t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=18.0, core=true, t24Name=I.M.REC.FRM.CUS)
+        M_LEND_VAL_REC : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=17.0, core=true, t24Name=M.LEND.VAL.REC, typeModifiers="1")
+    }
+    CUST_COLLATERAL_ALLOCATION__MKT_VAL_PASS
+    {
+        INT_PLG_PASS : T24BusinessTypes:CUS
+            @t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=8.0, core=true, t24Name=INT.PLG.PASS)
+        LEND_VAL_PASS : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=6.0, core=true, t24Name=LEND.VAL.PASS, typeModifiers="1")
+        MKT_VAL_PASS : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=5.0, core=true, t24Name=MKT.VAL.PASS, typeModifiers="1")
+        PASS_TO_CUST : T24BusinessTypes:CUS
+            @t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=7.0, core=true, t24Name=PASS.TO.CUST)
+    }
+    CUST_COLLATERAL_ALLOCATION__MKT_VAL_REC
+    {
+        INT_PLG_REC : T24BusinessTypes:CUS
+            @t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=12.0, core=true, t24Name=INT.PLG.REC)
+        LEND_VAL_REC : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=10.0, core=true, t24Name=LEND.VAL.REC, typeModifiers="1")
+        MKT_VAL_REC : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=9.0, core=true, t24Name=MKT.VAL.REC, typeModifiers="1")
+        REC_FRM_CUS : T24BusinessTypes:CUS
+            @t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=11.0, core=true, t24Name=REC.FRM.CUS)
+    }
+    LI_COLLATERAL
+        @i18n:Description (en="")
+        @t24:i (t24Name=LI.COLLATERAL, level=C, type=T, allowedFunctions="L P S", localRefAllowed=false)
+    {
+        COLLATERAL_RIGHT -> CO_Contract:COLLATERAL_RIGHT
+            @i18n:Label (en="Collateral Right")
+            @t24:i (align=L, inputBehaviour=I, maxLength=18, sysNumber=1.0, core=true, businessType=A, t24Name=COLLATERAL.RIGHT)
+        LIMIT -> CO_Contract:LI_COLLATERAL PK required
+            @t24:i (align=L, inputBehaviour=I, maxLength=32, sysNumber=0.0, core=true, businessType=A, t24Name=LIMIT)
+    }
+    LI_COLLATERAL_RIGHT
+        @i18n:Description (en="")
+        @t24:i (t24Name=LI.COLLATERAL.RIGHT, level=C, type=T, allowedFunctions="L P S", localRefAllowed=false)
+    {
+        COLLATERAL_RIGHT -> CO_Contract:COLLATERAL_RIGHT
+            @i18n:Label (en="Collateral Right")
+            @t24:i (align=L, inputBehaviour=I, maxLength=18, sysNumber=1.0, core=true, businessType=A, t24Name=COLLATERAL.RIGHT)
+        LIMIT -> CO_Contract:LI_COLLATERAL_RIGHT PK required
+            @t24:i (align=L, inputBehaviour=I, maxLength=32, sysNumber=0.0, core=true, businessType=A, t24Name=LIMIT)
+    }
+    RE_COLLATERAL
+        @i18n:Description (en="")
+        @t24:i (t24Name=RE.COLLATERAL, level=F, type=L, allowedFunctions="L P S", localRefAllowed=false)
+    {
+        AMOUNT_TO_MOVE : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=1.0, core=true, t24Name=AMOUNT.TO.MOVE)
+        CONTRACT_ID -> CO_Contract:RE_COLLATERAL PK required
+            @i18n:Label (en="Contract Id")
+            @t24:i (align=L, inputBehaviour=I, maxLength=17, sysNumber=0.0, core=true, businessType=A, t24Name=CONTRACT.ID)
+    }
+    RIGHT_COLLATERAL
+        @i18n:Description (en="")
+        @t24:i (t24Name=RIGHT.COLLATERAL, level=C, type=T, allowedFunctions="L P S", localRefAllowed=false)
+    {
+        COLLATERAL_ID -> CO_Contract:COLLATERAL
+            @t24:i (align=L, inputBehaviour=I, maxLength=22, sysNumber=1.0, core=true, businessType=A, t24Name=COLLATERAL.ID)
+        COLLATERAL_RIGHT -> CO_Contract:RIGHT_COLLATERAL PK required
+            @i18n:Label (en="Collateral Right")
+            @t24:i (align=L, inputBehaviour=I, maxLength=18, sysNumber=0.0, core=true, businessType=A, t24Name=COLLATERAL.RIGHT)
+    }
+    SC_COLLATERAL
+        @i18n:Description (en="")
+        @t24:i (t24Name=SC.COLLATERAL, level=F, type=L, allowedFunctions="L P S", localRefAllowed=false)
+    {
+        SC_POS_ASSET -> byValue CO_Contract:SC_COLLATERAL__SC_POS_ASSET *
+            @t24:i (t24Name=SC.POS.ASSET)
+        SEC_ACC_MASTER -> CO_Contract:SC_COLLATERAL PK required
+            @t24:i (align=L, inputBehaviour=I, maxLength=18, sysNumber=0.0, core=true, businessType=A, t24Name=SEC.ACC.MASTER)
+    }
+    SC_COLLATERAL__SC_POS_ASSET
+    {
+        COLLATERAL -> CO_Contract:COLLATERAL
+            @t24:i (align=L, inputBehaviour=I, maxLength=22, sysNumber=2.0, core=true, businessType=A, t24Name=COLLATERAL)
+        SC_POS_ASSET : T24BusinessTypes:A
+            @i18n:Label (en="Sc Pos Asset Id")
+            @t24:i (align=L, inputBehaviour=I, maxLength=20, sysNumber=1.0, core=true, t24Name=SC.POS.ASSET)
+    }
+}
+Enumerations {
+    COLLATERAL_RIGHT__STATUS : mml:string
+        CUR=CUR
+        FWD=FWD
+        LIQ=LIQ
+    CO_ALLOCATION_PARAMETER__COVER_LIABILITY : mml:string
+        1=1
+        2=2
+        NULL=NULL
+    CO_ALLOCATION_PARAMETER__PRIORITY_RECEIVE : mml:string
+        ASSET_TYPE=ASSET.TYPE
+        CUSTOMER=CUSTOMER
+    CO_ALLOCATION_PARAMETER__USE_COLLATERAL : mml:string
+        1=1
+        2=2
+        NULL=NULL
+    CUSTOMER_PLEDGE__PLEDGE_CUSTOMER__INTERNAL_PLEDGE : mml:string
+        NO=NO
+        YES=YES
+}

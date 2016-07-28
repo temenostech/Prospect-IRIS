@@ -1,0 +1,34 @@
+domain T24 {
+	use common.CoreCommands.*
+	use common.HTTPEvents.*
+	use common.ODataCommands.*
+	use common.T24Commands.*
+	use common.T24Events.*
+	use common.NextState.*
+	rim enqAcctBalToday {
+		command GETEntities
+		command GETEntity
+		basepath: "/{companyid}"
+	
+		resource enqAcctBalTodays {
+			type: collection
+			entity: enqAcctBalToday
+			commands [ GET : GETEntities {
+				properties [ filter = "{filter}" ]
+				} ]
+			path: "/enqAcctBalTodays()"
+			GET *-> enqAcctBalToday {
+				parameters [ id = "{Acc}" ]
+			}
+		}
+	
+		resource enqAcctBalToday {
+			type: item
+			entity: enqAcctBalToday
+			commands [ GET : GETEntity ]
+			path: "/enqAcctBalTodays('{id}')"
+		}
+	
+	}
+	
+}

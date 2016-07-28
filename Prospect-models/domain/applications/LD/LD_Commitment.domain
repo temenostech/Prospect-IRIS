@@ -1,0 +1,139 @@
+# UTF-8
+/* Commitments processing for Loans and Deposits */
+Domain LD_Commitment
+    @t24:i (module=LD)
+    @java:Package (value=com.temenos.t24.datamodel.ld.ld_commitment)
+namespace "http://www.temenos.com/t24/LD_Commitment"
+metamodelVersion 1.30.6
+Classes {
+    LD_COMMITMENT
+        @i18n:Description (en="")
+        @t24:i (t24Name=LD.COMMITMENT, level=F, type=T, allowedFunctions="L P S", localRefAllowed=false)
+    {
+        COMMITMENT_NO -> LD_Commitment:LD_COMMITMENT PK required
+            @i18n:Label (en="Commitment Number")
+            @t24:i (align=L, inputBehaviour=I, maxLength=14, sysNumber=0.0, core=true, businessType=A, t24Name=COMMITMENT.NO)
+        CONTRACT_NO : T24BusinessTypes:A
+            @i18n:Label (en="Contract Number")
+            @t24:i (align=L, inputBehaviour=I, maxLength=14, sysNumber=1.0, core=true, t24Name=CONTRACT.NO)
+    }
+    LD_SCHD_PAST_UPDATES
+        @i18n:Description (en="")
+        @t24:i (t24Name=LD.SCHD.PAST.UPDATES, level=F, type=L, allowedFunctions="L P S", localRefAllowed=false)
+    {
+        CONTRACT_NO -> LD_Commitment:LD_SCHD_PAST_UPDATES PK required
+            @i18n:Label (en="Contract Number")
+            @t24:i (align=L, inputBehaviour=I, maxLength=27, sysNumber=0.0, core=true, businessType=A, t24Name=CONTRACT.NO, mask="L##/#####/#####/##/#####/#")
+        CURRENCY : T24BusinessTypes:CCY
+            @i18n:Label (en=Ccy)
+            @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=1.0, core=true, t24Name=CURRENCY)
+        K_CURRENCY : T24BusinessTypes:CCY
+            @i18n:Label (en=Currency)
+            @t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=1.0, core=true, t24Name=K.CURRENCY)
+        REVERSAL_MARKER : T24BusinessTypes:A
+            @i18n:Label (en="Rev Marker")
+            @t24:i (align=L, inputBehaviour=I, maxLength=1, sysNumber=7.0, core=true, t24Name=REVERSAL.MARKER)
+        SCHD_JULDATE -> byValue LD_Commitment:LD_SCHD_PAST_UPDATES__SCHD_JULDATE *
+            @t24:i (t24Name=SCHD.JULDATE)
+        VALUE_DATE : T24BusinessTypes:D
+            @i18n:Label (en="Value Date")
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=2.0, core=true, t24Name=VALUE.DATE)
+    }
+    LD_SCHD_PAST_UPDATES__SCHD_JULDATE
+    {
+        SCHD_JULDATE : mml:Integer
+            @i18n:Label (en="Julian Date")
+            @t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=3.0, core=true, t24Name=SCHD.JULDATE)
+        SCHD_TYPE -> byValue LD_Commitment:LD_SCHD_PAST_UPDATES__SCHD_JULDATE__SCHD_TYPE *
+            @t24:i (t24Name=SCHD.TYPE)
+        SEQ : mml:Integer
+            @i18n:Label (en=Sequence)
+            @t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=4.0, core=true, t24Name=SEQ)
+    }
+    LD_SCHD_PAST_UPDATES__SCHD_JULDATE__SCHD_TYPE
+    {
+        SCHD_AMOUNT : T24BusinessTypes:AMT
+            @i18n:Label (en=Amount)
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=6.0, core=true, t24Name=SCHD.AMOUNT, typeModifiers="-1")
+        SCHD_TYPE : T24BusinessTypes:A
+            @i18n:Label (en=Type)
+            @t24:i (align=L, inputBehaviour=I, maxLength=1, sysNumber=5.0, core=true, t24Name=SCHD.TYPE)
+    }
+    LD_TRANCHE_DETAILS
+        @i18n:Description (en="")
+        @t24:i (t24Name=LD.TRANCHE.DETAILS, level=F, type=L, allowedFunctions="L P S", localRefAllowed=false)
+    {
+        KEY -> LD_Commitment:LD_TRANCHE_DETAILS PK required
+            @i18n:Label (en=Key)
+            @t24:i (align=L, inputBehaviour=I, maxLength=14, sysNumber=0.0, core=true, businessType=A, t24Name=KEY)
+        TRANCHE_AMT -> byValue LD_Commitment:LD_TRANCHE_DETAILS__TRANCHE_AMT *
+            @t24:i (t24Name=TRANCHE.AMT)
+    }
+    LD_TRANCHE_DETAILS__TRANCHE_AMT
+    {
+        DD_END_DATE : T24BusinessTypes:D
+            @i18n:Label (en="Dd End Date")
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=3.0, core=true, t24Name=DD.END.DATE)
+        DD_START_DATE : T24BusinessTypes:D
+            @i18n:Label (en="Dd Start Date")
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=2.0, core=true, t24Name=DD.START.DATE)
+        TRANCHE_AMT : T24BusinessTypes:AMT
+            @i18n:Label (en="Tranche Amount")
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=1.0, core=true, t24Name=TRANCHE.AMT)
+        TR_OUTS_AMT -> byValue LD_Commitment:LD_TRANCHE_DETAILS__TRANCHE_AMT__TR_OUTS_AMT *
+            @t24:i (t24Name=TR.OUTS.AMT)
+    }
+    LD_TRANCHE_DETAILS__TRANCHE_AMT__TR_OUTS_AMT
+    {
+        AMT_INCREASE : T24BusinessTypes:AMT
+            @i18n:Label (en="Increase Amount")
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=5.0, core=true, t24Name=AMT.INCREASE)
+        AMT_MOVEMT : T24BusinessTypes:AMT
+            @i18n:Label (en="Movement Of Amount")
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=6.0, core=true, t24Name=AMT.MOVEMT)
+        AMT_MV_DATE : T24BusinessTypes:D
+            @i18n:Label (en="Date Of Movement")
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=7.0, core=true, t24Name=AMT.MV.DATE)
+        TR_OUTS_AMT : T24BusinessTypes:AMT
+            @i18n:Label (en="Oustanding Amount")
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=4.0, core=true, t24Name=TR.OUTS.AMT)
+    }
+    LD_TRANCHE_END_LIST
+        @i18n:Description (en="")
+        @t24:i (t24Name=LD.TRANCHE.END.LIST, level=F, type=L, allowedFunctions="L P S", localRefAllowed=false)
+    {
+        CONTRACT_ID -> byValue LD_Commitment:LD_TRANCHE_END_LIST__CONTRACT_ID *
+            @t24:i (t24Name=CONTRACT.ID)
+        DATE -> LD_Commitment:LD_TRANCHE_END_LIST PK required
+            @i18n:Label (en=Date)
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=0.0, core=true, businessType=A, t24Name=DATE)
+        K_DATE : T24BusinessTypes:A
+            @i18n:Label (en=Date)
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=0.0, core=true, t24Name=K.DATE)
+    }
+    LD_TRANCHE_END_LIST__CONTRACT_ID
+    {
+        CONTRACT_ID : T24BusinessTypes:A
+            @i18n:Label (en="Contract Number")
+            @t24:i (align=L, inputBehaviour=I, maxLength=17, sysNumber=1.0, core=true, t24Name=CONTRACT.ID)
+    }
+    LD_TRANCHE_ST_LIST
+        @i18n:Description (en="")
+        @t24:i (t24Name=LD.TRANCHE.ST.LIST, level=F, type=L, allowedFunctions="L P S", localRefAllowed=false)
+    {
+        CONTRACT_ID -> byValue LD_Commitment:LD_TRANCHE_ST_LIST__CONTRACT_ID *
+            @t24:i (t24Name=CONTRACT.ID)
+        DATE -> LD_Commitment:LD_TRANCHE_ST_LIST PK required
+            @i18n:Label (en=Date)
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=0.0, core=true, businessType=A, t24Name=DATE)
+        K_DATE : T24BusinessTypes:A
+            @i18n:Label (en=Date)
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=0.0, core=true, t24Name=K.DATE)
+    }
+    LD_TRANCHE_ST_LIST__CONTRACT_ID
+    {
+        CONTRACT_ID : T24BusinessTypes:A
+            @i18n:Label (en="Contract Number")
+            @t24:i (align=L, inputBehaviour=I, maxLength=17, sysNumber=1.0, core=true, t24Name=CONTRACT.ID)
+    }
+}

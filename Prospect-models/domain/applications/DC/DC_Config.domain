@@ -1,0 +1,116 @@
+# UTF-8
+/* Data Capture processing */
+Domain DC_Config
+    @t24:i (module=DC)
+    @java:Package (value=com.temenos.t24.datamodel.dc.dc_config)
+namespace "http://www.temenos.com/t24/DC_Config"
+metamodelVersion 1.30.6
+Classes {
+    DC_PARAMETER
+        @i18n:Description (en="")
+        @t24:i (t24Name=DC.PARAMETER, level=I, type=H, allowedFunctions="A E H I L P Q S", localRefAllowed=false)
+    {
+        AUDITOR_CODE : T24BusinessTypes:A
+            @i18n:Label (en="Auditor Code")
+            @i18n:Tooltip (en="Auditor Code")
+            @t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=24.0, core=true, t24Name=AUDITOR.CODE)
+        AUDIT_DATE_TIME : T24BusinessTypes:RELTIME
+            @i18n:Label (en="Audit Date Time")
+            @i18n:Tooltip (en="Date and time when record was audited")
+            @t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=25.0, core=true, t24Name=AUDIT.DATE.TIME, mask="RDD DD  DD ##:##")
+        AUTHORISER : T24BusinessTypes:A
+            @i18n:Label (en=Authoriser)
+            @i18n:Tooltip (en="Indicates the User who Authorises the record")
+            @t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=21.0, core=true, t24Name=AUTHORISER)
+        CO_CODE -> ST_CompanyCreation:COMPANY
+            @i18n:Label (en=Company)
+            @t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=22.0, core=true, businessType=A, t24Name=CO.CODE, mask="R##-###-####")
+        CURR_NO : T24BusinessTypes:N
+            @i18n:Label (en="Curr No")
+            @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=18.0, core=true, t24Name=CURR.NO)
+        DATE_TIME -> byValue DC_Config:DC_PARAMETER__DATE_TIME *
+            @t24:i (t24Name=DATE.TIME)
+        DC_POS_TYPE -> byValue DC_Config:DC_PARAMETER__DC_POS_TYPE *
+            @t24:i (t24Name=DC.POS.TYPE)
+        DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+            @i18n:Label (en="Dept Code")
+            @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=23.0, core=true, t24Name=DEPT.CODE)
+        INPUTTER -> byValue DC_Config:DC_PARAMETER__INPUTTER *
+            @t24:i (t24Name=INPUTTER)
+        OVERRIDE -> byValue DC_Config:DC_PARAMETER__OVERRIDE *
+            @t24:i (t24Name=OVERRIDE)
+        PARAMETER_ID : DC_Config:DC_PARAMETER__PARAMETER_ID PK required
+            @t24:i (align=L, inputBehaviour=I, maxLength=7, sysNumber=0.0, core=true, t24Name=PARAMETER.ID)
+        RECORD_STATUS : T24BusinessTypes:STAT
+            @i18n:Label (en="Record Status")
+            @t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=17.0, core=true, t24Name=RECORD.STATUS)
+        RESERVED_1 : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=15.0, core=true, t24Name=RESERVED.1)
+        RESERVED_10 : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=6.0, core=true, t24Name=RESERVED.10)
+        RESERVED_2 : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=14.0, core=true, t24Name=RESERVED.2)
+        RESERVED_3 : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=13.0, core=true, t24Name=RESERVED.3)
+        RESERVED_4 : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=12.0, core=true, t24Name=RESERVED.4)
+        RESERVED_5 : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=11.0, core=true, t24Name=RESERVED.5)
+        RESERVED_6 : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=10.0, core=true, t24Name=RESERVED.6)
+        RESERVED_7 : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=9.0, core=true, t24Name=RESERVED.7)
+        RESERVED_8 : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=8.0, core=true, t24Name=RESERVED.8)
+        RESERVED_9 : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=7.0, core=true, t24Name=RESERVED.9)
+    }
+    DC_PARAMETER__DATE_TIME
+    {
+        DATE_TIME : T24BusinessTypes:RELTIME
+            @i18n:Label (en="Date time")
+            @i18n:Tooltip (en="Date and time when record was input or authorised")
+            @t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=20.0, core=true, t24Name=DATE.TIME, mask="RDD DD  DD ##:##")
+    }
+    DC_PARAMETER__DC_POS_TYPE
+    {
+        DC_CONT_DIF_CAT -> ST_Config:CATEGORY
+            @i18n:Label (en="Contingent Difference Cat")
+            @i18n:Tooltip (en="Contingent Difference Cat")
+            @t24:i (align=L, inputBehaviour=I, maxLength=6, sysNumber=5.0, core=true, businessType=CAT, t24Name=DC.CONT.DIF.CAT, typeModifiers=10000...19999, mask="R##-###")
+        DC_CONT_SUS_CAT -> ST_Config:CATEGORY
+            @i18n:Label (en="Contingent Suspense Cat")
+            @i18n:Tooltip (en="Contingent Suspense Cat")
+            @t24:i (align=L, inputBehaviour=I, maxLength=6, sysNumber=4.0, core=true, businessType=CAT, t24Name=DC.CONT.SUS.CAT, typeModifiers=10000...19999, mask="R##-###")
+        DC_DIFF_CATEG -> ST_Config:CATEGORY
+            @i18n:Label (en="Difference Category")
+            @i18n:Tooltip (en="Difference Category")
+            @t24:i (align=L, inputBehaviour=I, maxLength=6, sysNumber=3.0, core=true, businessType=CAT, t24Name=DC.DIFF.CATEG, typeModifiers=10000...19999, mask="R##-###")
+        DC_POS_TYPE -> RE_Config:FX_POS_TYPE
+            @i18n:Label (en="Position Type")
+            @i18n:Tooltip (en="Position Type")
+            @t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=1.0, core=true, businessType=SSS, t24Name=DC.POS.TYPE)
+        DC_SUSP_CATEG -> ST_Config:CATEGORY
+            @i18n:Label (en="DC Suspense Category")
+            @i18n:Tooltip (en="DC Suspense Category")
+            @t24:i (align=L, inputBehaviour=I, maxLength=6, sysNumber=2.0, core=true, businessType=CAT, t24Name=DC.SUSP.CATEG, typeModifiers=10000...19999, mask="R##-###")
+    }
+    DC_PARAMETER__INPUTTER
+    {
+        INPUTTER : T24BusinessTypes:A
+            @i18n:Label (en=Inputter)
+            @i18n:Tooltip (en="The user who last updated the record")
+            @t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=19.0, core=true, t24Name=INPUTTER)
+    }
+    DC_PARAMETER__OVERRIDE
+    {
+        OVERRIDE : T24BusinessTypes:N
+            @i18n:Label (en=Override)
+            @i18n:Tooltip (en="Overrides generated by this transaction")
+            @t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=16.0, core=true, t24Name=OVERRIDE)
+    }
+}
+Enumerations {
+    DC_PARAMETER__PARAMETER_ID : mml:string
+        SYSTEM=SYSTEM
+}
