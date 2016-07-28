@@ -9,6 +9,9 @@
 
   <meta name="description" content="Temenos T24 API documentation">
   <meta name="author" content="Manoj Jangid">
+  <!--
+  <link rel="icon" href="../../favicon.ico">
+  -->
 
   <title>Temenos T24 API Documentation</title>
 
@@ -17,6 +20,7 @@
 
   <!-- Custom styles for this template -->
   <link href="stylesheets/dashboard.css" rel="stylesheet">
+  <link href="stylesheets/util.css" rel="stylesheet">
 
 </head>
 
@@ -32,6 +36,8 @@
 
   <div class="container-fluid">
     <div class="row">
+
+
       <!-- Left Side bar panel-->
       <div class="col-sm-1 col-md-2 sidebar">
         <div class="panel-group" id="leftpanel">
@@ -42,12 +48,12 @@
               </h4>
             </div>
             <div id="overview" class="panel-collapse collapse in">
-              <div class="panel-body" style="background-color:#d9d9d9">Introduction</div>
-              <div class="panel-body"><a href="authentication.html">Authentication</a></div>
+              <div class="panel-body"><a href="index.html">Introduction</a></div>
+              <div class="panel-body" style="background-color:#d9d9d9">Authentication</div>
               <div class="panel-body"><a href="serviceDocument.html">Service Document</a></div>
               <div class="panel-body"><a href="metadata.html">Metadata</a></div>
               <div class="panel-body"><a href="httperrorcode.html">Http Status Code</a></div>
-              <div class="panel-body"><a href="queryParameters.html">Query Parameters</a></div>
+              <div class="panel-body"><a href="queryParameters.html">Query Parameters</div>
               <div class="panel-body"><a href="relationship.html">Relationship</a></div>
             </div>
           </div><br/>
@@ -61,7 +67,7 @@
               <div class="panel-body"><a href="verUsers.html">Users</a></div>
               <div class="panel-body"><a href="verCustomerInputs.html">Customers</a></div>
               <div class="panel-body"><a href="verAccount_SbOpens.html">Saving Accounts</a></div>
-              <div class="panel-body"><a href="verAccount_CaOpens">Current Accounts</a></div>
+              <div class="panel-body"><a href="verAccount_CaOpens.html">Current Accounts</a></div>
               <div class="panel-body"><a href="verTeller_LcyCashins.html">Cash Deposits</a></div>
               <div class="panel-body"><a href="verTeller_LcyCashwdls.html">Cash Withdrawls</a></div>
               <div class="panel-body"><a href="verFundsTransfers.html">Funds Transfers</a></div>
@@ -74,8 +80,8 @@
               </h4>
             </div>
             <div id="events" class="panel-collapse collapse in">
-              <div class="panel-body"><a href="#">Payments</a></div>
-              <div class="panel-body"><a href="#">Funds Transfers</a></div>
+              <div class="panel-body"><a href="verPayments.html">Payments</a></div>
+              <div class="panel-body"><a href="verOutwardTransfers.html">Outward Transfers</a></div>
             </div>
           </div>
         </div>
@@ -87,28 +93,62 @@
 
 
         <!-- API Decription -->
-        <h1 class="page-header">API Documentation</h1>
+        <h1 class="page-header">Authentication</h1>
         <div class="well well-lg">
-          <p>Banking API</p>
-          <p>
-            <ul>
-              <li>Create Customers</li>
-              <li>Create Accounts</li>
-              <li>Create Users</li>
-              <li>Funds Transfers</li>
-            </ul>
-          </p>
-          <p>Events</p>
-          <p>
-            <ul>
-              <li>Payments</li>
-              <li>Funds Transfers</li>
-            </ul>
-          </p>
+          <p>Prospect API supports Basic Authentication. All T24 internal user has complete access for Create Read Update Delete
+            (CRUD) operations.</p>
         </div>
 
+        <!-- Http Error code-->
+        <div class="panel panel-info">
+          <div class="panel-heading">
+            <h4 class="panel-title">
+              <a data-toggle="collapse" data-parent="#rightpanel" href="#authentication">Example</a>
+            </h4>
+          </div>
+          <div id="authentication" class="panel-collapse collapse in">
+            <!-- Begin -->
+            <table class="table">
+              <tr>
+                <td><strong>Java</strong>
+                  <p>
+                    <pre class="highlighter">
+        URL url = new URL(webPage);
+        URLConnection urlConnection = url.openConnection();
+        urlConnection.setRequestProperty("Authorization", "Basic " + authStringEnc);
+        InputStream is = urlConnection.getInputStream();
+        InputStreamReader isr = new InputStreamReader(is);</pre>
+                </td>
+              </tr>
+              <tr>
+                <td><strong>C#</strong>
+                  <p>
+                    <pre class="highlighter">
+            var TARGETURL = "http://en.wikipedia.org/";
+            HttpClientHandler handler = new HttpClientHandler() {
+                Proxy = new WebProxy("http://127.0.0.1:8080"),
+                UseProxy = true,
+            };            
+            HttpClient client = new HttpClient(handler);
+            var byteArray = Encoding.ASCII.GetBytes("username:password1234");
+            client.DefaultRequestHeaders.Authorization = 
+                    new System.Net.Http.Headers.AuthenticationHeaderValue("Basic", Convert.ToBase64String(byteArray));
 
-
+            HttpResponseMessage response = await client.GetAsync(TARGETURL);
+            HttpContent content = response.Content;</pre>
+                </td>
+              </tr>      
+              <tr>
+                <td><strong>Curl</strong>
+                  <p>
+                    <pre class="highlighter">
+        curl --user name:password http://127.0.0.1:8080/Prospect.svc</pre>
+                </td>
+              </tr>                        
+            </table>
+            <!-- End -->
+          </div>
+        </div>
       </div>
     </div>
   </div>
