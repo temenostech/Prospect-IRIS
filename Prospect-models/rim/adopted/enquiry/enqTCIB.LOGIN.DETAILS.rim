@@ -1,0 +1,34 @@
+domain T24 {
+    use common.CoreCommands.*
+    use common.HTTPEvents.*
+    use common.ODataCommands.*
+    use common.T24Commands.*
+    use common.T24Events.*
+    use common.NextState.*
+    rim enqTcibLoginDetails {
+        command GETEntities
+        command GETEntity
+        basepath: "/{companyid}"
+    
+        resource enqTcibLoginDetailss {
+            type: collection
+            entity: enqTcibLoginDetails
+            commands [ GET : GETEntities {
+                properties [ filter = "{filter}" ]
+                } ]
+            path: "/enqTcibLoginDetailss()"
+            GET *-> enqTcibLoginDetails {
+                parameters [ id = "{Id}" ]
+            }
+        }
+    
+        resource enqTcibLoginDetails {
+            type: item
+            entity: enqTcibLoginDetails
+            commands [ GET : GETEntity ]
+            path: "/enqTcibLoginDetailss('{id}')"
+        }
+    
+    }
+    
+}
