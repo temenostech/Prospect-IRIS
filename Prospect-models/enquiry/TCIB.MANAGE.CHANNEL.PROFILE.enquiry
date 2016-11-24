@@ -1,0 +1,237 @@
+Enquiry "TCIB.MANAGE.CHANNEL.PROFILE" for "name:/EB_ARC:EB.EXTERNAL.USER#" {
+    metamodelVersion: "1.30.6" full-description {
+        en = "Manage Channel Profile"
+    }
+
+    description {
+        en = "Manage Channel Profile"
+    }
+
+    zero-records-display: true
+    no-selection: true
+    start-line: 4
+    end-line: 99
+    fixed-sort: "DATE.TIME" Descending
+
+    field "ID" {
+        length: 70
+        alignment: Left
+        comma-separator: false
+        position {
+            column: 1
+        }
+
+        processing-mode: Single
+        operation: application-field-name "@ID"
+    }
+
+    field "CUSTOMER" {
+        label {
+            en = "Customer Id"
+        }
+
+        length: 10
+        alignment: Right
+        comma-separator: false
+        position {
+            column: 2
+        }
+
+        processing-mode: Single
+        operation: application-field-name "CUSTOMER"
+    }
+
+    field "NAME" {
+        label {
+            en = "Customer Name"
+        }
+
+        length: 70
+        alignment: Left
+        comma-separator: false
+        position {
+            column: 3
+        }
+
+        processing-mode: Single
+        operation: field-extract "CUSTOMER"
+        conversion: getFrom "CUSTOMER" "SHORT.NAME" false
+    }
+
+    field "ARRANGEMENT" {
+        length: 35
+        alignment: Left
+        comma-separator: false
+        processing-mode: Single
+        operation: application-field-name "ARRANGEMENT"
+    }
+
+    field "STRING" {
+        comma-separator: false
+        operation: constant "\"-VIEW-ARRANGEMENT\""
+    }
+
+    field "ARR.ACTIVITY" {
+        comma-separator: false
+        operation: calc "ARRANGEMENT":"STRING"
+    }
+
+    field "PRODUCT" {
+        label {
+            en = "Product"
+        }
+
+        length: 35
+        alignment: Left
+        comma-separator: false
+        position {
+            column: 5
+        }
+
+        operation: field-extract "ARRANGEMENT"
+        conversion: getFrom "AA.ARRANGEMENT" "PRODUCT" false
+    }
+
+    field "CH.PERMISSION" {
+        label {
+            en = "Attached Permission"
+        }
+
+        length: 35
+        alignment: Left
+        comma-separator: false
+        position {
+            column: 6
+        }
+
+        processing-mode: Multi
+        operation: application-field-name "CHANNEL.PERMISSION"
+    }
+
+    field "PERMISSION" {
+        length: 35
+        alignment: Left
+        comma-separator: false
+        processing-mode: Multi
+        operation: if "CH.PERMISSION" Equals "\"\"" process "CUSTOMER" "CH.PERMISSION"
+    }
+
+    field "STATUS" {
+        label {
+            en = "Status"
+        }
+
+        length: 35
+        alignment: Left
+        comma-separator: false
+        position {
+            column: 9
+        }
+
+        processing-mode: Single
+        operation: application-field-name "STATUS"
+    }
+
+    field "INPUTTER" {
+        label {
+            en = "Inputter"
+        }
+
+        length: 40
+        alignment: Left
+        comma-separator: false
+        position {
+            column: 10
+        }
+
+        processing-mode: Multi
+        hidden: true
+        operation: application-field-name "INPUTTER"
+        conversion: extract from 2 to 0 delimited by "_"
+    }
+
+    field "DATE.TIME" {
+        label {
+            en = "Date / Time"
+        }
+
+        display-type: "DATE"
+        format: Date
+        length: 15
+        alignment: Right
+        comma-separator: false
+        position {
+            column: 12
+        }
+
+        processing-mode: Multi
+        hidden: true
+        operation: application-field-name "DATE.TIME"
+    }
+
+    field "ZERONORECORD" {
+        display-type: "CLASS-ENQ.NORECS" break-condition {
+            break: None
+        }
+
+        alignment: Left
+        comma-separator: false
+        display-section: Header
+        position {
+            column: 1
+        }
+
+        operation: constant "\"No Authorised Users available for Selection\""
+    }
+
+    drilldown "1" {
+        description {
+            en = "Create/Modify Permission"
+        }
+
+        label-field: "ID" parameters {
+            function:  Input
+            field: "PERMISSION"
+        }
+
+        screen: "CHANNEL.PERMISSION,TCIB"
+    }
+
+    drilldown "2" {
+        description {
+            en = "Modify Channel User"
+        }
+
+        label-field: "ID" parameters {
+            function:  Input
+            field: "ID"
+        }
+
+        screen: "EB.EXTERNAL.USER,TCIB.AMEND"
+    }
+
+    drilldown "3" {
+        description {
+            en = "Simulate Permissions"
+        }
+
+        label-field: "ID"
+        criteria: "CURRENT.EEU" > "ID"
+        criteria: "CURRENT.PERM" > "CH.PERMISSION"
+        criteria: "CURRENT.ARR" > "ARRANGEMENT"
+        composite-screen: "TCIB.SIM.EEU.PERMISSION"
+    }
+
+    drilldown "4" {
+        description {
+            en = "View/Modify Arrangement"
+        }
+
+        label-field: "ID" parameters {
+            field: "ARRANGEMENT"
+        }
+
+        composite-screen: "TCIB.AA.ARR.OVERVIEW.INPONLY"
+    }
+
+}

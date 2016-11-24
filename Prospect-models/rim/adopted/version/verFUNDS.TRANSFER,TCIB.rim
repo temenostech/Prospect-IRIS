@@ -1,0 +1,775 @@
+domain T24 {
+    use common.CoreCommands.*
+    use common.HTTPEvents.*
+    use common.ODataCommands.*
+    use common.T24Commands.*
+    use common.T24Events.*
+    use common.NextState.*
+    use common.Errors.*
+    use T24.ContextEnquiry.*
+    rim verFundsTransfer_Tcib {
+        command T24FieldMetadata
+        command NoopGET
+        command GETEntities
+        command GetLiveEntity
+        command GetIauthEntity
+        command GetHauthEntity
+        command GetIauthEntities
+        command CreateEntity
+        command InputEntity
+        command HoldEntity
+        command AuthoriseEntity
+        command GetChangedValues
+        command ReviewEntity
+        command ReverseEntity
+        command GetReversedEntity
+        command ValidateEntity
+        command GetRauthEntity
+        command RestoreEntity
+        command DeleteEntity
+        command CopyEntity
+        command PasteEntity
+        command CreateDEPreview
+        command GetDealSlipEntities
+        command T24Enrichment
+        command CheckAutoIdSupport
+        command GetHauthEntities
+        command T24NextState
+        basepath: "/{companyid}"
+    
+        resource verFundsTransfer_Tcib_errorHandler {
+            type: item
+            entity: verFundsTransfer_Tcib
+            commands [ GET : NoopGET ]
+            relations [ "http://temenostech.temenos.com/rels/error" ]
+            path: "/verFundsTransfer_Tcibs('{id}')/error"
+            GET +-> ProcessErrors {
+                title: "errors"
+            }
+            POST +-> verFundsTransfer_Tcib_metadata {
+                title: "metadata"
+            }
+        }
+    
+        resource verFundsTransfer_Tcibs {
+            type: collection
+            entity: verFundsTransfer_Tcib
+            commands [ GET : GETEntities {
+                properties [ filter = "{filter}" ]
+                } ]
+            path: "/verFundsTransfer_Tcibs()"
+            GET *-> verFundsTransfer_Tcib {
+                parameters [ id = "{RefNo}" ]
+            }
+            GET *-> verFundsTransfer_Tcib_see {
+                parameters [ id = "{RefNo}" ]
+                title: "see record"
+            }
+            POST -> verFundsTransfer_Tcib_new {
+                title: "create new deal"
+                condition: OK(verFundsTransfer_Tcib_autoId)
+            }
+            POST -> verFundsTransfer_Tcib_populate {
+                title: "populate existing deal"
+            }
+            PUT *-> verFundsTransfer_Tcib_input {
+                parameters [ id = "{RefNo}" ]
+                title: "input deal"
+            }
+            POST *-> verFundsTransfer_Tcib_audit {
+                parameters [ id = "{RefNo}" ]
+                title: "audit deal"
+            }
+            POST *-> verFundsTransfer_Tcib_reverse {
+                parameters [ id = "{RefNo}" ]
+                title: "reverse deal"
+            }
+        }
+    
+        resource verFundsTransfer_Tcib {
+            type: item
+            entity: verFundsTransfer_Tcib
+            commands [ GET : GetLiveEntity ]
+            path: "/verFundsTransfer_Tcibs('{id}')"
+            POST +-> verFundsTransfer_Tcib_metadata {
+                title: "metadata"
+            }
+            GET --> verFundsTransfer_Tcib_IAuth {
+                parameters [ id = "{RefNo}" ]
+                condition: OK(verFundsTransfer_Tcib_IAuth)
+            }
+            POST -> verFundsTransfer_Tcib_validate {
+                parameters [ id = "{RefNo}" ]
+                title: "validate deal"
+            }
+            PUT -> verFundsTransfer_Tcib_input {
+                parameters [ id = "{RefNo}" ]
+                title: "input deal"
+            }
+            POST -> verFundsTransfer_Tcib_audit {
+                parameters [ id = "{RefNo}" ]
+                title: "audit deal"
+            }
+            POST -> verFundsTransfer_Tcib_reverse {
+                parameters [ id = "{RefNo}" ]
+                title: "reverse deal"
+            }
+            POST -> verFundsTransfer_Tcib_hold {
+                parameters [ id = "{RefNo}" ]
+                title: "hold deal"
+            }
+            POST -> verFundsTransfer_Tcib_deliveryPreview {
+                parameters [ id = "{RefNo}" ]
+                title: "delivery preview"
+            }
+            GET -> "T24.verFundsTransfer_Tcib.verFundsTransfer_Tcib_see" {
+                parameters [ id = "@" ]
+                title: "See transaction"
+            }
+            GET -> "T24.verFundsTransfer_Tcib.verFundsTransfer_Tcib_IAuth_see" {
+                parameters [ id = "@" ]
+                title: "GetIauthEntity"
+            }
+            GET -> "T24.verFundsTransfer_Tcib.verFundsTransfer_Tcib_HAuth_see" {
+                parameters [ id = "@" ]
+                title: "GetHauthEntity"
+            }
+            GET -> "T24.verFundsTransfer_Tcib.verFundsTransfer_Tcib_IAuth" {
+                parameters [ id = "@" ]
+                title: "GetIauthEntity"
+            }
+            GET -> "T24.verFundsTransfer_Tcib.verFundsTransfer_Tcib_HAuth" {
+                parameters [ id = "@" ]
+                title: "GetHauthEntity"
+            }
+            GET -> verFundsTransfer_Tcib_ContextEnquiries {
+                title: "All Context Enquiries"
+            }
+            GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+                parameters [ entity = "verFundsTransfer_Tcib" ]
+                title: "Context Enquiries"
+            }
+        }
+    
+        resource verFundsTransfer_Tcib_see {
+            type: item
+            entity: verFundsTransfer_Tcib
+            commands [ GET : GetLiveEntity ]
+            relations [ "http://schemas.microsoft.com/ado/2007/08/dataservices/related/verFundsTransfer_Tcib","http://temenostech.temenos.com/rels/see" ]
+            path: "/verFundsTransfer_Tcibs('{id}')/see"
+            POST +-> verFundsTransfer_Tcib_metadata {
+                title: "metadata"
+            }
+            GET -> verFundsTransfer_Tcib_ContextEnquiries {
+                title: "All Context Enquiries"
+            }
+            GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+                parameters [ entity = "verFundsTransfer_Tcib" ]
+                title: "Context Enquiries"
+            }
+        }
+    
+        resource verFundsTransfer_Tcib_IAuth_see {
+            type: item
+            entity: verFundsTransfer_Tcib
+            commands [ GET : GetIauthEntity ]
+            relations [ "http://schemas.microsoft.com/ado/2007/08/dataservices/related/verFundsTransfer_Tcib_IAuth","http://temenostech.temenos.com/rels/see" ]
+            path: "/verFundsTransfer_Tcibs_IAuth('{id}')/see"
+        }
+    
+        resource verFundsTransfer_Tcib_HAuth_see {
+            type: item
+            entity: verFundsTransfer_Tcib
+            commands [ GET : GetHauthEntity ]
+            relations [ "http://schemas.microsoft.com/ado/2007/08/dataservices/related/verFundsTransfer_Tcib_HAuth","http://temenostech.temenos.com/rels/see" ]
+            path: "/verFundsTransfer_Tcibs_HAuth('{id}')/see"
+        }
+    
+        resource verFundsTransfer_Tcib_ContextEnquiries {
+            type: item
+            entity: verFundsTransfer_Tcib
+            commands [ GET : NoopGET ]
+            path: "/verFundsTransfer_Tcib/ContextEnquiries"
+            GET -> "T24.enqlistFundsTransfer.enqlistFundsTransfers" {
+                parameters [ param = "list" ]
+                title: "List live deals"
+            }
+            GET -> "T24.enqlistFundsTransfer.enqlistFundsTransfersUnauth" {
+                parameters [ param = "list" ]
+                title: "List unauthorised deals"
+            }
+            GET -> "T24.enqlistFundsTransfer.enqlistFundsTransfersHist" {
+                parameters [ param = "list" ]
+                title: "List history deals"
+            }
+            GET -> "T24.enqlistFundsTransfer.enqlistFundsTransfers" {
+                title: "Search live deals"
+            }
+            GET -> "T24.enqlistFundsTransfer.enqlistFundsTransfersUnauth" {
+                title: "Search unauthorised deals"
+            }
+            GET -> "T24.enqlistFundsTransfer.enqlistFundsTransfersHist" {
+                title: "Search history deals"
+            }
+            GET +-> "T24.ContextEnquiry.ContextEnquiryList" {
+                parameters [ entity = "verFundsTransfer_Tcib" ]
+                title: "Other context Enquiries"
+            }
+        }
+    
+        resource verFundsTransfer_Tcib_metadata {
+            type: collection
+            entity: T24FieldMetadata
+            commands [ POST : T24FieldMetadata ]
+            relations [ "http://temenostech.temenos.com/rels/metadata" ]
+            path: "/verFundsTransfer_Tcibs()/metadata"
+        }
+    
+        resource verFundsTransfer_Tcibs_IAuth {
+            type: collection
+            entity: verFundsTransfer_Tcib
+            commands [ GET : GetIauthEntities {
+                properties [ filter = "{filter}" ]
+                } ]
+            path: "/verFundsTransfer_Tcibs_IAuth()"
+            GET *-> verFundsTransfer_Tcib_IAuth {
+                parameters [ id = "{RefNo}" ]
+            }
+            POST -> verFundsTransfer_Tcib_new {
+                title: "create new deal"
+                condition: OK(verFundsTransfer_Tcib_autoId)
+            }
+            POST -> verFundsTransfer_Tcib_populate {
+                title: "populate existing deal"
+            }
+            PUT *-> verFundsTransfer_Tcib_input {
+                parameters [ id = "{RefNo}" ]
+                title: "input deal"
+            }
+            DELETE *-> verFundsTransfer_Tcib_delete {
+                parameters [ id = "{RefNo}" ]
+                title: "delete"
+            }
+            PUT *-> verFundsTransfer_Tcib_authorise {
+                parameters [ id = "{RefNo}" ]
+                title: "authorise deal"
+            }
+        }
+    
+        resource verFundsTransfer_Tcib_new {
+            type: item
+            entity: verFundsTransfer_Tcib
+            commands [ POST : CreateEntity ]
+            relations [ "http://schemas.microsoft.com/ado/2007/08/dataservices/related/verFundsTransfer_Tcib","http://temenostech.temenos.com/rels/new" ]
+            path: "/verFundsTransfer_Tcibs()/new"
+            POST +-> verFundsTransfer_Tcib_metadata {
+                title: "metadata"
+            }
+            POST -> verFundsTransfer_Tcib_validate {
+                parameters [ id = "{RefNo}" ]
+                title: "validate deal"
+            }
+            PUT -> verFundsTransfer_Tcib_input {
+                parameters [ id = "{RefNo}" ]
+                title: "input deal"
+            }
+            POST -> verFundsTransfer_Tcib_hold {
+                parameters [ id = "{RefNo}" ]
+                title: "hold deal"
+            }
+            GET -> "T24.verFundsTransfer_Tcib.verFundsTransfer_Tcib_see" {
+                parameters [ id = "@" ]
+                title: "See transaction"
+            }
+            GET -> "T24.verFundsTransfer_Tcib.verFundsTransfer_Tcib_IAuth_see" {
+                parameters [ id = "@" ]
+                title: "GetIauthEntity"
+            }
+            GET -> "T24.verFundsTransfer_Tcib.verFundsTransfer_Tcib_HAuth_see" {
+                parameters [ id = "@" ]
+                title: "GetHauthEntity"
+            }
+            GET -> "T24.verFundsTransfer_Tcib.verFundsTransfer_Tcib_IAuth" {
+                parameters [ id = "@" ]
+                title: "GetIauthEntity"
+            }
+            GET -> "T24.verFundsTransfer_Tcib.verFundsTransfer_Tcib_HAuth" {
+                parameters [ id = "@" ]
+                title: "GetHauthEntity"
+            }
+            POST -> verFundsTransfer_Tcib_deliveryPreview {
+                parameters [ id = "{RefNo}" ]
+                title: "delivery preview"
+            }
+            GET -> verFundsTransfer_Tcib_ContextEnquiries {
+                title: "All Context Enquiries"
+            }
+            GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+                parameters [ entity = "verFundsTransfer_Tcib" ]
+                title: "Context Enquiries"
+            }
+        }
+    
+        resource verFundsTransfer_Tcib_input {
+            type: item
+            entity: verFundsTransfer_Tcib
+            commands [ PUT : InputEntity, POST : InputEntity ]
+            relations [ "http://temenostech.temenos.com/rels/input" ]
+            path: "/verFundsTransfer_Tcibs('{id}')"
+            GET --> nextState {
+                condition: OK(nextState)
+            }
+            GET --> verFundsTransfer_Tcib_IAuth {
+                parameters [ id = "{RefNo}" ]
+                condition: OK(verFundsTransfer_Tcib_IAuth)
+            }
+            GET --> verFundsTransfer_Tcib {
+                parameters [ id = "{RefNo}" ]
+                condition: OK(verFundsTransfer_Tcib)
+            }
+            GET -> verFundsTransfer_Tcib_ContextEnquiries {
+                title: "All Context Enquiries"
+            }
+            GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+                parameters [ entity = "verFundsTransfer_Tcib" ]
+                title: "Context Enquiries"
+            }
+            onerror --> T24.verFundsTransfer_Tcib.verFundsTransfer_Tcib_errorHandler
+        }
+    
+        resource verFundsTransfer_Tcib_hold {
+            type: item
+            entity: verFundsTransfer_Tcib
+            commands [ POST : HoldEntity ]
+            relations [ "http://temenostech.temenos.com/rels/hold" ]
+            path: "/verFundsTransfer_Tcibs('{id}')/hold"
+            PUT -> verFundsTransfer_Tcib_input {
+                parameters [ id = "{RefNo}" ]
+                title: "input deal"
+            }
+            DELETE -> verFundsTransfer_Tcib_delete {
+                parameters [ id = "{RefNo}" ]
+                title: "delete"
+            }
+            POST -> verFundsTransfer_Tcib_validate {
+                parameters [ id = "{RefNo}" ]
+                title: "validate deal"
+            }
+            onerror --> common.Errors.Errors
+        }
+    
+        resource verFundsTransfer_Tcib_authorise {
+            type: item
+            entity: verFundsTransfer_Tcib
+            commands [ PUT : AuthoriseEntity ]
+            relations [ "http://temenostech.temenos.com/rels/authorise" ]
+            path: "/verFundsTransfer_Tcibs('{id}')/authorise"
+            GET --> nextState {
+                condition: OK(nextState)
+            }
+            GET --> verFundsTransfer_Tcib_IAuth {
+                parameters [ id = "{RefNo}" ]
+                condition: OK(verFundsTransfer_Tcib_IAuth)
+            }
+            GET --> verFundsTransfer_Tcib {
+                parameters [ id = "{RefNo}" ]
+                condition: OK(verFundsTransfer_Tcib)
+            }
+            GET --> verFundsTransfer_Tcib_reversed {
+                parameters [ id = "{RefNo}" ]
+                condition: OK(verFundsTransfer_Tcib_reversed)
+            }
+            GET -> verFundsTransfer_Tcib_ContextEnquiries {
+                title: "All Context Enquiries"
+            }
+            GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+                parameters [ entity = "verFundsTransfer_Tcib" ]
+                title: "Context Enquiries"
+            }
+            onerror --> T24.verFundsTransfer_Tcib.verFundsTransfer_Tcib_errorHandler
+        }
+    
+        resource verFundsTransfer_Tcib_changedValues {
+            type: item
+            entity: verFundsTransfer_Tcib
+            commands [ GET : GetChangedValues ]
+            relations [ "http://temenostech.temenos.com/rels/changedValues" ]
+            path: "/verFundsTransfer_Tcibs('{id}')/changedValues"
+        }
+    
+        resource verFundsTransfer_Tcib_audit {
+            type: item
+            entity: verFundsTransfer_Tcib
+            commands [ POST : ReviewEntity ]
+            relations [ "http://temenostech.temenos.com/rels/review" ]
+            path: "/verFundsTransfer_Tcibs('{id}')/review"
+            GET -> verFundsTransfer_Tcib {
+                parameters [ id = "{RefNo}" ]
+            }
+            onerror --> common.Errors.Errors
+        }
+    
+        resource verFundsTransfer_Tcib_reverse {
+            type: item
+            entity: verFundsTransfer_Tcib
+            commands [ PUT : ReverseEntity ]
+            relations [ "http://temenostech.temenos.com/rels/reverse" ]
+            path: "/verFundsTransfer_Tcibs('{id}')/reverse"
+            GET --> verFundsTransfer_Tcib_RAuth {
+                parameters [ id = "{RefNo}" ]
+                condition: OK(verFundsTransfer_Tcib_RAuth)
+            }
+            onerror --> T24.verFundsTransfer_Tcib.verFundsTransfer_Tcib_errorHandler
+        }
+    
+        resource verFundsTransfer_Tcib_reversed {
+            type: item
+            entity: verFundsTransfer_Tcib
+            commands [ GET : GetReversedEntity ]
+            path: "/verFundsTransfer_Tcibs_reversed('{id}')"
+        }
+    
+        resource verFundsTransfer_Tcib_validate {
+            type: item
+            entity: verFundsTransfer_Tcib
+            commands [ POST : ValidateEntity ]
+            relations [ "http://temenostech.temenos.com/rels/validate" ]
+            path: "/verFundsTransfer_Tcibs('{id}')/validate"
+            POST +-> verFundsTransfer_Tcib_metadata {
+                title: "metadata"
+            }
+            PUT -> verFundsTransfer_Tcib_input {
+                parameters [ id = "{RefNo}" ]
+                title: "input deal"
+            }
+            POST -> verFundsTransfer_Tcib_hold {
+                parameters [ id = "{RefNo}" ]
+                title: "hold deal"
+            }
+            onerror --> T24.verFundsTransfer_Tcib.verFundsTransfer_Tcib_errorHandler
+        }
+    
+        resource verFundsTransfer_Tcib_IAuth {
+            type: item
+            entity: verFundsTransfer_Tcib
+            commands [ GET : GetIauthEntity ]
+            path: "/verFundsTransfer_Tcibs_IAuth('{id}')"
+            POST +-> verFundsTransfer_Tcib_metadata {
+                title: "metadata"
+            }
+            GET +-> verFundsTransfer_Tcib_changedValues {
+                parameters [ id = "{RefNo}" ]
+                title: "changed values"
+            }
+            POST -> verFundsTransfer_Tcib_validate {
+                parameters [ id = "{RefNo}" ]
+                title: "validate deal"
+            }
+            PUT -> verFundsTransfer_Tcib_input {
+                parameters [ id = "{RefNo}" ]
+                title: "input deal"
+            }
+            POST -> verFundsTransfer_Tcib_hold {
+                parameters [ id = "{RefNo}" ]
+                title: "hold deal"
+            }
+            POST -> verFundsTransfer_Tcib_authorise {
+                parameters [ id = "{RefNo}" ]
+                title: "authorise deal"
+            }
+            DELETE -> verFundsTransfer_Tcib_delete {
+                parameters [ id = "{RefNo}" ]
+                title: "delete"
+            }
+            GET -> verFundsTransfer_Tcib_ContextEnquiries {
+                title: "All Context Enquiries"
+            }
+            GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+                parameters [ entity = "verFundsTransfer_Tcib" ]
+                title: "Context Enquiries"
+            }
+        }
+    
+        resource verFundsTransfer_Tcib_RAuth {
+            type: item
+            entity: verFundsTransfer_Tcib
+            commands [ GET : GetRauthEntity ]
+            path: "/verFundsTransfer_Tcibs_RAuth('{id}')"
+            POST +-> verFundsTransfer_Tcib_metadata {
+                title: "metadata"
+            }
+            POST -> verFundsTransfer_Tcib_authorise {
+                parameters [ id = "{RefNo}" ]
+                title: "authorise deal"
+            }
+            DELETE -> verFundsTransfer_Tcib_delete {
+                parameters [ id = "{RefNo}" ]
+                title: "delete"
+            }
+        }
+    
+        resource verFundsTransfer_Tcib_delete {
+            type: item
+            entity: verFundsTransfer_Tcib
+            commands [ DELETE : DeleteEntity ]
+            relations [ "http://temenostech.temenos.com/rels/delete" ]
+            path: "/verFundsTransfer_Tcibs('{id}')/delete"
+        }
+    
+        resource verFundsTransfer_TcibEntry {
+            type: item
+            entity: verFundsTransfer_Tcib
+            commands [ GET : NoopGET ]
+            relations [ "http://schemas.microsoft.com/ado/2007/08/dataservices/related/verFundsTransfer_Tcib","http://temenostech.temenos.com/rels/contract" ]
+            path: "/verFundsTransfer_TcibEntry"
+            POST -> verFundsTransfer_Tcib_new {
+                title: "create new deal"
+                condition: OK(verFundsTransfer_Tcib_autoId)
+            }
+            POST -> verFundsTransfer_Tcib_populate {
+                title: "populate existing deal"
+            }
+            GET -> verFundsTransfer_Tcib {
+                parameters [ id = "@" ]
+                title: "action"
+            }
+            GET -> "T24.verFundsTransfer_Tcib.verFundsTransfer_Tcib_see" {
+                parameters [ id = "@" ]
+                title: "See transaction"
+            }
+            GET -> "T24.verFundsTransfer_Tcib.verFundsTransfer_Tcib_IAuth_see" {
+                parameters [ id = "@" ]
+                title: "GetIauthEntity"
+            }
+            GET -> "T24.verFundsTransfer_Tcib.verFundsTransfer_Tcib_HAuth_see" {
+                parameters [ id = "@" ]
+                title: "GetHauthEntity"
+            }
+            GET -> "T24.verFundsTransfer_Tcib.verFundsTransfer_Tcib_IAuth" {
+                parameters [ id = "@" ]
+                title: "GetIauthEntity"
+            }
+            GET -> "T24.verFundsTransfer_Tcib.verFundsTransfer_Tcib_HAuth" {
+                parameters [ id = "@" ]
+                title: "GetHauthEntity"
+            }
+            GET +-> "T24.verFundsTransfer_Tcib.verFundsTransfer_Tcib_ContextEnquiries" {
+                title: "All context Enquiries"
+            }
+            POST -> verFundsTransfer_Tcib_copy {
+                title: "Copy deal"
+            }
+            POST -> verFundsTransfer_Tcib_paste {
+                parameters [ id = "{RefNo}" ]
+                title: "Paste deal"
+            }
+        }
+    
+        resource verFundsTransfer_Tcib_populate {
+            type: item
+            entity: verFundsTransfer_Tcib
+            commands [ POST : CreateEntity ]
+            relations [ "http://schemas.microsoft.com/ado/2007/08/dataservices/related/verFundsTransfer_Tcib","http://temenostech.temenos.com/rels/populate" ]
+            path: "/verFundsTransfer_Tcibs()/populate"
+            POST -> verFundsTransfer_Tcib_validate {
+                parameters [ id = "{RefNo}" ]
+                title: "validate deal"
+            }
+            POST -> verFundsTransfer_Tcib_input {
+                parameters [ id = "{RefNo}" ]
+                title: "input deal"
+            }
+            POST -> verFundsTransfer_Tcib_hold {
+                parameters [ id = "{RefNo}" ]
+                title: "hold deal"
+            }
+            DELETE -> verFundsTransfer_Tcib_delete {
+                parameters [ id = "{RefNo}" ]
+                title: "delete"
+                condition: OK(verFundsTransfer_Tcib_IAuth)
+            }
+            POST -> verFundsTransfer_Tcib_metadata {
+                title: "metadata"
+            }
+            GET -> "T24.verFundsTransfer_Tcib.verFundsTransfer_Tcib_see" {
+                parameters [ id = "@" ]
+                title: "See transaction"
+            }
+            GET -> "T24.verFundsTransfer_Tcib.verFundsTransfer_Tcib_IAuth_see" {
+                parameters [ id = "@" ]
+                title: "GetIauthEntity"
+            }
+            GET -> "T24.verFundsTransfer_Tcib.verFundsTransfer_Tcib_HAuth_see" {
+                parameters [ id = "@" ]
+                title: "GetHauthEntity"
+            }
+            GET -> "T24.verFundsTransfer_Tcib.verFundsTransfer_Tcib_IAuth" {
+                parameters [ id = "@" ]
+                title: "GetIauthEntity"
+            }
+            GET -> "T24.verFundsTransfer_Tcib.verFundsTransfer_Tcib_HAuth" {
+                parameters [ id = "@" ]
+                title: "GetHauthEntity"
+            }
+            GET -> verFundsTransfer_Tcib_ContextEnquiries {
+                title: "All Context Enquiries"
+            }
+            GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+                parameters [ entity = "verFundsTransfer_Tcib" ]
+                title: "Context Enquiries"
+            }
+        }
+    
+        resource verFundsTransfer_Tcib_copy {
+            type: item
+            entity: verFundsTransfer_Tcib
+            commands [ POST : CopyEntity ]
+            relations [ "http://temenostech.temenos.com/rels/copy" ]
+            path: "/verFundsTransfer_Tcibs()/copy"
+        }
+    
+        resource verFundsTransfer_Tcib_paste {
+            type: item
+            entity: verFundsTransfer_Tcib
+            commands [ POST : PasteEntity ]
+            relations [ "http://temenostech.temenos.com/rels/paste" ]
+            path: "/verFundsTransfer_Tcibs('{id}')/paste"
+            POST +-> verFundsTransfer_Tcib_metadata {
+                title: "metadata"
+            }
+            POST -> verFundsTransfer_Tcib_validate {
+                parameters [ id = "{RefNo}" ]
+                title: "validate deal"
+            }
+            PUT -> verFundsTransfer_Tcib_input {
+                parameters [ id = "{RefNo}" ]
+                title: "input deal"
+            }
+            POST -> verFundsTransfer_Tcib_hold {
+                parameters [ id = "{RefNo}" ]
+                title: "hold deal"
+            }
+        }
+    
+        resource verFundsTransfer_Tcib_deliveryPreview {
+            type: item
+            entity: verFundsTransfer_Tcib
+            commands [ POST : CreateDEPreview ]
+            relations [ "http://temenostech.temenos.com/rels/deliveryPreview" ]
+            path: "/verFundsTransfer_Tcibs('{id}')/deliveryPreview"
+            GET +-> "T24.enqDePreview.enqDePreviews" {
+                parameters [ filter = "ContractId eq '{id}'" ]
+                title: "delivery preview enquiry"
+            }
+        }
+    
+        resource verFundsTransfer_Tcibs_enrichment {
+            type: item
+            entity: Enrichment
+            commands [ GET : T24Enrichment {
+                properties [ entity = "verFundsTransfer_Tcib" ]
+                } ]
+            relations [ "http://temenostech.temenos.com/rels/enrichment" ]
+            path: "/verFundsTransfer_Tcibs()/enrichment"
+        }
+    
+        resource verFundsTransfer_Tcib_autoId {
+            type: item
+            entity: verFundsTransfer_Tcib
+            commands [ GET : CheckAutoIdSupport ]
+        }
+    
+        resource verFundsTransfer_Tcib_restore {
+            type: item
+            entity: verFundsTransfer_Tcib
+            commands [ POST : RestoreEntity ]
+            relations [ "http://temenostech.temenos.com/rels/restore" ]
+            path: "/verFundsTransfer_Tcibs('{id}')/restore"
+            GET --> verFundsTransfer_Tcib_IAuth {
+                parameters [ id = "{RefNo}" ]
+                condition: OK(verFundsTransfer_Tcib_IAuth)
+            }
+            GET --> verFundsTransfer_Tcib {
+                parameters [ id = "{RefNo}" ]
+                condition: OK(verFundsTransfer_Tcib)
+            }
+            POST -> verFundsTransfer_Tcib_metadata {
+                title: "metadata"
+            }
+            GET -> verFundsTransfer_Tcib_ContextEnquiries {
+                title: "All Context Enquiries"
+            }
+            GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+                parameters [ entity = "verFundsTransfer_Tcib" ]
+                title: "Context Enquiries"
+            }
+            onerror --> common.Errors.Errors
+        }
+    
+        resource verFundsTransfer_Tcibs_HAuth {
+            type: collection
+            entity: verFundsTransfer_Tcib
+            commands [ GET : GetHauthEntities {
+                properties [ filter = "{filter}" ]
+                } ]
+            path: "/verFundsTransfer_Tcibs_HAuth()"
+            GET *-> verFundsTransfer_Tcib_HAuth {
+                parameters [ id = "{RefNo}" ]
+            }
+            POST -> verFundsTransfer_Tcib_new {
+                title: "create new deal"
+                condition: OK(verFundsTransfer_Tcib_autoId)
+            }
+            POST -> verFundsTransfer_Tcib_populate {
+                title: "populate existing deal"
+            }
+            POST *-> verFundsTransfer_Tcib_restore {
+                parameters [ id = "{RefNo}" ]
+                title: "restore deal"
+            }
+        }
+    
+        resource verFundsTransfer_Tcib_HAuth {
+            type: item
+            entity: verFundsTransfer_Tcib
+            commands [ GET : GetHauthEntity ]
+            path: "/verFundsTransfer_Tcibs_HAuth('{id}')"
+            POST +-> verFundsTransfer_Tcib_metadata {
+                title: "metadata"
+            }
+            POST -> verFundsTransfer_Tcib_validate {
+                parameters [ id = "{RefNo}" ]
+                title: "validate deal"
+            }
+            PUT -> verFundsTransfer_Tcib_input {
+                parameters [ id = "{RefNo}" ]
+                title: "input deal"
+            }
+            POST -> verFundsTransfer_Tcib_hold {
+                parameters [ id = "{RefNo}" ]
+                title: "hold deal"
+            }
+            POST -> verFundsTransfer_Tcib_authorise {
+                parameters [ id = "{RefNo}" ]
+                title: "authorise deal"
+            }
+            DELETE -> verFundsTransfer_Tcib_delete {
+                parameters [ id = "{RefNo}" ]
+                title: "delete"
+            }
+            POST -> verFundsTransfer_Tcib_restore {
+                parameters [ id = "{RefNo}" ]
+                title: "restore deal"
+            }
+            GET -> verFundsTransfer_Tcib_ContextEnquiries {
+                title: "All Context Enquiries"
+            }
+            GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+                parameters [ entity = "verFundsTransfer_Tcib" ]
+                title: "Context Enquiries"
+            }
+        }
+    
+    }
+    
+}
