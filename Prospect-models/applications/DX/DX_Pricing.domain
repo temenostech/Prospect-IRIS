@@ -6,6 +6,15 @@ Domain DX_Pricing
 namespace "http://www.temenos.com/t24/DX_Pricing"
 metamodelVersion 1.30.6
 Classes {
+    DX_BV_PRICE_CHANGE_TODAY
+        @i18n:Description (en="")
+        @t24:i (t24Name=DX.BV.PRICE.CHANGE.TODAY, level=I, type=T, allowedFunctions="L P S", localRefAllowed=false)
+    {
+        DX_BV_PRICE_CODE : T24BusinessTypes:A PK required
+            @t24:i (align=L, inputBehaviour=N, maxLength=8, sysNumber=0.0, core=true, t24Name=DX.BV.PRICE.CODE)
+        UPD_PRICE -> DX_Pricing:DX_MARKET_PRICE_HISTORY
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=1.0, core=true, businessType=A, t24Name=UPD.PRICE)
+    }
     DX_CREATE_PRICE
         @i18n:Description (en="")
         @t24:i (t24Name=DX.CREATE.PRICE, level=I, type=H, allowedFunctions="A C D E H I L P Q R S", localRefAllowed=true)
@@ -22,7 +31,7 @@ Classes {
             @i18n:Label (en=Authoriser)
             @i18n:Tooltip (en="Indicates the User who Authorises the record")
             @t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=29.0, core=true, t24Name=AUTHORISER)
-        CONTRACT_CODE -> DX_Configuration:DX_CONTRACT_MASTER
+        CONTRACT_CODE -> DX_Configuration:DX_CONTRACT_MASTER required
             @i18n:Label (en=Contract)
             @i18n:Tooltip (en="Identifies the contract code of the transaction")
             @t24:i (align=L, inputBehaviour=I, maxLength=12, sysNumber=2.0, core=true, businessType=DXCM, t24Name=CONTRACT.CODE)
@@ -49,7 +58,7 @@ Classes {
             @t24:i (align=L, inputBehaviour=N, maxLength=19, sysNumber=18.0, core=true, t24Name=INT.PRICE, typeModifiers="92")
         INT_STRIKE_PRICE : T24BusinessTypes:DEC
             @t24:i (align=L, inputBehaviour=N, maxLength=19, sysNumber=8.0, core=true, t24Name=INT.STRIKE.PRICE, typeModifiers="9")
-        MATURITY_DATE : T24BusinessTypes:A
+        MATURITY_DATE : T24BusinessTypes:A required
             @i18n:Label (en="Maturity Date")
             @i18n:Tooltip (en="Indicates the Maturity Date of the Transaction")
             @t24:i (align=L, inputBehaviour=I, maxLength=11, sysNumber=3.0, core=true, t24Name=MATURITY.DATE)
@@ -69,7 +78,7 @@ Classes {
         PRICE_KEY : T24BusinessTypes:A
             @i18n:Label (en="Price Key")
             @t24:i (align=L, inputBehaviour=N, maxLength=120, sysNumber=19.0, core=true, t24Name=PRICE.KEY)
-        PRICE_SET -> DX_Pricing:DX_PRICE_SET
+        PRICE_SET -> DX_Pricing:DX_PRICE_SET required
             @i18n:Label (en=Currnt/Closng/Whatif)
             @t24:i (align=L, inputBehaviour=I, maxLength=15, sysNumber=1.0, core=true, businessType=A, t24Name=PRICE.SET)
         QUOTE_CCY : T24BusinessTypes:CCY
@@ -92,7 +101,7 @@ Classes {
         STRIKE_PRICE : T24BusinessTypes:DEC
             @i18n:Label (en=Strike)
             @t24:i (align=L, inputBehaviour=I, maxLength=19, sysNumber=7.0, core=true, t24Name=STRIKE.PRICE, typeModifiers="9")
-        TRADE_CCY : T24BusinessTypes:CCY
+        TRADE_CCY : T24BusinessTypes:CCY required
             @i18n:Label (en="Trade Currency")
             @i18n:Tooltip (en="Identifies the currency of the transaction")
             @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=4.0, core=true, t24Name=TRADE.CCY)
@@ -155,7 +164,7 @@ Classes {
             @i18n:Label (en=Authoriser)
             @i18n:Tooltip (en="Indicates the User who Authorises the record")
             @t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=17.0, core=true, t24Name=AUTHORISER)
-        CALC_SUBROUTINE : DX_Pricing:DX_INT_PRICE_CALC__CALC_SUBROUTINE
+        CALC_SUBROUTINE : DX_Pricing:DX_INT_PRICE_CALC__CALC_SUBROUTINE required
             @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=2.0, core=true, t24Name=CALC.SUBROUTINE)
         CO_CODE -> ST_CompanyCreation:COMPANY
             @i18n:Label (en=Company)
@@ -210,7 +219,7 @@ Classes {
     }
     DX_INT_PRICE_CALC__NAME
     {
-        NAME : T24BusinessTypes:A
+        NAME : T24BusinessTypes:A required
             @i18n:Label (en=Name)
             @i18n:Tooltip (en="Indicates the Name ")
             @t24:i (align=L, inputBehaviour=I, maxLength=35, multiLanguage=true, sysNumber=1.0, core=true, t24Name=NAME)
@@ -824,20 +833,20 @@ Classes {
             @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=15.0, core=true, t24Name=CURR.NO)
         DATE_TIME -> byValue DX_Pricing:DX_PRICE_SET__DATE_TIME *
             @t24:i (t24Name=DATE.TIME)
-        DAYS_TO_EXP : mml:Integer
+        DAYS_TO_EXP : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=3.0, core=true, t24Name=DAYS.TO.EXP)
         DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
             @i18n:Label (en="Dept Code")
             @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=20.0, core=true, t24Name=DEPT.CODE)
         DESCRIPTION -> byValue DX_Pricing:DX_PRICE_SET__DESCRIPTION *
             @t24:i (t24Name=DESCRIPTION)
-        HOURS_TO_EXP : mml:Integer
+        HOURS_TO_EXP : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=4.0, core=true, t24Name=HOURS.TO.EXP)
         INPUTTER -> byValue DX_Pricing:DX_PRICE_SET__INPUTTER *
             @t24:i (t24Name=INPUTTER)
-        MINS_TO_EXP : mml:Integer
+        MINS_TO_EXP : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=5.0, core=true, t24Name=MINS.TO.EXP)
-        MNEMONIC : T24BusinessTypes:MNE
+        MNEMONIC : T24BusinessTypes:MNE required
             @i18n:Label (en=Mnemonic)
             @i18n:Tooltip (en="The alternate short way of calling the record")
             @t24:i (align=L, inputBehaviour=I, maxLength=12, sysNumber=1.0, core=true, t24Name=MNEMONIC)
@@ -870,7 +879,7 @@ Classes {
     }
     DX_PRICE_SET__DESCRIPTION
     {
-        DESCRIPTION : T24BusinessTypes:A
+        DESCRIPTION : T24BusinessTypes:A required
             @i18n:Label (en=Description)
             @i18n:Tooltip (en=Description)
             @t24:i (align=L, inputBehaviour=I, maxLength=25, multiLanguage=true, sysNumber=2.0, core=true, t24Name=DESCRIPTION)
@@ -932,7 +941,7 @@ Classes {
             @t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=14.0, core=true, t24Name=RESERVED1)
         RESERVED2 : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=13.0, core=true, t24Name=RESERVED2)
-        SHORT_DESC : T24BusinessTypes:A
+        SHORT_DESC : T24BusinessTypes:A required
             @i18n:Label (en="Short Description")
             @i18n:Tooltip (en="Short Description of the record")
             @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=1.0, core=true, t24Name=SHORT.DESC)
@@ -940,7 +949,7 @@ Classes {
             @t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=4.0, core=true, t24Name=STOP.UPDATES)
         TIME_TO_EXPIRY : DX_Pricing:DX_PRICE_SOURCE__TIME_TO_EXPIRY
             @t24:i (align=L, inputBehaviour=I, maxLength=1, sysNumber=12.0, core=true, t24Name=TIME.TO.EXPIRY)
-        UPDATE_AVAIL : DX_Pricing:DX_PRICE_SOURCE__UPDATE_AVAIL
+        UPDATE_AVAIL : DX_Pricing:DX_PRICE_SOURCE__UPDATE_AVAIL required
             @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=9.0, core=true, t24Name=UPDATE.AVAIL)
     }
     DX_PRICE_SOURCE__BUILD_PGM
@@ -968,7 +977,7 @@ Classes {
     }
     DX_PRICE_SOURCE__DESCRIPTION
     {
-        DESCRIPTION : T24BusinessTypes:ANY
+        DESCRIPTION : T24BusinessTypes:ANY required
             @i18n:Label (en=Description)
             @i18n:Tooltip (en=Description)
             @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=2.0, core=true, t24Name=DESCRIPTION)
@@ -1013,7 +1022,7 @@ Classes {
             @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=17.0, core=true, t24Name=DEPT.CODE)
         INPUTTER -> byValue DX_Pricing:DX_RV_CHECK_PRICES__INPUTTER *
             @t24:i (t24Name=INPUTTER)
-        PRICE_SET : DX_Pricing:DX_RV_CHECK_PRICES__PRICE_SET
+        PRICE_SET : DX_Pricing:DX_RV_CHECK_PRICES__PRICE_SET required
             @i18n:Label (en=Currnt/Closng/Whatif)
             @t24:i (align=L, inputBehaviour=F, maxLength=15, sysNumber=1.0, core=true, t24Name=PRICE.SET)
         RECORD_STATUS : T24BusinessTypes:STAT
@@ -1216,7 +1225,7 @@ Classes {
         VALUATION_AMT : T24BusinessTypes:AMT
             @i18n:Label (en="Valuation Amount")
             @t24:i (align=R, inputBehaviour=I, maxLength=20, sysNumber=5.0, core=true, t24Name=VALUATION.AMT, typeModifiers=-)
-        VALUATION_CCY -> ST_CurrencyConfig:CURRENCY
+        VALUATION_CCY -> ST_CurrencyConfig:CURRENCY required
             @i18n:Label (en="Valuation Ccy")
             @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=4.0, core=true, businessType=CCY, t24Name=VALUATION.CCY)
     }

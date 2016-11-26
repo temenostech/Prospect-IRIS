@@ -21,6 +21,11 @@ Classes {
     {
         BL_BILL -> CO_Contract:BL_COLLATERAL_RIGHT PK required
             @t24:i (align=L, inputBehaviour=I, maxLength=15, sysNumber=0.0, core=true, businessType=A, t24Name=BL.BILL, mask="L##/#####/######")
+        COLLATERAL_RIGHT -> byValue CO_Contract:BL_COLLATERAL_RIGHT__COLLATERAL_RIGHT *
+            @t24:i (t24Name=COLLATERAL.RIGHT)
+    }
+    BL_COLLATERAL_RIGHT__COLLATERAL_RIGHT
+    {
         COLLATERAL_RIGHT -> CO_Contract:COLLATERAL_RIGHT
             @i18n:Label (en="Collateral Right")
             @t24:i (align=L, inputBehaviour=I, maxLength=18, sysNumber=1.0, core=true, businessType=A, t24Name=COLLATERAL.RIGHT)
@@ -213,7 +218,7 @@ Classes {
             @i18n:Label (en=Authoriser)
             @i18n:Tooltip (en="Indicates the User who Authorises the record")
             @t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=31.0, core=true, t24Name=AUTHORISER)
-        COLLATERAL_CODE -> CO_Config:COLLATERAL_CODE
+        COLLATERAL_CODE -> CO_Config:COLLATERAL_CODE required
             @i18n:Label (en="Collateral Code")
             @i18n:Tooltip (en="Indicates the Collateral attached to the Limit")
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=1.0, core=true, t24Name=COLLATERAL.CODE)
@@ -285,12 +290,17 @@ Classes {
         @i18n:Description (en="")
         @t24:i (t24Name=COLLATERAL.RIGHT.CUST, level=C, type=T, allowedFunctions="L P S", localRefAllowed=false)
     {
-        COLL_RIGHT_ID : T24BusinessTypes:A
-            @t24:i (align=L, inputBehaviour=I, maxLength=25, sysNumber=1.0, core=true, t24Name=COLL.RIGHT.ID)
+        COLL_RIGHT_ID -> byValue CO_Contract:COLLATERAL_RIGHT_CUST__COLL_RIGHT_ID *
+            @t24:i (t24Name=COLL.RIGHT.ID)
         CUSTOMER_NO -> CO_Contract:COLLATERAL_RIGHT_CUST PK required
             @i18n:Label (en="Customer No")
             @i18n:Tooltip (en="Identifies the Customer for the transaction.")
             @t24:i (align=L, inputBehaviour=I, maxLength=10, sysNumber=0.0, core=true, businessType=A, t24Name=CUSTOMER.NO)
+    }
+    COLLATERAL_RIGHT_CUST__COLL_RIGHT_ID
+    {
+        COLL_RIGHT_ID : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=I, maxLength=25, sysNumber=1.0, core=true, t24Name=COLL.RIGHT.ID)
     }
     COLLATERAL_RIGHT__COMPANY
     {
@@ -512,13 +522,18 @@ Classes {
         @i18n:Description (en="")
         @t24:i (t24Name=CUSTOMER.COLLATERAL, level=C, type=T, allowedFunctions="L P S", localRefAllowed=false)
     {
-        COLLATERAL_RIGHT -> CO_Contract:COLLATERAL_RIGHT
-            @i18n:Label (en="Collateral Right")
-            @t24:i (align=L, inputBehaviour=I, maxLength=18, sysNumber=1.0, core=true, businessType=A, t24Name=COLLATERAL.RIGHT)
+        COLLATERAL_RIGHT -> byValue CO_Contract:CUSTOMER_COLLATERAL__COLLATERAL_RIGHT *
+            @t24:i (t24Name=COLLATERAL.RIGHT)
         CUSTOMER -> CO_Contract:CUSTOMER_COLLATERAL PK required
             @i18n:Label (en=Customer)
             @i18n:Tooltip (en="Customer Liability")
             @t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=0.0, core=true, businessType=CUS, t24Name=CUSTOMER)
+    }
+    CUSTOMER_COLLATERAL__COLLATERAL_RIGHT
+    {
+        COLLATERAL_RIGHT -> CO_Contract:COLLATERAL_RIGHT
+            @i18n:Label (en="Collateral Right")
+            @t24:i (align=L, inputBehaviour=I, maxLength=18, sysNumber=1.0, core=true, businessType=A, t24Name=COLLATERAL.RIGHT)
     }
     CUSTOMER_PLEDGE
         @i18n:Description (en="")
@@ -621,9 +636,9 @@ Classes {
             @t24:i (align=L, inputBehaviour=I, maxLength=10, sysNumber=4.0, core=true, t24Name=INTERNAL.PLEDGE)
         MAX_PLEDGE_AMT : T24BusinessTypes:AMT
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=3.0, core=true, t24Name=MAX.PLEDGE.AMT)
-        PLEDGE_CUSTOMER -> ST_Customer:CUSTOMER
+        PLEDGE_CUSTOMER -> ST_Customer:CUSTOMER required
             @t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=1.0, core=true, businessType=CUS, t24Name=PLEDGE.CUSTOMER)
-        PLEDGE_PRIORITY : T24BusinessTypes:N
+        PLEDGE_PRIORITY : T24BusinessTypes:N required
             @t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=2.0, core=true, t24Name=PLEDGE.PRIORITY)
     }
     CUST_COLLATERAL_ALLOCATION
@@ -728,9 +743,8 @@ Classes {
         @i18n:Description (en="")
         @t24:i (t24Name=LI.COLLATERAL, level=C, type=T, allowedFunctions="L P S", localRefAllowed=false)
     {
-        COLLATERAL_RIGHT -> CO_Contract:COLLATERAL_RIGHT
-            @i18n:Label (en="Collateral Right")
-            @t24:i (align=L, inputBehaviour=I, maxLength=18, sysNumber=1.0, core=true, businessType=A, t24Name=COLLATERAL.RIGHT)
+        COLLATERAL_RIGHT -> byValue CO_Contract:LI_COLLATERAL__COLLATERAL_RIGHT *
+            @t24:i (t24Name=COLLATERAL.RIGHT)
         LIMIT -> CO_Contract:LI_COLLATERAL PK required
             @t24:i (align=L, inputBehaviour=I, maxLength=32, sysNumber=0.0, core=true, businessType=A, t24Name=LIMIT)
     }
@@ -738,11 +752,22 @@ Classes {
         @i18n:Description (en="")
         @t24:i (t24Name=LI.COLLATERAL.RIGHT, level=C, type=T, allowedFunctions="L P S", localRefAllowed=false)
     {
+        COLLATERAL_RIGHT -> byValue CO_Contract:LI_COLLATERAL_RIGHT__COLLATERAL_RIGHT *
+            @t24:i (t24Name=COLLATERAL.RIGHT)
+        LIMIT -> CO_Contract:LI_COLLATERAL_RIGHT PK required
+            @t24:i (align=L, inputBehaviour=I, maxLength=32, sysNumber=0.0, core=true, businessType=A, t24Name=LIMIT)
+    }
+    LI_COLLATERAL_RIGHT__COLLATERAL_RIGHT
+    {
         COLLATERAL_RIGHT -> CO_Contract:COLLATERAL_RIGHT
             @i18n:Label (en="Collateral Right")
             @t24:i (align=L, inputBehaviour=I, maxLength=18, sysNumber=1.0, core=true, businessType=A, t24Name=COLLATERAL.RIGHT)
-        LIMIT -> CO_Contract:LI_COLLATERAL_RIGHT PK required
-            @t24:i (align=L, inputBehaviour=I, maxLength=32, sysNumber=0.0, core=true, businessType=A, t24Name=LIMIT)
+    }
+    LI_COLLATERAL__COLLATERAL_RIGHT
+    {
+        COLLATERAL_RIGHT -> CO_Contract:COLLATERAL_RIGHT
+            @i18n:Label (en="Collateral Right")
+            @t24:i (align=L, inputBehaviour=I, maxLength=18, sysNumber=1.0, core=true, businessType=A, t24Name=COLLATERAL.RIGHT)
     }
     RE_COLLATERAL
         @i18n:Description (en="")
@@ -758,11 +783,16 @@ Classes {
         @i18n:Description (en="")
         @t24:i (t24Name=RIGHT.COLLATERAL, level=C, type=T, allowedFunctions="L P S", localRefAllowed=false)
     {
-        COLLATERAL_ID -> CO_Contract:COLLATERAL
-            @t24:i (align=L, inputBehaviour=I, maxLength=22, sysNumber=1.0, core=true, businessType=A, t24Name=COLLATERAL.ID)
+        COLLATERAL_ID -> byValue CO_Contract:RIGHT_COLLATERAL__COLLATERAL_ID *
+            @t24:i (t24Name=COLLATERAL.ID)
         COLLATERAL_RIGHT -> CO_Contract:RIGHT_COLLATERAL PK required
             @i18n:Label (en="Collateral Right")
             @t24:i (align=L, inputBehaviour=I, maxLength=18, sysNumber=0.0, core=true, businessType=A, t24Name=COLLATERAL.RIGHT)
+    }
+    RIGHT_COLLATERAL__COLLATERAL_ID
+    {
+        COLLATERAL_ID -> CO_Contract:COLLATERAL
+            @t24:i (align=L, inputBehaviour=I, maxLength=22, sysNumber=1.0, core=true, businessType=A, t24Name=COLLATERAL.ID)
     }
     SC_COLLATERAL
         @i18n:Description (en="")
@@ -777,7 +807,7 @@ Classes {
     {
         COLLATERAL -> CO_Contract:COLLATERAL
             @t24:i (align=L, inputBehaviour=I, maxLength=22, sysNumber=2.0, core=true, businessType=A, t24Name=COLLATERAL)
-        SC_POS_ASSET : T24BusinessTypes:A
+        SC_POS_ASSET : T24BusinessTypes:A required
             @i18n:Label (en="Sc Pos Asset Id")
             @t24:i (align=L, inputBehaviour=I, maxLength=20, sysNumber=1.0, core=true, t24Name=SC.POS.ASSET)
     }

@@ -15,7 +15,7 @@ Classes {
             @t24:i (align=R, inputBehaviour=I, maxLength=12, sysNumber=0.0, core=true, businessType=D, t24Name=DATE)
         K_DATE : T24BusinessTypes:D
             @i18n:Label (en=Date)
-            @t24:i (align=R, inputBehaviour=N, maxLength=12, sysNumber=0.0, core=true, t24Name=K.DATE)
+            @t24:i (align=R, inputBehaviour=N, maxLength=12, sysNumber=0.0, core=false, t24Name=K.DATE)
         STMT_ENT_ID -> byValue SC_SctCapitalGains:CGT_REV_ENTRY__STMT_ENT_ID *
             @t24:i (t24Name=STMT.ENT.ID)
     }
@@ -26,7 +26,7 @@ Classes {
     }
     CGT_REV_ENTRY__STMT_ENT_ID__STMT_ENT_ID
     {
-        STMT_ENT_ID : mml:Integer
+        STMT_ENT_ID : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=25, sysNumber=1.0, core=true, t24Name=STMT.ENT.ID)
     }
     CG_BASE_BUILDER
@@ -146,11 +146,16 @@ Classes {
         @i18n:Description (en="")
         @t24:i (t24Name=CG.BASE.BUILD.TODAY, level=F, type=T, allowedFunctions="L P S", localRefAllowed=false)
     {
-        CG_BUILD_KEYS : mml:Integer
-            @t24:i (align=R, inputBehaviour=I, maxLength=36, sysNumber=1.0, core=true, t24Name=CG.BUILD.KEYS)
+        CG_BUILD_KEYS -> byValue SC_SctCapitalGains:CG_BASE_BUILD_TODAY__CG_BUILD_KEYS *
+            @t24:i (t24Name=CG.BUILD.KEYS)
         PROCESS_DATE -> SC_SctCapitalGains:CG_BASE_BUILD_TODAY PK required
             @i18n:Label (en="Process Date")
             @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=0.0, core=true, businessType=D, t24Name=PROCESS.DATE)
+    }
+    CG_BASE_BUILD_TODAY__CG_BUILD_KEYS
+    {
+        CG_BUILD_KEYS : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=I, maxLength=36, sysNumber=1.0, core=true, t24Name=CG.BUILD.KEYS)
     }
     CG_MANUAL_INPUT
         @i18n:Description (en="")
@@ -264,7 +269,7 @@ Classes {
         IP : T24BusinessTypes:AMT
             @i18n:Label (en=Strategy)
             @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=13.0, core=true, t24Name=IP)
-        TRADE_DATE_TIME : mml:Integer
+        TRADE_DATE_TIME : T24BusinessTypes:N
             @i18n:Label (en="Trade Date and Time")
             @i18n:Tooltip (en="Indicates the Trade Date and time")
             @t24:i (align=R, inputBehaviour=I, maxLength=16, sysNumber=7.0, core=true, t24Name=TRADE.DATE.TIME)
@@ -476,7 +481,7 @@ Classes {
     }
     CG_PARAM_CONDITION__TAX_START_DATE
     {
-        SRC_LCL_TAX : SC_SctCapitalGains:CG_PARAM_CONDITION__TAX_START_DATE__SRC_LCL_TAX
+        SRC_LCL_TAX : SC_SctCapitalGains:CG_PARAM_CONDITION__TAX_START_DATE__SRC_LCL_TAX required
             @i18n:Label (en=Source/Local)
             @i18n:Tooltip (en="Source/Local Tax")
             @t24:i (align=L, inputBehaviour=I, maxLength=11, sysNumber=8.0, core=true, t24Name=SRC.LCL.TAX)
@@ -520,11 +525,11 @@ Classes {
             @i18n:Label (en="Held Period Cutoff")
             @i18n:Tooltip (en="Held Period Cutoff")
             @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=4.0, core=true, t24Name=HELD.PERIOD.CUTOFF)
-        HELD_PERIOD_ROUND : SC_SctCapitalGains:CG_TAPER_RELIEF__HELD_PERIOD_ROUND
+        HELD_PERIOD_ROUND : SC_SctCapitalGains:CG_TAPER_RELIEF__HELD_PERIOD_ROUND required
             @i18n:Label (en="Held Period Round")
             @i18n:Tooltip (en="Held Period Round")
             @t24:i (align=L, inputBehaviour=I, maxLength=4, sysNumber=5.0, core=true, t24Name=HELD.PERIOD.ROUND)
-        HELD_PERIOD_TYPE : SC_SctCapitalGains:CG_TAPER_RELIEF__HELD_PERIOD_TYPE
+        HELD_PERIOD_TYPE : SC_SctCapitalGains:CG_TAPER_RELIEF__HELD_PERIOD_TYPE required
             @i18n:Label (en="Held Period Type")
             @i18n:Tooltip (en="Held Period Type")
             @t24:i (align=L, inputBehaviour=I, maxLength=5, sysNumber=6.0, core=true, t24Name=HELD.PERIOD.TYPE)
@@ -577,18 +582,18 @@ Classes {
     }
     CG_TAPER_RELIEF__DESCRIPTION
     {
-        DESCRIPTION : T24BusinessTypes:A
+        DESCRIPTION : T24BusinessTypes:A required
             @i18n:Label (en=Description)
             @i18n:Tooltip (en=Description)
             @t24:i (align=L, inputBehaviour=I, maxLength=35, multiLanguage=true, sysNumber=1.0, core=true, t24Name=DESCRIPTION)
     }
     CG_TAPER_RELIEF__HELD_PERIOD
     {
-        HELD_PERIOD : T24BusinessTypes:DEC
+        HELD_PERIOD : T24BusinessTypes:DEC required
             @i18n:Label (en="Held Period")
             @i18n:Tooltip (en="Held Period")
             @t24:i (align=L, inputBehaviour=I, maxLength=5, sysNumber=7.0, core=true, t24Name=HELD.PERIOD, typeModifiers="0")
-        REDUCT_PCT : T24BusinessTypes:A
+        REDUCT_PCT : T24BusinessTypes:A required
             @i18n:Label (en="Reduct Pct")
             @i18n:Tooltip (en="Reduction Percent")
             @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=8.0, core=true, t24Name=REDUCT.PCT)
@@ -633,7 +638,7 @@ Classes {
             @t24:i (align=L, inputBehaviour=I, maxLength=60, sysNumber=0.0, core=true, businessType=A, t24Name=CUST.GRP.SEC)
         DATE_TIME -> byValue SC_SctCapitalGains:CG_TXN_BASE__DATE_TIME *
             @t24:i (t24Name=DATE.TIME)
-        DATE_TIME_CGUPDT : mml:Integer
+        DATE_TIME_CGUPDT : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=16, sysNumber=41.0, core=true, t24Name=DATE.TIME.CGUPDT)
         DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
             @i18n:Label (en="Dept Code")
@@ -643,7 +648,7 @@ Classes {
             @t24:i (align=L, inputBehaviour=N, maxLength=35, core=false, t24Name=GROUP.NAME, genOperation="FIELD(@ID,\'.\',2)")
         INPUTTER -> byValue SC_SctCapitalGains:CG_TXN_BASE__INPUTTER *
             @t24:i (t24Name=INPUTTER)
-        PARAM_CONDITION : mml:Integer
+        PARAM_CONDITION : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=40.0, core=true, t24Name=PARAM.CONDITION)
         RECORD_STATUS : T24BusinessTypes:STAT
             @i18n:Label (en="Record Status")
@@ -668,16 +673,16 @@ Classes {
             @i18n:Label (en="Security No")
             @i18n:Tooltip (en="Indicates the security code/number")
             @t24:i (align=L, inputBehaviour=N, maxLength=12, core=false, t24Name=SECURITY.NO, genOperation="FIELD(@ID,\'.\',3)")
-        SEC_CURRENCY -> ST_CurrencyConfig:CURRENCY
+        SEC_CURRENCY -> ST_CurrencyConfig:CURRENCY required
             @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=1.0, core=true, businessType=CCY, t24Name=SEC.CURRENCY)
         TRADE_DATE_TIME -> byValue SC_SctCapitalGains:CG_TXN_BASE__TRADE_DATE_TIME *
             @t24:i (t24Name=TRADE.DATE.TIME)
     }
     CG_TXN_BASE__CORP_TXN_ID
     {
-        CORP_TXN_DATE : mml:Integer
+        CORP_TXN_DATE : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=16, sysNumber=39.0, core=true, t24Name=CORP.TXN.DATE)
-        CORP_TXN_ID : mml:Integer
+        CORP_TXN_ID : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=22, sysNumber=37.0, core=true, t24Name=CORP.TXN.ID)
         CORP_TXN_TYPE -> SC_Config:SC_TRANS_NAME
             @t24:i (align=R, inputBehaviour=I, maxLength=8, sysNumber=38.0, core=true, t24Name=CORP.TXN.TYPE)
@@ -713,13 +718,13 @@ Classes {
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=28.0, core=true, t24Name=CG.INT.POSN, typeModifiers="-1")
         CG_METHOD : T24BusinessTypes:A
             @t24:i (align=L, inputBehaviour=I, maxLength=7, sysNumber=31.0, core=true, t24Name=CG.METHOD)
-        CG_NOMINAL : mml:Integer
+        CG_NOMINAL : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=10.0, core=true, t24Name=CG.NOMINAL)
         CG_PL : T24BusinessTypes:AMT
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=12.0, core=true, t24Name=CG.PL, typeModifiers="-1")
         CG_PL_POSN : T24BusinessTypes:AMT
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=24.0, core=true, t24Name=CG.PL.POSN, typeModifiers="-1")
-        CG_POSITION : mml:Integer
+        CG_POSITION : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=22.0, core=true, t24Name=CG.POSITION)
         CG_TRD_COST : T24BusinessTypes:AMT
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=11.0, core=true, t24Name=CG.TRD.COST, typeModifiers="-1")
@@ -735,7 +740,7 @@ Classes {
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=35.0, core=true, t24Name=ORIG.VALUE, typeModifiers="-1")
         PUR_TXN_ID -> byValue SC_SctCapitalGains:CG_TXN_BASE__TRADE_DATE_TIME__PUR_TXN_ID *
             @t24:i (t24Name=PUR.TXN.ID)
-        SEC_TRANS_ID : mml:Integer
+        SEC_TRANS_ID : T24BusinessTypes:N
             @i18n:Label (en="Security Trans Id")
             @t24:i (align=R, inputBehaviour=I, maxLength=22, sysNumber=3.0, core=true, t24Name=SEC.TRANS.ID)
         SRC_LCL_CGT : T24BusinessTypes:A
@@ -744,21 +749,21 @@ Classes {
             @t24:i (t24Name=STMT.NOS)
         TAX_STATUS : T24BusinessTypes:A
             @t24:i (align=L, inputBehaviour=I, maxLength=10, sysNumber=30.0, core=true, t24Name=TAX.STATUS)
-        TRADE_DATE_TIME : mml:Integer
+        TRADE_DATE_TIME : T24BusinessTypes:N
             @i18n:Label (en="Trade Date and Time")
             @i18n:Tooltip (en="Indicates the Trade Date and time")
             @t24:i (align=R, inputBehaviour=I, maxLength=16, sysNumber=2.0, core=true, t24Name=TRADE.DATE.TIME)
-        TRD_NOMINAL : mml:Integer
+        TRD_NOMINAL : T24BusinessTypes:N
             @i18n:Label (en="Traded Nominal")
             @i18n:Tooltip (en="Indicates the trade nominal")
             @t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=6.0, core=true, t24Name=TRD.NOMINAL)
-        TRD_NOMINAL_ADJ : mml:Integer
+        TRD_NOMINAL_ADJ : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=36.0, core=true, t24Name=TRD.NOMINAL.ADJ)
         TRD_VALUE : T24BusinessTypes:AMT
             @i18n:Label (en="Traded Value")
             @i18n:Tooltip (en="Indicates value of the trade")
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=7.0, core=true, t24Name=TRD.VALUE, typeModifiers="-1")
-        TXN_INDEX : mml:Integer
+        TXN_INDEX : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=6, sysNumber=14.0, core=true, t24Name=TXN.INDEX)
         TXN_TYPE -> SC_Config:SC_TRANS_NAME
             @i18n:Label (en="Trans Type")
@@ -772,22 +777,22 @@ Classes {
     {
         PUR_AC_CG_PL : T24BusinessTypes:AMT
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=20.0, core=true, t24Name=PUR.AC.CG.PL, typeModifiers="-1")
-        PUR_TXN_ID : mml:Integer
+        PUR_TXN_ID : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=22, sysNumber=15.0, core=true, t24Name=PUR.TXN.ID)
-        PUR_TXN_NOM : mml:Integer
+        PUR_TXN_NOM : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=16.0, core=true, t24Name=PUR.TXN.NOM)
-        PUR_TXN_RED_ : mml:Integer
+        PUR_TXN_RED_ : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=6, sysNumber=19.0, core=true, t24Name=PUR.TXN.RED.)
-        PUR_TXN_TIME : mml:Integer
+        PUR_TXN_TIME : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=21.0, core=true, t24Name=PUR.TXN.TIME)
         PUR_TX_CG_PL : T24BusinessTypes:AMT
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=17.0, core=true, t24Name=PUR.TX.CG.PL, typeModifiers="-1")
-        PUR_TX_INDEX : mml:Integer
+        PUR_TX_INDEX : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=6, sysNumber=18.0, core=true, t24Name=PUR.TX.INDEX)
     }
     CG_TXN_BASE__TRADE_DATE_TIME__STMT_NOS
     {
-        STMT_NOS : mml:Integer
+        STMT_NOS : T24BusinessTypes:N
             @i18n:Label (en="Stmt Nos")
             @i18n:Tooltip (en="Stmt Nos")
             @t24:i (align=R, inputBehaviour=I, maxLength=25, sysNumber=33.0, core=true, t24Name=STMT.NOS)
@@ -834,7 +839,7 @@ Classes {
             @t24:i (t24Name=DESCRIPTION)
         EVENT_ROUTINE : T24BusinessTypes:A
             @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=6.0, core=true, t24Name=EVENT.ROUTINE)
-        EVENT_TYPE : SC_SctCapitalGains:CG_TXN_RULES__EVENT_TYPE
+        EVENT_TYPE : SC_SctCapitalGains:CG_TXN_RULES__EVENT_TYPE required
             @i18n:Label (en="Event type")
             @i18n:Tooltip (en="Type of event - Dividend Payment/Bonus etc.")
             @t24:i (align=L, inputBehaviour=I, maxLength=18, sysNumber=5.0, core=true, t24Name=EVENT.TYPE)

@@ -8,7 +8,7 @@ metamodelVersion 1.30.6
 Classes {
     IF_EVENTS_INTERFACE_TABLE
         @i18n:Description (en="")
-        @t24:i (t24Name=IF.EVENTS.INTERFACE.TABLE, level=I, type=D, allowedFunctions="A C D E H I L P Q R S", localRefAllowed=false)
+        @t24:i (t24Name=IF.EVENTS.INTERFACE.TABLE, level=F, type=D, allowedFunctions="A C D E H I L P Q R S", localRefAllowed=false)
     {
         AUDITOR_CODE : T24BusinessTypes:A
             @i18n:Label (en="Auditor Code")
@@ -40,8 +40,6 @@ Classes {
         DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
             @i18n:Label (en="Dept Code")
             @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=39.0, core=true, t24Name=DEPT.CODE)
-        EVENT_COMPANY : T24BusinessTypes:A
-            @t24:i (align=L, inputBehaviour=N, maxLength=10, sysNumber=20.0, core=true, t24Name=EVENT.COMPANY)
         EVENT_DATA : T24BusinessTypes:A
             @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=1.0, core=true, t24Name=EVENT.DATA)
         EVENT_ID -> IF_IntegrationService:IF_EVENTS_INTERFACE_TABLE PK required
@@ -57,6 +55,8 @@ Classes {
             @t24:i (t24Name=EVENT.XML.NAME)
         INPUTTER -> byValue IF_IntegrationService:IF_EVENTS_INTERFACE_TABLE__INPUTTER *
             @t24:i (t24Name=INPUTTER)
+        LOCAL_TRANSFORM : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=N, maxLength=50, sysNumber=5.0, core=true, t24Name=LOCAL.TRANSFORM, isTextarea=true)
         OLD_EVENT_XML : T24BusinessTypes:A
             @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=4.0, core=true, t24Name=OLD.EVENT.XML)
         OVERRIDE -> byValue IF_IntegrationService:IF_EVENTS_INTERFACE_TABLE__OVERRIDE *
@@ -64,8 +64,6 @@ Classes {
         RECORD_STATUS : T24BusinessTypes:STAT
             @i18n:Label (en="Record Status")
             @t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=33.0, core=true, t24Name=RECORD.STATUS)
-        RESERVED11 : T24BusinessTypes:A
-            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=5.0, core=true, t24Name=RESERVED11)
         RESERVED12 : T24BusinessTypes:A
             @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=6.0, core=true, t24Name=RESERVED12)
         RESERVED13 : T24BusinessTypes:A
@@ -80,6 +78,8 @@ Classes {
             @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=18.0, core=true, t24Name=RESERVED26)
         RESERVED27 : T24BusinessTypes:A
             @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=19.0, core=true, t24Name=RESERVED27)
+        RESERVED28 : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=20.0, core=true, t24Name=RESERVED28)
         RESERVED29 : T24BusinessTypes:A
             @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=21.0, core=true, t24Name=RESERVED29)
         RESERVED30 : T24BusinessTypes:A
@@ -213,15 +213,15 @@ Classes {
     }
     IF_INITIAL_LOAD_PARAMETER__APPLICATION
     {
-        APPLICATION -> EB_SystemTables:PGM_FILE
+        APPLICATION -> EB_SystemTables:PGM_FILE required
             @i18n:Label (en=Application)
             @t24:i (align=L, inputBehaviour=I, maxLength=65, sysNumber=1.0, core=true, businessType=A, t24Name=APPLICATION)
         FILE_TYPE -> byValue IF_IntegrationService:IF_INITIAL_LOAD_PARAMETER__APPLICATION__FILE_TYPE *
             @t24:i (t24Name=FILE.TYPE)
         ID_LIST : T24BusinessTypes:A
             @t24:i (align=L, inputBehaviour=I, maxLength=65, sysNumber=6.0, core=true, t24Name=ID.LIST)
-        RESERVED_10 -> EB_SystemTables:EB_TABLE_VETTING
-            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=8.0, core=true, businessType=A, t24Name=RESERVED.10)
+        RESERVED_10 : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=8.0, core=true, t24Name=RESERVED.10)
         RESERVED_11 : T24BusinessTypes:A
             @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=9.0, core=true, t24Name=RESERVED.11)
         RESERVED_12 : T24BusinessTypes:A
@@ -240,10 +240,10 @@ Classes {
             @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=16.0, core=true, t24Name=RESERVED.18)
         RESERVED_19 : T24BusinessTypes:A
             @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=17.0, core=true, t24Name=RESERVED.19)
-        SERVICE_STATUS : IF_IntegrationService:IF_INITIAL_LOAD_PARAMETER__APPLICATION__SERVICE_STATUS
+        SERVICE_STATUS : IF_IntegrationService:IF_INITIAL_LOAD_PARAMETER__APPLICATION__SERVICE_STATUS required
             @t24:i (align=L, inputBehaviour=I, maxLength=10, sysNumber=7.0, core=true, t24Name=SERVICE.STATUS)
-        TIME_AFTER -> EB_SystemTables:EB_TABLE_VETTING
-            @t24:i (align=L, inputBehaviour=I, maxLength=25, sysNumber=3.0, core=true, businessType=A, t24Name=TIME.AFTER)
+        TIME_AFTER : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=I, maxLength=25, sysNumber=3.0, core=true, t24Name=TIME.AFTER)
         TIME_ASOF : T24BusinessTypes:A
             @t24:i (align=L, inputBehaviour=I, maxLength=25, sysNumber=5.0, core=true, t24Name=TIME.ASOF)
         TIME_UNTIL : T24BusinessTypes:A
@@ -251,7 +251,7 @@ Classes {
     }
     IF_INITIAL_LOAD_PARAMETER__APPLICATION__FILE_TYPE
     {
-        FILE_TYPE : IF_IntegrationService:IF_INITIAL_LOAD_PARAMETER__APPLICATION__FILE_TYPE__FILE_TYPE
+        FILE_TYPE : IF_IntegrationService:IF_INITIAL_LOAD_PARAMETER__APPLICATION__FILE_TYPE__FILE_TYPE required
             @t24:i (align=L, inputBehaviour=I, maxLength=10, sysNumber=2.0, core=true, t24Name=FILE.TYPE)
     }
     IF_INITIAL_LOAD_PARAMETER__DATE_TIME
@@ -291,6 +291,8 @@ Classes {
             @i18n:Label (en=Authoriser)
             @i18n:Tooltip (en="Indicates the User who Authorises the record")
             @t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=22.0, core=true, t24Name=AUTHORISER)
+        COMPANIES_LIST -> byValue IF_IntegrationService:IF_INTEGRATION_SERVICE_PARAM__COMPANIES_LIST *
+            @t24:i (t24Name=COMPANIES.LIST)
         CO_CODE -> ST_CompanyCreation:COMPANY
             @i18n:Label (en=Company)
             @t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=23.0, core=true, businessType=A, t24Name=CO.CODE, mask="R##-###-####")
@@ -306,7 +308,7 @@ Classes {
             @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=3.0, core=true, t24Name=DESTINATION.PROP)
         DESTINATION_STATIC : T24BusinessTypes:A
             @t24:i (align=L, inputBehaviour=I, maxLength=65, sysNumber=2.0, core=true, t24Name=DESTINATION.STATIC)
-        EVENTS_BATCH_SIZE : mml:Integer
+        EVENTS_BATCH_SIZE : T24BusinessTypes:N required
             @t24:i (align=R, inputBehaviour=I, maxLength=4, sysNumber=1.0, core=true, t24Name=EVENTS.BATCH.SIZE)
         EVENT_TYPE_DEST -> byValue IF_IntegrationService:IF_INTEGRATION_SERVICE_PARAM__EVENT_TYPE_DEST *
             @t24:i (t24Name=EVENT.TYPE.DEST)
@@ -316,9 +318,9 @@ Classes {
             @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=7.0, core=true, t24Name=FILTER.TYPE)
         INPUTTER -> byValue IF_IntegrationService:IF_INTEGRATION_SERVICE_PARAM__INPUTTER *
             @t24:i (t24Name=INPUTTER)
-        MSG_BATCH_XML : IF_IntegrationService:IF_INTEGRATION_SERVICE_PARAM__MSG_BATCH_XML
+        MSG_BATCH_XML : IF_IntegrationService:IF_INTEGRATION_SERVICE_PARAM__MSG_BATCH_XML required
             @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=5.0, core=true, t24Name=MSG.BATCH.XML)
-        MSG_DELIVERY_MODE : IF_IntegrationService:IF_INTEGRATION_SERVICE_PARAM__MSG_DELIVERY_MODE
+        MSG_DELIVERY_MODE : IF_IntegrationService:IF_INTEGRATION_SERVICE_PARAM__MSG_DELIVERY_MODE required
             @t24:i (align=L, inputBehaviour=I, maxLength=25, sysNumber=4.0, core=true, t24Name=MSG.DELIVERY.MODE)
         MSG_PROP_NAME -> byValue IF_IntegrationService:IF_INTEGRATION_SERVICE_PARAM__MSG_PROP_NAME *
             @t24:i (t24Name=MSG.PROP.NAME)
@@ -332,8 +334,6 @@ Classes {
         RECORD_STATUS : T24BusinessTypes:STAT
             @i18n:Label (en="Record Status")
             @t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=18.0, core=true, t24Name=RECORD.STATUS)
-        RESERVED15 -> EB_SystemTables:EB_TABLE_VETTING
-            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=12.0, core=true, businessType=A, t24Name=RESERVED15)
         RESERVED16 : T24BusinessTypes:A
             @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=13.0, core=true, t24Name=RESERVED16)
         RESERVED17 : T24BusinessTypes:A
@@ -342,6 +342,11 @@ Classes {
             @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=15.0, core=true, t24Name=RESERVED18)
         RESERVED19 : T24BusinessTypes:A
             @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=16.0, core=true, t24Name=RESERVED19)
+    }
+    IF_INTEGRATION_SERVICE_PARAM__COMPANIES_LIST
+    {
+        COMPANIES_LIST -> ST_CompanyCreation:COMPANY
+            @t24:i (align=L, inputBehaviour=I, maxLength=25, sysNumber=12.0, core=true, businessType=A, t24Name=COMPANIES.LIST)
     }
     IF_INTEGRATION_SERVICE_PARAM__DATE_TIME
     {
@@ -371,8 +376,8 @@ Classes {
     }
     IF_INTEGRATION_SERVICE_PARAM__MSG_PROP_NAME
     {
-        MSG_PROP_NAME -> EB_SystemTables:EB_TABLE_VETTING
-            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=6.0, core=true, businessType=A, t24Name=MSG.PROP.NAME)
+        MSG_PROP_NAME : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=6.0, core=true, t24Name=MSG.PROP.NAME)
     }
     IF_INTEGRATION_SERVICE_PARAM__OVERRIDE
     {

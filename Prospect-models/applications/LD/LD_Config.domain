@@ -6,6 +6,17 @@ Domain LD_Config
 namespace "http://www.temenos.com/t24/LD_Config"
 metamodelVersion 1.30.6
 Classes {
+    LD_ADJUSTMENT_LIST
+        @i18n:Description (en="")
+        @t24:i (t24Name=LD.ADJUSTMENT.LIST, level=F, type=T, allowedFunctions="L P S", localRefAllowed=false)
+    {
+        CONTRACT_NO : T24BusinessTypes:N PK required
+            @i18n:Label (en="Contract Number")
+            @t24:i (align=R, inputBehaviour=N, maxLength=12, sysNumber=0.0, core=true, t24Name=CONTRACT.NO)
+        CUSTOMER_ID : T24BusinessTypes:CUS
+            @i18n:Label (en="Customer Id")
+            @t24:i (align=R, inputBehaviour=N, maxLength=10, sysNumber=1.0, core=true, t24Name=CUSTOMER.ID)
+    }
     LD_GROUP_CONDITION
         @i18n:Description (en="")
         @t24:i (t24Name=LD.GROUP.CONDITION, level=C, type=H, allowedFunctions="A C D E H I L P Q R S", localRefAllowed=false)
@@ -132,12 +143,195 @@ Classes {
         @i18n:Description (en="")
         @t24:i (t24Name=LD.PARTICIPANT, level=F, type=T, allowedFunctions="L P S", localRefAllowed=false)
     {
-        CONTRACT_NO : T24BusinessTypes:A
-            @i18n:Label (en="Contract Number")
-            @t24:i (align=L, inputBehaviour=I, maxLength=14, sysNumber=1.0, core=true, t24Name=CONTRACT.NO)
+        CONTRACT_NO -> byValue LD_Config:LD_PARTICIPANT__CONTRACT_NO *
+            @t24:i (t24Name=CONTRACT.NO)
         PARTICIPANT_NO -> LD_Config:LD_PARTICIPANT PK required
             @i18n:Label (en="Participant Number")
             @t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=0.0, core=true, businessType=CUS, t24Name=PARTICIPANT.NO)
+    }
+    LD_PARTICIPANT__CONTRACT_NO
+    {
+        CONTRACT_NO : T24BusinessTypes:A
+            @i18n:Label (en="Contract Number")
+            @t24:i (align=L, inputBehaviour=I, maxLength=14, sysNumber=1.0, core=true, t24Name=CONTRACT.NO)
+    }
+    LD_RECEIPT_ENTRY
+        @i18n:Description (en="")
+        @t24:i (t24Name=LD.RECEIPT.ENTRY, level=F, type=T, allowedFunctions="L P S", localRefAllowed=false)
+    {
+        ACTIVITY -> byValue LD_Config:LD_RECEIPT_ENTRY__ACTIVITY *
+            @t24:i (t24Name=ACTIVITY)
+        ALONE_MERGE_IND : LD_Config:LD_RECEIPT_ENTRY__ALONE_MERGE_IND
+            @t24:i (align=L, inputBehaviour=N, maxLength=1, sysNumber=41.0, core=true, t24Name=ALONE.MERGE.IND)
+        AUDITOR_CODE : T24BusinessTypes:A
+            @i18n:Label (en="Auditor Code")
+            @i18n:Tooltip (en="Auditor Code")
+            @t24:i (align=L, inputBehaviour=N, maxLength=16, sysNumber=54.0, core=true, t24Name=AUDITOR.CODE)
+        AUDIT_DATE_TIME : T24BusinessTypes:N
+            @i18n:Label (en="Audit Date Time")
+            @i18n:Tooltip (en="Date and time when record was audited")
+            @t24:i (align=R, inputBehaviour=N, maxLength=15, sysNumber=55.0, core=true, t24Name=AUDIT.DATE.TIME)
+        AUTHORISER : T24BusinessTypes:A
+            @i18n:Label (en=Authoriser)
+            @i18n:Tooltip (en="Indicates the User who Authorises the record")
+            @t24:i (align=L, inputBehaviour=N, maxLength=20, sysNumber=51.0, core=true, t24Name=AUTHORISER)
+        CHARGE_ACCT_NO : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=N, maxLength=16, sysNumber=29.0, core=true, t24Name=CHARGE.ACCT.NO)
+        COMMISSION_DUE : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=12.0, core=true, t24Name=COMMISSION.DUE, typeModifiers="-]1")
+        COM_ACCT_NO : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=N, maxLength=16, sysNumber=15.0, core=true, t24Name=COM.ACCT.NO)
+        COM_RECEIPT_CODE : LD_Config:LD_RECEIPT_ENTRY__COM_RECEIPT_CODE
+            @t24:i (align=L, inputBehaviour=N, maxLength=1, sysNumber=13.0, core=true, t24Name=COM.RECEIPT.CODE)
+        COM_RECEIVED : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=14.0, core=true, t24Name=COM.RECEIVED, typeModifiers="-]1")
+        CONTRACT_NO : T24BusinessTypes:A PK required
+            @i18n:Label (en="Contract No")
+            @t24:i (align=L, inputBehaviour=N, maxLength=27, sysNumber=0.0, core=true, t24Name=CONTRACT.NO, mask="L##/#####/#####/##/#####/#")
+        CO_CODE : T24BusinessTypes:A
+            @i18n:Label (en=Company)
+            @t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=52.0, core=true, t24Name=CO.CODE)
+        CURRENCY_CODE -> ST_CurrencyConfig:CURRENCY
+            @i18n:Label (en="Ccy Code")
+            @t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=1.0, core=true, businessType=A, t24Name=CURRENCY.CODE)
+        CURR_NO : T24BusinessTypes:N
+            @i18n:Label (en="Curr No")
+            @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=48.0, core=true, t24Name=CURR.NO)
+        CUST_REMARKS -> byValue LD_Config:LD_RECEIPT_ENTRY__CUST_REMARKS *
+            @t24:i (t24Name=CUST.REMARKS)
+        DATE_TIME -> byValue LD_Config:LD_RECEIPT_ENTRY__DATE_TIME *
+            @t24:i (t24Name=DATE.TIME)
+        DEPT_CODE : T24BusinessTypes:A
+            @i18n:Label (en="Dept Code")
+            @t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=53.0, core=true, t24Name=DEPT.CODE)
+        FEES_ACCT_NO : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=N, maxLength=16, sysNumber=19.0, core=true, t24Name=FEES.ACCT.NO)
+        FEES_DUE : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=16.0, core=true, t24Name=FEES.DUE, typeModifiers="-]1")
+        FEES_RECEIVED : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=18.0, core=true, t24Name=FEES.RECEIVED, typeModifiers="-]1")
+        FEE_RECEIPT_CODE : LD_Config:LD_RECEIPT_ENTRY__FEE_RECEIPT_CODE
+            @t24:i (align=L, inputBehaviour=N, maxLength=1, sysNumber=17.0, core=true, t24Name=FEE.RECEIPT.CODE)
+        FLAT_CHARGES : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=28.0, core=true, t24Name=FLAT.CHARGES, typeModifiers="-]1")
+        FX_NEG_REF : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=5, sysNumber=32.0, core=true, t24Name=FX.NEG.REF)
+        FX_RATE : T24BusinessTypes:R
+            @i18n:Label (en="Forex Rate")
+            @t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=30.0, core=true, t24Name=FX.RATE)
+        FX_V_DATE : T24BusinessTypes:D
+            @t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=31.0, core=true, t24Name=FX.V.DATE)
+        INPUTTER : T24BusinessTypes:A
+            @i18n:Label (en=Inputter)
+            @i18n:Tooltip (en="The user who last updated the record")
+            @t24:i (align=L, inputBehaviour=N, maxLength=20, sysNumber=49.0, core=true, t24Name=INPUTTER)
+        INTEREST_DUE : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=8.0, core=true, t24Name=INTEREST.DUE, typeModifiers="-]1")
+        INT_ACCT_NO : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=N, maxLength=16, sysNumber=11.0, core=true, t24Name=INT.ACCT.NO)
+        INT_RECEIPT_CODE : LD_Config:LD_RECEIPT_ENTRY__INT_RECEIPT_CODE
+            @t24:i (align=L, inputBehaviour=N, maxLength=1, sysNumber=9.0, core=true, t24Name=INT.RECEIPT.CODE)
+        INT_RECEIVED : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=10.0, core=true, t24Name=INT.RECEIVED, typeModifiers="-]1")
+        MIS_FX_SPREAD : T24BusinessTypes:R
+            @t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=33.0, core=true, t24Name=MIS.FX.SPREAD, typeModifiers=-)
+        OUR_REMARKS -> byValue LD_Config:LD_RECEIPT_ENTRY__OUR_REMARKS *
+            @t24:i (t24Name=OUR.REMARKS)
+        OVERRIDES -> byValue LD_Config:LD_RECEIPT_ENTRY__OVERRIDES *
+            @t24:i (t24Name=OVERRIDES)
+        PEN_COM_ACCT_NO : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=N, maxLength=16, sysNumber=27.0, core=true, t24Name=PEN.COM.ACCT.NO)
+        PEN_COM_DUE : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=24.0, core=true, t24Name=PEN.COM.DUE, typeModifiers="-]1")
+        PEN_COM_RECEIPT_CD : LD_Config:LD_RECEIPT_ENTRY__PEN_COM_RECEIPT_CD
+            @t24:i (align=L, inputBehaviour=N, maxLength=1, sysNumber=25.0, core=true, t24Name=PEN.COM.RECEIPT.CD)
+        PEN_COM_RECEIVED : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=26.0, core=true, t24Name=PEN.COM.RECEIVED, typeModifiers="-]1")
+        PEN_INT_ACCT_NO : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=N, maxLength=16, sysNumber=23.0, core=true, t24Name=PEN.INT.ACCT.NO)
+        PEN_INT_DUE : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=20.0, core=true, t24Name=PEN.INT.DUE, typeModifiers="-]1")
+        PEN_INT_RECEIPT_CD : LD_Config:LD_RECEIPT_ENTRY__PEN_INT_RECEIPT_CD
+            @t24:i (align=L, inputBehaviour=N, maxLength=1, sysNumber=21.0, core=true, t24Name=PEN.INT.RECEIPT.CD)
+        PEN_INT_RECEIVED : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=22.0, core=true, t24Name=PEN.INT.RECEIVED, typeModifiers="-]1")
+        PRINCIPAL_DUE : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=4.0, core=true, t24Name=PRINCIPAL.DUE, typeModifiers="-]1")
+        PRIN_ACCT_NO : T24BusinessTypes:A
+            @i18n:Label (en="Principal Account Number")
+            @t24:i (align=L, inputBehaviour=N, maxLength=16, sysNumber=7.0, core=true, t24Name=PRIN.ACCT.NO)
+        PRIN_RECEIPT_CODE : LD_Config:LD_RECEIPT_ENTRY__PRIN_RECEIPT_CODE
+            @t24:i (align=L, inputBehaviour=N, maxLength=1, sysNumber=5.0, core=true, t24Name=PRIN.RECEIPT.CODE)
+        PRIN_RECEIVED : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=6.0, core=true, t24Name=PRIN.RECEIVED, typeModifiers="-]1")
+        RECORD_STATUS : T24BusinessTypes:A
+            @i18n:Label (en="Record Status")
+            @t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=47.0, core=true, t24Name=RECORD.STATUS)
+        STMT_NO -> byValue LD_Config:LD_RECEIPT_ENTRY__STMT_NO *
+            @t24:i (t24Name=STMT.NO)
+        TAX_ON_COMMISSION : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=37.0, core=true, t24Name=TAX.ON.COMMISSION, typeModifiers="-]1")
+        TAX_ON_INTEREST : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=36.0, core=true, t24Name=TAX.ON.INTEREST, typeModifiers="-]1")
+        TAX_ON_PEN_COM : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=39.0, core=true, t24Name=TAX.ON.PEN.COM, typeModifiers="-]1")
+        TAX_ON_PEN_INT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=38.0, core=true, t24Name=TAX.ON.PEN.INT, typeModifiers="-]1")
+        TIME_DATE_STAMP -> byValue LD_Config:LD_RECEIPT_ENTRY__TIME_DATE_STAMP *
+            @t24:i (t24Name=TIME.DATE.STAMP)
+        TOTAL_AMNT_DUE : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=34.0, core=true, t24Name=TOTAL.AMNT.DUE, typeModifiers="-]1")
+        TOTAL_AMNT_RECD : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=35.0, core=true, t24Name=TOTAL.AMNT.RECD, typeModifiers="-]1")
+        TRANSACTION_AMOUNT : T24BusinessTypes:AMT
+            @i18n:Label (en="Transaction Amount")
+            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=3.0, core=true, t24Name=TRANSACTION.AMOUNT, typeModifiers="-]1")
+        VALUE_DATE : T24BusinessTypes:D
+            @i18n:Label (en="Value Date")
+            @i18n:Tooltip (en="Indicates the Value date of the Contract")
+            @t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=2.0, core=true, t24Name=VALUE.DATE)
+    }
+    LD_RECEIPT_ENTRY__ACTIVITY
+    {
+        ACTIVITY : T24BusinessTypes:N
+            @i18n:Label (en=Activity)
+            @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=43.0, core=true, t24Name=ACTIVITY)
+    }
+    LD_RECEIPT_ENTRY__CUST_REMARKS
+    {
+        CUST_REMARKS : T24BusinessTypes:A
+            @i18n:Label (en="Customer Remarks")
+            @i18n:Tooltip (en="Holds customer remarks ")
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=40.0, core=true, t24Name=CUST.REMARKS)
+    }
+    LD_RECEIPT_ENTRY__DATE_TIME
+    {
+        DATE_TIME : T24BusinessTypes:N
+            @i18n:Label (en="Date time")
+            @i18n:Tooltip (en="Date and time when record was input or authorised")
+            @t24:i (align=R, inputBehaviour=N, maxLength=15, sysNumber=50.0, core=true, t24Name=DATE.TIME)
+    }
+    LD_RECEIPT_ENTRY__OUR_REMARKS
+    {
+        OUR_REMARKS : T24BusinessTypes:A
+            @i18n:Label (en="Dealer Remarks")
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=42.0, core=true, t24Name=OUR.REMARKS)
+    }
+    LD_RECEIPT_ENTRY__OVERRIDES
+    {
+        OVERRIDES : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=46.0, core=true, t24Name=OVERRIDES)
+    }
+    LD_RECEIPT_ENTRY__STMT_NO
+    {
+        STMT_NO : T24BusinessTypes:N
+            @i18n:Label (en="Statement number")
+            @t24:i (align=R, inputBehaviour=N, maxLength=29, sysNumber=45.0, core=true, t24Name=STMT.NO)
+    }
+    LD_RECEIPT_ENTRY__TIME_DATE_STAMP
+    {
+        TIME_DATE_STAMP : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=16, sysNumber=44.0, core=true, t24Name=TIME.DATE.STAMP)
     }
     LD_TXN_CODES
         @i18n:Description (en="")
@@ -468,7 +662,7 @@ Classes {
     }
     LD_TXN_TYPE_CONDITION__DESCRIPTION
     {
-        DESCRIPTION : T24BusinessTypes:A
+        DESCRIPTION : T24BusinessTypes:A required
             @i18n:Label (en=Description)
             @t24:i (align=L, inputBehaviour=I, maxLength=35, multiLanguage=true, sysNumber=1.0, core=true, t24Name=DESCRIPTION)
     }
@@ -521,13 +715,13 @@ Classes {
             @t24:i (align=R, inputBehaviour=F, maxLength=1, sysNumber=27.0, core=true, t24Name=GM.DATE.SFX)
         INPUTTER -> byValue LD_Config:PM_LD_PARAM__INPUTTER *
             @t24:i (t24Name=INPUTTER)
-        NO_OF_ROWS : T24BusinessTypes:DEF
+        NO_OF_ROWS : T24BusinessTypes:DEF required
             @t24:i (align=L, inputBehaviour=F, maxLength=2, sysNumber=26.0, core=true, t24Name=NO.OF.ROWS, typeModifiers=21)
         OVERRIDE -> byValue LD_Config:PM_LD_PARAM__OVERRIDE *
             @t24:i (t24Name=OVERRIDE)
         PM_LD_PARAM_ID : LD_Config:PM_LD_PARAM__PM_LD_PARAM_ID PK required
             @t24:i (align=L, inputBehaviour=I, maxLength=10, sysNumber=0.0, core=true, t24Name=PM.LD.PARAM.ID)
-        PM_MAX_PERIOD : mml:Integer
+        PM_MAX_PERIOD : T24BusinessTypes:N
             @i18n:Label (en="Maximum Period")
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=29.0, core=true, t24Name=PM.MAX.PERIOD)
         REAL_FX_CLASS -> PM_Config:PM_POSN_CLASS
@@ -542,25 +736,25 @@ Classes {
     }
     PM_LD_PARAM__CATEG_DEP_ST
     {
-        CATEG_DEP_END : mml:Integer
+        CATEG_DEP_END : T24BusinessTypes:N
             @i18n:Label (en="Categ Dep End")
             @i18n:Tooltip (en="Category Deposit End")
             @t24:i (align=R, inputBehaviour=I, maxLength=6, sysNumber=3.0, core=true, t24Name=CATEG.DEP.END, mask="R##-###")
-        CATEG_DEP_ST : mml:Integer
+        CATEG_DEP_ST : T24BusinessTypes:N
             @i18n:Label (en="Categ Dep St")
             @i18n:Tooltip (en="Category Deposit Start")
             @t24:i (align=R, inputBehaviour=I, maxLength=6, sysNumber=2.0, core=true, t24Name=CATEG.DEP.ST, mask="R##-###")
-        CATEG_LOAN_END : mml:Integer
+        CATEG_LOAN_END : T24BusinessTypes:N
             @i18n:Label (en="Categ Ln End")
             @i18n:Tooltip (en="Category Loan End")
             @t24:i (align=R, inputBehaviour=I, maxLength=6, sysNumber=5.0, core=true, t24Name=CATEG.LOAN.END, mask="R##-###")
-        CATEG_LOAN_ST : mml:Integer
+        CATEG_LOAN_ST : T24BusinessTypes:N
             @i18n:Label (en="Categ Ln St")
             @i18n:Tooltip (en="Category Loan Start")
             @t24:i (align=R, inputBehaviour=I, maxLength=6, sysNumber=4.0, core=true, t24Name=CATEG.LOAN.ST, mask="R##-###")
         INT_TYPE_TO_USE : LD_Config:PM_LD_PARAM__CATEG_DEP_ST__INT_TYPE_TO_USE
             @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=25.0, core=true, t24Name=INT.TYPE.TO.USE)
-        POS_CHARGE_CAP -> PM_Config:PM_POSN_CLASS
+        POS_CHARGE_CAP -> PM_Config:PM_POSN_CLASS required
             @i18n:Label (en="Pos Charge Cap")
             @i18n:Tooltip (en="Posn Charge Cap")
             @t24:i (align=L, inputBehaviour=I, maxLength=5, sysNumber=12.0, core=true, businessType=A, t24Name=POS.CHARGE.CAP)
@@ -568,57 +762,57 @@ Classes {
             @t24:i (align=L, inputBehaviour=N, maxLength=5, sysNumber=13.0, core=true, businessType=A, t24Name=POS.FEE)
         POS_FWD_COMM -> PM_Config:PM_POSN_CLASS
             @t24:i (align=L, inputBehaviour=I, maxLength=5, sysNumber=14.0, core=true, businessType=A, t24Name=POS.FWD.COMM)
-        POS_FWD_FIX_CAP -> PM_Config:PM_POSN_CLASS
+        POS_FWD_FIX_CAP -> PM_Config:PM_POSN_CLASS required
             @i18n:Label (en="Pos Fwd Fix Cap")
             @i18n:Tooltip (en="Posn Fwd Fixed Cap")
             @t24:i (align=L, inputBehaviour=I, maxLength=5, sysNumber=9.0, core=true, businessType=A, t24Name=POS.FWD.FIX.CAP)
         POS_FWD_FIX_INT -> PM_Config:PM_POSN_CLASS
             @t24:i (align=L, inputBehaviour=I, maxLength=5, sysNumber=23.0, core=true, businessType=A, t24Name=POS.FWD.FIX.INT)
-        POS_FWD_VAR_CAP -> PM_Config:PM_POSN_CLASS
+        POS_FWD_VAR_CAP -> PM_Config:PM_POSN_CLASS required
             @i18n:Label (en="Pos Fwd Var Cap")
             @i18n:Tooltip (en="Posn Fwd Variable Cap")
             @t24:i (align=L, inputBehaviour=I, maxLength=5, sysNumber=10.0, core=true, businessType=A, t24Name=POS.FWD.VAR.CAP)
         POS_FWD_VAR_INT -> PM_Config:PM_POSN_CLASS
             @t24:i (align=L, inputBehaviour=I, maxLength=5, sysNumber=24.0, core=true, businessType=A, t24Name=POS.FWD.VAR.INT)
-        POS_INT_CAP -> PM_Config:PM_POSN_CLASS
+        POS_INT_CAP -> PM_Config:PM_POSN_CLASS required
             @i18n:Label (en="Pos Int Cap")
             @i18n:Tooltip (en="Posn Int Cap")
             @t24:i (align=L, inputBehaviour=I, maxLength=5, sysNumber=11.0, core=true, businessType=A, t24Name=POS.INT.CAP)
         POS_MAT_CASH -> PM_Config:PM_POSN_CLASS
             @t24:i (align=L, inputBehaviour=N, maxLength=5, sysNumber=7.0, core=true, businessType=A, t24Name=POS.MAT.CASH)
-        POS_MAT_GAP -> PM_Config:PM_POSN_CLASS
+        POS_MAT_GAP -> PM_Config:PM_POSN_CLASS required
             @i18n:Label (en="Pos Mat Gap")
             @i18n:Tooltip (en="Position Maturity Gap")
             @t24:i (align=L, inputBehaviour=I, maxLength=5, sysNumber=8.0, core=true, businessType=A, t24Name=POS.MAT.GAP)
         POS_PPL_DEC_CSH -> PM_Config:PM_POSN_CLASS
             @t24:i (align=L, inputBehaviour=N, maxLength=5, sysNumber=16.0, core=true, businessType=A, t24Name=POS.PPL.DEC.CSH)
-        POS_PPL_DEC_GAP -> PM_Config:PM_POSN_CLASS
+        POS_PPL_DEC_GAP -> PM_Config:PM_POSN_CLASS required
             @i18n:Label (en="Pos Prin Dec Gap")
             @i18n:Tooltip (en="Posn Prin Dec Gap")
             @t24:i (align=L, inputBehaviour=I, maxLength=5, sysNumber=17.0, core=true, businessType=A, t24Name=POS.PPL.DEC.GAP)
-        POS_PPL_INC -> PM_Config:PM_POSN_CLASS
+        POS_PPL_INC -> PM_Config:PM_POSN_CLASS required
             @i18n:Label (en="Pos Prin Inc")
             @i18n:Tooltip (en="Posn Prin Inc")
             @t24:i (align=L, inputBehaviour=I, maxLength=5, sysNumber=15.0, core=true, businessType=A, t24Name=POS.PPL.INC)
         POS_PRIN_CASH -> PM_Config:PM_POSN_CLASS
             @t24:i (align=L, inputBehaviour=N, maxLength=5, sysNumber=18.0, core=true, businessType=A, t24Name=POS.PRIN.CASH)
-        POS_PRIN_GAP -> PM_Config:PM_POSN_CLASS
+        POS_PRIN_GAP -> PM_Config:PM_POSN_CLASS required
             @i18n:Label (en="Pos Prin Gap")
             @i18n:Tooltip (en="Position Principal Gap")
             @t24:i (align=L, inputBehaviour=I, maxLength=5, sysNumber=19.0, core=true, businessType=A, t24Name=POS.PRIN.GAP)
-        POS_START -> PM_Config:PM_POSN_CLASS
+        POS_START -> PM_Config:PM_POSN_CLASS required
             @i18n:Label (en="Position Start")
             @i18n:Tooltip (en="Position Start")
             @t24:i (align=L, inputBehaviour=I, maxLength=5, sysNumber=6.0, core=true, businessType=A, t24Name=POS.START)
-        POS_TAX_COMM -> PM_Config:PM_POSN_CLASS
+        POS_TAX_COMM -> PM_Config:PM_POSN_CLASS required
             @i18n:Label (en="Pos Tax Comm")
             @i18n:Tooltip (en="Position Tax Commission")
             @t24:i (align=L, inputBehaviour=I, maxLength=5, sysNumber=22.0, core=true, businessType=A, t24Name=POS.TAX.COMM)
-        POS_TAX_INT -> PM_Config:PM_POSN_CLASS
+        POS_TAX_INT -> PM_Config:PM_POSN_CLASS required
             @i18n:Label (en="Pos Tax Int")
             @i18n:Tooltip (en="Position Tax Interest")
             @t24:i (align=L, inputBehaviour=I, maxLength=5, sysNumber=21.0, core=true, businessType=A, t24Name=POS.TAX.INT)
-        POS_TAX_PRIN -> PM_Config:PM_POSN_CLASS
+        POS_TAX_PRIN -> PM_Config:PM_POSN_CLASS required
             @i18n:Label (en="Pos Tax Prin")
             @i18n:Tooltip (en="Position Tax Principal")
             @t24:i (align=L, inputBehaviour=I, maxLength=5, sysNumber=20.0, core=true, businessType=A, t24Name=POS.TAX.PRIN)
@@ -632,7 +826,7 @@ Classes {
     }
     PM_LD_PARAM__DESCRIPTION
     {
-        DESCRIPTION : T24BusinessTypes:A
+        DESCRIPTION : T24BusinessTypes:A required
             @i18n:Label (en=Description)
             @i18n:Tooltip (en=Description)
             @t24:i (align=L, inputBehaviour=I, maxLength=35, multiLanguage=true, sysNumber=1.0, core=true, t24Name=DESCRIPTION)
@@ -659,6 +853,32 @@ Enumerations {
     LD_GROUP_CONDITION__FIXED_CONTRACT : mml:string
         NO=NO
         YES=YES
+    LD_RECEIPT_ENTRY__ALONE_MERGE_IND : mml:string
+        A=A
+        M=M
+    LD_RECEIPT_ENTRY__COM_RECEIPT_CODE : mml:string
+        N=N
+        W=W
+        Y=Y
+    LD_RECEIPT_ENTRY__FEE_RECEIPT_CODE : mml:string
+        N=N
+        W=W
+        Y=Y
+    LD_RECEIPT_ENTRY__INT_RECEIPT_CODE : mml:string
+        N=N
+        W=W
+        Y=Y
+    LD_RECEIPT_ENTRY__PEN_COM_RECEIPT_CD : mml:string
+        N=N
+        W=W
+        Y=Y
+    LD_RECEIPT_ENTRY__PEN_INT_RECEIPT_CD : mml:string
+        N=N
+        W=W
+        Y=Y
+    LD_RECEIPT_ENTRY__PRIN_RECEIPT_CODE : mml:string
+        N=N
+        Y=Y
     LD_TXN_CODES__ID : mml:string
         SYSTEM=SYSTEM
     LD_TXN_TYPE_CONDITION__BASE_DATE_KEY : mml:string

@@ -22,7 +22,7 @@ Classes {
             @i18n:Label (en=Authoriser)
             @i18n:Tooltip (en="Indicates the User who Authorises the record")
             @t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=13.0, core=true, t24Name=AUTHORISER)
-        BASE_AMOUNT : FD_Config:FD_CHARGE_PARAMETER__BASE_AMOUNT
+        BASE_AMOUNT : FD_Config:FD_CHARGE_PARAMETER__BASE_AMOUNT required
             @t24:i (align=L, inputBehaviour=I, maxLength=9, sysNumber=2.0, core=true, t24Name=BASE.AMOUNT)
         COMM_PRIN_INT : FD_Config:FD_CHARGE_PARAMETER__COMM_PRIN_INT
             @t24:i (align=L, inputBehaviour=I, maxLength=10, sysNumber=4.0, core=true, t24Name=COMM.PRIN.INT)
@@ -98,7 +98,7 @@ Classes {
             @i18n:Label (en="Customer No")
             @i18n:Tooltip (en="Identifies the Customer for the transaction.")
             @t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=0.0, core=true, businessType=CUS, t24Name=CUSTOMER.NO)
-        CUST_GROUP_NO : mml:Integer
+        CUST_GROUP_NO : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=5.0, core=true, t24Name=CUST.GROUP.NO)
         DATE_TIME -> byValue FD_Config:FD_CUST_DETAILS__DATE_TIME *
             @t24:i (t24Name=DATE.TIME)
@@ -317,7 +317,7 @@ Classes {
             @i18n:Label (en="Early Status")
             @i18n:Tooltip (en="Specifies the status of the early maturity request")
             @t24:i (align=L, inputBehaviour=I, maxLength=10, sysNumber=78.0, core=true, t24Name=EARLY.STATUS)
-        FID_BANK -> ST_Customer:CUSTOMER
+        FID_BANK -> ST_Customer:CUSTOMER required
             @i18n:Label (en="Fiduciary Bank")
             @i18n:Tooltip (en="Bank where the funds are to be placed")
             @t24:i (align=R, inputBehaviour=F, maxLength=10, sysNumber=1.0, core=true, businessType=CUS, t24Name=FID.BANK)
@@ -372,7 +372,7 @@ Classes {
             @t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=30.0, core=true, t24Name=INT.LIQ.ACCT)
         LAST_UPDATED_ORD -> FD_Contract:FD_FID_ORDER
             @t24:i (align=L, inputBehaviour=N, maxLength=18, sysNumber=54.0, core=true, businessType=A, t24Name=LAST.UPDATED.ORD, mask="L####/#####/#########")
-        LIMIT_REF : mml:Integer
+        LIMIT_REF : T24BusinessTypes:N
             @i18n:Label (en="Limit Ref")
             @i18n:Tooltip (en="Limit Reference")
             @t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=21.0, core=true, t24Name=LIMIT.REF)
@@ -580,6 +580,11 @@ Classes {
     {
         EVENT_DATE -> FD_Config:FD_EOD_LIST PK required
             @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=0.0, core=true, businessType=D, t24Name=EVENT.DATE)
+        PLACEMENT_ID -> byValue FD_Config:FD_EOD_LIST__PLACEMENT_ID *
+            @t24:i (t24Name=PLACEMENT.ID)
+    }
+    FD_EOD_LIST__PLACEMENT_ID
+    {
         PLACEMENT_ID : T24BusinessTypes:A
             @t24:i (align=L, inputBehaviour=I, maxLength=14, sysNumber=1.0, core=true, t24Name=PLACEMENT.ID, mask="R##/#####/#####")
     }
@@ -645,7 +650,7 @@ Classes {
     }
     FD_FID_CURRENCY__FID_TYPE
     {
-        FID_TYPE -> FD_Config:FD_CHARGE_PARAMETER
+        FID_TYPE -> FD_Config:FD_CHARGE_PARAMETER required
             @i18n:Label (en="Fiduciary Type")
             @t24:i (align=L, inputBehaviour=I, maxLength=6, sysNumber=2.0, core=true, businessType=A, t24Name=FID.TYPE)
         TENOR -> byValue FD_Config:FD_FID_CURRENCY__FID_TYPE__TENOR *
@@ -706,9 +711,9 @@ Classes {
             @t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=8.0, core=true, t24Name=AUTO.CHG.RATE)
         BANK_CCY_PERIOD -> FD_Config:FD_GROUP_TODAY PK required
             @t24:i (align=L, inputBehaviour=I, maxLength=18, sysNumber=0.0, core=true, businessType=A, t24Name=BANK.CCY.PERIOD)
-        CURRENT_INT_RATE : T24BusinessTypes:R
+        CURRENT_INT_RATE : T24BusinessTypes:R required
             @t24:i (align=R, inputBehaviour=F, maxLength=12, sysNumber=2.0, core=true, t24Name=CURRENT.INT.RATE, typeModifiers=-)
-        DAYS_PRIOR_CONF : mml:Integer
+        DAYS_PRIOR_CONF : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=7.0, core=true, t24Name=DAYS.PRIOR.CONF)
         DESCRIPTION -> byValue FD_Config:FD_GROUP_TODAY__DESCRIPTION *
             @t24:i (t24Name=DESCRIPTION)
@@ -731,7 +736,7 @@ Classes {
     }
     FD_GROUP_TODAY__DESCRIPTION
     {
-        DESCRIPTION : T24BusinessTypes:A
+        DESCRIPTION : T24BusinessTypes:A required
             @i18n:Label (en=Description)
             @i18n:Tooltip (en=Description)
             @t24:i (align=L, inputBehaviour=I, maxLength=35, multiLanguage=true, sysNumber=1.0, core=true, t24Name=DESCRIPTION)
@@ -820,7 +825,7 @@ Classes {
     }
     FD_MATURITY_DATES__CURRENCY__DAYS
     {
-        DAYS : mml:Integer
+        DAYS : T24BusinessTypes:N required
             @i18n:Label (en=Days)
             @t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=2.0, core=true, t24Name=DAYS)
     }
@@ -853,6 +858,11 @@ Classes {
             @i18n:Label (en=Customer)
             @i18n:Tooltip (en="Customer Liability")
             @t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=0.0, core=true, businessType=CUS, t24Name=CUSTOMER)
+        FID_ORDER -> byValue FD_Config:FD_ORDER_CUST__FID_ORDER *
+            @t24:i (t24Name=FID.ORDER)
+    }
+    FD_ORDER_CUST__FID_ORDER
+    {
         FID_ORDER -> FD_Contract:FD_FID_ORDER
             @t24:i (align=L, inputBehaviour=I, maxLength=14, sysNumber=1.0, core=true, businessType=A, t24Name=FID.ORDER, mask="L####/#####/#########")
     }
@@ -893,7 +903,7 @@ Classes {
             @i18n:Label (en=Category)
             @i18n:Tooltip (en="Specifies the Category")
             @t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=3.0, core=true, businessType=PRODCAT, t24Name=CATEGORY, mask="R##-###")
-        CCY_MARKET -> ST_CurrencyConfig:CURRENCY_MARKET
+        CCY_MARKET -> ST_CurrencyConfig:CURRENCY_MARKET required
             @i18n:Label (en="Ccy Market")
             @t24:i (align=R, inputBehaviour=I, maxLength=1, sysNumber=6.0, core=true, t24Name=CCY.MARKET)
         CHARGE_DATE -> byValue FD_Config:FD_ORD_ENT_TODAY__CHARGE_DATE *
@@ -921,10 +931,10 @@ Classes {
         CONSOL_KEY : T24BusinessTypes:N
             @i18n:Label (en="Consol Key")
             @t24:i (align=R, inputBehaviour=N, maxLength=40, sysNumber=87.0, core=true, t24Name=CONSOL.KEY)
-        CURRENCY -> ST_CurrencyConfig:CURRENCY
+        CURRENCY -> ST_CurrencyConfig:CURRENCY required
             @i18n:Label (en=Ccy)
             @t24:i (align=L, inputBehaviour=F, maxLength=3, sysNumber=4.0, core=true, businessType=CCY, t24Name=CURRENCY)
-        CUSTOMER -> ST_Customer:CUSTOMER
+        CUSTOMER -> ST_Customer:CUSTOMER required
             @i18n:Label (en=Customer)
             @i18n:Tooltip (en="Customer Liability")
             @t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=1.0, core=true, businessType=CUS, t24Name=CUSTOMER)
@@ -981,7 +991,7 @@ Classes {
             @i18n:Label (en="Fiduciary Sub Type")
             @i18n:Tooltip (en="Denotes the subtype at fiduciary type level")
             @t24:i (align=L, inputBehaviour=F, maxLength=3, sysNumber=80.0, core=true, t24Name=FID.SUBTYPE)
-        FID_TYPE : FD_Config:FD_ORD_ENT_TODAY__FID_TYPE
+        FID_TYPE : FD_Config:FD_ORD_ENT_TODAY__FID_TYPE required
             @i18n:Label (en="Fiduciary Type")
             @t24:i (align=L, inputBehaviour=F, maxLength=6, sysNumber=2.0, core=true, t24Name=FID.TYPE)
         FORWARD_BACKWARD : T24BusinessTypes:N
@@ -1005,7 +1015,7 @@ Classes {
             @i18n:Label (en="Interest Liq Acct")
             @i18n:Tooltip (en="Indicates Interest Liquidation Account")
             @t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=16.0, core=true, businessType=ANT, t24Name=INT.LIQ.ACCT)
-        LIMIT_REF : mml:Integer
+        LIMIT_REF : T24BusinessTypes:N
             @i18n:Label (en="Limit Ref")
             @i18n:Tooltip (en="Limit Reference")
             @t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=11.0, core=true, t24Name=LIMIT.REF)
@@ -1067,7 +1077,7 @@ Classes {
         POOLING_STATUS : FD_Config:FD_ORD_ENT_TODAY__POOLING_STATUS
             @i18n:Label (en="Pooling Status")
             @t24:i (align=L, inputBehaviour=I, maxLength=8, sysNumber=30.0, core=true, t24Name=POOLING.STATUS)
-        PORTFOLIO_NO : mml:Integer
+        PORTFOLIO_NO : T24BusinessTypes:N
             @i18n:Label (en="Portfoio No")
             @i18n:Tooltip (en="Indicates the Portfolio Account of the customer")
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=13.0, core=true, t24Name=PORTFOLIO.NO)
@@ -1124,7 +1134,7 @@ Classes {
         ROUND_RENEWAL : FD_Config:FD_ORD_ENT_TODAY__ROUND_RENEWAL
             @i18n:Label (en="Round renewal?")
             @t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=21.0, core=true, t24Name=ROUND.RENEWAL)
-        SEND_CONFIRM : FD_Config:FD_ORD_ENT_TODAY__SEND_CONFIRM
+        SEND_CONFIRM : FD_Config:FD_ORD_ENT_TODAY__SEND_CONFIRM required
             @i18n:Label (en="Send Confirm")
             @i18n:Tooltip (en="Specifies whether Confirmation to be sent or not")
             @t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=90.0, core=true, t24Name=SEND.CONFIRM)
@@ -1272,7 +1282,7 @@ Classes {
         ACCRUAL_BASIS -> AC_Fees:EB_ACCRUAL_PARAM
             @i18n:Label (en="Accrual Basis")
             @i18n:Tooltip (en="Accrual Basis")
-            @t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=57.0, core=true, t24Name=ACCRUAL.BASIS)
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=57.0, core=true, businessType=A, t24Name=ACCRUAL.BASIS)
         ACCR_COMM_NOTICE : FD_Config:FD_PARAMETER__ACCR_COMM_NOTICE
             @t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=55.0, core=true, t24Name=ACCR.COMM.NOTICE)
         ACCR_CYCLE_COMM : T24BusinessTypes:FQU
@@ -1280,7 +1290,9 @@ Classes {
         ACCR_CYCLE_INT : T24BusinessTypes:FQU
             @t24:i (align=L, inputBehaviour=I, maxLength=19, sysNumber=17.0, core=true, t24Name=ACCR.CYCLE.INT, mask="RDDDD DD DD  #####")
         AMORT_ADVANCE : FD_Config:FD_PARAMETER__AMORT_ADVANCE
-            @t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=58.0, core=true, t24Name=AMORT.ADVANCE)
+            @i18n:Label (en="Amortisation Advance")
+            @i18n:Tooltip (en="Amortisation Advance")
+            @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=58.0, core=true, t24Name=AMORT.ADVANCE)
         AUDITOR_CODE : T24BusinessTypes:A
             @i18n:Label (en="Auditor Code")
             @i18n:Tooltip (en="Auditor Code")
@@ -1307,10 +1319,10 @@ Classes {
             @t24:i (align=L, inputBehaviour=I, maxLength=8, sysNumber=39.0, core=true, t24Name=CUST.PORTFOLIO.ADD)
         DATE_TIME -> byValue FD_Config:FD_PARAMETER__DATE_TIME *
             @t24:i (t24Name=DATE.TIME)
-        DAYS_POST_MAT : T24BusinessTypes:A
+        DAYS_POST_MAT : T24BusinessTypes:A required
             @i18n:Label (en="Days Post Maturity")
             @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=31.0, core=true, t24Name=DAYS.POST.MAT)
-        DEF_RATE_NOTICE : mml:Integer
+        DEF_RATE_NOTICE : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=32.0, core=true, t24Name=DEF.RATE.NOTICE)
         DEF_RENEW_AMT : FD_Config:FD_PARAMETER__DEF_RENEW_AMT
             @t24:i (align=L, inputBehaviour=I, maxLength=11, sysNumber=45.0, core=true, t24Name=DEF.RENEW.AMT)
@@ -1329,7 +1341,7 @@ Classes {
             @t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=54.0, core=true, t24Name=FURTHER.POOLING)
         INPUTTER -> byValue FD_Config:FD_PARAMETER__INPUTTER *
             @t24:i (t24Name=INPUTTER)
-        INT_DIFF_CAT -> ST_Config:CATEGORY
+        INT_DIFF_CAT -> ST_Config:CATEGORY required
             @t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=24.0, core=true, t24Name=INT.DIFF.CAT)
         KEY : FD_Config:FD_PARAMETER__KEY PK required
             @i18n:Label (en=Key)
@@ -1341,7 +1353,7 @@ Classes {
             @i18n:Label (en="Mature at Start Of Day ")
             @i18n:Tooltip (en="Whether to mature at Start Of Day or not")
             @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=56.0, core=true, t24Name=MATURE.AT.SOD)
-        MAT_UPD_DAYS : mml:Integer
+        MAT_UPD_DAYS : T24BusinessTypes:N required
             @t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=30.0, core=true, t24Name=MAT.UPD.DAYS)
         MIN_INCOME : T24BusinessTypes:AMT
             @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=48.0, core=true, t24Name=MIN.INCOME, typeModifiers="USD")
@@ -1361,37 +1373,41 @@ Classes {
             @t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=51.0, core=true, t24Name=PEN.COMM.CAT)
         PLACEMENT_PROFILE : FD_Config:FD_PARAMETER__PLACEMENT_PROFILE
             @t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=49.0, core=true, t24Name=PLACEMENT.PROFILE)
-        PL_ACCR_COMM -> ST_Config:CATEGORY
+        PL_ACCR_COMM -> ST_Config:CATEGORY required
             @t24:i (align=R, inputBehaviour=F, maxLength=5, sysNumber=19.0, core=true, t24Name=PL.ACCR.COMM)
-        PL_AMOR_COMM : T24BusinessTypes:N
-            @t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=59.0, core=true, t24Name=PL.AMOR.COMM)
+        PL_AMOR_COMM -> ST_Config:CATEGORY
+            @i18n:Label (en="PL Amortisation Commission")
+            @i18n:Tooltip (en="PL Amortisation Commission")
+            @t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=59.0, core=true, t24Name=PL.AMOR.COMM)
         POOLING_FDP_PRG -> byValue FD_Config:FD_PARAMETER__POOLING_FDP_PRG *
             @t24:i (t24Name=POOLING.FDP.PRG)
         POOLING_FIELDS -> byValue FD_Config:FD_PARAMETER__POOLING_FIELDS *
             @t24:i (t24Name=POOLING.FIELDS)
-        PREV_MTH_ADJ_C -> ST_Config:CATEGORY
+        PREV_MTH_ADJ_C -> ST_Config:CATEGORY required
             @t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=20.0, core=true, t24Name=PREV.MTH.ADJ.C)
-        PREV_YR_ADJ_C -> ST_Config:CATEGORY
+        PREV_YR_ADJ_C -> ST_Config:CATEGORY required
             @t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=21.0, core=true, t24Name=PREV.YR.ADJ.C)
         RATE_TYPE -> byValue FD_Config:FD_PARAMETER__RATE_TYPE *
             @t24:i (t24Name=RATE.TYPE)
         RECORD_STATUS : T24BusinessTypes:STAT
             @i18n:Label (en="Record Status")
             @t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=62.0, core=true, t24Name=RECORD.STATUS)
-        RENEWAL_DAYS : T24BusinessTypes:A
+        RENEWAL_DAYS : T24BusinessTypes:A required
             @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=25.0, core=true, t24Name=RENEWAL.DAYS)
         RENEWAL_OVE : FD_Config:FD_PARAMETER__RENEWAL_OVE
             @t24:i (align=L, inputBehaviour=I, maxLength=8, sysNumber=26.0, core=true, t24Name=RENEWAL.OVE)
-        RENEWAL_START : T24BusinessTypes:A
+        RENEWAL_START : T24BusinessTypes:A required
             @t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=27.0, core=true, t24Name=RENEWAL.START)
         RENEW_BLOCK -> byValue FD_Config:FD_PARAMETER__RENEW_BLOCK *
             @t24:i (t24Name=RENEW.BLOCK)
-        RENEW_RPT_DAYS : T24BusinessTypes:A
+        RENEW_RPT_DAYS : T24BusinessTypes:A required
             @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=29.0, core=true, t24Name=RENEW.RPT.DAYS)
-        RESERVED_1 : FD_Config:FD_PARAMETER__RESERVED_1
-            @t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=61.0, core=true, t24Name=RESERVED.1)
-        REVERSE_REBOOK : T24BusinessTypes:N
-            @t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=60.0, core=true, t24Name=REVERSE.REBOOK)
+        RESERVED_1 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=61.0, core=true, t24Name=RESERVED.1)
+        REVERSE_REBOOK : FD_Config:FD_PARAMETER__REVERSE_REBOOK
+            @i18n:Label (en="Reverse Rebook")
+            @i18n:Tooltip (en="Reverse Rebook")
+            @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=60.0, core=true, t24Name=REVERSE.REBOOK)
         SETTLEMENT_MARKET -> ST_CurrencyConfig:CURRENCY_MARKET
             @t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=52.0, core=true, businessType=A, t24Name=SETTLEMENT.MARKET)
         VALUATION_ROUTINE : T24BusinessTypes:A
@@ -1424,37 +1440,37 @@ Classes {
             @t24:i (t24Name=DESCRIPT)
         FID_SUBTYPE -> byValue FD_Config:FD_PARAMETER__FID_TYPE__FID_SUBTYPE *
             @t24:i (t24Name=FID.SUBTYPE)
-        FID_TYPE : FD_Config:FD_PARAMETER__FID_TYPE__FID_TYPE
+        FID_TYPE : FD_Config:FD_PARAMETER__FID_TYPE__FID_TYPE required
             @i18n:Label (en="Fiduciary Type")
             @t24:i (align=L, inputBehaviour=I, maxLength=6, sysNumber=1.0, core=true, t24Name=FID.TYPE)
     }
     FD_PARAMETER__FID_TYPE__DESCRIPT
     {
-        DESCRIPT : T24BusinessTypes:A
+        DESCRIPT : T24BusinessTypes:A required
             @i18n:Label (en=Description)
             @t24:i (align=L, inputBehaviour=I, maxLength=35, multiLanguage=true, sysNumber=2.0, core=true, t24Name=DESCRIPT)
     }
     FD_PARAMETER__FID_TYPE__FID_SUBTYPE
     {
-        DEF_CAT_DEP -> ST_Config:CATEGORY
+        DEF_CAT_DEP -> ST_Config:CATEGORY required
             @t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=9.0, core=true, t24Name=DEF.CAT.DEP)
-        DEF_CAT_PLT -> ST_Config:CATEGORY
+        DEF_CAT_PLT -> ST_Config:CATEGORY required
             @t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=10.0, core=true, t24Name=DEF.CAT.PLT)
-        DEP_CAT_END -> ST_Config:CATEGORY
+        DEP_CAT_END -> ST_Config:CATEGORY required
             @t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=6.0, core=true, t24Name=DEP.CAT.END)
-        DEP_CAT_STRT -> ST_Config:CATEGORY
+        DEP_CAT_STRT -> ST_Config:CATEGORY required
             @t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=5.0, core=true, t24Name=DEP.CAT.STRT)
         FID_SUBTYPE : FD_Config:FD_PARAMETER__FID_TYPE__FID_SUBTYPE__FID_SUBTYPE
             @i18n:Label (en="Fiduciary Sub Type")
             @i18n:Tooltip (en="Denotes the subtype at fiduciary type level")
             @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=4.0, core=true, t24Name=FID.SUBTYPE)
-        MARGIN_RATE : mml:Integer
+        MARGIN_RATE : T24BusinessTypes:N required
             @i18n:Label (en="Margin Rate")
             @i18n:Tooltip (en="Percentage of margin rate used to value portfolio")
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=11.0, core=true, t24Name=MARGIN.RATE)
-        PLT_CAT_END -> ST_Config:CATEGORY
+        PLT_CAT_END -> ST_Config:CATEGORY required
             @t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=8.0, core=true, t24Name=PLT.CAT.END)
-        PLT_CAT_STRT -> ST_Config:CATEGORY
+        PLT_CAT_STRT -> ST_Config:CATEGORY required
             @t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=7.0, core=true, t24Name=PLT.CAT.STRT)
         RESERVED1 : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=16.0, core=true, t24Name=RESERVED1)
@@ -1504,6 +1520,11 @@ Classes {
             @i18n:Label (en="Fiduciary Bank")
             @i18n:Tooltip (en="Bank where the funds are to be placed")
             @t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=0.0, core=true, businessType=CUS, t24Name=FID.BANK)
+        PLACEMENT_ID -> byValue FD_Config:FD_PLACEMENT_CUST__PLACEMENT_ID *
+            @t24:i (t24Name=PLACEMENT.ID)
+    }
+    FD_PLACEMENT_CUST__PLACEMENT_ID
+    {
         PLACEMENT_ID -> FD_Contract:FD_FIDUCIARY
             @t24:i (align=L, inputBehaviour=I, maxLength=12, sysNumber=1.0, core=true, businessType=A, t24Name=PLACEMENT.ID, mask="R##/#####/#####")
     }
@@ -1580,10 +1601,10 @@ Classes {
     }
     FD_STANDARD_PERIODS__UPTO_DAYS
     {
-        PERIOD : T24BusinessTypes:A
+        PERIOD : T24BusinessTypes:A required
             @i18n:Label (en=Period)
             @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=2.0, core=true, t24Name=PERIOD)
-        UPTO_DAYS : mml:Integer
+        UPTO_DAYS : T24BusinessTypes:N
             @i18n:Label (en="Upto Days")
             @i18n:Tooltip (en="Indicates number of days Upto")
             @t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=1.0, core=true, t24Name=UPTO.DAYS)
@@ -1620,6 +1641,17 @@ Classes {
         FIDUCIARY_NO : T24BusinessTypes:N
             @i18n:Label (en="Fiduciary No")
             @t24:i (align=R, inputBehaviour=N, maxLength=12, core=false, t24Name=FIDUCIARY.NO, genOperation="FIELD(@ID,\"-\",2)")
+    }
+    RE_CONSOL_FID
+        @i18n:Description (en="")
+        @t24:i (t24Name=RE.CONSOL.FID, level=F, type=T, allowedFunctions="L P S", localRefAllowed=false)
+    {
+        CONSOL_KEY : T24BusinessTypes:ANY PK required
+            @i18n:Label (en="Consol Key")
+            @t24:i (align=L, inputBehaviour=N, maxLength=65, sysNumber=0.0, core=true, t24Name=CONSOL.KEY)
+        CONTRACT_NO : T24BusinessTypes:A
+            @i18n:Label (en="Contract No")
+            @t24:i (align=L, inputBehaviour=N, maxLength=14, sysNumber=1.0, core=true, t24Name=CONTRACT.NO)
     }
 }
 Enumerations {
@@ -1871,7 +1903,7 @@ Enumerations {
         ACCOUNT=ACCOUNT
         CONTRACT=CONTRACT
         NONE=NONE
-    FD_PARAMETER__RESERVED_1 : mml:string
+    FD_PARAMETER__REVERSE_REBOOK : mml:string
         NULL=NULL
         YES=YES
     FD_PARAMETER__XRATE_TYPE : mml:string

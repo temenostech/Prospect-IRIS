@@ -10,10 +10,15 @@ Classes {
         @i18n:Description (en="")
         @t24:i (t24Name=MM.MERGE.CONTRACT, level=F, type=T, allowedFunctions="L P S", localRefAllowed=false)
     {
-        PRIMARY_CONTRACT : T24BusinessTypes:A
-            @t24:i (align=L, inputBehaviour=I, maxLength=14, sysNumber=1.0, core=true, t24Name=PRIMARY.CONTRACT, mask="R##/#####/#####")
+        PRIMARY_CONTRACT -> byValue MM_Contract:MM_MERGE_CONTRACT__PRIMARY_CONTRACT *
+            @t24:i (t24Name=PRIMARY.CONTRACT)
         SECONDARY_CONTRACT -> MM_Contract:MM_MERGE_CONTRACT PK required
             @t24:i (align=L, inputBehaviour=I, maxLength=14, sysNumber=0.0, core=true, businessType=A, t24Name=SECONDARY.CONTRACT, mask="R##/#####/#####")
+    }
+    MM_MERGE_CONTRACT__PRIMARY_CONTRACT
+    {
+        PRIMARY_CONTRACT : T24BusinessTypes:A required
+            @t24:i (align=L, inputBehaviour=I, maxLength=14, sysNumber=1.0, core=true, t24Name=PRIMARY.CONTRACT, mask="R##/#####/#####")
     }
     MM_MONEY_MARKET
         @i18n:Description (en="")
@@ -78,7 +83,7 @@ Classes {
             @i18n:Label (en="Capitalise Interest?")
             @i18n:Tooltip (en="If interest is to be capitalised on int due dates")
             @t24:i (align=L, inputBehaviour=I, maxLength=1, sysNumber=70.0, core=true, t24Name=CAPITALISATION)
-        CATEGORY -> ST_Config:CATEGORY
+        CATEGORY -> ST_Config:CATEGORY required
             @i18n:Label (en=Category)
             @i18n:Tooltip (en="Specifies the Category")
             @t24:i (align=R, inputBehaviour=I, maxLength=6, sysNumber=7.0, core=true, businessType=PRODCAT, t24Name=CATEGORY, typeModifiers="2100121999", mask="R##-###")
@@ -147,7 +152,7 @@ Classes {
         CURR_NO : T24BusinessTypes:N
             @i18n:Label (en="Curr No")
             @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=153.0, core=true, t24Name=CURR.NO)
-        CUSTOMER_ID -> ST_Customer:CUSTOMER
+        CUSTOMER_ID -> ST_Customer:CUSTOMER required
             @i18n:Label (en=Counterparty)
             @i18n:Tooltip (en="Customer number of the counter party Bank")
             @t24:i (align=R, inputBehaviour=F, maxLength=10, sysNumber=1.0, core=true, businessType=CUS, t24Name=CUSTOMER.ID)
@@ -168,7 +173,7 @@ Classes {
             @t24:i (align=L, inputBehaviour=N, maxLength=4, core=false, t24Name=CUST.TAX.GROUP, genOperation="CUSTOMER.ID>CUSTOMER.CHARGE>TAX.ACT.GROUP")
         DATE_TIME -> byValue MM_Contract:MM_MONEY_MARKET__DATE_TIME *
             @t24:i (t24Name=DATE.TIME)
-        DEALER_DESK -> ST_Config:DEALER_DESK
+        DEALER_DESK -> ST_Config:DEALER_DESK required
             @i18n:Label (en="Dealer Desk")
             @i18n:Tooltip (en="Specifies the Dealer Desk handling the transaction")
             @t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=76.0, core=true, businessType=DEF, t24Name=DEALER.DESK, typeModifiers=A)
@@ -201,7 +206,7 @@ Classes {
             @i18n:Label (en="Fiduciary Bank")
             @i18n:Tooltip (en="Identifies the fiduciary bank")
             @t24:i (align=R, inputBehaviour=F, maxLength=10, sysNumber=54.0, core=true, businessType=CUS, t24Name=FIDUCIARY.BANK)
-        FID_ASSOC_LD_REF : mml:Integer
+        FID_ASSOC_LD_REF : T24BusinessTypes:N
             @i18n:Label (en="Fiduciary Associated LD Reference")
             @i18n:Tooltip (en="Identifies the fiduciary associate LD reference")
             @t24:i (align=R, inputBehaviour=E, maxLength=14, sysNumber=55.0, core=true, t24Name=FID.ASSOC.LD.REF)
@@ -244,7 +249,7 @@ Classes {
             @i18n:Label (en="Fair Value Margin Key")
             @i18n:Tooltip (en="The fair margin rate on LD and MM contracts")
             @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=114.0, core=true, t24Name=FV.MARGIN.KEY)
-        FV_RATE_KEY : mml:Integer
+        FV_RATE_KEY : T24BusinessTypes:N
             @i18n:Label (en="Fair Value Rate Key")
             @i18n:Tooltip (en="Provides the fair user rate on LD and MM contracts")
             @t24:i (align=R, inputBehaviour=I, maxLength=4, sysNumber=113.0, core=true, t24Name=FV.RATE.KEY)
@@ -270,7 +275,7 @@ Classes {
             @i18n:Label (en="Interest Basis")
             @i18n:Tooltip (en="Indicates the interest day basis")
             @t24:i (align=L, inputBehaviour=F, maxLength=2, sysNumber=9.0, core=true, t24Name=INTEREST.BASIS)
-        INTEREST_KEY : mml:Integer
+        INTEREST_KEY : T24BusinessTypes:N
             @i18n:Label (en="Interest Key")
             @i18n:Tooltip (en="Indicates key to apply floating rate of interest")
             @t24:i (align=R, inputBehaviour=F, maxLength=4, sysNumber=11.0, core=true, t24Name=INTEREST.KEY)
@@ -319,7 +324,7 @@ Classes {
             @i18n:Label (en="Interest Rate Type")
             @i18n:Tooltip (en="Indicates the type of interest rate to be used")
             @t24:i (align=R, inputBehaviour=F, maxLength=10, sysNumber=8.0, core=true, t24Name=INT.RATE.TYPE)
-        INT_REF_NUMBER : mml:Integer
+        INT_REF_NUMBER : T24BusinessTypes:N
             @i18n:Label (en="Interest Reference Number")
             @t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=46.0, core=true, t24Name=INT.REF.NUMBER)
         INT_SCHEDULE : T24BusinessTypes:FQU
@@ -330,7 +335,7 @@ Classes {
             @t24:i (t24Name=INT.TAX.FCY)
         INT_TAX_LCY -> byValue MM_Contract:MM_MONEY_MARKET__INT_TAX_LCY *
             @t24:i (t24Name=INT.TAX.LCY)
-        LIMIT_REFERENCE : mml:Integer
+        LIMIT_REFERENCE : T24BusinessTypes:N
             @i18n:Label (en="Limit Reference")
             @i18n:Tooltip (en="Indicates the limit that will be updated")
             @t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=34.0, core=true, t24Name=LIMIT.REFERENCE)
@@ -380,7 +385,7 @@ Classes {
             @t24:i (align=R, inputBehaviour=I, maxLength=4, sysNumber=51.0, core=true, businessType=DAO, t24Name=MIS.ACCT.OFFICER)
         MIS_COF_TYPE -> byValue MM_Contract:MM_MONEY_MARKET__MIS_COF_TYPE *
             @t24:i (t24Name=MIS.COF.TYPE)
-        MIS_INTEREST_KEY : mml:Integer
+        MIS_INTEREST_KEY : T24BusinessTypes:N
             @i18n:Label (en="MIS Interest Key")
             @t24:i (align=R, inputBehaviour=F, maxLength=3, sysNumber=47.0, core=true, t24Name=MIS.INTEREST.KEY)
         MIS_INTEREST_RATE : T24BusinessTypes:R
@@ -394,7 +399,7 @@ Classes {
             @i18n:Label (en="Negative Interest?")
             @i18n:Tooltip (en="If the interest rate can be negative or not")
             @t24:i (align=L, inputBehaviour=F, maxLength=3, sysNumber=127.0, core=true, t24Name=NEGATIVE.RATE)
-        NEG_REF_NUMBER : mml:Integer
+        NEG_REF_NUMBER : T24BusinessTypes:N
             @i18n:Label (en="Negotiation Reference Number")
             @t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=45.0, core=true, t24Name=NEG.REF.NUMBER)
         NEW_INTEREST_RATE : T24BusinessTypes:R
@@ -421,7 +426,7 @@ Classes {
             @i18n:Label (en="Next Principal Amount")
             @i18n:Tooltip (en="New Principal Amount while roll over of a contract")
             @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=102.0, core=true, t24Name=NEXT.PRIN.AMOUNT, typeModifiers="2")
-        ORIGINAL_FUNCTION : mml:Integer
+        ORIGINAL_FUNCTION : T24BusinessTypes:N
             @i18n:Label (en="Original Function")
             @i18n:Tooltip (en="if or not the deal was input by first level")
             @t24:i (align=R, inputBehaviour=E, maxLength=1, sysNumber=77.0, core=true, t24Name=ORIGINAL.FUNCTION)
@@ -439,7 +444,7 @@ Classes {
             @t24:i (align=L, inputBehaviour=E, maxLength=3, sysNumber=97.0, core=true, t24Name=OVERDUE.STATUS)
         OVERRIDE -> byValue MM_Contract:MM_MONEY_MARKET__OVERRIDE *
             @t24:i (t24Name=OVERRIDE)
-        PI_INT_KEY : mml:Integer
+        PI_INT_KEY : T24BusinessTypes:N
             @i18n:Label (en="Periodic Interest Key")
             @i18n:Tooltip (en="Indicates the periodic interest key number")
             @t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=109.0, core=true, t24Name=PI.INT.KEY)
@@ -455,7 +460,7 @@ Classes {
             @i18n:Label (en="Previous Maturity Date")
             @i18n:Tooltip (en="Maturity date of the contract prior to Rollover")
             @t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=105.0, core=true, t24Name=PREV.MAT.DATE)
-        PRINCIPAL : T24BusinessTypes:AMT
+        PRINCIPAL : T24BusinessTypes:AMT required
             @i18n:Label (en=Principal)
             @i18n:Tooltip (en="Principal ")
             @t24:i (align=R, inputBehaviour=F, maxLength=18, sysNumber=3.0, core=true, t24Name=PRINCIPAL, typeModifiers="2")
@@ -477,6 +482,9 @@ Classes {
             @i18n:Label (en="Principal Liq Acct")
             @i18n:Tooltip (en="Indicates principal liqudation account")
             @t24:i (align=L, inputBehaviour=I, maxLength=36, sysNumber=23.0, core=true, businessType=MMANT, t24Name=PRIN.LIQ.ACCT, typeModifiers="Y")
+        PRODCAT -> ST_Config:CATEGORY
+            @i18n:Label (en="Deal Type")
+            @t24:i (align=R, inputBehaviour=N, maxLength=6, sysNumber=7.0, core=false, businessType=PRODCAT, t24Name=PRODCAT, typeModifiers="21001]21999", mask="R##-###")
         PRODCCY : T24BusinessTypes:N
             @i18n:Label (en="Product Currency")
             @t24:i (align=L, inputBehaviour=N, maxLength=3, core=false, t24Name=PRODCCY, genOperation=CURRENCY)
@@ -775,7 +783,7 @@ Classes {
     }
     MM_MONEY_MARKET__TAX_INTEREST_KEY
     {
-        TAX_INTEREST_KEY : mml:Integer
+        TAX_INTEREST_KEY : T24BusinessTypes:N
             @i18n:Label (en="Tax Interest Key")
             @t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=33.0, core=true, t24Name=TAX.INTEREST.KEY)
     }
@@ -789,11 +797,16 @@ Classes {
         @i18n:Description (en="")
         @t24:i (t24Name=MM.REVERSED.DEALS, level=F, type=T, allowedFunctions="L P S", localRefAllowed=false)
     {
+        CONTRACT_ID -> byValue MM_Contract:MM_REVERSED_DEALS__CONTRACT_ID *
+            @t24:i (t24Name=CONTRACT.ID)
+        DATE_REVERSED -> MM_Contract:MM_REVERSED_DEALS PK required
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=0.0, core=true, t24Name=DATE.REVERSED)
+    }
+    MM_REVERSED_DEALS__CONTRACT_ID
+    {
         CONTRACT_ID : T24BusinessTypes:A
             @i18n:Label (en="Contract Id")
             @t24:i (align=L, inputBehaviour=I, maxLength=18, sysNumber=1.0, core=true, t24Name=CONTRACT.ID)
-        DATE_REVERSED -> MM_Contract:MM_REVERSED_DEALS PK required
-            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=0.0, core=true, t24Name=DATE.REVERSED)
     }
 }
 Enumerations {

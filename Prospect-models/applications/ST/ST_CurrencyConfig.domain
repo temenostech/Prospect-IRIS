@@ -247,7 +247,7 @@ Classes {
     }
     CURRENCY_MARKET__DESCRIPTION
     {
-        DESCRIPTION : T24BusinessTypes:A
+        DESCRIPTION : T24BusinessTypes:A required
             @i18n:Label (en=Description)
             @i18n:Tooltip (en=Description)
             @t24:i (align=L, inputBehaviour=I, maxLength=15, multiLanguage=true, sysNumber=1.0, core=true, t24Name=DESCRIPTION)
@@ -304,7 +304,7 @@ Classes {
             @t24:i (t24Name=EQUIVALENT.CCYS)
         INPUTTER -> byValue ST_CurrencyConfig:CURRENCY_PARAM__INPUTTER *
             @t24:i (t24Name=INPUTTER)
-        INTEREST_DAY_BASIS : ST_CurrencyConfig:CURRENCY_PARAM__INTEREST_DAY_BASIS
+        INTEREST_DAY_BASIS : ST_CurrencyConfig:CURRENCY_PARAM__INTEREST_DAY_BASIS required
             @i18n:Label (en="Interest Day Basis")
             @i18n:Tooltip (en="Defines calculation basis for interest calculation")
             @t24:i (align=L, inputBehaviour=I, maxLength=12, sysNumber=4.0, core=true, t24Name=INTEREST.DAY.BASIS)
@@ -312,7 +312,7 @@ Classes {
             @i18n:Label (en="No Of Decimals")
             @i18n:Tooltip (en="No Of Decimals")
             @t24:i (align=R, inputBehaviour=F, maxLength=1, sysNumber=3.0, core=true, t24Name=NO.OF.DECIMALS)
-        NUMERIC_CCY_CODE : T24BusinessTypes:N
+        NUMERIC_CCY_CODE : T24BusinessTypes:N required
             @i18n:Label (en="Numeric Ccy Code")
             @i18n:Tooltip (en="Numeric Ccy Code")
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=1.0, core=true, t24Name=NUMERIC.CCY.CODE)
@@ -336,7 +336,7 @@ Classes {
     }
     CURRENCY_PARAM__CCY_NAME
     {
-        CCY_NAME : T24BusinessTypes:AA
+        CCY_NAME : T24BusinessTypes:AA required
             @i18n:Label (en="Ccy Name")
             @t24:i (align=L, inputBehaviour=I, maxLength=35, multiLanguage=true, sysNumber=2.0, core=true, t24Name=CCY.NAME)
     }
@@ -460,18 +460,23 @@ Classes {
         @i18n:Description (en="")
         @t24:i (t24Name=NUMERIC.CURRENCY, level=I, type=T, allowedFunctions="L P S", localRefAllowed=false)
     {
-        CURRENCY_CODE -> ST_CurrencyConfig:CURRENCY_PARAM
-            @i18n:Label (en="Ccy Code")
-            @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=1.0, core=true, businessType=SSS, t24Name=CURRENCY.CODE)
+        CURRENCY_CODE -> byValue ST_CurrencyConfig:NUMERIC_CURRENCY__CURRENCY_CODE *
+            @t24:i (t24Name=CURRENCY.CODE)
         NUMERIC_CCY_CODE -> ST_CurrencyConfig:NUMERIC_CURRENCY PK required
             @i18n:Label (en="Ccy Code")
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=0.0, core=true, t24Name=NUMERIC.CCY.CODE)
+    }
+    NUMERIC_CURRENCY__CURRENCY_CODE
+    {
+        CURRENCY_CODE -> ST_CurrencyConfig:CURRENCY_PARAM required
+            @i18n:Label (en="Ccy Code")
+            @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=1.0, core=true, businessType=SSS, t24Name=CURRENCY.CODE)
     }
     RANK_BASE_CURRENCY
         @i18n:Description (en="")
         @t24:i (t24Name=RANK.BASE.CURRENCY, level=I, type=L, allowedFunctions="L P S", localRefAllowed=false)
     {
-        CURRENCY_CODE -> ST_CurrencyConfig:CURRENCY
+        CURRENCY_CODE -> ST_CurrencyConfig:CURRENCY required
             @i18n:Label (en="Ccy Code")
             @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=1.0, core=true, businessType=SSS, t24Name=CURRENCY.CODE)
         RANK_BASE_CCY -> ST_CurrencyConfig:RANK_BASE_CURRENCY PK required
@@ -481,11 +486,16 @@ Classes {
         @i18n:Description (en="")
         @t24:i (t24Name=RANK.CURRENCY, level=Y, type=T, allowedFunctions="L P S", localRefAllowed=false)
     {
-        CURRENCY_CODE -> ST_CurrencyConfig:CURRENCY
-            @i18n:Label (en="Ccy Code")
-            @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=1.0, core=true, businessType=SSS, t24Name=CURRENCY.CODE)
+        CURRENCY_CODE -> byValue ST_CurrencyConfig:RANK_CURRENCY__CURRENCY_CODE *
+            @t24:i (t24Name=CURRENCY.CODE)
         RANK_CCY_CODE -> ST_CurrencyConfig:RANK_CURRENCY PK required
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=0.0, core=true, t24Name=RANK.CCY.CODE)
+    }
+    RANK_CURRENCY__CURRENCY_CODE
+    {
+        CURRENCY_CODE -> ST_CurrencyConfig:CURRENCY required
+            @i18n:Label (en="Ccy Code")
+            @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=1.0, core=true, businessType=SSS, t24Name=CURRENCY.CODE)
     }
 }
 Enumerations {

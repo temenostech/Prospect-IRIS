@@ -124,7 +124,7 @@ Classes {
         CURR_NO : T24BusinessTypes:N
             @i18n:Label (en="Curr No")
             @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=132.0, core=true, t24Name=CURR.NO)
-        CUSTOMER -> ST_Customer:CUSTOMER
+        CUSTOMER -> ST_Customer:CUSTOMER required
             @i18n:Label (en=Customer)
             @i18n:Tooltip (en="Customer Liability")
             @t24:i (align=R, inputBehaviour=F, maxLength=10, sysNumber=1.0, core=true, businessType=CUS, t24Name=CUSTOMER)
@@ -140,7 +140,7 @@ Classes {
             @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=28.0, core=true, t24Name=CUSTOMER.SPREAD, typeModifiers=-)
         DATE_TIME -> byValue SL_Loans:SL_LOANS__DATE_TIME *
             @t24:i (t24Name=DATE.TIME)
-        DEAL_CURRENCY -> ST_CurrencyConfig:CURRENCY
+        DEAL_CURRENCY -> ST_CurrencyConfig:CURRENCY required
             @i18n:Label (en=Ccy)
             @t24:i (align=L, inputBehaviour=F, maxLength=3, sysNumber=2.0, core=true, businessType=CCY, t24Name=DEAL.CURRENCY)
         DELIVERY_CUST -> byValue SL_Loans:SL_LOANS__DELIVERY_CUST *
@@ -197,7 +197,7 @@ Classes {
             @i18n:Label (en="Interest Basis")
             @i18n:Tooltip (en="Indicates the interest day basis")
             @t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=24.0, core=true, t24Name=INTEREST.BASIS)
-        INTEREST_KEY : mml:Integer
+        INTEREST_KEY : T24BusinessTypes:N
             @i18n:Label (en="Interest Key")
             @i18n:Tooltip (en="Indicates key to apply floating rate of interest")
             @t24:i (align=R, inputBehaviour=I, maxLength=4, sysNumber=27.0, core=true, t24Name=INTEREST.KEY)
@@ -257,11 +257,11 @@ Classes {
             @i18n:Label (en="Market Margin")
             @i18n:Tooltip (en="Indicates the margin on the market rate")
             @t24:i (align=R, inputBehaviour=I, maxLength=12, sysNumber=111.0, core=true, t24Name=MARKET.MARGIN, typeModifiers=-)
-        MATURED_ONLINE : T24BusinessTypes:A
+        MATURED_ONLINE : SL_Loans:SL_LOANS__MATURED_ONLINE
             @i18n:Label (en="Online Maturity")
             @i18n:Tooltip (en="Whether Online Maturity is required$")
-            @t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=62.0, core=true, t24Name=MATURED.ONLINE)
-        MATURITY_DATE : T24BusinessTypes:MATLMM
+            @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=62.0, core=true, t24Name=MATURED.ONLINE)
+        MATURITY_DATE : T24BusinessTypes:MATLMM required
             @i18n:Label (en="Maturity Date")
             @i18n:Tooltip (en="Indicates the Maturity Date of the Transaction")
             @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=11.0, core=true, t24Name=MATURITY.DATE)
@@ -330,7 +330,7 @@ Classes {
         PRIN_REPAY_RATE : T24BusinessTypes:R
             @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=66.0, core=true, t24Name=PRIN.REPAY.RATE)
         PROCESS_AT_SOD : SL_Loans:SL_LOANS__PROCESS_AT_SOD
-            @t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=104.0, core=true, t24Name=PROCESS.AT.SOD)
+            @t24:i (align=L, inputBehaviour=F, maxLength=3, sysNumber=104.0, core=true, t24Name=PROCESS.AT.SOD)
         PRODCAT : T24BusinessTypes:N
             @i18n:Label (en="Deal Type")
             @t24:i (align=L, inputBehaviour=N, maxLength=5, core=false, t24Name=PRODCAT, genOperation=CATEGORY)
@@ -487,7 +487,7 @@ Classes {
     {
         INT_PAY_FQY : T24BusinessTypes:FQO
             @i18n:Label (en="Intt Pay Freq")
-            @t24:i (align=L, inputBehaviour=I, maxLength=13, sysNumber=39.0, core=true, t24Name=INT.PAY.FQY, mask="LDDDD DD  D #####")
+            @t24:i (align=L, inputBehaviour=I, maxLength=13, sysNumber=39.0, core=true, t24Name=INT.PAY.FQY, typeModifiers=IGNORE, mask="LDDDD DD  D #####")
     }
     SL_LOANS__ONLINE_PAY_TYPE
     {
@@ -553,7 +553,7 @@ Classes {
         PIK_INT_FQY : T24BusinessTypes:FQU
             @i18n:Label (en=Addl.Int.Frequency)
             @i18n:Tooltip (en="Additional Interest Frequency")
-            @t24:i (align=L, inputBehaviour=I, maxLength=13, sysNumber=116.0, core=true, t24Name=PIK.INT.FQY, mask="LDDDD DD  D #####")
+            @t24:i (align=L, inputBehaviour=I, maxLength=13, sysNumber=116.0, core=true, t24Name=PIK.INT.FQY, typeModifiers=IGNORE, mask="LDDDD DD  D #####")
         PIK_RATE : T24BusinessTypes:R
             @i18n:Label (en="Additional Interest")
             @i18n:Tooltip (en="Additional Interest")
@@ -662,12 +662,14 @@ Enumerations {
     SL_LOANS__LIQUIDATION_MODE : mml:string
         AUTOMATIC=AUTOMATIC
         INTERNAL=INTERNAL
+    SL_LOANS__MATURED_ONLINE : mml:string
+        YES=YES
     SL_LOANS__ONLINE_PAY_TYPE__ONLINE_PAY_TYPE : mml:string
         I=I
         P=P
         PI=PI
     SL_LOANS__PROCESS_AT_SOD : mml:string
-        NULL=NULL
+        NO=NO
         YES=YES
     SL_LOANS__RECALC_ANNUITY : mml:string
         NULL=NULL

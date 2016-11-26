@@ -10,13 +10,18 @@ Classes {
         @i18n:Description (en="")
         @t24:i (t24Name=ACCOUNT.COMPENSATION, level=F, type=T, allowedFunctions="L P S", localRefAllowed=false)
     {
-        ACCOUNT -> AC_AccountOpening:ACCOUNT
-            @i18n:Label (en=Account)
-            @i18n:Tooltip (en="Identifies the customer account")
-            @t24:i (align=R, inputBehaviour=I, maxLength=16, sysNumber=1.0, core=true, t24Name=ACCOUNT)
+        ACCOUNT -> byValue IC_OtherInterest:ACCOUNT_COMPENSATION__ACCOUNT *
+            @t24:i (t24Name=ACCOUNT)
         ACCOUNT_NUMBER -> IC_OtherInterest:ACCOUNT_COMPENSATION PK required
             @i18n:Label (en="Account Number")
             @t24:i (align=R, inputBehaviour=I, maxLength=16, sysNumber=0.0, core=true, businessType=ACC, t24Name=ACCOUNT.NUMBER)
+    }
+    ACCOUNT_COMPENSATION__ACCOUNT
+    {
+        ACCOUNT -> AC_AccountOpening:ACCOUNT required
+            @i18n:Label (en=Account)
+            @i18n:Tooltip (en="Identifies the customer account")
+            @t24:i (align=R, inputBehaviour=I, maxLength=16, sysNumber=1.0, core=true, t24Name=ACCOUNT)
     }
     ICA_BACK_VALUE
         @i18n:Description (en="")
@@ -26,7 +31,7 @@ Classes {
             @i18n:Label (en=Key)
             @i18n:Tooltip (en="Indicates th transaction key")
             @t24:i (align=R, inputBehaviour=I, maxLength=16, sysNumber=0.0, core=true, businessType=ACC, t24Name=KEY)
-        MAX_PROC_LEVEL : mml:Integer
+        MAX_PROC_LEVEL : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=1.0, core=true, t24Name=MAX.PROC.LEVEL)
         SUB_ACCT -> byValue IC_OtherInterest:ICA_BACK_VALUE__SUB_ACCT *
             @t24:i (t24Name=SUB.ACCT)
@@ -49,7 +54,7 @@ Classes {
         GROUP_ID : T24BusinessTypes:N
             @i18n:Label (en="Group Id")
             @t24:i (align=L, inputBehaviour=N, maxLength=16, core=false, t24Name=GROUP.ID, genOperation="@ID[\"-\",1,1]")
-        INTEREST_CALC : mml:Integer
+        INTEREST_CALC : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=6, sysNumber=2.0, core=true, t24Name=INTEREST.CALC)
         KEY -> IC_OtherInterest:ICA_GROUP_CORRECTION PK required
             @i18n:Label (en=Key)
@@ -57,7 +62,7 @@ Classes {
             @t24:i (align=L, inputBehaviour=I, maxLength=28, sysNumber=0.0, core=true, businessType=A, t24Name=KEY)
         MAIN_ACCTY_KEY -> byValue IC_OtherInterest:ICA_GROUP_CORRECTION__MAIN_ACCTY_KEY *
             @t24:i (t24Name=MAIN.ACCTY.KEY)
-        MAX_PROC_LEVEL : mml:Integer
+        MAX_PROC_LEVEL : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=4, sysNumber=1.0, core=true, t24Name=MAX.PROC.LEVEL)
         OLDEST_DATE : T24BusinessTypes:D
             @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=16.0, core=true, t24Name=OLDEST.DATE)
@@ -80,7 +85,7 @@ Classes {
     }
     ICA_GROUP_CORRECTION__MAIN_ACCTY_KEY
     {
-        MAIN_ACCTY_KEY : mml:Integer
+        MAIN_ACCTY_KEY : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=45, sysNumber=8.0, core=true, t24Name=MAIN.ACCTY.KEY)
     }
     ICA_GROUP_CORRECTION__PARTIAL_ACCOUNT
@@ -100,27 +105,27 @@ Classes {
     }
     ICA_GROUP_CORRECTION__PARTIAL_ACCOUNT__PART_ACCTYS
     {
-        PART_ACCTYS : mml:Integer
+        PART_ACCTYS : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=45, sysNumber=10.0, core=true, t24Name=PART.ACCTYS)
     }
     ICA_GROUP_CORRECTION__PARTIAL_ACCOUNT__PART_STMTC2
     {
-        PART_STMTC2 : mml:Integer
+        PART_STMTC2 : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=45, sysNumber=12.0, core=true, t24Name=PART.STMTC2)
     }
     ICA_GROUP_CORRECTION__PARTIAL_ACCOUNT__PART_STMTCR
     {
-        PART_STMTCR : mml:Integer
+        PART_STMTCR : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=45, sysNumber=11.0, core=true, t24Name=PART.STMTCR)
     }
     ICA_GROUP_CORRECTION__PARTIAL_ACCOUNT__PART_STMTD2
     {
-        PART_STMTD2 : mml:Integer
+        PART_STMTD2 : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=45, sysNumber=14.0, core=true, t24Name=PART.STMTD2)
     }
     ICA_GROUP_CORRECTION__PARTIAL_ACCOUNT__PART_STMTDR
     {
-        PART_STMTDR : mml:Integer
+        PART_STMTDR : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=45, sysNumber=13.0, core=true, t24Name=PART.STMTDR)
     }
     ICA_GROUP_DETAIL
@@ -157,7 +162,7 @@ Classes {
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=19.0, core=true, t24Name=MAIN.DIST.D2)
         MAIN_DIST_DR : T24BusinessTypes:AMT
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=18.0, core=true, t24Name=MAIN.DIST.DR)
-        MAX_PROC_LEVEL : mml:Integer
+        MAX_PROC_LEVEL : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=4, sysNumber=2.0, core=true, t24Name=MAX.PROC.LEVEL)
         NORMAL_INTEREST : T24BusinessTypes:AMT
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=10.0, core=true, t24Name=NORMAL.INTEREST)
@@ -194,7 +199,7 @@ Classes {
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=29.0, core=true, t24Name=DIST.D2)
         DIST_DR : T24BusinessTypes:AMT
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=28.0, core=true, t24Name=DIST.DR)
-        DIST_RATIO : mml:Integer
+        DIST_RATIO : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=25.0, core=true, t24Name=DIST.RATIO)
         END_DATE : T24BusinessTypes:D
             @i18n:Label (en="End Date")
@@ -220,7 +225,7 @@ Classes {
         PROCESS_DATE : T24BusinessTypes:D
             @i18n:Label (en="Process Date")
             @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=3.0, core=true, t24Name=PROCESS.DATE)
-        PROCESS_LEVEL : mml:Integer
+        PROCESS_LEVEL : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=4, sysNumber=4.0, core=true, t24Name=PROCESS.LEVEL)
     }
     ICA_GROUP_DISTRIBUTION
@@ -234,7 +239,7 @@ Classes {
         GROUP_ID : T24BusinessTypes:ACC
             @i18n:Label (en="Group Id")
             @t24:i (align=L, inputBehaviour=N, maxLength=16, core=false, t24Name=GROUP.ID, genOperation="@ID[\"-\",1,1]")
-        INTEREST_CALC : mml:Integer
+        INTEREST_CALC : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=6, sysNumber=2.0, core=true, t24Name=INTEREST.CALC)
         KEY -> IC_OtherInterest:ICA_GROUP_DISTRIBUTION PK required
             @i18n:Label (en=Key)
@@ -242,7 +247,7 @@ Classes {
             @t24:i (align=L, inputBehaviour=I, maxLength=28, sysNumber=0.0, core=true, businessType=A, t24Name=KEY)
         MAIN_ACCTY_KEY -> byValue IC_OtherInterest:ICA_GROUP_DISTRIBUTION__MAIN_ACCTY_KEY *
             @t24:i (t24Name=MAIN.ACCTY.KEY)
-        MAX_PROC_LEVEL : mml:Integer
+        MAX_PROC_LEVEL : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=4, sysNumber=1.0, core=true, t24Name=MAX.PROC.LEVEL)
         OLDEST_DATE : T24BusinessTypes:D
             @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=16.0, core=true, t24Name=OLDEST.DATE)
@@ -265,7 +270,7 @@ Classes {
     }
     ICA_GROUP_DISTRIBUTION__MAIN_ACCTY_KEY
     {
-        MAIN_ACCTY_KEY : mml:Integer
+        MAIN_ACCTY_KEY : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=45, sysNumber=8.0, core=true, t24Name=MAIN.ACCTY.KEY)
     }
     ICA_GROUP_DISTRIBUTION__PARTIAL_ACCOUNT
@@ -285,27 +290,27 @@ Classes {
     }
     ICA_GROUP_DISTRIBUTION__PARTIAL_ACCOUNT__PART_ACCTYS
     {
-        PART_ACCTYS : mml:Integer
+        PART_ACCTYS : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=45, sysNumber=10.0, core=true, t24Name=PART.ACCTYS)
     }
     ICA_GROUP_DISTRIBUTION__PARTIAL_ACCOUNT__PART_STMTC2
     {
-        PART_STMTC2 : mml:Integer
+        PART_STMTC2 : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=45, sysNumber=12.0, core=true, t24Name=PART.STMTC2)
     }
     ICA_GROUP_DISTRIBUTION__PARTIAL_ACCOUNT__PART_STMTCR
     {
-        PART_STMTCR : mml:Integer
+        PART_STMTCR : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=45, sysNumber=11.0, core=true, t24Name=PART.STMTCR)
     }
     ICA_GROUP_DISTRIBUTION__PARTIAL_ACCOUNT__PART_STMTD2
     {
-        PART_STMTD2 : mml:Integer
+        PART_STMTD2 : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=45, sysNumber=14.0, core=true, t24Name=PART.STMTD2)
     }
     ICA_GROUP_DISTRIBUTION__PARTIAL_ACCOUNT__PART_STMTDR
     {
-        PART_STMTDR : mml:Integer
+        PART_STMTDR : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=45, sysNumber=13.0, core=true, t24Name=PART.STMTDR)
     }
     ICA_GROUP_HISTORY
@@ -342,7 +347,7 @@ Classes {
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=19.0, core=true, t24Name=MAIN.DIST.D2)
         MAIN_DIST_DR : T24BusinessTypes:AMT
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=18.0, core=true, t24Name=MAIN.DIST.DR)
-        MAX_PROC_LEVEL : mml:Integer
+        MAX_PROC_LEVEL : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=4, sysNumber=2.0, core=true, t24Name=MAX.PROC.LEVEL)
         NORMAL_INTEREST : T24BusinessTypes:AMT
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=10.0, core=true, t24Name=NORMAL.INTEREST)
@@ -379,7 +384,7 @@ Classes {
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=29.0, core=true, t24Name=DIST.D2)
         DIST_DR : T24BusinessTypes:AMT
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=28.0, core=true, t24Name=DIST.DR)
-        DIST_RATIO : mml:Integer
+        DIST_RATIO : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=25.0, core=true, t24Name=DIST.RATIO)
         END_DATE : T24BusinessTypes:D
             @i18n:Label (en="End Date")
@@ -405,7 +410,7 @@ Classes {
         PROCESS_DATE : T24BusinessTypes:D
             @i18n:Label (en="Process Date")
             @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=3.0, core=true, t24Name=PROCESS.DATE)
-        PROCESS_LEVEL : mml:Integer
+        PROCESS_LEVEL : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=4, sysNumber=4.0, core=true, t24Name=PROCESS.LEVEL)
     }
     ICA_HIERARCHY
@@ -487,29 +492,29 @@ Classes {
         CO_CODE -> ST_CompanyCreation:COMPANY
             @i18n:Label (en=Company)
             @t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=41.0, core=true, businessType=A, t24Name=CO.CODE, mask="R##-###-####")
-        CR2_ADJ_CATEG -> ST_Config:CATEGORY
+        CR2_ADJ_CATEG -> ST_Config:CATEGORY required
             @t24:i (align=R, inputBehaviour=F, maxLength=5, sysNumber=22.0, core=true, t24Name=CR2.ADJ.CATEG)
-        CR2_ADJ_TXN_AC -> ST_Config:TRANSACTION
+        CR2_ADJ_TXN_AC -> ST_Config:TRANSACTION required
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=24.0, core=true, t24Name=CR2.ADJ.TXN.AC)
-        CR2_ADJ_TXN_PL -> ST_Config:TRANSACTION
+        CR2_ADJ_TXN_PL -> ST_Config:TRANSACTION required
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=23.0, core=true, t24Name=CR2.ADJ.TXN.PL)
-        CR2_CATEGORY -> ST_Config:CATEGORY
+        CR2_CATEGORY -> ST_Config:CATEGORY required
             @t24:i (align=R, inputBehaviour=F, maxLength=5, sysNumber=19.0, core=true, t24Name=CR2.CATEGORY)
-        CR2_TXN_CODE_AC -> ST_Config:TRANSACTION
+        CR2_TXN_CODE_AC -> ST_Config:TRANSACTION required
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=21.0, core=true, t24Name=CR2.TXN.CODE.AC)
-        CR2_TXN_CODE_PL -> ST_Config:TRANSACTION
+        CR2_TXN_CODE_PL -> ST_Config:TRANSACTION required
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=20.0, core=true, t24Name=CR2.TXN.CODE.PL)
-        CR_ADJ_CATEG -> ST_Config:CATEGORY
+        CR_ADJ_CATEG -> ST_Config:CATEGORY required
             @t24:i (align=R, inputBehaviour=F, maxLength=5, sysNumber=16.0, core=true, t24Name=CR.ADJ.CATEG)
-        CR_ADJ_TXN_AC -> ST_Config:TRANSACTION
+        CR_ADJ_TXN_AC -> ST_Config:TRANSACTION required
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=18.0, core=true, t24Name=CR.ADJ.TXN.AC)
-        CR_ADJ_TXN_PL -> ST_Config:TRANSACTION
+        CR_ADJ_TXN_PL -> ST_Config:TRANSACTION required
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=17.0, core=true, t24Name=CR.ADJ.TXN.PL)
-        CR_CATEGORY -> ST_Config:CATEGORY
+        CR_CATEGORY -> ST_Config:CATEGORY required
             @t24:i (align=R, inputBehaviour=F, maxLength=5, sysNumber=13.0, core=true, t24Name=CR.CATEGORY)
-        CR_TXN_CODE_AC -> ST_Config:TRANSACTION
+        CR_TXN_CODE_AC -> ST_Config:TRANSACTION required
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=15.0, core=true, t24Name=CR.TXN.CODE.AC)
-        CR_TXN_CODE_PL -> ST_Config:TRANSACTION
+        CR_TXN_CODE_PL -> ST_Config:TRANSACTION required
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=14.0, core=true, t24Name=CR.TXN.CODE.PL)
         CURR_NO : T24BusinessTypes:N
             @i18n:Label (en="Curr No")
@@ -519,29 +524,29 @@ Classes {
         DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
             @i18n:Label (en="Dept Code")
             @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=42.0, core=true, t24Name=DEPT.CODE)
-        DR2_ADJ_CATEG -> ST_Config:CATEGORY
+        DR2_ADJ_CATEG -> ST_Config:CATEGORY required
             @t24:i (align=R, inputBehaviour=F, maxLength=5, sysNumber=10.0, core=true, t24Name=DR2.ADJ.CATEG)
-        DR2_ADJ_TXN_AC -> ST_Config:TRANSACTION
+        DR2_ADJ_TXN_AC -> ST_Config:TRANSACTION required
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=12.0, core=true, t24Name=DR2.ADJ.TXN.AC)
-        DR2_ADJ_TXN_PL -> ST_Config:TRANSACTION
+        DR2_ADJ_TXN_PL -> ST_Config:TRANSACTION required
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=11.0, core=true, t24Name=DR2.ADJ.TXN.PL)
-        DR2_CATEGORY -> ST_Config:CATEGORY
+        DR2_CATEGORY -> ST_Config:CATEGORY required
             @t24:i (align=R, inputBehaviour=F, maxLength=5, sysNumber=7.0, core=true, t24Name=DR2.CATEGORY)
-        DR2_TXN_CODE_AC -> ST_Config:TRANSACTION
+        DR2_TXN_CODE_AC -> ST_Config:TRANSACTION required
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=9.0, core=true, t24Name=DR2.TXN.CODE.AC)
-        DR2_TXN_CODE_PL -> ST_Config:TRANSACTION
+        DR2_TXN_CODE_PL -> ST_Config:TRANSACTION required
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=8.0, core=true, t24Name=DR2.TXN.CODE.PL)
-        DR_ADJ_CATEG -> ST_Config:CATEGORY
+        DR_ADJ_CATEG -> ST_Config:CATEGORY required
             @t24:i (align=R, inputBehaviour=F, maxLength=5, sysNumber=4.0, core=true, t24Name=DR.ADJ.CATEG)
-        DR_ADJ_TXN_AC -> ST_Config:TRANSACTION
+        DR_ADJ_TXN_AC -> ST_Config:TRANSACTION required
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=6.0, core=true, t24Name=DR.ADJ.TXN.AC)
-        DR_ADJ_TXN_PL -> ST_Config:TRANSACTION
+        DR_ADJ_TXN_PL -> ST_Config:TRANSACTION required
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=5.0, core=true, t24Name=DR.ADJ.TXN.PL)
-        DR_CATEGORY -> ST_Config:CATEGORY
+        DR_CATEGORY -> ST_Config:CATEGORY required
             @t24:i (align=R, inputBehaviour=F, maxLength=5, sysNumber=1.0, core=true, t24Name=DR.CATEGORY)
-        DR_TXN_CODE_AC -> ST_Config:TRANSACTION
+        DR_TXN_CODE_AC -> ST_Config:TRANSACTION required
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=3.0, core=true, t24Name=DR.TXN.CODE.AC)
-        DR_TXN_CODE_PL -> ST_Config:TRANSACTION
+        DR_TXN_CODE_PL -> ST_Config:TRANSACTION required
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=2.0, core=true, t24Name=DR.TXN.CODE.PL)
         INPUTTER -> byValue IC_OtherInterest:ICA_HIERARCHY_PARAMETER__INPUTTER *
             @t24:i (t24Name=INPUTTER)
@@ -592,7 +597,7 @@ Classes {
     }
     ICA_HIERARCHY__DESCRIPTION
     {
-        DESCRIPTION : T24BusinessTypes:A
+        DESCRIPTION : T24BusinessTypes:A required
             @i18n:Label (en=Description)
             @i18n:Tooltip (en=Description)
             @t24:i (align=L, inputBehaviour=I, maxLength=35, multiLanguage=true, sysNumber=1.0, core=true, t24Name=DESCRIPTION)
@@ -613,7 +618,7 @@ Classes {
     }
     ICA_HIERARCHY__SHORT_NAME
     {
-        SHORT_NAME : T24BusinessTypes:AA
+        SHORT_NAME : T24BusinessTypes:AA required
             @i18n:Label (en="Short name")
             @t24:i (align=L, inputBehaviour=I, maxLength=15, multiLanguage=true, sysNumber=2.0, core=true, t24Name=SHORT.NAME)
     }
@@ -624,7 +629,12 @@ Classes {
         ACCOUNT_NUMBER -> IC_OtherInterest:ICA_TOP_ACCOUNT PK required
             @i18n:Label (en="Account Number")
             @t24:i (align=R, inputBehaviour=I, maxLength=16, sysNumber=0.0, core=true, businessType=ACC, t24Name=ACCOUNT.NUMBER)
-        ICA_HIERARCHY -> IC_OtherInterest:ICA_HIERARCHY
+        ICA_HIERARCHY -> byValue IC_OtherInterest:ICA_TOP_ACCOUNT__ICA_HIERARCHY *
+            @t24:i (t24Name=ICA.HIERARCHY)
+    }
+    ICA_TOP_ACCOUNT__ICA_HIERARCHY
+    {
+        ICA_HIERARCHY -> IC_OtherInterest:ICA_HIERARCHY required
             @t24:i (align=R, inputBehaviour=I, maxLength=16, sysNumber=1.0, core=true, t24Name=ICA.HIERARCHY)
     }
     IC_ADJUST_ACCRUAL
@@ -774,7 +784,7 @@ Classes {
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=17.0, core=true, t24Name=CALC.PREM, typeModifiers="4D")
         CALC_PREM_ACT : T24BusinessTypes:AMT
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=18.0, core=true, t24Name=CALC.PREM.ACT, typeModifiers="4D")
-        NUMBER_OF_DAYS : mml:Integer
+        NUMBER_OF_DAYS : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=16.0, core=true, t24Name=NUMBER.OF.DAYS)
         PREMIUM_END : T24BusinessTypes:D
             @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=15.0, core=true, t24Name=PREMIUM.END)
@@ -827,7 +837,7 @@ Classes {
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=17.0, core=true, t24Name=CALC.PREM, typeModifiers="4D")
         CALC_PREM_ACT : T24BusinessTypes:AMT
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=18.0, core=true, t24Name=CALC.PREM.ACT, typeModifiers="4D")
-        NUMBER_OF_DAYS : mml:Integer
+        NUMBER_OF_DAYS : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=16.0, core=true, t24Name=NUMBER.OF.DAYS)
         PREMIUM_END : T24BusinessTypes:D
             @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=15.0, core=true, t24Name=PREMIUM.END)
@@ -880,7 +890,7 @@ Classes {
             @t24:i (align=R, inputBehaviour=I, maxLength=55, sysNumber=16.0, core=true, t24Name=BK.BALANCE, typeModifiers=-)
         BK_CREDIT_MVMT : T24BusinessTypes:AMT
             @t24:i (align=R, inputBehaviour=I, maxLength=55, sysNumber=17.0, core=true, t24Name=BK.CREDIT.MVMT, typeModifiers=-)
-        BK_DAY_NO : mml:Integer
+        BK_DAY_NO : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=55, sysNumber=15.0, core=true, t24Name=BK.DAY.NO)
         BK_DEBIT_MVMT : T24BusinessTypes:AMT
             @t24:i (align=R, inputBehaviour=I, maxLength=55, sysNumber=18.0, core=true, t24Name=BK.DEBIT.MVMT, typeModifiers=-)
@@ -889,7 +899,7 @@ Classes {
     {
         BK_TRADE_DATE -> byValue IC_OtherInterest:PRIOR_ACCT_ACTIVITY__BOOKING_DAY__BK_TRADE_DATE *
             @t24:i (t24Name=BK.TRADE.DATE)
-        BOOKING_DAY : mml:Integer
+        BOOKING_DAY : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=19.0, core=true, t24Name=BOOKING.DAY)
     }
     PRIOR_ACCT_ACTIVITY__BOOKING_DAY__BK_TRADE_DATE
@@ -907,7 +917,7 @@ Classes {
             @i18n:Label (en=Balance)
             @i18n:Tooltip (en="Indicates the current Balance of the Product")
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=4.0, core=true, t24Name=BALANCE, typeModifiers=-)
-        DAY_NO : mml:Integer
+        DAY_NO : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=1.0, core=true, t24Name=DAY.NO)
         TURNOVER_CREDIT : T24BusinessTypes:AMT
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=2.0, core=true, t24Name=TURNOVER.CREDIT, typeModifiers=-)
@@ -916,7 +926,7 @@ Classes {
     }
     PRIOR_ACCT_ACTIVITY__TRANSACT_CODE
     {
-        NO_OF_TRANSACT : mml:Integer
+        NO_OF_TRANSACT : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=6, sysNumber=6.0, core=true, t24Name=NO.OF.TRANSACT)
         TRANSACT_AMT : T24BusinessTypes:AMT
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=7.0, core=true, t24Name=TRANSACT.AMT, typeModifiers=-)
@@ -929,7 +939,7 @@ Classes {
             @t24:i (t24Name=BOOKING.DATE)
         TRADE_DATE -> byValue IC_OtherInterest:PRIOR_ACCT_ACTIVITY__VALUE_DAY__TRADE_DATE *
             @t24:i (t24Name=TRADE.DATE)
-        VALUE_DAY : mml:Integer
+        VALUE_DAY : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=8.0, core=true, t24Name=VALUE.DAY)
     }
     PRIOR_ACCT_ACTIVITY__VALUE_DAY__BOOKING_DATE
@@ -976,14 +986,14 @@ Classes {
         CO_CODE -> ST_CompanyCreation:COMPANY
             @i18n:Label (en=Company)
             @t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=30.0, core=true, businessType=A, t24Name=CO.CODE, mask="R##-###-####")
-        CREDIT_TXN_CODE -> ST_Config:TRANSACTION
+        CREDIT_TXN_CODE -> ST_Config:TRANSACTION required
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=5.0, core=true, t24Name=CREDIT.TXN.CODE)
         CURR_NO : T24BusinessTypes:N
             @i18n:Label (en="Curr No")
             @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=26.0, core=true, t24Name=CURR.NO)
         DATE_TIME -> byValue IC_OtherInterest:SAVINGS_PREMIUM__DATE_TIME *
             @t24:i (t24Name=DATE.TIME)
-        DEBIT_TXN_CODE -> ST_Config:TRANSACTION
+        DEBIT_TXN_CODE -> ST_Config:TRANSACTION required
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=4.0, core=true, t24Name=DEBIT.TXN.CODE)
         DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
             @i18n:Label (en="Dept Code")
@@ -1013,12 +1023,12 @@ Classes {
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=20.0, core=true, t24Name=MIN.BAL.INC)
         MIN_PREM_QUAL_PRD : T24BusinessTypes:A
             @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=15.0, core=true, t24Name=MIN.PREM.QUAL.PRD)
-        PL_CATEGORY -> ST_Config:CATEGORY
+        PL_CATEGORY -> ST_Config:CATEGORY required
             @i18n:Label (en="PL Category")
             @t24:i (align=L, inputBehaviour=I, maxLength=5, sysNumber=3.0, core=true, businessType=A, t24Name=PL.CATEGORY)
         PREMIUM_INC_INT : IC_OtherInterest:SAVINGS_PREMIUM__PREMIUM_INC_INT
             @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=18.0, core=true, t24Name=PREMIUM.INC.INT)
-        PREMIUM_RATE : T24BusinessTypes:R
+        PREMIUM_RATE : T24BusinessTypes:R required
             @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=2.0, core=true, t24Name=PREMIUM.RATE)
         PREMIUM_TYPE -> IC_OtherInterest:SAVINGS_PREMIUM PK required
             @t24:i (align=L, inputBehaviour=I, maxLength=27, sysNumber=0.0, core=true, businessType=A, t24Name=PREMIUM.TYPE)
@@ -1050,7 +1060,7 @@ Classes {
     }
     SAVINGS_PREMIUM__DESCRIPTION
     {
-        DESCRIPTION : T24BusinessTypes:A
+        DESCRIPTION : T24BusinessTypes:A required
             @i18n:Label (en=Description)
             @i18n:Tooltip (en=Description)
             @t24:i (align=L, inputBehaviour=I, maxLength=35, multiLanguage=true, sysNumber=1.0, core=true, t24Name=DESCRIPTION)

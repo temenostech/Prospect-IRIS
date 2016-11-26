@@ -192,7 +192,7 @@ Classes {
             @t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=302.0, core=true, businessType=CCY, t24Name=AS.CURRENCY)
         AS_DAY_COUNT -> ST_RateParameters:INTEREST_BASIS
             @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=304.0, core=true, businessType=A, t24Name=AS.DAY.COUNT)
-        AS_FIXED_RATE : mml:Integer
+        AS_FIXED_RATE : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=F, maxLength=11, sysNumber=305.0, core=true, t24Name=AS.FIXED.RATE)
         AS_FLOAT_KEY -> ST_RateParameters:MARKET_RATE_TEXT
             @t24:i (align=L, inputBehaviour=I, maxLength=6, sysNumber=306.0, core=true, businessType=A, t24Name=AS.FLOAT.KEY)
@@ -203,7 +203,7 @@ Classes {
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=303.0, core=true, t24Name=AS.PRINCIPAL, typeModifiers="13")
         AS_RR_FREQUENCY : T24BusinessTypes:FQU
             @t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=309.0, core=true, t24Name=AS.RR.FREQUENCY)
-        AS_SPREAD : mml:Integer
+        AS_SPREAD : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=307.0, core=true, t24Name=AS.SPREAD)
         AUDITOR_CODE : T24BusinessTypes:A
             @i18n:Label (en="Auditor Code")
@@ -267,7 +267,7 @@ Classes {
             @i18n:Label (en="Contract Ccy")
             @i18n:Tooltip (en="Identifies the currency of the contract")
             @t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=12.0, core=true, businessType=CCY, t24Name=CONTRACT.CCY)
-        CONTRACT_CODE -> DX_Configuration:DX_CONTRACT_MASTER
+        CONTRACT_CODE -> DX_Configuration:DX_CONTRACT_MASTER required
             @i18n:Label (en=Contract)
             @i18n:Tooltip (en="Identifies the contract code of the transaction")
             @t24:i (align=L, inputBehaviour=I, maxLength=12, sysNumber=1.0, core=true, businessType=DXCM, t24Name=CONTRACT.CODE, onchangeBehaviour=HOT.FIELD)
@@ -277,10 +277,8 @@ Classes {
             @t24:i (align=R, inputBehaviour=N, maxLength=16, sysNumber=252.0, core=true, t24Name=CONTRACT.SIZE)
         CONTRACT_TIME : T24BusinessTypes:TIME
             @t24:i (align=L, inputBehaviour=I, maxLength=9, sysNumber=33.0, core=true, t24Name=CONTRACT.TIME, typeModifiers=S)
-        COST_ACC_CCY : T24BusinessTypes:AMT
-            @t24:i (align=R, inputBehaviour=N, maxLength=20, sysNumber=393.0, core=true, t24Name=COST.ACC.CCY)
-        COST_SAM_CCY : T24BusinessTypes:AMT
-            @t24:i (align=R, inputBehaviour=N, maxLength=20, sysNumber=394.0, core=true, t24Name=COST.SAM.CCY)
+        COST_ACC_CCY -> byValue DX_Trade:DX_TRADE__COST_ACC_CCY *
+            @t24:i (t24Name=COST.ACC.CCY)
         COUNTERPARTY_TRADE : DX_Trade:DX_TRADE__COUNTERPARTY_TRADE
             @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=367.0, core=true, t24Name=COUNTERPARTY.TRADE)
         CO_CODE -> ST_CompanyCreation:COMPANY
@@ -411,7 +409,7 @@ Classes {
             @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=310.0, core=true, businessType=CCY, t24Name=LB.CURRENCY)
         LB_DAY_COUNT -> ST_RateParameters:INTEREST_BASIS
             @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=312.0, core=true, businessType=A, t24Name=LB.DAY.COUNT)
-        LB_FIXED_RATE : mml:Integer
+        LB_FIXED_RATE : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=F, maxLength=11, sysNumber=313.0, core=true, t24Name=LB.FIXED.RATE)
         LB_FLOAT_KEY -> ST_RateParameters:MARKET_RATE_TEXT
             @t24:i (align=L, inputBehaviour=I, maxLength=6, sysNumber=314.0, core=true, businessType=A, t24Name=LB.FLOAT.KEY)
@@ -422,7 +420,7 @@ Classes {
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=311.0, core=true, t24Name=LB.PRINCIPAL, typeModifiers="310")
         LB_RR_FREQUENCY : T24BusinessTypes:FQU
             @t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=317.0, core=true, t24Name=LB.RR.FREQUENCY)
-        LB_SPREAD : mml:Integer
+        LB_SPREAD : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=315.0, core=true, t24Name=LB.SPREAD)
         LIMIT_DATE : T24BusinessTypes:D
             @t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=286.0, core=true, t24Name=LIMIT.DATE)
@@ -453,7 +451,7 @@ Classes {
             @t24:i (align=L, inputBehaviour=N, maxLength=120, sysNumber=370.0, core=true, t24Name=MARKET.PRICE.KEY)
         MASTER_AGREEMENT -> SW_Config:SWAP_AGREEMENT_TYPE
             @t24:i (align=L, inputBehaviour=I, maxLength=6, sysNumber=325.0, core=true, businessType=A, t24Name=MASTER.AGREEMENT)
-        MATURITY_DATE : T24BusinessTypes:A
+        MATURITY_DATE : T24BusinessTypes:A required
             @i18n:Label (en="Maturity Date")
             @i18n:Tooltip (en="Indicates the Maturity Date of the Transaction")
             @t24:i (align=L, inputBehaviour=I, maxLength=11, sysNumber=8.0, core=true, t24Name=MATURITY.DATE)
@@ -544,16 +542,16 @@ Classes {
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=347.0, core=true, t24Name=PRICE.TRADED)
         PRIN_AGENT_MODEL : DX_Trade:DX_TRADE__PRIN_AGENT_MODEL
             @t24:i (align=L, inputBehaviour=N, maxLength=1, sysNumber=388.0, core=true, t24Name=PRIN.AGENT.MODEL)
-        PRI_BUY_SELL : DX_Trade:DX_TRADE__PRI_BUY_SELL
+        PRI_BUY_SELL : DX_Trade:DX_TRADE__PRI_BUY_SELL required
             @i18n:Label (en="Buy or Sell")
             @t24:i (align=L, inputBehaviour=F, maxLength=4, sysNumber=55.0, core=true, t24Name=PRI.BUY.SELL)
         PRI_CUST_NO -> byValue DX_Trade:DX_TRADE__PRI_CUST_NO *
             @t24:i (t24Name=PRI.CUST.NO)
         PRI_INT_PRICE : T24BusinessTypes:AMT
             @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=53.0, core=true, t24Name=PRI.INT.PRICE, typeModifiers="13")
-        PRI_PRICE : mml:Integer
+        PRI_PRICE : T24BusinessTypes:PRICE
             @i18n:Label (en=Price/Premium)
-            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=52.0, core=true, t24Name=PRI.PRICE)
+            @t24:i (align=L, inputBehaviour=I, maxLength=19, sysNumber=52.0, core=true, t24Name=PRI.PRICE)
         PRI_TRADE_COST : T24BusinessTypes:AMT
             @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=54.0, core=true, t24Name=PRI.TRADE.COST)
         PRODCCY : T24BusinessTypes:N
@@ -750,7 +748,7 @@ Classes {
             @t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=239.0, core=true, businessType=CUS, t24Name=SEC.INTR.BK.NO)
         SEC_INT_PRICE : T24BusinessTypes:AMT
             @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=163.0, core=true, t24Name=SEC.INT.PRICE)
-        SEC_LIMIT_REF : mml:Integer
+        SEC_LIMIT_REF : T24BusinessTypes:N
             @i18n:Label (en="Sec Limit Ref")
             @i18n:Tooltip (en="Limit reference for updating customer credit line")
             @t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=221.0, core=true, t24Name=SEC.LIMIT.REF)
@@ -786,16 +784,16 @@ Classes {
             @t24:i (align=R, inputBehaviour=I, maxLength=16, sysNumber=214.0, core=true, t24Name=SEC.PREM.EXC)
         SEC_PREM_EXCH_RATE : T24BusinessTypes:R
             @t24:i (align=R, inputBehaviour=N, maxLength=16, sysNumber=203.0, core=true, t24Name=SEC.PREM.EXCH.RATE)
-        SEC_PREM_OFFSET : mml:Integer
+        SEC_PREM_OFFSET : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=233.0, core=true, t24Name=SEC.PREM.OFFSET)
         SEC_PREM_PRICE : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=202.0, core=true, t24Name=SEC.PREM.PRICE)
         SEC_PREM_TXN -> byValue DX_Trade:DX_TRADE__SEC_PREM_TXN *
             @t24:i (t24Name=SEC.PREM.TXN)
-        SEC_PRICE : mml:Integer
+        SEC_PRICE : T24BusinessTypes:PRICE
             @i18n:Label (en="Sec Price")
             @i18n:Tooltip (en="The price for the number of lots transactiond")
-            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=162.0, core=true, t24Name=SEC.PRICE)
+            @t24:i (align=L, inputBehaviour=I, maxLength=19, sysNumber=162.0, core=true, t24Name=SEC.PRICE)
         SEC_PYMT_NAR -> byValue DX_Trade:DX_TRADE__SEC_PYMT_NAR *
             @t24:i (t24Name=SEC.PYMT.NAR)
         SEC_RCAD_NAR -> byValue DX_Trade:DX_TRADE__SEC_RCAD_NAR *
@@ -852,10 +850,10 @@ Classes {
         SHORT_DESCRIPTION : T24BusinessTypes:A
             @i18n:Label (en=Description)
             @t24:i (align=L, inputBehaviour=I, maxLength=120, sysNumber=37.0, core=true, t24Name=SHORT.DESCRIPTION)
-        SPREAD_RATE : mml:Integer
+        SPREAD_RATE : T24BusinessTypes:N
             @i18n:Label (en="Spread Rate")
             @t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=319.0, core=true, t24Name=SPREAD.RATE)
-        STRIKE_PRICE : mml:Integer
+        STRIKE_PRICE : T24BusinessTypes:N
             @i18n:Label (en=Strike)
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=28.0, core=true, t24Name=STRIKE.PRICE)
         STRIKE_QUOTE : T24BusinessTypes:N
@@ -999,6 +997,13 @@ Classes {
             @i18n:Tooltip (en="Closeout Trade")
             @t24:i (align=L, inputBehaviour=I, maxLength=20, sysNumber=395.0, core=true, t24Name=CLOSEOUT.TRADE)
     }
+    DX_TRADE__COST_ACC_CCY
+    {
+        COST_ACC_CCY : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=N, maxLength=20, sysNumber=393.0, core=true, t24Name=COST.ACC.CCY)
+        COST_SAM_CCY : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=N, maxLength=20, sysNumber=394.0, core=true, t24Name=COST.SAM.CCY)
+    }
     DX_TRADE__DATE_TIME
     {
         DATE_TIME : T24BusinessTypes:RELTIME
@@ -1093,7 +1098,7 @@ Classes {
     {
         INTEG_DATA_ITEM : T24BusinessTypes:A
             @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=397.0, core=true, t24Name=INTEG.DATA.ITEM)
-        INTEG_DATA_VALUE : mml:Integer
+        INTEG_DATA_VALUE : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=21, sysNumber=398.0, core=true, t24Name=INTEG.DATA.VALUE)
     }
     DX_TRADE__NARRATIVE
@@ -1182,7 +1187,7 @@ Classes {
             @i18n:Label (en="Pri Cpy No")
             @i18n:Tooltip (en="Identifies the counterparty to the transaction")
             @t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=138.0, core=true, businessType=CUS, t24Name=PRI.CPY.NO)
-        PRI_CUST_NO -> DX_Customer:DX_CUSTOMER
+        PRI_CUST_NO -> DX_Customer:DX_CUSTOMER required
             @i18n:Label (en="Pri Cust No")
             @t24:i (align=R, inputBehaviour=F, maxLength=10, sysNumber=56.0, core=true, businessType=CUS, t24Name=PRI.CUST.NO)
         PRI_CUST_REF : T24BusinessTypes:A
@@ -1267,13 +1272,13 @@ Classes {
             @i18n:Label (en="Pri Int Bank No")
             @i18n:Tooltip (en="Intermediary bank involved in the transaction")
             @t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=141.0, core=true, businessType=CUS, t24Name=PRI.INTR.BK.NO)
-        PRI_LIMIT_REF : mml:Integer
+        PRI_LIMIT_REF : T24BusinessTypes:N
             @i18n:Label (en="Pri Limit Ref")
             @i18n:Tooltip (en="Limit reference for updating customer credit line")
             @t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=123.0, core=true, t24Name=PRI.LIMIT.REF)
         PRI_LINK -> byValue DX_Trade:DX_TRADE__PRI_CUST_NO__PRI_LINK *
             @t24:i (t24Name=PRI.LINK)
-        PRI_LOTS : T24BusinessTypes:DEC
+        PRI_LOTS : T24BusinessTypes:DEC required
             @i18n:Label (en=Lots)
             @t24:i (align=L, inputBehaviour=I, maxLength=19, sysNumber=61.0, core=true, t24Name=PRI.LOTS, typeModifiers="9")
         PRI_MESS_CTL -> byValue DX_Trade:DX_TRADE__PRI_CUST_NO__PRI_MESS_CTL *
@@ -1306,7 +1311,7 @@ Classes {
             @i18n:Label (en="Pri Premium Exch Rate")
             @i18n:Tooltip (en="Primary Side Premium Exchange Rate")
             @t24:i (align=R, inputBehaviour=N, maxLength=16, sysNumber=105.0, core=true, t24Name=PRI.PREM.EXCH.RATE)
-        PRI_PREM_OFFSET : mml:Integer
+        PRI_PREM_OFFSET : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=135.0, core=true, t24Name=PRI.PREM.OFFSET)
         PRI_PREM_PRICE : T24BusinessTypes:N
             @i18n:Label (en="Pri Premium Price")
@@ -1743,7 +1748,7 @@ Classes {
             @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=206.0, core=true, t24Name=AS.PRINCIPAL)
         BASE_LOTS : T24BusinessTypes:AMT
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=137.0, core=true, t24Name=BASE.LOTS)
-        BUY_FLOATING_RATE : mml:Integer
+        BUY_FLOATING_RATE : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=155.0, core=true, t24Name=BUY.FLOATING.RATE)
         BUY_SELL : DX_Trade:DX_TRANSACTION__BUY_SELL
             @i18n:Label (en=Buy/Sell)
@@ -1764,7 +1769,7 @@ Classes {
             @i18n:Label (en="Charge Date")
             @i18n:Tooltip (en="Indicates value date for online charges raised")
             @t24:i (align=L, inputBehaviour=I, maxLength=10, sysNumber=69.0, core=true, t24Name=CHARGE.DATE)
-        CHG_OFFSET : mml:Integer
+        CHG_OFFSET : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=88.0, core=true, t24Name=CHG.OFFSET)
         COMM_TYP -> byValue DX_Trade:DX_TRANSACTION__COMM_TYP *
             @t24:i (t24Name=COMM.TYP)
@@ -1774,7 +1779,7 @@ Classes {
             @i18n:Label (en=Contract)
             @i18n:Tooltip (en="Identifies the contract code of the transaction")
             @t24:i (align=L, inputBehaviour=I, maxLength=12, sysNumber=6.0, core=true, businessType=A, t24Name=CONTRACT.CODE)
-        CONTRACT_SIZE : T24BusinessTypes:AMT
+        CONTRACT_SIZE : T24BusinessTypes:AMT required
             @i18n:Label (en="Contract Size")
             @i18n:Tooltip (en="Specifies the size of the contract")
             @t24:i (align=R, inputBehaviour=I, maxLength=16, sysNumber=123.0, core=true, t24Name=CONTRACT.SIZE)
@@ -1782,9 +1787,9 @@ Classes {
             @t24:i (t24Name=COUNTERPARTY)
         CO_STMT_NOS -> byValue DX_Trade:DX_TRANSACTION__CO_STMT_NOS *
             @t24:i (t24Name=CO.STMT.NOS)
-        CPARTY_IPRICE : mml:Integer
+        CPARTY_IPRICE : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=140.0, core=true, t24Name=CPARTY.IPRICE)
-        CPARTY_PRICE : mml:Integer
+        CPARTY_PRICE : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=139.0, core=true, t24Name=CPARTY.PRICE)
         CREATE_TRADES : DX_Trade:DX_TRANSACTION__CREATE_TRADES
             @t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=178.0, core=true, t24Name=CREATE.TRADES)
@@ -1822,7 +1827,7 @@ Classes {
             @t24:i (align=L, inputBehaviour=I, maxLength=15, sysNumber=49.0, core=true, t24Name=CUST.STATUS)
         CUST_TYPE : T24BusinessTypes:A
             @t24:i (align=L, inputBehaviour=I, maxLength=15, sysNumber=48.0, core=true, t24Name=CUST.TYPE)
-        DAYS_PER_YEAR : mml:Integer
+        DAYS_PER_YEAR : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=9, sysNumber=150.0, core=true, t24Name=DAYS.PER.YEAR)
         DEALER_DESK -> ST_Config:DEALER_DESK
             @i18n:Label (en="Dealer Desk")
@@ -1936,9 +1941,9 @@ Classes {
             @t24:i (t24Name=INIT.MAR.CCY)
         INIT_MAR_REF_CCY : T24BusinessTypes:AMT
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=40.0, core=true, t24Name=INIT.MAR.REF.CCY)
-        INT_PRICE : mml:Integer
+        INT_PRICE : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=19.0, core=true, t24Name=INT.PRICE)
-        INT_STRIKE : mml:Integer
+        INT_STRIKE : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=22.0, core=true, t24Name=INT.STRIKE)
         LAST_REP_POS -> DX_Position:DX_REP_POS_LAST
             @t24:i (align=L, inputBehaviour=I, maxLength=120, sysNumber=12.0, core=true, businessType=A, t24Name=LAST.REP.POS)
@@ -1956,18 +1961,18 @@ Classes {
             @t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=120.0, core=true, t24Name=LIMIT.REFERENCE)
         LINK -> byValue DX_Trade:DX_TRANSACTION__LINK *
             @t24:i (t24Name=LINK)
-        LOTS : mml:Integer
+        LOTS : T24BusinessTypes:N
             @i18n:Label (en="Open Lots")
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=16.0, core=true, t24Name=LOTS)
-        LOTS_ACTIONED : mml:Integer
+        LOTS_ACTIONED : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=34.0, core=true, t24Name=LOTS.ACTIONED)
         LOTS_IN_TRADE_CCY : T24BusinessTypes:N
             @i18n:Label (en="Lots in Trade Ccy")
             @i18n:Tooltip (en="Lots in Trade Ccy")
             @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=245.0, core=true, t24Name=LOTS.IN.TRADE.CCY)
-        LOTS_SETTLED : mml:Integer
+        LOTS_SETTLED : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=31.0, core=true, t24Name=LOTS.SETTLED)
-        LOTS_TRANSFER : T24BusinessTypes:DEC
+        LOTS_TRANSFER : T24BusinessTypes:DEC required
             @i18n:Label (en="Lots Transfer")
             @i18n:Tooltip (en="Specifies the number of lots to be transferred")
             @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=166.0, core=true, t24Name=LOTS.TRANSFER)
@@ -2027,10 +2032,10 @@ Classes {
             @t24:i (t24Name=OPTION.TYPE)
         ORDER_NO -> byValue DX_Trade:DX_TRANSACTION__ORDER_NO *
             @t24:i (t24Name=ORDER.NO)
-        ORIGINAL_LOTS : mml:Integer
+        ORIGINAL_LOTS : T24BusinessTypes:N
             @i18n:Label (en="Original Lots")
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=17.0, core=true, t24Name=ORIGINAL.LOTS)
-        ORIGINAL_PRICE : mml:Integer
+        ORIGINAL_PRICE : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=138.0, core=true, t24Name=ORIGINAL.PRICE)
         ORIG_LIMIT_AMOUNT : T24BusinessTypes:AMT
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=121.0, core=true, t24Name=ORIG.LIMIT.AMOUNT)
@@ -2100,10 +2105,10 @@ Classes {
             @t24:i (t24Name=PREV.VM.CCY)
         PREV_VM_REF_CCY : T24BusinessTypes:AMT
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=110.0, core=true, t24Name=PREV.VM.REF.CCY)
-        PRICE : mml:Integer
+        PRICE : T24BusinessTypes:N
             @i18n:Label (en=Price)
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=18.0, core=true, t24Name=PRICE)
-        PRICE_OUTPUT : mml:Integer
+        PRICE_OUTPUT : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=20.0, core=true, t24Name=PRICE.OUTPUT)
         PRICE_SET : T24BusinessTypes:A
             @i18n:Label (en=Currnt/Closng/Whatif)
@@ -2140,11 +2145,11 @@ Classes {
             @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=86.0, core=true, t24Name=RV.UPDATE.ID)
         SC_BLOCK_INFO -> byValue DX_Trade:DX_TRANSACTION__SC_BLOCK_INFO *
             @t24:i (t24Name=SC.BLOCK.INFO)
-        SELL_FLOATING_RATE : mml:Integer
+        SELL_FLOATING_RATE : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=156.0, core=true, t24Name=SELL.FLOATING.RATE)
-        SETT_VAL_ACC_CCY : mml:Integer
+        SETT_VAL_ACC_CCY : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=32.0, core=true, t24Name=SETT.VAL.ACC.CCY)
-        SETT_VAL_REF_CCY : mml:Integer
+        SETT_VAL_REF_CCY : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=33.0, core=true, t24Name=SETT.VAL.REF.CCY)
         SOURCE_ID : T24BusinessTypes:A
             @i18n:Label (en="Source Id")
@@ -2152,7 +2157,7 @@ Classes {
         SOURCE_REF : T24BusinessTypes:A
             @i18n:Label (en="Source Ref")
             @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=5.0, core=true, t24Name=SOURCE.REF)
-        SPREAD_RATE : mml:Integer
+        SPREAD_RATE : T24BusinessTypes:N
             @i18n:Label (en="Spread Rate")
             @t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=151.0, core=true, t24Name=SPREAD.RATE)
         STATEMENT_NOS -> byValue DX_Trade:DX_TRANSACTION__STATEMENT_NOS *
@@ -2160,17 +2165,17 @@ Classes {
         STRATEGY -> DX_Configuration:DX_STRATEGY
             @i18n:Label (en=Strategy)
             @t24:i (align=L, inputBehaviour=I, maxLength=20, sysNumber=47.0, core=true, businessType=A, t24Name=STRATEGY)
-        STRIKE : mml:Integer
+        STRIKE : T24BusinessTypes:N
             @i18n:Label (en=Strike)
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=21.0, core=true, t24Name=STRIKE)
-        STRIKE_OUTPUT : mml:Integer
+        STRIKE_OUTPUT : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=23.0, core=true, t24Name=STRIKE.OUTPUT)
         STRIKE_QUOTE : T24BusinessTypes:N
             @i18n:Label (en="Strike Quote ")
             @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=218.0, core=true, t24Name=STRIKE.QUOTE)
         STRIKE_QUOTE_CCY : T24BusinessTypes:CCY
             @t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=217.0, core=true, t24Name=STRIKE.QUOTE.CCY)
-        SUB_ASSET_TYPE -> ST_Valuation:SUB_ASSET_TYPE
+        SUB_ASSET_TYPE -> ST_Valuation:SUB_ASSET_TYPE required
             @i18n:Label (en="Sub Asset Type")
             @t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=25.0, core=true, t24Name=SUB.ASSET.TYPE)
         SWAP_REFERENCE : T24BusinessTypes:A
@@ -2264,7 +2269,7 @@ Classes {
             @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=206.0, core=true, t24Name=AS.PRINCIPAL)
         BASE_LOTS : T24BusinessTypes:AMT
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=137.0, core=true, t24Name=BASE.LOTS)
-        BUY_FLOATING_RATE : mml:Integer
+        BUY_FLOATING_RATE : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=155.0, core=true, t24Name=BUY.FLOATING.RATE)
         BUY_SELL : DX_Trade:DX_TRANSACTION_HISTORY__BUY_SELL
             @i18n:Label (en=Buy/Sell)
@@ -2285,7 +2290,7 @@ Classes {
             @i18n:Label (en="Charge Date")
             @i18n:Tooltip (en="Indicates value date for online charges raised")
             @t24:i (align=L, inputBehaviour=I, maxLength=10, sysNumber=69.0, core=true, t24Name=CHARGE.DATE)
-        CHG_OFFSET : mml:Integer
+        CHG_OFFSET : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=88.0, core=true, t24Name=CHG.OFFSET)
         COMM_TYP -> byValue DX_Trade:DX_TRANSACTION_HISTORY__COMM_TYP *
             @t24:i (t24Name=COMM.TYP)
@@ -2295,7 +2300,7 @@ Classes {
             @i18n:Label (en=Contract)
             @i18n:Tooltip (en="Identifies the contract code of the transaction")
             @t24:i (align=L, inputBehaviour=I, maxLength=12, sysNumber=6.0, core=true, businessType=A, t24Name=CONTRACT.CODE)
-        CONTRACT_SIZE : T24BusinessTypes:AMT
+        CONTRACT_SIZE : T24BusinessTypes:AMT required
             @i18n:Label (en="Contract Size")
             @i18n:Tooltip (en="Specifies the size of the contract")
             @t24:i (align=R, inputBehaviour=I, maxLength=16, sysNumber=123.0, core=true, t24Name=CONTRACT.SIZE)
@@ -2303,9 +2308,9 @@ Classes {
             @t24:i (t24Name=COUNTERPARTY)
         CO_STMT_NOS -> byValue DX_Trade:DX_TRANSACTION_HISTORY__CO_STMT_NOS *
             @t24:i (t24Name=CO.STMT.NOS)
-        CPARTY_IPRICE : mml:Integer
+        CPARTY_IPRICE : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=140.0, core=true, t24Name=CPARTY.IPRICE)
-        CPARTY_PRICE : mml:Integer
+        CPARTY_PRICE : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=139.0, core=true, t24Name=CPARTY.PRICE)
         CREATE_TRADES : DX_Trade:DX_TRANSACTION_HISTORY__CREATE_TRADES
             @t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=178.0, core=true, t24Name=CREATE.TRADES)
@@ -2340,7 +2345,7 @@ Classes {
             @t24:i (align=L, inputBehaviour=I, maxLength=15, sysNumber=49.0, core=true, t24Name=CUST.STATUS)
         CUST_TYPE : T24BusinessTypes:A
             @t24:i (align=L, inputBehaviour=I, maxLength=15, sysNumber=48.0, core=true, t24Name=CUST.TYPE)
-        DAYS_PER_YEAR : mml:Integer
+        DAYS_PER_YEAR : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=9, sysNumber=150.0, core=true, t24Name=DAYS.PER.YEAR)
         DEALER_DESK -> ST_Config:DEALER_DESK
             @i18n:Label (en="Dealer Desk")
@@ -2451,9 +2456,9 @@ Classes {
             @t24:i (t24Name=INIT.MAR.CCY)
         INIT_MAR_REF_CCY : T24BusinessTypes:AMT
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=40.0, core=true, t24Name=INIT.MAR.REF.CCY)
-        INT_PRICE : mml:Integer
+        INT_PRICE : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=19.0, core=true, t24Name=INT.PRICE)
-        INT_STRIKE : mml:Integer
+        INT_STRIKE : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=22.0, core=true, t24Name=INT.STRIKE)
         LAST_REP_POS -> DX_Position:DX_REP_POS_LAST
             @t24:i (align=L, inputBehaviour=I, maxLength=120, sysNumber=12.0, core=true, businessType=A, t24Name=LAST.REP.POS)
@@ -2471,18 +2476,18 @@ Classes {
             @t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=120.0, core=true, t24Name=LIMIT.REFERENCE)
         LINK -> byValue DX_Trade:DX_TRANSACTION_HISTORY__LINK *
             @t24:i (t24Name=LINK)
-        LOTS : mml:Integer
+        LOTS : T24BusinessTypes:N
             @i18n:Label (en="Open Lots")
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=16.0, core=true, t24Name=LOTS)
-        LOTS_ACTIONED : mml:Integer
+        LOTS_ACTIONED : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=34.0, core=true, t24Name=LOTS.ACTIONED)
         LOTS_IN_TRADE_CCY : T24BusinessTypes:N
             @i18n:Label (en="Lots in Trade Ccy")
             @i18n:Tooltip (en="Lots in Trade Ccy")
             @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=245.0, core=true, t24Name=LOTS.IN.TRADE.CCY)
-        LOTS_SETTLED : mml:Integer
+        LOTS_SETTLED : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=31.0, core=true, t24Name=LOTS.SETTLED)
-        LOTS_TRANSFER : T24BusinessTypes:DEC
+        LOTS_TRANSFER : T24BusinessTypes:DEC required
             @i18n:Label (en="Lots Transfer")
             @i18n:Tooltip (en="Specifies the number of lots to be transferred")
             @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=166.0, core=true, t24Name=LOTS.TRANSFER)
@@ -2538,10 +2543,10 @@ Classes {
             @t24:i (t24Name=OPTION.TYPE)
         ORDER_NO -> byValue DX_Trade:DX_TRANSACTION_HISTORY__ORDER_NO *
             @t24:i (t24Name=ORDER.NO)
-        ORIGINAL_LOTS : mml:Integer
+        ORIGINAL_LOTS : T24BusinessTypes:N
             @i18n:Label (en="Original Lots")
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=17.0, core=true, t24Name=ORIGINAL.LOTS)
-        ORIGINAL_PRICE : mml:Integer
+        ORIGINAL_PRICE : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=138.0, core=true, t24Name=ORIGINAL.PRICE)
         ORIG_LIMIT_AMOUNT : T24BusinessTypes:AMT
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=121.0, core=true, t24Name=ORIG.LIMIT.AMOUNT)
@@ -2611,10 +2616,10 @@ Classes {
             @t24:i (t24Name=PREV.VM.CCY)
         PREV_VM_REF_CCY : T24BusinessTypes:AMT
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=110.0, core=true, t24Name=PREV.VM.REF.CCY)
-        PRICE : mml:Integer
+        PRICE : T24BusinessTypes:N
             @i18n:Label (en=Price)
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=18.0, core=true, t24Name=PRICE)
-        PRICE_OUTPUT : mml:Integer
+        PRICE_OUTPUT : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=20.0, core=true, t24Name=PRICE.OUTPUT)
         PRICE_TRADED : T24BusinessTypes:AMT
             @i18n:Label (en="Price Traded")
@@ -2648,11 +2653,11 @@ Classes {
             @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=86.0, core=true, t24Name=RV.UPDATE.ID)
         SC_BLOCK_INFO -> byValue DX_Trade:DX_TRANSACTION_HISTORY__SC_BLOCK_INFO *
             @t24:i (t24Name=SC.BLOCK.INFO)
-        SELL_FLOATING_RATE : mml:Integer
+        SELL_FLOATING_RATE : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=156.0, core=true, t24Name=SELL.FLOATING.RATE)
-        SETT_VAL_ACC_CCY : mml:Integer
+        SETT_VAL_ACC_CCY : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=32.0, core=true, t24Name=SETT.VAL.ACC.CCY)
-        SETT_VAL_REF_CCY : mml:Integer
+        SETT_VAL_REF_CCY : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=33.0, core=true, t24Name=SETT.VAL.REF.CCY)
         SOURCE_ID : T24BusinessTypes:A
             @i18n:Label (en="Source Id")
@@ -2660,7 +2665,7 @@ Classes {
         SOURCE_REF : T24BusinessTypes:A
             @i18n:Label (en="Source Ref")
             @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=5.0, core=true, t24Name=SOURCE.REF)
-        SPREAD_RATE : mml:Integer
+        SPREAD_RATE : T24BusinessTypes:N
             @i18n:Label (en="Spread Rate")
             @t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=151.0, core=true, t24Name=SPREAD.RATE)
         STATEMENT_NOS -> byValue DX_Trade:DX_TRANSACTION_HISTORY__STATEMENT_NOS *
@@ -2668,17 +2673,17 @@ Classes {
         STRATEGY -> DX_Configuration:DX_STRATEGY
             @i18n:Label (en=Strategy)
             @t24:i (align=L, inputBehaviour=I, maxLength=20, sysNumber=47.0, core=true, businessType=A, t24Name=STRATEGY)
-        STRIKE : mml:Integer
+        STRIKE : T24BusinessTypes:N
             @i18n:Label (en=Strike)
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=21.0, core=true, t24Name=STRIKE)
-        STRIKE_OUTPUT : mml:Integer
+        STRIKE_OUTPUT : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=23.0, core=true, t24Name=STRIKE.OUTPUT)
         STRIKE_QUOTE : T24BusinessTypes:N
             @i18n:Label (en="Strike Quote ")
             @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=218.0, core=true, t24Name=STRIKE.QUOTE)
         STRIKE_QUOTE_CCY : T24BusinessTypes:CCY
             @t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=217.0, core=true, t24Name=STRIKE.QUOTE.CCY)
-        SUB_ASSET_TYPE -> ST_Valuation:SUB_ASSET_TYPE
+        SUB_ASSET_TYPE -> ST_Valuation:SUB_ASSET_TYPE required
             @i18n:Label (en="Sub Asset Type")
             @t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=25.0, core=true, t24Name=SUB.ASSET.TYPE)
         SWAP_REFERENCE : T24BusinessTypes:A
@@ -2743,7 +2748,7 @@ Classes {
     }
     DX_TRANSACTION_HISTORY__ACTIVITY_CODE
     {
-        ACTIVITY_CODE : mml:Integer
+        ACTIVITY_CODE : T24BusinessTypes:N
             @i18n:Label (en="Activity Code")
             @i18n:Tooltip (en="Indicates activity code")
             @t24:i (align=R, inputBehaviour=I, maxLength=4, sysNumber=97.0, core=true, t24Name=ACTIVITY.CODE)
@@ -3130,7 +3135,7 @@ Classes {
     }
     DX_TRANSACTION__ACTIVITY_CODE
     {
-        ACTIVITY_CODE : mml:Integer
+        ACTIVITY_CODE : T24BusinessTypes:N
             @i18n:Label (en="Activity Code")
             @i18n:Tooltip (en="Indicates activity code")
             @t24:i (align=R, inputBehaviour=I, maxLength=4, sysNumber=97.0, core=true, t24Name=ACTIVITY.CODE)
@@ -3527,10 +3532,10 @@ Classes {
             @t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=13.0, core=true, t24Name=RESERVED4)
         TRADE_REFERENCE : T24BusinessTypes:N
             @t24:i (align=L, inputBehaviour=N, maxLength=17, core=false, t24Name=TRADE.REFERENCE, genOperation="FIELD(@ID,\".\",1)")
-        TRADE_STATUS : T24BusinessTypes:N
+        TRADE_STATUS : T24BusinessTypes:A
             @i18n:Label (en="Trade Status")
             @i18n:Tooltip (en="Status of the transaction in the system")
-            @t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=11.0, core=true, t24Name=TRADE.STATUS)
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=11.0, core=true, t24Name=TRADE.STATUS)
         VM_DETS_ID -> DX_Trade:DX_VARIATION_MARGIN_DETS PK required
             @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=0.0, core=true, businessType=A, t24Name=VM.DETS.ID)
     }
@@ -3571,6 +3576,11 @@ Classes {
             @i18n:Label (en="SY DX Reference")
             @i18n:Tooltip (en="SY DX Reference")
             @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=0.0, core=true, businessType=A, t24Name=SY.DX.REFERENCE)
+        UNDERLYING_ID -> byValue DX_Trade:SY_DX_LINK_FILE__UNDERLYING_ID *
+            @t24:i (t24Name=UNDERLYING.ID)
+    }
+    SY_DX_LINK_FILE__UNDERLYING_ID
+    {
         UNDERLYING_ID : T24BusinessTypes:A
             @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=1.0, core=true, t24Name=UNDERLYING.ID)
     }

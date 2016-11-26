@@ -37,13 +37,15 @@ Classes {
             @i18n:Label (en=Description)
             @i18n:Tooltip (en=Description)
             @t24:i (align=L, inputBehaviour=I, maxLength=90, sysNumber=1.0, core=true, t24Name=DESCRIPTION)
+        ID -> EB_ModelBank:COMP_FT_OVERRIDE_PARAM PK required
+            @i18n:Label (en="Transaction Ref")
+            @i18n:Tooltip (en="Transaction Reference")
+            @t24:i (align=L, inputBehaviour=I, maxLength=55, sysNumber=0.0, core=true, businessType=A, t24Name="@ID")
         INPUTTER -> byValue EB_ModelBank:COMP_FT_OVERRIDE_PARAM__INPUTTER *
             @t24:i (t24Name=INPUTTER)
         RECORD_STATUS : T24BusinessTypes:STAT
             @i18n:Label (en="Record Status")
             @t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=2.0, core=true, t24Name=RECORD.STATUS)
-        _ID -> EB_ModelBank:COMP_FT_OVERRIDE_PARAM PK required
-            @t24:i (align=L, inputBehaviour=I, maxLength=55, sysNumber=0.0, core=true, businessType=A, t24Name=.ID)
     }
     COMP_FT_OVERRIDE_PARAM__DATE_TIME
     {
@@ -90,13 +92,15 @@ Classes {
             @i18n:Label (en=Description)
             @i18n:Tooltip (en=Description)
             @t24:i (align=L, inputBehaviour=I, maxLength=90, sysNumber=1.0, core=true, t24Name=DESCRIPTION)
+        ID -> EB_ModelBank:COMP_TT_OVERRIDE_PARAM PK required
+            @i18n:Label (en="Transaction Ref")
+            @i18n:Tooltip (en="Transaction Reference")
+            @t24:i (align=L, inputBehaviour=I, maxLength=55, sysNumber=0.0, core=true, businessType=A, t24Name="@ID")
         INPUTTER -> byValue EB_ModelBank:COMP_TT_OVERRIDE_PARAM__INPUTTER *
             @t24:i (t24Name=INPUTTER)
         RECORD_STATUS : T24BusinessTypes:STAT
             @i18n:Label (en="Record Status")
             @t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=2.0, core=true, t24Name=RECORD.STATUS)
-        _ID -> EB_ModelBank:COMP_TT_OVERRIDE_PARAM PK required
-            @t24:i (align=L, inputBehaviour=I, maxLength=55, sysNumber=0.0, core=true, businessType=A, t24Name=.ID)
     }
     COMP_TT_OVERRIDE_PARAM__DATE_TIME
     {
@@ -111,6 +115,39 @@ Classes {
             @i18n:Label (en=Inputter)
             @i18n:Tooltip (en="The user who last updated the record")
             @t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=4.0, core=true, t24Name=INPUTTER)
+    }
+    GUI_EXCEPTION
+        @i18n:Description (en="")
+        @t24:i (t24Name=GUI.EXCEPTION, level=I, type=T, allowedFunctions="L P S", localRefAllowed=false)
+    {
+        ERR : T24BusinessTypes:N
+            @i18n:Label (en=ERR)
+            @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=6.0, core=true, t24Name=ERR)
+        FILE_NAME : T24BusinessTypes:N
+            @i18n:Label (en="File Name")
+            @t24:i (align=L, inputBehaviour=N, maxLength=50, core=false, t24Name=FILE.NAME, genOperation="FIELD(@ID,\"*\",2)")
+        HLD : T24BusinessTypes:N
+            @i18n:Label (en=HLD)
+            @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=5.0, core=true, t24Name=HLD)
+        K_TOTAL : T24BusinessTypes:N
+            @i18n:Label (en=Total)
+            @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=1.0, core=true, t24Name=K.TOTAL)
+        NA2 : T24BusinessTypes:N
+            @i18n:Label (en=NA2)
+            @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=3.0, core=true, t24Name=NA2)
+        NAO : T24BusinessTypes:N
+            @i18n:Label (en=NAO)
+            @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=4.0, core=true, t24Name=NAO)
+        NAU : T24BusinessTypes:N
+            @i18n:Label (en=NAU)
+            @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=2.0, core=true, t24Name=NAU)
+        SORT_FLD : T24BusinessTypes:N
+            @t24:i (align=L, inputBehaviour=N, maxLength=1, core=false, t24Name=SORT.FLD, genOperation="IF FILE.NAME EQ \"F.STANDARD.SELECTION\" THEN \"1\" ELSE \"2\"")
+        UNDEFINED : T24BusinessTypes:N
+            @i18n:Label (en=Undef)
+            @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=7.0, core=true, t24Name=UNDEFINED)
+        USERNO : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=4, core=false, t24Name=USERNO, genOperation="@ID[\"*\",1,1]")
     }
     MB_TXN_ENTRY_PARAM
         @i18n:Description (en="")
@@ -1135,21 +1172,6 @@ Classes {
             @i18n:Label (en="Transaction Ref")
             @i18n:Tooltip (en="Transaction Reference")
             @t24:i (align=L, inputBehaviour=N, maxLength=50, core=false, t24Name=TRANSACTION.REF, genOperation=E.MB.TXN.ENTRIES)
-    }
-    NOFILE_TXN_ENTRY_MB
-        @i18n:Description (en="")
-        @t24:i (t24Name=NOFILE.TXN.ENTRY.MB, level=I, type=T, allowedFunctions="L P S", localRefAllowed=false)
-    {
-        APPLICATION : T24BusinessTypes:N
-            @i18n:Label (en=Application)
-            @t24:i (align=R, inputBehaviour=N, maxLength=25, sysNumber=0.0, core=true, t24Name=APPLICATION)
-        DC_BATCH_DATE : T24BusinessTypes:D PK
-            @i18n:Label (en="DC Batch Date")
-            @t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=0.0, core=true, t24Name=DC.BATCH.DATE)
-        TRANSACTION_REF : T24BusinessTypes:N
-            @i18n:Label (en="Transaction Ref")
-            @i18n:Tooltip (en="Transaction Reference")
-            @t24:i (align=L, inputBehaviour=N, maxLength=50, core=false, t24Name=TRANSACTION.REF, genOperation=E.MB.TXN.ENTRY)
     }
     NOFILE_TXN__TRANSACTION_REF
     {

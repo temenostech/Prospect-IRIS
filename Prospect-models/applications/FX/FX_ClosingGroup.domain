@@ -24,7 +24,7 @@ Classes {
             @t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=15.0, core=true, t24Name=AUTHORISER)
         CLS_GRP_ID -> FX_ClosingGroup:FX_CLOSING_GROUP PK required
             @t24:i (align=L, inputBehaviour=I, maxLength=14, sysNumber=0.0, core=true, businessType=A, t24Name=CLS.GRP.ID)
-        COUNTERPARTY -> ST_Customer:CUSTOMER
+        COUNTERPARTY -> ST_Customer:CUSTOMER required
             @i18n:Label (en=Counterparty)
             @i18n:Tooltip (en="Counterparty with whom the deal is made")
             @t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=1.0, core=true, businessType=CUS, t24Name=COUNTERPARTY)
@@ -58,7 +58,7 @@ Classes {
             @t24:i (align=L, inputBehaviour=N, maxLength=20, sysNumber=7.0, core=true, t24Name=RESERVED.4)
         TRAN_ID -> byValue FX_ClosingGroup:FX_CLOSING_GROUP__TRAN_ID *
             @t24:i (t24Name=TRAN.ID)
-        VALUE_DATE : T24BusinessTypes:FOREXD
+        VALUE_DATE : T24BusinessTypes:FOREXD required
             @i18n:Label (en="Value Date")
             @i18n:Tooltip (en="Indicates the Value date of the Contract")
             @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=2.0, core=true, t24Name=VALUE.DATE, mask="RDD DDD DDDD")
@@ -86,7 +86,7 @@ Classes {
     }
     FX_CLOSING_GROUP__TRAN_ID
     {
-        TRAN_ID -> FX_Contract:FOREX
+        TRAN_ID -> FX_Contract:FOREX required
             @i18n:Label (en="Transaction Ref")
             @t24:i (align=L, inputBehaviour=I, maxLength=15, sysNumber=3.0, core=true, businessType=A, t24Name=TRAN.ID)
     }
@@ -94,9 +94,14 @@ Classes {
         @i18n:Description (en="")
         @t24:i (t24Name=FX.CLS.GRP.VAL.DATE, level=F, type=T, allowedFunctions="L P S", localRefAllowed=false)
     {
-        FX_CLS_GRP_ID -> FX_ClosingGroup:FX_CLOSING_GROUP
-            @t24:i (align=R, inputBehaviour=I, maxLength=14, sysNumber=1.0, core=true, t24Name=FX.CLS.GRP.ID)
+        FX_CLS_GRP_ID -> byValue FX_ClosingGroup:FX_CLS_GRP_VAL_DATE__FX_CLS_GRP_ID *
+            @t24:i (t24Name=FX.CLS.GRP.ID)
         VAL_DATE_ID -> FX_ClosingGroup:FX_CLS_GRP_VAL_DATE PK required
             @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=0.0, core=true, businessType=D, t24Name=VAL.DATE.ID)
+    }
+    FX_CLS_GRP_VAL_DATE__FX_CLS_GRP_ID
+    {
+        FX_CLS_GRP_ID -> FX_ClosingGroup:FX_CLOSING_GROUP required
+            @t24:i (align=R, inputBehaviour=I, maxLength=14, sysNumber=1.0, core=true, t24Name=FX.CLS.GRP.ID)
     }
 }

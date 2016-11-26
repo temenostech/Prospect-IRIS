@@ -18,7 +18,7 @@ Classes {
     }
     LMM_EOD_LIST__CONTRACT_NUMBER
     {
-        CONTRACT_NUMBER : T24BusinessTypes:AA
+        CONTRACT_NUMBER : T24BusinessTypes:AA required
             @i18n:Label (en="Contract Number")
             @t24:i (align=L, inputBehaviour=I, maxLength=17, sysNumber=1.0, core=true, t24Name=CONTRACT.NUMBER, mask="R##/#####/#####")
     }
@@ -26,13 +26,18 @@ Classes {
         @i18n:Description (en="")
         @t24:i (t24Name=LMM.MATURITY, level=F, type=T, allowedFunctions="L P S", localRefAllowed=false)
     {
-        CONTRACT_NO : T24BusinessTypes:A
-            @i18n:Label (en="Contract No")
-            @t24:i (align=L, inputBehaviour=I, maxLength=14, sysNumber=1.0, core=true, t24Name=CONTRACT.NO)
+        CONTRACT_NO -> byValue LM_Schedules:LMM_MATURITY__CONTRACT_NO *
+            @t24:i (t24Name=CONTRACT.NO)
         MATURITY_DATE -> LM_Schedules:LMM_MATURITY PK required
             @i18n:Label (en="Maturity Date")
             @i18n:Tooltip (en="Indicates the Maturity Date of the Transaction")
             @t24:i (align=L, inputBehaviour=I, maxLength=11, sysNumber=0.0, core=true, businessType=A, t24Name=MATURITY.DATE)
+    }
+    LMM_MATURITY__CONTRACT_NO
+    {
+        CONTRACT_NO : T24BusinessTypes:A
+            @i18n:Label (en="Contract No")
+            @t24:i (align=L, inputBehaviour=I, maxLength=14, sysNumber=1.0, core=true, t24Name=CONTRACT.NO)
     }
     LMM_SCHEDULES
         @i18n:Description (en="")
@@ -120,7 +125,7 @@ Classes {
             @t24:i (align=R, inputBehaviour=N, maxLength=8, core=false, t24Name=SCHED.DT, genOperation="@ID[13,7]")
         SCHED_TYPE -> byValue LM_Schedules:LMM_SCHEDULES__SCHED_TYPE *
             @t24:i (t24Name=SCHED.TYPE)
-        SCH_FWD_BWD : mml:Integer
+        SCH_FWD_BWD : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=F, maxLength=1, sysNumber=1.0, core=true, t24Name=SCH.FWD.BWD)
         S_DATE -> byValue LM_Schedules:LMM_SCHEDULES__S_DATE *
             @t24:i (t24Name=S.DATE)
@@ -410,7 +415,7 @@ Classes {
     {
         AMOUNT_APPLD : T24BusinessTypes:A
             @t24:i (align=L, inputBehaviour=I, maxLength=18, sysNumber=34.0, core=true, t24Name=AMOUNT.APPLD)
-        CHARGE_CODE : mml:Integer
+        CHARGE_CODE : T24BusinessTypes:N
             @i18n:Label (en="Charge Code")
             @i18n:Tooltip (en="Indicates the Charge code")
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=33.0, core=true, t24Name=CHARGE.CODE)
@@ -559,7 +564,7 @@ Classes {
     {
         AMOUNT_APPLD : T24BusinessTypes:A
             @t24:i (align=L, inputBehaviour=I, maxLength=18, sysNumber=34.0, core=true, t24Name=AMOUNT.APPLD)
-        CHARGE_CODE : mml:Integer
+        CHARGE_CODE : T24BusinessTypes:N
             @i18n:Label (en="Charge Code")
             @i18n:Tooltip (en="Indicates the Charge code")
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=33.0, core=true, t24Name=CHARGE.CODE)
@@ -600,7 +605,7 @@ Classes {
     }
     LMM_SCHEDULES__FEE_BASE_SCHED
     {
-        FEE_BASE_SCHED : mml:Integer
+        FEE_BASE_SCHED : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=1, sysNumber=53.0, core=true, t24Name=FEE.BASE.SCHED)
     }
     LMM_SCHEDULES__FEE_CALC_TYPE
@@ -634,12 +639,12 @@ Classes {
     {
         NOTE_DENOM : T24BusinessTypes:A
             @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=31.0, core=true, t24Name=NOTE.DENOM)
-        NOTE_QUANTITY : mml:Integer
+        NOTE_QUANTITY : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=32.0, core=true, t24Name=NOTE.QUANTITY)
     }
     LMM_SCHEDULES__OVERRIDES
     {
-        OVERRIDES : mml:Integer
+        OVERRIDES : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=55, sysNumber=43.0, core=true, t24Name=OVERRIDES)
     }
     LMM_SCHEDULES__PRIN_AMT_SPLIT
@@ -687,8 +692,8 @@ Classes {
         CONTRACT_NUMBER -> LM_Schedules:LMM_SCHEDULE_DATES PK required
             @i18n:Label (en="Contract Number")
             @t24:i (align=L, inputBehaviour=I, maxLength=19, sysNumber=0.0, core=true, businessType=A, t24Name=CONTRACT.NUMBER)
-        DATE_STATUS : T24BusinessTypes:A
-            @t24:i (align=L, inputBehaviour=I, maxLength=7, sysNumber=1.0, core=true, t24Name=DATE.STATUS)
+        DATE_STATUS -> byValue LM_Schedules:LMM_SCHEDULE_DATES__DATE_STATUS *
+            @t24:i (t24Name=DATE.STATUS)
         END_DATE : T24BusinessTypes:D
             @i18n:Label (en="End Date")
             @i18n:Tooltip (en="End Date")
@@ -697,6 +702,11 @@ Classes {
             @i18n:Label (en="Start Date")
             @i18n:Tooltip (en="Start Date")
             @t24:i (align=R, inputBehaviour=N, maxLength=11, core=false, t24Name=START.DATE)
+    }
+    LMM_SCHEDULE_DATES__DATE_STATUS
+    {
+        DATE_STATUS : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=I, maxLength=7, sysNumber=1.0, core=true, t24Name=DATE.STATUS)
     }
 }
 Enumerations {

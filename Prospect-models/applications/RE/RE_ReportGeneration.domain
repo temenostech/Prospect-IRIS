@@ -249,12 +249,12 @@ Classes {
             @t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=0.0, core=true, businessType=ANT, t24Name=ACCOUNT.NUMBER)
         BAL_DATE : T24BusinessTypes:D
             @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=1.0, core=true, t24Name=BAL.DATE)
-        CURRENCY -> ST_CurrencyConfig:CURRENCY
+        CURRENCY -> ST_CurrencyConfig:CURRENCY required
             @i18n:Label (en=Ccy)
             @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=2.0, core=true, businessType=CCY, t24Name=CURRENCY)
         K_CURRENCY -> ST_CurrencyConfig:CURRENCY
             @i18n:Label (en=Ccy)
-            @t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=2.0, core=true, businessType=CCY, t24Name=K.CURRENCY)
+            @t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=2.0, core=false, businessType=CCY, t24Name=K.CURRENCY)
         OPEN_BAL : T24BusinessTypes:AMT
             @i18n:Label (en="Open Bal Lcy")
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=3.0, core=true, t24Name=OPEN.BAL, typeModifiers="-2")
@@ -278,7 +278,7 @@ Classes {
         BASE_CCY -> RE_ReportGeneration:RE_BASE_CCY_PARAM PK required
             @i18n:Label (en="Base Ccy")
             @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=0.0, core=true, businessType=CCY, t24Name=BASE.CCY)
-        CONTING_CATEG -> ST_Config:CATEGORY
+        CONTING_CATEG -> ST_Config:CATEGORY required
             @t24:i (align=R, inputBehaviour=F, maxLength=6, sysNumber=3.0, core=true, t24Name=CONTING.CATEG, mask="R##-###")
         CO_CODE -> ST_CompanyCreation:COMPANY
             @i18n:Label (en=Company)
@@ -298,7 +298,7 @@ Classes {
             @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=2.0, core=true, t24Name=EXCH.RATE)
         INPUTTER -> byValue RE_ReportGeneration:RE_BASE_CCY_PARAM__INPUTTER *
             @t24:i (t24Name=INPUTTER)
-        NON_CONTING_CATEG -> ST_Config:CATEGORY
+        NON_CONTING_CATEG -> ST_Config:CATEGORY required
             @t24:i (align=R, inputBehaviour=F, maxLength=6, sysNumber=4.0, core=true, t24Name=NON.CONTING.CATEG, mask="R##-###")
         ORIGINAL_CCY -> byValue RE_ReportGeneration:RE_BASE_CCY_PARAM__ORIGINAL_CCY *
             @t24:i (t24Name=ORIGINAL.CCY)
@@ -321,7 +321,7 @@ Classes {
     }
     RE_BASE_CCY_PARAM__DESCRIPTION
     {
-        DESCRIPTION : T24BusinessTypes:A
+        DESCRIPTION : T24BusinessTypes:A required
             @i18n:Label (en=Description)
             @i18n:Tooltip (en=Description)
             @t24:i (align=L, inputBehaviour=I, maxLength=35, multiLanguage=true, sysNumber=1.0, core=true, t24Name=DESCRIPTION)
@@ -377,7 +377,7 @@ Classes {
             @t24:i (t24Name=DESCRIPTION)
         INPUTTER -> byValue RE_ReportGeneration:RE_BASE_CCY_REQ__INPUTTER *
             @t24:i (t24Name=INPUTTER)
-        PARAM_ID -> RE_ReportGeneration:RE_BASE_CCY_PARAM
+        PARAM_ID -> RE_ReportGeneration:RE_BASE_CCY_PARAM required
             @i18n:Label (en="Parameter Id")
             @t24:i (align=L, inputBehaviour=I, maxLength=15, sysNumber=2.0, core=true, businessType=A, t24Name=PARAM.ID)
         RECORD_STATUS : T24BusinessTypes:STAT
@@ -396,7 +396,7 @@ Classes {
     }
     RE_BASE_CCY_REQ__DESCRIPTION
     {
-        DESCRIPTION : T24BusinessTypes:A
+        DESCRIPTION : T24BusinessTypes:A required
             @i18n:Label (en=Description)
             @i18n:Tooltip (en=Description)
             @t24:i (align=L, inputBehaviour=I, maxLength=35, multiLanguage=true, sysNumber=1.0, core=true, t24Name=DESCRIPTION)
@@ -415,7 +415,12 @@ Classes {
         CONSOL_KEY -> RE_ReportGeneration:RE_CONSOL_IC_SEQU PK required
             @i18n:Label (en="Consol Key")
             @t24:i (align=L, inputBehaviour=I, maxLength=65, sysNumber=0.0, core=true, businessType=ANY, t24Name=CONSOL.KEY)
-        RECORD_ID : mml:Integer
+        RECORD_ID -> byValue RE_ReportGeneration:RE_CONSOL_IC_SEQU__RECORD_ID *
+            @t24:i (t24Name=RECORD.ID)
+    }
+    RE_CONSOL_IC_SEQU__RECORD_ID
+    {
+        RECORD_ID : T24BusinessTypes:N required
             @i18n:Label (en="Record Id")
             @t24:i (align=R, inputBehaviour=I, maxLength=35, sysNumber=1.0, core=true, t24Name=RECORD.ID)
     }
@@ -473,7 +478,7 @@ Classes {
     }
     RE_CONSOL_REQUEST__DESCRIPTION
     {
-        DESCRIPTION : T24BusinessTypes:A
+        DESCRIPTION : T24BusinessTypes:A required
             @i18n:Label (en=Description)
             @i18n:Tooltip (en=Description)
             @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=1.0, core=true, t24Name=DESCRIPTION)
@@ -487,14 +492,14 @@ Classes {
     }
     RE_CONSOL_REQUEST__REPORT_NAME
     {
-        CONSOL_NO -> ST_CompanyCreation:COMPANY_CONSOL
+        CONSOL_NO -> ST_CompanyCreation:COMPANY_CONSOL required
             @i18n:Label (en="Consol No")
             @i18n:Tooltip (en="Consol Number")
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=6.0, core=true, t24Name=CONSOL.NO)
-        CONTENTS : RE_ReportGeneration:RE_CONSOL_REQUEST__REPORT_NAME__CONTENTS
+        CONTENTS : RE_ReportGeneration:RE_CONSOL_REQUEST__REPORT_NAME__CONTENTS required
             @i18n:Label (en=Contents)
             @t24:i (align=L, inputBehaviour=I, maxLength=7, sysNumber=4.0, core=true, t24Name=CONTENTS)
-        RATES_MKR : RE_ReportGeneration:RE_CONSOL_REQUEST__REPORT_NAME__RATES_MKR
+        RATES_MKR : RE_ReportGeneration:RE_CONSOL_REQUEST__REPORT_NAME__RATES_MKR required
             @i18n:Label (en="Rates Mkr")
             @i18n:Tooltip (en="Rates Marker")
             @t24:i (align=L, inputBehaviour=I, maxLength=7, sysNumber=7.0, core=true, t24Name=RATES.MKR)
@@ -502,7 +507,7 @@ Classes {
             @i18n:Label (en="Report Ccy")
             @i18n:Tooltip (en="Report Currency")
             @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=5.0, core=true, businessType=CCY, t24Name=REPORT.CCY)
-        REPORT_NAME -> RE_Config:RE_STAT_REPORT_HEAD
+        REPORT_NAME -> RE_Config:RE_STAT_REPORT_HEAD required
             @i18n:Label (en="Report Name")
             @t24:i (align=L, inputBehaviour=I, maxLength=14, sysNumber=3.0, core=true, businessType=S, t24Name=REPORT.NAME)
         SPCL_RATE_ID : T24BusinessTypes:A
@@ -519,6 +524,11 @@ Classes {
         CONSOL_KEY -> RE_ReportGeneration:RE_CONSOL_SPEC_ENT_KEY PK required
             @i18n:Label (en="Consol Key")
             @t24:i (align=L, inputBehaviour=I, maxLength=85, sysNumber=0.0, core=true, businessType=ANY, t24Name=CONSOL.KEY)
+        RE_SPEC_ENT_KEY -> byValue RE_ReportGeneration:RE_CONSOL_SPEC_ENT_KEY__RE_SPEC_ENT_KEY *
+            @t24:i (t24Name=RE.SPEC.ENT.KEY)
+    }
+    RE_CONSOL_SPEC_ENT_KEY__RE_SPEC_ENT_KEY
+    {
         RE_SPEC_ENT_KEY : T24BusinessTypes:A
             @t24:i (align=L, inputBehaviour=I, maxLength=25, sysNumber=1.0, core=true, t24Name=RE.SPEC.ENT.KEY)
     }
@@ -529,6 +539,11 @@ Classes {
         CONSOL_KEY -> RE_ReportGeneration:RE_CONSOL_STMT_ENT_KEY PK required
             @i18n:Label (en="Consol Key")
             @t24:i (align=L, inputBehaviour=I, maxLength=85, sysNumber=0.0, core=true, businessType=ANY, t24Name=CONSOL.KEY)
+        STMT_ENTRY_KEY -> byValue RE_ReportGeneration:RE_CONSOL_STMT_ENT_KEY__STMT_ENTRY_KEY *
+            @t24:i (t24Name=STMT.ENTRY.KEY)
+    }
+    RE_CONSOL_STMT_ENT_KEY__STMT_ENTRY_KEY
+    {
         STMT_ENTRY_KEY : T24BusinessTypes:A
             @t24:i (align=L, inputBehaviour=I, maxLength=25, sysNumber=1.0, core=true, t24Name=STMT.ENTRY.KEY)
     }
@@ -554,7 +569,7 @@ Classes {
             @i18n:Label (en="Interest Basis")
             @i18n:Tooltip (en="Interest basis for interest calculation")
             @t24:i (align=L, inputBehaviour=I, maxLength=9, sysNumber=10.0, core=true, t24Name=INT.BASIS)
-        INT_RATE : mml:Integer
+        INT_RATE : T24BusinessTypes:N
             @i18n:Label (en="Interest Rate")
             @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=7.0, core=true, t24Name=INT.RATE)
         K_CURRENCY -> byValue RE_ReportGeneration:RE_DEAL_BALANCES__K_CURRENCY *
@@ -591,7 +606,7 @@ Classes {
     {
         K_CURRENCY -> ST_CurrencyConfig:CURRENCY
             @i18n:Label (en=Ccy)
-            @t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=4.0, core=true, businessType=CCY, t24Name=K.CURRENCY)
+            @t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=4.0, core=false, businessType=CCY, t24Name=K.CURRENCY)
     }
     RE_DEAL_BALANCES__NARR
     {
@@ -669,7 +684,7 @@ Classes {
     }
     RE_IMPORT_REQUEST__DESCRIPTION
     {
-        DESCRIPTION : T24BusinessTypes:A
+        DESCRIPTION : T24BusinessTypes:A required
             @i18n:Label (en=Description)
             @i18n:Tooltip (en=Description)
             @t24:i (align=L, inputBehaviour=I, maxLength=35, multiLanguage=true, sysNumber=1.0, core=true, t24Name=DESCRIPTION)
@@ -739,7 +754,7 @@ Classes {
             @i18n:Label (en="System id")
             @i18n:Tooltip (en="Shows the system id")
             @t24:i (align=L, inputBehaviour=N, maxLength=5, core=false, t24Name=SYSTEM.ID, genOperation="@ID[\"*\",5,1]")
-        TXN_CODE : mml:Integer
+        TXN_CODE : T24BusinessTypes:N
             @i18n:Label (en="Transaction Code")
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=1.0, core=true, t24Name=TXN.CODE)
         VALUE_DATE : T24BusinessTypes:D
@@ -817,7 +832,7 @@ Classes {
     }
     RE_KEY_DETAIL__DESCRIPTION
     {
-        DESCRIPTION : T24BusinessTypes:ANY
+        DESCRIPTION : T24BusinessTypes:ANY required
             @i18n:Label (en=Description)
             @i18n:Tooltip (en=Description)
             @t24:i (align=L, inputBehaviour=I, maxLength=35, multiLanguage=true, sysNumber=1.0, core=true, t24Name=DESCRIPTION)
@@ -869,7 +884,7 @@ Classes {
     RE_KEY_DETAIL__K_FILE
     {
         K_FILE : T24BusinessTypes:A
-            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=2.0, core=true, t24Name=K.FILE)
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=2.0, core=false, t24Name=K.FILE)
     }
     RE_OLD_CONSOL_KEY
         @i18n:Description (en="")
@@ -934,7 +949,7 @@ Classes {
     }
     RE_RPT_CCY_RATE__DESCRIPTION
     {
-        DESCRIPTION : T24BusinessTypes:A
+        DESCRIPTION : T24BusinessTypes:A required
             @i18n:Label (en=Description)
             @i18n:Tooltip (en=Description)
             @t24:i (align=L, inputBehaviour=I, maxLength=35, multiLanguage=true, sysNumber=1.0, core=true, t24Name=DESCRIPTION)
@@ -948,13 +963,13 @@ Classes {
     }
     RE_RPT_CCY_RATE__LOCAL_CCY
     {
-        BASE_CCY -> ST_CurrencyConfig:CURRENCY_PARAM
+        BASE_CCY -> ST_CurrencyConfig:CURRENCY_PARAM required
             @i18n:Label (en="Base Ccy")
             @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=3.0, core=true, businessType=CCY, t24Name=BASE.CCY)
-        EXCH_RATE : T24BusinessTypes:R
+        EXCH_RATE : T24BusinessTypes:R required
             @i18n:Label (en="Exchange Rate")
             @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=5.0, core=true, t24Name=EXCH.RATE)
-        LOCAL_CCY -> ST_CurrencyConfig:CURRENCY_PARAM
+        LOCAL_CCY -> ST_CurrencyConfig:CURRENCY_PARAM required
             @i18n:Label (en=Lcy)
             @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=2.0, core=true, businessType=CCY, t24Name=LOCAL.CCY)
         QUOTE_CODE : RE_ReportGeneration:RE_RPT_CCY_RATE__LOCAL_CCY__QUOTE_CODE
@@ -973,10 +988,32 @@ Classes {
         @i18n:Description (en="")
         @t24:i (t24Name=RE.STAT.CROSS.LINE, level=I, type=T, allowedFunctions="L P S", localRefAllowed=false)
     {
-        LINE_WITH_DETAILS : T24BusinessTypes:A
-            @t24:i (align=L, inputBehaviour=I, maxLength=4, sysNumber=1.0, core=true, t24Name=LINE.WITH.DETAILS)
+        LINE_WITH_DETAILS -> byValue RE_ReportGeneration:RE_STAT_CROSS_LINE__LINE_WITH_DETAILS *
+            @t24:i (t24Name=LINE.WITH.DETAILS)
         REP_LINE_NO_TYPE -> RE_ReportGeneration:RE_STAT_CROSS_LINE PK required
             @t24:i (align=L, inputBehaviour=I, maxLength=17, sysNumber=0.0, core=true, businessType=A, t24Name=REP.LINE.NO.TYPE)
+    }
+    RE_STAT_CROSS_LINE__LINE_WITH_DETAILS
+    {
+        LINE_WITH_DETAILS : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=I, maxLength=4, sysNumber=1.0, core=true, t24Name=LINE.WITH.DETAILS)
+    }
+    RE_STAT_LINE_AL_WORK
+        @i18n:Description (en="")
+        @t24:i (t24Name=RE.STAT.LINE.AL.WORK, level=F, type=T, allowedFunctions="L P S", localRefAllowed=false)
+    {
+        ASSET_TYPE : T24BusinessTypes:N
+            @i18n:Label (en="Asset Type")
+            @i18n:Tooltip (en="Indicates the asset type")
+            @t24:i (align=L, inputBehaviour=N, maxLength=12, core=false, t24Name=ASSET.TYPE, genOperation="FIELD(@ID,\"*\",3)")
+        CON_KEY : T24BusinessTypes:N
+            @t24:i (align=L, inputBehaviour=N, maxLength=50, core=false, t24Name=CON.KEY, genOperation="FIELD(@ID,\"*\",2)")
+        MAT_RANGE : T24BusinessTypes:N
+            @t24:i (align=L, inputBehaviour=N, maxLength=10, core=false, t24Name=MAT.RANGE, genOperation="FIELD(@ID,\"*\",4)")
+        REPORT_LINE : T24BusinessTypes:N
+            @i18n:Label (en="Report Line")
+            @i18n:Tooltip (en="@(20,0)Report Lines")
+            @t24:i (align=L, inputBehaviour=N, maxLength=20, core=false, t24Name=REPORT.LINE, genOperation="FIELD(@ID,\"*\",1)")
     }
     RE_STAT_LINE_BAL
         @i18n:Description (en="")
@@ -1025,11 +1062,11 @@ Classes {
             @t24:i (align=L, inputBehaviour=I, maxLength=59, sysNumber=0.0, core=true, businessType=A, t24Name=LINE.CCY.DATE)
         LINE_NAME : T24BusinessTypes:LINE
             @t24:i (align=L, inputBehaviour=N, maxLength=20, core=false, t24Name=LINE.NAME, genOperation="@ID[\"-\",1,2]")
-        MVMT_A_SPLIT : mml:Integer
+        MVMT_A_SPLIT : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=7, sysNumber=9.0, core=true, t24Name=MVMT.A.SPLIT)
-        MVMT_P_SPLIT : mml:Integer
+        MVMT_P_SPLIT : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=7, sysNumber=10.0, core=true, t24Name=MVMT.P.SPLIT)
-        MVMT_R_SPLIT : mml:Integer
+        MVMT_R_SPLIT : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=7, sysNumber=11.0, core=true, t24Name=MVMT.R.SPLIT)
         OPEN_BAL : T24BusinessTypes:AMT
             @i18n:Label (en="Open Bal Lcy")
@@ -1106,11 +1143,11 @@ Classes {
     {
         NEW_LINE_END : T24BusinessTypes:A
             @t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=4.0, core=true, t24Name=NEW.LINE.END)
-        NEW_LINE_START : mml:Integer
+        NEW_LINE_START : T24BusinessTypes:N required
             @t24:i (align=R, inputBehaviour=I, maxLength=4, sysNumber=3.0, core=true, t24Name=NEW.LINE.START)
-        OLD_LINE_END : T24BusinessTypes:A
+        OLD_LINE_END : T24BusinessTypes:A required
             @t24:i (align=L, inputBehaviour=I, maxLength=4, sysNumber=2.0, core=true, t24Name=OLD.LINE.END)
-        OLD_LINE_START : mml:Integer
+        OLD_LINE_START : T24BusinessTypes:N required
             @t24:i (align=R, inputBehaviour=I, maxLength=4, sysNumber=1.0, core=true, t24Name=OLD.LINE.START)
     }
     RE_STAT_LINE_MVMT
@@ -1120,8 +1157,8 @@ Classes {
         CURRENCY : T24BusinessTypes:CCY
             @i18n:Label (en=Ccy)
             @t24:i (align=L, inputBehaviour=N, maxLength=3, core=false, t24Name=CURRENCY, genOperation="@ID[\'-\',3,1]")
-        ENT_KEY_ID : mml:Integer
-            @t24:i (align=R, inputBehaviour=I, maxLength=80, sysNumber=1.0, core=true, t24Name=ENT.KEY.ID)
+        ENT_KEY_ID -> byValue RE_ReportGeneration:RE_STAT_LINE_MVMT__ENT_KEY_ID *
+            @t24:i (t24Name=ENT.KEY.ID)
         FILE_IND : T24BusinessTypes:N
             @t24:i (align=L, inputBehaviour=N, maxLength=1, core=false, t24Name=FILE.IND, genOperation="@ID[\'-\',5,1]")
         LINE_CCY_DATE -> RE_ReportGeneration:RE_STAT_LINE_MVMT PK required
@@ -1138,6 +1175,26 @@ Classes {
             @t24:i (align=L, inputBehaviour=N, maxLength=20, core=false, t24Name=REPORT.NAME, genOperation="@ID[\"-\",1,1]")
         RE_MVMT_IDS : T24BusinessTypes:N
             @t24:i (align=L, inputBehaviour=N, maxLength=28, core=false, t24Name=RE.MVMT.IDS, genOperation="@ID[\"-\",1,5]")
+    }
+    RE_STAT_LINE_MVMT__ENT_KEY_ID
+    {
+        ENT_KEY_ID : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=I, maxLength=80, sysNumber=1.0, core=true, t24Name=ENT.KEY.ID)
+    }
+    RE_STAT_LINE_PL_WORK
+        @i18n:Description (en="")
+        @t24:i (t24Name=RE.STAT.LINE.PL.WORK, level=F, type=T, allowedFunctions="L P S", localRefAllowed=false)
+    {
+        CON_KEY : T24BusinessTypes:N
+            @t24:i (align=L, inputBehaviour=N, maxLength=50, core=false, t24Name=CON.KEY, genOperation="FIELD(@ID,\"*\",2)")
+        PL_CCY : T24BusinessTypes:N
+            @t24:i (align=L, inputBehaviour=N, maxLength=3, core=false, t24Name=PL.CCY, genOperation="FIELD(@ID,\"*\",3)")
+        PROFIT_SIGN : T24BusinessTypes:N
+            @t24:i (align=L, inputBehaviour=N, maxLength=7, core=false, t24Name=PROFIT.SIGN, genOperation="FIELD(@ID,\"*\",4)")
+        REPORT_LINE : T24BusinessTypes:N
+            @i18n:Label (en="Report Line")
+            @i18n:Tooltip (en="@(20,0)Report Lines")
+            @t24:i (align=L, inputBehaviour=N, maxLength=20, core=false, t24Name=REPORT.LINE, genOperation="FIELD(@ID,\"*\",1)")
     }
     RE_STAT_MISMATCH
         @i18n:Description (en="")
@@ -1205,15 +1262,15 @@ Classes {
     {
         LINE_NO_ST -> byValue RE_ReportGeneration:RE_STAT_MISMATCH__REPORT_NAME__LINE_NO_ST *
             @t24:i (t24Name=LINE.NO.ST)
-        REPORT_NAME -> RE_Config:RE_STAT_REPORT_HEAD
+        REPORT_NAME -> RE_Config:RE_STAT_REPORT_HEAD required
             @i18n:Label (en="Report Name")
             @t24:i (align=L, inputBehaviour=I, maxLength=21, sysNumber=2.0, core=true, businessType=A, t24Name=REPORT.NAME)
     }
     RE_STAT_MISMATCH__REPORT_NAME__LINE_NO_ST
     {
-        LINE_NO_END : mml:Integer
+        LINE_NO_END : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=4, sysNumber=4.0, core=true, t24Name=LINE.NO.END)
-        LINE_NO_ST : mml:Integer
+        LINE_NO_ST : T24BusinessTypes:N required
             @t24:i (align=R, inputBehaviour=I, maxLength=4, sysNumber=3.0, core=true, t24Name=LINE.NO.ST)
     }
     RE_STAT_REQUEST
@@ -1302,12 +1359,12 @@ Classes {
     }
     RE_STAT_REQUEST__REPORT_NAME
     {
-        CONTENTS : RE_ReportGeneration:RE_STAT_REQUEST__REPORT_NAME__CONTENTS
+        CONTENTS : RE_ReportGeneration:RE_STAT_REQUEST__REPORT_NAME__CONTENTS required
             @i18n:Label (en=Contents)
             @t24:i (align=L, inputBehaviour=I, maxLength=7, sysNumber=4.0, core=true, t24Name=CONTENTS)
         OUTPUT_MODE -> byValue RE_ReportGeneration:RE_STAT_REQUEST__REPORT_NAME__OUTPUT_MODE *
             @t24:i (t24Name=OUTPUT.MODE)
-        REPORT_NAME -> RE_Config:RE_STAT_REPORT_HEAD
+        REPORT_NAME -> RE_Config:RE_STAT_REPORT_HEAD required
             @i18n:Label (en="Report Name")
             @t24:i (align=L, inputBehaviour=I, maxLength=21, sysNumber=3.0, core=true, businessType=A, t24Name=REPORT.NAME)
     }
@@ -1355,7 +1412,7 @@ Classes {
             @i18n:Label (en=Key)
             @i18n:Tooltip (en="Indicates th transaction key")
             @t24:i (align=L, inputBehaviour=I, maxLength=6, sysNumber=0.0, core=true, t24Name=KEY)
-        PROCESS_TYPE : RE_ReportGeneration:RE_TRANSFER_PARAMETER__PROCESS_TYPE
+        PROCESS_TYPE : RE_ReportGeneration:RE_TRANSFER_PARAMETER__PROCESS_TYPE required
             @i18n:Label (en="Process Type")
             @i18n:Tooltip (en="Indicates the process type")
             @t24:i (align=L, inputBehaviour=I, maxLength=1, sysNumber=2.0, core=true, t24Name=PROCESS.TYPE)
@@ -1396,7 +1453,7 @@ Classes {
     }
     RE_TRANSFER_PARAMETER__DESCRIPTION
     {
-        DESCRIPTION : T24BusinessTypes:A
+        DESCRIPTION : T24BusinessTypes:A required
             @i18n:Label (en=Description)
             @i18n:Tooltip (en=Description)
             @t24:i (align=L, inputBehaviour=I, maxLength=35, multiLanguage=true, sysNumber=1.0, core=true, t24Name=DESCRIPTION)
@@ -1412,6 +1469,26 @@ Classes {
     {
         REP_NAMES -> RE_Config:RE_STAT_REPORT_HEAD
             @t24:i (align=L, inputBehaviour=I, maxLength=21, sysNumber=3.0, core=true, businessType=A, t24Name=REP.NAMES)
+    }
+    TXN_JOURNAL
+        @i18n:Description (en="")
+        @t24:i (t24Name=TXN.JOURNAL, level=B, type=T, allowedFunctions="L P S", localRefAllowed=false)
+    {
+        APPLICATION_ID : T24BusinessTypes:N
+            @i18n:Label (en="Application Id")
+            @t24:i (align=L, inputBehaviour=N, maxLength=2, core=false, t24Name=APPLICATION.ID, genOperation="FIELD(@ID,\"*\",4)")
+        COMPANY_CODE : T24BusinessTypes:N
+            @i18n:Label (en=Company)
+            @t24:i (align=L, inputBehaviour=N, maxLength=11, core=false, t24Name=COMPANY.CODE, genOperation="FIELD(@ID,\'*\',2)")
+        CONTINGENT_IND : T24BusinessTypes:N
+            @t24:i (align=L, inputBehaviour=N, maxLength=1, core=false, t24Name=CONTINGENT.IND, genOperation="FIELD(@ID,\"*\",1)")
+        PROCESS_DATE : T24BusinessTypes:N
+            @i18n:Label (en="Process Date")
+            @t24:i (align=R, inputBehaviour=N, maxLength=8, core=false, t24Name=PROCESS.DATE, genOperation="FIELD(@ID,\'*\',3)")
+        TRANSACTION_REF : T24BusinessTypes:N
+            @i18n:Label (en="Transaction Ref")
+            @i18n:Tooltip (en="Transaction Reference")
+            @t24:i (align=L, inputBehaviour=N, maxLength=16, core=false, t24Name=TRANSACTION.REF, genOperation="FIELD(@ID,\'*\',5)")
     }
 }
 Enumerations {

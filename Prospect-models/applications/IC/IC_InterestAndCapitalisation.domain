@@ -10,6 +10,16 @@ Classes {
         @i18n:Description (en="")
         @t24:i (t24Name=ACCOUNT.CHARGE, level=F, type=T, allowedFunctions="L P S", localRefAllowed=false)
     {
+        CHARGE_ACCOUNT -> IC_InterestAndCapitalisation:ACCOUNT_CHARGE PK required
+            @i18n:Label (en="Charge Debit Account")
+            @t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=0.0, core=true, businessType=ANT, t24Name=CHARGE.ACCOUNT)
+        MAIN_ACCOUNT -> byValue IC_InterestAndCapitalisation:ACCOUNT_CHARGE__MAIN_ACCOUNT *
+            @t24:i (t24Name=MAIN.ACCOUNT)
+    }
+    ACCOUNT_CHARGE__MAIN_ACCOUNT
+    {
+        MAIN_ACCOUNT -> AC_AccountOpening:ACCOUNT
+            @t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=1.0, core=true, businessType=ANT, t24Name=MAIN.ACCOUNT)
     }
     ACCOUNT_GEN_CHG
         @i18n:Description (en="")
@@ -55,9 +65,8 @@ Classes {
         @i18n:Description (en="")
         @t24:i (t24Name=ACCR.ACCT.CH, level=F, type=L, allowedFunctions="L P S", localRefAllowed=false)
     {
-        ACCOUNT_NUMBER -> IC_InterestAndCapitalisation:ACCR_ACCT_CH PK required
-            @i18n:Label (en="Account Number")
-            @t24:i (align=R, inputBehaviour=I, maxLength=16, sysNumber=0.0, core=true, businessType=ACC, t24Name=ACCOUNT.NUMBER)
+#        "" -> IC_InterestAndCapitalisation:ACCR_ACCT_CH PK required
+#            @t24:i (align=R, inputBehaviour=I, maxLength=55, sysNumber=0.0, core=true)
         BAL_REQU_CATEG -> ST_Config:CATEGORY
             @t24:i (align=R, inputBehaviour=I, maxLength=6, sysNumber=7.0, core=true, t24Name=BAL.REQU.CATEG, mask="R##-###")
         BAL_REQU_CODE -> IC_Config:BALANCE_REQUIREMENT
@@ -90,29 +99,29 @@ Classes {
             @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=159.0, core=true, t24Name=DEFERRED.DATE)
         GRAND_TOTAL : T24BusinessTypes:AMT
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=158.0, core=true, t24Name=GRAND.TOTAL, typeModifiers=-)
-        HIGHEST_DR_CODE : mml:Integer
+        HIGHEST_DR_CODE : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=122.0, core=true, t24Name=HIGHEST.DR.CODE)
         HIGHEST_DR_FREE : T24BusinessTypes:AMT
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=130.0, core=true, t24Name=HIGHEST.DR.FREE)
         HIGHEST_DR_PERC : T24BusinessTypes:R
             @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=129.0, core=true, t24Name=HIGHEST.DR.PERC)
-        HIGH_DR_CATEG : mml:Integer
+        HIGH_DR_CATEG : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=126.0, core=true, t24Name=HIGH.DR.CATEG)
         HIGH_DR_MIN_MAX : T24BusinessTypes:A
             @t24:i (align=L, inputBehaviour=I, maxLength=7, sysNumber=131.0, core=true, t24Name=HIGH.DR.MIN.MAX)
-        HIGH_DR_TRSCR : mml:Integer
+        HIGH_DR_TRSCR : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=128.0, core=true, t24Name=HIGH.DR.TRSCR)
-        HIGH_DR_TRSDR : mml:Integer
+        HIGH_DR_TRSDR : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=127.0, core=true, t24Name=HIGH.DR.TRSDR)
-        HI_DR_TAXCATEG : mml:Integer
+        HI_DR_TAXCATEG : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=135.0, core=true, t24Name=HI.DR.TAXCATEG)
-        HI_DR_TAX_CODE : mml:Integer
+        HI_DR_TAX_CODE : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=132.0, core=true, t24Name=HI.DR.TAX.CODE)
         HI_DR_TAX_RATE -> byValue IC_InterestAndCapitalisation:ACCR_ACCT_CH__HI_DR_TAX_RATE *
             @t24:i (t24Name=HI.DR.TAX.RATE)
-        HI_DR_TAX_TRSCR : mml:Integer
+        HI_DR_TAX_TRSCR : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=137.0, core=true, t24Name=HI.DR.TAX.TRSCR)
-        HI_DR_TAX_TRSDR : mml:Integer
+        HI_DR_TAX_TRSDR : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=136.0, core=true, t24Name=HI.DR.TAX.TRSDR)
         HI_DR_YR_MTH -> byValue IC_InterestAndCapitalisation:ACCR_ACCT_CH__HI_DR_YR_MTH *
             @t24:i (t24Name=HI.DR.YR.MTH)
@@ -121,7 +130,7 @@ Classes {
             @t24:i (align=L, inputBehaviour=I, maxLength=8, sysNumber=154.0, core=true, t24Name=INT.NO.BOOKING)
         K_GRAND_TOTAL : T24BusinessTypes:AMT
             @i18n:Label (en=Total)
-            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=158.0, core=true, t24Name=K.GRAND.TOTAL, typeModifiers=-)
+            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=158.0, core=false, t24Name=K.GRAND.TOTAL, typeModifiers=-)
         LIQUIDITY_ACCOUNT -> AC_AccountOpening:ACCOUNT
             @t24:i (align=R, inputBehaviour=I, maxLength=16, sysNumber=152.0, core=true, businessType=ACC, t24Name=LIQUIDITY.ACCOUNT)
         LIQUIDITY_CCY -> ST_CurrencyConfig:CURRENCY
@@ -275,7 +284,7 @@ Classes {
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=125.0, core=true, t24Name=HIGHEST.DR.AMT)
         HIGHEST_DR_BAL : T24BusinessTypes:AMT
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=124.0, core=true, t24Name=HIGHEST.DR.BAL)
-        HI_DR_YR_MTH : mml:Integer
+        HI_DR_YR_MTH : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=8, sysNumber=123.0, core=true, t24Name=HI.DR.YR.MTH)
     }
     ACCR_ACCT_CH__NO_CRED_YR_MTH
@@ -290,7 +299,7 @@ Classes {
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=20.0, core=true, t24Name=NO.CR.FREE, typeModifiers=-)
         NO_CR_MIN_MAX : IC_InterestAndCapitalisation:ACCR_ACCT_CH__NO_CRED_YR_MTH__NO_CR_MIN_MAX
             @t24:i (align=L, inputBehaviour=I, maxLength=7, sysNumber=21.0, core=true, t24Name=NO.CR.MIN.MAX)
-        NO_CR_TRANSACT : mml:Integer
+        NO_CR_TRANSACT : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=6, sysNumber=18.0, core=true, t24Name=NO.CR.TRANSACT)
     }
     ACCR_ACCT_CH__NO_CR_TAX_RATE
@@ -318,7 +327,7 @@ Classes {
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=36.0, core=true, t24Name=NO.DR.FREE, typeModifiers=-)
         NO_DR_MIN_MAX : IC_InterestAndCapitalisation:ACCR_ACCT_CH__NO_DEBIT_YR_MTH__NO_DR_MIN_MAX
             @t24:i (align=L, inputBehaviour=I, maxLength=7, sysNumber=37.0, core=true, t24Name=NO.DR.MIN.MAX)
-        NO_DR_TRANSACT : mml:Integer
+        NO_DR_TRANSACT : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=7, sysNumber=34.0, core=true, t24Name=NO.DR.TRANSACT)
     }
     ACCR_ACCT_CH__NO_DR_TAX_RATE
@@ -347,13 +356,13 @@ Classes {
     {
         MIN_MAX_CHG : IC_InterestAndCapitalisation:ACCR_ACCT_CH__STMT_CHG_YR_MTH__MIN_MAX_CHG
             @t24:i (align=L, inputBehaviour=I, maxLength=7, sysNumber=147.0, core=true, t24Name=MIN.MAX.CHG)
-        NO_STATEMENTS : mml:Integer
+        NO_STATEMENTS : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=7, sysNumber=140.0, core=true, t24Name=NO.STATEMENTS)
-        NO_STMTS_FREE : mml:Integer
+        NO_STMTS_FREE : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=142.0, core=true, t24Name=NO.STMTS.FREE)
-        NO_STMT_COPY : mml:Integer
+        NO_STMT_COPY : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=143.0, core=true, t24Name=NO.STMT.COPY)
-        NO_STMT_SHEETS : mml:Integer
+        NO_STMT_SHEETS : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=145.0, core=true, t24Name=NO.STMT.SHEETS)
         STMTS_CHG : T24BusinessTypes:AMT
             @t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=141.0, core=true, t24Name=STMTS.CHG, typeModifiers=-)
@@ -395,7 +404,7 @@ Classes {
     }
     ACCR_ACCT_CH__TRCHARGE_YR_MTH__TRCH_CODE
     {
-        NO_TRANSACT : mml:Integer
+        NO_TRANSACT : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=6, sysNumber=82.0, core=true, t24Name=NO.TRANSACT)
         TRANS_CHARGE : T24BusinessTypes:AMT
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=83.0, core=true, t24Name=TRANS.CHARGE, typeModifiers=-)
@@ -507,7 +516,7 @@ Classes {
             @t24:i (align=R, inputBehaviour=I, maxLength=8, sysNumber=50.0, core=true, t24Name=CORRECTION.DATE)
         CORRECTION_ID -> byValue IC_InterestAndCapitalisation:ACCR_ACCT_CR__CORRECTION_ID *
             @t24:i (t24Name=CORRECTION.ID)
-        CORRECTION_NUMBER : mml:Integer
+        CORRECTION_NUMBER : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=24.0, core=true, t24Name=CORRECTION.NUMBER)
         CR_INT_CATEG -> ST_Config:CATEGORY
             @t24:i (align=R, inputBehaviour=I, maxLength=6, sysNumber=8.0, core=true, t24Name=CR.INT.CATEG, mask="R##-###")
@@ -519,11 +528,11 @@ Classes {
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=9.0, core=true, t24Name=CR.INT.TR.AC)
         CR_INT_TR_PL -> ST_Config:TRANSACTION
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=10.0, core=true, t24Name=CR.INT.TR.PL)
-        CR_MIN_VALUE : mml:Integer
+        CR_MIN_VALUE : T24BusinessTypes:N
             @i18n:Label (en="Minimum Interest Amount")
             @i18n:Tooltip (en="Indicates minimum interest amount")
             @t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=39.0, core=true, t24Name=CR.MIN.VALUE)
-        CR_MIN_WAIVE : mml:Integer
+        CR_MIN_WAIVE : T24BusinessTypes:N
             @i18n:Label (en="Minimum Interest Waive")
             @i18n:Tooltip (en="Indicates minimum interest waive")
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=40.0, core=true, t24Name=CR.MIN.WAIVE)
@@ -533,7 +542,7 @@ Classes {
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=23.0, core=true, t24Name=GRAND.TOTAL, typeModifiers=-)
         ICA_MAIN_ACCT -> byValue IC_InterestAndCapitalisation:ACCR_ACCT_CR__ICA_MAIN_ACCT *
             @t24:i (t24Name=ICA.MAIN.ACCT)
-        ICA_POST_INTEREST : mml:Integer
+        ICA_POST_INTEREST : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=4, sysNumber=26.0, core=true, t24Name=ICA.POST.INTEREST)
         INT_NO_BOOKING : IC_InterestAndCapitalisation:ACCR_ACCT_CR__INT_NO_BOOKING
             @i18n:Label (en="Int Booking")
@@ -542,7 +551,7 @@ Classes {
             @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=42.0, core=true, t24Name=INT.POST.DATE)
         K_GRAND_TOTAL : T24BusinessTypes:AMT
             @i18n:Label (en=Total)
-            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=23.0, core=true, t24Name=K.GRAND.TOTAL, typeModifiers=-)
+            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=23.0, core=false, t24Name=K.GRAND.TOTAL, typeModifiers=-)
         LIQUIDITY_ACCOUNT -> AC_AccountOpening:ACCOUNT
             @t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=17.0, core=true, businessType=ANT, t24Name=LIQUIDITY.ACCOUNT)
         LIQUIDITY_CCY -> ST_CurrencyConfig:CURRENCY
@@ -579,7 +588,7 @@ Classes {
         TOTAL_INTEREST : T24BusinessTypes:AMT
             @i18n:Label (en="Total Int")
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=20.0, core=true, t24Name=TOTAL.INTEREST, typeModifiers=-)
-        UNADJ_TOTAL_INT : mml:Integer
+        UNADJ_TOTAL_INT : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=41.0, core=true, t24Name=UNADJ.TOTAL.INT)
         WAIVE_AMT : T24BusinessTypes:AMT
             @i18n:Label (en="Waive Amount")
@@ -605,7 +614,7 @@ Classes {
             @t24:i (align=R, inputBehaviour=I, maxLength=8, sysNumber=50.0, core=true, t24Name=CORRECTION.DATE)
         CORRECTION_ID -> byValue IC_InterestAndCapitalisation:ACCR_ACCT_CR2__CORRECTION_ID *
             @t24:i (t24Name=CORRECTION.ID)
-        CORRECTION_NUMBER : mml:Integer
+        CORRECTION_NUMBER : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=24.0, core=true, t24Name=CORRECTION.NUMBER)
         CR2_INT_CATEG -> ST_Config:CATEGORY
             @t24:i (align=R, inputBehaviour=I, maxLength=6, sysNumber=8.0, core=true, t24Name=CR2.INT.CATEG, mask="R##-###")
@@ -615,9 +624,9 @@ Classes {
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=9.0, core=true, t24Name=CR2.INT.TR.AC)
         CR2_INT_TR_PL -> ST_Config:TRANSACTION
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=10.0, core=true, t24Name=CR2.INT.TR.PL)
-        CR2_MIN_VALUE : mml:Integer
+        CR2_MIN_VALUE : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=39.0, core=true, t24Name=CR2.MIN.VALUE)
-        CR2_MIN_WAIVE : mml:Integer
+        CR2_MIN_WAIVE : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=40.0, core=true, t24Name=CR2.MIN.WAIVE)
         DB_NETTING_AMT : T24BusinessTypes:AMT
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=49.0, core=true, t24Name=DB.NETTING.AMT)
@@ -625,7 +634,7 @@ Classes {
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=23.0, core=true, t24Name=GRAND.TOTAL, typeModifiers=-)
         ICA_MAIN_ACCT -> byValue IC_InterestAndCapitalisation:ACCR_ACCT_CR2__ICA_MAIN_ACCT *
             @t24:i (t24Name=ICA.MAIN.ACCT)
-        ICA_POST_INTEREST : mml:Integer
+        ICA_POST_INTEREST : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=4, sysNumber=26.0, core=true, t24Name=ICA.POST.INTEREST)
         INT_NO_BOOKING : IC_InterestAndCapitalisation:ACCR_ACCT_CR2__INT_NO_BOOKING
             @i18n:Label (en="Int Booking")
@@ -634,7 +643,7 @@ Classes {
             @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=42.0, core=true, t24Name=INT.POST.DATE)
         K_GRAND_TOTAL : T24BusinessTypes:AMT
             @i18n:Label (en=Total)
-            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=23.0, core=true, t24Name=K.GRAND.TOTAL, typeModifiers=-)
+            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=23.0, core=false, t24Name=K.GRAND.TOTAL, typeModifiers=-)
         LIQUIDITY_ACCOUNT -> AC_AccountOpening:ACCOUNT
             @t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=17.0, core=true, businessType=ANT, t24Name=LIQUIDITY.ACCOUNT)
         LIQUIDITY_CCY -> ST_CurrencyConfig:CURRENCY
@@ -671,7 +680,7 @@ Classes {
         TOTAL_INTEREST : T24BusinessTypes:AMT
             @i18n:Label (en="Total interest")
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=20.0, core=true, t24Name=TOTAL.INTEREST, typeModifiers=-)
-        UNADJ_TOTAL_INT : mml:Integer
+        UNADJ_TOTAL_INT : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=41.0, core=true, t24Name=UNADJ.TOTAL.INT)
         WAIVE_AMT : T24BusinessTypes:AMT
             @i18n:Label (en="Waive Amount")
@@ -708,7 +717,7 @@ Classes {
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=46.0, core=true, t24Name=ADJ.INT.AMT)
         ADJ_TAX_AMT : T24BusinessTypes:AMT
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=47.0, core=true, t24Name=ADJ.TAX.AMT)
-        CORRECTION_ID : mml:Integer
+        CORRECTION_ID : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=55, sysNumber=45.0, core=true, t24Name=CORRECTION.ID)
         WITHHELD_INT_AMT : T24BusinessTypes:AMT
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=48.0, core=true, t24Name=WITHHELD.INT.AMT)
@@ -723,24 +732,24 @@ Classes {
             @i18n:Label (en="Fixed Interest")
             @i18n:Tooltip (en="Input fixed rate of interest")
             @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=6.0, core=true, t24Name=CR2.INT.RATE)
-        CR2_NO_OF_DAYS : mml:Integer
+        CR2_NO_OF_DAYS : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=4.0, core=true, t24Name=CR2.NO.OF.DAYS)
         CR2_VAL_BALANCE : T24BusinessTypes:AMT
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=5.0, core=true, t24Name=CR2.VAL.BALANCE, typeModifiers=-)
     }
     ACCR_ACCT_CR2__ICA_MAIN_ACCT
     {
-        ICA_DIST_RATIO : mml:Integer
+        ICA_DIST_RATIO : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=28.0, core=true, t24Name=ICA.DIST.RATIO)
-        ICA_DIST_TYPE : mml:Integer
+        ICA_DIST_TYPE : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=29.0, core=true, t24Name=ICA.DIST.TYPE)
         ICA_INT_CATEG -> ST_Config:CATEGORY
             @t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=30.0, core=true, t24Name=ICA.INT.CATEG)
-        ICA_MAIN_ACCT : mml:Integer
+        ICA_MAIN_ACCT : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=27.0, core=true, t24Name=ICA.MAIN.ACCT)
-        ICA_MAIN_INT : mml:Integer
+        ICA_MAIN_INT : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=33.0, core=true, t24Name=ICA.MAIN.INT)
-        ICA_SUB_INT : mml:Integer
+        ICA_SUB_INT : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=34.0, core=true, t24Name=ICA.SUB.INT)
         ICA_TR_AC -> ST_Config:TRANSACTION
             @t24:i (align=R, inputBehaviour=I, maxLength=4, sysNumber=31.0, core=true, t24Name=ICA.TR.AC)
@@ -758,7 +767,7 @@ Classes {
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=46.0, core=true, t24Name=ADJ.INT.AMT)
         ADJ_TAX_AMT : T24BusinessTypes:AMT
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=47.0, core=true, t24Name=ADJ.TAX.AMT)
-        CORRECTION_ID : mml:Integer
+        CORRECTION_ID : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=55, sysNumber=45.0, core=true, t24Name=CORRECTION.ID)
         WITHHELD_INT_AMT : T24BusinessTypes:AMT
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=48.0, core=true, t24Name=WITHHELD.INT.AMT)
@@ -775,7 +784,7 @@ Classes {
             @i18n:Label (en="Fixed Interest")
             @i18n:Tooltip (en="Input fixed rate of interest")
             @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=6.0, core=true, t24Name=CR.INT.RATE)
-        CR_NO_OF_DAYS : mml:Integer
+        CR_NO_OF_DAYS : T24BusinessTypes:N
             @i18n:Label (en=Days)
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=4.0, core=true, t24Name=CR.NO.OF.DAYS)
         CR_VAL_BALANCE : T24BusinessTypes:AMT
@@ -801,17 +810,17 @@ Classes {
     }
     ACCR_ACCT_CR__ICA_MAIN_ACCT
     {
-        ICA_DIST_RATIO : mml:Integer
+        ICA_DIST_RATIO : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=29.0, core=true, t24Name=ICA.DIST.RATIO)
-        ICA_DIST_TYPE : mml:Integer
+        ICA_DIST_TYPE : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=28.0, core=true, t24Name=ICA.DIST.TYPE)
         ICA_INT_CATEG -> ST_Config:CATEGORY
             @t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=30.0, core=true, t24Name=ICA.INT.CATEG)
-        ICA_MAIN_ACCT : mml:Integer
+        ICA_MAIN_ACCT : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=27.0, core=true, t24Name=ICA.MAIN.ACCT)
-        ICA_MAIN_INT : mml:Integer
+        ICA_MAIN_INT : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=33.0, core=true, t24Name=ICA.MAIN.INT)
-        ICA_SUB_INT : mml:Integer
+        ICA_SUB_INT : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=34.0, core=true, t24Name=ICA.SUB.INT)
         ICA_TR_AC -> ST_Config:TRANSACTION
             @t24:i (align=R, inputBehaviour=I, maxLength=4, sysNumber=31.0, core=true, t24Name=ICA.TR.AC)
@@ -839,7 +848,7 @@ Classes {
             @t24:i (align=R, inputBehaviour=I, maxLength=8, sysNumber=116.0, core=true, t24Name=CORRECTION.DATE)
         CORRECTION_ID -> byValue IC_InterestAndCapitalisation:ACCR_ACCT_DR__CORRECTION_ID *
             @t24:i (t24Name=CORRECTION.ID)
-        CORRECTION_NUMBER : mml:Integer
+        CORRECTION_NUMBER : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=79.0, core=true, t24Name=CORRECTION.NUMBER)
         DB_NETTING_AMT : T24BusinessTypes:AMT
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=115.0, core=true, t24Name=DB.NETTING.AMT)
@@ -871,9 +880,9 @@ Classes {
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=107.0, core=true, t24Name=DEF.TOTAL.INT, typeModifiers=-)
         DEF_TOTAL_TAX : T24BusinessTypes:AMT
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=109.0, core=true, t24Name=DEF.TOTAL.TAX, typeModifiers=-)
-        DEF_WAIVE_ALL : mml:Integer
+        DEF_WAIVE_ALL : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=110.0, core=true, t24Name=DEF.WAIVE.ALL)
-        DR_INT_CATEG : mml:Integer
+        DR_INT_CATEG : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=6, sysNumber=9.0, core=true, t24Name=DR.INT.CATEG, mask="L##-###")
         DR_INT_DATE -> byValue IC_InterestAndCapitalisation:ACCR_ACCT_DR__DR_INT_DATE *
             @t24:i (t24Name=DR.INT.DATE)
@@ -885,11 +894,11 @@ Classes {
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=10.0, core=true, t24Name=DR.INT.TR.AC)
         DR_INT_TR_PL -> ST_Config:TRANSACTION
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=11.0, core=true, t24Name=DR.INT.TR.PL)
-        DR_MIN_VALUE : mml:Integer
+        DR_MIN_VALUE : T24BusinessTypes:N
             @i18n:Label (en="Minimum Interest Amount")
             @i18n:Tooltip (en="Indicates minimum interest amount")
             @t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=92.0, core=true, t24Name=DR.MIN.VALUE)
-        DR_MIN_WAIVE : mml:Integer
+        DR_MIN_WAIVE : T24BusinessTypes:N
             @i18n:Label (en="Minimum Interest Waive")
             @i18n:Tooltip (en="Indicates minimum interest waive")
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=93.0, core=true, t24Name=DR.MIN.WAIVE)
@@ -899,7 +908,7 @@ Classes {
             @t24:i (t24Name=GOV.MARGIN.DATE)
         GOV_MARGIN_MIN_MAX : IC_InterestAndCapitalisation:ACCR_ACCT_DR__GOV_MARGIN_MIN_MAX
             @t24:i (align=L, inputBehaviour=I, maxLength=7, sysNumber=39.0, core=true, t24Name=GOV.MARGIN.MIN.MAX)
-        GOV_MRG_CATEG : mml:Integer
+        GOV_MRG_CATEG : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=6, sysNumber=41.0, core=true, t24Name=GOV.MRG.CATEG, mask="L##-###")
         GOV_MRG_TOT_AMT : T24BusinessTypes:AMT
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=40.0, core=true, t24Name=GOV.MRG.TOT.AMT, typeModifiers=-)
@@ -919,7 +928,7 @@ Classes {
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=47.0, core=true, t24Name=HIGHEST.DR.FREE, typeModifiers=-)
         HIGHEST_DR_PERC : T24BusinessTypes:R
             @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=46.0, core=true, t24Name=HIGHEST.DR.PERC)
-        HIGH_DR_CATEG : mml:Integer
+        HIGH_DR_CATEG : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=6, sysNumber=51.0, core=true, t24Name=HIGH.DR.CATEG, mask="L##-###")
         HIGH_DR_MIN_MAX : IC_InterestAndCapitalisation:ACCR_ACCT_DR__HIGH_DR_MIN_MAX
             @t24:i (align=L, inputBehaviour=I, maxLength=7, sysNumber=48.0, core=true, t24Name=HIGH.DR.MIN.MAX)
@@ -933,11 +942,11 @@ Classes {
             @t24:i (t24Name=HI.DR.TAX.RATE)
         ICA_MAIN_ACCT -> byValue IC_InterestAndCapitalisation:ACCR_ACCT_DR__ICA_MAIN_ACCT *
             @t24:i (t24Name=ICA.MAIN.ACCT)
-        ICA_POST_INTEREST : mml:Integer
+        ICA_POST_INTEREST : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=4, sysNumber=83.0, core=true, t24Name=ICA.POST.INTEREST)
         INT_ADDON_AMT : T24BusinessTypes:AMT
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=23.0, core=true, t24Name=INT.ADDON.AMT, typeModifiers=-)
-        INT_ADDON_CATEG : mml:Integer
+        INT_ADDON_CATEG : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=6, sysNumber=24.0, core=true, t24Name=INT.ADDON.CATEG, mask="L##-###")
         INT_ADDON_CODE -> IC_Config:DEBIT_INT_ADDON
             @t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=18.0, core=true, t24Name=INT.ADDON.CODE)
@@ -956,7 +965,7 @@ Classes {
             @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=95.0, core=true, t24Name=INT.POST.DATE)
         INT_STMT_AMT : T24BusinessTypes:AMT
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=61.0, core=true, t24Name=INT.STMT.AMT, typeModifiers=-)
-        INT_STMT_CATEG : mml:Integer
+        INT_STMT_CATEG : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=6, sysNumber=62.0, core=true, t24Name=INT.STMT.CATEG, mask="L##-###")
         INT_STMT_CODE -> IC_Config:INTEREST_STATEMENT
             @t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=60.0, core=true, t24Name=INT.STMT.CODE)
@@ -966,7 +975,7 @@ Classes {
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=63.0, core=true, t24Name=INT.STMT.TRSDR)
         K_GRAND_TOTAL : T24BusinessTypes:AMT
             @i18n:Label (en=Total)
-            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=78.0, core=true, t24Name=K.GRAND.TOTAL, typeModifiers=-)
+            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=78.0, core=false, t24Name=K.GRAND.TOTAL, typeModifiers=-)
         LIQUIDITY_ACCOUNT -> AC_AccountOpening:ACCOUNT
             @t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=71.0, core=true, businessType=ANT, t24Name=LIQUIDITY.ACCOUNT)
         LIQUIDITY_CCY -> ST_CurrencyConfig:CURRENCY
@@ -1001,7 +1010,7 @@ Classes {
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=49.0, core=true, t24Name=UNADJ.HIGHEST.DR, typeModifiers=-)
         UNADJ_INT_ADDON : T24BusinessTypes:AMT
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=22.0, core=true, t24Name=UNADJ.INT.ADDON, typeModifiers=-)
-        UNADJ_TOTAL_INT : mml:Integer
+        UNADJ_TOTAL_INT : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=94.0, core=true, t24Name=UNADJ.TOTAL.INT)
         USED_MIDDLE_RATE : T24BusinessTypes:R
             @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=74.0, core=true, t24Name=USED.MIDDLE.RATE)
@@ -1027,7 +1036,7 @@ Classes {
             @t24:i (align=R, inputBehaviour=I, maxLength=8, sysNumber=48.0, core=true, t24Name=CORRECTION.DATE)
         CORRECTION_ID -> byValue IC_InterestAndCapitalisation:ACCR_ACCT_DR2__CORRECTION_ID *
             @t24:i (t24Name=CORRECTION.ID)
-        CORRECTION_NUMBER : mml:Integer
+        CORRECTION_NUMBER : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=23.0, core=true, t24Name=CORRECTION.NUMBER)
         D2_INT_TAX_CODE -> ST_ChargeConfig:TAX
             @t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=11.0, core=true, t24Name=D2.INT.TAX.CODE)
@@ -1041,7 +1050,7 @@ Classes {
             @t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=40.0, core=true, t24Name=DEF.TOTAL.INT, typeModifiers=-)
         DEF_TOTAL_TAX : T24BusinessTypes:AMT
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=41.0, core=true, t24Name=DEF.TOTAL.TAX, typeModifiers=-)
-        DEF_WAIVE_ALL : mml:Integer
+        DEF_WAIVE_ALL : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=42.0, core=true, t24Name=DEF.WAIVE.ALL)
         DR2_INT_CATEG -> ST_Config:CATEGORY
             @t24:i (align=R, inputBehaviour=I, maxLength=6, sysNumber=8.0, core=true, t24Name=DR2.INT.CATEG, mask="R##-###")
@@ -1051,11 +1060,11 @@ Classes {
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=9.0, core=true, t24Name=DR2.INT.TR.AC)
         DR2_INT_TR_PL -> ST_Config:TRANSACTION
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=10.0, core=true, t24Name=DR2.INT.TR.PL)
-        DR2_MIN_VALUE : mml:Integer
+        DR2_MIN_VALUE : T24BusinessTypes:N
             @i18n:Label (en="Minimum Interest Amount")
             @i18n:Tooltip (en="Indicates minimum interest amount")
             @t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=35.0, core=true, t24Name=DR2.MIN.VALUE)
-        DR2_MIN_WAIVE : mml:Integer
+        DR2_MIN_WAIVE : T24BusinessTypes:N
             @i18n:Label (en="Minimum Interest Waive")
             @i18n:Tooltip (en="Indicates minimum interest waive")
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=36.0, core=true, t24Name=DR2.MIN.WAIVE)
@@ -1063,7 +1072,7 @@ Classes {
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=22.0, core=true, t24Name=GRAND.TOTAL, typeModifiers=-)
         ICA_MAIN_ACCT -> byValue IC_InterestAndCapitalisation:ACCR_ACCT_DR2__ICA_MAIN_ACCT *
             @t24:i (t24Name=ICA.MAIN.ACCT)
-        ICA_POST_INTEREST : mml:Integer
+        ICA_POST_INTEREST : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=4, sysNumber=26.0, core=true, t24Name=ICA.POST.INTEREST)
         INT_NO_BOOKING : IC_InterestAndCapitalisation:ACCR_ACCT_DR2__INT_NO_BOOKING
             @i18n:Label (en="Int Booking")
@@ -1072,7 +1081,7 @@ Classes {
             @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=38.0, core=true, t24Name=INT.POST.DATE)
         K_GRAND_TOTAL : T24BusinessTypes:AMT
             @i18n:Label (en=Total)
-            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=22.0, core=true, t24Name=K.GRAND.TOTAL, typeModifiers=-)
+            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=22.0, core=false, t24Name=K.GRAND.TOTAL, typeModifiers=-)
         LIQUIDITY_ACCOUNT -> AC_AccountOpening:ACCOUNT
             @t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=17.0, core=true, businessType=ANT, t24Name=LIQUIDITY.ACCOUNT)
         LIQUIDITY_CCY -> ST_CurrencyConfig:CURRENCY
@@ -1096,7 +1105,7 @@ Classes {
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=20.0, core=true, t24Name=TOTAL.INTEREST, typeModifiers=-)
         TOTAL_TAX : T24BusinessTypes:AMT
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=21.0, core=true, t24Name=TOTAL.TAX, typeModifiers=-)
-        UNADJ_TOTAL_INT : mml:Integer
+        UNADJ_TOTAL_INT : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=37.0, core=true, t24Name=UNADJ.TOTAL.INT)
         WAIVE_AMT : T24BusinessTypes:AMT
             @i18n:Label (en="Waive Amount")
@@ -1118,7 +1127,7 @@ Classes {
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=44.0, core=true, t24Name=ADJ.INT.AMT)
         ADJ_TAX_AMT : T24BusinessTypes:AMT
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=45.0, core=true, t24Name=ADJ.TAX.AMT)
-        CORRECTION_ID : mml:Integer
+        CORRECTION_ID : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=55, sysNumber=43.0, core=true, t24Name=CORRECTION.ID)
         WITHHELD_INT_AMT : T24BusinessTypes:AMT
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=46.0, core=true, t24Name=WITHHELD.INT.AMT)
@@ -1146,24 +1155,24 @@ Classes {
             @i18n:Label (en="Fixed Interest")
             @i18n:Tooltip (en="Indicates fixed interest")
             @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=6.0, core=true, t24Name=DR2.INT.RATE)
-        DR2_NO_OF_DAYS : mml:Integer
+        DR2_NO_OF_DAYS : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=4.0, core=true, t24Name=DR2.NO.OF.DAYS)
         DR2_VAL_BALANCE : T24BusinessTypes:AMT
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=5.0, core=true, t24Name=DR2.VAL.BALANCE, typeModifiers=-)
     }
     ACCR_ACCT_DR2__ICA_MAIN_ACCT
     {
-        ICA_DIST_RATIO : mml:Integer
+        ICA_DIST_RATIO : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=29.0, core=true, t24Name=ICA.DIST.RATIO)
-        ICA_DIST_TYPE : mml:Integer
+        ICA_DIST_TYPE : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=28.0, core=true, t24Name=ICA.DIST.TYPE)
         ICA_INT_CATEG -> ST_Config:CATEGORY
             @t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=30.0, core=true, t24Name=ICA.INT.CATEG)
-        ICA_MAIN_ACCT : mml:Integer
+        ICA_MAIN_ACCT : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=27.0, core=true, t24Name=ICA.MAIN.ACCT)
-        ICA_MAIN_INT : mml:Integer
+        ICA_MAIN_INT : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=33.0, core=true, t24Name=ICA.MAIN.INT)
-        ICA_SUB_INT : mml:Integer
+        ICA_SUB_INT : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=34.0, core=true, t24Name=ICA.SUB.INT)
         ICA_TR_AC -> ST_Config:TRANSACTION
             @t24:i (align=R, inputBehaviour=I, maxLength=4, sysNumber=31.0, core=true, t24Name=ICA.TR.AC)
@@ -1172,7 +1181,7 @@ Classes {
     }
     ACCR_ACCT_DR__ADDON_TAX_RATE
     {
-        ADDON_TAXCATEG : mml:Integer
+        ADDON_TAXCATEG : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=6, sysNumber=30.0, core=true, t24Name=ADDON.TAXCATEG, mask="L##-###")
         ADDON_TAXTRSCR -> ST_Config:TRANSACTION
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=32.0, core=true, t24Name=ADDON.TAXTRSCR)
@@ -1194,7 +1203,7 @@ Classes {
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=112.0, core=true, t24Name=ADJ.INT.AMT)
         ADJ_TAX_AMT : T24BusinessTypes:AMT
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=113.0, core=true, t24Name=ADJ.TAX.AMT)
-        CORRECTION_ID : mml:Integer
+        CORRECTION_ID : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=55, sysNumber=111.0, core=true, t24Name=CORRECTION.ID)
         WITHHELD_INT_AMT : T24BusinessTypes:AMT
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=114.0, core=true, t24Name=WITHHELD.INT.AMT)
@@ -1222,7 +1231,7 @@ Classes {
     }
     ACCR_ACCT_DR__DR_INT_TAX_RATE
     {
-        DR_INT_TAXCATEG : mml:Integer
+        DR_INT_TAXCATEG : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=6, sysNumber=15.0, core=true, t24Name=DR.INT.TAXCATEG, mask="L##-###")
         DR_INT_TAXTRSCR -> ST_Config:TRANSACTION
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=17.0, core=true, t24Name=DR.INT.TAXTRSCR)
@@ -1243,14 +1252,14 @@ Classes {
             @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=33.0, core=true, t24Name=GOV.MARGIN.DATE)
         GV_INT_RATE : T24BusinessTypes:R
             @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=36.0, core=true, t24Name=GV.INT.RATE)
-        GV_NO_OF_DAYS : mml:Integer
+        GV_NO_OF_DAYS : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=34.0, core=true, t24Name=GV.NO.OF.DAYS)
         GV_VAL_BALANCE : T24BusinessTypes:AMT
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=35.0, core=true, t24Name=GV.VAL.BALANCE, typeModifiers=-)
     }
     ACCR_ACCT_DR__HI_DR_TAX_RATE
     {
-        HI_DR_TAXCATEG : mml:Integer
+        HI_DR_TAXCATEG : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=6, sysNumber=57.0, core=true, t24Name=HI.DR.TAXCATEG, mask="L##-###")
         HI_DR_TAXTRSCR -> ST_Config:TRANSACTION
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=59.0, core=true, t24Name=HI.DR.TAXTRSCR)
@@ -1263,17 +1272,17 @@ Classes {
     }
     ACCR_ACCT_DR__ICA_MAIN_ACCT
     {
-        ICA_DIST_RATIO : mml:Integer
+        ICA_DIST_RATIO : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=86.0, core=true, t24Name=ICA.DIST.RATIO)
-        ICA_DIST_TYPE : mml:Integer
+        ICA_DIST_TYPE : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=85.0, core=true, t24Name=ICA.DIST.TYPE)
-        ICA_INT_CATEG : mml:Integer
+        ICA_INT_CATEG : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=87.0, core=true, t24Name=ICA.INT.CATEG)
-        ICA_MAIN_ACCT : mml:Integer
+        ICA_MAIN_ACCT : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=84.0, core=true, t24Name=ICA.MAIN.ACCT)
-        ICA_MAIN_INT : mml:Integer
+        ICA_MAIN_INT : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=90.0, core=true, t24Name=ICA.MAIN.INT)
-        ICA_SUB_INT : mml:Integer
+        ICA_SUB_INT : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=91.0, core=true, t24Name=ICA.SUB.INT)
         ICA_TR_AC -> ST_Config:TRANSACTION
             @t24:i (align=R, inputBehaviour=I, maxLength=4, sysNumber=88.0, core=true, t24Name=ICA.TR.AC)
@@ -1282,7 +1291,7 @@ Classes {
     }
     ACCR_ACCT_DR__STMT_TAX_RATE
     {
-        STMT_TAXCATEG : mml:Integer
+        STMT_TAXCATEG : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=6, sysNumber=68.0, core=true, t24Name=STMT.TAXCATEG, mask="L##-###")
         STMT_TAXTRSCR -> ST_Config:TRANSACTION
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=70.0, core=true, t24Name=STMT.TAXTRSCR)
@@ -1357,7 +1366,7 @@ Classes {
     {
         CHRG_TOT : T24BusinessTypes:AMT
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=11.0, core=true, t24Name=CHRG.TOT)
-        YR_MTH : mml:Integer
+        YR_MTH : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=6, sysNumber=10.0, core=true, t24Name=YR.MTH)
     }
     ACCT_BACK_VALUE
@@ -1425,7 +1434,7 @@ Classes {
             @i18n:Label (en="Debit Capitalisation Frequency")
             @i18n:Tooltip (en="Frequency of the application of 2nd debit interest")
             @t24:i (align=L, inputBehaviour=I, maxLength=17, sysNumber=2.0, core=true, t24Name=DR2.CAP.FREQUENCY, mask="RDDDD DD  DD #####")
-        DR_CAP_FREQUENCY : T24BusinessTypes:FQU
+        DR_CAP_FREQUENCY : T24BusinessTypes:FQU required
             @i18n:Label (en="Dr Cap Fqy")
             @t24:i (align=L, inputBehaviour=I, maxLength=17, sysNumber=1.0, core=true, t24Name=DR.CAP.FREQUENCY, mask="RDDDD DD  DD #####")
         INPUTTER -> byValue IC_InterestAndCapitalisation:ACCT_CAPITALISATION__INPUTTER *
@@ -1506,7 +1515,7 @@ Classes {
     }
     ACCT_INTERIM_CAP__ACCOUNT_NUMBER
     {
-        ACCOUNT_NUMBER -> AC_AccountOpening:ACCOUNT
+        ACCOUNT_NUMBER -> AC_AccountOpening:ACCOUNT required
             @i18n:Label (en="Account Number")
             @t24:i (align=R, inputBehaviour=I, maxLength=16, sysNumber=1.0, core=true, businessType=ACC, t24Name=ACCOUNT.NUMBER)
         CR2_CAPITALIS : IC_InterestAndCapitalisation:ACCT_INTERIM_CAP__ACCOUNT_NUMBER__CR2_CAPITALIS
@@ -1642,9 +1651,9 @@ Classes {
         ACCOUNT_NUMBER -> IC_InterestAndCapitalisation:ACCT_SUSP_ACT PK required
             @i18n:Label (en="Account Number")
             @t24:i (align=L, inputBehaviour=I, maxLength=25, sysNumber=0.0, core=true, businessType=A, t24Name=ACCOUNT.NUMBER)
-        CURR_NO_ADDED : mml:Integer
+        CURR_NO_ADDED : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=1.0, core=true, t24Name=CURR.NO.ADDED)
-        CURR_NO_REMOVED : mml:Integer
+        CURR_NO_REMOVED : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=2.0, core=true, t24Name=CURR.NO.REMOVED)
     }
     ACCT_SUSP_ENTRIES
@@ -1668,7 +1677,7 @@ Classes {
     {
         CH_AMT : T24BusinessTypes:AMT
             @t24:i (align=R, inputBehaviour=I, maxLength=20, sysNumber=40.0, core=true, t24Name=CH.AMT)
-        CH_CATEGORY : mml:Integer
+        CH_CATEGORY : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=8, sysNumber=39.0, core=true, t24Name=CH.CATEGORY, mask="R##-###")
         CH_NAME : T24BusinessTypes:A
             @t24:i (align=L, inputBehaviour=I, maxLength=30, sysNumber=38.0, core=true, t24Name=CH.NAME)
@@ -1676,7 +1685,7 @@ Classes {
             @t24:i (t24Name=CH.SET.DATE)
         CH_TAX_AMT : T24BusinessTypes:AMT
             @t24:i (align=R, inputBehaviour=I, maxLength=20, sysNumber=42.0, core=true, t24Name=CH.TAX.AMT)
-        CH_TAX_KEY : mml:Integer
+        CH_TAX_KEY : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=41.0, core=true, t24Name=CH.TAX.KEY)
         CH_TX_ORG_CAT : T24BusinessTypes:ANT
             @t24:i (align=L, inputBehaviour=I, maxLength=12, sysNumber=44.0, core=true, t24Name=CH.TX.ORG.CAT)
@@ -1694,7 +1703,7 @@ Classes {
     }
     ACCT_SUSP_ENTRIES__CR2_CATEGORY
     {
-        CR2_CATEGORY : mml:Integer
+        CR2_CATEGORY : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=8, sysNumber=29.0, core=true, t24Name=CR2.CATEGORY, mask="R##-###")
         CR2_INT_AMT : T24BusinessTypes:AMT
             @t24:i (align=R, inputBehaviour=I, maxLength=20, sysNumber=30.0, core=true, t24Name=CR2.INT.AMT)
@@ -1702,7 +1711,7 @@ Classes {
             @t24:i (t24Name=CR2.SET.DATE)
         CR2_TAX_AMT : T24BusinessTypes:AMT
             @t24:i (align=R, inputBehaviour=I, maxLength=20, sysNumber=32.0, core=true, t24Name=CR2.TAX.AMT)
-        CR2_TAX_KEY : mml:Integer
+        CR2_TAX_KEY : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=31.0, core=true, t24Name=CR2.TAX.KEY)
         CR2_TX_ORG_CAT : T24BusinessTypes:ANT
             @t24:i (align=L, inputBehaviour=I, maxLength=12, sysNumber=34.0, core=true, t24Name=CR2.TX.ORG.CAT)
@@ -1713,14 +1722,14 @@ Classes {
     {
         CR2_SET_DATE : T24BusinessTypes:D
             @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=35.0, core=true, t24Name=CR2.SET.DATE)
-        CR2_SET_INT : mml:Integer
+        CR2_SET_INT : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=20, sysNumber=36.0, core=true, t24Name=CR2.SET.INT)
         CR2_SET_TAX : T24BusinessTypes:AMT
             @t24:i (align=R, inputBehaviour=I, maxLength=20, sysNumber=37.0, core=true, t24Name=CR2.SET.TAX)
     }
     ACCT_SUSP_ENTRIES__CR_CATEGORY
     {
-        CR_CATEGORY : mml:Integer
+        CR_CATEGORY : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=8, sysNumber=20.0, core=true, t24Name=CR.CATEGORY, mask="R##-###")
         CR_INT_AMT : T24BusinessTypes:AMT
             @i18n:Label (en="Cr Int Amount")
@@ -1729,7 +1738,7 @@ Classes {
             @t24:i (t24Name=CR.SET.DATE)
         CR_TAX_AMT : T24BusinessTypes:AMT
             @t24:i (align=R, inputBehaviour=I, maxLength=20, sysNumber=23.0, core=true, t24Name=CR.TAX.AMT)
-        CR_TAX_KEY : mml:Integer
+        CR_TAX_KEY : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=22.0, core=true, t24Name=CR.TAX.KEY)
         CR_TX_ORG_CAT : T24BusinessTypes:ANT
             @t24:i (align=L, inputBehaviour=I, maxLength=12, sysNumber=25.0, core=true, t24Name=CR.TX.ORG.CAT)
@@ -1740,14 +1749,14 @@ Classes {
     {
         CR_SET_DATE : T24BusinessTypes:D
             @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=26.0, core=true, t24Name=CR.SET.DATE)
-        CR_SET_INT : mml:Integer
+        CR_SET_INT : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=20, sysNumber=27.0, core=true, t24Name=CR.SET.INT)
         CR_SET_TAX : T24BusinessTypes:AMT
             @t24:i (align=R, inputBehaviour=I, maxLength=20, sysNumber=28.0, core=true, t24Name=CR.SET.TAX)
     }
     ACCT_SUSP_ENTRIES__DR2_CATEGORY
     {
-        DR2_CATEGORY : mml:Integer
+        DR2_CATEGORY : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=11.0, core=true, t24Name=DR2.CATEGORY, mask="R##-###")
         DR2_INT_AMT : T24BusinessTypes:AMT
             @t24:i (align=R, inputBehaviour=I, maxLength=20, sysNumber=12.0, core=true, t24Name=DR2.INT.AMT)
@@ -1755,7 +1764,7 @@ Classes {
             @t24:i (t24Name=DR2.SET.DATE)
         DR2_TAX_AMT : T24BusinessTypes:AMT
             @t24:i (align=R, inputBehaviour=I, maxLength=20, sysNumber=14.0, core=true, t24Name=DR2.TAX.AMT)
-        DR2_TAX_KEY : mml:Integer
+        DR2_TAX_KEY : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=13.0, core=true, t24Name=DR2.TAX.KEY)
         DR2_TX_ORG_CAT : T24BusinessTypes:ANT
             @t24:i (align=L, inputBehaviour=I, maxLength=12, sysNumber=16.0, core=true, t24Name=DR2.TX.ORG.CAT)
@@ -1766,16 +1775,16 @@ Classes {
     {
         DR2_SET_DATE : T24BusinessTypes:D
             @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=17.0, core=true, t24Name=DR2.SET.DATE)
-        DR2_SET_INT : mml:Integer
+        DR2_SET_INT : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=20, sysNumber=18.0, core=true, t24Name=DR2.SET.INT)
         DR2_SET_TAX : T24BusinessTypes:AMT
             @t24:i (align=R, inputBehaviour=I, maxLength=20, sysNumber=19.0, core=true, t24Name=DR2.SET.TAX)
     }
     ACCT_SUSP_ENTRIES__DR_CATEGORY
     {
-        DR_CATEGORY : mml:Integer
+        DR_CATEGORY : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=8, sysNumber=1.0, core=true, t24Name=DR.CATEGORY, mask="R##-###")
-        DR_CHARGE_NAME : mml:Integer
+        DR_CHARGE_NAME : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=20, sysNumber=3.0, core=true, t24Name=DR.CHARGE.NAME)
         DR_INT_AMT : T24BusinessTypes:AMT
             @i18n:Label (en="Interest Amount")
@@ -1784,7 +1793,7 @@ Classes {
             @t24:i (t24Name=DR.SET.DATE)
         DR_TAX_AMT : T24BusinessTypes:AMT
             @t24:i (align=R, inputBehaviour=I, maxLength=20, sysNumber=5.0, core=true, t24Name=DR.TAX.AMT)
-        DR_TAX_KEY : mml:Integer
+        DR_TAX_KEY : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=4.0, core=true, t24Name=DR.TAX.KEY)
         DR_TX_ORG_CAT : T24BusinessTypes:ANT
             @t24:i (align=L, inputBehaviour=I, maxLength=12, sysNumber=7.0, core=true, t24Name=DR.TX.ORG.CAT)
@@ -1795,7 +1804,7 @@ Classes {
     {
         DR_SET_DATE : T24BusinessTypes:D
             @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=8.0, core=true, t24Name=DR.SET.DATE)
-        DR_SET_INT : mml:Integer
+        DR_SET_INT : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=20, sysNumber=9.0, core=true, t24Name=DR.SET.INT)
         DR_SET_TAX : T24BusinessTypes:AMT
             @t24:i (align=R, inputBehaviour=I, maxLength=20, sysNumber=10.0, core=true, t24Name=DR.SET.TAX)
@@ -1847,7 +1856,7 @@ Classes {
             @t24:i (t24Name=INPUTTER)
         K_CURRENCY -> ST_CurrencyConfig:CURRENCY
             @i18n:Label (en=Ccy)
-            @t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=1.0, core=true, businessType=CCY, t24Name=K.CURRENCY)
+            @t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=1.0, core=false, businessType=CCY, t24Name=K.CURRENCY)
         RECORD_STATUS : T24BusinessTypes:STAT
             @i18n:Label (en="Record Status")
             @t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=19.0, core=true, t24Name=RECORD.STATUS)
@@ -2224,7 +2233,7 @@ Classes {
         PROCESSING_DATE : T24BusinessTypes:D
             @i18n:Label (en="Processing Date")
             @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=2.0, core=true, t24Name=PROCESSING.DATE)
-        STMT_ENTRY_ID -> AC_EntryCreation:STMT_ENTRY
+        STMT_ENTRY_ID -> AC_EntryCreation:STMT_ENTRY required
             @i18n:Label (en="Entry Id")
             @t24:i (align=L, inputBehaviour=I, maxLength=22, sysNumber=1.0, core=true, businessType=A, t24Name=STMT.ENTRY.ID, mvSvExpansionAccess=NODELETE)
         TXN_CODE -> ST_Config:TRANSACTION
@@ -2275,29 +2284,29 @@ Classes {
             @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=146.0, core=true, t24Name=DEFERRED.DATE)
         GRAND_TOTAL : T24BusinessTypes:AMT
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=144.0, core=true, t24Name=GRAND.TOTAL, typeModifiers=-)
-        HIGHEST_DR_CODE : mml:Integer
+        HIGHEST_DR_CODE : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=122.0, core=true, t24Name=HIGHEST.DR.CODE)
         HIGHEST_DR_FREE : T24BusinessTypes:AMT
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=130.0, core=true, t24Name=HIGHEST.DR.FREE)
         HIGHEST_DR_PERC : T24BusinessTypes:R
             @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=129.0, core=true, t24Name=HIGHEST.DR.PERC)
-        HIGH_DR_CATEG : mml:Integer
+        HIGH_DR_CATEG : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=126.0, core=true, t24Name=HIGH.DR.CATEG)
         HIGH_DR_MIN_MAX : T24BusinessTypes:A
             @t24:i (align=L, inputBehaviour=I, maxLength=7, sysNumber=131.0, core=true, t24Name=HIGH.DR.MIN.MAX)
-        HIGH_DR_TRSCR : mml:Integer
+        HIGH_DR_TRSCR : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=128.0, core=true, t24Name=HIGH.DR.TRSCR)
-        HIGH_DR_TRSDR : mml:Integer
+        HIGH_DR_TRSDR : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=127.0, core=true, t24Name=HIGH.DR.TRSDR)
-        HI_DR_TAXCATEG : mml:Integer
+        HI_DR_TAXCATEG : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=135.0, core=true, t24Name=HI.DR.TAXCATEG)
-        HI_DR_TAX_CODE : mml:Integer
+        HI_DR_TAX_CODE : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=132.0, core=true, t24Name=HI.DR.TAX.CODE)
         HI_DR_TAX_RATE -> byValue IC_InterestAndCapitalisation:CORR_ACCT_CH__HI_DR_TAX_RATE *
             @t24:i (t24Name=HI.DR.TAX.RATE)
-        HI_DR_TAX_TRSCR : mml:Integer
+        HI_DR_TAX_TRSCR : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=137.0, core=true, t24Name=HI.DR.TAX.TRSCR)
-        HI_DR_TAX_TRSDR : mml:Integer
+        HI_DR_TAX_TRSDR : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=136.0, core=true, t24Name=HI.DR.TAX.TRSDR)
         HI_DR_YR_MTH -> byValue IC_InterestAndCapitalisation:CORR_ACCT_CH__HI_DR_YR_MTH *
             @t24:i (t24Name=HI.DR.YR.MTH)
@@ -2306,8 +2315,8 @@ Classes {
             @t24:i (align=L, inputBehaviour=I, maxLength=8, sysNumber=140.0, core=true, t24Name=INT.NO.BOOKING)
         K_GRAND_TOTAL : T24BusinessTypes:AMT
             @i18n:Label (en=Total)
-            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=144.0, core=true, t24Name=K.GRAND.TOTAL, typeModifiers=-)
-        LAST_CORRECTION_NO : mml:Integer
+            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=144.0, core=false, t24Name=K.GRAND.TOTAL, typeModifiers=-)
+        LAST_CORRECTION_NO : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=145.0, core=true, t24Name=LAST.CORRECTION.NO)
         LIQUIDITY_ACCOUNT -> AC_AccountOpening:ACCOUNT
             @t24:i (align=R, inputBehaviour=I, maxLength=16, sysNumber=138.0, core=true, businessType=ACC, t24Name=LIQUIDITY.ACCOUNT)
@@ -2452,7 +2461,7 @@ Classes {
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=125.0, core=true, t24Name=HIGHEST.DR.AMT)
         HIGHEST_DR_BAL : T24BusinessTypes:AMT
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=124.0, core=true, t24Name=HIGHEST.DR.BAL)
-        HI_DR_YR_MTH : mml:Integer
+        HI_DR_YR_MTH : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=8, sysNumber=123.0, core=true, t24Name=HI.DR.YR.MTH)
     }
     CORR_ACCT_CH__NO_CRED_YR_MTH
@@ -2467,7 +2476,7 @@ Classes {
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=20.0, core=true, t24Name=NO.CR.FREE, typeModifiers=-)
         NO_CR_MIN_MAX : IC_InterestAndCapitalisation:CORR_ACCT_CH__NO_CRED_YR_MTH__NO_CR_MIN_MAX
             @t24:i (align=L, inputBehaviour=I, maxLength=7, sysNumber=21.0, core=true, t24Name=NO.CR.MIN.MAX)
-        NO_CR_TRANSACT : mml:Integer
+        NO_CR_TRANSACT : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=6, sysNumber=18.0, core=true, t24Name=NO.CR.TRANSACT)
     }
     CORR_ACCT_CH__NO_CR_TAX_RATE
@@ -2495,7 +2504,7 @@ Classes {
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=36.0, core=true, t24Name=NO.DR.FREE, typeModifiers=-)
         NO_DR_MIN_MAX : IC_InterestAndCapitalisation:CORR_ACCT_CH__NO_DEBIT_YR_MTH__NO_DR_MIN_MAX
             @t24:i (align=L, inputBehaviour=I, maxLength=7, sysNumber=37.0, core=true, t24Name=NO.DR.MIN.MAX)
-        NO_DR_TRANSACT : mml:Integer
+        NO_DR_TRANSACT : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=7, sysNumber=34.0, core=true, t24Name=NO.DR.TRANSACT)
     }
     CORR_ACCT_CH__NO_DR_TAX_RATE
@@ -2549,7 +2558,7 @@ Classes {
     }
     CORR_ACCT_CH__TRCHARGE_YR_MTH__TRCH_CODE
     {
-        NO_TRANSACT : mml:Integer
+        NO_TRANSACT : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=6, sysNumber=82.0, core=true, t24Name=NO.TRANSACT)
         TRANS_CHARGE : T24BusinessTypes:AMT
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=83.0, core=true, t24Name=TRANS.CHARGE, typeModifiers=-)
@@ -2665,7 +2674,7 @@ Classes {
             @t24:i (align=R, inputBehaviour=I, maxLength=8, sysNumber=50.0, core=true, t24Name=CORRECTION.DATE)
         CORRECTION_ID -> byValue IC_InterestAndCapitalisation:CORR_ACCT_CR__CORRECTION_ID *
             @t24:i (t24Name=CORRECTION.ID)
-        CORRECTION_NUMBER : mml:Integer
+        CORRECTION_NUMBER : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=24.0, core=true, t24Name=CORRECTION.NUMBER)
         CR_INT_CATEG -> ST_Config:CATEGORY
             @t24:i (align=R, inputBehaviour=I, maxLength=6, sysNumber=8.0, core=true, t24Name=CR.INT.CATEG, mask="R##-###")
@@ -2677,11 +2686,11 @@ Classes {
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=9.0, core=true, t24Name=CR.INT.TR.AC)
         CR_INT_TR_PL -> ST_Config:TRANSACTION
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=10.0, core=true, t24Name=CR.INT.TR.PL)
-        CR_MIN_VALUE : mml:Integer
+        CR_MIN_VALUE : T24BusinessTypes:N
             @i18n:Label (en="Minimum Interest Amount")
             @i18n:Tooltip (en="Indicates minimum interest amount")
             @t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=39.0, core=true, t24Name=CR.MIN.VALUE)
-        CR_MIN_WAIVE : mml:Integer
+        CR_MIN_WAIVE : T24BusinessTypes:N
             @i18n:Label (en="Minimum Interest Waive")
             @i18n:Tooltip (en="Indicates minimum interest waive")
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=40.0, core=true, t24Name=CR.MIN.WAIVE)
@@ -2691,7 +2700,7 @@ Classes {
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=23.0, core=true, t24Name=GRAND.TOTAL, typeModifiers=-)
         ICA_MAIN_ACCT -> byValue IC_InterestAndCapitalisation:CORR_ACCT_CR__ICA_MAIN_ACCT *
             @t24:i (t24Name=ICA.MAIN.ACCT)
-        ICA_POST_INTEREST : mml:Integer
+        ICA_POST_INTEREST : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=4, sysNumber=26.0, core=true, t24Name=ICA.POST.INTEREST)
         INT_NO_BOOKING : IC_InterestAndCapitalisation:CORR_ACCT_CR__INT_NO_BOOKING
             @i18n:Label (en="Int Booking")
@@ -2700,7 +2709,7 @@ Classes {
             @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=42.0, core=true, t24Name=INT.POST.DATE)
         K_GRAND_TOTAL : T24BusinessTypes:AMT
             @i18n:Label (en=Total)
-            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=23.0, core=true, t24Name=K.GRAND.TOTAL, typeModifiers=-)
+            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=23.0, core=false, t24Name=K.GRAND.TOTAL, typeModifiers=-)
         LIQUIDITY_ACCOUNT -> AC_AccountOpening:ACCOUNT
             @t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=17.0, core=true, businessType=ANT, t24Name=LIQUIDITY.ACCOUNT)
         LIQUIDITY_CCY -> ST_CurrencyConfig:CURRENCY
@@ -2737,7 +2746,7 @@ Classes {
         TOTAL_INTEREST : T24BusinessTypes:AMT
             @i18n:Label (en="Total Int")
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=20.0, core=true, t24Name=TOTAL.INTEREST, typeModifiers=-)
-        UNADJ_TOTAL_INT : mml:Integer
+        UNADJ_TOTAL_INT : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=41.0, core=true, t24Name=UNADJ.TOTAL.INT)
         WAIVE_AMT : T24BusinessTypes:AMT
             @i18n:Label (en="Waive Amount")
@@ -2763,7 +2772,7 @@ Classes {
             @t24:i (align=R, inputBehaviour=I, maxLength=8, sysNumber=50.0, core=true, t24Name=CORRECTION.DATE)
         CORRECTION_ID -> byValue IC_InterestAndCapitalisation:CORR_ACCT_CR2__CORRECTION_ID *
             @t24:i (t24Name=CORRECTION.ID)
-        CORRECTION_NUMBER : mml:Integer
+        CORRECTION_NUMBER : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=24.0, core=true, t24Name=CORRECTION.NUMBER)
         CR2_INT_CATEG -> ST_Config:CATEGORY
             @t24:i (align=R, inputBehaviour=I, maxLength=6, sysNumber=8.0, core=true, t24Name=CR2.INT.CATEG, mask="R##-###")
@@ -2773,9 +2782,9 @@ Classes {
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=9.0, core=true, t24Name=CR2.INT.TR.AC)
         CR2_INT_TR_PL -> ST_Config:TRANSACTION
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=10.0, core=true, t24Name=CR2.INT.TR.PL)
-        CR2_MIN_VALUE : mml:Integer
+        CR2_MIN_VALUE : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=39.0, core=true, t24Name=CR2.MIN.VALUE)
-        CR2_MIN_WAIVE : mml:Integer
+        CR2_MIN_WAIVE : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=40.0, core=true, t24Name=CR2.MIN.WAIVE)
         DB_NETTING_AMT : T24BusinessTypes:AMT
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=49.0, core=true, t24Name=DB.NETTING.AMT)
@@ -2783,7 +2792,7 @@ Classes {
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=23.0, core=true, t24Name=GRAND.TOTAL, typeModifiers=-)
         ICA_MAIN_ACCT -> byValue IC_InterestAndCapitalisation:CORR_ACCT_CR2__ICA_MAIN_ACCT *
             @t24:i (t24Name=ICA.MAIN.ACCT)
-        ICA_POST_INTEREST : mml:Integer
+        ICA_POST_INTEREST : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=4, sysNumber=26.0, core=true, t24Name=ICA.POST.INTEREST)
         INT_NO_BOOKING : IC_InterestAndCapitalisation:CORR_ACCT_CR2__INT_NO_BOOKING
             @i18n:Label (en="Int Booking")
@@ -2792,7 +2801,7 @@ Classes {
             @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=42.0, core=true, t24Name=INT.POST.DATE)
         K_GRAND_TOTAL : T24BusinessTypes:AMT
             @i18n:Label (en=Total)
-            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=23.0, core=true, t24Name=K.GRAND.TOTAL, typeModifiers=-)
+            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=23.0, core=false, t24Name=K.GRAND.TOTAL, typeModifiers=-)
         LIQUIDITY_ACCOUNT -> AC_AccountOpening:ACCOUNT
             @t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=17.0, core=true, businessType=ANT, t24Name=LIQUIDITY.ACCOUNT)
         LIQUIDITY_CCY -> ST_CurrencyConfig:CURRENCY
@@ -2829,7 +2838,7 @@ Classes {
         TOTAL_INTEREST : T24BusinessTypes:AMT
             @i18n:Label (en="Total interest")
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=20.0, core=true, t24Name=TOTAL.INTEREST, typeModifiers=-)
-        UNADJ_TOTAL_INT : mml:Integer
+        UNADJ_TOTAL_INT : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=41.0, core=true, t24Name=UNADJ.TOTAL.INT)
         WAIVE_AMT : T24BusinessTypes:AMT
             @i18n:Label (en="Waive Amount")
@@ -2866,7 +2875,7 @@ Classes {
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=46.0, core=true, t24Name=ADJ.INT.AMT)
         ADJ_TAX_AMT : T24BusinessTypes:AMT
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=47.0, core=true, t24Name=ADJ.TAX.AMT)
-        CORRECTION_ID : mml:Integer
+        CORRECTION_ID : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=55, sysNumber=45.0, core=true, t24Name=CORRECTION.ID)
         WITHHELD_INT_AMT : T24BusinessTypes:AMT
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=48.0, core=true, t24Name=WITHHELD.INT.AMT)
@@ -2881,24 +2890,24 @@ Classes {
             @i18n:Label (en="Fixed Interest")
             @i18n:Tooltip (en="Input fixed rate of interest")
             @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=6.0, core=true, t24Name=CR2.INT.RATE)
-        CR2_NO_OF_DAYS : mml:Integer
+        CR2_NO_OF_DAYS : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=4.0, core=true, t24Name=CR2.NO.OF.DAYS)
         CR2_VAL_BALANCE : T24BusinessTypes:AMT
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=5.0, core=true, t24Name=CR2.VAL.BALANCE, typeModifiers=-)
     }
     CORR_ACCT_CR2__ICA_MAIN_ACCT
     {
-        ICA_DIST_RATIO : mml:Integer
+        ICA_DIST_RATIO : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=28.0, core=true, t24Name=ICA.DIST.RATIO)
-        ICA_DIST_TYPE : mml:Integer
+        ICA_DIST_TYPE : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=29.0, core=true, t24Name=ICA.DIST.TYPE)
         ICA_INT_CATEG -> ST_Config:CATEGORY
             @t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=30.0, core=true, t24Name=ICA.INT.CATEG)
-        ICA_MAIN_ACCT : mml:Integer
+        ICA_MAIN_ACCT : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=27.0, core=true, t24Name=ICA.MAIN.ACCT)
-        ICA_MAIN_INT : mml:Integer
+        ICA_MAIN_INT : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=33.0, core=true, t24Name=ICA.MAIN.INT)
-        ICA_SUB_INT : mml:Integer
+        ICA_SUB_INT : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=34.0, core=true, t24Name=ICA.SUB.INT)
         ICA_TR_AC -> ST_Config:TRANSACTION
             @t24:i (align=R, inputBehaviour=I, maxLength=4, sysNumber=31.0, core=true, t24Name=ICA.TR.AC)
@@ -2916,7 +2925,7 @@ Classes {
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=46.0, core=true, t24Name=ADJ.INT.AMT)
         ADJ_TAX_AMT : T24BusinessTypes:AMT
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=47.0, core=true, t24Name=ADJ.TAX.AMT)
-        CORRECTION_ID : mml:Integer
+        CORRECTION_ID : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=55, sysNumber=45.0, core=true, t24Name=CORRECTION.ID)
         WITHHELD_INT_AMT : T24BusinessTypes:AMT
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=48.0, core=true, t24Name=WITHHELD.INT.AMT)
@@ -2933,7 +2942,7 @@ Classes {
             @i18n:Label (en="Fixed Interest")
             @i18n:Tooltip (en="Input fixed rate of interest")
             @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=6.0, core=true, t24Name=CR.INT.RATE)
-        CR_NO_OF_DAYS : mml:Integer
+        CR_NO_OF_DAYS : T24BusinessTypes:N
             @i18n:Label (en=Days)
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=4.0, core=true, t24Name=CR.NO.OF.DAYS)
         CR_VAL_BALANCE : T24BusinessTypes:AMT
@@ -2959,17 +2968,17 @@ Classes {
     }
     CORR_ACCT_CR__ICA_MAIN_ACCT
     {
-        ICA_DIST_RATIO : mml:Integer
+        ICA_DIST_RATIO : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=29.0, core=true, t24Name=ICA.DIST.RATIO)
-        ICA_DIST_TYPE : mml:Integer
+        ICA_DIST_TYPE : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=28.0, core=true, t24Name=ICA.DIST.TYPE)
         ICA_INT_CATEG -> ST_Config:CATEGORY
             @t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=30.0, core=true, t24Name=ICA.INT.CATEG)
-        ICA_MAIN_ACCT : mml:Integer
+        ICA_MAIN_ACCT : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=27.0, core=true, t24Name=ICA.MAIN.ACCT)
-        ICA_MAIN_INT : mml:Integer
+        ICA_MAIN_INT : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=33.0, core=true, t24Name=ICA.MAIN.INT)
-        ICA_SUB_INT : mml:Integer
+        ICA_SUB_INT : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=34.0, core=true, t24Name=ICA.SUB.INT)
         ICA_TR_AC -> ST_Config:TRANSACTION
             @t24:i (align=R, inputBehaviour=I, maxLength=4, sysNumber=31.0, core=true, t24Name=ICA.TR.AC)
@@ -3001,7 +3010,7 @@ Classes {
             @t24:i (align=R, inputBehaviour=I, maxLength=8, sysNumber=116.0, core=true, t24Name=CORRECTION.DATE)
         CORRECTION_ID -> byValue IC_InterestAndCapitalisation:CORR_ACCT_DR__CORRECTION_ID *
             @t24:i (t24Name=CORRECTION.ID)
-        CORRECTION_NUMBER : mml:Integer
+        CORRECTION_NUMBER : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=79.0, core=true, t24Name=CORRECTION.NUMBER)
         DB_NETTING_AMT : T24BusinessTypes:AMT
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=115.0, core=true, t24Name=DB.NETTING.AMT)
@@ -3033,9 +3042,9 @@ Classes {
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=107.0, core=true, t24Name=DEF.TOTAL.INT, typeModifiers=-)
         DEF_TOTAL_TAX : T24BusinessTypes:AMT
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=109.0, core=true, t24Name=DEF.TOTAL.TAX, typeModifiers=-)
-        DEF_WAIVE_ALL : mml:Integer
+        DEF_WAIVE_ALL : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=110.0, core=true, t24Name=DEF.WAIVE.ALL)
-        DR_INT_CATEG : mml:Integer
+        DR_INT_CATEG : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=6, sysNumber=9.0, core=true, t24Name=DR.INT.CATEG, mask="L##-###")
         DR_INT_DATE -> byValue IC_InterestAndCapitalisation:CORR_ACCT_DR__DR_INT_DATE *
             @t24:i (t24Name=DR.INT.DATE)
@@ -3047,11 +3056,11 @@ Classes {
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=10.0, core=true, t24Name=DR.INT.TR.AC)
         DR_INT_TR_PL -> ST_Config:TRANSACTION
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=11.0, core=true, t24Name=DR.INT.TR.PL)
-        DR_MIN_VALUE : mml:Integer
+        DR_MIN_VALUE : T24BusinessTypes:N
             @i18n:Label (en="Minimum Interest Amount")
             @i18n:Tooltip (en="Indicates minimum interest amount")
             @t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=92.0, core=true, t24Name=DR.MIN.VALUE)
-        DR_MIN_WAIVE : mml:Integer
+        DR_MIN_WAIVE : T24BusinessTypes:N
             @i18n:Label (en="Minimum Interest Waive")
             @i18n:Tooltip (en="Indicates minimum interest waive")
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=93.0, core=true, t24Name=DR.MIN.WAIVE)
@@ -3061,7 +3070,7 @@ Classes {
             @t24:i (t24Name=GOV.MARGIN.DATE)
         GOV_MARGIN_MIN_MAX : IC_InterestAndCapitalisation:CORR_ACCT_DR__GOV_MARGIN_MIN_MAX
             @t24:i (align=L, inputBehaviour=I, maxLength=7, sysNumber=39.0, core=true, t24Name=GOV.MARGIN.MIN.MAX)
-        GOV_MRG_CATEG : mml:Integer
+        GOV_MRG_CATEG : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=6, sysNumber=41.0, core=true, t24Name=GOV.MRG.CATEG, mask="L##-###")
         GOV_MRG_TOT_AMT : T24BusinessTypes:AMT
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=40.0, core=true, t24Name=GOV.MRG.TOT.AMT, typeModifiers=-)
@@ -3081,7 +3090,7 @@ Classes {
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=47.0, core=true, t24Name=HIGHEST.DR.FREE, typeModifiers=-)
         HIGHEST_DR_PERC : T24BusinessTypes:R
             @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=46.0, core=true, t24Name=HIGHEST.DR.PERC)
-        HIGH_DR_CATEG : mml:Integer
+        HIGH_DR_CATEG : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=6, sysNumber=51.0, core=true, t24Name=HIGH.DR.CATEG, mask="L##-###")
         HIGH_DR_MIN_MAX : IC_InterestAndCapitalisation:CORR_ACCT_DR__HIGH_DR_MIN_MAX
             @t24:i (align=L, inputBehaviour=I, maxLength=7, sysNumber=48.0, core=true, t24Name=HIGH.DR.MIN.MAX)
@@ -3095,11 +3104,11 @@ Classes {
             @t24:i (t24Name=HI.DR.TAX.RATE)
         ICA_MAIN_ACCT -> byValue IC_InterestAndCapitalisation:CORR_ACCT_DR__ICA_MAIN_ACCT *
             @t24:i (t24Name=ICA.MAIN.ACCT)
-        ICA_POST_INTEREST : mml:Integer
+        ICA_POST_INTEREST : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=4, sysNumber=83.0, core=true, t24Name=ICA.POST.INTEREST)
         INT_ADDON_AMT : T24BusinessTypes:AMT
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=23.0, core=true, t24Name=INT.ADDON.AMT, typeModifiers=-)
-        INT_ADDON_CATEG : mml:Integer
+        INT_ADDON_CATEG : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=6, sysNumber=24.0, core=true, t24Name=INT.ADDON.CATEG, mask="L##-###")
         INT_ADDON_CODE -> IC_Config:DEBIT_INT_ADDON
             @t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=18.0, core=true, t24Name=INT.ADDON.CODE)
@@ -3118,7 +3127,7 @@ Classes {
             @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=95.0, core=true, t24Name=INT.POST.DATE)
         INT_STMT_AMT : T24BusinessTypes:AMT
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=61.0, core=true, t24Name=INT.STMT.AMT, typeModifiers=-)
-        INT_STMT_CATEG : mml:Integer
+        INT_STMT_CATEG : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=6, sysNumber=62.0, core=true, t24Name=INT.STMT.CATEG, mask="L##-###")
         INT_STMT_CODE -> IC_Config:INTEREST_STATEMENT
             @t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=60.0, core=true, t24Name=INT.STMT.CODE)
@@ -3128,7 +3137,7 @@ Classes {
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=63.0, core=true, t24Name=INT.STMT.TRSDR)
         K_GRAND_TOTAL : T24BusinessTypes:AMT
             @i18n:Label (en=Total)
-            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=78.0, core=true, t24Name=K.GRAND.TOTAL, typeModifiers=-)
+            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=78.0, core=false, t24Name=K.GRAND.TOTAL, typeModifiers=-)
         LIQUIDITY_ACCOUNT -> AC_AccountOpening:ACCOUNT
             @t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=71.0, core=true, businessType=ANT, t24Name=LIQUIDITY.ACCOUNT)
         LIQUIDITY_CCY -> ST_CurrencyConfig:CURRENCY
@@ -3163,7 +3172,7 @@ Classes {
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=49.0, core=true, t24Name=UNADJ.HIGHEST.DR, typeModifiers=-)
         UNADJ_INT_ADDON : T24BusinessTypes:AMT
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=22.0, core=true, t24Name=UNADJ.INT.ADDON, typeModifiers=-)
-        UNADJ_TOTAL_INT : mml:Integer
+        UNADJ_TOTAL_INT : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=94.0, core=true, t24Name=UNADJ.TOTAL.INT)
         USED_MIDDLE_RATE : T24BusinessTypes:R
             @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=74.0, core=true, t24Name=USED.MIDDLE.RATE)
@@ -3189,7 +3198,7 @@ Classes {
             @t24:i (align=R, inputBehaviour=I, maxLength=8, sysNumber=48.0, core=true, t24Name=CORRECTION.DATE)
         CORRECTION_ID -> byValue IC_InterestAndCapitalisation:CORR_ACCT_DR2__CORRECTION_ID *
             @t24:i (t24Name=CORRECTION.ID)
-        CORRECTION_NUMBER : mml:Integer
+        CORRECTION_NUMBER : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=23.0, core=true, t24Name=CORRECTION.NUMBER)
         D2_INT_TAX_CODE -> ST_ChargeConfig:TAX
             @t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=11.0, core=true, t24Name=D2.INT.TAX.CODE)
@@ -3203,7 +3212,7 @@ Classes {
             @t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=40.0, core=true, t24Name=DEF.TOTAL.INT, typeModifiers=-)
         DEF_TOTAL_TAX : T24BusinessTypes:AMT
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=41.0, core=true, t24Name=DEF.TOTAL.TAX, typeModifiers=-)
-        DEF_WAIVE_ALL : mml:Integer
+        DEF_WAIVE_ALL : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=42.0, core=true, t24Name=DEF.WAIVE.ALL)
         DR2_INT_CATEG -> ST_Config:CATEGORY
             @t24:i (align=R, inputBehaviour=I, maxLength=6, sysNumber=8.0, core=true, t24Name=DR2.INT.CATEG, mask="R##-###")
@@ -3213,11 +3222,11 @@ Classes {
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=9.0, core=true, t24Name=DR2.INT.TR.AC)
         DR2_INT_TR_PL -> ST_Config:TRANSACTION
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=10.0, core=true, t24Name=DR2.INT.TR.PL)
-        DR2_MIN_VALUE : mml:Integer
+        DR2_MIN_VALUE : T24BusinessTypes:N
             @i18n:Label (en="Minimum Interest Amount")
             @i18n:Tooltip (en="Indicates minimum interest amount")
             @t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=35.0, core=true, t24Name=DR2.MIN.VALUE)
-        DR2_MIN_WAIVE : mml:Integer
+        DR2_MIN_WAIVE : T24BusinessTypes:N
             @i18n:Label (en="Minimum Interest Waive")
             @i18n:Tooltip (en="Indicates minimum interest waive")
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=36.0, core=true, t24Name=DR2.MIN.WAIVE)
@@ -3225,7 +3234,7 @@ Classes {
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=22.0, core=true, t24Name=GRAND.TOTAL, typeModifiers=-)
         ICA_MAIN_ACCT -> byValue IC_InterestAndCapitalisation:CORR_ACCT_DR2__ICA_MAIN_ACCT *
             @t24:i (t24Name=ICA.MAIN.ACCT)
-        ICA_POST_INTEREST : mml:Integer
+        ICA_POST_INTEREST : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=4, sysNumber=26.0, core=true, t24Name=ICA.POST.INTEREST)
         INT_NO_BOOKING : IC_InterestAndCapitalisation:CORR_ACCT_DR2__INT_NO_BOOKING
             @i18n:Label (en="Int Booking")
@@ -3234,7 +3243,7 @@ Classes {
             @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=38.0, core=true, t24Name=INT.POST.DATE)
         K_GRAND_TOTAL : T24BusinessTypes:AMT
             @i18n:Label (en=Total)
-            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=22.0, core=true, t24Name=K.GRAND.TOTAL, typeModifiers=-)
+            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=22.0, core=false, t24Name=K.GRAND.TOTAL, typeModifiers=-)
         LIQUIDITY_ACCOUNT -> AC_AccountOpening:ACCOUNT
             @t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=17.0, core=true, businessType=ANT, t24Name=LIQUIDITY.ACCOUNT)
         LIQUIDITY_CCY -> ST_CurrencyConfig:CURRENCY
@@ -3258,7 +3267,7 @@ Classes {
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=20.0, core=true, t24Name=TOTAL.INTEREST, typeModifiers=-)
         TOTAL_TAX : T24BusinessTypes:AMT
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=21.0, core=true, t24Name=TOTAL.TAX, typeModifiers=-)
-        UNADJ_TOTAL_INT : mml:Integer
+        UNADJ_TOTAL_INT : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=37.0, core=true, t24Name=UNADJ.TOTAL.INT)
         WAIVE_AMT : T24BusinessTypes:AMT
             @i18n:Label (en="Waive Amount")
@@ -3280,7 +3289,7 @@ Classes {
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=44.0, core=true, t24Name=ADJ.INT.AMT)
         ADJ_TAX_AMT : T24BusinessTypes:AMT
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=45.0, core=true, t24Name=ADJ.TAX.AMT)
-        CORRECTION_ID : mml:Integer
+        CORRECTION_ID : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=55, sysNumber=43.0, core=true, t24Name=CORRECTION.ID)
         WITHHELD_INT_AMT : T24BusinessTypes:AMT
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=46.0, core=true, t24Name=WITHHELD.INT.AMT)
@@ -3308,24 +3317,24 @@ Classes {
             @i18n:Label (en="Fixed Interest")
             @i18n:Tooltip (en="Indicates fixed interest")
             @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=6.0, core=true, t24Name=DR2.INT.RATE)
-        DR2_NO_OF_DAYS : mml:Integer
+        DR2_NO_OF_DAYS : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=4.0, core=true, t24Name=DR2.NO.OF.DAYS)
         DR2_VAL_BALANCE : T24BusinessTypes:AMT
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=5.0, core=true, t24Name=DR2.VAL.BALANCE, typeModifiers=-)
     }
     CORR_ACCT_DR2__ICA_MAIN_ACCT
     {
-        ICA_DIST_RATIO : mml:Integer
+        ICA_DIST_RATIO : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=29.0, core=true, t24Name=ICA.DIST.RATIO)
-        ICA_DIST_TYPE : mml:Integer
+        ICA_DIST_TYPE : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=28.0, core=true, t24Name=ICA.DIST.TYPE)
         ICA_INT_CATEG -> ST_Config:CATEGORY
             @t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=30.0, core=true, t24Name=ICA.INT.CATEG)
-        ICA_MAIN_ACCT : mml:Integer
+        ICA_MAIN_ACCT : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=27.0, core=true, t24Name=ICA.MAIN.ACCT)
-        ICA_MAIN_INT : mml:Integer
+        ICA_MAIN_INT : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=33.0, core=true, t24Name=ICA.MAIN.INT)
-        ICA_SUB_INT : mml:Integer
+        ICA_SUB_INT : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=34.0, core=true, t24Name=ICA.SUB.INT)
         ICA_TR_AC -> ST_Config:TRANSACTION
             @t24:i (align=R, inputBehaviour=I, maxLength=4, sysNumber=31.0, core=true, t24Name=ICA.TR.AC)
@@ -3334,7 +3343,7 @@ Classes {
     }
     CORR_ACCT_DR__ADDON_TAX_RATE
     {
-        ADDON_TAXCATEG : mml:Integer
+        ADDON_TAXCATEG : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=6, sysNumber=30.0, core=true, t24Name=ADDON.TAXCATEG, mask="L##-###")
         ADDON_TAXTRSCR -> ST_Config:TRANSACTION
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=32.0, core=true, t24Name=ADDON.TAXTRSCR)
@@ -3356,7 +3365,7 @@ Classes {
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=112.0, core=true, t24Name=ADJ.INT.AMT)
         ADJ_TAX_AMT : T24BusinessTypes:AMT
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=113.0, core=true, t24Name=ADJ.TAX.AMT)
-        CORRECTION_ID : mml:Integer
+        CORRECTION_ID : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=55, sysNumber=111.0, core=true, t24Name=CORRECTION.ID)
         WITHHELD_INT_AMT : T24BusinessTypes:AMT
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=114.0, core=true, t24Name=WITHHELD.INT.AMT)
@@ -3384,7 +3393,7 @@ Classes {
     }
     CORR_ACCT_DR__DR_INT_TAX_RATE
     {
-        DR_INT_TAXCATEG : mml:Integer
+        DR_INT_TAXCATEG : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=6, sysNumber=15.0, core=true, t24Name=DR.INT.TAXCATEG, mask="L##-###")
         DR_INT_TAXTRSCR -> ST_Config:TRANSACTION
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=17.0, core=true, t24Name=DR.INT.TAXTRSCR)
@@ -3405,14 +3414,14 @@ Classes {
             @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=33.0, core=true, t24Name=GOV.MARGIN.DATE)
         GV_INT_RATE : T24BusinessTypes:R
             @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=36.0, core=true, t24Name=GV.INT.RATE)
-        GV_NO_OF_DAYS : mml:Integer
+        GV_NO_OF_DAYS : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=34.0, core=true, t24Name=GV.NO.OF.DAYS)
         GV_VAL_BALANCE : T24BusinessTypes:AMT
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=35.0, core=true, t24Name=GV.VAL.BALANCE, typeModifiers=-)
     }
     CORR_ACCT_DR__HI_DR_TAX_RATE
     {
-        HI_DR_TAXCATEG : mml:Integer
+        HI_DR_TAXCATEG : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=6, sysNumber=57.0, core=true, t24Name=HI.DR.TAXCATEG, mask="L##-###")
         HI_DR_TAXTRSCR -> ST_Config:TRANSACTION
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=59.0, core=true, t24Name=HI.DR.TAXTRSCR)
@@ -3425,17 +3434,17 @@ Classes {
     }
     CORR_ACCT_DR__ICA_MAIN_ACCT
     {
-        ICA_DIST_RATIO : mml:Integer
+        ICA_DIST_RATIO : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=86.0, core=true, t24Name=ICA.DIST.RATIO)
-        ICA_DIST_TYPE : mml:Integer
+        ICA_DIST_TYPE : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=85.0, core=true, t24Name=ICA.DIST.TYPE)
-        ICA_INT_CATEG : mml:Integer
+        ICA_INT_CATEG : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=87.0, core=true, t24Name=ICA.INT.CATEG)
-        ICA_MAIN_ACCT : mml:Integer
+        ICA_MAIN_ACCT : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=84.0, core=true, t24Name=ICA.MAIN.ACCT)
-        ICA_MAIN_INT : mml:Integer
+        ICA_MAIN_INT : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=90.0, core=true, t24Name=ICA.MAIN.INT)
-        ICA_SUB_INT : mml:Integer
+        ICA_SUB_INT : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=91.0, core=true, t24Name=ICA.SUB.INT)
         ICA_TR_AC -> ST_Config:TRANSACTION
             @t24:i (align=R, inputBehaviour=I, maxLength=4, sysNumber=88.0, core=true, t24Name=ICA.TR.AC)
@@ -3444,7 +3453,7 @@ Classes {
     }
     CORR_ACCT_DR__STMT_TAX_RATE
     {
-        STMT_TAXCATEG : mml:Integer
+        STMT_TAXCATEG : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=6, sysNumber=68.0, core=true, t24Name=STMT.TAXCATEG, mask="L##-###")
         STMT_TAXTRSCR -> ST_Config:TRANSACTION
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=70.0, core=true, t24Name=STMT.TAXTRSCR)
@@ -3496,7 +3505,7 @@ Classes {
             @i18n:Label (en="Debit Capitalisation Frequency")
             @i18n:Tooltip (en="Frequency of the application of 2nd debit interest")
             @t24:i (align=L, inputBehaviour=I, maxLength=17, sysNumber=2.0, core=true, t24Name=DR2.CAP.FREQUENCY, mask="RDDDD DD  DD #####")
-        DR_CAP_FREQUENCY : T24BusinessTypes:FQU
+        DR_CAP_FREQUENCY : T24BusinessTypes:FQU required
             @i18n:Label (en="Dr Cap Fqy")
             @t24:i (align=L, inputBehaviour=I, maxLength=17, sysNumber=1.0, core=true, t24Name=DR.CAP.FREQUENCY, mask="RDDDD DD  DD #####")
         INPUTTER -> byValue IC_InterestAndCapitalisation:GROUP_CAPITALISATION__INPUTTER *
@@ -3747,10 +3756,17 @@ Classes {
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=3.0, core=true, t24Name=ADJ.INT.AMT)
         ADJ_TAX_AMT : T24BusinessTypes:AMT
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=4.0, core=true, t24Name=ADJ.TAX.AMT)
-        CORRECTION_ID : mml:Integer
+        CORRECTION_ID : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=55, sysNumber=2.0, core=true, t24Name=CORRECTION.ID)
         WITHHELD_INT_AMT : T24BusinessTypes:AMT
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=5.0, core=true, t24Name=WITHHELD.INT.AMT)
+    }
+    IC_LIQ_ACCT
+        @i18n:Description (en="")
+        @t24:i (t24Name=IC.LIQ.ACCT, level=F, type=T, allowedFunctions="L P S", localRefAllowed=false)
+    {
+        LIQ_ACCT_NO -> IC_InterestAndCapitalisation:IC_LIQ_ACCT PK required
+            @t24:i (align=R, inputBehaviour=I, maxLength=40, sysNumber=0.0, core=true, t24Name=LIQ.ACCT.NO)
     }
     INFO_ACCT_CH
         @i18n:Description (en="")
@@ -3783,7 +3799,7 @@ Classes {
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=99.0, core=true, t24Name=COMTRANSACT.TRSCR)
         COMTRANSACT_TRSDR -> ST_Config:TRANSACTION
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=98.0, core=true, t24Name=COMTRANSACT.TRSDR)
-        COMTRS_CHARGE_CODE : mml:Integer
+        COMTRS_CHARGE_CODE : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=92.0, core=true, t24Name=COMTRS.CHARGE.CODE)
         COMTRS_YR_MTH -> byValue IC_InterestAndCapitalisation:INFO_ACCT_CH__COMTRS_YR_MTH *
             @t24:i (t24Name=COMTRS.YR.MTH)
@@ -3791,29 +3807,29 @@ Classes {
             @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=159.0, core=true, t24Name=DEFERRED.DATE)
         GRAND_TOTAL : T24BusinessTypes:AMT
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=158.0, core=true, t24Name=GRAND.TOTAL, typeModifiers=-)
-        HIGHEST_DR_CODE : mml:Integer
+        HIGHEST_DR_CODE : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=122.0, core=true, t24Name=HIGHEST.DR.CODE)
         HIGHEST_DR_FREE : T24BusinessTypes:AMT
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=130.0, core=true, t24Name=HIGHEST.DR.FREE)
         HIGHEST_DR_PERC : T24BusinessTypes:R
             @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=129.0, core=true, t24Name=HIGHEST.DR.PERC)
-        HIGH_DR_CATEG : mml:Integer
+        HIGH_DR_CATEG : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=126.0, core=true, t24Name=HIGH.DR.CATEG)
         HIGH_DR_MIN_MAX : T24BusinessTypes:A
             @t24:i (align=L, inputBehaviour=I, maxLength=7, sysNumber=131.0, core=true, t24Name=HIGH.DR.MIN.MAX)
-        HIGH_DR_TRSCR : mml:Integer
+        HIGH_DR_TRSCR : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=128.0, core=true, t24Name=HIGH.DR.TRSCR)
-        HIGH_DR_TRSDR : mml:Integer
+        HIGH_DR_TRSDR : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=127.0, core=true, t24Name=HIGH.DR.TRSDR)
-        HI_DR_TAXCATEG : mml:Integer
+        HI_DR_TAXCATEG : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=135.0, core=true, t24Name=HI.DR.TAXCATEG)
-        HI_DR_TAX_CODE : mml:Integer
+        HI_DR_TAX_CODE : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=132.0, core=true, t24Name=HI.DR.TAX.CODE)
         HI_DR_TAX_RATE -> byValue IC_InterestAndCapitalisation:INFO_ACCT_CH__HI_DR_TAX_RATE *
             @t24:i (t24Name=HI.DR.TAX.RATE)
-        HI_DR_TAX_TRSCR : mml:Integer
+        HI_DR_TAX_TRSCR : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=137.0, core=true, t24Name=HI.DR.TAX.TRSCR)
-        HI_DR_TAX_TRSDR : mml:Integer
+        HI_DR_TAX_TRSDR : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=136.0, core=true, t24Name=HI.DR.TAX.TRSDR)
         HI_DR_YR_MTH -> byValue IC_InterestAndCapitalisation:INFO_ACCT_CH__HI_DR_YR_MTH *
             @t24:i (t24Name=HI.DR.YR.MTH)
@@ -3822,7 +3838,7 @@ Classes {
             @t24:i (align=L, inputBehaviour=I, maxLength=8, sysNumber=154.0, core=true, t24Name=INT.NO.BOOKING)
         K_GRAND_TOTAL : T24BusinessTypes:AMT
             @i18n:Label (en=Total)
-            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=158.0, core=true, t24Name=K.GRAND.TOTAL, typeModifiers=-)
+            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=158.0, core=false, t24Name=K.GRAND.TOTAL, typeModifiers=-)
         LIQUIDITY_ACCOUNT -> AC_AccountOpening:ACCOUNT
             @t24:i (align=R, inputBehaviour=I, maxLength=16, sysNumber=152.0, core=true, businessType=ACC, t24Name=LIQUIDITY.ACCOUNT)
         LIQUIDITY_CCY -> ST_CurrencyConfig:CURRENCY
@@ -3976,7 +3992,7 @@ Classes {
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=125.0, core=true, t24Name=HIGHEST.DR.AMT)
         HIGHEST_DR_BAL : T24BusinessTypes:AMT
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=124.0, core=true, t24Name=HIGHEST.DR.BAL)
-        HI_DR_YR_MTH : mml:Integer
+        HI_DR_YR_MTH : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=8, sysNumber=123.0, core=true, t24Name=HI.DR.YR.MTH)
     }
     INFO_ACCT_CH__NO_CRED_YR_MTH
@@ -3991,7 +4007,7 @@ Classes {
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=20.0, core=true, t24Name=NO.CR.FREE, typeModifiers=-)
         NO_CR_MIN_MAX : IC_InterestAndCapitalisation:INFO_ACCT_CH__NO_CRED_YR_MTH__NO_CR_MIN_MAX
             @t24:i (align=L, inputBehaviour=I, maxLength=7, sysNumber=21.0, core=true, t24Name=NO.CR.MIN.MAX)
-        NO_CR_TRANSACT : mml:Integer
+        NO_CR_TRANSACT : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=6, sysNumber=18.0, core=true, t24Name=NO.CR.TRANSACT)
     }
     INFO_ACCT_CH__NO_CR_TAX_RATE
@@ -4019,7 +4035,7 @@ Classes {
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=36.0, core=true, t24Name=NO.DR.FREE, typeModifiers=-)
         NO_DR_MIN_MAX : IC_InterestAndCapitalisation:INFO_ACCT_CH__NO_DEBIT_YR_MTH__NO_DR_MIN_MAX
             @t24:i (align=L, inputBehaviour=I, maxLength=7, sysNumber=37.0, core=true, t24Name=NO.DR.MIN.MAX)
-        NO_DR_TRANSACT : mml:Integer
+        NO_DR_TRANSACT : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=7, sysNumber=34.0, core=true, t24Name=NO.DR.TRANSACT)
     }
     INFO_ACCT_CH__NO_DR_TAX_RATE
@@ -4048,13 +4064,13 @@ Classes {
     {
         MIN_MAX_CHG : IC_InterestAndCapitalisation:INFO_ACCT_CH__STMT_CHG_YR_MTH__MIN_MAX_CHG
             @t24:i (align=L, inputBehaviour=I, maxLength=7, sysNumber=147.0, core=true, t24Name=MIN.MAX.CHG)
-        NO_STATEMENTS : mml:Integer
+        NO_STATEMENTS : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=7, sysNumber=140.0, core=true, t24Name=NO.STATEMENTS)
-        NO_STMTS_FREE : mml:Integer
+        NO_STMTS_FREE : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=142.0, core=true, t24Name=NO.STMTS.FREE)
-        NO_STMT_COPY : mml:Integer
+        NO_STMT_COPY : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=143.0, core=true, t24Name=NO.STMT.COPY)
-        NO_STMT_SHEETS : mml:Integer
+        NO_STMT_SHEETS : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=145.0, core=true, t24Name=NO.STMT.SHEETS)
         STMTS_CHG : T24BusinessTypes:AMT
             @t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=141.0, core=true, t24Name=STMTS.CHG, typeModifiers=-)
@@ -4096,7 +4112,7 @@ Classes {
     }
     INFO_ACCT_CH__TRCHARGE_YR_MTH__TRCH_CODE
     {
-        NO_TRANSACT : mml:Integer
+        NO_TRANSACT : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=6, sysNumber=82.0, core=true, t24Name=NO.TRANSACT)
         TRANS_CHARGE : T24BusinessTypes:AMT
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=83.0, core=true, t24Name=TRANS.CHARGE, typeModifiers=-)
@@ -4106,7 +4122,7 @@ Classes {
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=88.0, core=true, t24Name=TRCHARGE.AMT, typeModifiers=-)
         TRCH_CATEG -> ST_Config:CATEGORY
             @t24:i (align=R, inputBehaviour=I, maxLength=6, sysNumber=89.0, core=true, t24Name=TRCH.CATEG, mask="R##-###")
-        TRCH_CODE : mml:Integer
+        TRCH_CODE : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=81.0, core=true, t24Name=TRCH.CODE)
         TRCH_FREE : T24BusinessTypes:AMT
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=86.0, core=true, t24Name=TRCH.FREE, typeModifiers=-)
@@ -4208,7 +4224,7 @@ Classes {
             @t24:i (align=R, inputBehaviour=I, maxLength=8, sysNumber=50.0, core=true, t24Name=CORRECTION.DATE)
         CORRECTION_ID -> byValue IC_InterestAndCapitalisation:INFO_ACCT_CR__CORRECTION_ID *
             @t24:i (t24Name=CORRECTION.ID)
-        CORRECTION_NUMBER : mml:Integer
+        CORRECTION_NUMBER : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=24.0, core=true, t24Name=CORRECTION.NUMBER)
         CR_INT_CATEG -> ST_Config:CATEGORY
             @t24:i (align=R, inputBehaviour=I, maxLength=6, sysNumber=8.0, core=true, t24Name=CR.INT.CATEG, mask="R##-###")
@@ -4220,11 +4236,11 @@ Classes {
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=9.0, core=true, t24Name=CR.INT.TR.AC)
         CR_INT_TR_PL -> ST_Config:TRANSACTION
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=10.0, core=true, t24Name=CR.INT.TR.PL)
-        CR_MIN_VALUE : mml:Integer
+        CR_MIN_VALUE : T24BusinessTypes:N
             @i18n:Label (en="Minimum Interest Amount")
             @i18n:Tooltip (en="Indicates minimum interest amount")
             @t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=39.0, core=true, t24Name=CR.MIN.VALUE)
-        CR_MIN_WAIVE : mml:Integer
+        CR_MIN_WAIVE : T24BusinessTypes:N
             @i18n:Label (en="Minimum Interest Waive")
             @i18n:Tooltip (en="Indicates minimum interest waive")
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=40.0, core=true, t24Name=CR.MIN.WAIVE)
@@ -4234,7 +4250,7 @@ Classes {
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=23.0, core=true, t24Name=GRAND.TOTAL, typeModifiers=-)
         ICA_MAIN_ACCT -> byValue IC_InterestAndCapitalisation:INFO_ACCT_CR__ICA_MAIN_ACCT *
             @t24:i (t24Name=ICA.MAIN.ACCT)
-        ICA_POST_INTEREST : mml:Integer
+        ICA_POST_INTEREST : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=4, sysNumber=26.0, core=true, t24Name=ICA.POST.INTEREST)
         INT_NO_BOOKING : IC_InterestAndCapitalisation:INFO_ACCT_CR__INT_NO_BOOKING
             @i18n:Label (en="Int Booking")
@@ -4243,7 +4259,7 @@ Classes {
             @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=42.0, core=true, t24Name=INT.POST.DATE)
         K_GRAND_TOTAL : T24BusinessTypes:AMT
             @i18n:Label (en=Total)
-            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=23.0, core=true, t24Name=K.GRAND.TOTAL, typeModifiers=-)
+            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=23.0, core=false, t24Name=K.GRAND.TOTAL, typeModifiers=-)
         LIQUIDITY_ACCOUNT -> AC_AccountOpening:ACCOUNT
             @t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=17.0, core=true, businessType=ANT, t24Name=LIQUIDITY.ACCOUNT)
         LIQUIDITY_CCY -> ST_CurrencyConfig:CURRENCY
@@ -4280,7 +4296,7 @@ Classes {
         TOTAL_INTEREST : T24BusinessTypes:AMT
             @i18n:Label (en="Total Int")
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=20.0, core=true, t24Name=TOTAL.INTEREST, typeModifiers=-)
-        UNADJ_TOTAL_INT : mml:Integer
+        UNADJ_TOTAL_INT : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=41.0, core=true, t24Name=UNADJ.TOTAL.INT)
         WAIVE_AMT : T24BusinessTypes:AMT
             @i18n:Label (en="Waive Amount")
@@ -4306,7 +4322,7 @@ Classes {
             @t24:i (align=R, inputBehaviour=I, maxLength=8, sysNumber=50.0, core=true, t24Name=CORRECTION.DATE)
         CORRECTION_ID -> byValue IC_InterestAndCapitalisation:INFO_ACCT_CR2__CORRECTION_ID *
             @t24:i (t24Name=CORRECTION.ID)
-        CORRECTION_NUMBER : mml:Integer
+        CORRECTION_NUMBER : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=24.0, core=true, t24Name=CORRECTION.NUMBER)
         CR2_INT_CATEG -> ST_Config:CATEGORY
             @t24:i (align=R, inputBehaviour=I, maxLength=6, sysNumber=8.0, core=true, t24Name=CR2.INT.CATEG, mask="R##-###")
@@ -4316,9 +4332,9 @@ Classes {
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=9.0, core=true, t24Name=CR2.INT.TR.AC)
         CR2_INT_TR_PL -> ST_Config:TRANSACTION
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=10.0, core=true, t24Name=CR2.INT.TR.PL)
-        CR2_MIN_VALUE : mml:Integer
+        CR2_MIN_VALUE : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=39.0, core=true, t24Name=CR2.MIN.VALUE)
-        CR2_MIN_WAIVE : mml:Integer
+        CR2_MIN_WAIVE : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=40.0, core=true, t24Name=CR2.MIN.WAIVE)
         DB_NETTING_AMT : T24BusinessTypes:AMT
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=49.0, core=true, t24Name=DB.NETTING.AMT)
@@ -4326,7 +4342,7 @@ Classes {
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=23.0, core=true, t24Name=GRAND.TOTAL, typeModifiers=-)
         ICA_MAIN_ACCT -> byValue IC_InterestAndCapitalisation:INFO_ACCT_CR2__ICA_MAIN_ACCT *
             @t24:i (t24Name=ICA.MAIN.ACCT)
-        ICA_POST_INTEREST : mml:Integer
+        ICA_POST_INTEREST : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=4, sysNumber=26.0, core=true, t24Name=ICA.POST.INTEREST)
         INT_NO_BOOKING : IC_InterestAndCapitalisation:INFO_ACCT_CR2__INT_NO_BOOKING
             @i18n:Label (en="Int Booking")
@@ -4335,7 +4351,7 @@ Classes {
             @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=42.0, core=true, t24Name=INT.POST.DATE)
         K_GRAND_TOTAL : T24BusinessTypes:AMT
             @i18n:Label (en=Total)
-            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=23.0, core=true, t24Name=K.GRAND.TOTAL, typeModifiers=-)
+            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=23.0, core=false, t24Name=K.GRAND.TOTAL, typeModifiers=-)
         LIQUIDITY_ACCOUNT -> AC_AccountOpening:ACCOUNT
             @t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=17.0, core=true, businessType=ANT, t24Name=LIQUIDITY.ACCOUNT)
         LIQUIDITY_CCY -> ST_CurrencyConfig:CURRENCY
@@ -4372,7 +4388,7 @@ Classes {
         TOTAL_INTEREST : T24BusinessTypes:AMT
             @i18n:Label (en="Total interest")
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=20.0, core=true, t24Name=TOTAL.INTEREST, typeModifiers=-)
-        UNADJ_TOTAL_INT : mml:Integer
+        UNADJ_TOTAL_INT : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=41.0, core=true, t24Name=UNADJ.TOTAL.INT)
         WAIVE_AMT : T24BusinessTypes:AMT
             @i18n:Label (en="Waive Amount")
@@ -4409,7 +4425,7 @@ Classes {
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=46.0, core=true, t24Name=ADJ.INT.AMT)
         ADJ_TAX_AMT : T24BusinessTypes:AMT
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=47.0, core=true, t24Name=ADJ.TAX.AMT)
-        CORRECTION_ID : mml:Integer
+        CORRECTION_ID : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=55, sysNumber=45.0, core=true, t24Name=CORRECTION.ID)
         WITHHELD_INT_AMT : T24BusinessTypes:AMT
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=48.0, core=true, t24Name=WITHHELD.INT.AMT)
@@ -4424,24 +4440,24 @@ Classes {
             @i18n:Label (en="Fixed Interest")
             @i18n:Tooltip (en="Input fixed rate of interest")
             @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=6.0, core=true, t24Name=CR2.INT.RATE)
-        CR2_NO_OF_DAYS : mml:Integer
+        CR2_NO_OF_DAYS : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=4.0, core=true, t24Name=CR2.NO.OF.DAYS)
         CR2_VAL_BALANCE : T24BusinessTypes:AMT
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=5.0, core=true, t24Name=CR2.VAL.BALANCE, typeModifiers=-)
     }
     INFO_ACCT_CR2__ICA_MAIN_ACCT
     {
-        ICA_DIST_RATIO : mml:Integer
+        ICA_DIST_RATIO : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=28.0, core=true, t24Name=ICA.DIST.RATIO)
-        ICA_DIST_TYPE : mml:Integer
+        ICA_DIST_TYPE : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=29.0, core=true, t24Name=ICA.DIST.TYPE)
         ICA_INT_CATEG -> ST_Config:CATEGORY
             @t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=30.0, core=true, t24Name=ICA.INT.CATEG)
-        ICA_MAIN_ACCT : mml:Integer
+        ICA_MAIN_ACCT : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=27.0, core=true, t24Name=ICA.MAIN.ACCT)
-        ICA_MAIN_INT : mml:Integer
+        ICA_MAIN_INT : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=33.0, core=true, t24Name=ICA.MAIN.INT)
-        ICA_SUB_INT : mml:Integer
+        ICA_SUB_INT : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=34.0, core=true, t24Name=ICA.SUB.INT)
         ICA_TR_AC -> ST_Config:TRANSACTION
             @t24:i (align=R, inputBehaviour=I, maxLength=4, sysNumber=31.0, core=true, t24Name=ICA.TR.AC)
@@ -4459,7 +4475,7 @@ Classes {
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=46.0, core=true, t24Name=ADJ.INT.AMT)
         ADJ_TAX_AMT : T24BusinessTypes:AMT
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=47.0, core=true, t24Name=ADJ.TAX.AMT)
-        CORRECTION_ID : mml:Integer
+        CORRECTION_ID : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=55, sysNumber=45.0, core=true, t24Name=CORRECTION.ID)
         WITHHELD_INT_AMT : T24BusinessTypes:AMT
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=48.0, core=true, t24Name=WITHHELD.INT.AMT)
@@ -4476,7 +4492,7 @@ Classes {
             @i18n:Label (en="Fixed Interest")
             @i18n:Tooltip (en="Input fixed rate of interest")
             @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=6.0, core=true, t24Name=CR.INT.RATE)
-        CR_NO_OF_DAYS : mml:Integer
+        CR_NO_OF_DAYS : T24BusinessTypes:N
             @i18n:Label (en=Days)
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=4.0, core=true, t24Name=CR.NO.OF.DAYS)
         CR_VAL_BALANCE : T24BusinessTypes:AMT
@@ -4502,17 +4518,17 @@ Classes {
     }
     INFO_ACCT_CR__ICA_MAIN_ACCT
     {
-        ICA_DIST_RATIO : mml:Integer
+        ICA_DIST_RATIO : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=29.0, core=true, t24Name=ICA.DIST.RATIO)
-        ICA_DIST_TYPE : mml:Integer
+        ICA_DIST_TYPE : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=28.0, core=true, t24Name=ICA.DIST.TYPE)
         ICA_INT_CATEG -> ST_Config:CATEGORY
             @t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=30.0, core=true, t24Name=ICA.INT.CATEG)
-        ICA_MAIN_ACCT : mml:Integer
+        ICA_MAIN_ACCT : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=27.0, core=true, t24Name=ICA.MAIN.ACCT)
-        ICA_MAIN_INT : mml:Integer
+        ICA_MAIN_INT : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=33.0, core=true, t24Name=ICA.MAIN.INT)
-        ICA_SUB_INT : mml:Integer
+        ICA_SUB_INT : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=34.0, core=true, t24Name=ICA.SUB.INT)
         ICA_TR_AC -> ST_Config:TRANSACTION
             @t24:i (align=R, inputBehaviour=I, maxLength=4, sysNumber=31.0, core=true, t24Name=ICA.TR.AC)
@@ -4540,7 +4556,7 @@ Classes {
             @t24:i (align=R, inputBehaviour=I, maxLength=8, sysNumber=116.0, core=true, t24Name=CORRECTION.DATE)
         CORRECTION_ID -> byValue IC_InterestAndCapitalisation:INFO_ACCT_DR__CORRECTION_ID *
             @t24:i (t24Name=CORRECTION.ID)
-        CORRECTION_NUMBER : mml:Integer
+        CORRECTION_NUMBER : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=79.0, core=true, t24Name=CORRECTION.NUMBER)
         DB_NETTING_AMT : T24BusinessTypes:AMT
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=115.0, core=true, t24Name=DB.NETTING.AMT)
@@ -4572,9 +4588,9 @@ Classes {
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=107.0, core=true, t24Name=DEF.TOTAL.INT, typeModifiers=-)
         DEF_TOTAL_TAX : T24BusinessTypes:AMT
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=109.0, core=true, t24Name=DEF.TOTAL.TAX, typeModifiers=-)
-        DEF_WAIVE_ALL : mml:Integer
+        DEF_WAIVE_ALL : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=110.0, core=true, t24Name=DEF.WAIVE.ALL)
-        DR_INT_CATEG : mml:Integer
+        DR_INT_CATEG : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=6, sysNumber=9.0, core=true, t24Name=DR.INT.CATEG, mask="L##-###")
         DR_INT_DATE -> byValue IC_InterestAndCapitalisation:INFO_ACCT_DR__DR_INT_DATE *
             @t24:i (t24Name=DR.INT.DATE)
@@ -4586,11 +4602,11 @@ Classes {
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=10.0, core=true, t24Name=DR.INT.TR.AC)
         DR_INT_TR_PL -> ST_Config:TRANSACTION
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=11.0, core=true, t24Name=DR.INT.TR.PL)
-        DR_MIN_VALUE : mml:Integer
+        DR_MIN_VALUE : T24BusinessTypes:N
             @i18n:Label (en="Minimum Interest Amount")
             @i18n:Tooltip (en="Indicates minimum interest amount")
             @t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=92.0, core=true, t24Name=DR.MIN.VALUE)
-        DR_MIN_WAIVE : mml:Integer
+        DR_MIN_WAIVE : T24BusinessTypes:N
             @i18n:Label (en="Minimum Interest Waive")
             @i18n:Tooltip (en="Indicates minimum interest waive")
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=93.0, core=true, t24Name=DR.MIN.WAIVE)
@@ -4600,7 +4616,7 @@ Classes {
             @t24:i (t24Name=GOV.MARGIN.DATE)
         GOV_MARGIN_MIN_MAX : IC_InterestAndCapitalisation:INFO_ACCT_DR__GOV_MARGIN_MIN_MAX
             @t24:i (align=L, inputBehaviour=I, maxLength=7, sysNumber=39.0, core=true, t24Name=GOV.MARGIN.MIN.MAX)
-        GOV_MRG_CATEG : mml:Integer
+        GOV_MRG_CATEG : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=6, sysNumber=41.0, core=true, t24Name=GOV.MRG.CATEG, mask="L##-###")
         GOV_MRG_TOT_AMT : T24BusinessTypes:AMT
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=40.0, core=true, t24Name=GOV.MRG.TOT.AMT, typeModifiers=-)
@@ -4620,7 +4636,7 @@ Classes {
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=47.0, core=true, t24Name=HIGHEST.DR.FREE, typeModifiers=-)
         HIGHEST_DR_PERC : T24BusinessTypes:R
             @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=46.0, core=true, t24Name=HIGHEST.DR.PERC)
-        HIGH_DR_CATEG : mml:Integer
+        HIGH_DR_CATEG : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=6, sysNumber=51.0, core=true, t24Name=HIGH.DR.CATEG, mask="L##-###")
         HIGH_DR_MIN_MAX : IC_InterestAndCapitalisation:INFO_ACCT_DR__HIGH_DR_MIN_MAX
             @t24:i (align=L, inputBehaviour=I, maxLength=7, sysNumber=48.0, core=true, t24Name=HIGH.DR.MIN.MAX)
@@ -4634,11 +4650,11 @@ Classes {
             @t24:i (t24Name=HI.DR.TAX.RATE)
         ICA_MAIN_ACCT -> byValue IC_InterestAndCapitalisation:INFO_ACCT_DR__ICA_MAIN_ACCT *
             @t24:i (t24Name=ICA.MAIN.ACCT)
-        ICA_POST_INTEREST : mml:Integer
+        ICA_POST_INTEREST : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=4, sysNumber=83.0, core=true, t24Name=ICA.POST.INTEREST)
         INT_ADDON_AMT : T24BusinessTypes:AMT
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=23.0, core=true, t24Name=INT.ADDON.AMT, typeModifiers=-)
-        INT_ADDON_CATEG : mml:Integer
+        INT_ADDON_CATEG : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=6, sysNumber=24.0, core=true, t24Name=INT.ADDON.CATEG, mask="L##-###")
         INT_ADDON_CODE -> IC_Config:DEBIT_INT_ADDON
             @t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=18.0, core=true, t24Name=INT.ADDON.CODE)
@@ -4657,7 +4673,7 @@ Classes {
             @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=95.0, core=true, t24Name=INT.POST.DATE)
         INT_STMT_AMT : T24BusinessTypes:AMT
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=61.0, core=true, t24Name=INT.STMT.AMT, typeModifiers=-)
-        INT_STMT_CATEG : mml:Integer
+        INT_STMT_CATEG : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=6, sysNumber=62.0, core=true, t24Name=INT.STMT.CATEG, mask="L##-###")
         INT_STMT_CODE -> IC_Config:INTEREST_STATEMENT
             @t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=60.0, core=true, t24Name=INT.STMT.CODE)
@@ -4667,7 +4683,7 @@ Classes {
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=63.0, core=true, t24Name=INT.STMT.TRSDR)
         K_GRAND_TOTAL : T24BusinessTypes:AMT
             @i18n:Label (en=Total)
-            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=78.0, core=true, t24Name=K.GRAND.TOTAL, typeModifiers=-)
+            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=78.0, core=false, t24Name=K.GRAND.TOTAL, typeModifiers=-)
         LIQUIDITY_ACCOUNT -> AC_AccountOpening:ACCOUNT
             @t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=71.0, core=true, businessType=ANT, t24Name=LIQUIDITY.ACCOUNT)
         LIQUIDITY_CCY -> ST_CurrencyConfig:CURRENCY
@@ -4702,7 +4718,7 @@ Classes {
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=49.0, core=true, t24Name=UNADJ.HIGHEST.DR, typeModifiers=-)
         UNADJ_INT_ADDON : T24BusinessTypes:AMT
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=22.0, core=true, t24Name=UNADJ.INT.ADDON, typeModifiers=-)
-        UNADJ_TOTAL_INT : mml:Integer
+        UNADJ_TOTAL_INT : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=94.0, core=true, t24Name=UNADJ.TOTAL.INT)
         USED_MIDDLE_RATE : T24BusinessTypes:R
             @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=74.0, core=true, t24Name=USED.MIDDLE.RATE)
@@ -4728,7 +4744,7 @@ Classes {
             @t24:i (align=R, inputBehaviour=I, maxLength=8, sysNumber=48.0, core=true, t24Name=CORRECTION.DATE)
         CORRECTION_ID -> byValue IC_InterestAndCapitalisation:INFO_ACCT_DR2__CORRECTION_ID *
             @t24:i (t24Name=CORRECTION.ID)
-        CORRECTION_NUMBER : mml:Integer
+        CORRECTION_NUMBER : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=23.0, core=true, t24Name=CORRECTION.NUMBER)
         D2_INT_TAX_CODE -> ST_ChargeConfig:TAX
             @t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=11.0, core=true, t24Name=D2.INT.TAX.CODE)
@@ -4742,7 +4758,7 @@ Classes {
             @t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=40.0, core=true, t24Name=DEF.TOTAL.INT, typeModifiers=-)
         DEF_TOTAL_TAX : T24BusinessTypes:AMT
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=41.0, core=true, t24Name=DEF.TOTAL.TAX, typeModifiers=-)
-        DEF_WAIVE_ALL : mml:Integer
+        DEF_WAIVE_ALL : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=42.0, core=true, t24Name=DEF.WAIVE.ALL)
         DR2_INT_CATEG -> ST_Config:CATEGORY
             @t24:i (align=R, inputBehaviour=I, maxLength=6, sysNumber=8.0, core=true, t24Name=DR2.INT.CATEG, mask="R##-###")
@@ -4752,11 +4768,11 @@ Classes {
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=9.0, core=true, t24Name=DR2.INT.TR.AC)
         DR2_INT_TR_PL -> ST_Config:TRANSACTION
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=10.0, core=true, t24Name=DR2.INT.TR.PL)
-        DR2_MIN_VALUE : mml:Integer
+        DR2_MIN_VALUE : T24BusinessTypes:N
             @i18n:Label (en="Minimum Interest Amount")
             @i18n:Tooltip (en="Indicates minimum interest amount")
             @t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=35.0, core=true, t24Name=DR2.MIN.VALUE)
-        DR2_MIN_WAIVE : mml:Integer
+        DR2_MIN_WAIVE : T24BusinessTypes:N
             @i18n:Label (en="Minimum Interest Waive")
             @i18n:Tooltip (en="Indicates minimum interest waive")
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=36.0, core=true, t24Name=DR2.MIN.WAIVE)
@@ -4764,7 +4780,7 @@ Classes {
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=22.0, core=true, t24Name=GRAND.TOTAL, typeModifiers=-)
         ICA_MAIN_ACCT -> byValue IC_InterestAndCapitalisation:INFO_ACCT_DR2__ICA_MAIN_ACCT *
             @t24:i (t24Name=ICA.MAIN.ACCT)
-        ICA_POST_INTEREST : mml:Integer
+        ICA_POST_INTEREST : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=4, sysNumber=26.0, core=true, t24Name=ICA.POST.INTEREST)
         INT_NO_BOOKING : IC_InterestAndCapitalisation:INFO_ACCT_DR2__INT_NO_BOOKING
             @i18n:Label (en="Int Booking")
@@ -4773,7 +4789,7 @@ Classes {
             @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=38.0, core=true, t24Name=INT.POST.DATE)
         K_GRAND_TOTAL : T24BusinessTypes:AMT
             @i18n:Label (en=Total)
-            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=22.0, core=true, t24Name=K.GRAND.TOTAL, typeModifiers=-)
+            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=22.0, core=false, t24Name=K.GRAND.TOTAL, typeModifiers=-)
         LIQUIDITY_ACCOUNT -> AC_AccountOpening:ACCOUNT
             @t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=17.0, core=true, businessType=ANT, t24Name=LIQUIDITY.ACCOUNT)
         LIQUIDITY_CCY -> ST_CurrencyConfig:CURRENCY
@@ -4797,7 +4813,7 @@ Classes {
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=20.0, core=true, t24Name=TOTAL.INTEREST, typeModifiers=-)
         TOTAL_TAX : T24BusinessTypes:AMT
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=21.0, core=true, t24Name=TOTAL.TAX, typeModifiers=-)
-        UNADJ_TOTAL_INT : mml:Integer
+        UNADJ_TOTAL_INT : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=37.0, core=true, t24Name=UNADJ.TOTAL.INT)
         WAIVE_AMT : T24BusinessTypes:AMT
             @i18n:Label (en="Waive Amount")
@@ -4819,7 +4835,7 @@ Classes {
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=44.0, core=true, t24Name=ADJ.INT.AMT)
         ADJ_TAX_AMT : T24BusinessTypes:AMT
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=45.0, core=true, t24Name=ADJ.TAX.AMT)
-        CORRECTION_ID : mml:Integer
+        CORRECTION_ID : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=55, sysNumber=43.0, core=true, t24Name=CORRECTION.ID)
         WITHHELD_INT_AMT : T24BusinessTypes:AMT
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=46.0, core=true, t24Name=WITHHELD.INT.AMT)
@@ -4847,24 +4863,24 @@ Classes {
             @i18n:Label (en="Fixed Interest")
             @i18n:Tooltip (en="Indicates fixed interest")
             @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=6.0, core=true, t24Name=DR2.INT.RATE)
-        DR2_NO_OF_DAYS : mml:Integer
+        DR2_NO_OF_DAYS : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=4.0, core=true, t24Name=DR2.NO.OF.DAYS)
         DR2_VAL_BALANCE : T24BusinessTypes:AMT
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=5.0, core=true, t24Name=DR2.VAL.BALANCE, typeModifiers=-)
     }
     INFO_ACCT_DR2__ICA_MAIN_ACCT
     {
-        ICA_DIST_RATIO : mml:Integer
+        ICA_DIST_RATIO : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=29.0, core=true, t24Name=ICA.DIST.RATIO)
-        ICA_DIST_TYPE : mml:Integer
+        ICA_DIST_TYPE : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=28.0, core=true, t24Name=ICA.DIST.TYPE)
         ICA_INT_CATEG -> ST_Config:CATEGORY
             @t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=30.0, core=true, t24Name=ICA.INT.CATEG)
-        ICA_MAIN_ACCT : mml:Integer
+        ICA_MAIN_ACCT : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=27.0, core=true, t24Name=ICA.MAIN.ACCT)
-        ICA_MAIN_INT : mml:Integer
+        ICA_MAIN_INT : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=33.0, core=true, t24Name=ICA.MAIN.INT)
-        ICA_SUB_INT : mml:Integer
+        ICA_SUB_INT : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=34.0, core=true, t24Name=ICA.SUB.INT)
         ICA_TR_AC -> ST_Config:TRANSACTION
             @t24:i (align=R, inputBehaviour=I, maxLength=4, sysNumber=31.0, core=true, t24Name=ICA.TR.AC)
@@ -4873,7 +4889,7 @@ Classes {
     }
     INFO_ACCT_DR__ADDON_TAX_RATE
     {
-        ADDON_TAXCATEG : mml:Integer
+        ADDON_TAXCATEG : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=6, sysNumber=30.0, core=true, t24Name=ADDON.TAXCATEG, mask="L##-###")
         ADDON_TAXTRSCR -> ST_Config:TRANSACTION
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=32.0, core=true, t24Name=ADDON.TAXTRSCR)
@@ -4895,7 +4911,7 @@ Classes {
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=112.0, core=true, t24Name=ADJ.INT.AMT)
         ADJ_TAX_AMT : T24BusinessTypes:AMT
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=113.0, core=true, t24Name=ADJ.TAX.AMT)
-        CORRECTION_ID : mml:Integer
+        CORRECTION_ID : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=55, sysNumber=111.0, core=true, t24Name=CORRECTION.ID)
         WITHHELD_INT_AMT : T24BusinessTypes:AMT
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=114.0, core=true, t24Name=WITHHELD.INT.AMT)
@@ -4923,7 +4939,7 @@ Classes {
     }
     INFO_ACCT_DR__DR_INT_TAX_RATE
     {
-        DR_INT_TAXCATEG : mml:Integer
+        DR_INT_TAXCATEG : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=6, sysNumber=15.0, core=true, t24Name=DR.INT.TAXCATEG, mask="L##-###")
         DR_INT_TAXTRSCR -> ST_Config:TRANSACTION
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=17.0, core=true, t24Name=DR.INT.TAXTRSCR)
@@ -4944,14 +4960,14 @@ Classes {
             @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=33.0, core=true, t24Name=GOV.MARGIN.DATE)
         GV_INT_RATE : T24BusinessTypes:R
             @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=36.0, core=true, t24Name=GV.INT.RATE)
-        GV_NO_OF_DAYS : mml:Integer
+        GV_NO_OF_DAYS : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=34.0, core=true, t24Name=GV.NO.OF.DAYS)
         GV_VAL_BALANCE : T24BusinessTypes:AMT
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=35.0, core=true, t24Name=GV.VAL.BALANCE, typeModifiers=-)
     }
     INFO_ACCT_DR__HI_DR_TAX_RATE
     {
-        HI_DR_TAXCATEG : mml:Integer
+        HI_DR_TAXCATEG : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=6, sysNumber=57.0, core=true, t24Name=HI.DR.TAXCATEG, mask="L##-###")
         HI_DR_TAXTRSCR -> ST_Config:TRANSACTION
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=59.0, core=true, t24Name=HI.DR.TAXTRSCR)
@@ -4964,17 +4980,17 @@ Classes {
     }
     INFO_ACCT_DR__ICA_MAIN_ACCT
     {
-        ICA_DIST_RATIO : mml:Integer
+        ICA_DIST_RATIO : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=86.0, core=true, t24Name=ICA.DIST.RATIO)
-        ICA_DIST_TYPE : mml:Integer
+        ICA_DIST_TYPE : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=85.0, core=true, t24Name=ICA.DIST.TYPE)
-        ICA_INT_CATEG : mml:Integer
+        ICA_INT_CATEG : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=87.0, core=true, t24Name=ICA.INT.CATEG)
-        ICA_MAIN_ACCT : mml:Integer
+        ICA_MAIN_ACCT : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=84.0, core=true, t24Name=ICA.MAIN.ACCT)
-        ICA_MAIN_INT : mml:Integer
+        ICA_MAIN_INT : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=90.0, core=true, t24Name=ICA.MAIN.INT)
-        ICA_SUB_INT : mml:Integer
+        ICA_SUB_INT : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=91.0, core=true, t24Name=ICA.SUB.INT)
         ICA_TR_AC -> ST_Config:TRANSACTION
             @t24:i (align=R, inputBehaviour=I, maxLength=4, sysNumber=88.0, core=true, t24Name=ICA.TR.AC)
@@ -4983,7 +4999,7 @@ Classes {
     }
     INFO_ACCT_DR__STMT_TAX_RATE
     {
-        STMT_TAXCATEG : mml:Integer
+        STMT_TAXCATEG : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=6, sysNumber=68.0, core=true, t24Name=STMT.TAXCATEG, mask="L##-###")
         STMT_TAXTRSCR -> ST_Config:TRANSACTION
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=70.0, core=true, t24Name=STMT.TAXTRSCR)
@@ -5006,7 +5022,7 @@ Classes {
             @i18n:Label (en=Category)
             @i18n:Tooltip (en="Specifies the Category")
             @t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=4.0, core=true, t24Name=CATEGORY)
-        CHARGE_AMOUNT : mml:Integer
+        CHARGE_AMOUNT : T24BusinessTypes:N
             @i18n:Label (en="Charge Amount")
             @i18n:Tooltip (en="Indicates charge amount")
             @t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=3.0, core=true, t24Name=CHARGE.AMOUNT)
@@ -5041,7 +5057,7 @@ Classes {
             @t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=15.0, core=true, t24Name=RESERVED.9)
         TAX_ACCOUNT : T24BusinessTypes:A
             @t24:i (align=L, inputBehaviour=I, maxLength=20, sysNumber=11.0, core=true, t24Name=TAX.ACCOUNT)
-        TAX_AMOUNT : mml:Integer
+        TAX_AMOUNT : T24BusinessTypes:N
             @i18n:Label (en="Tax Amount")
             @t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=12.0, core=true, t24Name=TAX.AMOUNT)
         TAX_CODE : T24BusinessTypes:A
@@ -5138,7 +5154,7 @@ Classes {
     REBUILD_TRAN_CHARGES__K_GROUP
     {
         K_GROUP -> ST_ChargeConfig:ACCT_GEN_CONDITION
-            @t24:i (align=R, inputBehaviour=N, maxLength=2, sysNumber=2.0, core=true, t24Name=K.GROUP)
+            @t24:i (align=R, inputBehaviour=N, maxLength=2, sysNumber=2.0, core=false, t24Name=K.GROUP)
     }
     STMT_ACCT_CH
         @i18n:Description (en="")
@@ -5148,7 +5164,7 @@ Classes {
             @t24:i (align=L, inputBehaviour=I, maxLength=26, sysNumber=0.0, core=true, t24Name=ACCT.NO.YEAR.MONTH, mask="R################ # ####-##")
         K_GRAND_TOTAL : T24BusinessTypes:AMT
             @i18n:Label (en=Total)
-            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=158.0, core=true, t24Name=K.GRAND.TOTAL, typeModifiers=-)
+            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=158.0, core=false, t24Name=K.GRAND.TOTAL, typeModifiers=-)
     }
     STMT_ACCT_CR
         @i18n:Description (en="")
@@ -5161,9 +5177,94 @@ Classes {
         ACCOUNT_NO_DATE -> IC_InterestAndCapitalisation:STMT_ACCT_CR PK required
             @i18n:Label (en="Account Date")
             @t24:i (align=L, inputBehaviour=I, maxLength=52, sysNumber=0.0, core=true, businessType=A, t24Name=ACCOUNT.NO.DATE, typeModifiers=ND, mask="R########################################### # DDDD DD  DD")
+        COMPENS_ACCOUNT -> byValue IC_InterestAndCapitalisation:STMT_ACCT_CR__COMPENS_ACCOUNT *
+            @t24:i (t24Name=COMPENS.ACCOUNT)
+        CORRECTION_DATE : T24BusinessTypes:D
+            @t24:i (align=R, inputBehaviour=I, maxLength=8, sysNumber=50.0, core=true, t24Name=CORRECTION.DATE)
+        CORRECTION_ID -> byValue IC_InterestAndCapitalisation:STMT_ACCT_CR__CORRECTION_ID *
+            @t24:i (t24Name=CORRECTION.ID)
+        CORRECTION_NUMBER : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=24.0, core=true, t24Name=CORRECTION.NUMBER)
+        CR_INT_CATEG -> ST_Config:CATEGORY
+            @t24:i (align=R, inputBehaviour=I, maxLength=6, sysNumber=8.0, core=true, t24Name=CR.INT.CATEG, mask="R##-###")
+        CR_INT_DATE -> byValue IC_InterestAndCapitalisation:STMT_ACCT_CR__CR_INT_DATE *
+            @t24:i (t24Name=CR.INT.DATE)
+        CR_INT_TAX_CODE -> byValue IC_InterestAndCapitalisation:STMT_ACCT_CR__CR_INT_TAX_CODE *
+            @t24:i (t24Name=CR.INT.TAX.CODE)
+        CR_INT_TR_AC -> ST_Config:TRANSACTION
+            @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=9.0, core=true, t24Name=CR.INT.TR.AC)
+        CR_INT_TR_PL -> ST_Config:TRANSACTION
+            @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=10.0, core=true, t24Name=CR.INT.TR.PL)
+        CR_MIN_VALUE : T24BusinessTypes:N
+            @i18n:Label (en="Minimum Interest Amount")
+            @i18n:Tooltip (en="Indicates minimum interest amount")
+            @t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=39.0, core=true, t24Name=CR.MIN.VALUE)
+        CR_MIN_WAIVE : T24BusinessTypes:N
+            @i18n:Label (en="Minimum Interest Waive")
+            @i18n:Tooltip (en="Indicates minimum interest waive")
+            @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=40.0, core=true, t24Name=CR.MIN.WAIVE)
+        DB_NETTING_AMT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=49.0, core=true, t24Name=DB.NETTING.AMT)
+        GRAND_TOTAL : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=23.0, core=true, t24Name=GRAND.TOTAL, typeModifiers=-)
+        ICA_MAIN_ACCT -> byValue IC_InterestAndCapitalisation:STMT_ACCT_CR__ICA_MAIN_ACCT *
+            @t24:i (t24Name=ICA.MAIN.ACCT)
+        ICA_POST_INTEREST : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=I, maxLength=4, sysNumber=26.0, core=true, t24Name=ICA.POST.INTEREST)
+        INT_NO_BOOKING : IC_InterestAndCapitalisation:STMT_ACCT_CR__INT_NO_BOOKING
+            @i18n:Label (en="Int Booking")
+            @t24:i (align=L, inputBehaviour=I, maxLength=8, sysNumber=19.0, core=true, t24Name=INT.NO.BOOKING)
+        INT_POST_DATE : T24BusinessTypes:D
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=42.0, core=true, t24Name=INT.POST.DATE)
         K_GRAND_TOTAL : T24BusinessTypes:AMT
             @i18n:Label (en=Total)
-            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=23.0, core=true, t24Name=K.GRAND.TOTAL, typeModifiers=-)
+            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=23.0, core=false, t24Name=K.GRAND.TOTAL, typeModifiers=-)
+        LIQUIDITY_ACCOUNT -> AC_AccountOpening:ACCOUNT
+            @t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=17.0, core=true, businessType=ANT, t24Name=LIQUIDITY.ACCOUNT)
+        LIQUIDITY_CCY -> ST_CurrencyConfig:CURRENCY
+            @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=25.0, core=true, businessType=CCY, t24Name=LIQUIDITY.CCY)
+        MANUAL_ADJ_AMT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=44.0, core=true, t24Name=MANUAL.ADJ.AMT, typeModifiers=-)
+        PERIOD_FIRST_DATE : T24BusinessTypes:D
+            @i18n:Label (en="Start Date")
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=1.0, core=true, t24Name=PERIOD.FIRST.DATE)
+        PERIOD_LAST_DATE : T24BusinessTypes:D
+            @i18n:Label (en="End Date")
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=2.0, core=true, t24Name=PERIOD.LAST.DATE)
+        RESERVED_01 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=55.0, core=true, t24Name=RESERVED.01)
+        RESERVED_02 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=54.0, core=true, t24Name=RESERVED.02)
+        RESERVED_03 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=53.0, core=true, t24Name=RESERVED.03)
+        RESERVED_1 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=35.0, core=true, t24Name=RESERVED.1)
+        RESERVED_2 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=36.0, core=true, t24Name=RESERVED.2)
+        RESERVED_3 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=37.0, core=true, t24Name=RESERVED.3)
+        RESERVED_4 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=38.0, core=true, t24Name=RESERVED.4)
+        TAX_EXCH_RATE : T24BusinessTypes:R
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=43.0, core=true, t24Name=TAX.EXCH.RATE)
+        TAX_FOR_BANK : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=22.0, core=true, t24Name=TAX.FOR.BANK, typeModifiers=-)
+        TAX_FOR_CUSTOMER : T24BusinessTypes:AMT
+            @i18n:Label (en="Tax For Customer")
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=21.0, core=true, t24Name=TAX.FOR.CUSTOMER, typeModifiers=-)
+        TOTAL_INTEREST : T24BusinessTypes:AMT
+            @i18n:Label (en="Total Int")
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=20.0, core=true, t24Name=TOTAL.INTEREST, typeModifiers=-)
+        UNADJ_TOTAL_INT : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=41.0, core=true, t24Name=UNADJ.TOTAL.INT)
+        WAIVE_AMT : T24BusinessTypes:AMT
+            @i18n:Label (en="Waive Amount")
+            @i18n:Tooltip (en="Waive Amount in the Ccy of Acct if waive ccy is diff from Acct ccy")
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=51.0, core=true, t24Name=WAIVE.AMT)
+        WAIVE_RATE : T24BusinessTypes:R
+            @i18n:Label (en="Waive Rate")
+            @i18n:Tooltip (en="Exchange rate used for conversion")
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=52.0, core=true, t24Name=WAIVE.RATE)
     }
     STMT_ACCT_CR2
         @i18n:Description (en="")
@@ -5180,7 +5281,7 @@ Classes {
             @t24:i (align=R, inputBehaviour=I, maxLength=8, sysNumber=50.0, core=true, t24Name=CORRECTION.DATE)
         CORRECTION_ID -> byValue IC_InterestAndCapitalisation:STMT_ACCT_CR2__CORRECTION_ID *
             @t24:i (t24Name=CORRECTION.ID)
-        CORRECTION_NUMBER : mml:Integer
+        CORRECTION_NUMBER : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=24.0, core=true, t24Name=CORRECTION.NUMBER)
         CR2_INT_CATEG -> ST_Config:CATEGORY
             @t24:i (align=R, inputBehaviour=I, maxLength=6, sysNumber=8.0, core=true, t24Name=CR2.INT.CATEG, mask="R##-###")
@@ -5190,9 +5291,9 @@ Classes {
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=9.0, core=true, t24Name=CR2.INT.TR.AC)
         CR2_INT_TR_PL -> ST_Config:TRANSACTION
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=10.0, core=true, t24Name=CR2.INT.TR.PL)
-        CR2_MIN_VALUE : mml:Integer
+        CR2_MIN_VALUE : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=39.0, core=true, t24Name=CR2.MIN.VALUE)
-        CR2_MIN_WAIVE : mml:Integer
+        CR2_MIN_WAIVE : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=40.0, core=true, t24Name=CR2.MIN.WAIVE)
         DB_NETTING_AMT : T24BusinessTypes:AMT
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=49.0, core=true, t24Name=DB.NETTING.AMT)
@@ -5200,7 +5301,7 @@ Classes {
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=23.0, core=true, t24Name=GRAND.TOTAL, typeModifiers=-)
         ICA_MAIN_ACCT -> byValue IC_InterestAndCapitalisation:STMT_ACCT_CR2__ICA_MAIN_ACCT *
             @t24:i (t24Name=ICA.MAIN.ACCT)
-        ICA_POST_INTEREST : mml:Integer
+        ICA_POST_INTEREST : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=4, sysNumber=26.0, core=true, t24Name=ICA.POST.INTEREST)
         INT_NO_BOOKING : IC_InterestAndCapitalisation:STMT_ACCT_CR2__INT_NO_BOOKING
             @i18n:Label (en="Int Booking")
@@ -5209,7 +5310,7 @@ Classes {
             @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=42.0, core=true, t24Name=INT.POST.DATE)
         K_GRAND_TOTAL : T24BusinessTypes:AMT
             @i18n:Label (en=Total)
-            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=23.0, core=true, t24Name=K.GRAND.TOTAL, typeModifiers=-)
+            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=23.0, core=false, t24Name=K.GRAND.TOTAL, typeModifiers=-)
         LIQUIDITY_ACCOUNT -> AC_AccountOpening:ACCOUNT
             @t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=17.0, core=true, businessType=ANT, t24Name=LIQUIDITY.ACCOUNT)
         LIQUIDITY_CCY -> ST_CurrencyConfig:CURRENCY
@@ -5246,7 +5347,7 @@ Classes {
         TOTAL_INTEREST : T24BusinessTypes:AMT
             @i18n:Label (en="Total interest")
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=20.0, core=true, t24Name=TOTAL.INTEREST, typeModifiers=-)
-        UNADJ_TOTAL_INT : mml:Integer
+        UNADJ_TOTAL_INT : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=41.0, core=true, t24Name=UNADJ.TOTAL.INT)
         WAIVE_AMT : T24BusinessTypes:AMT
             @i18n:Label (en="Waive Amount")
@@ -5283,7 +5384,7 @@ Classes {
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=46.0, core=true, t24Name=ADJ.INT.AMT)
         ADJ_TAX_AMT : T24BusinessTypes:AMT
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=47.0, core=true, t24Name=ADJ.TAX.AMT)
-        CORRECTION_ID : mml:Integer
+        CORRECTION_ID : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=55, sysNumber=45.0, core=true, t24Name=CORRECTION.ID)
         WITHHELD_INT_AMT : T24BusinessTypes:AMT
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=48.0, core=true, t24Name=WITHHELD.INT.AMT)
@@ -5298,24 +5399,95 @@ Classes {
             @i18n:Label (en="Fixed Interest")
             @i18n:Tooltip (en="Input fixed rate of interest")
             @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=6.0, core=true, t24Name=CR2.INT.RATE)
-        CR2_NO_OF_DAYS : mml:Integer
+        CR2_NO_OF_DAYS : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=4.0, core=true, t24Name=CR2.NO.OF.DAYS)
         CR2_VAL_BALANCE : T24BusinessTypes:AMT
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=5.0, core=true, t24Name=CR2.VAL.BALANCE, typeModifiers=-)
     }
     STMT_ACCT_CR2__ICA_MAIN_ACCT
     {
-        ICA_DIST_RATIO : mml:Integer
+        ICA_DIST_RATIO : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=28.0, core=true, t24Name=ICA.DIST.RATIO)
-        ICA_DIST_TYPE : mml:Integer
+        ICA_DIST_TYPE : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=29.0, core=true, t24Name=ICA.DIST.TYPE)
         ICA_INT_CATEG -> ST_Config:CATEGORY
             @t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=30.0, core=true, t24Name=ICA.INT.CATEG)
-        ICA_MAIN_ACCT : mml:Integer
+        ICA_MAIN_ACCT : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=27.0, core=true, t24Name=ICA.MAIN.ACCT)
-        ICA_MAIN_INT : mml:Integer
+        ICA_MAIN_INT : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=33.0, core=true, t24Name=ICA.MAIN.INT)
-        ICA_SUB_INT : mml:Integer
+        ICA_SUB_INT : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=34.0, core=true, t24Name=ICA.SUB.INT)
+        ICA_TR_AC -> ST_Config:TRANSACTION
+            @t24:i (align=R, inputBehaviour=I, maxLength=4, sysNumber=31.0, core=true, t24Name=ICA.TR.AC)
+        ICA_TR_PL -> ST_Config:TRANSACTION
+            @t24:i (align=R, inputBehaviour=I, maxLength=4, sysNumber=32.0, core=true, t24Name=ICA.TR.PL)
+    }
+    STMT_ACCT_CR__COMPENS_ACCOUNT
+    {
+        COMPENS_ACCOUNT -> AC_AccountOpening:ACCOUNT
+            @t24:i (align=R, inputBehaviour=I, maxLength=16, sysNumber=18.0, core=true, businessType=ACC, t24Name=COMPENS.ACCOUNT)
+    }
+    STMT_ACCT_CR__CORRECTION_ID
+    {
+        ADJ_INT_AMT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=46.0, core=true, t24Name=ADJ.INT.AMT)
+        ADJ_TAX_AMT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=47.0, core=true, t24Name=ADJ.TAX.AMT)
+        CORRECTION_ID : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=I, maxLength=55, sysNumber=45.0, core=true, t24Name=CORRECTION.ID)
+        WITHHELD_INT_AMT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=48.0, core=true, t24Name=WITHHELD.INT.AMT)
+    }
+    STMT_ACCT_CR__CR_INT_DATE
+    {
+        CR_INT_AMT : T24BusinessTypes:AMT
+            @i18n:Label (en="Cr Int Amount")
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=7.0, core=true, t24Name=CR.INT.AMT, typeModifiers=-)
+        CR_INT_DATE : T24BusinessTypes:D
+            @i18n:Label (en="Cr Int date")
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=3.0, core=true, t24Name=CR.INT.DATE)
+        CR_INT_RATE : T24BusinessTypes:R
+            @i18n:Label (en="Fixed Interest")
+            @i18n:Tooltip (en="Input fixed rate of interest")
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=6.0, core=true, t24Name=CR.INT.RATE)
+        CR_NO_OF_DAYS : T24BusinessTypes:N
+            @i18n:Label (en=Days)
+            @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=4.0, core=true, t24Name=CR.NO.OF.DAYS)
+        CR_VAL_BALANCE : T24BusinessTypes:AMT
+            @i18n:Label (en="Cr Balance")
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=5.0, core=true, t24Name=CR.VAL.BALANCE, typeModifiers=-)
+    }
+    STMT_ACCT_CR__CR_INT_TAX_CODE
+    {
+        CR_INT_TAXCATEG -> ST_Config:CATEGORY
+            @t24:i (align=R, inputBehaviour=I, maxLength=6, sysNumber=14.0, core=true, t24Name=CR.INT.TAXCATEG, mask="R##-###")
+        CR_INT_TAXTRSCR -> ST_Config:TRANSACTION
+            @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=16.0, core=true, t24Name=CR.INT.TAXTRSCR)
+        CR_INT_TAXTRSDR -> ST_Config:TRANSACTION
+            @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=15.0, core=true, t24Name=CR.INT.TAXTRSDR)
+        CR_INT_TAX_AMT : T24BusinessTypes:AMT
+            @i18n:Label (en="Tax Amount")
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=13.0, core=true, t24Name=CR.INT.TAX.AMT, typeModifiers=-)
+        CR_INT_TAX_CODE -> ST_ChargeConfig:TAX
+            @t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=11.0, core=true, t24Name=CR.INT.TAX.CODE)
+        CR_INT_TAX_RATE : T24BusinessTypes:R
+            @i18n:Label (en="Tax Rate")
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=12.0, core=true, t24Name=CR.INT.TAX.RATE)
+    }
+    STMT_ACCT_CR__ICA_MAIN_ACCT
+    {
+        ICA_DIST_RATIO : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=29.0, core=true, t24Name=ICA.DIST.RATIO)
+        ICA_DIST_TYPE : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=28.0, core=true, t24Name=ICA.DIST.TYPE)
+        ICA_INT_CATEG -> ST_Config:CATEGORY
+            @t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=30.0, core=true, t24Name=ICA.INT.CATEG)
+        ICA_MAIN_ACCT : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=27.0, core=true, t24Name=ICA.MAIN.ACCT)
+        ICA_MAIN_INT : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=33.0, core=true, t24Name=ICA.MAIN.INT)
+        ICA_SUB_INT : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=34.0, core=true, t24Name=ICA.SUB.INT)
         ICA_TR_AC -> ST_Config:TRANSACTION
             @t24:i (align=R, inputBehaviour=I, maxLength=4, sysNumber=31.0, core=true, t24Name=ICA.TR.AC)
@@ -5333,9 +5505,194 @@ Classes {
         ACCOUNT_NO_DATE -> IC_InterestAndCapitalisation:STMT_ACCT_DR PK required
             @i18n:Label (en="Account Date")
             @t24:i (align=L, inputBehaviour=I, maxLength=52, sysNumber=0.0, core=true, businessType=A, t24Name=ACCOUNT.NO.DATE, typeModifiers=ND, mask="R########################################### # DDDD DD  DD")
+        ADDON_MIN_MAX : IC_InterestAndCapitalisation:STMT_ACCT_DR__ADDON_MIN_MAX
+            @t24:i (align=L, inputBehaviour=I, maxLength=7, sysNumber=21.0, core=true, t24Name=ADDON.MIN.MAX)
+        ADDON_TAX_CODE -> ST_ChargeConfig:TAX
+            @t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=27.0, core=true, t24Name=ADDON.TAX.CODE)
+        ADDON_TAX_RATE -> byValue IC_InterestAndCapitalisation:STMT_ACCT_DR__ADDON_TAX_RATE *
+            @t24:i (t24Name=ADDON.TAX.RATE)
+        APR : T24BusinessTypes:R
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=80.0, core=true, t24Name=APR)
+        COMPENS_ACCOUNT -> byValue IC_InterestAndCapitalisation:STMT_ACCT_DR__COMPENS_ACCOUNT *
+            @t24:i (t24Name=COMPENS.ACCOUNT)
+        CORRECTION_DATE : T24BusinessTypes:D
+            @t24:i (align=R, inputBehaviour=I, maxLength=8, sysNumber=116.0, core=true, t24Name=CORRECTION.DATE)
+        CORRECTION_ID -> byValue IC_InterestAndCapitalisation:STMT_ACCT_DR__CORRECTION_ID *
+            @t24:i (t24Name=CORRECTION.ID)
+        CORRECTION_NUMBER : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=79.0, core=true, t24Name=CORRECTION.NUMBER)
+        DB_NETTING_AMT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=115.0, core=true, t24Name=DB.NETTING.AMT)
+        DEFERRED_DATE : T24BusinessTypes:D
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=81.0, core=true, t24Name=DEFERRED.DATE)
+        DEF_ADDON : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=99.0, core=true, t24Name=DEF.ADDON, typeModifiers=-)
+        DEF_ADDON_TAX : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=100.0, core=true, t24Name=DEF.ADDON.TAX, typeModifiers=-)
+        DEF_DR_INT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=97.0, core=true, t24Name=DEF.DR.INT, typeModifiers=-)
+        DEF_DR_TAX : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=98.0, core=true, t24Name=DEF.DR.TAX, typeModifiers=-)
+        DEF_GOV_MAR : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=103.0, core=true, t24Name=DEF.GOV.MAR, typeModifiers=-)
+        DEF_GOV_MAR_TAX : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=104.0, core=true, t24Name=DEF.GOV.MAR.TAX, typeModifiers=-)
+        DEF_HIGH_DR : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=101.0, core=true, t24Name=DEF.HIGH.DR, typeModifiers=-)
+        DEF_HIGH_DR_TAX : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=102.0, core=true, t24Name=DEF.HIGH.DR.TAX, typeModifiers=-)
+        DEF_INT_STMT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=105.0, core=true, t24Name=DEF.INT.STMT, typeModifiers=-)
+        DEF_INT_STMT_TAX : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=106.0, core=true, t24Name=DEF.INT.STMT.TAX, typeModifiers=-)
+        DEF_TOTAL_CHARGE : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=108.0, core=true, t24Name=DEF.TOTAL.CHARGE, typeModifiers=-)
+        DEF_TOTAL_INT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=107.0, core=true, t24Name=DEF.TOTAL.INT, typeModifiers=-)
+        DEF_TOTAL_TAX : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=109.0, core=true, t24Name=DEF.TOTAL.TAX, typeModifiers=-)
+        DEF_WAIVE_ALL : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=110.0, core=true, t24Name=DEF.WAIVE.ALL)
+        DR_INT_CATEG : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=I, maxLength=6, sysNumber=9.0, core=true, t24Name=DR.INT.CATEG, mask="L##-###")
+        DR_INT_DATE -> byValue IC_InterestAndCapitalisation:STMT_ACCT_DR__DR_INT_DATE *
+            @t24:i (t24Name=DR.INT.DATE)
+        DR_INT_TAX_CODE -> ST_ChargeConfig:TAX
+            @t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=12.0, core=true, t24Name=DR.INT.TAX.CODE)
+        DR_INT_TAX_RATE -> byValue IC_InterestAndCapitalisation:STMT_ACCT_DR__DR_INT_TAX_RATE *
+            @t24:i (t24Name=DR.INT.TAX.RATE)
+        DR_INT_TR_AC -> ST_Config:TRANSACTION
+            @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=10.0, core=true, t24Name=DR.INT.TR.AC)
+        DR_INT_TR_PL -> ST_Config:TRANSACTION
+            @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=11.0, core=true, t24Name=DR.INT.TR.PL)
+        DR_MIN_VALUE : T24BusinessTypes:N
+            @i18n:Label (en="Minimum Interest Amount")
+            @i18n:Tooltip (en="Indicates minimum interest amount")
+            @t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=92.0, core=true, t24Name=DR.MIN.VALUE)
+        DR_MIN_WAIVE : T24BusinessTypes:N
+            @i18n:Label (en="Minimum Interest Waive")
+            @i18n:Tooltip (en="Indicates minimum interest waive")
+            @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=93.0, core=true, t24Name=DR.MIN.WAIVE)
+        GOV_MARGIN_CODE -> IC_Config:GOVERNMENT_MARGIN
+            @t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=38.0, core=true, t24Name=GOV.MARGIN.CODE)
+        GOV_MARGIN_DATE -> byValue IC_InterestAndCapitalisation:STMT_ACCT_DR__GOV_MARGIN_DATE *
+            @t24:i (t24Name=GOV.MARGIN.DATE)
+        GOV_MARGIN_MIN_MAX : IC_InterestAndCapitalisation:STMT_ACCT_DR__GOV_MARGIN_MIN_MAX
+            @t24:i (align=L, inputBehaviour=I, maxLength=7, sysNumber=39.0, core=true, t24Name=GOV.MARGIN.MIN.MAX)
+        GOV_MRG_CATEG : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=I, maxLength=6, sysNumber=41.0, core=true, t24Name=GOV.MRG.CATEG, mask="L##-###")
+        GOV_MRG_TOT_AMT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=40.0, core=true, t24Name=GOV.MRG.TOT.AMT, typeModifiers=-)
+        GOV_MRG_TRSCR -> ST_Config:TRANSACTION
+            @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=43.0, core=true, t24Name=GOV.MRG.TRSCR)
+        GOV_MRG_TRSDR -> ST_Config:TRANSACTION
+            @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=42.0, core=true, t24Name=GOV.MRG.TRSDR)
+        GRAND_TOTAL : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=78.0, core=true, t24Name=GRAND.TOTAL, typeModifiers=-)
+        HIGHEST_DR_AMT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=50.0, core=true, t24Name=HIGHEST.DR.AMT, typeModifiers=-)
+        HIGHEST_DR_BAL : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=45.0, core=true, t24Name=HIGHEST.DR.BAL, typeModifiers=-)
+        HIGHEST_DR_CODE -> IC_Config:HIGHEST_DEBIT
+            @t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=44.0, core=true, t24Name=HIGHEST.DR.CODE)
+        HIGHEST_DR_FREE : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=47.0, core=true, t24Name=HIGHEST.DR.FREE, typeModifiers=-)
+        HIGHEST_DR_PERC : T24BusinessTypes:R
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=46.0, core=true, t24Name=HIGHEST.DR.PERC)
+        HIGH_DR_CATEG : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=I, maxLength=6, sysNumber=51.0, core=true, t24Name=HIGH.DR.CATEG, mask="L##-###")
+        HIGH_DR_MIN_MAX : IC_InterestAndCapitalisation:STMT_ACCT_DR__HIGH_DR_MIN_MAX
+            @t24:i (align=L, inputBehaviour=I, maxLength=7, sysNumber=48.0, core=true, t24Name=HIGH.DR.MIN.MAX)
+        HIGH_DR_TRSCR -> ST_Config:TRANSACTION
+            @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=53.0, core=true, t24Name=HIGH.DR.TRSCR)
+        HIGH_DR_TRSDR -> ST_Config:TRANSACTION
+            @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=52.0, core=true, t24Name=HIGH.DR.TRSDR)
+        HI_DR_TAX_CODE -> ST_ChargeConfig:TAX
+            @t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=54.0, core=true, t24Name=HI.DR.TAX.CODE)
+        HI_DR_TAX_RATE -> byValue IC_InterestAndCapitalisation:STMT_ACCT_DR__HI_DR_TAX_RATE *
+            @t24:i (t24Name=HI.DR.TAX.RATE)
+        ICA_MAIN_ACCT -> byValue IC_InterestAndCapitalisation:STMT_ACCT_DR__ICA_MAIN_ACCT *
+            @t24:i (t24Name=ICA.MAIN.ACCT)
+        ICA_POST_INTEREST : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=I, maxLength=4, sysNumber=83.0, core=true, t24Name=ICA.POST.INTEREST)
+        INT_ADDON_AMT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=23.0, core=true, t24Name=INT.ADDON.AMT, typeModifiers=-)
+        INT_ADDON_CATEG : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=I, maxLength=6, sysNumber=24.0, core=true, t24Name=INT.ADDON.CATEG, mask="L##-###")
+        INT_ADDON_CODE -> IC_Config:DEBIT_INT_ADDON
+            @t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=18.0, core=true, t24Name=INT.ADDON.CODE)
+        INT_ADDON_FREE : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=20.0, core=true, t24Name=INT.ADDON.FREE, typeModifiers=-)
+        INT_ADDON_PERCT : T24BusinessTypes:R
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=19.0, core=true, t24Name=INT.ADDON.PERCT)
+        INT_ADDON_TRSCR -> ST_Config:TRANSACTION
+            @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=26.0, core=true, t24Name=INT.ADDON.TRSCR)
+        INT_ADDON_TRSDR -> ST_Config:TRANSACTION
+            @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=25.0, core=true, t24Name=INT.ADDON.TRSDR)
+        INT_NO_BOOKING : IC_InterestAndCapitalisation:STMT_ACCT_DR__INT_NO_BOOKING
+            @i18n:Label (en="Int Booking")
+            @t24:i (align=L, inputBehaviour=I, maxLength=8, sysNumber=73.0, core=true, t24Name=INT.NO.BOOKING)
+        INT_POST_DATE : T24BusinessTypes:D
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=95.0, core=true, t24Name=INT.POST.DATE)
+        INT_STMT_AMT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=61.0, core=true, t24Name=INT.STMT.AMT, typeModifiers=-)
+        INT_STMT_CATEG : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=I, maxLength=6, sysNumber=62.0, core=true, t24Name=INT.STMT.CATEG, mask="L##-###")
+        INT_STMT_CODE -> IC_Config:INTEREST_STATEMENT
+            @t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=60.0, core=true, t24Name=INT.STMT.CODE)
+        INT_STMT_TRSCR -> ST_Config:TRANSACTION
+            @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=64.0, core=true, t24Name=INT.STMT.TRSCR)
+        INT_STMT_TRSDR -> ST_Config:TRANSACTION
+            @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=63.0, core=true, t24Name=INT.STMT.TRSDR)
         K_GRAND_TOTAL : T24BusinessTypes:AMT
             @i18n:Label (en=Total)
-            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=78.0, core=true, t24Name=K.GRAND.TOTAL, typeModifiers=-)
+            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=78.0, core=false, t24Name=K.GRAND.TOTAL, typeModifiers=-)
+        LIQUIDITY_ACCOUNT -> AC_AccountOpening:ACCOUNT
+            @t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=71.0, core=true, businessType=ANT, t24Name=LIQUIDITY.ACCOUNT)
+        LIQUIDITY_CCY -> ST_CurrencyConfig:CURRENCY
+            @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=82.0, core=true, businessType=CCY, t24Name=LIQUIDITY.CCY)
+        MANUAL_ADJ_AMT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=96.0, core=true, t24Name=MANUAL.ADJ.AMT, typeModifiers=-)
+        PERIOD_FIRST_DATE : T24BusinessTypes:D
+            @i18n:Label (en="Start Date")
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=1.0, core=true, t24Name=PERIOD.FIRST.DATE)
+        PERIOD_LAST_DATE : T24BusinessTypes:D
+            @i18n:Label (en="End Date")
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=2.0, core=true, t24Name=PERIOD.LAST.DATE)
+        RESERVED_01 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=121.0, core=true, t24Name=RESERVED.01)
+        RESERVED_02 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=120.0, core=true, t24Name=RESERVED.02)
+        RESERVED_03 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=119.0, core=true, t24Name=RESERVED.03)
+        STMT_TAX_CODE -> ST_ChargeConfig:TAX
+            @t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=65.0, core=true, t24Name=STMT.TAX.CODE)
+        STMT_TAX_RATE -> byValue IC_InterestAndCapitalisation:STMT_ACCT_DR__STMT_TAX_RATE *
+            @t24:i (t24Name=STMT.TAX.RATE)
+        TOTAL_CHARGE : T24BusinessTypes:AMT
+            @i18n:Label (en=Charge)
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=76.0, core=true, t24Name=TOTAL.CHARGE, typeModifiers=-)
+        TOTAL_INTEREST : T24BusinessTypes:AMT
+            @i18n:Label (en="Total int")
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=75.0, core=true, t24Name=TOTAL.INTEREST, typeModifiers=-)
+        TOTAL_TAX : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=77.0, core=true, t24Name=TOTAL.TAX, typeModifiers=-)
+        UNADJ_HIGHEST_DR : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=49.0, core=true, t24Name=UNADJ.HIGHEST.DR, typeModifiers=-)
+        UNADJ_INT_ADDON : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=22.0, core=true, t24Name=UNADJ.INT.ADDON, typeModifiers=-)
+        UNADJ_TOTAL_INT : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=94.0, core=true, t24Name=UNADJ.TOTAL.INT)
+        USED_MIDDLE_RATE : T24BusinessTypes:R
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=74.0, core=true, t24Name=USED.MIDDLE.RATE)
+        WAIVE_AMT : T24BusinessTypes:AMT
+            @i18n:Label (en="Waive Amount")
+            @i18n:Tooltip (en="Waive Amount in the Ccy of Acct if waive ccy is diff from Acct ccy")
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=117.0, core=true, t24Name=WAIVE.AMT)
+        WAIVE_RATE : T24BusinessTypes:R
+            @i18n:Label (en="Waive Rate")
+            @i18n:Tooltip (en="Exchange rate used for conversion")
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=118.0, core=true, t24Name=WAIVE.RATE)
     }
     STMT_ACCT_DR2
         @i18n:Description (en="")
@@ -5350,7 +5707,7 @@ Classes {
             @t24:i (align=R, inputBehaviour=I, maxLength=8, sysNumber=48.0, core=true, t24Name=CORRECTION.DATE)
         CORRECTION_ID -> byValue IC_InterestAndCapitalisation:STMT_ACCT_DR2__CORRECTION_ID *
             @t24:i (t24Name=CORRECTION.ID)
-        CORRECTION_NUMBER : mml:Integer
+        CORRECTION_NUMBER : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=23.0, core=true, t24Name=CORRECTION.NUMBER)
         D2_INT_TAX_CODE -> ST_ChargeConfig:TAX
             @t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=11.0, core=true, t24Name=D2.INT.TAX.CODE)
@@ -5364,7 +5721,7 @@ Classes {
             @t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=40.0, core=true, t24Name=DEF.TOTAL.INT, typeModifiers=-)
         DEF_TOTAL_TAX : T24BusinessTypes:AMT
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=41.0, core=true, t24Name=DEF.TOTAL.TAX, typeModifiers=-)
-        DEF_WAIVE_ALL : mml:Integer
+        DEF_WAIVE_ALL : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=42.0, core=true, t24Name=DEF.WAIVE.ALL)
         DR2_INT_CATEG -> ST_Config:CATEGORY
             @t24:i (align=R, inputBehaviour=I, maxLength=6, sysNumber=8.0, core=true, t24Name=DR2.INT.CATEG, mask="R##-###")
@@ -5374,11 +5731,11 @@ Classes {
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=9.0, core=true, t24Name=DR2.INT.TR.AC)
         DR2_INT_TR_PL -> ST_Config:TRANSACTION
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=10.0, core=true, t24Name=DR2.INT.TR.PL)
-        DR2_MIN_VALUE : mml:Integer
+        DR2_MIN_VALUE : T24BusinessTypes:N
             @i18n:Label (en="Minimum Interest Amount")
             @i18n:Tooltip (en="Indicates minimum interest amount")
             @t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=35.0, core=true, t24Name=DR2.MIN.VALUE)
-        DR2_MIN_WAIVE : mml:Integer
+        DR2_MIN_WAIVE : T24BusinessTypes:N
             @i18n:Label (en="Minimum Interest Waive")
             @i18n:Tooltip (en="Indicates minimum interest waive")
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=36.0, core=true, t24Name=DR2.MIN.WAIVE)
@@ -5386,7 +5743,7 @@ Classes {
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=22.0, core=true, t24Name=GRAND.TOTAL, typeModifiers=-)
         ICA_MAIN_ACCT -> byValue IC_InterestAndCapitalisation:STMT_ACCT_DR2__ICA_MAIN_ACCT *
             @t24:i (t24Name=ICA.MAIN.ACCT)
-        ICA_POST_INTEREST : mml:Integer
+        ICA_POST_INTEREST : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=4, sysNumber=26.0, core=true, t24Name=ICA.POST.INTEREST)
         INT_NO_BOOKING : IC_InterestAndCapitalisation:STMT_ACCT_DR2__INT_NO_BOOKING
             @i18n:Label (en="Int Booking")
@@ -5395,7 +5752,7 @@ Classes {
             @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=38.0, core=true, t24Name=INT.POST.DATE)
         K_GRAND_TOTAL : T24BusinessTypes:AMT
             @i18n:Label (en=Total)
-            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=22.0, core=true, t24Name=K.GRAND.TOTAL, typeModifiers=-)
+            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=22.0, core=false, t24Name=K.GRAND.TOTAL, typeModifiers=-)
         LIQUIDITY_ACCOUNT -> AC_AccountOpening:ACCOUNT
             @t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=17.0, core=true, businessType=ANT, t24Name=LIQUIDITY.ACCOUNT)
         LIQUIDITY_CCY -> ST_CurrencyConfig:CURRENCY
@@ -5419,7 +5776,7 @@ Classes {
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=20.0, core=true, t24Name=TOTAL.INTEREST, typeModifiers=-)
         TOTAL_TAX : T24BusinessTypes:AMT
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=21.0, core=true, t24Name=TOTAL.TAX, typeModifiers=-)
-        UNADJ_TOTAL_INT : mml:Integer
+        UNADJ_TOTAL_INT : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=37.0, core=true, t24Name=UNADJ.TOTAL.INT)
         WAIVE_AMT : T24BusinessTypes:AMT
             @i18n:Label (en="Waive Amount")
@@ -5441,7 +5798,7 @@ Classes {
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=44.0, core=true, t24Name=ADJ.INT.AMT)
         ADJ_TAX_AMT : T24BusinessTypes:AMT
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=45.0, core=true, t24Name=ADJ.TAX.AMT)
-        CORRECTION_ID : mml:Integer
+        CORRECTION_ID : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=55, sysNumber=43.0, core=true, t24Name=CORRECTION.ID)
         WITHHELD_INT_AMT : T24BusinessTypes:AMT
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=46.0, core=true, t24Name=WITHHELD.INT.AMT)
@@ -5469,29 +5826,152 @@ Classes {
             @i18n:Label (en="Fixed Interest")
             @i18n:Tooltip (en="Indicates fixed interest")
             @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=6.0, core=true, t24Name=DR2.INT.RATE)
-        DR2_NO_OF_DAYS : mml:Integer
+        DR2_NO_OF_DAYS : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=4.0, core=true, t24Name=DR2.NO.OF.DAYS)
         DR2_VAL_BALANCE : T24BusinessTypes:AMT
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=5.0, core=true, t24Name=DR2.VAL.BALANCE, typeModifiers=-)
     }
     STMT_ACCT_DR2__ICA_MAIN_ACCT
     {
-        ICA_DIST_RATIO : mml:Integer
+        ICA_DIST_RATIO : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=29.0, core=true, t24Name=ICA.DIST.RATIO)
-        ICA_DIST_TYPE : mml:Integer
+        ICA_DIST_TYPE : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=28.0, core=true, t24Name=ICA.DIST.TYPE)
         ICA_INT_CATEG -> ST_Config:CATEGORY
             @t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=30.0, core=true, t24Name=ICA.INT.CATEG)
-        ICA_MAIN_ACCT : mml:Integer
+        ICA_MAIN_ACCT : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=27.0, core=true, t24Name=ICA.MAIN.ACCT)
-        ICA_MAIN_INT : mml:Integer
+        ICA_MAIN_INT : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=33.0, core=true, t24Name=ICA.MAIN.INT)
-        ICA_SUB_INT : mml:Integer
+        ICA_SUB_INT : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=34.0, core=true, t24Name=ICA.SUB.INT)
         ICA_TR_AC -> ST_Config:TRANSACTION
             @t24:i (align=R, inputBehaviour=I, maxLength=4, sysNumber=31.0, core=true, t24Name=ICA.TR.AC)
         ICA_TR_PL -> ST_Config:TRANSACTION
             @t24:i (align=R, inputBehaviour=I, maxLength=4, sysNumber=32.0, core=true, t24Name=ICA.TR.PL)
+    }
+    STMT_ACCT_DR__ADDON_TAX_RATE
+    {
+        ADDON_TAXCATEG : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=I, maxLength=6, sysNumber=30.0, core=true, t24Name=ADDON.TAXCATEG, mask="L##-###")
+        ADDON_TAXTRSCR -> ST_Config:TRANSACTION
+            @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=32.0, core=true, t24Name=ADDON.TAXTRSCR)
+        ADDON_TAXTRSDR -> ST_Config:TRANSACTION
+            @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=31.0, core=true, t24Name=ADDON.TAXTRSDR)
+        ADDON_TAX_AMT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=29.0, core=true, t24Name=ADDON.TAX.AMT, typeModifiers=-)
+        ADDON_TAX_RATE : T24BusinessTypes:R
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=28.0, core=true, t24Name=ADDON.TAX.RATE)
+    }
+    STMT_ACCT_DR__COMPENS_ACCOUNT
+    {
+        COMPENS_ACCOUNT -> AC_AccountOpening:ACCOUNT
+            @t24:i (align=R, inputBehaviour=I, maxLength=16, sysNumber=72.0, core=true, businessType=ACC, t24Name=COMPENS.ACCOUNT)
+    }
+    STMT_ACCT_DR__CORRECTION_ID
+    {
+        ADJ_INT_AMT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=112.0, core=true, t24Name=ADJ.INT.AMT)
+        ADJ_TAX_AMT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=113.0, core=true, t24Name=ADJ.TAX.AMT)
+        CORRECTION_ID : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=I, maxLength=55, sysNumber=111.0, core=true, t24Name=CORRECTION.ID)
+        WITHHELD_INT_AMT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=114.0, core=true, t24Name=WITHHELD.INT.AMT)
+    }
+    STMT_ACCT_DR__DR_INT_DATE
+    {
+        DR_INT_AMT : T24BusinessTypes:AMT
+            @i18n:Label (en="Interest Amount")
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=8.0, core=true, t24Name=DR.INT.AMT, typeModifiers=-)
+        DR_INT_DATE : T24BusinessTypes:D
+            @i18n:Label (en="Int date")
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=3.0, core=true, t24Name=DR.INT.DATE)
+        DR_INT_RATE : T24BusinessTypes:R
+            @i18n:Label (en="Fixed Interest")
+            @i18n:Tooltip (en="Indicates fixed interest")
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=6.0, core=true, t24Name=DR.INT.RATE)
+        DR_NO_OF_DAYS : T24BusinessTypes:A
+            @i18n:Label (en=Days)
+            @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=4.0, core=true, t24Name=DR.NO.OF.DAYS)
+        DR_VAL_BALANCE : T24BusinessTypes:AMT
+            @i18n:Label (en=Balance)
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=5.0, core=true, t24Name=DR.VAL.BALANCE, typeModifiers=-)
+        UNADJ_DR_INT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=7.0, core=true, t24Name=UNADJ.DR.INT, typeModifiers=-)
+    }
+    STMT_ACCT_DR__DR_INT_TAX_RATE
+    {
+        DR_INT_TAXCATEG : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=I, maxLength=6, sysNumber=15.0, core=true, t24Name=DR.INT.TAXCATEG, mask="L##-###")
+        DR_INT_TAXTRSCR -> ST_Config:TRANSACTION
+            @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=17.0, core=true, t24Name=DR.INT.TAXTRSCR)
+        DR_INT_TAXTRSDR -> ST_Config:TRANSACTION
+            @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=16.0, core=true, t24Name=DR.INT.TAXTRSDR)
+        DR_INT_TAX_AMT : T24BusinessTypes:AMT
+            @i18n:Label (en="Tax Amount")
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=14.0, core=true, t24Name=DR.INT.TAX.AMT, typeModifiers=-)
+        DR_INT_TAX_RATE : T24BusinessTypes:R
+            @i18n:Label (en="Tax Rate")
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=13.0, core=true, t24Name=DR.INT.TAX.RATE)
+    }
+    STMT_ACCT_DR__GOV_MARGIN_DATE
+    {
+        GOV_MARGIN_AMT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=37.0, core=true, t24Name=GOV.MARGIN.AMT, typeModifiers=-)
+        GOV_MARGIN_DATE : T24BusinessTypes:D
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=33.0, core=true, t24Name=GOV.MARGIN.DATE)
+        GV_INT_RATE : T24BusinessTypes:R
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=36.0, core=true, t24Name=GV.INT.RATE)
+        GV_NO_OF_DAYS : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=34.0, core=true, t24Name=GV.NO.OF.DAYS)
+        GV_VAL_BALANCE : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=35.0, core=true, t24Name=GV.VAL.BALANCE, typeModifiers=-)
+    }
+    STMT_ACCT_DR__HI_DR_TAX_RATE
+    {
+        HI_DR_TAXCATEG : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=I, maxLength=6, sysNumber=57.0, core=true, t24Name=HI.DR.TAXCATEG, mask="L##-###")
+        HI_DR_TAXTRSCR -> ST_Config:TRANSACTION
+            @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=59.0, core=true, t24Name=HI.DR.TAXTRSCR)
+        HI_DR_TAXTRSDR -> ST_Config:TRANSACTION
+            @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=58.0, core=true, t24Name=HI.DR.TAXTRSDR)
+        HI_DR_TAX_AMT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=56.0, core=true, t24Name=HI.DR.TAX.AMT, typeModifiers=-)
+        HI_DR_TAX_RATE : T24BusinessTypes:R
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=55.0, core=true, t24Name=HI.DR.TAX.RATE)
+    }
+    STMT_ACCT_DR__ICA_MAIN_ACCT
+    {
+        ICA_DIST_RATIO : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=86.0, core=true, t24Name=ICA.DIST.RATIO)
+        ICA_DIST_TYPE : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=85.0, core=true, t24Name=ICA.DIST.TYPE)
+        ICA_INT_CATEG : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=87.0, core=true, t24Name=ICA.INT.CATEG)
+        ICA_MAIN_ACCT : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=84.0, core=true, t24Name=ICA.MAIN.ACCT)
+        ICA_MAIN_INT : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=90.0, core=true, t24Name=ICA.MAIN.INT)
+        ICA_SUB_INT : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=91.0, core=true, t24Name=ICA.SUB.INT)
+        ICA_TR_AC -> ST_Config:TRANSACTION
+            @t24:i (align=R, inputBehaviour=I, maxLength=4, sysNumber=88.0, core=true, t24Name=ICA.TR.AC)
+        ICA_TR_PL -> ST_Config:TRANSACTION
+            @t24:i (align=R, inputBehaviour=I, maxLength=4, sysNumber=89.0, core=true, t24Name=ICA.TR.PL)
+    }
+    STMT_ACCT_DR__STMT_TAX_RATE
+    {
+        STMT_TAXCATEG : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=I, maxLength=6, sysNumber=68.0, core=true, t24Name=STMT.TAXCATEG, mask="L##-###")
+        STMT_TAXTRSCR -> ST_Config:TRANSACTION
+            @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=70.0, core=true, t24Name=STMT.TAXTRSCR)
+        STMT_TAXTRSDR -> ST_Config:TRANSACTION
+            @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=69.0, core=true, t24Name=STMT.TAXTRSDR)
+        STMT_TAX_AMT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=67.0, core=true, t24Name=STMT.TAX.AMT, typeModifiers=-)
+        STMT_TAX_RATE : T24BusinessTypes:R
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=66.0, core=true, t24Name=STMT.TAX.RATE)
     }
     STMT_ACCT_TRAN_CH
         @i18n:Description (en="")
@@ -5555,7 +6035,7 @@ Classes {
     {
         CHRG_TOT : T24BusinessTypes:AMT
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=11.0, core=true, t24Name=CHRG.TOT)
-        YR_MTH : mml:Integer
+        YR_MTH : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=6, sysNumber=10.0, core=true, t24Name=YR.MTH)
     }
     STMT_GEN_CHG
@@ -5607,7 +6087,7 @@ Classes {
             @t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=18.0, core=true, t24Name=RESERVED.8)
         RESERVED_9 : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=17.0, core=true, t24Name=RESERVED.9)
-        TAX_AMOUNT : mml:Integer
+        TAX_AMOUNT : T24BusinessTypes:N
             @i18n:Label (en="Tax Amount")
             @t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=14.0, core=true, t24Name=TAX.AMOUNT)
         TAX_CATEGORY : T24BusinessTypes:A
@@ -5719,7 +6199,7 @@ Classes {
     TABLE_CAPITALIS_CORR__K_GROUP
     {
         K_GROUP -> ST_ChargeConfig:ACCT_GEN_CONDITION
-            @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=2.0, core=true, t24Name=K.GROUP)
+            @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=2.0, core=false, t24Name=K.GROUP)
     }
     TEST_ACCRUAL
         @i18n:Description (en="")
@@ -5747,14 +6227,14 @@ Classes {
             @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=11.0, core=true, t24Name=CLEAR.ACCR.DATA)
         COMPOUND_FREQ : T24BusinessTypes:FQU
             @t24:i (align=L, inputBehaviour=I, maxLength=17, sysNumber=17.0, core=true, t24Name=COMPOUND.FREQ, mask="RDDDD DD  DD #####")
-        CONTRACT_END : T24BusinessTypes:D
+        CONTRACT_END : T24BusinessTypes:D required
             @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=6.0, core=true, t24Name=CONTRACT.END)
-        CONTRACT_START : T24BusinessTypes:D
+        CONTRACT_START : T24BusinessTypes:D required
             @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=5.0, core=true, t24Name=CONTRACT.START)
         CO_CODE -> ST_CompanyCreation:COMPANY
             @i18n:Label (en=Company)
             @t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=51.0, core=true, businessType=A, t24Name=CO.CODE, mask="R##-###-####")
-        CURRENCY -> ST_CurrencyConfig:CURRENCY
+        CURRENCY -> ST_CurrencyConfig:CURRENCY required
             @i18n:Label (en=Ccy)
             @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=3.0, core=true, businessType=CCY, t24Name=CURRENCY)
         CURR_NO : T24BusinessTypes:N
@@ -5771,7 +6251,7 @@ Classes {
             @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=52.0, core=true, t24Name=DEPT.CODE)
         DESCRIPTION -> byValue IC_InterestAndCapitalisation:TEST_ACCRUAL__DESCRIPTION *
             @t24:i (t24Name=DESCRIPTION)
-        EB_ACCRUAL_PARAM -> AC_Fees:EB_ACCRUAL_PARAM
+        EB_ACCRUAL_PARAM -> AC_Fees:EB_ACCRUAL_PARAM required
             @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=2.0, core=true, businessType=A, t24Name=EB.ACCRUAL.PARAM)
         EB_ROUNDING_RULE -> ST_Config:EB_ROUNDING_RULE
             @i18n:Label (en="EB Rounding Rule")
@@ -5800,7 +6280,7 @@ Classes {
             @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=39.0, core=true, t24Name=PREV.MONTH.ACCR)
         PREV_YEAR_ACCR : T24BusinessTypes:AMT
             @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=40.0, core=true, t24Name=PREV.YEAR.ACCR)
-        PRINCIPAL : T24BusinessTypes:AMT
+        PRINCIPAL : T24BusinessTypes:AMT required
             @i18n:Label (en=Principal)
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=4.0, core=true, t24Name=PRINCIPAL, typeModifiers="-3")
         PRIN_IN_DATE -> byValue IC_InterestAndCapitalisation:TEST_ACCRUAL__PRIN_IN_DATE *
@@ -5860,7 +6340,7 @@ Classes {
     }
     TEST_ACCRUAL__DESCRIPTION
     {
-        DESCRIPTION : T24BusinessTypes:A
+        DESCRIPTION : T24BusinessTypes:A required
             @i18n:Label (en=Description)
             @i18n:Tooltip (en=Description)
             @t24:i (align=L, inputBehaviour=I, maxLength=35, multiLanguage=true, sysNumber=1.0, core=true, t24Name=DESCRIPTION)
@@ -5874,7 +6354,7 @@ Classes {
     }
     TEST_ACCRUAL__INTEREST_DATE
     {
-        INTEREST_DATE : T24BusinessTypes:D
+        INTEREST_DATE : T24BusinessTypes:D required
             @i18n:Label (en="Coupon Date")
             @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=19.0, core=true, t24Name=INTEREST.DATE)
         INTEREST_RATE -> byValue IC_InterestAndCapitalisation:TEST_ACCRUAL__INTEREST_DATE__INTEREST_RATE *
@@ -5885,7 +6365,7 @@ Classes {
     }
     TEST_ACCRUAL__INTEREST_DATE__INTEREST_RATE
     {
-        INTEREST_RATE : T24BusinessTypes:R
+        INTEREST_RATE : T24BusinessTypes:R required
             @i18n:Label (en="Interest Rate")
             @i18n:Tooltip (en="Indicates interest rate")
             @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=21.0, core=true, t24Name=INTEREST.RATE)
@@ -5893,7 +6373,7 @@ Classes {
             @i18n:Label (en="Tier Amount")
             @i18n:Tooltip (en="Defines the threshold amount for each tier")
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=22.0, core=true, t24Name=TIER.AMOUNT)
-        TIER_PERCENT : mml:Integer
+        TIER_PERCENT : T24BusinessTypes:N
             @i18n:Label (en="Tier Percent")
             @i18n:Tooltip (en="Tier Percent")
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=23.0, core=true, t24Name=TIER.PERCENT)
@@ -6126,7 +6606,22 @@ Enumerations {
     STMT_ACCT_CR2__INT_NO_BOOKING : mml:string
         SUSPENSE=SUSPENSE
         Y=Y
+    STMT_ACCT_CR__INT_NO_BOOKING : mml:string
+        SUSPENSE=SUSPENSE
+        Y=Y
     STMT_ACCT_DR2__INT_NO_BOOKING : mml:string
+        SUSPENSE=SUSPENSE
+        Y=Y
+    STMT_ACCT_DR__ADDON_MIN_MAX : mml:string
+        MAXIMUM=MAXIMUM
+        MINIMUM=MINIMUM
+    STMT_ACCT_DR__GOV_MARGIN_MIN_MAX : mml:string
+        MAXIMUM=MAXIMUM
+        MINIMUM=MINIMUM
+    STMT_ACCT_DR__HIGH_DR_MIN_MAX : mml:string
+        MAXIMUM=MAXIMUM
+        MINIMUM=MINIMUM
+    STMT_ACCT_DR__INT_NO_BOOKING : mml:string
         SUSPENSE=SUSPENSE
         Y=Y
     TABLE_CAPITALIS_CORR__ALL_BACK_VALUES : mml:string

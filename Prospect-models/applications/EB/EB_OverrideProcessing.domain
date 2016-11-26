@@ -37,7 +37,7 @@ Classes {
             @i18n:Label (en="Curr No")
             @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=27.0, core=true, t24Name=CURR.NO)
         CURR_OFFICER : T24BusinessTypes:N
-            @t24:i (align=L, inputBehaviour=N, maxLength=4, core=false, t24Name=CURR.OFFICER, genOperation="@ID")
+            @t24:i (align=R, inputBehaviour=N, maxLength=4, core=false, t24Name=CURR.OFFICER)
         DATE_TIME -> byValue EB_OverrideProcessing:DISPO_ITEMS__DATE_TIME *
             @t24:i (t24Name=DATE.TIME)
         DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
@@ -95,13 +95,13 @@ Classes {
     {
         K_DATE : T24BusinessTypes:D
             @i18n:Label (en=Date)
-            @t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=8.0, core=true, t24Name=K.DATE)
+            @t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=8.0, core=false, t24Name=K.DATE)
     }
     DISPO_ITEMS__K_TIME
     {
         K_TIME : T24BusinessTypes:TIME
             @i18n:Label (en=Time)
-            @t24:i (align=L, inputBehaviour=N, maxLength=5, sysNumber=9.0, core=true, t24Name=K.TIME)
+            @t24:i (align=L, inputBehaviour=N, maxLength=5, sysNumber=9.0, core=false, t24Name=K.TIME)
     }
     DISPO_ITEMS__OVERRIDE_TEXT
     {
@@ -135,7 +135,7 @@ Classes {
             @i18n:Label (en="Dispo Officer")
             @i18n:Tooltip (en="Indicates the Dispo Officer ")
             @t24:i (align=R, inputBehaviour=I, maxLength=4, sysNumber=6.0, core=true, t24Name=DISPO.OFFICER)
-        DISPO_STATUS : EB_OverrideProcessing:DISPO_ITEMS__OVERRIDE_TEXT__DISPO_STATUS
+        DISPO_STATUS : EB_OverrideProcessing:DISPO_ITEMS__OVERRIDE_TEXT__DISPO_STATUS required
             @t24:i (align=L, inputBehaviour=I, maxLength=10, sysNumber=13.0, core=true, t24Name=DISPO.STATUS)
         EVENT_REFERENCE : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=N, maxLength=60, sysNumber=19.0, core=true, t24Name=EVENT.REFERENCE)
@@ -218,9 +218,9 @@ Classes {
             @t24:i (align=L, inputBehaviour=I, maxLength=4, sysNumber=6.0, core=true, businessType=A, t24Name=ROUTE.TO, onchangeBehaviour=HOT.FIELD)
         SHORT_TITLE -> byValue EB_OverrideProcessing:DISPO_OFFICER__SHORT_TITLE *
             @t24:i (t24Name=SHORT.TITLE)
-        TIME_FROM : mml:Integer
+        TIME_FROM : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=9.0, core=true, t24Name=TIME.FROM, mask="R##:##")
-        TIME_TO : mml:Integer
+        TIME_TO : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=10.0, core=true, t24Name=TIME.TO, mask="R##:##")
     }
     DISPO_OFFICER__DATE_TIME
@@ -284,11 +284,12 @@ Classes {
         DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
             @i18n:Label (en="Dept Code")
             @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=19.0, core=true, t24Name=DEPT.CODE)
-        
+        FORCE_OFS_SRC_ID -> EB_Interface:OFS_SOURCE
+            @t24:i (align=L, inputBehaviour=I, maxLength=20, sysNumber=3.0, core=true, businessType=A, t24Name=FORCE.OFS.SRC.ID)
         INPUTTER -> byValue EB_OverrideProcessing:DISPO_PARAMETER__INPUTTER *
             @t24:i (t24Name=INPUTTER)
         K_SYSTEM : EB_OverrideProcessing:DISPO_PARAMETER__K_SYSTEM
-            @t24:i (align=L, inputBehaviour=N, maxLength=6, sysNumber=0.0, core=true, t24Name=K.SYSTEM)
+            @t24:i (align=L, inputBehaviour=N, maxLength=6, sysNumber=0.0, core=false, t24Name=K.SYSTEM)
         OFS_SOURCE_ID -> EB_Interface:OFS_SOURCE
             @i18n:Label (en="OFS Source Id")
             @i18n:Tooltip (en="Ofs Source Id")
@@ -443,10 +444,8 @@ Classes {
         K_DETAIL -> byValue EB_OverrideProcessing:OVERRIDE__K_DETAIL *
             @t24:i (t24Name=K.DETAIL)
         K_SYSTEM : EB_OverrideProcessing:OVERRIDE__K_SYSTEM
-            @t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=42.0, core=true, t24Name=K.SYSTEM)
-        K_TYPE -> byValue EB_OverrideProcessing:OVERRIDE__K_TYPE *
-            @t24:i (t24Name=K.TYPE)
-        LEVEL : mml:Integer
+            @t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=42.0, core=false, t24Name=K.SYSTEM)
+        LEVEL : T24BusinessTypes:N
             @i18n:Label (en=Level)
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=26.0, core=true, t24Name=LEVEL)
         MESSAGE -> byValue EB_OverrideProcessing:OVERRIDE__MESSAGE *
@@ -566,7 +565,7 @@ Classes {
     }
     OVERRIDE_CLASS_DETAILS__CLASSIFICATION
     {
-        CLASSIFICATION : T24BusinessTypes:S
+        CLASSIFICATION : T24BusinessTypes:S required
             @i18n:Label (en=Classification)
             @i18n:Tooltip (en=Classification)
             @t24:i (align=L, inputBehaviour=I, maxLength=4, sysNumber=2.0, core=true, t24Name=CLASSIFICATION)
@@ -575,9 +574,9 @@ Classes {
     }
     OVERRIDE_CLASS_DETAILS__CLASSIFICATION__DATA_DEF_NO
     {
-        COMPARISON : EB_OverrideProcessing:OVERRIDE_CLASS_DETAILS__CLASSIFICATION__DATA_DEF_NO__COMPARISON
+        COMPARISON : EB_OverrideProcessing:OVERRIDE_CLASS_DETAILS__CLASSIFICATION__DATA_DEF_NO__COMPARISON required
             @t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=4.0, core=true, t24Name=COMPARISON)
-        DATA_DEF_NO : mml:Integer
+        DATA_DEF_NO : T24BusinessTypes:N required
             @t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=3.0, core=true, t24Name=DATA.DEF.NO)
         DATA_FROM : T24BusinessTypes:A
             @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=5.0, core=true, t24Name=DATA.FROM)
@@ -586,7 +585,7 @@ Classes {
     }
     OVERRIDE_CLASS_DETAILS__DATA_DEF
     {
-        DATA_DEF : T24BusinessTypes:A
+        DATA_DEF : T24BusinessTypes:A required
             @i18n:Label (en="Data Definition")
             @i18n:Tooltip (en="Data Definition")
             @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=1.0, core=true, t24Name=DATA.DEF)
@@ -625,7 +624,7 @@ Classes {
             @t24:i (align=L, inputBehaviour=I, maxLength=4, sysNumber=3.0, core=true, t24Name=DEFAULT.CLASS)
         OVERRIDE_DETAIL -> EB_OverrideProcessing:OVERRIDE_CLASS_DETAILS
             @t24:i (align=L, inputBehaviour=I, maxLength=12, sysNumber=2.0, core=true, businessType=A, t24Name=OVERRIDE.DETAIL)
-        OVERRIDE_TEXT : T24BusinessTypes:A
+        OVERRIDE_TEXT : T24BusinessTypes:A required
             @t24:i (align=L, inputBehaviour=I, maxLength=65, sysNumber=1.0, core=true, t24Name=OVERRIDE.TEXT)
     }
     OVERRIDE__APPLICATION
@@ -753,13 +752,7 @@ Classes {
     OVERRIDE__K_DETAIL
     {
         K_DETAIL -> EB_OverrideProcessing:OVERRIDE_CLASS_DETAILS
-            @t24:i (align=L, inputBehaviour=N, maxLength=12, sysNumber=16.0, core=true, businessType=A, t24Name=K.DETAIL)
-    }
-    OVERRIDE__K_TYPE
-    {
-        K_TYPE : EB_OverrideProcessing:OVERRIDE__K_TYPE__K_TYPE
-            @i18n:Label (en=Type)
-            @t24:i (align=L, inputBehaviour=N, maxLength=10, sysNumber=2.0, core=true, t24Name=K.TYPE)
+            @t24:i (align=L, inputBehaviour=N, maxLength=12, sysNumber=16.0, core=false, businessType=A, t24Name=K.DETAIL)
     }
     OVERRIDE__MESSAGE
     {
@@ -789,7 +782,7 @@ Classes {
     }
     OVERRIDE__MESSAGE__MESSAGE
     {
-        MESSAGE : T24BusinessTypes:A
+        MESSAGE : T24BusinessTypes:A required
             @i18n:Label (en=Message)
             @t24:i (align=L, inputBehaviour=I, maxLength=150, multiLanguage=true, sysNumber=1.0, core=true, t24Name=MESSAGE)
     }
@@ -956,11 +949,6 @@ Enumerations {
         TEXT=TEXT
     OVERRIDE__K_SYSTEM : mml:string
         YES=YES
-    OVERRIDE__K_TYPE__K_TYPE : mml:string
-        Auto=Auto
-        Error=Error
-        Message=Message
-        Warning=Warning
     OVERRIDE__MESSAGE__APPROVE_METHOD : mml:string
         ChallengeResponse=ChallengeResponse
         MemorableData=MemorableData

@@ -6,11 +6,48 @@ Domain FX_Reports
 namespace "http://www.temenos.com/t24/FX_Reports"
 metamodelVersion 1.30.6
 Classes {
+    FX_LST_OPEN
+        @i18n:Description (en="")
+        @t24:i (t24Name=FX.LST.OPEN, level=F, type=T, allowedFunctions="L P S", localRefAllowed=false)
+    {
+        AMOUNT_BOUGHT : T24BusinessTypes:N
+            @i18n:Label (en="Buy Amount")
+            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=5.0, core=true, t24Name=AMOUNT.BOUGHT)
+        AMOUNT_SOLD : T24BusinessTypes:N
+            @i18n:Label (en="Sell Amount")
+            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=7.0, core=true, t24Name=AMOUNT.SOLD)
+        COUNTERPARTY : T24BusinessTypes:N
+            @i18n:Label (en=Counterparty)
+            @i18n:Tooltip (en="Counterparty with whom the deal is made")
+            @t24:i (align=R, inputBehaviour=N, maxLength=10, sysNumber=10.0, core=true, t24Name=COUNTERPARTY)
+        CURRENCY_BOUGHT : T24BusinessTypes:N
+            @i18n:Label (en="Buy Currency")
+            @t24:i (align=R, inputBehaviour=N, maxLength=3, sysNumber=4.0, core=true, t24Name=CURRENCY.BOUGHT)
+        CURRENCY_SOLD : T24BusinessTypes:N
+            @i18n:Label (en="Sell Currency")
+            @t24:i (align=R, inputBehaviour=N, maxLength=3, sysNumber=6.0, core=true, t24Name=CURRENCY.SOLD)
+        EARLY_DATE : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=3.0, core=true, t24Name=EARLY.DATE)
+        FORWARD_RATE : T24BusinessTypes:N
+            @i18n:Label (en="Forward Rate")
+            @t24:i (align=R, inputBehaviour=N, maxLength=16, sysNumber=9.0, core=true, t24Name=FORWARD.RATE)
+        SPOT_RATE : T24BusinessTypes:N
+            @i18n:Label (en="Spot Rate")
+            @t24:i (align=R, inputBehaviour=N, maxLength=16, sysNumber=8.0, core=true, t24Name=SPOT.RATE)
+        TRANSACTION_REF_NO : T24BusinessTypes:N PK required
+            @t24:i (align=R, inputBehaviour=N, maxLength=15, sysNumber=0.0, core=true, t24Name=TRANSACTION.REF.NO)
+        VALUE_DATE_BUY : T24BusinessTypes:N
+            @i18n:Label (en="Value Date Buy")
+            @t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=1.0, core=true, t24Name=VALUE.DATE.BUY)
+        VALUE_DATE_SELL : T24BusinessTypes:N
+            @i18n:Label (en="Value Date Sell")
+            @t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=2.0, core=true, t24Name=VALUE.DATE.SELL)
+    }
     FX_POSITION
         @i18n:Description (en="")
         @t24:i (t24Name=FX.POSITION, level=C, type=H, allowedFunctions="A C D E H I L P Q R S", localRefAllowed=false)
     {
-        ASSET_LIAB : mml:Integer
+        ASSET_LIAB : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=14, sysNumber=1.0, core=true, t24Name=ASSET.LIAB)
         AUDITOR_CODE : T24BusinessTypes:A
             @i18n:Label (en="Auditor Code")
@@ -35,15 +72,15 @@ Classes {
         DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
             @i18n:Label (en="Dept Code")
             @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=26.0, core=true, t24Name=DEPT.CODE)
-        FWD_ASSET_LIAB : mml:Integer
+        FWD_ASSET_LIAB : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=14, sysNumber=2.0, core=true, t24Name=FWD.ASSET.LIAB)
         FX_POSITION_ID -> FX_Reports:FX_POSITION PK required
             @t24:i (align=L, inputBehaviour=I, maxLength=25, sysNumber=0.0, core=true, businessType=A, t24Name=FX.POSITION.ID)
         INPUTTER -> byValue FX_Reports:FX_POSITION__INPUTTER *
             @t24:i (t24Name=INPUTTER)
-        POSITION_TOTAL : mml:Integer
+        POSITION_TOTAL : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=14, sysNumber=6.0, core=true, t24Name=POSITION.TOTAL)
-        REBATE : mml:Integer
+        REBATE : T24BusinessTypes:N
             @i18n:Label (en=Rebate)
             @i18n:Tooltip (en=Rebate)
             @t24:i (align=R, inputBehaviour=I, maxLength=14, sysNumber=5.0, core=true, t24Name=REBATE)
@@ -74,11 +111,11 @@ Classes {
             @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=12.0, core=true, t24Name=RESERVED8)
         RESERVED9 : T24BusinessTypes:A
             @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=11.0, core=true, t24Name=RESERVED9)
-        SPOT_FOREX : mml:Integer
+        SPOT_FOREX : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=14, sysNumber=3.0, core=true, t24Name=SPOT.FOREX)
-        STRAIGHT_LINE_INT : mml:Integer
+        STRAIGHT_LINE_INT : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=14, sysNumber=4.0, core=true, t24Name=STRAIGHT.LINE.INT)
-        TOTAL_EQUIVALENT : mml:Integer
+        TOTAL_EQUIVALENT : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=14, sysNumber=7.0, core=true, t24Name=TOTAL.EQUIVALENT)
     }
     FX_POSITION__DATE_TIME
@@ -95,6 +132,26 @@ Classes {
             @i18n:Tooltip (en="The user who last updated the record")
             @t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=22.0, core=true, t24Name=INPUTTER)
     }
+    FX_REPORTING_LIST
+        @i18n:Description (en="")
+        @t24:i (t24Name=FX.REPORTING.LIST, level=F, type=T, allowedFunctions="L P S", localRefAllowed=false)
+    {
+        KEY : T24BusinessTypes:ANY PK required
+            @i18n:Label (en=Key)
+            @i18n:Tooltip (en="Indicates th transaction key")
+            @t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=0.0, core=true, t24Name=KEY)
+        K_TYPE : T24BusinessTypes:A
+            @i18n:Label (en=Type)
+            @t24:i (align=L, inputBehaviour=N, maxLength=20, sysNumber=1.0, core=true, t24Name=K.TYPE)
+        REPORT_DATA : T24BusinessTypes:ANY
+            @t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=3.0, core=true, t24Name=REPORT.DATA)
+        SORT_DATA : T24BusinessTypes:ANY
+            @t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=2.0, core=true, t24Name=SORT.DATA)
+        TYPE : T24BusinessTypes:A
+            @i18n:Label (en=Type)
+            @i18n:Tooltip (en=Type)
+            @t24:i (align=L, inputBehaviour=N, maxLength=20, sysNumber=1.0, core=true, t24Name=TYPE)
+    }
     FX_SETL_TODAY
         @i18n:Description (en="")
         @t24:i (t24Name=FX.SETL.TODAY, level=F, type=L, allowedFunctions="L P S", localRefAllowed=false)
@@ -102,6 +159,42 @@ Classes {
         TRANSACTION_ID -> FX_Reports:FX_SETL_TODAY PK required
             @i18n:Label (en="Transaction ID")
             @t24:i (align=L, inputBehaviour=I, maxLength=12, sysNumber=0.0, core=true, businessType=A, t24Name=TRANSACTION.ID)
+    }
+    FX_SF_SWAP
+        @i18n:Description (en="")
+        @t24:i (t24Name=FX.SF.SWAP, level=F, type=T, allowedFunctions="L P S", localRefAllowed=false)
+    {
+        ACCOUNT_OFFICER : T24BusinessTypes:N
+            @i18n:Label (en="Account Officer")
+            @i18n:Tooltip (en="Indicates Account Officer responsible")
+            @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=10.0, core=true, t24Name=ACCOUNT.OFFICER)
+        BUY_ACC_TDATE_F : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=6.0, core=true, t24Name=BUY.ACC.TDATE.F)
+        BUY_DAILY_ACC_F : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=5.0, core=true, t24Name=BUY.DAILY.ACC.F)
+        SEL_ACC_TDATE_F : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=9.0, core=true, t24Name=SEL.ACC.TDATE.F)
+        SEL_DAILY_ACC_F : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=8.0, core=true, t24Name=SEL.DAILY.ACC.F)
+        SPOT_DATE : T24BusinessTypes:N
+            @i18n:Label (en="Spot Date")
+            @i18n:Tooltip (en="The start date for calculation of Profit and Loss")
+            @t24:i (align=R, inputBehaviour=N, maxLength=16, sysNumber=3.0, core=true, t24Name=SPOT.DATE)
+        SWAP_OTHER_CCY : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=3, sysNumber=1.0, core=true, t24Name=SWAP.OTHER.CCY)
+        SWAP_PL_VALUE_DATE : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=2.0, core=true, t24Name=SWAP.PL.VALUE.DATE)
+        SWAP_REFERENCE_NO -> byValue FX_Reports:FX_SF_SWAP__SWAP_REFERENCE_NO *
+            @t24:i (t24Name=SWAP.REFERENCE.NO)
+        TOTAL_INT_BOUGHT : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=4.0, core=true, t24Name=TOTAL.INT.BOUGHT)
+        TOT_INT_SOLD : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=7.0, core=true, t24Name=TOT.INT.SOLD)
+    }
+    FX_SF_SWAP__SWAP_REFERENCE_NO
+    {
+        SWAP_REFERENCE_NO : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=12, sysNumber=11.0, core=true, t24Name=SWAP.REFERENCE.NO)
     }
     NOFILE_ND_BE_FIXED
         @i18n:Description (en="")

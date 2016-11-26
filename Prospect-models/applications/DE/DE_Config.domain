@@ -129,8 +129,6 @@ Classes {
             @t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=24.0, core=true, t24Name=RESERVED.3)
         RESERVED_4 : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=25.0, core=true, t24Name=RESERVED.4)
-        RESERVED_5 : T24BusinessTypes:N
-            @t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=26.0, core=true, t24Name=RESERVED.5)
         RESERVED_6 : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=32.0, core=true, t24Name=RESERVED.6)
         RESERVED_7 : T24BusinessTypes:N
@@ -146,8 +144,68 @@ Classes {
             @t24:i (align=L, inputBehaviour=I, maxLength=17, sysNumber=16.0, core=true, t24Name=SMS.1)
         STREET_ADDR -> byValue DE_Config:DE_ADDRESS__STREET_ADDR *
             @t24:i (t24Name=STREET.ADDR)
+        TAG25_IND : DE_Config:DE_ADDRESS__TAG25_IND
+            @i18n:Label (en="Map TAG25")
+            @i18n:Tooltip (en="Map TAG25")
+            @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=26.0, core=true, t24Name=TAG25.IND)
         TOWN_COUNTRY -> byValue DE_Config:DE_ADDRESS__TOWN_COUNTRY *
             @t24:i (t24Name=TOWN.COUNTRY)
+    }
+    DE_ADDRESS_FAX
+        @i18n:Description (en="")
+        @t24:i (t24Name=DE.ADDRESS.FAX, level=I, type=T, allowedFunctions="L P S", localRefAllowed=false)
+    {
+        ADDRESS_MNEMONIC : T24BusinessTypes:A PK required
+            @t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=0.0, core=true, t24Name=ADDRESS.MNEMONIC)
+        AUDITOR_CODE : T24BusinessTypes:A
+            @i18n:Label (en="Auditor Code")
+            @i18n:Tooltip (en="Auditor Code")
+            @t24:i (align=L, inputBehaviour=N, maxLength=16, sysNumber=11.0, core=true, t24Name=AUDITOR.CODE)
+        AUDIT_DATE_TIME : T24BusinessTypes:N
+            @i18n:Label (en="Audit Date Time")
+            @i18n:Tooltip (en="Date and time when record was audited")
+            @t24:i (align=R, inputBehaviour=N, maxLength=15, sysNumber=12.0, core=true, t24Name=AUDIT.DATE.TIME)
+        AUTHORISER : T24BusinessTypes:A
+            @i18n:Label (en=Authoriser)
+            @i18n:Tooltip (en="Indicates the User who Authorises the record")
+            @t24:i (align=L, inputBehaviour=N, maxLength=20, sysNumber=8.0, core=true, t24Name=AUTHORISER)
+        CO_CODE : T24BusinessTypes:A
+            @i18n:Label (en=Company)
+            @t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=9.0, core=true, t24Name=CO.CODE)
+        CURR_NO : T24BusinessTypes:N
+            @i18n:Label (en="Curr No")
+            @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=5.0, core=true, t24Name=CURR.NO)
+        DATE_TIME -> byValue DE_Config:DE_ADDRESS_FAX__DATE_TIME *
+            @t24:i (t24Name=DATE.TIME)
+        DEPT_CODE : T24BusinessTypes:A
+            @i18n:Label (en="Dept Code")
+            @t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=10.0, core=true, t24Name=DEPT.CODE)
+        FAX_NO : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=N, maxLength=30, sysNumber=3.0, core=true, t24Name=FAX.NO)
+        INPUTTER -> byValue DE_Config:DE_ADDRESS_FAX__INPUTTER *
+            @t24:i (t24Name=INPUTTER)
+        LINK_TO_CUSTOMER -> ST_Customer:CUSTOMER
+            @t24:i (align=R, inputBehaviour=N, maxLength=10, sysNumber=2.0, core=true, businessType=CUS, t24Name=LINK.TO.CUSTOMER)
+        RECORD_STATUS : T24BusinessTypes:A
+            @i18n:Label (en="Record Status")
+            @t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=4.0, core=true, t24Name=RECORD.STATUS)
+        SHORT_NAME : T24BusinessTypes:A
+            @i18n:Label (en="Short name")
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=1.0, core=true, t24Name=SHORT.NAME)
+    }
+    DE_ADDRESS_FAX__DATE_TIME
+    {
+        DATE_TIME : T24BusinessTypes:N
+            @i18n:Label (en="Date time")
+            @i18n:Tooltip (en="Date and time when record was input or authorised")
+            @t24:i (align=R, inputBehaviour=N, maxLength=15, sysNumber=7.0, core=true, t24Name=DATE.TIME)
+    }
+    DE_ADDRESS_FAX__INPUTTER
+    {
+        INPUTTER : T24BusinessTypes:A
+            @i18n:Label (en=Inputter)
+            @i18n:Tooltip (en="The user who last updated the record")
+            @t24:i (align=L, inputBehaviour=N, maxLength=20, sysNumber=6.0, core=true, t24Name=INPUTTER)
     }
     DE_ADDRESS__BLACKOUT_START
     {
@@ -211,7 +269,7 @@ Classes {
     }
     DE_ADDRESS__SHORT_NAME
     {
-        SHORT_NAME : T24BusinessTypes:SWI
+        SHORT_NAME : T24BusinessTypes:SWI required
             @i18n:Label (en="Short name")
             @t24:i (align=L, inputBehaviour=I, maxLength=35, multiLanguage=true, sysNumber=6.0, core=true, t24Name=SHORT.NAME)
     }
@@ -244,11 +302,11 @@ Classes {
             @i18n:Label (en=Authoriser)
             @i18n:Tooltip (en="Indicates the User who Authorises the record")
             @t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=9.0, core=true, t24Name=AUTHORISER)
-        CARRIER_ADDR_NO : T24BusinessTypes:A
+        CARRIER_ADDR_NO : T24BusinessTypes:A required
             @i18n:Label (en=Carrier)
             @i18n:Tooltip (en="Will this message go as SWIFT or PRINT or TELEX etc")
             @t24:i (align=L, inputBehaviour=I, maxLength=14, sysNumber=1.0, core=true, t24Name=CARRIER.ADDR.NO)
-        COPIES : mml:Integer
+        COPIES : T24BusinessTypes:N
             @i18n:Label (en="Copies ")
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=4.0, core=true, t24Name=COPIES)
         CO_CODE -> ST_CompanyCreation:COMPANY
@@ -262,7 +320,7 @@ Classes {
         DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
             @i18n:Label (en="Dept Code")
             @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=11.0, core=true, t24Name=DEPT.CODE)
-        FORMAT : mml:Integer
+        FORMAT : T24BusinessTypes:N
             @i18n:Label (en=Format)
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=3.0, core=true, t24Name=FORMAT)
         ID -> DE_Config:DE_ALTERNATE PK required
@@ -328,11 +386,11 @@ Classes {
             @i18n:Label (en=Description)
             @i18n:Tooltip (en=Description)
             @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=1.0, core=true, t24Name=DESCRIPTION)
-        FIELD_NAME : T24BusinessTypes:A
+        FIELD_NAME : T24BusinessTypes:A required
             @i18n:Label (en="Field Name")
             @i18n:Tooltip (en="Name of the field(used mostly for SWIFT)")
             @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=5.0, core=true, t24Name=FIELD.NAME)
-        FILE_NAME : T24BusinessTypes:PG
+        FILE_NAME : T24BusinessTypes:PG required
             @i18n:Label (en="File Name")
             @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=2.0, core=true, t24Name=FILE.NAME, typeModifiers=HUL)
         FQY : T24BusinessTypes:FQU
@@ -420,7 +478,7 @@ Classes {
     }
     DE_BATCH_GROUP__DESCRIPTION
     {
-        DESCRIPTION : T24BusinessTypes:A
+        DESCRIPTION : T24BusinessTypes:A required
             @i18n:Label (en=Description)
             @i18n:Tooltip (en=Description)
             @t24:i (align=L, inputBehaviour=I, maxLength=35, multiLanguage=true, sysNumber=1.0, core=true, t24Name=DESCRIPTION)
@@ -434,7 +492,7 @@ Classes {
     }
     DE_BATCH_GROUP__MESSAGE_TYPE
     {
-        MESSAGE_TYPE -> DE_Config:DE_MESSAGE
+        MESSAGE_TYPE -> DE_Config:DE_MESSAGE required
             @i18n:Label (en="Message Type")
             @i18n:Tooltip (en="Delivery message types generated for this record")
             @t24:i (align=R, inputBehaviour=I, maxLength=4, sysNumber=2.0, core=true, t24Name=MESSAGE.TYPE)
@@ -467,7 +525,7 @@ Classes {
             @t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=8.0, core=true, t24Name=BRANCH.CODE)
         BR_QUALIFIER : T24BusinessTypes:ANY
             @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=27.0, core=true, t24Name=BR.QUALIFIER)
-        CHIPSUID : mml:Integer
+        CHIPSUID : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=6, sysNumber=24.0, core=true, t24Name=CHIPSUID)
         CITY : T24BusinessTypes:ANY
             @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=5.0, core=true, t24Name=CITY)
@@ -625,7 +683,7 @@ Classes {
             @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=19.0, core=true, t24Name=CURR.NO)
         DATE_TIME -> byValue DE_Config:DE_BIC_LOAD__DATE_TIME *
             @t24:i (t24Name=DATE.TIME)
-        DELIMITER : DE_Config:DE_BIC_LOAD__DELIMITER
+        DELIMITER : DE_Config:DE_BIC_LOAD__DELIMITER required
             @t24:i (align=L, inputBehaviour=I, maxLength=10, sysNumber=5.0, core=true, t24Name=DELIMITER)
         DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
             @i18n:Label (en="Dept Code")
@@ -678,7 +736,7 @@ Classes {
     }
     DE_BIC_LOAD__DESCRIPTION
     {
-        DESCRIPTION : T24BusinessTypes:A
+        DESCRIPTION : T24BusinessTypes:A required
             @i18n:Label (en=Description)
             @i18n:Tooltip (en=Description)
             @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=1.0, core=true, t24Name=DESCRIPTION)
@@ -884,7 +942,7 @@ Classes {
             @i18n:Label (en=Interface)
             @i18n:Tooltip (en=Interface)
             @t24:i (align=L, inputBehaviour=I, maxLength=20, sysNumber=5.0, core=true, businessType=A, t24Name=INTERFACE)
-        IN_BYTE_LEN : mml:Integer
+        IN_BYTE_LEN : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=7, sysNumber=7.0, core=true, t24Name=IN.BYTE.LEN)
         IN_FORMAT_MODULE : T24BusinessTypes:A
             @t24:i (align=L, inputBehaviour=I, maxLength=10, sysNumber=6.0, core=true, t24Name=IN.FORMAT.MODULE)
@@ -919,7 +977,7 @@ Classes {
     }
     DE_CARRIER__DESCRIPTION
     {
-        DESCRIPTION : T24BusinessTypes:A
+        DESCRIPTION : T24BusinessTypes:A required
             @i18n:Label (en=Description)
             @i18n:Tooltip (en=Description)
             @t24:i (align=L, inputBehaviour=I, maxLength=35, multiLanguage=true, sysNumber=1.0, core=true, t24Name=DESCRIPTION)
@@ -1015,7 +1073,7 @@ Classes {
             @t24:i (t24Name=COPY.CUSTOMER)
         DE_PRODUCT_ID -> byValue DE_Config:DE_CUSTOMER_PREFERENCES__MESSAGE_GROUP__DE_PRODUCT_ID *
             @t24:i (t24Name=DE.PRODUCT.ID)
-        MESSAGE_GROUP -> DE_Config:DE_MESSAGE_GROUP
+        MESSAGE_GROUP -> DE_Config:DE_MESSAGE_GROUP required
             @i18n:Label (en="Message Group")
             @i18n:Tooltip (en="Message Group")
             @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=1.0, core=true, businessType=A, t24Name=MESSAGE.GROUP, mvSvExpansionAccess=NODELETE)
@@ -1026,14 +1084,14 @@ Classes {
             @i18n:Label (en=Address)
             @i18n:Tooltip (en="Define the address")
             @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=5.0, core=true, t24Name=ADDRESS)
-        CARRIER -> DE_Config:DE_CARRIER
+        CARRIER -> DE_Config:DE_CARRIER required
             @i18n:Label (en=Carrier)
             @i18n:Tooltip (en=Carrier)
             @t24:i (align=L, inputBehaviour=I, maxLength=10, sysNumber=3.0, core=true, businessType=A, t24Name=CARRIER)
-        COPIES : mml:Integer
+        COPIES : T24BusinessTypes:N
             @i18n:Label (en="Copies ")
             @t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=7.0, core=true, t24Name=COPIES)
-        FORMAT : mml:Integer
+        FORMAT : T24BusinessTypes:N
             @i18n:Label (en=Format)
             @t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=6.0, core=true, t24Name=FORMAT)
         HOLD_MAIL_END : T24BusinessTypes:D
@@ -1199,7 +1257,7 @@ Classes {
         K_PRIORITY : DE_Config:DE_DISP_CONTROL__K_PRIORITY
             @i18n:Label (en=Priority)
             @i18n:Tooltip (en="Original Priorityof the message in Mapping")
-            @t24:i (align=L, inputBehaviour=N, maxLength=1, sysNumber=6.0, core=true, t24Name=K.PRIORITY)
+            @t24:i (align=L, inputBehaviour=N, maxLength=1, sysNumber=6.0, core=false, t24Name=K.PRIORITY)
         PRIORITY : DE_Config:DE_DISP_CONTROL__PRIORITY
             @i18n:Label (en=Priority)
             @t24:i (align=L, inputBehaviour=I, maxLength=1, sysNumber=6.0, core=true, t24Name=PRIORITY)
@@ -1226,7 +1284,7 @@ Classes {
             @i18n:Label (en=Condition)
             @i18n:Tooltip (en="Value that the field name is to be compared with")
             @t24:i (align=L, inputBehaviour=I, maxLength=30, sysNumber=3.0, core=true, t24Name=CONDITION)
-        FIELD_NAME : T24BusinessTypes:A
+        FIELD_NAME : T24BusinessTypes:A required
             @i18n:Label (en="Field Name")
             @i18n:Tooltip (en="Name of the field(used mostly for SWIFT)")
             @t24:i (align=L, inputBehaviour=I, maxLength=18, sysNumber=1.0, core=true, t24Name=FIELD.NAME)
@@ -1385,7 +1443,7 @@ Classes {
     }
     DE_EXTRA_TEXT__TEXT
     {
-        TEXT : T24BusinessTypes:A
+        TEXT : T24BusinessTypes:A required
             @i18n:Label (en="Pre Syndication ID")
             @t24:i (align=L, inputBehaviour=I, maxLength=50, multiLanguage=true, sysNumber=1.0, core=true, t24Name=TEXT)
     }
@@ -1443,7 +1501,7 @@ Classes {
     }
     DE_FORMAT_PRINT__DESCRIPTION
     {
-        DESCRIPTION : T24BusinessTypes:A
+        DESCRIPTION : T24BusinessTypes:A required
             @i18n:Label (en=Description)
             @i18n:Tooltip (en=Description)
             @t24:i (align=L, inputBehaviour=I, maxLength=35, multiLanguage=true, sysNumber=1.0, core=true, t24Name=DESCRIPTION)
@@ -1471,15 +1529,15 @@ Classes {
             @t24:i (align=L, inputBehaviour=I, maxLength=30, sysNumber=14.0, core=true, t24Name=DEPEND.COND.)
         DEPEND_OPERAND : DE_Config:DE_FORMAT_PRINT__LINE_S___DEPEND_OPERAND
             @t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=13.0, core=true, t24Name=DEPEND.OPERAND)
-        FIELD__TEXT_ : T24BusinessTypes:A
+        FIELD__TEXT_ : T24BusinessTypes:A required
             @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=8.0, core=true, t24Name=FIELD..TEXT.)
         HEADING : DE_Config:DE_FORMAT_PRINT__LINE_S___HEADING
             @t24:i (align=L, inputBehaviour=I, maxLength=1, sysNumber=5.0, core=true, t24Name=HEADING)
-        INDENT : T24BusinessTypes:A
+        INDENT : T24BusinessTypes:A required
             @i18n:Label (en="Indent ")
             @i18n:Tooltip (en="Indent ")
             @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=4.0, core=true, t24Name=INDENT)
-        LINE_S_ : T24BusinessTypes:A
+        LINE_S_ : T24BusinessTypes:A required
             @t24:i (align=L, inputBehaviour=I, maxLength=7, sysNumber=3.0, core=true, t24Name=LINE.S.)
         MASK : T24BusinessTypes:A
             @t24:i (align=L, inputBehaviour=I, maxLength=25, sysNumber=10.0, core=true, t24Name=MASK)
@@ -1548,7 +1606,7 @@ Classes {
     }
     DE_FORMAT_SWIFT__DESCRIPTION
     {
-        DESCRIPTION : T24BusinessTypes:A
+        DESCRIPTION : T24BusinessTypes:A required
             @i18n:Label (en=Description)
             @i18n:Tooltip (en=Description)
             @t24:i (align=L, inputBehaviour=I, maxLength=35, multiLanguage=true, sysNumber=1.0, core=true, t24Name=DESCRIPTION)
@@ -1560,7 +1618,7 @@ Classes {
             @t24:i (align=L, inputBehaviour=I, maxLength=7, sysNumber=6.0, core=true, t24Name=CALCULATION)
         CONVERSION -> byValue DE_Config:DE_FORMAT_SWIFT__FIELD_TAG__CONVERSION *
             @t24:i (t24Name=CONVERSION)
-        FIELD_NAME : T24BusinessTypes:A
+        FIELD_NAME : T24BusinessTypes:A required
             @i18n:Label (en="Field Name")
             @i18n:Tooltip (en="Name of the field(used mostly for SWIFT)")
             @t24:i (align=L, inputBehaviour=I, maxLength=18, sysNumber=4.0, core=true, t24Name=FIELD.NAME)
@@ -1599,7 +1657,7 @@ Classes {
     {
         K_CONVERSION : T24BusinessTypes:A
             @i18n:Label (en=Conversion)
-            @t24:i (align=L, inputBehaviour=N, maxLength=50, sysNumber=5.0, core=true, t24Name=K.CONVERSION)
+            @t24:i (align=L, inputBehaviour=N, maxLength=50, sysNumber=5.0, core=false, t24Name=K.CONVERSION)
     }
     DE_FORMAT_SWIFT__USER_BLOCK
     {
@@ -1682,7 +1740,7 @@ Classes {
     }
     DE_FORMAT_TEMPLATE__DESCRIPTION
     {
-        DESCRIPTION : T24BusinessTypes:A
+        DESCRIPTION : T24BusinessTypes:A required
             @i18n:Label (en=Description)
             @i18n:Tooltip (en=Description)
             @t24:i (align=L, inputBehaviour=I, maxLength=35, multiLanguage=true, sysNumber=1.0, core=true, t24Name=DESCRIPTION)
@@ -1807,7 +1865,7 @@ Classes {
     }
     DE_FORMAT_XML__DESCRIPTION
     {
-        DESCRIPTION : T24BusinessTypes:A
+        DESCRIPTION : T24BusinessTypes:A required
             @i18n:Label (en=Description)
             @i18n:Tooltip (en=Description)
             @t24:i (align=L, inputBehaviour=I, maxLength=35, multiLanguage=true, sysNumber=1.0, core=true, t24Name=DESCRIPTION)
@@ -1835,11 +1893,11 @@ Classes {
             @t24:i (align=L, inputBehaviour=I, maxLength=1, sysNumber=9.0, core=true, t24Name=MULTI)
         MULTI_GRP_NAME : T24BusinessTypes:A
             @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=10.0, core=true, t24Name=MULTI.GRP.NAME)
-        RESERVED_10 : mml:Integer
+        RESERVED_10 : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=30, sysNumber=14.0, core=true, t24Name=RESERVED.10)
-        RESERVED_8 : mml:Integer
+        RESERVED_8 : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=30, sysNumber=16.0, core=true, t24Name=RESERVED.8)
-        RESERVED_9 : mml:Integer
+        RESERVED_9 : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=30, sysNumber=15.0, core=true, t24Name=RESERVED.9)
         TEXT : T24BusinessTypes:ANY
             @i18n:Label (en=Text)
@@ -1863,7 +1921,7 @@ Classes {
     {
         K_CONVERSION : T24BusinessTypes:A
             @i18n:Label (en=Conversion)
-            @t24:i (align=L, inputBehaviour=N, maxLength=45, sysNumber=11.0, core=true, t24Name=K.CONVERSION)
+            @t24:i (align=L, inputBehaviour=N, maxLength=45, sysNumber=11.0, core=false, t24Name=K.CONVERSION)
     }
     DE_FORMAT_XML__OVERRIDE
     {
@@ -1972,7 +2030,7 @@ Classes {
         IN_IF_ROUTINE : T24BusinessTypes:ANY
             @t24:i (align=L, inputBehaviour=I, maxLength=50, sysNumber=9.0, core=true, t24Name=IN.IF.ROUTINE)
         K_NETWORK : T24BusinessTypes:A
-            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=4.0, core=true, t24Name=K.NETWORK)
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=4.0, core=false, t24Name=K.NETWORK)
         LINE_COMM : T24BusinessTypes:A
             @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=5.0, core=true, t24Name=LINE.COMM)
         NETWORK : T24BusinessTypes:A
@@ -2004,7 +2062,7 @@ Classes {
             @t24:i (align=L, inputBehaviour=I, maxLength=50, sysNumber=13.0, core=true, t24Name=SHUTDOWN.ROUTINE)
         STARTUP_ROUTINE : T24BusinessTypes:ANY
             @t24:i (align=L, inputBehaviour=I, maxLength=50, sysNumber=12.0, core=true, t24Name=STARTUP.ROUTINE)
-        TIME_OUT_SECS : mml:Integer
+        TIME_OUT_SECS : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=6.0, core=true, t24Name=TIME.OUT.SECS)
     }
     DE_INTERFACE__DATE_TIME
@@ -2016,7 +2074,7 @@ Classes {
     }
     DE_INTERFACE__DESCRIPTION
     {
-        DESCRIPTION : T24BusinessTypes:A
+        DESCRIPTION : T24BusinessTypes:A required
             @i18n:Label (en=Description)
             @i18n:Tooltip (en=Description)
             @t24:i (align=L, inputBehaviour=I, maxLength=35, multiLanguage=true, sysNumber=1.0, core=true, t24Name=DESCRIPTION)
@@ -2064,7 +2122,7 @@ Classes {
             @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=8.0, core=true, t24Name=CURR.NO)
         DATE_TIME -> byValue DE_Config:DE_INWARD_ROUTING__DATE_TIME *
             @t24:i (t24Name=DATE.TIME)
-        DEPARTMENT -> ST_Config:DEPT_ACCT_OFFICER
+        DEPARTMENT -> ST_Config:DEPT_ACCT_OFFICER required
             @i18n:Label (en=Department)
             @t24:i (align=R, inputBehaviour=I, maxLength=4, sysNumber=2.0, core=true, t24Name=DEPARTMENT)
         DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
@@ -2100,7 +2158,7 @@ Classes {
             @i18n:Label (en=Condition)
             @i18n:Tooltip (en="Value that the field name is to be compared with")
             @t24:i (align=L, inputBehaviour=I, maxLength=13, sysNumber=5.0, core=true, t24Name=CONDITION)
-        FIELD_NAME : DE_Config:DE_INWARD_ROUTING__FIELD_NAME__FIELD_NAME
+        FIELD_NAME : DE_Config:DE_INWARD_ROUTING__FIELD_NAME__FIELD_NAME required
             @i18n:Label (en="Field Name")
             @i18n:Tooltip (en="Name of the field(used mostly for SWIFT)")
             @t24:i (align=L, inputBehaviour=I, maxLength=18, sysNumber=3.0, core=true, t24Name=FIELD.NAME)
@@ -2145,15 +2203,15 @@ Classes {
         AUDITOR_CODE : T24BusinessTypes:A
             @i18n:Label (en="Auditor Code")
             @i18n:Tooltip (en="Auditor Code")
-            @t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=66.0, core=true, t24Name=AUDITOR.CODE)
+            @t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=76.0, core=true, t24Name=AUDITOR.CODE)
         AUDIT_DATE_TIME : T24BusinessTypes:RELTIME
             @i18n:Label (en="Audit Date Time")
             @i18n:Tooltip (en="Date and time when record was audited")
-            @t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=67.0, core=true, t24Name=AUDIT.DATE.TIME, mask="RDD DD  DD ##:##")
+            @t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=77.0, core=true, t24Name=AUDIT.DATE.TIME, mask="RDD DD  DD ##:##")
         AUTHORISER : T24BusinessTypes:A
             @i18n:Label (en=Authoriser)
             @i18n:Tooltip (en="Indicates the User who Authorises the record")
-            @t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=63.0, core=true, t24Name=AUTHORISER)
+            @t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=73.0, core=true, t24Name=AUTHORISER)
         BANK_DATE : T24BusinessTypes:D
             @i18n:Label (en="Bank Date")
             @t24:i (align=R, inputBehaviour=N, maxLength=8, sysNumber=53.0, core=true, t24Name=BANK.DATE)
@@ -2162,15 +2220,17 @@ Classes {
         COMPANY_CODE : T24BusinessTypes:N
             @i18n:Label (en=Company)
             @t24:i (align=R, inputBehaviour=N, maxLength=9, sysNumber=13.0, core=true, t24Name=COMPANY.CODE)
+        COPY_MSG : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=52.0, core=true, t24Name=COPY.MSG)
         CO_CODE -> ST_CompanyCreation:COMPANY
             @i18n:Label (en=Company)
-            @t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=64.0, core=true, businessType=A, t24Name=CO.CODE, mask="R##-###-####")
+            @t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=74.0, core=true, businessType=A, t24Name=CO.CODE, mask="R##-###-####")
         CURRENCY : T24BusinessTypes:N
             @i18n:Label (en=Ccy)
             @t24:i (align=R, inputBehaviour=N, maxLength=3, sysNumber=18.0, core=true, t24Name=CURRENCY)
         CURR_NO : T24BusinessTypes:N
             @i18n:Label (en="Curr No")
-            @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=60.0, core=true, t24Name=CURR.NO)
+            @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=70.0, core=true, t24Name=CURR.NO)
         CUSTOMER_NUMBER : T24BusinessTypes:N
             @i18n:Label (en="Customer No")
             @i18n:Tooltip (en="Identifies the Customer for the transaction.")
@@ -2186,16 +2246,18 @@ Classes {
             @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=20.0, core=true, t24Name=DEPARTMENT)
         DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
             @i18n:Label (en="Dept Code")
-            @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=65.0, core=true, t24Name=DEPT.CODE)
+            @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=75.0, core=true, t24Name=DEPT.CODE)
         DESTINATION_CODE : T24BusinessTypes:N
             @i18n:Label (en="Dest. Code ")
             @i18n:Tooltip (en="Indicates the selected carrier ")
             @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=8.0, core=true, t24Name=DESTINATION.CODE)
-        DISPOSITION : DE_Config:DE_I_HEADER__DISPOSITION
+        DISPOSITION : DE_Config:DE_I_HEADER__DISPOSITION required
             @i18n:Label (en=Status)
             @t24:i (align=L, inputBehaviour=I, maxLength=15, sysNumber=4.0, core=true, t24Name=DISPOSITION)
         ERROR_CODE : T24BusinessTypes:A
             @t24:i (align=L, inputBehaviour=N, maxLength=30, sysNumber=5.0, core=true, t24Name=ERROR.CODE)
+        IF_EVENT_TABLE_LINK : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=N, maxLength=65, sysNumber=49.0, core=true, t24Name=IF.EVENT.TABLE.LINK)
         INPUTTER -> byValue DE_Config:DE_I_HEADER__INPUTTER *
             @t24:i (t24Name=INPUTTER)
         INWARD_PAY_TYPE : T24BusinessTypes:N
@@ -2208,11 +2270,14 @@ Classes {
         K_PRIORITY : DE_Config:DE_I_HEADER__K_PRIORITY
             @i18n:Label (en=Priority)
             @i18n:Tooltip (en="Original Priorityof the message in Mapping")
-            @t24:i (align=L, inputBehaviour=N, maxLength=1, sysNumber=6.0, core=true, t24Name=K.PRIORITY)
+            @t24:i (align=L, inputBehaviour=N, maxLength=1, sysNumber=6.0, core=false, t24Name=K.PRIORITY)
         LANGUAGE : T24BusinessTypes:N
             @i18n:Label (en=Language)
             @i18n:Tooltip (en="Indicates the Language used")
             @t24:i (align=R, inputBehaviour=N, maxLength=2, sysNumber=16.0, core=true, t24Name=LANGUAGE)
+        MAPPING_KEY : T24BusinessTypes:A
+            @i18n:Label (en="Mapping Key")
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=58.0, core=true, t24Name=MAPPING.KEY)
         MESSAGE_TYPE : T24BusinessTypes:N
             @i18n:Label (en="Message Type")
             @i18n:Tooltip (en="Delivery message types generated for this record")
@@ -2229,14 +2294,36 @@ Classes {
             @t24:i (t24Name=OVR.DEL.ADD.)
         POS_DUP_ENTRY : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=N, maxLength=3, sysNumber=9.0, core=true, t24Name=POS.DUP.ENTRY)
-        PRIORITY : DE_Config:DE_I_HEADER__PRIORITY
+        PRIORITY : DE_Config:DE_I_HEADER__PRIORITY required
             @i18n:Label (en=Priority)
             @t24:i (align=L, inputBehaviour=I, maxLength=1, sysNumber=6.0, core=true, t24Name=PRIORITY)
         RECORD_STATUS : T24BusinessTypes:STAT
             @i18n:Label (en="Record Status")
-            @t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=59.0, core=true, t24Name=RECORD.STATUS)
+            @t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=69.0, core=true, t24Name=RECORD.STATUS)
         RESERVED_1 : T24BusinessTypes:N
-            @t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=58.0, core=true, t24Name=RESERVED.1)
+            @t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=68.0, core=true, t24Name=RESERVED.1)
+        RESERVED_10 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=59.0, core=true, t24Name=RESERVED.10)
+        RESERVED_11 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=51.0, core=true, t24Name=RESERVED.11)
+        RESERVED_12 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=50.0, core=true, t24Name=RESERVED.12)
+        RESERVED_2 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=67.0, core=true, t24Name=RESERVED.2)
+        RESERVED_3 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=66.0, core=true, t24Name=RESERVED.3)
+        RESERVED_4 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=65.0, core=true, t24Name=RESERVED.4)
+        RESERVED_5 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=64.0, core=true, t24Name=RESERVED.5)
+        RESERVED_6 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=63.0, core=true, t24Name=RESERVED.6)
+        RESERVED_7 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=62.0, core=true, t24Name=RESERVED.7)
+        RESERVED_8 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=61.0, core=true, t24Name=RESERVED.8)
+        RESERVED_9 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=60.0, core=true, t24Name=RESERVED.9)
         STATUS : T24BusinessTypes:N
             @i18n:Label (en=Status)
             @t24:i (align=R, inputBehaviour=N, maxLength=10, sysNumber=7.0, core=true, t24Name=STATUS)
@@ -2277,15 +2364,15 @@ Classes {
         AUDITOR_CODE : T24BusinessTypes:A
             @i18n:Label (en="Auditor Code")
             @i18n:Tooltip (en="Auditor Code")
-            @t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=66.0, core=true, t24Name=AUDITOR.CODE)
+            @t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=76.0, core=true, t24Name=AUDITOR.CODE)
         AUDIT_DATE_TIME : T24BusinessTypes:RELTIME
             @i18n:Label (en="Audit Date Time")
             @i18n:Tooltip (en="Date and time when record was audited")
-            @t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=67.0, core=true, t24Name=AUDIT.DATE.TIME, mask="RDD DD  DD ##:##")
+            @t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=77.0, core=true, t24Name=AUDIT.DATE.TIME, mask="RDD DD  DD ##:##")
         AUTHORISER : T24BusinessTypes:A
             @i18n:Label (en=Authoriser)
             @i18n:Tooltip (en="Indicates the User who Authorises the record")
-            @t24:i (align=L, inputBehaviour=N, maxLength=20, sysNumber=63.0, core=true, t24Name=AUTHORISER)
+            @t24:i (align=L, inputBehaviour=N, maxLength=20, sysNumber=73.0, core=true, t24Name=AUTHORISER)
         BANK_DATE : T24BusinessTypes:D
             @i18n:Label (en="Bank Date")
             @t24:i (align=R, inputBehaviour=N, maxLength=8, sysNumber=53.0, core=true, t24Name=BANK.DATE)
@@ -2299,13 +2386,13 @@ Classes {
             @t24:i (align=R, inputBehaviour=N, maxLength=9, sysNumber=13.0, core=true, t24Name=COMPANY.CODE)
         CO_CODE -> ST_CompanyCreation:COMPANY
             @i18n:Label (en=Company)
-            @t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=64.0, core=true, businessType=A, t24Name=CO.CODE, mask="R##-###-####")
+            @t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=74.0, core=true, businessType=A, t24Name=CO.CODE, mask="R##-###-####")
         CURRENCY : T24BusinessTypes:N
             @i18n:Label (en=Ccy)
             @t24:i (align=R, inputBehaviour=N, maxLength=3, sysNumber=18.0, core=true, t24Name=CURRENCY)
         CURR_NO : T24BusinessTypes:N
             @i18n:Label (en="Curr No")
-            @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=60.0, core=true, t24Name=CURR.NO)
+            @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=70.0, core=true, t24Name=CURR.NO)
         CUSTOMER_NUMBER : T24BusinessTypes:N
             @i18n:Label (en="Customer No")
             @i18n:Tooltip (en="Identifies the Customer for the transaction.")
@@ -2323,7 +2410,7 @@ Classes {
             @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=20.0, core=true, t24Name=DEPARTMENT)
         DEPT_CODE : T24BusinessTypes:N
             @i18n:Label (en="Dept Code")
-            @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=65.0, core=true, t24Name=DEPT.CODE)
+            @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=75.0, core=true, t24Name=DEPT.CODE)
         DESTINATION_CODE : T24BusinessTypes:N
             @i18n:Label (en="Dest. Code ")
             @i18n:Tooltip (en="Indicates the selected carrier ")
@@ -2333,6 +2420,8 @@ Classes {
             @t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=4.0, core=true, t24Name=DISPOSITION)
         ERROR_CODE : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=N, maxLength=30, sysNumber=5.0, core=true, t24Name=ERROR.CODE)
+        IF_EVENT_TABLE_LINK : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=N, maxLength=65, sysNumber=49.0, core=true, t24Name=IF.EVENT.TABLE.LINK)
         INPUTTER -> byValue DE_Config:DE_I_HEADER_ARCH__INPUTTER *
             @t24:i (t24Name=INPUTTER)
         INWARD_PAY_TYPE : T24BusinessTypes:N
@@ -2345,11 +2434,14 @@ Classes {
         K_PRIORITY : T24BusinessTypes:N
             @i18n:Label (en=Priority)
             @i18n:Tooltip (en="Original Priorityof the message in Mapping")
-            @t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=6.0, core=true, t24Name=K.PRIORITY)
+            @t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=6.0, core=false, t24Name=K.PRIORITY)
         LANGUAGE : T24BusinessTypes:N
             @i18n:Label (en=Language)
             @i18n:Tooltip (en="Indicates the Language used")
             @t24:i (align=R, inputBehaviour=N, maxLength=2, sysNumber=16.0, core=true, t24Name=LANGUAGE)
+        MAPPING_KEY : T24BusinessTypes:N
+            @i18n:Label (en="Mapping Key")
+            @t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=58.0, core=true, t24Name=MAPPING.KEY)
         MESSAGE_TYPE : T24BusinessTypes:N
             @i18n:Label (en="Message Type")
             @i18n:Tooltip (en="Delivery message types generated for this record")
@@ -2371,9 +2463,33 @@ Classes {
             @t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=6.0, core=true, t24Name=PRIORITY)
         RECORD_STATUS : T24BusinessTypes:STAT
             @i18n:Label (en="Record Status")
-            @t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=59.0, core=true, t24Name=RECORD.STATUS)
+            @t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=69.0, core=true, t24Name=RECORD.STATUS)
         RESERVED_1 : T24BusinessTypes:N
-            @t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=58.0, core=true, t24Name=RESERVED.1)
+            @t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=68.0, core=true, t24Name=RESERVED.1)
+        RESERVED_10 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=59.0, core=true, t24Name=RESERVED.10)
+        RESERVED_11 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=52.0, core=true, t24Name=RESERVED.11)
+        RESERVED_12 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=51.0, core=true, t24Name=RESERVED.12)
+        RESERVED_13 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=50.0, core=true, t24Name=RESERVED.13)
+        RESERVED_2 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=67.0, core=true, t24Name=RESERVED.2)
+        RESERVED_3 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=66.0, core=true, t24Name=RESERVED.3)
+        RESERVED_4 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=65.0, core=true, t24Name=RESERVED.4)
+        RESERVED_5 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=64.0, core=true, t24Name=RESERVED.5)
+        RESERVED_6 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=63.0, core=true, t24Name=RESERVED.6)
+        RESERVED_7 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=62.0, core=true, t24Name=RESERVED.7)
+        RESERVED_8 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=61.0, core=true, t24Name=RESERVED.8)
+        RESERVED_9 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=60.0, core=true, t24Name=RESERVED.9)
         SENT_DATE : T24BusinessTypes:D
             @t24:i (align=L, inputBehaviour=N, maxLength=11, core=false, t24Name=SENT.DATE, genOperation="@ID[2,8]")
         STATUS : T24BusinessTypes:N
@@ -2436,14 +2552,6 @@ Classes {
             @t24:i (align=R, inputBehaviour=N, maxLength=13, sysNumber=37.0, core=true, t24Name=RECEIVED.STAMP)
         REPLY_TO_ADR -> byValue DE_Config:DE_I_HEADER_ARCH__CARRIER_ADDR_NO__REPLY_TO_ADR *
             @t24:i (t24Name=REPLY.TO.ADR)
-        RESERVED_6 : T24BusinessTypes:N
-            @t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=52.0, core=true, t24Name=RESERVED.6)
-        RESERVED_7 : T24BusinessTypes:N
-            @t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=51.0, core=true, t24Name=RESERVED.7)
-        RESERVED_8 : T24BusinessTypes:N
-            @t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=50.0, core=true, t24Name=RESERVED.8)
-        RESERVED_9 : T24BusinessTypes:N
-            @t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=49.0, core=true, t24Name=RESERVED.9)
         SENT_STAMP : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=N, maxLength=13, sysNumber=40.0, core=true, t24Name=SENT.STAMP)
         SHORT_NAME : T24BusinessTypes:N
@@ -2471,14 +2579,14 @@ Classes {
         DATE_TIME : T24BusinessTypes:RELTIME
             @i18n:Label (en="Date time")
             @i18n:Tooltip (en="Date and time when record was input or authorised")
-            @t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=62.0, core=true, t24Name=DATE.TIME, mask="RDD DD  DD ##:##")
+            @t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=72.0, core=true, t24Name=DATE.TIME, mask="RDD DD  DD ##:##")
     }
     DE_I_HEADER_ARCH__INPUTTER
     {
         INPUTTER : T24BusinessTypes:A
             @i18n:Label (en=Inputter)
             @i18n:Tooltip (en="The user who last updated the record")
-            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=61.0, core=true, t24Name=INPUTTER)
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=71.0, core=true, t24Name=INPUTTER)
     }
     DE_I_HEADER_ARCH__INW_HEAD_TRAIL
     {
@@ -2488,7 +2596,7 @@ Classes {
     DE_I_HEADER_ARCH__K_FORMAT
     {
         K_FORMAT : T24BusinessTypes:N
-            @t24:i (align=R, inputBehaviour=N, maxLength=3, sysNumber=28.0, core=true, t24Name=K.FORMAT)
+            @t24:i (align=R, inputBehaviour=N, maxLength=3, sysNumber=28.0, core=false, t24Name=K.FORMAT)
     }
     DE_I_HEADER_ARCH__OFS_REQ_DET_KEY
     {
@@ -2513,8 +2621,6 @@ Classes {
             @t24:i (align=L, inputBehaviour=N, maxLength=14, sysNumber=25.0, core=true, t24Name=CARRIER.ADDR.NO)
         CARRIER_SEQ_NO : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=N, maxLength=13, sysNumber=41.0, core=true, t24Name=CARRIER.SEQ.NO)
-        COPY_MSG : T24BusinessTypes:N
-            @t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=52.0, core=true, t24Name=COPY.MSG)
         COPY_NUMBER : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=N, maxLength=3, sysNumber=26.0, core=true, t24Name=COPY.NUMBER)
         COUNTRY_CODE : T24BusinessTypes:N
@@ -2551,12 +2657,6 @@ Classes {
             @t24:i (align=R, inputBehaviour=N, maxLength=13, sysNumber=37.0, core=true, t24Name=RECEIVED.STAMP)
         REPLY_TO_ADR -> byValue DE_Config:DE_I_HEADER__CARRIER_ADDR_NO__REPLY_TO_ADR *
             @t24:i (t24Name=REPLY.TO.ADR)
-        RESERVED_7 : T24BusinessTypes:N
-            @t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=51.0, core=true, t24Name=RESERVED.7)
-        RESERVED_8 : T24BusinessTypes:N
-            @t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=50.0, core=true, t24Name=RESERVED.8)
-        RESERVED_9 : T24BusinessTypes:N
-            @t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=49.0, core=true, t24Name=RESERVED.9)
         SENT_STAMP : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=N, maxLength=13, sysNumber=40.0, core=true, t24Name=SENT.STAMP)
         SHORT_NAME : T24BusinessTypes:N
@@ -2584,14 +2684,14 @@ Classes {
         DATE_TIME : T24BusinessTypes:RELTIME
             @i18n:Label (en="Date time")
             @i18n:Tooltip (en="Date and time when record was input or authorised")
-            @t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=62.0, core=true, t24Name=DATE.TIME, mask="RDD DD  DD ##:##")
+            @t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=72.0, core=true, t24Name=DATE.TIME, mask="RDD DD  DD ##:##")
     }
     DE_I_HEADER__INPUTTER
     {
         INPUTTER : T24BusinessTypes:A
             @i18n:Label (en=Inputter)
             @i18n:Tooltip (en="The user who last updated the record")
-            @t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=61.0, core=true, t24Name=INPUTTER)
+            @t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=71.0, core=true, t24Name=INPUTTER)
     }
     DE_I_HEADER__INW_HEAD_TRAIL
     {
@@ -2601,7 +2701,7 @@ Classes {
     DE_I_HEADER__K_FORMAT
     {
         K_FORMAT : T24BusinessTypes:N
-            @t24:i (align=R, inputBehaviour=N, maxLength=3, sysNumber=28.0, core=true, t24Name=K.FORMAT)
+            @t24:i (align=R, inputBehaviour=N, maxLength=3, sysNumber=28.0, core=false, t24Name=K.FORMAT)
     }
     DE_I_HEADER__OFS_REQ_DET_KEY
     {
@@ -2630,6 +2730,13 @@ Classes {
             @t24:i (align=L, inputBehaviour=I, maxLength=30, sysNumber=0.0, core=true, businessType=A, t24Name=KEY)
         MESSAGE_TEXT : T24BusinessTypes:A
             @t24:i (align=L, inputBehaviour=I, maxLength=132, sysNumber=1.0, core=true, t24Name=MESSAGE.TEXT)
+    }
+    DE_I_HISTORY_QUEUE
+        @i18n:Description (en="")
+        @t24:i (t24Name=DE.I.HISTORY.QUEUE, level=I, type=T, allowedFunctions="L P S", localRefAllowed=false)
+    {
+        DELIVERY_DATE : T24BusinessTypes:D
+            @t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=1.0, core=true, t24Name=DELIVERY.DATE)
     }
     DE_I_HISTORY__CONV_REC
     {
@@ -2681,7 +2788,7 @@ Classes {
             @t24:i (t24Name=INPUT.REC.NO)
         OVERRIDE -> byValue DE_Config:DE_MAPPING__OVERRIDE *
             @t24:i (t24Name=OVERRIDE)
-        RECORD_NAME_LOC : mml:Integer
+        RECORD_NAME_LOC : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=21.0, core=true, t24Name=RECORD.NAME.LOC)
         RECORD_STATUS : T24BusinessTypes:STAT
             @i18n:Label (en="Record Status")
@@ -2728,7 +2835,7 @@ Classes {
     }
     DE_MAPPING__DESCRIPTION
     {
-        DESCRIPTION : T24BusinessTypes:A
+        DESCRIPTION : T24BusinessTypes:A required
             @i18n:Label (en=Description)
             @i18n:Tooltip (en=Description)
             @t24:i (align=L, inputBehaviour=I, maxLength=35, multiLanguage=true, sysNumber=1.0, core=true, t24Name=DESCRIPTION)
@@ -2761,7 +2868,7 @@ Classes {
             @i18n:Label (en="Input Name")
             @i18n:Tooltip (en="Input Name")
             @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=6.0, core=true, t24Name=INPUT.NAME)
-        INPUT_POSITION : T24BusinessTypes:A
+        INPUT_POSITION : T24BusinessTypes:A required
             @i18n:Label (en="Input Position")
             @i18n:Tooltip (en="Input Position")
             @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=5.0, core=true, t24Name=INPUT.POSITION)
@@ -2863,7 +2970,7 @@ Classes {
         IN_OFS_VERSION -> byValue DE_Config:DE_MESSAGE__IN_OFS_VERSION *
             @t24:i (t24Name=IN.OFS.VERSION)
         K_COPIES : DE_Config:DE_MESSAGE__K_COPIES
-            @t24:i (align=L, inputBehaviour=N, maxLength=2, sysNumber=2.0, core=true, t24Name=K.COPIES)
+            @t24:i (align=L, inputBehaviour=N, maxLength=2, sysNumber=2.0, core=false, t24Name=K.COPIES)
         MESSAGE_TYPE -> DE_Config:DE_MESSAGE PK required
             @i18n:Label (en="Message Type")
             @i18n:Tooltip (en="Delivery message types generated for this record")
@@ -2951,7 +3058,7 @@ Classes {
     }
     DE_MESSAGE_GROUP__DESCRIPTION
     {
-        DESCRIPTION : T24BusinessTypes:A
+        DESCRIPTION : T24BusinessTypes:A required
             @i18n:Label (en=Description)
             @i18n:Tooltip (en=Description)
             @t24:i (align=L, inputBehaviour=I, maxLength=35, multiLanguage=true, sysNumber=1.0, core=true, t24Name=DESCRIPTION)
@@ -2965,7 +3072,7 @@ Classes {
     }
     DE_MESSAGE_GROUP__MESSAGE_APP
     {
-        MESSAGE_APP : T24BusinessTypes:A
+        MESSAGE_APP : T24BusinessTypes:A required
             @i18n:Label (en="Message Application")
             @i18n:Tooltip (en="Message Application")
             @t24:i (align=L, inputBehaviour=I, maxLength=10, sysNumber=2.0, core=true, t24Name=MESSAGE.APP)
@@ -2986,7 +3093,7 @@ Classes {
     }
     DE_MESSAGE__DESCRIPTION
     {
-        DESCRIPTION : T24BusinessTypes:A
+        DESCRIPTION : T24BusinessTypes:A required
             @i18n:Label (en=Description)
             @i18n:Tooltip (en=Description)
             @t24:i (align=L, inputBehaviour=I, maxLength=35, multiLanguage=true, sysNumber=1.0, core=true, t24Name=DESCRIPTION)
@@ -2997,7 +3104,7 @@ Classes {
             @i18n:Label (en="Field Name")
             @i18n:Tooltip (en="Name of the field(used mostly for SWIFT)")
             @t24:i (align=L, inputBehaviour=I, maxLength=18, sysNumber=7.0, core=true, t24Name=FIELD.NAME)
-        LENGTH : mml:Integer
+        LENGTH : T24BusinessTypes:N
             @i18n:Label (en=Length)
             @i18n:Tooltip (en=Length)
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=8.0, core=true, t24Name=LENGTH)
@@ -3010,7 +3117,7 @@ Classes {
             @i18n:Tooltip (en="Print Type ")
             @t24:i (align=L, inputBehaviour=I, maxLength=1, sysNumber=9.0, core=true, t24Name=PRINT.TYPE)
         SINGLE_MULTI : DE_Config:DE_MESSAGE__FIELD_NAME__SINGLE_MULTI
-            @t24:i (align=L, inputBehaviour=I, maxLength=1, sysNumber=10.0, core=true, t24Name=SINGLE.MULTI)
+            @t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=10.0, core=true, t24Name=SINGLE.MULTI)
     }
     DE_MESSAGE__INPUTTER
     {
@@ -3035,14 +3142,14 @@ Classes {
     {
         USR_FIELD_NAME : T24BusinessTypes:A
             @t24:i (align=L, inputBehaviour=I, maxLength=18, sysNumber=12.0, core=true, t24Name=USR.FIELD.NAME)
-        USR_LENGTH : mml:Integer
+        USR_LENGTH : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=13.0, core=true, t24Name=USR.LENGTH)
         USR_MANDATORY : DE_Config:DE_MESSAGE__USR_FIELD_NAME__USR_MANDATORY
             @t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=16.0, core=true, t24Name=USR.MANDATORY)
         USR_PRINT_TYPE : DE_Config:DE_MESSAGE__USR_FIELD_NAME__USR_PRINT_TYPE
             @t24:i (align=L, inputBehaviour=I, maxLength=1, sysNumber=14.0, core=true, t24Name=USR.PRINT.TYPE)
         USR_SING_MULT : DE_Config:DE_MESSAGE__USR_FIELD_NAME__USR_SING_MULT
-            @t24:i (align=L, inputBehaviour=I, maxLength=1, sysNumber=15.0, core=true, t24Name=USR.SING.MULT)
+            @t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=15.0, core=true, t24Name=USR.SING.MULT)
     }
     DE_MT941_SENT_ENTRIES
         @i18n:Description (en="")
@@ -3065,24 +3172,24 @@ Classes {
         @i18n:Description (en="")
         @t24:i (t24Name=DE.O.BATCH.DETAILS, level=I, type=L, allowedFunctions="L P S", localRefAllowed=false)
     {
-        BATCH_GROUP : mml:Integer
+        BATCH_GROUP : T24BusinessTypes:N required
             @t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=7.0, core=true, t24Name=BATCH.GROUP)
-        CURRENCY : T24BusinessTypes:A
+        CURRENCY : T24BusinessTypes:A required
             @i18n:Label (en=Ccy)
             @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=4.0, core=true, t24Name=CURRENCY)
         DELIVERY_IDS -> byValue DE_Config:DE_O_BATCH_DETAILS__DELIVERY_IDS *
             @t24:i (t24Name=DELIVERY.IDS)
-        DISPOSITION : T24BusinessTypes:A
+        DISPOSITION : T24BusinessTypes:A required
             @i18n:Label (en=Status)
             @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=1.0, core=true, t24Name=DISPOSITION)
         KEY___BATCH_NUMBER -> DE_Config:DE_O_BATCH_DETAILS PK required
             @t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=0.0, core=true, t24Name=KEY...BATCH.NUMBER)
-        TEST_KEY_REQ : T24BusinessTypes:A
+        TEST_KEY_REQ : T24BusinessTypes:A required
             @t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=6.0, core=true, t24Name=TEST.KEY.REQ)
-        TO_ADDRESS : T24BusinessTypes:A
+        TO_ADDRESS : T24BusinessTypes:A required
             @i18n:Label (en="To address")
             @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=3.0, core=true, t24Name=TO.ADDRESS)
-        VALUE_DATE : T24BusinessTypes:D
+        VALUE_DATE : T24BusinessTypes:D required
             @i18n:Label (en="Value Date")
             @i18n:Tooltip (en="Indicates the Value date of the Contract")
             @t24:i (align=R, inputBehaviour=I, maxLength=12, sysNumber=5.0, core=true, t24Name=VALUE.DATE)
@@ -3091,39 +3198,39 @@ Classes {
         @i18n:Description (en="")
         @t24:i (t24Name=DE.O.BATCH.DETAILS.ARCH, level=I, type=L, allowedFunctions="L P S", localRefAllowed=false)
     {
-        BATCH_GROUP : mml:Integer
+        BATCH_GROUP : T24BusinessTypes:N required
             @t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=7.0, core=true, t24Name=BATCH.GROUP)
-        CURRENCY : T24BusinessTypes:A
+        CURRENCY : T24BusinessTypes:A required
             @i18n:Label (en=Ccy)
             @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=4.0, core=true, t24Name=CURRENCY)
         DELIVERY_IDS -> byValue DE_Config:DE_O_BATCH_DETAILS_ARCH__DELIVERY_IDS *
             @t24:i (t24Name=DELIVERY.IDS)
-        DISPOSITION : T24BusinessTypes:A
+        DISPOSITION : T24BusinessTypes:A required
             @i18n:Label (en=Status)
             @t24:i (align=L, inputBehaviour=I, maxLength=22, sysNumber=1.0, core=true, t24Name=DISPOSITION)
         KEY___BATCH_NUMBER -> DE_Config:DE_O_BATCH_DETAILS_ARCH PK required
             @t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=0.0, core=true, t24Name=KEY...BATCH.NUMBER)
         K_CURRENCY : T24BusinessTypes:A
             @i18n:Label (en=Ccy)
-            @t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=4.0, core=true, t24Name=K.CURRENCY)
+            @t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=4.0, core=false, t24Name=K.CURRENCY)
         TEST_KEY_REQ : T24BusinessTypes:A
             @t24:i (align=L, inputBehaviour=I, maxLength=1, sysNumber=6.0, core=true, t24Name=TEST.KEY.REQ)
-        TO_ADDRESS : T24BusinessTypes:A
+        TO_ADDRESS : T24BusinessTypes:A required
             @i18n:Label (en="To address")
             @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=3.0, core=true, t24Name=TO.ADDRESS)
-        VALUE_DATE : T24BusinessTypes:D
+        VALUE_DATE : T24BusinessTypes:D required
             @i18n:Label (en="Value Date")
             @i18n:Tooltip (en="Indicates the Value date of the Contract")
             @t24:i (align=R, inputBehaviour=I, maxLength=9, sysNumber=5.0, core=true, t24Name=VALUE.DATE)
     }
     DE_O_BATCH_DETAILS_ARCH__DELIVERY_IDS
     {
-        DELIVERY_IDS : T24BusinessTypes:A
+        DELIVERY_IDS : T24BusinessTypes:A required
             @t24:i (align=L, inputBehaviour=I, maxLength=18, sysNumber=2.0, core=true, t24Name=DELIVERY.IDS)
     }
     DE_O_BATCH_DETAILS__DELIVERY_IDS
     {
-        DELIVERY_IDS : T24BusinessTypes:A
+        DELIVERY_IDS : T24BusinessTypes:A required
             @t24:i (align=L, inputBehaviour=I, maxLength=19, sysNumber=2.0, core=true, t24Name=DELIVERY.IDS)
     }
     DE_O_HEADER
@@ -3153,15 +3260,15 @@ Classes {
         AUDITOR_CODE : T24BusinessTypes:A
             @i18n:Label (en="Auditor Code")
             @i18n:Tooltip (en="Auditor Code")
-            @t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=66.0, core=true, t24Name=AUDITOR.CODE)
+            @t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=76.0, core=true, t24Name=AUDITOR.CODE)
         AUDIT_DATE_TIME : T24BusinessTypes:RELTIME
             @i18n:Label (en="Audit Date Time")
             @i18n:Tooltip (en="Date and time when record was audited")
-            @t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=67.0, core=true, t24Name=AUDIT.DATE.TIME, mask="RDD DD  DD ##:##")
+            @t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=77.0, core=true, t24Name=AUDIT.DATE.TIME, mask="RDD DD  DD ##:##")
         AUTHORISER : T24BusinessTypes:A
             @i18n:Label (en=Authoriser)
             @i18n:Tooltip (en="Indicates the User who Authorises the record")
-            @t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=63.0, core=true, t24Name=AUTHORISER)
+            @t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=73.0, core=true, t24Name=AUTHORISER)
         BANK_DATE : T24BusinessTypes:D
             @i18n:Label (en="Bank Date")
             @t24:i (align=R, inputBehaviour=N, maxLength=8, sysNumber=53.0, core=true, t24Name=BANK.DATE)
@@ -3170,15 +3277,17 @@ Classes {
         COMPANY_CODE : T24BusinessTypes:N
             @i18n:Label (en=Company)
             @t24:i (align=R, inputBehaviour=N, maxLength=9, sysNumber=13.0, core=true, t24Name=COMPANY.CODE)
+        COPY_MSG : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=52.0, core=true, t24Name=COPY.MSG)
         CO_CODE -> ST_CompanyCreation:COMPANY
             @i18n:Label (en=Company)
-            @t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=64.0, core=true, businessType=A, t24Name=CO.CODE, mask="R##-###-####")
+            @t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=74.0, core=true, businessType=A, t24Name=CO.CODE, mask="R##-###-####")
         CURRENCY : T24BusinessTypes:N
             @i18n:Label (en=Ccy)
             @t24:i (align=R, inputBehaviour=N, maxLength=3, sysNumber=18.0, core=true, t24Name=CURRENCY)
         CURR_NO : T24BusinessTypes:N
             @i18n:Label (en="Curr No")
-            @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=60.0, core=true, t24Name=CURR.NO)
+            @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=70.0, core=true, t24Name=CURR.NO)
         CUSTOMER_NUMBER -> byValue DE_Config:DE_O_HEADER__CUSTOMER_NUMBER *
             @t24:i (t24Name=CUSTOMER.NUMBER)
         CUS__COMPANY : T24BusinessTypes:N
@@ -3194,8 +3303,8 @@ Classes {
             @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=20.0, core=true, t24Name=DEPARTMENT)
         DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
             @i18n:Label (en="Dept Code")
-            @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=65.0, core=true, t24Name=DEPT.CODE)
-        DESTINATION_CODE : mml:Integer
+            @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=75.0, core=true, t24Name=DEPT.CODE)
+        DESTINATION_CODE : T24BusinessTypes:N
             @i18n:Label (en="Dest. Code ")
             @i18n:Tooltip (en="Indicates the selected carrier ")
             @t24:i (align=R, inputBehaviour=I, maxLength=4, sysNumber=8.0, core=true, t24Name=DESTINATION.CODE)
@@ -3206,6 +3315,8 @@ Classes {
             @t24:i (t24Name=ERROR.CODE)
         FORMATTED_IDS : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=N, maxLength=17, core=false, t24Name=FORMATTED.IDS, genOperation=E.SEL.HDR.IDS)
+        IF_EVENT_TABLE_LINK : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=N, maxLength=65, sysNumber=49.0, core=true, t24Name=IF.EVENT.TABLE.LINK)
         INPUTTER -> byValue DE_Config:DE_O_HEADER__INPUTTER *
             @t24:i (t24Name=INPUTTER)
         INWARD_PAY_TYPE : T24BusinessTypes:N
@@ -3218,11 +3329,14 @@ Classes {
         K_PRIORITY : DE_Config:DE_O_HEADER__K_PRIORITY
             @i18n:Label (en=Priority)
             @i18n:Tooltip (en="Original Priorityof the message in Mapping")
-            @t24:i (align=L, inputBehaviour=N, maxLength=1, sysNumber=6.0, core=true, t24Name=K.PRIORITY)
+            @t24:i (align=L, inputBehaviour=N, maxLength=1, sysNumber=6.0, core=false, t24Name=K.PRIORITY)
         LANGUAGE : T24BusinessTypes:N
             @i18n:Label (en=Language)
             @i18n:Tooltip (en="Indicates the Language used")
             @t24:i (align=R, inputBehaviour=N, maxLength=2, sysNumber=16.0, core=true, t24Name=LANGUAGE)
+        MAPPING_KEY : T24BusinessTypes:A
+            @i18n:Label (en="Mapping Key")
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=58.0, core=true, t24Name=MAPPING.KEY)
         MESSAGE_TYPE : T24BusinessTypes:N
             @i18n:Label (en="Message Type")
             @i18n:Tooltip (en="Delivery message types generated for this record")
@@ -3246,9 +3360,31 @@ Classes {
             @t24:i (align=L, inputBehaviour=N, maxLength=12, core=false, t24Name=QUEUE.NAME)
         RECORD_STATUS : T24BusinessTypes:STAT
             @i18n:Label (en="Record Status")
-            @t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=59.0, core=true, t24Name=RECORD.STATUS)
+            @t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=69.0, core=true, t24Name=RECORD.STATUS)
         RESERVED_1 : T24BusinessTypes:N
-            @t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=58.0, core=true, t24Name=RESERVED.1)
+            @t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=68.0, core=true, t24Name=RESERVED.1)
+        RESERVED_10 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=59.0, core=true, t24Name=RESERVED.10)
+        RESERVED_11 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=51.0, core=true, t24Name=RESERVED.11)
+        RESERVED_12 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=50.0, core=true, t24Name=RESERVED.12)
+        RESERVED_2 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=67.0, core=true, t24Name=RESERVED.2)
+        RESERVED_3 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=66.0, core=true, t24Name=RESERVED.3)
+        RESERVED_4 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=65.0, core=true, t24Name=RESERVED.4)
+        RESERVED_5 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=64.0, core=true, t24Name=RESERVED.5)
+        RESERVED_6 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=63.0, core=true, t24Name=RESERVED.6)
+        RESERVED_7 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=62.0, core=true, t24Name=RESERVED.7)
+        RESERVED_8 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=61.0, core=true, t24Name=RESERVED.8)
+        RESERVED_9 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=60.0, core=true, t24Name=RESERVED.9)
         STATUS : T24BusinessTypes:AA
             @i18n:Label (en=Status)
             @t24:i (align=L, inputBehaviour=I, maxLength=10, sysNumber=7.0, core=true, t24Name=STATUS)
@@ -3291,15 +3427,15 @@ Classes {
         AUDITOR_CODE : T24BusinessTypes:A
             @i18n:Label (en="Auditor Code")
             @i18n:Tooltip (en="Auditor Code")
-            @t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=66.0, core=true, t24Name=AUDITOR.CODE)
+            @t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=76.0, core=true, t24Name=AUDITOR.CODE)
         AUDIT_DATE_TIME : T24BusinessTypes:RELTIME
             @i18n:Label (en="Audit Date Time")
             @i18n:Tooltip (en="Date and time when record was audited")
-            @t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=67.0, core=true, t24Name=AUDIT.DATE.TIME, mask="RDD DD  DD ##:##")
+            @t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=77.0, core=true, t24Name=AUDIT.DATE.TIME, mask="RDD DD  DD ##:##")
         AUTHORISER : T24BusinessTypes:A
             @i18n:Label (en=Authoriser)
             @i18n:Tooltip (en="Indicates the User who Authorises the record")
-            @t24:i (align=L, inputBehaviour=N, maxLength=20, sysNumber=63.0, core=true, t24Name=AUTHORISER)
+            @t24:i (align=L, inputBehaviour=N, maxLength=20, sysNumber=73.0, core=true, t24Name=AUTHORISER)
         BANK_DATE : T24BusinessTypes:D
             @i18n:Label (en="Bank Date")
             @t24:i (align=R, inputBehaviour=N, maxLength=8, sysNumber=53.0, core=true, t24Name=BANK.DATE)
@@ -3310,13 +3446,13 @@ Classes {
             @t24:i (align=R, inputBehaviour=N, maxLength=9, sysNumber=13.0, core=true, t24Name=COMPANY.CODE)
         CO_CODE -> ST_CompanyCreation:COMPANY
             @i18n:Label (en=Company)
-            @t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=64.0, core=true, businessType=A, t24Name=CO.CODE, mask="R##-###-####")
+            @t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=74.0, core=true, businessType=A, t24Name=CO.CODE, mask="R##-###-####")
         CURRENCY : T24BusinessTypes:N
             @i18n:Label (en=Ccy)
             @t24:i (align=R, inputBehaviour=N, maxLength=3, sysNumber=18.0, core=true, t24Name=CURRENCY)
         CURR_NO : T24BusinessTypes:N
             @i18n:Label (en="Curr No")
-            @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=60.0, core=true, t24Name=CURR.NO)
+            @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=70.0, core=true, t24Name=CURR.NO)
         CUSTOMER_NUMBER -> byValue DE_Config:DE_O_HEADER_ARCH__CUSTOMER_NUMBER *
             @t24:i (t24Name=CUSTOMER.NUMBER)
         CUS__COMPANY : T24BusinessTypes:N
@@ -3332,7 +3468,7 @@ Classes {
             @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=20.0, core=true, t24Name=DEPARTMENT)
         DEPT_CODE : T24BusinessTypes:N
             @i18n:Label (en="Dept Code")
-            @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=65.0, core=true, t24Name=DEPT.CODE)
+            @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=75.0, core=true, t24Name=DEPT.CODE)
         DESTINATION_CODE : T24BusinessTypes:N
             @i18n:Label (en="Dest. Code ")
             @i18n:Tooltip (en="Indicates the selected carrier ")
@@ -3342,6 +3478,8 @@ Classes {
             @t24:i (align=L, inputBehaviour=I, maxLength=11, sysNumber=4.0, core=true, t24Name=DISPOSITION)
         ERROR_CODE : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=N, maxLength=40, sysNumber=5.0, core=true, t24Name=ERROR.CODE)
+        IF_EVENT_TABLE_LINK : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=N, maxLength=65, sysNumber=49.0, core=true, t24Name=IF.EVENT.TABLE.LINK)
         INPUTTER -> byValue DE_Config:DE_O_HEADER_ARCH__INPUTTER *
             @t24:i (t24Name=INPUTTER)
         INWARD_PAY_TYPE : T24BusinessTypes:N
@@ -3354,11 +3492,14 @@ Classes {
         K_PRIORITY : DE_Config:DE_O_HEADER_ARCH__K_PRIORITY
             @i18n:Label (en=Priority)
             @i18n:Tooltip (en="Original Priorityof the message in Mapping")
-            @t24:i (align=L, inputBehaviour=N, maxLength=1, sysNumber=6.0, core=true, t24Name=K.PRIORITY)
+            @t24:i (align=L, inputBehaviour=N, maxLength=1, sysNumber=6.0, core=false, t24Name=K.PRIORITY)
         LANGUAGE : T24BusinessTypes:N
             @i18n:Label (en=Language)
             @i18n:Tooltip (en="Indicates the Language used")
             @t24:i (align=R, inputBehaviour=N, maxLength=2, sysNumber=16.0, core=true, t24Name=LANGUAGE)
+        MAPPING_KEY : T24BusinessTypes:A
+            @i18n:Label (en="Mapping Key")
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=58.0, core=true, t24Name=MAPPING.KEY)
         MESSAGE_TYPE : T24BusinessTypes:N
             @i18n:Label (en="Message Type")
             @i18n:Tooltip (en="Delivery message types generated for this record")
@@ -3380,9 +3521,33 @@ Classes {
             @t24:i (align=L, inputBehaviour=I, maxLength=1, sysNumber=6.0, core=true, t24Name=PRIORITY)
         RECORD_STATUS : T24BusinessTypes:STAT
             @i18n:Label (en="Record Status")
-            @t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=59.0, core=true, t24Name=RECORD.STATUS)
+            @t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=69.0, core=true, t24Name=RECORD.STATUS)
         RESERVED_1 : T24BusinessTypes:N
-            @t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=58.0, core=true, t24Name=RESERVED.1)
+            @t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=68.0, core=true, t24Name=RESERVED.1)
+        RESERVED_10 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=59.0, core=true, t24Name=RESERVED.10)
+        RESERVED_11 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=52.0, core=true, t24Name=RESERVED.11)
+        RESERVED_12 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=51.0, core=true, t24Name=RESERVED.12)
+        RESERVED_13 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=50.0, core=true, t24Name=RESERVED.13)
+        RESERVED_2 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=67.0, core=true, t24Name=RESERVED.2)
+        RESERVED_3 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=66.0, core=true, t24Name=RESERVED.3)
+        RESERVED_4 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=65.0, core=true, t24Name=RESERVED.4)
+        RESERVED_5 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=64.0, core=true, t24Name=RESERVED.5)
+        RESERVED_6 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=63.0, core=true, t24Name=RESERVED.6)
+        RESERVED_7 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=62.0, core=true, t24Name=RESERVED.7)
+        RESERVED_8 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=61.0, core=true, t24Name=RESERVED.8)
+        RESERVED_9 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=60.0, core=true, t24Name=RESERVED.9)
         SENT_DATE : T24BusinessTypes:D
             @t24:i (align=L, inputBehaviour=N, maxLength=11, core=false, t24Name=SENT.DATE, genOperation="@ID[2,8]")
         STATUS : DE_Config:DE_O_HEADER_ARCH__STATUS
@@ -3445,14 +3610,6 @@ Classes {
             @t24:i (align=R, inputBehaviour=N, maxLength=13, sysNumber=37.0, core=true, t24Name=RECEIVED.STAMP)
         REPLY_TO_ADR -> byValue DE_Config:DE_O_HEADER_ARCH__CARRIER_ADDR_NO__REPLY_TO_ADR *
             @t24:i (t24Name=REPLY.TO.ADR)
-        RESERVED_6 : T24BusinessTypes:N
-            @t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=52.0, core=true, t24Name=RESERVED.6)
-        RESERVED_7 : T24BusinessTypes:N
-            @t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=51.0, core=true, t24Name=RESERVED.7)
-        RESERVED_8 : T24BusinessTypes:N
-            @t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=50.0, core=true, t24Name=RESERVED.8)
-        RESERVED_9 : T24BusinessTypes:N
-            @t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=49.0, core=true, t24Name=RESERVED.9)
         SENT_STAMP : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=N, maxLength=22, sysNumber=40.0, core=true, t24Name=SENT.STAMP)
         SHORT_NAME : T24BusinessTypes:N
@@ -3492,14 +3649,14 @@ Classes {
         DATE_TIME : T24BusinessTypes:RELTIME
             @i18n:Label (en="Date time")
             @i18n:Tooltip (en="Date and time when record was input or authorised")
-            @t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=62.0, core=true, t24Name=DATE.TIME, mask="RDD DD  DD ##:##")
+            @t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=72.0, core=true, t24Name=DATE.TIME, mask="RDD DD  DD ##:##")
     }
     DE_O_HEADER_ARCH__INPUTTER
     {
         INPUTTER : T24BusinessTypes:A
             @i18n:Label (en=Inputter)
             @i18n:Tooltip (en="The user who last updated the record")
-            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=61.0, core=true, t24Name=INPUTTER)
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=71.0, core=true, t24Name=INPUTTER)
     }
     DE_O_HEADER_ARCH__INW_HEAD_TRAIL
     {
@@ -3509,7 +3666,7 @@ Classes {
     DE_O_HEADER_ARCH__K_FORMAT
     {
         K_FORMAT : T24BusinessTypes:N
-            @t24:i (align=R, inputBehaviour=N, maxLength=3, sysNumber=28.0, core=true, t24Name=K.FORMAT)
+            @t24:i (align=R, inputBehaviour=N, maxLength=3, sysNumber=28.0, core=false, t24Name=K.FORMAT)
     }
     DE_O_HEADER_ARCH__OFS_REQ_DET_KEY
     {
@@ -3536,8 +3693,6 @@ Classes {
             @t24:i (align=L, inputBehaviour=N, maxLength=14, sysNumber=25.0, core=true, t24Name=CARRIER.ADDR.NO)
         CARRIER_SEQ_NO : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=N, maxLength=10, sysNumber=41.0, core=true, t24Name=CARRIER.SEQ.NO)
-        COPY_MSG : T24BusinessTypes:N
-            @t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=52.0, core=true, t24Name=COPY.MSG)
         COPY_NUMBER : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=N, maxLength=3, sysNumber=26.0, core=true, t24Name=COPY.NUMBER)
         COUNTRY_CODE : T24BusinessTypes:N
@@ -3577,12 +3732,6 @@ Classes {
             @t24:i (align=R, inputBehaviour=N, maxLength=13, sysNumber=37.0, core=true, t24Name=RECEIVED.STAMP)
         REPLY_TO_ADR -> byValue DE_Config:DE_O_HEADER__CARRIER_ADDR_NO__REPLY_TO_ADR *
             @t24:i (t24Name=REPLY.TO.ADR)
-        RESERVED_7 : T24BusinessTypes:N
-            @t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=51.0, core=true, t24Name=RESERVED.7)
-        RESERVED_8 : T24BusinessTypes:N
-            @t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=50.0, core=true, t24Name=RESERVED.8)
-        RESERVED_9 : T24BusinessTypes:N
-            @t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=49.0, core=true, t24Name=RESERVED.9)
         SENT_STAMP : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=N, maxLength=22, sysNumber=40.0, core=true, t24Name=SENT.STAMP)
         SHORT_NAME : T24BusinessTypes:N
@@ -3628,7 +3777,7 @@ Classes {
         DATE_TIME : T24BusinessTypes:RELTIME
             @i18n:Label (en="Date time")
             @i18n:Tooltip (en="Date and time when record was input or authorised")
-            @t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=62.0, core=true, t24Name=DATE.TIME, mask="RDD DD  DD ##:##")
+            @t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=72.0, core=true, t24Name=DATE.TIME, mask="RDD DD  DD ##:##")
     }
     DE_O_HEADER__ERROR_CODE
     {
@@ -3640,7 +3789,7 @@ Classes {
         INPUTTER : T24BusinessTypes:A
             @i18n:Label (en=Inputter)
             @i18n:Tooltip (en="The user who last updated the record")
-            @t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=61.0, core=true, t24Name=INPUTTER)
+            @t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=71.0, core=true, t24Name=INPUTTER)
     }
     DE_O_HEADER__INW_HEAD_TRAIL
     {
@@ -3650,7 +3799,7 @@ Classes {
     DE_O_HEADER__K_FORMAT
     {
         K_FORMAT : T24BusinessTypes:N
-            @t24:i (align=R, inputBehaviour=N, maxLength=3, sysNumber=28.0, core=true, t24Name=K.FORMAT)
+            @t24:i (align=R, inputBehaviour=N, maxLength=3, sysNumber=28.0, core=false, t24Name=K.FORMAT)
     }
     DE_O_HEADER__OFS_REQ_DET_KEY
     {
@@ -3680,6 +3829,24 @@ Classes {
         MESSAGE_TEXT : T24BusinessTypes:A
             @t24:i (align=L, inputBehaviour=I, maxLength=132, sysNumber=1.0, core=true, t24Name=MESSAGE.TEXT)
     }
+    DE_O_HOLD_KEY
+        @i18n:Description (en="")
+        @t24:i (t24Name=DE.O.HOLD.KEY, level=I, type=T, allowedFunctions="L P S", localRefAllowed=false)
+    {
+        DATE : T24BusinessTypes:N
+            @i18n:Label (en=Date)
+            @t24:i (align=R, inputBehaviour=N, maxLength=8, sysNumber=2.0, core=true, t24Name=DATE)
+        MESSAGE_ID : T24BusinessTypes:N PK required
+            @t24:i (align=R, inputBehaviour=N, maxLength=26, sysNumber=0.0, core=true, t24Name=MESSAGE.ID)
+        RESERVED_1 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=25, sysNumber=4.0, core=true, t24Name=RESERVED.1)
+        STATUS : T24BusinessTypes:N
+            @i18n:Label (en=Status)
+            @t24:i (align=R, inputBehaviour=N, maxLength=12, sysNumber=1.0, core=true, t24Name=STATUS)
+        TIME : T24BusinessTypes:N
+            @i18n:Label (en=Time)
+            @t24:i (align=R, inputBehaviour=N, maxLength=10, sysNumber=3.0, core=true, t24Name=TIME)
+    }
     DE_PARM
         @i18n:Description (en="")
         @t24:i (t24Name=DE.PARM, level=I, type=H, additionalInfo=NOD, allowedFunctions="A C D E H I L P Q R S", localRefAllowed=true)
@@ -3690,15 +3857,15 @@ Classes {
         AUDITOR_CODE : T24BusinessTypes:A
             @i18n:Label (en="Auditor Code")
             @i18n:Tooltip (en="Auditor Code")
-            @t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=66.0, core=true, t24Name=AUDITOR.CODE)
+            @t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=72.0, core=true, t24Name=AUDITOR.CODE)
         AUDIT_DATE_TIME : T24BusinessTypes:RELTIME
             @i18n:Label (en="Audit Date Time")
             @i18n:Tooltip (en="Date and time when record was audited")
-            @t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=67.0, core=true, t24Name=AUDIT.DATE.TIME, mask="RDD DD  DD ##:##")
+            @t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=73.0, core=true, t24Name=AUDIT.DATE.TIME, mask="RDD DD  DD ##:##")
         AUTHORISER : T24BusinessTypes:A
             @i18n:Label (en=Authoriser)
             @i18n:Tooltip (en="Indicates the User who Authorises the record")
-            @t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=63.0, core=true, t24Name=AUTHORISER)
+            @t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=69.0, core=true, t24Name=AUTHORISER)
         AUTHORISE_TEST_KEY : DE_Config:DE_PARM__AUTHORISE_TEST_KEY
             @t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=29.0, core=true, t24Name=AUTHORISE.TEST.KEY)
         BATCHING_REQ_ : DE_Config:DE_PARM__BATCHING_REQ_
@@ -3713,17 +3880,17 @@ Classes {
             @t24:i (t24Name=COMM.PARAMETERS)
         CO_CODE -> ST_CompanyCreation:COMPANY
             @i18n:Label (en=Company)
-            @t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=64.0, core=true, businessType=A, t24Name=CO.CODE, mask="R##-###-####")
+            @t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=70.0, core=true, businessType=A, t24Name=CO.CODE, mask="R##-###-####")
         CURR_NO : T24BusinessTypes:N
             @i18n:Label (en="Curr No")
-            @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=60.0, core=true, t24Name=CURR.NO)
+            @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=66.0, core=true, t24Name=CURR.NO)
         DATE_TIME -> byValue DE_Config:DE_PARM__DATE_TIME *
             @t24:i (t24Name=DATE.TIME)
         DEBUG : DE_Config:DE_PARM__DEBUG
             @t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=37.0, core=true, t24Name=DEBUG)
         DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
             @i18n:Label (en="Dept Code")
-            @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=65.0, core=true, t24Name=DEPT.CODE)
+            @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=71.0, core=true, t24Name=DEPT.CODE)
         DISPLAY_TEST_KEYS : DE_Config:DE_PARM__DISPLAY_TEST_KEYS
             @t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=31.0, core=true, t24Name=DISPLAY.TEST.KEYS)
         DISP_CONTROL : DE_Config:DE_PARM__DISP_CONTROL
@@ -3748,17 +3915,19 @@ Classes {
             @t24:i (align=L, inputBehaviour=I, maxLength=1, sysNumber=35.0, core=true, t24Name=INSTAL.PARAMETER)
         INWARD_CARRIERS -> byValue DE_Config:DE_PARM__INWARD_CARRIERS *
             @t24:i (t24Name=INWARD.CARRIERS)
+        INWARD_EXT_RTN : T24BusinessTypes:ANY
+            @t24:i (align=L, inputBehaviour=I, maxLength=50, sysNumber=59.0, core=true, t24Name=INWARD.EXT.RTN)
         INWARD_ROUTING : DE_Config:DE_PARM__INWARD_ROUTING
             @t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=12.0, core=true, t24Name=INWARD.ROUTING)
-        MACHINE_ID : DE_Config:DE_PARM__MACHINE_ID
+        MACHINE_ID : DE_Config:DE_PARM__MACHINE_ID required
             @t24:i (align=L, inputBehaviour=I, maxLength=5, sysNumber=15.0, core=true, t24Name=MACHINE.ID)
         MAINTAIN_HISTORY : DE_Config:DE_PARM__MAINTAIN_HISTORY
             @t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=13.0, core=true, t24Name=MAINTAIN.HISTORY)
         NETTING_PAYMENT : DE_Config:DE_PARM__NETTING_PAYMENT
             @t24:i (align=L, inputBehaviour=I, maxLength=1, sysNumber=53.0, core=true, t24Name=NETTING.PAYMENT)
-        NO__AUTH__ATTEMPTS : mml:Integer
+        NO__AUTH__ATTEMPTS : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=30.0, core=true, t24Name=NO..AUTH..ATTEMPTS)
-        NO__VERIFY_ATTMPTS : mml:Integer
+        NO__VERIFY_ATTMPTS : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=32.0, core=true, t24Name=NO..VERIFY.ATTMPTS)
         OFFSET : T24BusinessTypes:A
             @i18n:Label (en=Offset)
@@ -3770,13 +3939,23 @@ Classes {
             @t24:i (t24Name=PHANT.CHECK)
         PRINT_BYPASS -> byValue DE_Config:DE_PARM__PRINT_BYPASS *
             @t24:i (t24Name=PRINT.BYPASS)
-        READ_NORMAL : mml:Integer
+        READ_NORMAL : T24BusinessTypes:N required
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=10.0, core=true, t24Name=READ.NORMAL)
-        READ_PRIORITY : mml:Integer
+        READ_PRIORITY : T24BusinessTypes:N required
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=9.0, core=true, t24Name=READ.PRIORITY)
         RECORD_STATUS : T24BusinessTypes:STAT
             @i18n:Label (en="Record Status")
-            @t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=59.0, core=true, t24Name=RECORD.STATUS)
+            @t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=65.0, core=true, t24Name=RECORD.STATUS)
+        RESERVED_1 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=64.0, core=true, t24Name=RESERVED.1)
+        RESERVED_2 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=63.0, core=true, t24Name=RESERVED.2)
+        RESERVED_3 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=62.0, core=true, t24Name=RESERVED.3)
+        RESERVED_4 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=61.0, core=true, t24Name=RESERVED.4)
+        RESERVED_5 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=60.0, core=true, t24Name=RESERVED.5)
         SHUTDOWN_INWARD : DE_Config:DE_PARM__SHUTDOWN_INWARD
             @t24:i (align=L, inputBehaviour=I, maxLength=1, sysNumber=1.0, core=true, t24Name=SHUTDOWN.INWARD)
         SHUTDOWN_MAPPING : DE_Config:DE_PARM__SHUTDOWN_MAPPING
@@ -3801,17 +3980,17 @@ Classes {
             @t24:i (align=R, inputBehaviour=N, maxLength=5, sysNumber=17.0, core=true, t24Name=SWIFT.SF.SEQUENCE)
         TELEX_HARDWARE : DE_Config:DE_PARM__TELEX_HARDWARE
             @t24:i (align=L, inputBehaviour=I, maxLength=10, sysNumber=28.0, core=true, t24Name=TELEX.HARDWARE)
-        TELEX_LINE_NO_ : mml:Integer
+        TELEX_LINE_NO_ : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=27.0, core=true, t24Name=TELEX.LINE.NO.)
         TELEX_SF_SEQUENCE : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=N, maxLength=5, sysNumber=26.0, core=true, t24Name=TELEX.SF.SEQUENCE)
-        TIME_OUT_SECS_ : mml:Integer
+        TIME_OUT_SECS_ : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=22.0, core=true, t24Name=TIME.OUT.SECS.)
         USER_LANGUAGE_DATE : DE_Config:DE_PARM__USER_LANGUAGE_DATE
             @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=56.0, core=true, t24Name=USER.LANGUAGE.DATE)
         USE_TTYSET : DE_Config:DE_PARM__USE_TTYSET
             @t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=48.0, core=true, t24Name=USE.TTYSET)
-        WAIT_TIME_SECS_ : mml:Integer
+        WAIT_TIME_SECS_ : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=34.0, core=true, t24Name=WAIT.TIME.SECS.)
     }
     DE_PARM__COMM_PARAMETERS
@@ -3824,7 +4003,7 @@ Classes {
         DATE_TIME : T24BusinessTypes:RELTIME
             @i18n:Label (en="Date time")
             @i18n:Tooltip (en="Date and time when record was input or authorised")
-            @t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=62.0, core=true, t24Name=DATE.TIME, mask="RDD DD  DD ##:##")
+            @t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=68.0, core=true, t24Name=DATE.TIME, mask="RDD DD  DD ##:##")
     }
     DE_PARM__EUCLID_USER_NO_
     {
@@ -3852,7 +4031,7 @@ Classes {
         INPUTTER : T24BusinessTypes:A
             @i18n:Label (en=Inputter)
             @i18n:Tooltip (en="The user who last updated the record")
-            @t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=61.0, core=true, t24Name=INPUTTER)
+            @t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=67.0, core=true, t24Name=INPUTTER)
     }
     DE_PARM__INWARD_CARRIERS
     {
@@ -3915,23 +4094,23 @@ Classes {
             @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=34.0, core=true, t24Name=DEPT.CODE)
         DESCRIPTION -> byValue DE_Config:DE_PRINT_MARKERS__DESCRIPTION *
             @t24:i (t24Name=DESCRIPTION)
-        EFM_COORDINATES : T24BusinessTypes:A
+        EFM_COORDINATES : T24BusinessTypes:A required
             @t24:i (align=L, inputBehaviour=I, maxLength=7, sysNumber=8.0, core=true, t24Name=EFM.COORDINATES)
         EJECT_DEPENDANT -> byValue DE_Config:DE_PRINT_MARKERS__EJECT_DEPENDANT *
             @t24:i (t24Name=EJECT.DEPENDANT)
-        EJECT_MKR : mml:Integer
+        EJECT_MKR : T24BusinessTypes:N required
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=11.0, core=true, t24Name=EJECT.MKR)
-        EJM_COORDINATES : T24BusinessTypes:A
+        EJM_COORDINATES : T24BusinessTypes:A required
             @t24:i (align=L, inputBehaviour=I, maxLength=7, sysNumber=12.0, core=true, t24Name=EJM.COORDINATES)
-        ENCLS_THIS_RUN : DE_Config:DE_PRINT_MARKERS__ENCLS_THIS_RUN
+        ENCLS_THIS_RUN : DE_Config:DE_PRINT_MARKERS__ENCLS_THIS_RUN required
             @t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=4.0, core=true, t24Name=ENCLS.THIS.RUN)
         ENCL_DEPENDANT -> byValue DE_Config:DE_PRINT_MARKERS__ENCL_DEPENDANT *
             @t24:i (t24Name=ENCL.DEPENDANT)
-        ENCL_FEED_MKR : mml:Integer
+        ENCL_FEED_MKR : T24BusinessTypes:N required
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=9.0, core=true, t24Name=ENCL.FEED.MKR)
-        ENC_COORDINATES : T24BusinessTypes:A
+        ENC_COORDINATES : T24BusinessTypes:A required
             @t24:i (align=L, inputBehaviour=I, maxLength=7, sysNumber=10.0, core=true, t24Name=ENC.COORDINATES)
-        ENV_FEED_MKR : mml:Integer
+        ENV_FEED_MKR : T24BusinessTypes:N required
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=7.0, core=true, t24Name=ENV.FEED.MKR)
         ID -> DE_Config:DE_PRINT_MARKERS PK required
             @i18n:Label (en="Transaction Ref")
@@ -3939,13 +4118,13 @@ Classes {
             @t24:i (align=L, inputBehaviour=I, maxLength=25, sysNumber=0.0, core=true, businessType=A, t24Name=ID)
         INPUTTER -> byValue DE_Config:DE_PRINT_MARKERS__INPUTTER *
             @t24:i (t24Name=INPUTTER)
-        MAX_SHEETS_ENCL : mml:Integer
+        MAX_SHEETS_ENCL : T24BusinessTypes:N required
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=2.0, core=true, t24Name=MAX.SHEETS.ENCL)
-        MAX_SHEETS_NO_ENCL : mml:Integer
+        MAX_SHEETS_NO_ENCL : T24BusinessTypes:N required
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=3.0, core=true, t24Name=MAX.SHEETS.NO.ENCL)
-        MORE_SHEETS_MKR : mml:Integer
+        MORE_SHEETS_MKR : T24BusinessTypes:N required
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=5.0, core=true, t24Name=MORE.SHEETS.MKR)
-        MSM_COORDINATES : T24BusinessTypes:A
+        MSM_COORDINATES : T24BusinessTypes:A required
             @t24:i (align=L, inputBehaviour=I, maxLength=7, sysNumber=6.0, core=true, t24Name=MSM.COORDINATES)
         RECORD_STATUS : T24BusinessTypes:STAT
             @i18n:Label (en="Record Status")
@@ -3962,7 +4141,7 @@ Classes {
     }
     DE_PRINT_MARKERS__DESCRIPTION
     {
-        DESCRIPTION : T24BusinessTypes:A
+        DESCRIPTION : T24BusinessTypes:A required
             @i18n:Label (en=Description)
             @i18n:Tooltip (en=Description)
             @t24:i (align=L, inputBehaviour=I, maxLength=35, multiLanguage=true, sysNumber=1.0, core=true, t24Name=DESCRIPTION)
@@ -4066,7 +4245,7 @@ Classes {
         K_PRIORITY : DE_Config:DE_PRODUCT__K_PRIORITY
             @i18n:Label (en=Priority)
             @i18n:Tooltip (en="Original Priorityof the message in Mapping")
-            @t24:i (align=L, inputBehaviour=N, maxLength=1, sysNumber=2.0, core=true, t24Name=K.PRIORITY)
+            @t24:i (align=L, inputBehaviour=N, maxLength=1, sysNumber=2.0, core=false, t24Name=K.PRIORITY)
         MESSAGE_STATUS : DE_Config:DE_PRODUCT__MESSAGE_STATUS
             @i18n:Label (en="Message Status")
             @i18n:Tooltip (en="Message Status")
@@ -4088,14 +4267,14 @@ Classes {
     }
     DE_PRODUCT__CARRIER_ADDR_NO
     {
-        CARRIER_ADDR_NO : T24BusinessTypes:A
+        CARRIER_ADDR_NO : T24BusinessTypes:A required
             @i18n:Label (en=Carrier)
             @i18n:Tooltip (en="Will this message go as SWIFT or PRINT or TELEX etc")
             @t24:i (align=L, inputBehaviour=I, maxLength=14, sysNumber=3.0, core=true, t24Name=CARRIER.ADDR.NO)
-        COPIES : mml:Integer
+        COPIES : T24BusinessTypes:N
             @i18n:Label (en="Copies ")
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=6.0, core=true, t24Name=COPIES)
-        FORMAT : mml:Integer
+        FORMAT : T24BusinessTypes:N
             @i18n:Label (en=Format)
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=5.0, core=true, t24Name=FORMAT)
         LANGUAGE : T24BusinessTypes:A
@@ -4133,12 +4312,12 @@ Classes {
     DE_PRODUCT__K_COPIES
     {
         K_COPIES : T24BusinessTypes:N
-            @t24:i (align=R, inputBehaviour=N, maxLength=3, sysNumber=6.0, core=true, t24Name=K.COPIES)
+            @t24:i (align=R, inputBehaviour=N, maxLength=3, sysNumber=6.0, core=false, t24Name=K.COPIES)
     }
     DE_PRODUCT__K_FORMAT
     {
         K_FORMAT : T24BusinessTypes:N
-            @t24:i (align=R, inputBehaviour=N, maxLength=3, sysNumber=5.0, core=true, t24Name=K.FORMAT)
+            @t24:i (align=R, inputBehaviour=N, maxLength=3, sysNumber=5.0, core=false, t24Name=K.FORMAT)
     }
     DE_PRODUCT__OVERRIDE
     {
@@ -4151,7 +4330,7 @@ Classes {
         @i18n:Description (en="")
         @t24:i (t24Name=DE.RECEIVED.SWIFT, level=I, type=L, allowedFunctions="L P S", localRefAllowed=false)
     {
-        COMP_TXN_REF : mml:Integer
+        COMP_TXN_REF : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=55, sysNumber=1.0, core=true, t24Name=COMP.TXN.REF)
         DELIVERY_KEY -> DE_Config:DE_RECEIVED_SWIFT PK required
             @i18n:Label (en="Delivery Key")
@@ -4182,7 +4361,7 @@ Classes {
             @t24:i (align=L, inputBehaviour=I, maxLength=23, sysNumber=0.0, core=true, businessType=A, t24Name=KEY)
         OSN_NO : T24BusinessTypes:A
             @t24:i (align=L, inputBehaviour=I, maxLength=6, sysNumber=2.0, core=true, t24Name=OSN.NO)
-        SENT_TIME_STAMP : T24BusinessTypes:A
+        SENT_TIME_STAMP : T24BusinessTypes:A required
             @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=1.0, core=true, t24Name=SENT.TIME.STAMP)
     }
     DE_SEQUENCE_NUMBER
@@ -4219,9 +4398,9 @@ Classes {
             @t24:i (t24Name=INPUTTER)
         IN_SEQ_NUMBER : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=N, maxLength=6, sysNumber=1.0, core=true, t24Name=IN.SEQ.NUMBER)
-        NEW_IN_SEQ_NO : mml:Integer
+        NEW_IN_SEQ_NO : T24BusinessTypes:N required
             @t24:i (align=R, inputBehaviour=I, maxLength=6, sysNumber=3.0, core=true, t24Name=NEW.IN.SEQ.NO)
-        NEW_OUT_SEQ_NO : mml:Integer
+        NEW_OUT_SEQ_NO : T24BusinessTypes:N required
             @t24:i (align=R, inputBehaviour=I, maxLength=6, sysNumber=4.0, core=true, t24Name=NEW.OUT.SEQ.NO)
         OUT_SEQ_NUMBER : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=N, maxLength=6, sysNumber=2.0, core=true, t24Name=OUT.SEQ.NUMBER)
@@ -4274,13 +4453,13 @@ Classes {
         DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
             @i18n:Label (en="Dept Code")
             @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=27.0, core=true, t24Name=DEPT.CODE)
-        DIRECTION : DE_Config:DE_STATEMENT_REQUEST__DIRECTION
+        DIRECTION : DE_Config:DE_STATEMENT_REQUEST__DIRECTION required
             @i18n:Label (en="Stmt Direction")
             @i18n:Tooltip (en="Indicates the Direction of the Statement")
             @t24:i (align=L, inputBehaviour=I, maxLength=10, sysNumber=8.0, core=true, t24Name=DIRECTION)
         INPUTTER -> byValue DE_Config:DE_STATEMENT_REQUEST__INPUTTER *
             @t24:i (t24Name=INPUTTER)
-        INSTITUTION : T24BusinessTypes:CUST_BIC
+        INSTITUTION : T24BusinessTypes:CUST_BIC required
             @i18n:Label (en="Customer Id")
             @i18n:Tooltip (en="Indicates the Customer Id of the Account holder")
             @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=1.0, core=true, t24Name=INSTITUTION, typeModifiers="SWBIC")
@@ -4438,7 +4617,7 @@ Classes {
     }
     DE_STATISTICS__DESCRIPTION
     {
-        DESCRIPTION : T24BusinessTypes:A
+        DESCRIPTION : T24BusinessTypes:A required
             @i18n:Label (en=Description)
             @i18n:Tooltip (en=Description)
             @t24:i (align=L, inputBehaviour=I, maxLength=35, multiLanguage=true, sysNumber=1.0, core=true, t24Name=DESCRIPTION)
@@ -4449,7 +4628,7 @@ Classes {
             @i18n:Label (en=Condition)
             @i18n:Tooltip (en="Value that the field name is to be compared with")
             @t24:i (align=L, inputBehaviour=I, maxLength=30, sysNumber=5.0, core=true, t24Name=CONDITION)
-        FIELD_NAME : DE_Config:DE_STATISTICS__FIELD_NAME__FIELD_NAME
+        FIELD_NAME : DE_Config:DE_STATISTICS__FIELD_NAME__FIELD_NAME required
             @i18n:Label (en="Field Name")
             @i18n:Tooltip (en="Name of the field(used mostly for SWIFT)")
             @t24:i (align=L, inputBehaviour=I, maxLength=18, sysNumber=3.0, core=true, t24Name=FIELD.NAME)
@@ -4469,6 +4648,18 @@ Classes {
             @i18n:Label (en=Inputter)
             @i18n:Tooltip (en="The user who last updated the record")
             @t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=11.0, core=true, t24Name=INPUTTER)
+    }
+    DE_STP_MSG_RESPONSE
+        @i18n:Description (en="")
+        @t24:i (t24Name=DE.STP.MSG.RESPONSE, level=I, type=T, allowedFunctions="L P S", localRefAllowed=false)
+    {
+        VR_RESPONSE -> byValue DE_Config:DE_STP_MSG_RESPONSE__VR_RESPONSE *
+            @t24:i (t24Name=VR.RESPONSE)
+    }
+    DE_STP_MSG_RESPONSE__VR_RESPONSE
+    {
+        VR_RESPONSE : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=N, maxLength=25, sysNumber=1.0, core=true, t24Name=VR.RESPONSE)
     }
     DE_STP_REPAIR_PARM
         @i18n:Description (en="")
@@ -4533,7 +4724,7 @@ Classes {
             @i18n:Label (en=Direction)
             @i18n:Tooltip (en="In or Out")
             @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=4.0, core=true, t24Name=DIRECTION)
-        MESSAGE_TYPE : mml:Integer
+        MESSAGE_TYPE : T24BusinessTypes:N
             @i18n:Label (en="Message Type")
             @i18n:Tooltip (en="Delivery message types generated for this record")
             @t24:i (align=R, inputBehaviour=I, maxLength=35, sysNumber=3.0, core=true, t24Name=MESSAGE.TYPE)
@@ -4619,7 +4810,7 @@ Classes {
     }
     DE_SWIFT_BOOK__NAME
     {
-        NAME : T24BusinessTypes:A
+        NAME : T24BusinessTypes:A required
             @i18n:Label (en=Name)
             @i18n:Tooltip (en="Indicates the Name ")
             @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=1.0, core=true, t24Name=NAME)
@@ -4655,15 +4846,15 @@ Classes {
         DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
             @i18n:Label (en="Dept Code")
             @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=30.0, core=true, t24Name=DEPT.CODE)
-        DIVERT_ADDRESS : T24BusinessTypes:S
+        DIVERT_ADDRESS : T24BusinessTypes:S required
             @t24:i (align=L, inputBehaviour=I, maxLength=18, sysNumber=1.0, core=true, t24Name=DIVERT.ADDRESS)
-        DIVERT_FORMAT : DE_Config:DE_SWIFT_DIVERSION__DIVERT_FORMAT
+        DIVERT_FORMAT : DE_Config:DE_SWIFT_DIVERSION__DIVERT_FORMAT required
             @t24:i (align=L, inputBehaviour=I, maxLength=11, sysNumber=2.0, core=true, t24Name=DIVERT.FORMAT)
         INPUTTER -> byValue DE_Config:DE_SWIFT_DIVERSION__INPUTTER *
             @t24:i (t24Name=INPUTTER)
-        INWARD_FILE : T24BusinessTypes:ANY
+        INWARD_FILE : T24BusinessTypes:ANY required
             @t24:i (align=L, inputBehaviour=I, maxLength=25, sysNumber=5.0, core=true, t24Name=INWARD.FILE)
-        INWARD_RECORD : T24BusinessTypes:ANY
+        INWARD_RECORD : T24BusinessTypes:ANY required
             @t24:i (align=L, inputBehaviour=I, maxLength=11, sysNumber=6.0, core=true, t24Name=INWARD.RECORD)
         IN_SPECIAL_IF -> byValue DE_Config:DE_SWIFT_DIVERSION__IN_SPECIAL_IF *
             @t24:i (t24Name=IN.SPECIAL.IF)
@@ -4673,9 +4864,9 @@ Classes {
             @t24:i (align=R, inputBehaviour=I, maxLength=4, sysNumber=0.0, core=true, t24Name=MESSAGE.TYPE)
         NO_DAYS_ON_FILE : T24BusinessTypes:ANY
             @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=9.0, core=true, t24Name=NO.DAYS.ON.FILE)
-        OUTWARD_FILE : T24BusinessTypes:ANY
+        OUTWARD_FILE : T24BusinessTypes:ANY required
             @t24:i (align=L, inputBehaviour=I, maxLength=25, sysNumber=3.0, core=true, t24Name=OUTWARD.FILE)
-        OUTWARD_RECORD : T24BusinessTypes:ANY
+        OUTWARD_RECORD : T24BusinessTypes:ANY required
             @t24:i (align=L, inputBehaviour=I, maxLength=11, sysNumber=4.0, core=true, t24Name=OUTWARD.RECORD)
         RECORD_STATUS : T24BusinessTypes:STAT
             @i18n:Label (en="Record Status")
@@ -4773,7 +4964,7 @@ Classes {
     }
     DE_TRANSLATION__DESCRIPTION
     {
-        DESCRIPTION : T24BusinessTypes:A
+        DESCRIPTION : T24BusinessTypes:A required
             @i18n:Label (en=Description)
             @i18n:Tooltip (en=Description)
             @t24:i (align=L, inputBehaviour=I, maxLength=35, multiLanguage=true, sysNumber=1.0, core=true, t24Name=DESCRIPTION)
@@ -4827,15 +5018,15 @@ Classes {
         RECORD_STATUS : T24BusinessTypes:STAT
             @i18n:Label (en="Record Status")
             @t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=18.0, core=true, t24Name=RECORD.STATUS)
-        RESERVED_1 : mml:Integer
+        RESERVED_1 : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=1, sysNumber=17.0, core=true, t24Name=RESERVED.1)
-        RESERVED_2 : mml:Integer
+        RESERVED_2 : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=1, sysNumber=16.0, core=true, t24Name=RESERVED.2)
-        RESERVED_3 : mml:Integer
+        RESERVED_3 : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=1, sysNumber=15.0, core=true, t24Name=RESERVED.3)
-        RESERVED_4 : mml:Integer
+        RESERVED_4 : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=1, sysNumber=14.0, core=true, t24Name=RESERVED.4)
-        RESERVED_5 : mml:Integer
+        RESERVED_5 : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=1, sysNumber=13.0, core=true, t24Name=RESERVED.5)
         UNITS_11_19 -> byValue DE_Config:DE_WORDS__UNITS_11_19 *
             @t24:i (t24Name=UNITS.11.19)
@@ -4865,7 +5056,7 @@ Classes {
     }
     DE_WORDS__DESCRIPTION
     {
-        DESCRIPTION : T24BusinessTypes:A
+        DESCRIPTION : T24BusinessTypes:A required
             @i18n:Label (en=Description)
             @i18n:Tooltip (en=Description)
             @t24:i (align=L, inputBehaviour=I, maxLength=35, multiLanguage=true, sysNumber=1.0, core=true, t24Name=DESCRIPTION)
@@ -4916,6 +5107,11 @@ Classes {
     {
         UNIT_TRILLION : T24BusinessTypes:A
             @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=9.0, core=true, t24Name=UNIT.TRILLION)
+    }
+    DE_XML_SCHEMA
+        @i18n:Description (en="")
+        @t24:i (t24Name=DE.XML.SCHEMA, level=I, type=T, allowedFunctions="L P S", localRefAllowed=false)
+    {
     }
     SWIFT_CODE_WORDS
         @i18n:Description (en="")
@@ -5049,7 +5245,7 @@ Classes {
         CURR_NO : T24BusinessTypes:N
             @i18n:Label (en="Curr No")
             @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=28.0, core=true, t24Name=CURR.NO)
-        CURR_SWIFT_REL : mml:Integer
+        CURR_SWIFT_REL : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=4, sysNumber=1.0, core=true, t24Name=CURR.SWIFT.REL)
         DATE_TIME -> byValue DE_Config:SWIFT_PARAMETER__DATE_TIME *
             @t24:i (t24Name=DATE.TIME)
@@ -5166,6 +5362,9 @@ Enumerations {
     DE_ADDRESS__HOLD_OUTPUT : mml:string
         NO=NO
         Y=Y
+    DE_ADDRESS__TAG25_IND : mml:string
+        NO=NO
+        YES=YES
     DE_AUTO_TRANSLATION__UPDATE : mml:string
         ALL=ALL
         NEW=NEW
@@ -5386,7 +5585,10 @@ Enumerations {
         N=N
     DE_MESSAGE__FIELD_NAME__SINGLE_MULTI : mml:string
         M=M
+        ML=ML
         S=S
+        V=V
+        VL=VL
     DE_MESSAGE__K_COPIES : mml:string
         NO=NO
         Y=Y
@@ -5407,7 +5609,10 @@ Enumerations {
         N=N
     DE_MESSAGE__USR_FIELD_NAME__USR_SING_MULT : mml:string
         M=M
+        ML=ML
         S=S
+        V=V
+        VL=VL
     DE_O_HEADER_ARCH__DISPOSITION : mml:string
         NOINPUT=NOINPUT
     DE_O_HEADER_ARCH__K_PRIORITY : mml:string

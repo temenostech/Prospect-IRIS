@@ -77,7 +77,7 @@ Classes {
             @i18n:Label (en="Investment Pgm")
             @i18n:Tooltip (en="Investment Pgm used for Rebalancing")
             @t24:i (align=L, inputBehaviour=I, maxLength=12, sysNumber=18.0, core=true, businessType=A, t24Name=INVESTMENT.PROGRAM)
-        MNEMONIC : T24BusinessTypes:MNE
+        MNEMONIC : T24BusinessTypes:MNE required
             @i18n:Label (en=Mnemonic)
             @i18n:Tooltip (en="The alternate short way of calling the record")
             @t24:i (align=L, inputBehaviour=I, maxLength=20, sysNumber=2.0, core=true, t24Name=MNEMONIC)
@@ -88,19 +88,19 @@ Classes {
         RECORD_STATUS : T24BusinessTypes:STAT
             @i18n:Label (en="Record Status")
             @t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=27.0, core=true, t24Name=RECORD.STATUS)
-        RESERVED3 : mml:Integer
+        RESERVED3 : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=E, maxLength=10, sysNumber=24.0, core=true, t24Name=RESERVED3)
-        RESERVED4 : mml:Integer
+        RESERVED4 : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=E, maxLength=10, sysNumber=23.0, core=true, t24Name=RESERVED4)
-        RESERVED5 : mml:Integer
+        RESERVED5 : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=E, maxLength=10, sysNumber=22.0, core=true, t24Name=RESERVED5)
-        RESERVED6 : mml:Integer
+        RESERVED6 : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=E, maxLength=10, sysNumber=21.0, core=true, t24Name=RESERVED6)
-        RESERVED7 : mml:Integer
+        RESERVED7 : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=E, maxLength=10, sysNumber=20.0, core=true, t24Name=RESERVED7)
         SEC_ACC_NO -> byValue AM_Group:AM_GROUP_PORT__SEC_ACC_NO *
             @t24:i (t24Name=SEC.ACC.NO)
-        VAL_CURRENCY -> ST_CurrencyConfig:CURRENCY
+        VAL_CURRENCY -> ST_CurrencyConfig:CURRENCY required
             @i18n:Label (en="Valuation Ccy")
             @i18n:Tooltip (en="Valuation Ccy")
             @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=9.0, core=true, businessType=A, t24Name=VAL.CURRENCY)
@@ -112,9 +112,8 @@ Classes {
         GROUP_CODE -> AM_Group:AM_GROUP_PORT_CONCAT PK required
             @i18n:Label (en="Group Code")
             @t24:i (align=L, inputBehaviour=I, maxLength=18, sysNumber=0.0, core=true, businessType=A, t24Name=GROUP.CODE)
-        SAM_ID -> SC_ScoPortfolioMaintenance:SEC_ACC_MASTER
-            @i18n:Label (en="Portfolio Id")
-            @t24:i (align=L, inputBehaviour=I, maxLength=12, sysNumber=1.0, core=true, businessType=A, t24Name=SAM.ID)
+        SAM_ID -> byValue AM_Group:AM_GROUP_PORT_CONCAT__SAM_ID *
+            @t24:i (t24Name=SAM.ID)
     }
     AM_GROUP_PORT_CONCAT_HIST
         @i18n:Description (en="")
@@ -129,7 +128,12 @@ Classes {
         GROUP_ID : T24BusinessTypes:N
             @i18n:Label (en="Group Id")
             @t24:i (align=R, inputBehaviour=N, maxLength=50, core=false, t24Name=GROUP.ID)
-        SAM_ID : T24BusinessTypes:A
+        SAM_ID -> byValue AM_Group:AM_GROUP_PORT_CONCAT_HIST__SAM_ID *
+            @t24:i (t24Name=SAM.ID)
+    }
+    AM_GROUP_PORT_CONCAT_HIST__SAM_ID
+    {
+        SAM_ID : T24BusinessTypes:A required
             @i18n:Label (en="Portfolio Id")
             @t24:i (align=L, inputBehaviour=I, maxLength=20, sysNumber=1.0, core=true, t24Name=SAM.ID)
     }
@@ -140,7 +144,18 @@ Classes {
         GROUP_CODE -> AM_Group:AM_GROUP_PORT_CONCAT_LW PK required
             @i18n:Label (en="Group Code")
             @t24:i (align=L, inputBehaviour=I, maxLength=18, sysNumber=0.0, core=true, businessType=A, t24Name=GROUP.CODE)
-        SAM_ID -> SC_ScoPortfolioMaintenance:SEC_ACC_MASTER
+        SAM_ID -> byValue AM_Group:AM_GROUP_PORT_CONCAT_LW__SAM_ID *
+            @t24:i (t24Name=SAM.ID)
+    }
+    AM_GROUP_PORT_CONCAT_LW__SAM_ID
+    {
+        SAM_ID -> SC_ScoPortfolioMaintenance:SEC_ACC_MASTER required
+            @i18n:Label (en="Portfolio Id")
+            @t24:i (align=L, inputBehaviour=I, maxLength=12, sysNumber=1.0, core=true, businessType=A, t24Name=SAM.ID)
+    }
+    AM_GROUP_PORT_CONCAT__SAM_ID
+    {
+        SAM_ID -> SC_ScoPortfolioMaintenance:SEC_ACC_MASTER required
             @i18n:Label (en="Portfolio Id")
             @t24:i (align=L, inputBehaviour=I, maxLength=12, sysNumber=1.0, core=true, businessType=A, t24Name=SAM.ID)
     }
@@ -148,21 +163,31 @@ Classes {
         @i18n:Description (en="")
         @t24:i (t24Name=AM.GROUP.PORT.DATE.CHANGE, level=F, type=T, allowedFunctions="L P S", localRefAllowed=false)
     {
-        DATE_OF_CHANGE : T24BusinessTypes:D
-            @t24:i (align=R, inputBehaviour=I, maxLength=20, sysNumber=1.0, core=true, t24Name=DATE.OF.CHANGE)
+        DATE_OF_CHANGE -> byValue AM_Group:AM_GROUP_PORT_DATE_CHANGE__DATE_OF_CHANGE *
+            @t24:i (t24Name=DATE.OF.CHANGE)
         GROUP_CODE -> AM_Group:AM_GROUP_PORT_DATE_CHANGE PK required
             @i18n:Label (en="Group Code")
             @t24:i (align=L, inputBehaviour=I, maxLength=60, sysNumber=0.0, core=true, businessType=A, t24Name=GROUP.CODE)
+    }
+    AM_GROUP_PORT_DATE_CHANGE__DATE_OF_CHANGE
+    {
+        DATE_OF_CHANGE : T24BusinessTypes:D
+            @t24:i (align=R, inputBehaviour=I, maxLength=20, sysNumber=1.0, core=true, t24Name=DATE.OF.CHANGE)
     }
     AM_GROUP_PORT_UNIQUE
         @i18n:Description (en="")
         @t24:i (t24Name=AM.GROUP.PORT.UNIQUE, level=F, type=T, allowedFunctions="L P S", localRefAllowed=false)
     {
+        SAM_ID -> byValue AM_Group:AM_GROUP_PORT_UNIQUE__SAM_ID *
+            @t24:i (t24Name=SAM.ID)
+        UNIQUE_GROUP_ID -> AM_Group:AM_GROUP_PORT_UNIQUE PK required
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=0.0, core=true, businessType=A, t24Name=UNIQUE.GROUP.ID)
+    }
+    AM_GROUP_PORT_UNIQUE__SAM_ID
+    {
         SAM_ID : T24BusinessTypes:SAM
             @i18n:Label (en="Portfolio Id")
             @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=1.0, core=true, t24Name=SAM.ID)
-        UNIQUE_GROUP_ID -> AM_Group:AM_GROUP_PORT_UNIQUE PK required
-            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=0.0, core=true, businessType=A, t24Name=UNIQUE.GROUP.ID)
     }
     AM_GROUP_PORT__COMMENTS
     {
@@ -328,7 +353,7 @@ Classes {
     }
     AM_GROUP_TYPE__DESCRIPTION__DESCRIPTION
     {
-        DESCRIPTION : T24BusinessTypes:A
+        DESCRIPTION : T24BusinessTypes:A required
             @i18n:Label (en=Description)
             @i18n:Tooltip (en=Description)
             @t24:i (align=L, inputBehaviour=I, maxLength=35, multiLanguage=true, sysNumber=1.0, core=true, t24Name=DESCRIPTION)
@@ -350,9 +375,8 @@ Classes {
         @i18n:Description (en="")
         @t24:i (t24Name=AM.PORT.GROUP.CONCAT, level=F, type=T, allowedFunctions="L P S", localRefAllowed=false)
     {
-        GROUP_ID : T24BusinessTypes:A
-            @i18n:Label (en="Group Id")
-            @t24:i (align=L, inputBehaviour=I, maxLength=50, sysNumber=1.0, core=true, t24Name=GROUP.ID)
+        GROUP_ID -> byValue AM_Group:AM_PORT_GROUP_CONCAT__GROUP_ID *
+            @t24:i (t24Name=GROUP.ID)
         SAM_CODE -> AM_Group:AM_PORT_GROUP_CONCAT PK required
             @i18n:Label (en=Portfolio)
             @t24:i (align=L, inputBehaviour=I, maxLength=20, sysNumber=0.0, core=true, businessType=A, t24Name=SAM.CODE)
@@ -361,21 +385,37 @@ Classes {
         @i18n:Description (en="")
         @t24:i (t24Name=AM.PORT.GROUP.CONCAT.HIST, level=F, type=T, allowedFunctions="L P S", localRefAllowed=false)
     {
-        GROUP_ID : T24BusinessTypes:A
-            @i18n:Label (en="Group Id")
-            @t24:i (align=L, inputBehaviour=I, maxLength=50, sysNumber=1.0, core=true, t24Name=GROUP.ID)
+        GROUP_ID -> byValue AM_Group:AM_PORT_GROUP_CONCAT_HIST__GROUP_ID *
+            @t24:i (t24Name=GROUP.ID)
         SAM_CODE -> AM_Group:AM_PORT_GROUP_CONCAT_HIST PK required
             @i18n:Label (en=Portfolio)
             @t24:i (align=L, inputBehaviour=I, maxLength=20, sysNumber=0.0, core=true, businessType=A, t24Name=SAM.CODE)
+    }
+    AM_PORT_GROUP_CONCAT_HIST__GROUP_ID
+    {
+        GROUP_ID : T24BusinessTypes:A required
+            @i18n:Label (en="Group Id")
+            @t24:i (align=L, inputBehaviour=I, maxLength=50, sysNumber=1.0, core=true, t24Name=GROUP.ID)
+    }
+    AM_PORT_GROUP_CONCAT__GROUP_ID
+    {
+        GROUP_ID : T24BusinessTypes:A required
+            @i18n:Label (en="Group Id")
+            @t24:i (align=L, inputBehaviour=I, maxLength=50, sysNumber=1.0, core=true, t24Name=GROUP.ID)
     }
     AM_PORT_GROUP_DATE_CHANGE
         @i18n:Description (en="")
         @t24:i (t24Name=AM.PORT.GROUP.DATE.CHANGE, level=F, type=T, allowedFunctions="L P S", localRefAllowed=false)
     {
-        DATE_OF_CHANGE : T24BusinessTypes:D
-            @t24:i (align=R, inputBehaviour=I, maxLength=20, sysNumber=1.0, core=true, t24Name=DATE.OF.CHANGE)
+        DATE_OF_CHANGE -> byValue AM_Group:AM_PORT_GROUP_DATE_CHANGE__DATE_OF_CHANGE *
+            @t24:i (t24Name=DATE.OF.CHANGE)
         PORTFOLIO_CODE -> AM_Group:AM_PORT_GROUP_DATE_CHANGE PK required
             @t24:i (align=L, inputBehaviour=I, maxLength=60, sysNumber=0.0, core=true, businessType=A, t24Name=PORTFOLIO.CODE)
+    }
+    AM_PORT_GROUP_DATE_CHANGE__DATE_OF_CHANGE
+    {
+        DATE_OF_CHANGE : T24BusinessTypes:D
+            @t24:i (align=R, inputBehaviour=I, maxLength=20, sysNumber=1.0, core=true, t24Name=DATE.OF.CHANGE)
     }
     AM_PORT_TYPE
         @i18n:Description (en="")
@@ -415,7 +455,7 @@ Classes {
         PORTFOLIO_TYPE -> AM_Group:AM_PORT_TYPE PK required
             @i18n:Label (en="Portfolio Type")
             @t24:i (align=L, inputBehaviour=I, maxLength=6, sysNumber=0.0, core=true, businessType=A, t24Name=PORTFOLIO.TYPE)
-        PRIORITY : mml:Integer
+        PRIORITY : T24BusinessTypes:N
             @i18n:Label (en=Priority)
             @t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=4.0, core=true, t24Name=PRIORITY)
         RECORD_STATUS : T24BusinessTypes:STAT
@@ -454,7 +494,7 @@ Classes {
     }
     AM_PORT_TYPE__DESCRIPTION__DESCRIPTION
     {
-        DESCRIPTION : T24BusinessTypes:A
+        DESCRIPTION : T24BusinessTypes:A required
             @i18n:Label (en=Description)
             @i18n:Tooltip (en=Description)
             @t24:i (align=L, inputBehaviour=I, maxLength=35, multiLanguage=true, sysNumber=1.0, core=true, t24Name=DESCRIPTION)
@@ -476,7 +516,7 @@ Classes {
         @i18n:Description (en="")
         @t24:i (t24Name=AM.VALUATION.EXT.GRP.CONS, level=F, type=L, allowedFunctions="L P S", localRefAllowed=false)
     {
-        ACCRUED_INT : T24BusinessTypes:AMT
+        ACCRUED_INT : T24BusinessTypes:AMT required
             @i18n:Label (en="Accrued Int")
             @t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=9.0, core=true, t24Name=ACCRUED.INT)
         AM_GROUP_ID : T24BusinessTypes:N
@@ -491,64 +531,64 @@ Classes {
             @t24:i (align=L, inputBehaviour=N, maxLength=3, core=false, t24Name=ASSET.TYPE, genOperation="@ID[\'*\',9,1]")
         AVE_GRP_CON_KEY -> AM_Group:AM_VALUATION_EXT_GRP_CONS PK required
             @t24:i (align=L, inputBehaviour=I, maxLength=80, sysNumber=0.0, core=true, businessType=A, t24Name=AVE.GRP.CON.KEY)
-        BEGIN_DATE : T24BusinessTypes:D
+        BEGIN_DATE : T24BusinessTypes:D required
             @i18n:Label (en="Begin Date")
             @t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=21.0, core=true, t24Name=BEGIN.DATE)
-        BOOK_COST_SEC_CCY : T24BusinessTypes:AMT
+        BOOK_COST_SEC_CCY : T24BusinessTypes:AMT required
             @i18n:Label (en="Book Cost Sec Ccy")
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=18.0, core=true, t24Name=BOOK.COST.SEC.CCY)
-        BOOK_CST_EXC_RATE : T24BusinessTypes:AMT
+        BOOK_CST_EXC_RATE : T24BusinessTypes:AMT required
             @i18n:Label (en="Book Cst Exc Rate")
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=22.0, core=true, t24Name=BOOK.CST.EXC.RATE)
-        COST_PRICE : T24BusinessTypes:AMT
+        COST_PRICE : T24BusinessTypes:AMT required
             @i18n:Label (en="Cost Price")
             @t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=3.0, core=true, t24Name=COST.PRICE)
-        COUNTER_NOMINAL : T24BusinessTypes:AMT
+        COUNTER_NOMINAL : T24BusinessTypes:AMT required
             @i18n:Label (en="Counter Nominal")
             @t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=5.0, core=true, t24Name=COUNTER.NOMINAL)
-        COUP_PR_YEAR : T24BusinessTypes:AMT
+        COUP_PR_YEAR : T24BusinessTypes:AMT required
             @i18n:Label (en="Coup Pr Year")
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=15.0, core=true, t24Name=COUP.PR.YEAR)
-        DATE_TIME : T24BusinessTypes:A
+        DATE_TIME : T24BusinessTypes:A required
             @i18n:Label (en="Date time")
             @i18n:Tooltip (en="Date and time when record was input or authorised")
             @t24:i (align=L, inputBehaviour=I, maxLength=18, sysNumber=25.0, core=true, t24Name=DATE.TIME)
-        DEPOSITORY : T24BusinessTypes:A
+        DEPOSITORY : T24BusinessTypes:A required
             @i18n:Label (en=Depository)
             @i18n:Tooltip (en="Depository the Security to be delivered from/to")
             @t24:i (align=L, inputBehaviour=I, maxLength=10, sysNumber=20.0, core=true, t24Name=DEPOSITORY)
-        DURATION : mml:Integer
+        DURATION : T24BusinessTypes:N required
             @i18n:Label (en=Duration)
             @i18n:Tooltip (en="Duration of that opportunity to be active")
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=16.0, core=true, t24Name=DURATION)
-        ESTIMATED_INCOME : T24BusinessTypes:AMT
+        ESTIMATED_INCOME : T24BusinessTypes:AMT required
             @i18n:Label (en="Estimated Income")
             @t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=10.0, core=true, t24Name=ESTIMATED.INCOME)
-        ESTIMATION : T24BusinessTypes:AMT
+        ESTIMATION : T24BusinessTypes:AMT required
             @i18n:Label (en=Estimation)
             @t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=6.0, core=true, t24Name=ESTIMATION)
-        GRP_VAL_CURRENCY : T24BusinessTypes:A
+        GRP_VAL_CURRENCY : T24BusinessTypes:A required
             @i18n:Label (en="Grp Val CCy")
             @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=24.0, core=true, t24Name=GRP.VAL.CURRENCY)
-        HELD_SINCE : T24BusinessTypes:D
+        HELD_SINCE : T24BusinessTypes:D required
             @t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=23.0, core=true, t24Name=HELD.SINCE)
-        INT_AT_MATURITY : T24BusinessTypes:AMT
+        INT_AT_MATURITY : T24BusinessTypes:AMT required
             @i18n:Label (en=Int.At.Maturity)
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=14.0, core=true, t24Name=INT.AT.MATURITY)
-        MARGIN_VALUE : T24BusinessTypes:AMT
+        MARGIN_VALUE : T24BusinessTypes:AMT required
             @i18n:Label (en="Margin Value")
             @t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=8.0, core=true, t24Name=MARGIN.VALUE)
-        MARKET_PRICE : T24BusinessTypes:AMT
+        MARKET_PRICE : T24BusinessTypes:AMT required
             @i18n:Label (en="Market Price")
             @i18n:Tooltip (en="Indicates the Market Price")
             @t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=4.0, core=true, t24Name=MARKET.PRICE)
-        MATURITY_DATE : T24BusinessTypes:D
+        MATURITY_DATE : T24BusinessTypes:D required
             @i18n:Label (en="Maturity Date")
             @i18n:Tooltip (en="Indicates the Maturity Date of the Transaction")
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=17.0, core=true, t24Name=MATURITY.DATE)
         NET_ACCR_DIV : T24BusinessTypes:AMT
             @t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=27.0, core=true, t24Name=NET.ACCR.DIV)
-        NO_NOMINAL : T24BusinessTypes:AMT
+        NO_NOMINAL : T24BusinessTypes:AMT required
             @i18n:Label (en=Nominal)
             @t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=2.0, core=true, t24Name=NO.NOMINAL)
         ONLINE_REQ : T24BusinessTypes:N
@@ -578,16 +618,16 @@ Classes {
             @t24:i (align=L, inputBehaviour=N, maxLength=5, core=false, t24Name=SUB.ASSET.TYPE, genOperation="@ID[\'*\',8,1]")
         VAL_CURR : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=N, maxLength=3, core=false, t24Name=VAL.CURR)
-        V_DATE_MARGIN : T24BusinessTypes:AMT
+        V_DATE_MARGIN : T24BusinessTypes:AMT required
             @i18n:Label (en=V.Dt.Margin)
             @t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=13.0, core=true, t24Name=V.DATE.MARGIN)
-        V_DATE_NOMINAL : T24BusinessTypes:AMT
+        V_DATE_NOMINAL : T24BusinessTypes:AMT required
             @i18n:Label (en="V Date Nominal")
             @t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=11.0, core=true, t24Name=V.DATE.NOMINAL)
-        V_DT_ESTIMATION : T24BusinessTypes:AMT
+        V_DT_ESTIMATION : T24BusinessTypes:AMT required
             @i18n:Label (en="V Dt Estimation")
             @t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=12.0, core=true, t24Name=V.DT.ESTIMATION)
-        YIELD : T24BusinessTypes:AMT
+        YIELD : T24BusinessTypes:AMT required
             @i18n:Label (en=Yield)
             @t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=7.0, core=true, t24Name=YIELD)
     }
@@ -595,7 +635,7 @@ Classes {
         @i18n:Description (en="")
         @t24:i (t24Name=AM.VALUATION.EXT.GRP.CONS.LW, level=F, type=L, allowedFunctions="L P S", localRefAllowed=false)
     {
-        ACCRUED_INT : T24BusinessTypes:AMT
+        ACCRUED_INT : T24BusinessTypes:AMT required
             @i18n:Label (en="Accrued Int")
             @t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=9.0, core=true, t24Name=ACCRUED.INT)
         AM_GROUP_ID : T24BusinessTypes:N
@@ -610,64 +650,64 @@ Classes {
             @t24:i (align=L, inputBehaviour=N, maxLength=3, core=false, t24Name=ASSET.TYPE, genOperation="@ID[\'*\',9,1]")
         AVE_GRP_CON_LW_KEY -> AM_Group:AM_VALUATION_EXT_GRP_CONS_LW PK required
             @t24:i (align=L, inputBehaviour=I, maxLength=80, sysNumber=0.0, core=true, businessType=A, t24Name=AVE.GRP.CON.LW.KEY)
-        BEGIN_DATE : T24BusinessTypes:D
+        BEGIN_DATE : T24BusinessTypes:D required
             @i18n:Label (en="Begin Date")
             @t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=21.0, core=true, t24Name=BEGIN.DATE)
-        BOOK_COST_SEC_CCY : T24BusinessTypes:AMT
+        BOOK_COST_SEC_CCY : T24BusinessTypes:AMT required
             @i18n:Label (en="Book Cost Sec Ccy")
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=18.0, core=true, t24Name=BOOK.COST.SEC.CCY)
-        BOOK_CST_EXC_RATE : T24BusinessTypes:AMT
+        BOOK_CST_EXC_RATE : T24BusinessTypes:AMT required
             @i18n:Label (en="Book Cst Exc Rate")
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=22.0, core=true, t24Name=BOOK.CST.EXC.RATE)
-        COST_PRICE : T24BusinessTypes:AMT
+        COST_PRICE : T24BusinessTypes:AMT required
             @i18n:Label (en="Cost Price")
             @t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=3.0, core=true, t24Name=COST.PRICE)
-        COUNTER_NOMINAL : T24BusinessTypes:AMT
+        COUNTER_NOMINAL : T24BusinessTypes:AMT required
             @i18n:Label (en="Counter Nominal")
             @t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=5.0, core=true, t24Name=COUNTER.NOMINAL)
-        COUP_PR_YEAR : T24BusinessTypes:AMT
+        COUP_PR_YEAR : T24BusinessTypes:AMT required
             @i18n:Label (en="Coup Pr Year")
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=15.0, core=true, t24Name=COUP.PR.YEAR)
-        DATE_TIME : T24BusinessTypes:A
+        DATE_TIME : T24BusinessTypes:A required
             @i18n:Label (en="Date time")
             @i18n:Tooltip (en="Date and time when record was input or authorised")
             @t24:i (align=L, inputBehaviour=I, maxLength=18, sysNumber=25.0, core=true, t24Name=DATE.TIME)
-        DEPOSITORY : T24BusinessTypes:A
+        DEPOSITORY : T24BusinessTypes:A required
             @i18n:Label (en=Depository)
             @i18n:Tooltip (en="Depository the Security to be delivered from/to")
             @t24:i (align=L, inputBehaviour=I, maxLength=10, sysNumber=20.0, core=true, t24Name=DEPOSITORY)
-        DURATION : mml:Integer
+        DURATION : T24BusinessTypes:N required
             @i18n:Label (en=Duration)
             @i18n:Tooltip (en="Duration of that opportunity to be active")
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=16.0, core=true, t24Name=DURATION)
-        ESTIMATED_INCOME : T24BusinessTypes:AMT
+        ESTIMATED_INCOME : T24BusinessTypes:AMT required
             @i18n:Label (en="Estimated Income")
             @t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=10.0, core=true, t24Name=ESTIMATED.INCOME)
-        ESTIMATION : T24BusinessTypes:AMT
+        ESTIMATION : T24BusinessTypes:AMT required
             @i18n:Label (en=Estimation)
             @t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=6.0, core=true, t24Name=ESTIMATION)
-        GRP_VAL_CURRENCY : T24BusinessTypes:A
+        GRP_VAL_CURRENCY : T24BusinessTypes:A required
             @i18n:Label (en="Grp Val CCy")
             @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=24.0, core=true, t24Name=GRP.VAL.CURRENCY)
-        HELD_SINCE : T24BusinessTypes:D
+        HELD_SINCE : T24BusinessTypes:D required
             @t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=23.0, core=true, t24Name=HELD.SINCE)
-        INT_AT_MATURITY : T24BusinessTypes:AMT
+        INT_AT_MATURITY : T24BusinessTypes:AMT required
             @i18n:Label (en=Int.At.Maturity)
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=14.0, core=true, t24Name=INT.AT.MATURITY)
-        MARGIN_VALUE : T24BusinessTypes:AMT
+        MARGIN_VALUE : T24BusinessTypes:AMT required
             @i18n:Label (en="Margin Value")
             @t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=8.0, core=true, t24Name=MARGIN.VALUE)
-        MARKET_PRICE : T24BusinessTypes:AMT
+        MARKET_PRICE : T24BusinessTypes:AMT required
             @i18n:Label (en="Market Price")
             @i18n:Tooltip (en="Indicates the Market Price")
             @t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=4.0, core=true, t24Name=MARKET.PRICE)
-        MATURITY_DATE : T24BusinessTypes:D
+        MATURITY_DATE : T24BusinessTypes:D required
             @i18n:Label (en="Maturity Date")
             @i18n:Tooltip (en="Indicates the Maturity Date of the Transaction")
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=17.0, core=true, t24Name=MATURITY.DATE)
         NET_ACCR_DIV : T24BusinessTypes:AMT
             @t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=27.0, core=true, t24Name=NET.ACCR.DIV)
-        NO_NOMINAL : T24BusinessTypes:AMT
+        NO_NOMINAL : T24BusinessTypes:AMT required
             @i18n:Label (en=Nominal)
             @t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=2.0, core=true, t24Name=NO.NOMINAL)
         ORIG_ACCR_DIV : T24BusinessTypes:AMT
@@ -691,41 +731,1582 @@ Classes {
         SUB_ASSET_TYPE : T24BusinessTypes:N
             @i18n:Label (en="Sub Asset Type")
             @t24:i (align=L, inputBehaviour=N, maxLength=5, core=false, t24Name=SUB.ASSET.TYPE, genOperation="@ID[\'*\',8,1]")
-        V_DATE_MARGIN : T24BusinessTypes:AMT
+        V_DATE_MARGIN : T24BusinessTypes:AMT required
             @i18n:Label (en=V.Dt.Margin)
             @t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=13.0, core=true, t24Name=V.DATE.MARGIN)
-        V_DATE_NOMINAL : T24BusinessTypes:AMT
+        V_DATE_NOMINAL : T24BusinessTypes:AMT required
             @i18n:Label (en="V Date Nominal")
             @t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=11.0, core=true, t24Name=V.DATE.NOMINAL)
-        V_DT_ESTIMATION : T24BusinessTypes:AMT
+        V_DT_ESTIMATION : T24BusinessTypes:AMT required
             @i18n:Label (en="V Dt Estimation")
             @t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=12.0, core=true, t24Name=V.DT.ESTIMATION)
-        YIELD : T24BusinessTypes:AMT
+        YIELD : T24BusinessTypes:AMT required
             @i18n:Label (en=Yield)
             @t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=7.0, core=true, t24Name=YIELD)
     }
     AM_VALUATION_EXT_GRP_CONS_LW__PORTFOLIO_NO
     {
-        PORTFOLIO_NO -> SC_ScoPortfolioMaintenance:SEC_ACC_MASTER
+        PORTFOLIO_NO -> SC_ScoPortfolioMaintenance:SEC_ACC_MASTER required
             @i18n:Label (en="Portfoio No")
             @i18n:Tooltip (en="Indicates the Portfolio Account of the customer")
             @t24:i (align=L, inputBehaviour=I, maxLength=10, sysNumber=19.0, core=true, businessType=A, t24Name=PORTFOLIO.NO)
     }
     AM_VALUATION_EXT_GRP_CONS__PORTFOLIO_NO
     {
-        PORTFOLIO_NO -> SC_ScoPortfolioMaintenance:SEC_ACC_MASTER
+        PORTFOLIO_NO -> SC_ScoPortfolioMaintenance:SEC_ACC_MASTER required
             @i18n:Label (en="Portfoio No")
             @i18n:Tooltip (en="Indicates the Portfolio Account of the customer")
             @t24:i (align=L, inputBehaviour=I, maxLength=10, sysNumber=19.0, core=true, businessType=A, t24Name=PORTFOLIO.NO)
+    }
+    AM_VEH_GRP_01
+        @i18n:Description (en="")
+        @t24:i (t24Name=AM.VEH.GRP.01, level=F, type=T, allowedFunctions="L P S", localRefAllowed=false)
+    {
+        ACCRUED_INT : T24BusinessTypes:AMT
+            @i18n:Label (en="Accrued Int")
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=9.0, core=true, t24Name=ACCRUED.INT)
+        AM_GROUP_ID : T24BusinessTypes:N
+            @i18n:Label (en="Group Id")
+            @t24:i (align=L, inputBehaviour=N, maxLength=8, core=false, t24Name=AM.GROUP.ID, genOperation="@ID[\'*\',1,1]")
+        APPLICATION : T24BusinessTypes:N
+            @i18n:Label (en=Application)
+            @t24:i (align=L, inputBehaviour=N, maxLength=2, core=false, t24Name=APPLICATION, genOperation="@ID[\'*\',2,1]")
+        ASSET_TYPE : T24BusinessTypes:N
+            @i18n:Label (en="Asset Type")
+            @i18n:Tooltip (en="Indicates the asset type")
+            @t24:i (align=L, inputBehaviour=N, maxLength=3, core=false, t24Name=ASSET.TYPE, genOperation="@ID[\'*\',9,1]")
+        AVE_GRP_CON_KEY : T24BusinessTypes:A PK required
+            @t24:i (align=L, inputBehaviour=N, maxLength=80, sysNumber=0.0, core=true, t24Name=AVE.GRP.CON.KEY)
+        BEGIN_DATE : T24BusinessTypes:D
+            @i18n:Label (en="Begin Date")
+            @t24:i (align=R, inputBehaviour=N, maxLength=10, sysNumber=21.0, core=true, t24Name=BEGIN.DATE)
+        BOOK_COST_SEC_CCY : T24BusinessTypes:AMT
+            @i18n:Label (en="Book Cost Sec Ccy")
+            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=18.0, core=true, t24Name=BOOK.COST.SEC.CCY)
+        BOOK_CST_EXC_RATE : T24BusinessTypes:AMT
+            @i18n:Label (en="Book Cst Exc Rate")
+            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=22.0, core=true, t24Name=BOOK.CST.EXC.RATE)
+        COST_PRICE : T24BusinessTypes:AMT
+            @i18n:Label (en="Cost Price")
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=3.0, core=true, t24Name=COST.PRICE)
+        COUNTER_NOMINAL : T24BusinessTypes:AMT
+            @i18n:Label (en="Counter Nominal")
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=5.0, core=true, t24Name=COUNTER.NOMINAL)
+        COUP_PR_YEAR : T24BusinessTypes:AMT
+            @i18n:Label (en="Coup Pr Year")
+            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=15.0, core=true, t24Name=COUP.PR.YEAR)
+        DATE_TIME -> byValue AM_Group:AM_VEH_GRP_01__DATE_TIME *
+            @t24:i (t24Name=DATE.TIME)
+        DEPOSITORY : T24BusinessTypes:A
+            @i18n:Label (en=Depository)
+            @i18n:Tooltip (en="Depository the Security to be delivered from/to")
+            @t24:i (align=L, inputBehaviour=N, maxLength=10, sysNumber=20.0, core=true, t24Name=DEPOSITORY)
+        DURATION : T24BusinessTypes:N
+            @i18n:Label (en=Duration)
+            @i18n:Tooltip (en="Duration of that opportunity to be active")
+            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=16.0, core=true, t24Name=DURATION)
+        ESTIMATED_INCOME : T24BusinessTypes:AMT
+            @i18n:Label (en="Estimated Income")
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=10.0, core=true, t24Name=ESTIMATED.INCOME)
+        ESTIMATION : T24BusinessTypes:AMT
+            @i18n:Label (en=Estimation)
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=6.0, core=true, t24Name=ESTIMATION)
+        GRP_VAL_CURRENCY : T24BusinessTypes:A
+            @i18n:Label (en="Grp Val CCy")
+            @t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=24.0, core=true, t24Name=GRP.VAL.CURRENCY)
+        HELD_SINCE : T24BusinessTypes:D
+            @t24:i (align=R, inputBehaviour=N, maxLength=10, sysNumber=23.0, core=true, t24Name=HELD.SINCE)
+        INT_AT_MATURITY : T24BusinessTypes:AMT
+            @i18n:Label (en=Int.At.Maturity)
+            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=14.0, core=true, t24Name=INT.AT.MATURITY)
+        MARGIN_VALUE : T24BusinessTypes:AMT
+            @i18n:Label (en="Margin Value")
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=8.0, core=true, t24Name=MARGIN.VALUE)
+        MARKET_PRICE : T24BusinessTypes:AMT
+            @i18n:Label (en="Market Price")
+            @i18n:Tooltip (en="Indicates the Market Price")
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=4.0, core=true, t24Name=MARKET.PRICE)
+        MATURITY_DATE : T24BusinessTypes:D
+            @i18n:Label (en="Maturity Date")
+            @i18n:Tooltip (en="Indicates the Maturity Date of the Transaction")
+            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=17.0, core=true, t24Name=MATURITY.DATE)
+        MONTH_NO : T24BusinessTypes:N
+            @i18n:Label (en="Month No")
+            @t24:i (align=R, inputBehaviour=N, maxLength=2, core=false, t24Name=MONTH.NO)
+        NET_ACCR_DIV : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=27.0, core=true, t24Name=NET.ACCR.DIV)
+        NO_NOMINAL : T24BusinessTypes:AMT
+            @i18n:Label (en=Nominal)
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=2.0, core=true, t24Name=NO.NOMINAL)
+        ORIG_ACCR_DIV : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=26.0, core=true, t24Name=ORIG.ACCR.DIV)
+        PORTFOLIO_NO -> byValue AM_Group:AM_VEH_GRP_01__PORTFOLIO_NO *
+            @t24:i (t24Name=PORTFOLIO.NO)
+        REC_TAX_CUM_AMT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=28.0, core=true, t24Name=REC.TAX.CUM.AMT)
+        REC_TAX_CUM_RESET : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=29.0, core=true, t24Name=REC.TAX.CUM.RESET)
+        SECURITY_CCY : T24BusinessTypes:N
+            @i18n:Label (en=Ccy)
+            @t24:i (align=L, inputBehaviour=N, maxLength=3, core=false, t24Name=SECURITY.CCY, genOperation="@ID[\'*\',4,1]")
+        SECURITY_NO : T24BusinessTypes:N
+            @i18n:Label (en="Security No")
+            @i18n:Tooltip (en="Indicates the security code/number")
+            @t24:i (align=L, inputBehaviour=N, maxLength=15, core=false, t24Name=SECURITY.NO, genOperation="@ID[\'*\',3,1]")
+        SHORT_NAME : T24BusinessTypes:A
+            @i18n:Label (en="Short name")
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=1.0, core=true, t24Name=SHORT.NAME)
+        SUB_ASSET_TYPE : T24BusinessTypes:N
+            @i18n:Label (en="Sub Asset Type")
+            @t24:i (align=L, inputBehaviour=N, maxLength=5, core=false, t24Name=SUB.ASSET.TYPE, genOperation="@ID[\'*\',8,1]")
+        V_DATE_MARGIN : T24BusinessTypes:AMT
+            @i18n:Label (en=V.Dt.Margin)
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=13.0, core=true, t24Name=V.DATE.MARGIN)
+        V_DATE_NOMINAL : T24BusinessTypes:AMT
+            @i18n:Label (en="V Date Nominal")
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=11.0, core=true, t24Name=V.DATE.NOMINAL)
+        V_DT_ESTIMATION : T24BusinessTypes:AMT
+            @i18n:Label (en="V Dt Estimation")
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=12.0, core=true, t24Name=V.DT.ESTIMATION)
+        YIELD : T24BusinessTypes:AMT
+            @i18n:Label (en=Yield)
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=7.0, core=true, t24Name=YIELD)
+    }
+    AM_VEH_GRP_01__DATE_TIME
+    {
+        DATE_TIME : T24BusinessTypes:A
+            @i18n:Label (en="Date time")
+            @i18n:Tooltip (en="Date and time when record was input or authorised")
+            @t24:i (align=L, inputBehaviour=N, maxLength=18, sysNumber=25.0, core=true, t24Name=DATE.TIME)
+    }
+    AM_VEH_GRP_01__PORTFOLIO_NO
+    {
+        PORTFOLIO_NO -> SC_ScoPortfolioMaintenance:SEC_ACC_MASTER
+            @i18n:Label (en="Portfoio No")
+            @i18n:Tooltip (en="Indicates the Portfolio Account of the customer")
+            @t24:i (align=L, inputBehaviour=N, maxLength=10, sysNumber=19.0, core=true, businessType=A, t24Name=PORTFOLIO.NO)
+    }
+    AM_VEH_GRP_02
+        @i18n:Description (en="")
+        @t24:i (t24Name=AM.VEH.GRP.02, level=F, type=T, allowedFunctions="L P S", localRefAllowed=false)
+    {
+        ACCRUED_INT : T24BusinessTypes:AMT
+            @i18n:Label (en="Accrued Int")
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=9.0, core=true, t24Name=ACCRUED.INT)
+        AM_GROUP_ID : T24BusinessTypes:N
+            @i18n:Label (en="Group Id")
+            @t24:i (align=L, inputBehaviour=N, maxLength=8, core=false, t24Name=AM.GROUP.ID, genOperation="@ID[\'*\',1,1]")
+        APPLICATION : T24BusinessTypes:N
+            @i18n:Label (en=Application)
+            @t24:i (align=L, inputBehaviour=N, maxLength=2, core=false, t24Name=APPLICATION, genOperation="@ID[\'*\',2,1]")
+        ASSET_TYPE : T24BusinessTypes:N
+            @i18n:Label (en="Asset Type")
+            @i18n:Tooltip (en="Indicates the asset type")
+            @t24:i (align=L, inputBehaviour=N, maxLength=3, core=false, t24Name=ASSET.TYPE, genOperation="@ID[\'*\',9,1]")
+        AVE_GRP_CON_KEY : T24BusinessTypes:A PK required
+            @t24:i (align=L, inputBehaviour=N, maxLength=80, sysNumber=0.0, core=true, t24Name=AVE.GRP.CON.KEY)
+        BEGIN_DATE : T24BusinessTypes:D
+            @i18n:Label (en="Begin Date")
+            @t24:i (align=R, inputBehaviour=N, maxLength=10, sysNumber=21.0, core=true, t24Name=BEGIN.DATE)
+        BOOK_COST_SEC_CCY : T24BusinessTypes:AMT
+            @i18n:Label (en="Book Cost Sec Ccy")
+            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=18.0, core=true, t24Name=BOOK.COST.SEC.CCY)
+        BOOK_CST_EXC_RATE : T24BusinessTypes:AMT
+            @i18n:Label (en="Book Cst Exc Rate")
+            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=22.0, core=true, t24Name=BOOK.CST.EXC.RATE)
+        COST_PRICE : T24BusinessTypes:AMT
+            @i18n:Label (en="Cost Price")
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=3.0, core=true, t24Name=COST.PRICE)
+        COUNTER_NOMINAL : T24BusinessTypes:AMT
+            @i18n:Label (en="Counter Nominal")
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=5.0, core=true, t24Name=COUNTER.NOMINAL)
+        COUP_PR_YEAR : T24BusinessTypes:AMT
+            @i18n:Label (en="Coup Pr Year")
+            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=15.0, core=true, t24Name=COUP.PR.YEAR)
+        DATE_TIME -> byValue AM_Group:AM_VEH_GRP_02__DATE_TIME *
+            @t24:i (t24Name=DATE.TIME)
+        DEPOSITORY : T24BusinessTypes:A
+            @i18n:Label (en=Depository)
+            @i18n:Tooltip (en="Depository the Security to be delivered from/to")
+            @t24:i (align=L, inputBehaviour=N, maxLength=10, sysNumber=20.0, core=true, t24Name=DEPOSITORY)
+        DURATION : T24BusinessTypes:N
+            @i18n:Label (en=Duration)
+            @i18n:Tooltip (en="Duration of that opportunity to be active")
+            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=16.0, core=true, t24Name=DURATION)
+        ESTIMATED_INCOME : T24BusinessTypes:AMT
+            @i18n:Label (en="Estimated Income")
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=10.0, core=true, t24Name=ESTIMATED.INCOME)
+        ESTIMATION : T24BusinessTypes:AMT
+            @i18n:Label (en=Estimation)
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=6.0, core=true, t24Name=ESTIMATION)
+        GRP_VAL_CURRENCY : T24BusinessTypes:A
+            @i18n:Label (en="Grp Val CCy")
+            @t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=24.0, core=true, t24Name=GRP.VAL.CURRENCY)
+        HELD_SINCE : T24BusinessTypes:D
+            @t24:i (align=R, inputBehaviour=N, maxLength=10, sysNumber=23.0, core=true, t24Name=HELD.SINCE)
+        INT_AT_MATURITY : T24BusinessTypes:AMT
+            @i18n:Label (en=Int.At.Maturity)
+            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=14.0, core=true, t24Name=INT.AT.MATURITY)
+        MARGIN_VALUE : T24BusinessTypes:AMT
+            @i18n:Label (en="Margin Value")
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=8.0, core=true, t24Name=MARGIN.VALUE)
+        MARKET_PRICE : T24BusinessTypes:AMT
+            @i18n:Label (en="Market Price")
+            @i18n:Tooltip (en="Indicates the Market Price")
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=4.0, core=true, t24Name=MARKET.PRICE)
+        MATURITY_DATE : T24BusinessTypes:D
+            @i18n:Label (en="Maturity Date")
+            @i18n:Tooltip (en="Indicates the Maturity Date of the Transaction")
+            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=17.0, core=true, t24Name=MATURITY.DATE)
+        MONTH_NO : T24BusinessTypes:N
+            @i18n:Label (en="Month No")
+            @t24:i (align=R, inputBehaviour=N, maxLength=2, core=false, t24Name=MONTH.NO)
+        NET_ACCR_DIV : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=27.0, core=true, t24Name=NET.ACCR.DIV)
+        NO_NOMINAL : T24BusinessTypes:AMT
+            @i18n:Label (en=Nominal)
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=2.0, core=true, t24Name=NO.NOMINAL)
+        ORIG_ACCR_DIV : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=26.0, core=true, t24Name=ORIG.ACCR.DIV)
+        PORTFOLIO_NO -> byValue AM_Group:AM_VEH_GRP_02__PORTFOLIO_NO *
+            @t24:i (t24Name=PORTFOLIO.NO)
+        REC_TAX_CUM_AMT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=28.0, core=true, t24Name=REC.TAX.CUM.AMT)
+        REC_TAX_CUM_RESET : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=29.0, core=true, t24Name=REC.TAX.CUM.RESET)
+        SECURITY_CCY : T24BusinessTypes:N
+            @i18n:Label (en=Ccy)
+            @t24:i (align=L, inputBehaviour=N, maxLength=3, core=false, t24Name=SECURITY.CCY, genOperation="@ID[\'*\',4,1]")
+        SECURITY_NO : T24BusinessTypes:N
+            @i18n:Label (en="Security No")
+            @i18n:Tooltip (en="Indicates the security code/number")
+            @t24:i (align=L, inputBehaviour=N, maxLength=15, core=false, t24Name=SECURITY.NO, genOperation="@ID[\'*\',3,1]")
+        SHORT_NAME : T24BusinessTypes:A
+            @i18n:Label (en="Short name")
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=1.0, core=true, t24Name=SHORT.NAME)
+        SUB_ASSET_TYPE : T24BusinessTypes:N
+            @i18n:Label (en="Sub Asset Type")
+            @t24:i (align=L, inputBehaviour=N, maxLength=5, core=false, t24Name=SUB.ASSET.TYPE, genOperation="@ID[\'*\',8,1]")
+        V_DATE_MARGIN : T24BusinessTypes:AMT
+            @i18n:Label (en=V.Dt.Margin)
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=13.0, core=true, t24Name=V.DATE.MARGIN)
+        V_DATE_NOMINAL : T24BusinessTypes:AMT
+            @i18n:Label (en="V Date Nominal")
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=11.0, core=true, t24Name=V.DATE.NOMINAL)
+        V_DT_ESTIMATION : T24BusinessTypes:AMT
+            @i18n:Label (en="V Dt Estimation")
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=12.0, core=true, t24Name=V.DT.ESTIMATION)
+        YIELD : T24BusinessTypes:AMT
+            @i18n:Label (en=Yield)
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=7.0, core=true, t24Name=YIELD)
+    }
+    AM_VEH_GRP_02__DATE_TIME
+    {
+        DATE_TIME : T24BusinessTypes:A
+            @i18n:Label (en="Date time")
+            @i18n:Tooltip (en="Date and time when record was input or authorised")
+            @t24:i (align=L, inputBehaviour=N, maxLength=18, sysNumber=25.0, core=true, t24Name=DATE.TIME)
+    }
+    AM_VEH_GRP_02__PORTFOLIO_NO
+    {
+        PORTFOLIO_NO -> SC_ScoPortfolioMaintenance:SEC_ACC_MASTER
+            @i18n:Label (en="Portfoio No")
+            @i18n:Tooltip (en="Indicates the Portfolio Account of the customer")
+            @t24:i (align=L, inputBehaviour=N, maxLength=10, sysNumber=19.0, core=true, businessType=A, t24Name=PORTFOLIO.NO)
+    }
+    AM_VEH_GRP_03
+        @i18n:Description (en="")
+        @t24:i (t24Name=AM.VEH.GRP.03, level=F, type=T, allowedFunctions="L P S", localRefAllowed=false)
+    {
+        ACCRUED_INT : T24BusinessTypes:AMT
+            @i18n:Label (en="Accrued Int")
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=9.0, core=true, t24Name=ACCRUED.INT)
+        AM_GROUP_ID : T24BusinessTypes:N
+            @i18n:Label (en="Group Id")
+            @t24:i (align=L, inputBehaviour=N, maxLength=8, core=false, t24Name=AM.GROUP.ID, genOperation="@ID[\'*\',1,1]")
+        APPLICATION : T24BusinessTypes:N
+            @i18n:Label (en=Application)
+            @t24:i (align=L, inputBehaviour=N, maxLength=2, core=false, t24Name=APPLICATION, genOperation="@ID[\'*\',2,1]")
+        ASSET_TYPE : T24BusinessTypes:N
+            @i18n:Label (en="Asset Type")
+            @i18n:Tooltip (en="Indicates the asset type")
+            @t24:i (align=L, inputBehaviour=N, maxLength=3, core=false, t24Name=ASSET.TYPE, genOperation="@ID[\'*\',9,1]")
+        AVE_GRP_CON_KEY : T24BusinessTypes:A PK required
+            @t24:i (align=L, inputBehaviour=N, maxLength=80, sysNumber=0.0, core=true, t24Name=AVE.GRP.CON.KEY)
+        BEGIN_DATE : T24BusinessTypes:D
+            @i18n:Label (en="Begin Date")
+            @t24:i (align=R, inputBehaviour=N, maxLength=10, sysNumber=21.0, core=true, t24Name=BEGIN.DATE)
+        BOOK_COST_SEC_CCY : T24BusinessTypes:AMT
+            @i18n:Label (en="Book Cost Sec Ccy")
+            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=18.0, core=true, t24Name=BOOK.COST.SEC.CCY)
+        BOOK_CST_EXC_RATE : T24BusinessTypes:AMT
+            @i18n:Label (en="Book Cst Exc Rate")
+            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=22.0, core=true, t24Name=BOOK.CST.EXC.RATE)
+        COST_PRICE : T24BusinessTypes:AMT
+            @i18n:Label (en="Cost Price")
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=3.0, core=true, t24Name=COST.PRICE)
+        COUNTER_NOMINAL : T24BusinessTypes:AMT
+            @i18n:Label (en="Counter Nominal")
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=5.0, core=true, t24Name=COUNTER.NOMINAL)
+        COUP_PR_YEAR : T24BusinessTypes:AMT
+            @i18n:Label (en="Coup Pr Year")
+            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=15.0, core=true, t24Name=COUP.PR.YEAR)
+        DATE_TIME -> byValue AM_Group:AM_VEH_GRP_03__DATE_TIME *
+            @t24:i (t24Name=DATE.TIME)
+        DEPOSITORY : T24BusinessTypes:A
+            @i18n:Label (en=Depository)
+            @i18n:Tooltip (en="Depository the Security to be delivered from/to")
+            @t24:i (align=L, inputBehaviour=N, maxLength=10, sysNumber=20.0, core=true, t24Name=DEPOSITORY)
+        DURATION : T24BusinessTypes:N
+            @i18n:Label (en=Duration)
+            @i18n:Tooltip (en="Duration of that opportunity to be active")
+            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=16.0, core=true, t24Name=DURATION)
+        ESTIMATED_INCOME : T24BusinessTypes:AMT
+            @i18n:Label (en="Estimated Income")
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=10.0, core=true, t24Name=ESTIMATED.INCOME)
+        ESTIMATION : T24BusinessTypes:AMT
+            @i18n:Label (en=Estimation)
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=6.0, core=true, t24Name=ESTIMATION)
+        GRP_VAL_CURRENCY : T24BusinessTypes:A
+            @i18n:Label (en="Grp Val CCy")
+            @t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=24.0, core=true, t24Name=GRP.VAL.CURRENCY)
+        HELD_SINCE : T24BusinessTypes:D
+            @t24:i (align=R, inputBehaviour=N, maxLength=10, sysNumber=23.0, core=true, t24Name=HELD.SINCE)
+        INT_AT_MATURITY : T24BusinessTypes:AMT
+            @i18n:Label (en=Int.At.Maturity)
+            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=14.0, core=true, t24Name=INT.AT.MATURITY)
+        MARGIN_VALUE : T24BusinessTypes:AMT
+            @i18n:Label (en="Margin Value")
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=8.0, core=true, t24Name=MARGIN.VALUE)
+        MARKET_PRICE : T24BusinessTypes:AMT
+            @i18n:Label (en="Market Price")
+            @i18n:Tooltip (en="Indicates the Market Price")
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=4.0, core=true, t24Name=MARKET.PRICE)
+        MATURITY_DATE : T24BusinessTypes:D
+            @i18n:Label (en="Maturity Date")
+            @i18n:Tooltip (en="Indicates the Maturity Date of the Transaction")
+            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=17.0, core=true, t24Name=MATURITY.DATE)
+        MONTH_NO : T24BusinessTypes:N
+            @i18n:Label (en="Month No")
+            @t24:i (align=R, inputBehaviour=N, maxLength=2, core=false, t24Name=MONTH.NO)
+        NET_ACCR_DIV : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=27.0, core=true, t24Name=NET.ACCR.DIV)
+        NO_NOMINAL : T24BusinessTypes:AMT
+            @i18n:Label (en=Nominal)
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=2.0, core=true, t24Name=NO.NOMINAL)
+        ORIG_ACCR_DIV : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=26.0, core=true, t24Name=ORIG.ACCR.DIV)
+        PORTFOLIO_NO -> byValue AM_Group:AM_VEH_GRP_03__PORTFOLIO_NO *
+            @t24:i (t24Name=PORTFOLIO.NO)
+        REC_TAX_CUM_AMT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=28.0, core=true, t24Name=REC.TAX.CUM.AMT)
+        REC_TAX_CUM_RESET : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=29.0, core=true, t24Name=REC.TAX.CUM.RESET)
+        SECURITY_CCY : T24BusinessTypes:N
+            @i18n:Label (en=Ccy)
+            @t24:i (align=L, inputBehaviour=N, maxLength=3, core=false, t24Name=SECURITY.CCY, genOperation="@ID[\'*\',4,1]")
+        SECURITY_NO : T24BusinessTypes:N
+            @i18n:Label (en="Security No")
+            @i18n:Tooltip (en="Indicates the security code/number")
+            @t24:i (align=L, inputBehaviour=N, maxLength=15, core=false, t24Name=SECURITY.NO, genOperation="@ID[\'*\',3,1]")
+        SHORT_NAME : T24BusinessTypes:A
+            @i18n:Label (en="Short name")
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=1.0, core=true, t24Name=SHORT.NAME)
+        SUB_ASSET_TYPE : T24BusinessTypes:N
+            @i18n:Label (en="Sub Asset Type")
+            @t24:i (align=L, inputBehaviour=N, maxLength=5, core=false, t24Name=SUB.ASSET.TYPE, genOperation="@ID[\'*\',8,1]")
+        V_DATE_MARGIN : T24BusinessTypes:AMT
+            @i18n:Label (en=V.Dt.Margin)
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=13.0, core=true, t24Name=V.DATE.MARGIN)
+        V_DATE_NOMINAL : T24BusinessTypes:AMT
+            @i18n:Label (en="V Date Nominal")
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=11.0, core=true, t24Name=V.DATE.NOMINAL)
+        V_DT_ESTIMATION : T24BusinessTypes:AMT
+            @i18n:Label (en="V Dt Estimation")
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=12.0, core=true, t24Name=V.DT.ESTIMATION)
+        YIELD : T24BusinessTypes:AMT
+            @i18n:Label (en=Yield)
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=7.0, core=true, t24Name=YIELD)
+    }
+    AM_VEH_GRP_03__DATE_TIME
+    {
+        DATE_TIME : T24BusinessTypes:A
+            @i18n:Label (en="Date time")
+            @i18n:Tooltip (en="Date and time when record was input or authorised")
+            @t24:i (align=L, inputBehaviour=N, maxLength=18, sysNumber=25.0, core=true, t24Name=DATE.TIME)
+    }
+    AM_VEH_GRP_03__PORTFOLIO_NO
+    {
+        PORTFOLIO_NO -> SC_ScoPortfolioMaintenance:SEC_ACC_MASTER
+            @i18n:Label (en="Portfoio No")
+            @i18n:Tooltip (en="Indicates the Portfolio Account of the customer")
+            @t24:i (align=L, inputBehaviour=N, maxLength=10, sysNumber=19.0, core=true, businessType=A, t24Name=PORTFOLIO.NO)
+    }
+    AM_VEH_GRP_04
+        @i18n:Description (en="")
+        @t24:i (t24Name=AM.VEH.GRP.04, level=F, type=T, allowedFunctions="L P S", localRefAllowed=false)
+    {
+        ACCRUED_INT : T24BusinessTypes:AMT
+            @i18n:Label (en="Accrued Int")
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=9.0, core=true, t24Name=ACCRUED.INT)
+        AM_GROUP_ID : T24BusinessTypes:N
+            @i18n:Label (en="Group Id")
+            @t24:i (align=L, inputBehaviour=N, maxLength=8, core=false, t24Name=AM.GROUP.ID, genOperation="@ID[\'*\',1,1]")
+        APPLICATION : T24BusinessTypes:N
+            @i18n:Label (en=Application)
+            @t24:i (align=L, inputBehaviour=N, maxLength=2, core=false, t24Name=APPLICATION, genOperation="@ID[\'*\',2,1]")
+        ASSET_TYPE : T24BusinessTypes:N
+            @i18n:Label (en="Asset Type")
+            @i18n:Tooltip (en="Indicates the asset type")
+            @t24:i (align=L, inputBehaviour=N, maxLength=3, core=false, t24Name=ASSET.TYPE, genOperation="@ID[\'*\',9,1]")
+        AVE_GRP_CON_KEY : T24BusinessTypes:A PK required
+            @t24:i (align=L, inputBehaviour=N, maxLength=80, sysNumber=0.0, core=true, t24Name=AVE.GRP.CON.KEY)
+        BEGIN_DATE : T24BusinessTypes:D
+            @i18n:Label (en="Begin Date")
+            @t24:i (align=R, inputBehaviour=N, maxLength=10, sysNumber=21.0, core=true, t24Name=BEGIN.DATE)
+        BOOK_COST_SEC_CCY : T24BusinessTypes:AMT
+            @i18n:Label (en="Book Cost Sec Ccy")
+            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=18.0, core=true, t24Name=BOOK.COST.SEC.CCY)
+        BOOK_CST_EXC_RATE : T24BusinessTypes:AMT
+            @i18n:Label (en="Book Cst Exc Rate")
+            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=22.0, core=true, t24Name=BOOK.CST.EXC.RATE)
+        COST_PRICE : T24BusinessTypes:AMT
+            @i18n:Label (en="Cost Price")
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=3.0, core=true, t24Name=COST.PRICE)
+        COUNTER_NOMINAL : T24BusinessTypes:AMT
+            @i18n:Label (en="Counter Nominal")
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=5.0, core=true, t24Name=COUNTER.NOMINAL)
+        COUP_PR_YEAR : T24BusinessTypes:AMT
+            @i18n:Label (en="Coup Pr Year")
+            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=15.0, core=true, t24Name=COUP.PR.YEAR)
+        DATE_TIME -> byValue AM_Group:AM_VEH_GRP_04__DATE_TIME *
+            @t24:i (t24Name=DATE.TIME)
+        DEPOSITORY : T24BusinessTypes:A
+            @i18n:Label (en=Depository)
+            @i18n:Tooltip (en="Depository the Security to be delivered from/to")
+            @t24:i (align=L, inputBehaviour=N, maxLength=10, sysNumber=20.0, core=true, t24Name=DEPOSITORY)
+        DURATION : T24BusinessTypes:N
+            @i18n:Label (en=Duration)
+            @i18n:Tooltip (en="Duration of that opportunity to be active")
+            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=16.0, core=true, t24Name=DURATION)
+        ESTIMATED_INCOME : T24BusinessTypes:AMT
+            @i18n:Label (en="Estimated Income")
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=10.0, core=true, t24Name=ESTIMATED.INCOME)
+        ESTIMATION : T24BusinessTypes:AMT
+            @i18n:Label (en=Estimation)
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=6.0, core=true, t24Name=ESTIMATION)
+        GRP_VAL_CURRENCY : T24BusinessTypes:A
+            @i18n:Label (en="Grp Val CCy")
+            @t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=24.0, core=true, t24Name=GRP.VAL.CURRENCY)
+        HELD_SINCE : T24BusinessTypes:D
+            @t24:i (align=R, inputBehaviour=N, maxLength=10, sysNumber=23.0, core=true, t24Name=HELD.SINCE)
+        INT_AT_MATURITY : T24BusinessTypes:AMT
+            @i18n:Label (en=Int.At.Maturity)
+            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=14.0, core=true, t24Name=INT.AT.MATURITY)
+        MARGIN_VALUE : T24BusinessTypes:AMT
+            @i18n:Label (en="Margin Value")
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=8.0, core=true, t24Name=MARGIN.VALUE)
+        MARKET_PRICE : T24BusinessTypes:AMT
+            @i18n:Label (en="Market Price")
+            @i18n:Tooltip (en="Indicates the Market Price")
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=4.0, core=true, t24Name=MARKET.PRICE)
+        MATURITY_DATE : T24BusinessTypes:D
+            @i18n:Label (en="Maturity Date")
+            @i18n:Tooltip (en="Indicates the Maturity Date of the Transaction")
+            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=17.0, core=true, t24Name=MATURITY.DATE)
+        MONTH_NO : T24BusinessTypes:N
+            @i18n:Label (en="Month No")
+            @t24:i (align=R, inputBehaviour=N, maxLength=2, core=false, t24Name=MONTH.NO)
+        NET_ACCR_DIV : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=27.0, core=true, t24Name=NET.ACCR.DIV)
+        NO_NOMINAL : T24BusinessTypes:AMT
+            @i18n:Label (en=Nominal)
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=2.0, core=true, t24Name=NO.NOMINAL)
+        ORIG_ACCR_DIV : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=26.0, core=true, t24Name=ORIG.ACCR.DIV)
+        PORTFOLIO_NO -> byValue AM_Group:AM_VEH_GRP_04__PORTFOLIO_NO *
+            @t24:i (t24Name=PORTFOLIO.NO)
+        REC_TAX_CUM_AMT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=28.0, core=true, t24Name=REC.TAX.CUM.AMT)
+        REC_TAX_CUM_RESET : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=29.0, core=true, t24Name=REC.TAX.CUM.RESET)
+        SECURITY_CCY : T24BusinessTypes:N
+            @i18n:Label (en=Ccy)
+            @t24:i (align=L, inputBehaviour=N, maxLength=3, core=false, t24Name=SECURITY.CCY, genOperation="@ID[\'*\',4,1]")
+        SECURITY_NO : T24BusinessTypes:N
+            @i18n:Label (en="Security No")
+            @i18n:Tooltip (en="Indicates the security code/number")
+            @t24:i (align=L, inputBehaviour=N, maxLength=15, core=false, t24Name=SECURITY.NO, genOperation="@ID[\'*\',3,1]")
+        SHORT_NAME : T24BusinessTypes:A
+            @i18n:Label (en="Short name")
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=1.0, core=true, t24Name=SHORT.NAME)
+        SUB_ASSET_TYPE : T24BusinessTypes:N
+            @i18n:Label (en="Sub Asset Type")
+            @t24:i (align=L, inputBehaviour=N, maxLength=5, core=false, t24Name=SUB.ASSET.TYPE, genOperation="@ID[\'*\',8,1]")
+        V_DATE_MARGIN : T24BusinessTypes:AMT
+            @i18n:Label (en=V.Dt.Margin)
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=13.0, core=true, t24Name=V.DATE.MARGIN)
+        V_DATE_NOMINAL : T24BusinessTypes:AMT
+            @i18n:Label (en="V Date Nominal")
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=11.0, core=true, t24Name=V.DATE.NOMINAL)
+        V_DT_ESTIMATION : T24BusinessTypes:AMT
+            @i18n:Label (en="V Dt Estimation")
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=12.0, core=true, t24Name=V.DT.ESTIMATION)
+        YIELD : T24BusinessTypes:AMT
+            @i18n:Label (en=Yield)
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=7.0, core=true, t24Name=YIELD)
+    }
+    AM_VEH_GRP_04__DATE_TIME
+    {
+        DATE_TIME : T24BusinessTypes:A
+            @i18n:Label (en="Date time")
+            @i18n:Tooltip (en="Date and time when record was input or authorised")
+            @t24:i (align=L, inputBehaviour=N, maxLength=18, sysNumber=25.0, core=true, t24Name=DATE.TIME)
+    }
+    AM_VEH_GRP_04__PORTFOLIO_NO
+    {
+        PORTFOLIO_NO -> SC_ScoPortfolioMaintenance:SEC_ACC_MASTER
+            @i18n:Label (en="Portfoio No")
+            @i18n:Tooltip (en="Indicates the Portfolio Account of the customer")
+            @t24:i (align=L, inputBehaviour=N, maxLength=10, sysNumber=19.0, core=true, businessType=A, t24Name=PORTFOLIO.NO)
+    }
+    AM_VEH_GRP_05
+        @i18n:Description (en="")
+        @t24:i (t24Name=AM.VEH.GRP.05, level=F, type=T, allowedFunctions="L P S", localRefAllowed=false)
+    {
+        ACCRUED_INT : T24BusinessTypes:AMT
+            @i18n:Label (en="Accrued Int")
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=9.0, core=true, t24Name=ACCRUED.INT)
+        AM_GROUP_ID : T24BusinessTypes:N
+            @i18n:Label (en="Group Id")
+            @t24:i (align=L, inputBehaviour=N, maxLength=8, core=false, t24Name=AM.GROUP.ID, genOperation="@ID[\'*\',1,1]")
+        APPLICATION : T24BusinessTypes:N
+            @i18n:Label (en=Application)
+            @t24:i (align=L, inputBehaviour=N, maxLength=2, core=false, t24Name=APPLICATION, genOperation="@ID[\'*\',2,1]")
+        ASSET_TYPE : T24BusinessTypes:N
+            @i18n:Label (en="Asset Type")
+            @i18n:Tooltip (en="Indicates the asset type")
+            @t24:i (align=L, inputBehaviour=N, maxLength=3, core=false, t24Name=ASSET.TYPE, genOperation="@ID[\'*\',9,1]")
+        AVE_GRP_CON_KEY : T24BusinessTypes:A PK required
+            @t24:i (align=L, inputBehaviour=N, maxLength=80, sysNumber=0.0, core=true, t24Name=AVE.GRP.CON.KEY)
+        BEGIN_DATE : T24BusinessTypes:D
+            @i18n:Label (en="Begin Date")
+            @t24:i (align=R, inputBehaviour=N, maxLength=10, sysNumber=21.0, core=true, t24Name=BEGIN.DATE)
+        BOOK_COST_SEC_CCY : T24BusinessTypes:AMT
+            @i18n:Label (en="Book Cost Sec Ccy")
+            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=18.0, core=true, t24Name=BOOK.COST.SEC.CCY)
+        BOOK_CST_EXC_RATE : T24BusinessTypes:AMT
+            @i18n:Label (en="Book Cst Exc Rate")
+            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=22.0, core=true, t24Name=BOOK.CST.EXC.RATE)
+        COST_PRICE : T24BusinessTypes:AMT
+            @i18n:Label (en="Cost Price")
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=3.0, core=true, t24Name=COST.PRICE)
+        COUNTER_NOMINAL : T24BusinessTypes:AMT
+            @i18n:Label (en="Counter Nominal")
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=5.0, core=true, t24Name=COUNTER.NOMINAL)
+        COUP_PR_YEAR : T24BusinessTypes:AMT
+            @i18n:Label (en="Coup Pr Year")
+            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=15.0, core=true, t24Name=COUP.PR.YEAR)
+        DATE_TIME -> byValue AM_Group:AM_VEH_GRP_05__DATE_TIME *
+            @t24:i (t24Name=DATE.TIME)
+        DEPOSITORY : T24BusinessTypes:A
+            @i18n:Label (en=Depository)
+            @i18n:Tooltip (en="Depository the Security to be delivered from/to")
+            @t24:i (align=L, inputBehaviour=N, maxLength=10, sysNumber=20.0, core=true, t24Name=DEPOSITORY)
+        DURATION : T24BusinessTypes:N
+            @i18n:Label (en=Duration)
+            @i18n:Tooltip (en="Duration of that opportunity to be active")
+            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=16.0, core=true, t24Name=DURATION)
+        ESTIMATED_INCOME : T24BusinessTypes:AMT
+            @i18n:Label (en="Estimated Income")
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=10.0, core=true, t24Name=ESTIMATED.INCOME)
+        ESTIMATION : T24BusinessTypes:AMT
+            @i18n:Label (en=Estimation)
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=6.0, core=true, t24Name=ESTIMATION)
+        GRP_VAL_CURRENCY : T24BusinessTypes:A
+            @i18n:Label (en="Grp Val CCy")
+            @t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=24.0, core=true, t24Name=GRP.VAL.CURRENCY)
+        HELD_SINCE : T24BusinessTypes:D
+            @t24:i (align=R, inputBehaviour=N, maxLength=10, sysNumber=23.0, core=true, t24Name=HELD.SINCE)
+        INT_AT_MATURITY : T24BusinessTypes:AMT
+            @i18n:Label (en=Int.At.Maturity)
+            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=14.0, core=true, t24Name=INT.AT.MATURITY)
+        MARGIN_VALUE : T24BusinessTypes:AMT
+            @i18n:Label (en="Margin Value")
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=8.0, core=true, t24Name=MARGIN.VALUE)
+        MARKET_PRICE : T24BusinessTypes:AMT
+            @i18n:Label (en="Market Price")
+            @i18n:Tooltip (en="Indicates the Market Price")
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=4.0, core=true, t24Name=MARKET.PRICE)
+        MATURITY_DATE : T24BusinessTypes:D
+            @i18n:Label (en="Maturity Date")
+            @i18n:Tooltip (en="Indicates the Maturity Date of the Transaction")
+            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=17.0, core=true, t24Name=MATURITY.DATE)
+        MONTH_NO : T24BusinessTypes:N
+            @i18n:Label (en="Month No")
+            @t24:i (align=R, inputBehaviour=N, maxLength=2, core=false, t24Name=MONTH.NO)
+        NET_ACCR_DIV : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=27.0, core=true, t24Name=NET.ACCR.DIV)
+        NO_NOMINAL : T24BusinessTypes:AMT
+            @i18n:Label (en=Nominal)
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=2.0, core=true, t24Name=NO.NOMINAL)
+        ORIG_ACCR_DIV : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=26.0, core=true, t24Name=ORIG.ACCR.DIV)
+        PORTFOLIO_NO -> byValue AM_Group:AM_VEH_GRP_05__PORTFOLIO_NO *
+            @t24:i (t24Name=PORTFOLIO.NO)
+        REC_TAX_CUM_AMT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=28.0, core=true, t24Name=REC.TAX.CUM.AMT)
+        REC_TAX_CUM_RESET : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=29.0, core=true, t24Name=REC.TAX.CUM.RESET)
+        SECURITY_CCY : T24BusinessTypes:N
+            @i18n:Label (en=Ccy)
+            @t24:i (align=L, inputBehaviour=N, maxLength=3, core=false, t24Name=SECURITY.CCY, genOperation="@ID[\'*\',4,1]")
+        SECURITY_NO : T24BusinessTypes:N
+            @i18n:Label (en="Security No")
+            @i18n:Tooltip (en="Indicates the security code/number")
+            @t24:i (align=L, inputBehaviour=N, maxLength=15, core=false, t24Name=SECURITY.NO, genOperation="@ID[\'*\',3,1]")
+        SHORT_NAME : T24BusinessTypes:A
+            @i18n:Label (en="Short name")
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=1.0, core=true, t24Name=SHORT.NAME)
+        SUB_ASSET_TYPE : T24BusinessTypes:N
+            @i18n:Label (en="Sub Asset Type")
+            @t24:i (align=L, inputBehaviour=N, maxLength=5, core=false, t24Name=SUB.ASSET.TYPE, genOperation="@ID[\'*\',8,1]")
+        V_DATE_MARGIN : T24BusinessTypes:AMT
+            @i18n:Label (en=V.Dt.Margin)
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=13.0, core=true, t24Name=V.DATE.MARGIN)
+        V_DATE_NOMINAL : T24BusinessTypes:AMT
+            @i18n:Label (en="V Date Nominal")
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=11.0, core=true, t24Name=V.DATE.NOMINAL)
+        V_DT_ESTIMATION : T24BusinessTypes:AMT
+            @i18n:Label (en="V Dt Estimation")
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=12.0, core=true, t24Name=V.DT.ESTIMATION)
+        YIELD : T24BusinessTypes:AMT
+            @i18n:Label (en=Yield)
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=7.0, core=true, t24Name=YIELD)
+    }
+    AM_VEH_GRP_05__DATE_TIME
+    {
+        DATE_TIME : T24BusinessTypes:A
+            @i18n:Label (en="Date time")
+            @i18n:Tooltip (en="Date and time when record was input or authorised")
+            @t24:i (align=L, inputBehaviour=N, maxLength=18, sysNumber=25.0, core=true, t24Name=DATE.TIME)
+    }
+    AM_VEH_GRP_05__PORTFOLIO_NO
+    {
+        PORTFOLIO_NO -> SC_ScoPortfolioMaintenance:SEC_ACC_MASTER
+            @i18n:Label (en="Portfoio No")
+            @i18n:Tooltip (en="Indicates the Portfolio Account of the customer")
+            @t24:i (align=L, inputBehaviour=N, maxLength=10, sysNumber=19.0, core=true, businessType=A, t24Name=PORTFOLIO.NO)
+    }
+    AM_VEH_GRP_06
+        @i18n:Description (en="")
+        @t24:i (t24Name=AM.VEH.GRP.06, level=F, type=T, allowedFunctions="L P S", localRefAllowed=false)
+    {
+        ACCRUED_INT : T24BusinessTypes:AMT
+            @i18n:Label (en="Accrued Int")
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=9.0, core=true, t24Name=ACCRUED.INT)
+        AM_GROUP_ID : T24BusinessTypes:N
+            @i18n:Label (en="Group Id")
+            @t24:i (align=L, inputBehaviour=N, maxLength=8, core=false, t24Name=AM.GROUP.ID, genOperation="@ID[\'*\',1,1]")
+        APPLICATION : T24BusinessTypes:N
+            @i18n:Label (en=Application)
+            @t24:i (align=L, inputBehaviour=N, maxLength=2, core=false, t24Name=APPLICATION, genOperation="@ID[\'*\',2,1]")
+        ASSET_TYPE : T24BusinessTypes:N
+            @i18n:Label (en="Asset Type")
+            @i18n:Tooltip (en="Indicates the asset type")
+            @t24:i (align=L, inputBehaviour=N, maxLength=3, core=false, t24Name=ASSET.TYPE, genOperation="@ID[\'*\',9,1]")
+        AVE_GRP_CON_KEY : T24BusinessTypes:A PK required
+            @t24:i (align=L, inputBehaviour=N, maxLength=80, sysNumber=0.0, core=true, t24Name=AVE.GRP.CON.KEY)
+        BEGIN_DATE : T24BusinessTypes:D
+            @i18n:Label (en="Begin Date")
+            @t24:i (align=R, inputBehaviour=N, maxLength=10, sysNumber=21.0, core=true, t24Name=BEGIN.DATE)
+        BOOK_COST_SEC_CCY : T24BusinessTypes:AMT
+            @i18n:Label (en="Book Cost Sec Ccy")
+            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=18.0, core=true, t24Name=BOOK.COST.SEC.CCY)
+        BOOK_CST_EXC_RATE : T24BusinessTypes:AMT
+            @i18n:Label (en="Book Cst Exc Rate")
+            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=22.0, core=true, t24Name=BOOK.CST.EXC.RATE)
+        COST_PRICE : T24BusinessTypes:AMT
+            @i18n:Label (en="Cost Price")
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=3.0, core=true, t24Name=COST.PRICE)
+        COUNTER_NOMINAL : T24BusinessTypes:AMT
+            @i18n:Label (en="Counter Nominal")
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=5.0, core=true, t24Name=COUNTER.NOMINAL)
+        COUP_PR_YEAR : T24BusinessTypes:AMT
+            @i18n:Label (en="Coup Pr Year")
+            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=15.0, core=true, t24Name=COUP.PR.YEAR)
+        DATE_TIME -> byValue AM_Group:AM_VEH_GRP_06__DATE_TIME *
+            @t24:i (t24Name=DATE.TIME)
+        DEPOSITORY : T24BusinessTypes:A
+            @i18n:Label (en=Depository)
+            @i18n:Tooltip (en="Depository the Security to be delivered from/to")
+            @t24:i (align=L, inputBehaviour=N, maxLength=10, sysNumber=20.0, core=true, t24Name=DEPOSITORY)
+        DURATION : T24BusinessTypes:N
+            @i18n:Label (en=Duration)
+            @i18n:Tooltip (en="Duration of that opportunity to be active")
+            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=16.0, core=true, t24Name=DURATION)
+        ESTIMATED_INCOME : T24BusinessTypes:AMT
+            @i18n:Label (en="Estimated Income")
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=10.0, core=true, t24Name=ESTIMATED.INCOME)
+        ESTIMATION : T24BusinessTypes:AMT
+            @i18n:Label (en=Estimation)
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=6.0, core=true, t24Name=ESTIMATION)
+        GRP_VAL_CURRENCY : T24BusinessTypes:A
+            @i18n:Label (en="Grp Val CCy")
+            @t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=24.0, core=true, t24Name=GRP.VAL.CURRENCY)
+        HELD_SINCE : T24BusinessTypes:D
+            @t24:i (align=R, inputBehaviour=N, maxLength=10, sysNumber=23.0, core=true, t24Name=HELD.SINCE)
+        INT_AT_MATURITY : T24BusinessTypes:AMT
+            @i18n:Label (en=Int.At.Maturity)
+            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=14.0, core=true, t24Name=INT.AT.MATURITY)
+        MARGIN_VALUE : T24BusinessTypes:AMT
+            @i18n:Label (en="Margin Value")
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=8.0, core=true, t24Name=MARGIN.VALUE)
+        MARKET_PRICE : T24BusinessTypes:AMT
+            @i18n:Label (en="Market Price")
+            @i18n:Tooltip (en="Indicates the Market Price")
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=4.0, core=true, t24Name=MARKET.PRICE)
+        MATURITY_DATE : T24BusinessTypes:D
+            @i18n:Label (en="Maturity Date")
+            @i18n:Tooltip (en="Indicates the Maturity Date of the Transaction")
+            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=17.0, core=true, t24Name=MATURITY.DATE)
+        MONTH_NO : T24BusinessTypes:N
+            @i18n:Label (en="Month No")
+            @t24:i (align=R, inputBehaviour=N, maxLength=2, core=false, t24Name=MONTH.NO)
+        NET_ACCR_DIV : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=27.0, core=true, t24Name=NET.ACCR.DIV)
+        NO_NOMINAL : T24BusinessTypes:AMT
+            @i18n:Label (en=Nominal)
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=2.0, core=true, t24Name=NO.NOMINAL)
+        ORIG_ACCR_DIV : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=26.0, core=true, t24Name=ORIG.ACCR.DIV)
+        PORTFOLIO_NO -> byValue AM_Group:AM_VEH_GRP_06__PORTFOLIO_NO *
+            @t24:i (t24Name=PORTFOLIO.NO)
+        REC_TAX_CUM_AMT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=28.0, core=true, t24Name=REC.TAX.CUM.AMT)
+        REC_TAX_CUM_RESET : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=29.0, core=true, t24Name=REC.TAX.CUM.RESET)
+        SECURITY_CCY : T24BusinessTypes:N
+            @i18n:Label (en=Ccy)
+            @t24:i (align=L, inputBehaviour=N, maxLength=3, core=false, t24Name=SECURITY.CCY, genOperation="@ID[\'*\',4,1]")
+        SECURITY_NO : T24BusinessTypes:N
+            @i18n:Label (en="Security No")
+            @i18n:Tooltip (en="Indicates the security code/number")
+            @t24:i (align=L, inputBehaviour=N, maxLength=15, core=false, t24Name=SECURITY.NO, genOperation="@ID[\'*\',3,1]")
+        SHORT_NAME : T24BusinessTypes:A
+            @i18n:Label (en="Short name")
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=1.0, core=true, t24Name=SHORT.NAME)
+        SUB_ASSET_TYPE : T24BusinessTypes:N
+            @i18n:Label (en="Sub Asset Type")
+            @t24:i (align=L, inputBehaviour=N, maxLength=5, core=false, t24Name=SUB.ASSET.TYPE, genOperation="@ID[\'*\',8,1]")
+        V_DATE_MARGIN : T24BusinessTypes:AMT
+            @i18n:Label (en=V.Dt.Margin)
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=13.0, core=true, t24Name=V.DATE.MARGIN)
+        V_DATE_NOMINAL : T24BusinessTypes:AMT
+            @i18n:Label (en="V Date Nominal")
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=11.0, core=true, t24Name=V.DATE.NOMINAL)
+        V_DT_ESTIMATION : T24BusinessTypes:AMT
+            @i18n:Label (en="V Dt Estimation")
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=12.0, core=true, t24Name=V.DT.ESTIMATION)
+        YIELD : T24BusinessTypes:AMT
+            @i18n:Label (en=Yield)
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=7.0, core=true, t24Name=YIELD)
+    }
+    AM_VEH_GRP_06__DATE_TIME
+    {
+        DATE_TIME : T24BusinessTypes:A
+            @i18n:Label (en="Date time")
+            @i18n:Tooltip (en="Date and time when record was input or authorised")
+            @t24:i (align=L, inputBehaviour=N, maxLength=18, sysNumber=25.0, core=true, t24Name=DATE.TIME)
+    }
+    AM_VEH_GRP_06__PORTFOLIO_NO
+    {
+        PORTFOLIO_NO -> SC_ScoPortfolioMaintenance:SEC_ACC_MASTER
+            @i18n:Label (en="Portfoio No")
+            @i18n:Tooltip (en="Indicates the Portfolio Account of the customer")
+            @t24:i (align=L, inputBehaviour=N, maxLength=10, sysNumber=19.0, core=true, businessType=A, t24Name=PORTFOLIO.NO)
+    }
+    AM_VEH_GRP_07
+        @i18n:Description (en="")
+        @t24:i (t24Name=AM.VEH.GRP.07, level=F, type=T, allowedFunctions="L P S", localRefAllowed=false)
+    {
+        ACCRUED_INT : T24BusinessTypes:AMT
+            @i18n:Label (en="Accrued Int")
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=9.0, core=true, t24Name=ACCRUED.INT)
+        AM_GROUP_ID : T24BusinessTypes:N
+            @i18n:Label (en="Group Id")
+            @t24:i (align=L, inputBehaviour=N, maxLength=8, core=false, t24Name=AM.GROUP.ID, genOperation="@ID[\'*\',1,1]")
+        APPLICATION : T24BusinessTypes:N
+            @i18n:Label (en=Application)
+            @t24:i (align=L, inputBehaviour=N, maxLength=2, core=false, t24Name=APPLICATION, genOperation="@ID[\'*\',2,1]")
+        ASSET_TYPE : T24BusinessTypes:N
+            @i18n:Label (en="Asset Type")
+            @i18n:Tooltip (en="Indicates the asset type")
+            @t24:i (align=L, inputBehaviour=N, maxLength=3, core=false, t24Name=ASSET.TYPE, genOperation="@ID[\'*\',9,1]")
+        AVE_GRP_CON_KEY : T24BusinessTypes:A PK required
+            @t24:i (align=L, inputBehaviour=N, maxLength=80, sysNumber=0.0, core=true, t24Name=AVE.GRP.CON.KEY)
+        BEGIN_DATE : T24BusinessTypes:D
+            @i18n:Label (en="Begin Date")
+            @t24:i (align=R, inputBehaviour=N, maxLength=10, sysNumber=21.0, core=true, t24Name=BEGIN.DATE)
+        BOOK_COST_SEC_CCY : T24BusinessTypes:AMT
+            @i18n:Label (en="Book Cost Sec Ccy")
+            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=18.0, core=true, t24Name=BOOK.COST.SEC.CCY)
+        BOOK_CST_EXC_RATE : T24BusinessTypes:AMT
+            @i18n:Label (en="Book Cst Exc Rate")
+            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=22.0, core=true, t24Name=BOOK.CST.EXC.RATE)
+        COST_PRICE : T24BusinessTypes:AMT
+            @i18n:Label (en="Cost Price")
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=3.0, core=true, t24Name=COST.PRICE)
+        COUNTER_NOMINAL : T24BusinessTypes:AMT
+            @i18n:Label (en="Counter Nominal")
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=5.0, core=true, t24Name=COUNTER.NOMINAL)
+        COUP_PR_YEAR : T24BusinessTypes:AMT
+            @i18n:Label (en="Coup Pr Year")
+            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=15.0, core=true, t24Name=COUP.PR.YEAR)
+        DATE_TIME -> byValue AM_Group:AM_VEH_GRP_07__DATE_TIME *
+            @t24:i (t24Name=DATE.TIME)
+        DEPOSITORY : T24BusinessTypes:A
+            @i18n:Label (en=Depository)
+            @i18n:Tooltip (en="Depository the Security to be delivered from/to")
+            @t24:i (align=L, inputBehaviour=N, maxLength=10, sysNumber=20.0, core=true, t24Name=DEPOSITORY)
+        DURATION : T24BusinessTypes:N
+            @i18n:Label (en=Duration)
+            @i18n:Tooltip (en="Duration of that opportunity to be active")
+            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=16.0, core=true, t24Name=DURATION)
+        ESTIMATED_INCOME : T24BusinessTypes:AMT
+            @i18n:Label (en="Estimated Income")
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=10.0, core=true, t24Name=ESTIMATED.INCOME)
+        ESTIMATION : T24BusinessTypes:AMT
+            @i18n:Label (en=Estimation)
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=6.0, core=true, t24Name=ESTIMATION)
+        GRP_VAL_CURRENCY : T24BusinessTypes:A
+            @i18n:Label (en="Grp Val CCy")
+            @t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=24.0, core=true, t24Name=GRP.VAL.CURRENCY)
+        HELD_SINCE : T24BusinessTypes:D
+            @t24:i (align=R, inputBehaviour=N, maxLength=10, sysNumber=23.0, core=true, t24Name=HELD.SINCE)
+        INT_AT_MATURITY : T24BusinessTypes:AMT
+            @i18n:Label (en=Int.At.Maturity)
+            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=14.0, core=true, t24Name=INT.AT.MATURITY)
+        MARGIN_VALUE : T24BusinessTypes:AMT
+            @i18n:Label (en="Margin Value")
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=8.0, core=true, t24Name=MARGIN.VALUE)
+        MARKET_PRICE : T24BusinessTypes:AMT
+            @i18n:Label (en="Market Price")
+            @i18n:Tooltip (en="Indicates the Market Price")
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=4.0, core=true, t24Name=MARKET.PRICE)
+        MATURITY_DATE : T24BusinessTypes:D
+            @i18n:Label (en="Maturity Date")
+            @i18n:Tooltip (en="Indicates the Maturity Date of the Transaction")
+            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=17.0, core=true, t24Name=MATURITY.DATE)
+        MONTH_NO : T24BusinessTypes:N
+            @i18n:Label (en="Month No")
+            @t24:i (align=R, inputBehaviour=N, maxLength=2, core=false, t24Name=MONTH.NO)
+        NET_ACCR_DIV : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=27.0, core=true, t24Name=NET.ACCR.DIV)
+        NO_NOMINAL : T24BusinessTypes:AMT
+            @i18n:Label (en=Nominal)
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=2.0, core=true, t24Name=NO.NOMINAL)
+        ORIG_ACCR_DIV : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=26.0, core=true, t24Name=ORIG.ACCR.DIV)
+        PORTFOLIO_NO -> byValue AM_Group:AM_VEH_GRP_07__PORTFOLIO_NO *
+            @t24:i (t24Name=PORTFOLIO.NO)
+        REC_TAX_CUM_AMT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=28.0, core=true, t24Name=REC.TAX.CUM.AMT)
+        REC_TAX_CUM_RESET : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=29.0, core=true, t24Name=REC.TAX.CUM.RESET)
+        SECURITY_CCY : T24BusinessTypes:N
+            @i18n:Label (en=Ccy)
+            @t24:i (align=L, inputBehaviour=N, maxLength=3, core=false, t24Name=SECURITY.CCY, genOperation="@ID[\'*\',4,1]")
+        SECURITY_NO : T24BusinessTypes:N
+            @i18n:Label (en="Security No")
+            @i18n:Tooltip (en="Indicates the security code/number")
+            @t24:i (align=L, inputBehaviour=N, maxLength=15, core=false, t24Name=SECURITY.NO, genOperation="@ID[\'*\',3,1]")
+        SHORT_NAME : T24BusinessTypes:A
+            @i18n:Label (en="Short name")
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=1.0, core=true, t24Name=SHORT.NAME)
+        SUB_ASSET_TYPE : T24BusinessTypes:N
+            @i18n:Label (en="Sub Asset Type")
+            @t24:i (align=L, inputBehaviour=N, maxLength=5, core=false, t24Name=SUB.ASSET.TYPE, genOperation="@ID[\'*\',8,1]")
+        V_DATE_MARGIN : T24BusinessTypes:AMT
+            @i18n:Label (en=V.Dt.Margin)
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=13.0, core=true, t24Name=V.DATE.MARGIN)
+        V_DATE_NOMINAL : T24BusinessTypes:AMT
+            @i18n:Label (en="V Date Nominal")
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=11.0, core=true, t24Name=V.DATE.NOMINAL)
+        V_DT_ESTIMATION : T24BusinessTypes:AMT
+            @i18n:Label (en="V Dt Estimation")
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=12.0, core=true, t24Name=V.DT.ESTIMATION)
+        YIELD : T24BusinessTypes:AMT
+            @i18n:Label (en=Yield)
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=7.0, core=true, t24Name=YIELD)
+    }
+    AM_VEH_GRP_07__DATE_TIME
+    {
+        DATE_TIME : T24BusinessTypes:A
+            @i18n:Label (en="Date time")
+            @i18n:Tooltip (en="Date and time when record was input or authorised")
+            @t24:i (align=L, inputBehaviour=N, maxLength=18, sysNumber=25.0, core=true, t24Name=DATE.TIME)
+    }
+    AM_VEH_GRP_07__PORTFOLIO_NO
+    {
+        PORTFOLIO_NO -> SC_ScoPortfolioMaintenance:SEC_ACC_MASTER
+            @i18n:Label (en="Portfoio No")
+            @i18n:Tooltip (en="Indicates the Portfolio Account of the customer")
+            @t24:i (align=L, inputBehaviour=N, maxLength=10, sysNumber=19.0, core=true, businessType=A, t24Name=PORTFOLIO.NO)
+    }
+    AM_VEH_GRP_08
+        @i18n:Description (en="")
+        @t24:i (t24Name=AM.VEH.GRP.08, level=F, type=T, allowedFunctions="L P S", localRefAllowed=false)
+    {
+        ACCRUED_INT : T24BusinessTypes:AMT
+            @i18n:Label (en="Accrued Int")
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=9.0, core=true, t24Name=ACCRUED.INT)
+        AM_GROUP_ID : T24BusinessTypes:N
+            @i18n:Label (en="Group Id")
+            @t24:i (align=L, inputBehaviour=N, maxLength=8, core=false, t24Name=AM.GROUP.ID, genOperation="@ID[\'*\',1,1]")
+        APPLICATION : T24BusinessTypes:N
+            @i18n:Label (en=Application)
+            @t24:i (align=L, inputBehaviour=N, maxLength=2, core=false, t24Name=APPLICATION, genOperation="@ID[\'*\',2,1]")
+        ASSET_TYPE : T24BusinessTypes:N
+            @i18n:Label (en="Asset Type")
+            @i18n:Tooltip (en="Indicates the asset type")
+            @t24:i (align=L, inputBehaviour=N, maxLength=3, core=false, t24Name=ASSET.TYPE, genOperation="@ID[\'*\',9,1]")
+        AVE_GRP_CON_KEY : T24BusinessTypes:A PK required
+            @t24:i (align=L, inputBehaviour=N, maxLength=80, sysNumber=0.0, core=true, t24Name=AVE.GRP.CON.KEY)
+        BEGIN_DATE : T24BusinessTypes:D
+            @i18n:Label (en="Begin Date")
+            @t24:i (align=R, inputBehaviour=N, maxLength=10, sysNumber=21.0, core=true, t24Name=BEGIN.DATE)
+        BOOK_COST_SEC_CCY : T24BusinessTypes:AMT
+            @i18n:Label (en="Book Cost Sec Ccy")
+            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=18.0, core=true, t24Name=BOOK.COST.SEC.CCY)
+        BOOK_CST_EXC_RATE : T24BusinessTypes:AMT
+            @i18n:Label (en="Book Cst Exc Rate")
+            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=22.0, core=true, t24Name=BOOK.CST.EXC.RATE)
+        COST_PRICE : T24BusinessTypes:AMT
+            @i18n:Label (en="Cost Price")
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=3.0, core=true, t24Name=COST.PRICE)
+        COUNTER_NOMINAL : T24BusinessTypes:AMT
+            @i18n:Label (en="Counter Nominal")
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=5.0, core=true, t24Name=COUNTER.NOMINAL)
+        COUP_PR_YEAR : T24BusinessTypes:AMT
+            @i18n:Label (en="Coup Pr Year")
+            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=15.0, core=true, t24Name=COUP.PR.YEAR)
+        DATE_TIME -> byValue AM_Group:AM_VEH_GRP_08__DATE_TIME *
+            @t24:i (t24Name=DATE.TIME)
+        DEPOSITORY : T24BusinessTypes:A
+            @i18n:Label (en=Depository)
+            @i18n:Tooltip (en="Depository the Security to be delivered from/to")
+            @t24:i (align=L, inputBehaviour=N, maxLength=10, sysNumber=20.0, core=true, t24Name=DEPOSITORY)
+        DURATION : T24BusinessTypes:N
+            @i18n:Label (en=Duration)
+            @i18n:Tooltip (en="Duration of that opportunity to be active")
+            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=16.0, core=true, t24Name=DURATION)
+        ESTIMATED_INCOME : T24BusinessTypes:AMT
+            @i18n:Label (en="Estimated Income")
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=10.0, core=true, t24Name=ESTIMATED.INCOME)
+        ESTIMATION : T24BusinessTypes:AMT
+            @i18n:Label (en=Estimation)
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=6.0, core=true, t24Name=ESTIMATION)
+        GRP_VAL_CURRENCY : T24BusinessTypes:A
+            @i18n:Label (en="Grp Val CCy")
+            @t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=24.0, core=true, t24Name=GRP.VAL.CURRENCY)
+        HELD_SINCE : T24BusinessTypes:D
+            @t24:i (align=R, inputBehaviour=N, maxLength=10, sysNumber=23.0, core=true, t24Name=HELD.SINCE)
+        INT_AT_MATURITY : T24BusinessTypes:AMT
+            @i18n:Label (en=Int.At.Maturity)
+            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=14.0, core=true, t24Name=INT.AT.MATURITY)
+        MARGIN_VALUE : T24BusinessTypes:AMT
+            @i18n:Label (en="Margin Value")
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=8.0, core=true, t24Name=MARGIN.VALUE)
+        MARKET_PRICE : T24BusinessTypes:AMT
+            @i18n:Label (en="Market Price")
+            @i18n:Tooltip (en="Indicates the Market Price")
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=4.0, core=true, t24Name=MARKET.PRICE)
+        MATURITY_DATE : T24BusinessTypes:D
+            @i18n:Label (en="Maturity Date")
+            @i18n:Tooltip (en="Indicates the Maturity Date of the Transaction")
+            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=17.0, core=true, t24Name=MATURITY.DATE)
+        MONTH_NO : T24BusinessTypes:N
+            @i18n:Label (en="Month No")
+            @t24:i (align=R, inputBehaviour=N, maxLength=2, core=false, t24Name=MONTH.NO)
+        NET_ACCR_DIV : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=27.0, core=true, t24Name=NET.ACCR.DIV)
+        NO_NOMINAL : T24BusinessTypes:AMT
+            @i18n:Label (en=Nominal)
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=2.0, core=true, t24Name=NO.NOMINAL)
+        ORIG_ACCR_DIV : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=26.0, core=true, t24Name=ORIG.ACCR.DIV)
+        PORTFOLIO_NO -> byValue AM_Group:AM_VEH_GRP_08__PORTFOLIO_NO *
+            @t24:i (t24Name=PORTFOLIO.NO)
+        REC_TAX_CUM_AMT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=28.0, core=true, t24Name=REC.TAX.CUM.AMT)
+        REC_TAX_CUM_RESET : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=29.0, core=true, t24Name=REC.TAX.CUM.RESET)
+        SECURITY_CCY : T24BusinessTypes:N
+            @i18n:Label (en=Ccy)
+            @t24:i (align=L, inputBehaviour=N, maxLength=3, core=false, t24Name=SECURITY.CCY, genOperation="@ID[\'*\',4,1]")
+        SECURITY_NO : T24BusinessTypes:N
+            @i18n:Label (en="Security No")
+            @i18n:Tooltip (en="Indicates the security code/number")
+            @t24:i (align=L, inputBehaviour=N, maxLength=15, core=false, t24Name=SECURITY.NO, genOperation="@ID[\'*\',3,1]")
+        SHORT_NAME : T24BusinessTypes:A
+            @i18n:Label (en="Short name")
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=1.0, core=true, t24Name=SHORT.NAME)
+        SUB_ASSET_TYPE : T24BusinessTypes:N
+            @i18n:Label (en="Sub Asset Type")
+            @t24:i (align=L, inputBehaviour=N, maxLength=5, core=false, t24Name=SUB.ASSET.TYPE, genOperation="@ID[\'*\',8,1]")
+        V_DATE_MARGIN : T24BusinessTypes:AMT
+            @i18n:Label (en=V.Dt.Margin)
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=13.0, core=true, t24Name=V.DATE.MARGIN)
+        V_DATE_NOMINAL : T24BusinessTypes:AMT
+            @i18n:Label (en="V Date Nominal")
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=11.0, core=true, t24Name=V.DATE.NOMINAL)
+        V_DT_ESTIMATION : T24BusinessTypes:AMT
+            @i18n:Label (en="V Dt Estimation")
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=12.0, core=true, t24Name=V.DT.ESTIMATION)
+        YIELD : T24BusinessTypes:AMT
+            @i18n:Label (en=Yield)
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=7.0, core=true, t24Name=YIELD)
+    }
+    AM_VEH_GRP_08__DATE_TIME
+    {
+        DATE_TIME : T24BusinessTypes:A
+            @i18n:Label (en="Date time")
+            @i18n:Tooltip (en="Date and time when record was input or authorised")
+            @t24:i (align=L, inputBehaviour=N, maxLength=18, sysNumber=25.0, core=true, t24Name=DATE.TIME)
+    }
+    AM_VEH_GRP_08__PORTFOLIO_NO
+    {
+        PORTFOLIO_NO -> SC_ScoPortfolioMaintenance:SEC_ACC_MASTER
+            @i18n:Label (en="Portfoio No")
+            @i18n:Tooltip (en="Indicates the Portfolio Account of the customer")
+            @t24:i (align=L, inputBehaviour=N, maxLength=10, sysNumber=19.0, core=true, businessType=A, t24Name=PORTFOLIO.NO)
+    }
+    AM_VEH_GRP_09
+        @i18n:Description (en="")
+        @t24:i (t24Name=AM.VEH.GRP.09, level=F, type=T, allowedFunctions="L P S", localRefAllowed=false)
+    {
+        ACCRUED_INT : T24BusinessTypes:AMT
+            @i18n:Label (en="Accrued Int")
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=9.0, core=true, t24Name=ACCRUED.INT)
+        AM_GROUP_ID : T24BusinessTypes:N
+            @i18n:Label (en="Group Id")
+            @t24:i (align=L, inputBehaviour=N, maxLength=8, core=false, t24Name=AM.GROUP.ID, genOperation="@ID[\'*\',1,1]")
+        APPLICATION : T24BusinessTypes:N
+            @i18n:Label (en=Application)
+            @t24:i (align=L, inputBehaviour=N, maxLength=2, core=false, t24Name=APPLICATION, genOperation="@ID[\'*\',2,1]")
+        ASSET_TYPE : T24BusinessTypes:N
+            @i18n:Label (en="Asset Type")
+            @i18n:Tooltip (en="Indicates the asset type")
+            @t24:i (align=L, inputBehaviour=N, maxLength=3, core=false, t24Name=ASSET.TYPE, genOperation="@ID[\'*\',9,1]")
+        AVE_GRP_CON_KEY : T24BusinessTypes:A PK required
+            @t24:i (align=L, inputBehaviour=N, maxLength=80, sysNumber=0.0, core=true, t24Name=AVE.GRP.CON.KEY)
+        BEGIN_DATE : T24BusinessTypes:D
+            @i18n:Label (en="Begin Date")
+            @t24:i (align=R, inputBehaviour=N, maxLength=10, sysNumber=21.0, core=true, t24Name=BEGIN.DATE)
+        BOOK_COST_SEC_CCY : T24BusinessTypes:AMT
+            @i18n:Label (en="Book Cost Sec Ccy")
+            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=18.0, core=true, t24Name=BOOK.COST.SEC.CCY)
+        BOOK_CST_EXC_RATE : T24BusinessTypes:AMT
+            @i18n:Label (en="Book Cst Exc Rate")
+            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=22.0, core=true, t24Name=BOOK.CST.EXC.RATE)
+        COST_PRICE : T24BusinessTypes:AMT
+            @i18n:Label (en="Cost Price")
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=3.0, core=true, t24Name=COST.PRICE)
+        COUNTER_NOMINAL : T24BusinessTypes:AMT
+            @i18n:Label (en="Counter Nominal")
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=5.0, core=true, t24Name=COUNTER.NOMINAL)
+        COUP_PR_YEAR : T24BusinessTypes:AMT
+            @i18n:Label (en="Coup Pr Year")
+            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=15.0, core=true, t24Name=COUP.PR.YEAR)
+        DATE_TIME -> byValue AM_Group:AM_VEH_GRP_09__DATE_TIME *
+            @t24:i (t24Name=DATE.TIME)
+        DEPOSITORY : T24BusinessTypes:A
+            @i18n:Label (en=Depository)
+            @i18n:Tooltip (en="Depository the Security to be delivered from/to")
+            @t24:i (align=L, inputBehaviour=N, maxLength=10, sysNumber=20.0, core=true, t24Name=DEPOSITORY)
+        DURATION : T24BusinessTypes:N
+            @i18n:Label (en=Duration)
+            @i18n:Tooltip (en="Duration of that opportunity to be active")
+            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=16.0, core=true, t24Name=DURATION)
+        ESTIMATED_INCOME : T24BusinessTypes:AMT
+            @i18n:Label (en="Estimated Income")
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=10.0, core=true, t24Name=ESTIMATED.INCOME)
+        ESTIMATION : T24BusinessTypes:AMT
+            @i18n:Label (en=Estimation)
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=6.0, core=true, t24Name=ESTIMATION)
+        GRP_VAL_CURRENCY : T24BusinessTypes:A
+            @i18n:Label (en="Grp Val CCy")
+            @t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=24.0, core=true, t24Name=GRP.VAL.CURRENCY)
+        HELD_SINCE : T24BusinessTypes:D
+            @t24:i (align=R, inputBehaviour=N, maxLength=10, sysNumber=23.0, core=true, t24Name=HELD.SINCE)
+        INT_AT_MATURITY : T24BusinessTypes:AMT
+            @i18n:Label (en=Int.At.Maturity)
+            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=14.0, core=true, t24Name=INT.AT.MATURITY)
+        MARGIN_VALUE : T24BusinessTypes:AMT
+            @i18n:Label (en="Margin Value")
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=8.0, core=true, t24Name=MARGIN.VALUE)
+        MARKET_PRICE : T24BusinessTypes:AMT
+            @i18n:Label (en="Market Price")
+            @i18n:Tooltip (en="Indicates the Market Price")
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=4.0, core=true, t24Name=MARKET.PRICE)
+        MATURITY_DATE : T24BusinessTypes:D
+            @i18n:Label (en="Maturity Date")
+            @i18n:Tooltip (en="Indicates the Maturity Date of the Transaction")
+            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=17.0, core=true, t24Name=MATURITY.DATE)
+        MONTH_NO : T24BusinessTypes:N
+            @i18n:Label (en="Month No")
+            @t24:i (align=R, inputBehaviour=N, maxLength=2, core=false, t24Name=MONTH.NO)
+        NET_ACCR_DIV : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=27.0, core=true, t24Name=NET.ACCR.DIV)
+        NO_NOMINAL : T24BusinessTypes:AMT
+            @i18n:Label (en=Nominal)
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=2.0, core=true, t24Name=NO.NOMINAL)
+        ORIG_ACCR_DIV : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=26.0, core=true, t24Name=ORIG.ACCR.DIV)
+        PORTFOLIO_NO -> byValue AM_Group:AM_VEH_GRP_09__PORTFOLIO_NO *
+            @t24:i (t24Name=PORTFOLIO.NO)
+        REC_TAX_CUM_AMT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=28.0, core=true, t24Name=REC.TAX.CUM.AMT)
+        REC_TAX_CUM_RESET : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=29.0, core=true, t24Name=REC.TAX.CUM.RESET)
+        SECURITY_CCY : T24BusinessTypes:N
+            @i18n:Label (en=Ccy)
+            @t24:i (align=L, inputBehaviour=N, maxLength=3, core=false, t24Name=SECURITY.CCY, genOperation="@ID[\'*\',4,1]")
+        SECURITY_NO : T24BusinessTypes:N
+            @i18n:Label (en="Security No")
+            @i18n:Tooltip (en="Indicates the security code/number")
+            @t24:i (align=L, inputBehaviour=N, maxLength=15, core=false, t24Name=SECURITY.NO, genOperation="@ID[\'*\',3,1]")
+        SHORT_NAME : T24BusinessTypes:A
+            @i18n:Label (en="Short name")
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=1.0, core=true, t24Name=SHORT.NAME)
+        SUB_ASSET_TYPE : T24BusinessTypes:N
+            @i18n:Label (en="Sub Asset Type")
+            @t24:i (align=L, inputBehaviour=N, maxLength=5, core=false, t24Name=SUB.ASSET.TYPE, genOperation="@ID[\'*\',8,1]")
+        V_DATE_MARGIN : T24BusinessTypes:AMT
+            @i18n:Label (en=V.Dt.Margin)
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=13.0, core=true, t24Name=V.DATE.MARGIN)
+        V_DATE_NOMINAL : T24BusinessTypes:AMT
+            @i18n:Label (en="V Date Nominal")
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=11.0, core=true, t24Name=V.DATE.NOMINAL)
+        V_DT_ESTIMATION : T24BusinessTypes:AMT
+            @i18n:Label (en="V Dt Estimation")
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=12.0, core=true, t24Name=V.DT.ESTIMATION)
+        YIELD : T24BusinessTypes:AMT
+            @i18n:Label (en=Yield)
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=7.0, core=true, t24Name=YIELD)
+    }
+    AM_VEH_GRP_09__DATE_TIME
+    {
+        DATE_TIME : T24BusinessTypes:A
+            @i18n:Label (en="Date time")
+            @i18n:Tooltip (en="Date and time when record was input or authorised")
+            @t24:i (align=L, inputBehaviour=N, maxLength=18, sysNumber=25.0, core=true, t24Name=DATE.TIME)
+    }
+    AM_VEH_GRP_09__PORTFOLIO_NO
+    {
+        PORTFOLIO_NO -> SC_ScoPortfolioMaintenance:SEC_ACC_MASTER
+            @i18n:Label (en="Portfoio No")
+            @i18n:Tooltip (en="Indicates the Portfolio Account of the customer")
+            @t24:i (align=L, inputBehaviour=N, maxLength=10, sysNumber=19.0, core=true, businessType=A, t24Name=PORTFOLIO.NO)
+    }
+    AM_VEH_GRP_10
+        @i18n:Description (en="")
+        @t24:i (t24Name=AM.VEH.GRP.10, level=F, type=T, allowedFunctions="L P S", localRefAllowed=false)
+    {
+        ACCRUED_INT : T24BusinessTypes:AMT
+            @i18n:Label (en="Accrued Int")
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=9.0, core=true, t24Name=ACCRUED.INT)
+        AM_GROUP_ID : T24BusinessTypes:N
+            @i18n:Label (en="Group Id")
+            @t24:i (align=L, inputBehaviour=N, maxLength=8, core=false, t24Name=AM.GROUP.ID, genOperation="@ID[\'*\',1,1]")
+        APPLICATION : T24BusinessTypes:N
+            @i18n:Label (en=Application)
+            @t24:i (align=L, inputBehaviour=N, maxLength=2, core=false, t24Name=APPLICATION, genOperation="@ID[\'*\',2,1]")
+        ASSET_TYPE : T24BusinessTypes:N
+            @i18n:Label (en="Asset Type")
+            @i18n:Tooltip (en="Indicates the asset type")
+            @t24:i (align=L, inputBehaviour=N, maxLength=3, core=false, t24Name=ASSET.TYPE, genOperation="@ID[\'*\',9,1]")
+        AVE_GRP_CON_KEY : T24BusinessTypes:A PK required
+            @t24:i (align=L, inputBehaviour=N, maxLength=80, sysNumber=0.0, core=true, t24Name=AVE.GRP.CON.KEY)
+        BEGIN_DATE : T24BusinessTypes:D
+            @i18n:Label (en="Begin Date")
+            @t24:i (align=R, inputBehaviour=N, maxLength=10, sysNumber=21.0, core=true, t24Name=BEGIN.DATE)
+        BOOK_COST_SEC_CCY : T24BusinessTypes:AMT
+            @i18n:Label (en="Book Cost Sec Ccy")
+            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=18.0, core=true, t24Name=BOOK.COST.SEC.CCY)
+        BOOK_CST_EXC_RATE : T24BusinessTypes:AMT
+            @i18n:Label (en="Book Cst Exc Rate")
+            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=22.0, core=true, t24Name=BOOK.CST.EXC.RATE)
+        COST_PRICE : T24BusinessTypes:AMT
+            @i18n:Label (en="Cost Price")
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=3.0, core=true, t24Name=COST.PRICE)
+        COUNTER_NOMINAL : T24BusinessTypes:AMT
+            @i18n:Label (en="Counter Nominal")
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=5.0, core=true, t24Name=COUNTER.NOMINAL)
+        COUP_PR_YEAR : T24BusinessTypes:AMT
+            @i18n:Label (en="Coup Pr Year")
+            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=15.0, core=true, t24Name=COUP.PR.YEAR)
+        DATE_TIME -> byValue AM_Group:AM_VEH_GRP_10__DATE_TIME *
+            @t24:i (t24Name=DATE.TIME)
+        DEPOSITORY : T24BusinessTypes:A
+            @i18n:Label (en=Depository)
+            @i18n:Tooltip (en="Depository the Security to be delivered from/to")
+            @t24:i (align=L, inputBehaviour=N, maxLength=10, sysNumber=20.0, core=true, t24Name=DEPOSITORY)
+        DURATION : T24BusinessTypes:N
+            @i18n:Label (en=Duration)
+            @i18n:Tooltip (en="Duration of that opportunity to be active")
+            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=16.0, core=true, t24Name=DURATION)
+        ESTIMATED_INCOME : T24BusinessTypes:AMT
+            @i18n:Label (en="Estimated Income")
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=10.0, core=true, t24Name=ESTIMATED.INCOME)
+        ESTIMATION : T24BusinessTypes:AMT
+            @i18n:Label (en=Estimation)
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=6.0, core=true, t24Name=ESTIMATION)
+        GRP_VAL_CURRENCY : T24BusinessTypes:A
+            @i18n:Label (en="Grp Val CCy")
+            @t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=24.0, core=true, t24Name=GRP.VAL.CURRENCY)
+        HELD_SINCE : T24BusinessTypes:D
+            @t24:i (align=R, inputBehaviour=N, maxLength=10, sysNumber=23.0, core=true, t24Name=HELD.SINCE)
+        INT_AT_MATURITY : T24BusinessTypes:AMT
+            @i18n:Label (en=Int.At.Maturity)
+            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=14.0, core=true, t24Name=INT.AT.MATURITY)
+        MARGIN_VALUE : T24BusinessTypes:AMT
+            @i18n:Label (en="Margin Value")
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=8.0, core=true, t24Name=MARGIN.VALUE)
+        MARKET_PRICE : T24BusinessTypes:AMT
+            @i18n:Label (en="Market Price")
+            @i18n:Tooltip (en="Indicates the Market Price")
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=4.0, core=true, t24Name=MARKET.PRICE)
+        MATURITY_DATE : T24BusinessTypes:D
+            @i18n:Label (en="Maturity Date")
+            @i18n:Tooltip (en="Indicates the Maturity Date of the Transaction")
+            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=17.0, core=true, t24Name=MATURITY.DATE)
+        MONTH_NO : T24BusinessTypes:N
+            @i18n:Label (en="Month No")
+            @t24:i (align=R, inputBehaviour=N, maxLength=2, core=false, t24Name=MONTH.NO)
+        NET_ACCR_DIV : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=27.0, core=true, t24Name=NET.ACCR.DIV)
+        NO_NOMINAL : T24BusinessTypes:AMT
+            @i18n:Label (en=Nominal)
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=2.0, core=true, t24Name=NO.NOMINAL)
+        ORIG_ACCR_DIV : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=26.0, core=true, t24Name=ORIG.ACCR.DIV)
+        PORTFOLIO_NO -> byValue AM_Group:AM_VEH_GRP_10__PORTFOLIO_NO *
+            @t24:i (t24Name=PORTFOLIO.NO)
+        REC_TAX_CUM_AMT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=28.0, core=true, t24Name=REC.TAX.CUM.AMT)
+        REC_TAX_CUM_RESET : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=29.0, core=true, t24Name=REC.TAX.CUM.RESET)
+        SECURITY_CCY : T24BusinessTypes:N
+            @i18n:Label (en=Ccy)
+            @t24:i (align=L, inputBehaviour=N, maxLength=3, core=false, t24Name=SECURITY.CCY, genOperation="@ID[\'*\',4,1]")
+        SECURITY_NO : T24BusinessTypes:N
+            @i18n:Label (en="Security No")
+            @i18n:Tooltip (en="Indicates the security code/number")
+            @t24:i (align=L, inputBehaviour=N, maxLength=15, core=false, t24Name=SECURITY.NO, genOperation="@ID[\'*\',3,1]")
+        SHORT_NAME : T24BusinessTypes:A
+            @i18n:Label (en="Short name")
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=1.0, core=true, t24Name=SHORT.NAME)
+        SUB_ASSET_TYPE : T24BusinessTypes:N
+            @i18n:Label (en="Sub Asset Type")
+            @t24:i (align=L, inputBehaviour=N, maxLength=5, core=false, t24Name=SUB.ASSET.TYPE, genOperation="@ID[\'*\',8,1]")
+        V_DATE_MARGIN : T24BusinessTypes:AMT
+            @i18n:Label (en=V.Dt.Margin)
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=13.0, core=true, t24Name=V.DATE.MARGIN)
+        V_DATE_NOMINAL : T24BusinessTypes:AMT
+            @i18n:Label (en="V Date Nominal")
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=11.0, core=true, t24Name=V.DATE.NOMINAL)
+        V_DT_ESTIMATION : T24BusinessTypes:AMT
+            @i18n:Label (en="V Dt Estimation")
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=12.0, core=true, t24Name=V.DT.ESTIMATION)
+        YIELD : T24BusinessTypes:AMT
+            @i18n:Label (en=Yield)
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=7.0, core=true, t24Name=YIELD)
+    }
+    AM_VEH_GRP_10__DATE_TIME
+    {
+        DATE_TIME : T24BusinessTypes:A
+            @i18n:Label (en="Date time")
+            @i18n:Tooltip (en="Date and time when record was input or authorised")
+            @t24:i (align=L, inputBehaviour=N, maxLength=18, sysNumber=25.0, core=true, t24Name=DATE.TIME)
+    }
+    AM_VEH_GRP_10__PORTFOLIO_NO
+    {
+        PORTFOLIO_NO -> SC_ScoPortfolioMaintenance:SEC_ACC_MASTER
+            @i18n:Label (en="Portfoio No")
+            @i18n:Tooltip (en="Indicates the Portfolio Account of the customer")
+            @t24:i (align=L, inputBehaviour=N, maxLength=10, sysNumber=19.0, core=true, businessType=A, t24Name=PORTFOLIO.NO)
+    }
+    AM_VEH_GRP_11
+        @i18n:Description (en="")
+        @t24:i (t24Name=AM.VEH.GRP.11, level=F, type=T, allowedFunctions="L P S", localRefAllowed=false)
+    {
+        ACCRUED_INT : T24BusinessTypes:AMT
+            @i18n:Label (en="Accrued Int")
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=9.0, core=true, t24Name=ACCRUED.INT)
+        AM_GROUP_ID : T24BusinessTypes:N
+            @i18n:Label (en="Group Id")
+            @t24:i (align=L, inputBehaviour=N, maxLength=8, core=false, t24Name=AM.GROUP.ID, genOperation="@ID[\'*\',1,1]")
+        APPLICATION : T24BusinessTypes:N
+            @i18n:Label (en=Application)
+            @t24:i (align=L, inputBehaviour=N, maxLength=2, core=false, t24Name=APPLICATION, genOperation="@ID[\'*\',2,1]")
+        ASSET_TYPE : T24BusinessTypes:N
+            @i18n:Label (en="Asset Type")
+            @i18n:Tooltip (en="Indicates the asset type")
+            @t24:i (align=L, inputBehaviour=N, maxLength=3, core=false, t24Name=ASSET.TYPE, genOperation="@ID[\'*\',9,1]")
+        AVE_GRP_CON_KEY : T24BusinessTypes:A PK required
+            @t24:i (align=L, inputBehaviour=N, maxLength=80, sysNumber=0.0, core=true, t24Name=AVE.GRP.CON.KEY)
+        BEGIN_DATE : T24BusinessTypes:D
+            @i18n:Label (en="Begin Date")
+            @t24:i (align=R, inputBehaviour=N, maxLength=10, sysNumber=21.0, core=true, t24Name=BEGIN.DATE)
+        BOOK_COST_SEC_CCY : T24BusinessTypes:AMT
+            @i18n:Label (en="Book Cost Sec Ccy")
+            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=18.0, core=true, t24Name=BOOK.COST.SEC.CCY)
+        BOOK_CST_EXC_RATE : T24BusinessTypes:AMT
+            @i18n:Label (en="Book Cst Exc Rate")
+            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=22.0, core=true, t24Name=BOOK.CST.EXC.RATE)
+        COST_PRICE : T24BusinessTypes:AMT
+            @i18n:Label (en="Cost Price")
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=3.0, core=true, t24Name=COST.PRICE)
+        COUNTER_NOMINAL : T24BusinessTypes:AMT
+            @i18n:Label (en="Counter Nominal")
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=5.0, core=true, t24Name=COUNTER.NOMINAL)
+        COUP_PR_YEAR : T24BusinessTypes:AMT
+            @i18n:Label (en="Coup Pr Year")
+            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=15.0, core=true, t24Name=COUP.PR.YEAR)
+        DATE_TIME -> byValue AM_Group:AM_VEH_GRP_11__DATE_TIME *
+            @t24:i (t24Name=DATE.TIME)
+        DEPOSITORY : T24BusinessTypes:A
+            @i18n:Label (en=Depository)
+            @i18n:Tooltip (en="Depository the Security to be delivered from/to")
+            @t24:i (align=L, inputBehaviour=N, maxLength=10, sysNumber=20.0, core=true, t24Name=DEPOSITORY)
+        DURATION : T24BusinessTypes:N
+            @i18n:Label (en=Duration)
+            @i18n:Tooltip (en="Duration of that opportunity to be active")
+            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=16.0, core=true, t24Name=DURATION)
+        ESTIMATED_INCOME : T24BusinessTypes:AMT
+            @i18n:Label (en="Estimated Income")
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=10.0, core=true, t24Name=ESTIMATED.INCOME)
+        ESTIMATION : T24BusinessTypes:AMT
+            @i18n:Label (en=Estimation)
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=6.0, core=true, t24Name=ESTIMATION)
+        GRP_VAL_CURRENCY : T24BusinessTypes:A
+            @i18n:Label (en="Grp Val CCy")
+            @t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=24.0, core=true, t24Name=GRP.VAL.CURRENCY)
+        HELD_SINCE : T24BusinessTypes:D
+            @t24:i (align=R, inputBehaviour=N, maxLength=10, sysNumber=23.0, core=true, t24Name=HELD.SINCE)
+        INT_AT_MATURITY : T24BusinessTypes:AMT
+            @i18n:Label (en=Int.At.Maturity)
+            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=14.0, core=true, t24Name=INT.AT.MATURITY)
+        MARGIN_VALUE : T24BusinessTypes:AMT
+            @i18n:Label (en="Margin Value")
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=8.0, core=true, t24Name=MARGIN.VALUE)
+        MARKET_PRICE : T24BusinessTypes:AMT
+            @i18n:Label (en="Market Price")
+            @i18n:Tooltip (en="Indicates the Market Price")
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=4.0, core=true, t24Name=MARKET.PRICE)
+        MATURITY_DATE : T24BusinessTypes:D
+            @i18n:Label (en="Maturity Date")
+            @i18n:Tooltip (en="Indicates the Maturity Date of the Transaction")
+            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=17.0, core=true, t24Name=MATURITY.DATE)
+        MONTH_NO : T24BusinessTypes:N
+            @i18n:Label (en="Month No")
+            @t24:i (align=R, inputBehaviour=N, maxLength=2, core=false, t24Name=MONTH.NO)
+        NET_ACCR_DIV : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=27.0, core=true, t24Name=NET.ACCR.DIV)
+        NO_NOMINAL : T24BusinessTypes:AMT
+            @i18n:Label (en=Nominal)
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=2.0, core=true, t24Name=NO.NOMINAL)
+        ORIG_ACCR_DIV : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=26.0, core=true, t24Name=ORIG.ACCR.DIV)
+        PORTFOLIO_NO -> byValue AM_Group:AM_VEH_GRP_11__PORTFOLIO_NO *
+            @t24:i (t24Name=PORTFOLIO.NO)
+        REC_TAX_CUM_AMT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=28.0, core=true, t24Name=REC.TAX.CUM.AMT)
+        REC_TAX_CUM_RESET : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=29.0, core=true, t24Name=REC.TAX.CUM.RESET)
+        SECURITY_CCY : T24BusinessTypes:N
+            @i18n:Label (en=Ccy)
+            @t24:i (align=L, inputBehaviour=N, maxLength=3, core=false, t24Name=SECURITY.CCY, genOperation="@ID[\'*\',4,1]")
+        SECURITY_NO : T24BusinessTypes:N
+            @i18n:Label (en="Security No")
+            @i18n:Tooltip (en="Indicates the security code/number")
+            @t24:i (align=L, inputBehaviour=N, maxLength=15, core=false, t24Name=SECURITY.NO, genOperation="@ID[\'*\',3,1]")
+        SHORT_NAME : T24BusinessTypes:A
+            @i18n:Label (en="Short name")
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=1.0, core=true, t24Name=SHORT.NAME)
+        SUB_ASSET_TYPE : T24BusinessTypes:N
+            @i18n:Label (en="Sub Asset Type")
+            @t24:i (align=L, inputBehaviour=N, maxLength=5, core=false, t24Name=SUB.ASSET.TYPE, genOperation="@ID[\'*\',8,1]")
+        V_DATE_MARGIN : T24BusinessTypes:AMT
+            @i18n:Label (en=V.Dt.Margin)
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=13.0, core=true, t24Name=V.DATE.MARGIN)
+        V_DATE_NOMINAL : T24BusinessTypes:AMT
+            @i18n:Label (en="V Date Nominal")
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=11.0, core=true, t24Name=V.DATE.NOMINAL)
+        V_DT_ESTIMATION : T24BusinessTypes:AMT
+            @i18n:Label (en="V Dt Estimation")
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=12.0, core=true, t24Name=V.DT.ESTIMATION)
+        YIELD : T24BusinessTypes:AMT
+            @i18n:Label (en=Yield)
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=7.0, core=true, t24Name=YIELD)
+    }
+    AM_VEH_GRP_11__DATE_TIME
+    {
+        DATE_TIME : T24BusinessTypes:A
+            @i18n:Label (en="Date time")
+            @i18n:Tooltip (en="Date and time when record was input or authorised")
+            @t24:i (align=L, inputBehaviour=N, maxLength=18, sysNumber=25.0, core=true, t24Name=DATE.TIME)
+    }
+    AM_VEH_GRP_11__PORTFOLIO_NO
+    {
+        PORTFOLIO_NO -> SC_ScoPortfolioMaintenance:SEC_ACC_MASTER
+            @i18n:Label (en="Portfoio No")
+            @i18n:Tooltip (en="Indicates the Portfolio Account of the customer")
+            @t24:i (align=L, inputBehaviour=N, maxLength=10, sysNumber=19.0, core=true, businessType=A, t24Name=PORTFOLIO.NO)
+    }
+    AM_VEH_GRP_12
+        @i18n:Description (en="")
+        @t24:i (t24Name=AM.VEH.GRP.12, level=F, type=T, allowedFunctions="L P S", localRefAllowed=false)
+    {
+        ACCRUED_INT : T24BusinessTypes:AMT
+            @i18n:Label (en="Accrued Int")
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=9.0, core=true, t24Name=ACCRUED.INT)
+        AM_GROUP_ID : T24BusinessTypes:N
+            @i18n:Label (en="Group Id")
+            @t24:i (align=L, inputBehaviour=N, maxLength=8, core=false, t24Name=AM.GROUP.ID, genOperation="@ID[\'*\',1,1]")
+        APPLICATION : T24BusinessTypes:N
+            @i18n:Label (en=Application)
+            @t24:i (align=L, inputBehaviour=N, maxLength=2, core=false, t24Name=APPLICATION, genOperation="@ID[\'*\',2,1]")
+        ASSET_TYPE : T24BusinessTypes:N
+            @i18n:Label (en="Asset Type")
+            @i18n:Tooltip (en="Indicates the asset type")
+            @t24:i (align=L, inputBehaviour=N, maxLength=3, core=false, t24Name=ASSET.TYPE, genOperation="@ID[\'*\',9,1]")
+        AVE_GRP_CON_KEY : T24BusinessTypes:A PK required
+            @t24:i (align=L, inputBehaviour=N, maxLength=80, sysNumber=0.0, core=true, t24Name=AVE.GRP.CON.KEY)
+        BEGIN_DATE : T24BusinessTypes:D
+            @i18n:Label (en="Begin Date")
+            @t24:i (align=R, inputBehaviour=N, maxLength=10, sysNumber=21.0, core=true, t24Name=BEGIN.DATE)
+        BOOK_COST_SEC_CCY : T24BusinessTypes:AMT
+            @i18n:Label (en="Book Cost Sec Ccy")
+            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=18.0, core=true, t24Name=BOOK.COST.SEC.CCY)
+        BOOK_CST_EXC_RATE : T24BusinessTypes:AMT
+            @i18n:Label (en="Book Cst Exc Rate")
+            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=22.0, core=true, t24Name=BOOK.CST.EXC.RATE)
+        COST_PRICE : T24BusinessTypes:AMT
+            @i18n:Label (en="Cost Price")
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=3.0, core=true, t24Name=COST.PRICE)
+        COUNTER_NOMINAL : T24BusinessTypes:AMT
+            @i18n:Label (en="Counter Nominal")
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=5.0, core=true, t24Name=COUNTER.NOMINAL)
+        COUP_PR_YEAR : T24BusinessTypes:AMT
+            @i18n:Label (en="Coup Pr Year")
+            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=15.0, core=true, t24Name=COUP.PR.YEAR)
+        DATE_TIME -> byValue AM_Group:AM_VEH_GRP_12__DATE_TIME *
+            @t24:i (t24Name=DATE.TIME)
+        DEPOSITORY : T24BusinessTypes:A
+            @i18n:Label (en=Depository)
+            @i18n:Tooltip (en="Depository the Security to be delivered from/to")
+            @t24:i (align=L, inputBehaviour=N, maxLength=10, sysNumber=20.0, core=true, t24Name=DEPOSITORY)
+        DURATION : T24BusinessTypes:N
+            @i18n:Label (en=Duration)
+            @i18n:Tooltip (en="Duration of that opportunity to be active")
+            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=16.0, core=true, t24Name=DURATION)
+        ESTIMATED_INCOME : T24BusinessTypes:AMT
+            @i18n:Label (en="Estimated Income")
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=10.0, core=true, t24Name=ESTIMATED.INCOME)
+        ESTIMATION : T24BusinessTypes:AMT
+            @i18n:Label (en=Estimation)
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=6.0, core=true, t24Name=ESTIMATION)
+        GRP_VAL_CURRENCY : T24BusinessTypes:A
+            @i18n:Label (en="Grp Val CCy")
+            @t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=24.0, core=true, t24Name=GRP.VAL.CURRENCY)
+        HELD_SINCE : T24BusinessTypes:D
+            @t24:i (align=R, inputBehaviour=N, maxLength=10, sysNumber=23.0, core=true, t24Name=HELD.SINCE)
+        INT_AT_MATURITY : T24BusinessTypes:AMT
+            @i18n:Label (en=Int.At.Maturity)
+            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=14.0, core=true, t24Name=INT.AT.MATURITY)
+        MARGIN_VALUE : T24BusinessTypes:AMT
+            @i18n:Label (en="Margin Value")
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=8.0, core=true, t24Name=MARGIN.VALUE)
+        MARKET_PRICE : T24BusinessTypes:AMT
+            @i18n:Label (en="Market Price")
+            @i18n:Tooltip (en="Indicates the Market Price")
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=4.0, core=true, t24Name=MARKET.PRICE)
+        MATURITY_DATE : T24BusinessTypes:D
+            @i18n:Label (en="Maturity Date")
+            @i18n:Tooltip (en="Indicates the Maturity Date of the Transaction")
+            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=17.0, core=true, t24Name=MATURITY.DATE)
+        MONTH_NO : T24BusinessTypes:N
+            @i18n:Label (en="Month No")
+            @t24:i (align=R, inputBehaviour=N, maxLength=2, core=false, t24Name=MONTH.NO)
+        NET_ACCR_DIV : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=27.0, core=true, t24Name=NET.ACCR.DIV)
+        NO_NOMINAL : T24BusinessTypes:AMT
+            @i18n:Label (en=Nominal)
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=2.0, core=true, t24Name=NO.NOMINAL)
+        ORIG_ACCR_DIV : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=26.0, core=true, t24Name=ORIG.ACCR.DIV)
+        PORTFOLIO_NO -> byValue AM_Group:AM_VEH_GRP_12__PORTFOLIO_NO *
+            @t24:i (t24Name=PORTFOLIO.NO)
+        REC_TAX_CUM_AMT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=28.0, core=true, t24Name=REC.TAX.CUM.AMT)
+        REC_TAX_CUM_RESET : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=29.0, core=true, t24Name=REC.TAX.CUM.RESET)
+        SECURITY_CCY : T24BusinessTypes:N
+            @i18n:Label (en=Ccy)
+            @t24:i (align=L, inputBehaviour=N, maxLength=3, core=false, t24Name=SECURITY.CCY, genOperation="@ID[\'*\',4,1]")
+        SECURITY_NO : T24BusinessTypes:N
+            @i18n:Label (en="Security No")
+            @i18n:Tooltip (en="Indicates the security code/number")
+            @t24:i (align=L, inputBehaviour=N, maxLength=15, core=false, t24Name=SECURITY.NO, genOperation="@ID[\'*\',3,1]")
+        SHORT_NAME : T24BusinessTypes:A
+            @i18n:Label (en="Short name")
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=1.0, core=true, t24Name=SHORT.NAME)
+        SUB_ASSET_TYPE : T24BusinessTypes:N
+            @i18n:Label (en="Sub Asset Type")
+            @t24:i (align=L, inputBehaviour=N, maxLength=5, core=false, t24Name=SUB.ASSET.TYPE, genOperation="@ID[\'*\',8,1]")
+        V_DATE_MARGIN : T24BusinessTypes:AMT
+            @i18n:Label (en=V.Dt.Margin)
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=13.0, core=true, t24Name=V.DATE.MARGIN)
+        V_DATE_NOMINAL : T24BusinessTypes:AMT
+            @i18n:Label (en="V Date Nominal")
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=11.0, core=true, t24Name=V.DATE.NOMINAL)
+        V_DT_ESTIMATION : T24BusinessTypes:AMT
+            @i18n:Label (en="V Dt Estimation")
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=12.0, core=true, t24Name=V.DT.ESTIMATION)
+        YIELD : T24BusinessTypes:AMT
+            @i18n:Label (en=Yield)
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=7.0, core=true, t24Name=YIELD)
+    }
+    AM_VEH_GRP_12__DATE_TIME
+    {
+        DATE_TIME : T24BusinessTypes:A
+            @i18n:Label (en="Date time")
+            @i18n:Tooltip (en="Date and time when record was input or authorised")
+            @t24:i (align=L, inputBehaviour=N, maxLength=18, sysNumber=25.0, core=true, t24Name=DATE.TIME)
+    }
+    AM_VEH_GRP_12__PORTFOLIO_NO
+    {
+        PORTFOLIO_NO -> SC_ScoPortfolioMaintenance:SEC_ACC_MASTER
+            @i18n:Label (en="Portfoio No")
+            @i18n:Tooltip (en="Indicates the Portfolio Account of the customer")
+            @t24:i (align=L, inputBehaviour=N, maxLength=10, sysNumber=19.0, core=true, businessType=A, t24Name=PORTFOLIO.NO)
     }
     MNEMONIC_AM_GROUP_PORT
         @i18n:Description (en="")
         @t24:i (t24Name=MNEMONIC.AM.GROUP.PORT, level=F, type=T, allowedFunctions="L P S", localRefAllowed=false)
     {
-        AM_GROUP_PORT -> AM_Group:AM_GROUP_PORT
-            @t24:i (align=R, inputBehaviour=I, maxLength=8, sysNumber=1.0, core=true, t24Name=AM.GROUP.PORT)
+        AM_GROUP_PORT -> byValue AM_Group:MNEMONIC_AM_GROUP_PORT__AM_GROUP_PORT *
+            @t24:i (t24Name=AM.GROUP.PORT)
         MNEMONIC_AGP -> AM_Group:MNEMONIC_AM_GROUP_PORT PK required
             @t24:i (align=R, inputBehaviour=I, maxLength=8, sysNumber=0.0, core=true, t24Name=MNEMONIC.AGP)
+    }
+    MNEMONIC_AM_GROUP_PORT__AM_GROUP_PORT
+    {
+        AM_GROUP_PORT -> AM_Group:AM_GROUP_PORT required
+            @t24:i (align=R, inputBehaviour=I, maxLength=8, sysNumber=1.0, core=true, t24Name=AM.GROUP.PORT)
     }
 }
 Enumerations {

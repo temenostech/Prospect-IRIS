@@ -51,7 +51,7 @@ Classes {
             @i18n:Label (en=Mnemonic)
             @i18n:Tooltip (en="The alternate short way of calling the record")
             @t24:i (align=L, inputBehaviour=I, maxLength=10, sysNumber=4.0, core=true, t24Name=MNEMONIC)
-        NAME : T24BusinessTypes:A
+        NAME : T24BusinessTypes:A required
             @i18n:Label (en=Name)
             @i18n:Tooltip (en="Indicates the Name ")
             @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=2.0, core=true, t24Name=NAME)
@@ -80,7 +80,7 @@ Classes {
             @t24:i (align=R, inputBehaviour=N, maxLength=10, sysNumber=15.0, core=true, t24Name=RESERVED9)
         SECURITY_NO -> byValue AM_TimeSeries:AM_COLLECTION__SECURITY_NO *
             @t24:i (t24Name=SECURITY.NO)
-        SHORT_NAME : T24BusinessTypes:A
+        SHORT_NAME : T24BusinessTypes:A required
             @i18n:Label (en="Short name")
             @t24:i (align=L, inputBehaviour=I, maxLength=20, sysNumber=3.0, core=true, t24Name=SHORT.NAME)
     }
@@ -90,6 +90,11 @@ Classes {
     {
         COLLECTION_ID -> AM_TimeSeries:AM_COLLECTION_CONCAT PK required
             @t24:i (align=L, inputBehaviour=I, maxLength=15, sysNumber=0.0, core=true, businessType=A, t24Name=COLLECTION.ID)
+        SECURITY_NO -> byValue AM_TimeSeries:AM_COLLECTION_CONCAT__SECURITY_NO *
+            @t24:i (t24Name=SECURITY.NO)
+    }
+    AM_COLLECTION_CONCAT__SECURITY_NO
+    {
         SECURITY_NO -> SC_ScoSecurityMasterMaintenance:SECURITY_MASTER
             @i18n:Label (en="Security No")
             @i18n:Tooltip (en="Indicates the security code/number")
@@ -111,7 +116,7 @@ Classes {
     }
     AM_COLLECTION__DESCRIPTION
     {
-        DESCRIPTION : T24BusinessTypes:A
+        DESCRIPTION : T24BusinessTypes:A required
             @i18n:Label (en=Description)
             @i18n:Tooltip (en=Description)
             @t24:i (align=L, inputBehaviour=I, maxLength=50, multiLanguage=true, sysNumber=1.0, core=true, t24Name=DESCRIPTION)
@@ -218,10 +223,15 @@ Classes {
         @i18n:Description (en="")
         @t24:i (t24Name=MNEMONIC.AM.COLLECTION, level=F, type=T, allowedFunctions="L P S", localRefAllowed=false)
     {
-        COLLECTION -> AM_TimeSeries:AM_COLLECTION
-            @t24:i (align=R, inputBehaviour=I, maxLength=15, sysNumber=1.0, core=true, t24Name=COLLECTION)
+        COLLECTION -> byValue AM_TimeSeries:MNEMONIC_AM_COLLECTION__COLLECTION *
+            @t24:i (t24Name=COLLECTION)
         MNEMONIC_COL -> AM_TimeSeries:MNEMONIC_AM_COLLECTION PK required
             @t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=0.0, core=true, t24Name=MNEMONIC.COL)
+    }
+    MNEMONIC_AM_COLLECTION__COLLECTION
+    {
+        COLLECTION -> AM_TimeSeries:AM_COLLECTION
+            @t24:i (align=R, inputBehaviour=I, maxLength=15, sysNumber=1.0, core=true, t24Name=COLLECTION)
     }
     RADAR_PARAMETER
         @i18n:Description (en="")
@@ -291,7 +301,7 @@ Classes {
             @t24:i (t24Name=XML.LABEL)
         XML_LEVEL : T24BusinessTypes:A
             @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=2.0, core=true, t24Name=XML.LEVEL)
-        XML_LEVEL_NO : mml:Integer
+        XML_LEVEL_NO : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=3.0, core=true, t24Name=XML.LEVEL.NO)
     }
     RADAR_PARAMETER__XML_LEVEL__XML_LABEL
@@ -333,7 +343,7 @@ Classes {
             @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=27.0, core=true, t24Name=CURR.NO)
         DATE_FIELD_NAME : T24BusinessTypes:A
             @t24:i (align=L, inputBehaviour=I, maxLength=20, sysNumber=10.0, core=true, t24Name=DATE.FIELD.NAME)
-        DATE_FORMAT : T24BusinessTypes:A
+        DATE_FORMAT : T24BusinessTypes:A required
             @i18n:Label (en="Date Format")
             @t24:i (align=L, inputBehaviour=I, maxLength=10, sysNumber=4.0, core=true, t24Name=DATE.FORMAT)
         DATE_TIME -> byValue AM_TimeSeries:TSRADAR__DATE_TIME *
@@ -513,7 +523,7 @@ Classes {
     }
     TSRADAR__DESCRIPTION
     {
-        DESCRIPTION : T24BusinessTypes:A
+        DESCRIPTION : T24BusinessTypes:A required
             @i18n:Label (en=Description)
             @i18n:Tooltip (en=Description)
             @t24:i (align=L, inputBehaviour=I, maxLength=30, multiLanguage=true, sysNumber=1.0, core=true, t24Name=DESCRIPTION)

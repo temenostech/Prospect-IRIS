@@ -37,6 +37,10 @@ Classes {
             @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=22.0, core=true, t24Name=DEPT.CODE)
         EXT_CACHE_EXPIRY : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=4, sysNumber=1.0, core=true, t24Name=EXT.CACHE.EXPIRY)
+        ID : EB_ARC:CHANNEL_PARAMETER__ID PK required
+            @i18n:Label (en="Transaction Ref")
+            @i18n:Tooltip (en="Transaction Reference")
+            @t24:i (align=L, inputBehaviour=I, maxLength=6, sysNumber=0.0, core=true, t24Name="@ID")
         INPUTTER -> byValue EB_ARC:CHANNEL_PARAMETER__INPUTTER *
             @t24:i (t24Name=INPUTTER)
         OFS_SOURCE -> byValue EB_ARC:CHANNEL_PARAMETER__OFS_SOURCE *
@@ -54,8 +58,6 @@ Classes {
             @t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=12.0, core=true, t24Name=RESERVED.04)
         RESERVED_05 : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=11.0, core=true, t24Name=RESERVED.05)
-        _ID : EB_ARC:CHANNEL_PARAMETER___ID PK required
-            @t24:i (align=L, inputBehaviour=I, maxLength=6, sysNumber=0.0, core=true, t24Name=.ID)
     }
     CHANNEL_PARAMETER__DATE_TIME
     {
@@ -79,7 +81,7 @@ Classes {
             @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=3.0, core=true, t24Name=ENABLE.CACHE)
         ENQUIRY_CACHE : EB_ARC:CHANNEL_PARAMETER__OFS_SOURCE__ENQUIRY_CACHE
             @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=9.0, core=true, t24Name=ENQUIRY.CACHE)
-        OFS_SOURCE -> EB_Interface:OFS_SOURCE
+        OFS_SOURCE -> EB_Interface:OFS_SOURCE required
             @i18n:Label (en="OFS Source")
             @i18n:Tooltip (en="The OFS Source record ID")
             @t24:i (align=L, inputBehaviour=I, maxLength=20, sysNumber=2.0, core=true, businessType=A, t24Name=OFS.SOURCE)
@@ -135,8 +137,8 @@ Classes {
             @t24:i (t24Name=INPUTTER)
         OVERRIDE -> byValue EB_ARC:CHANNEL_PERMISSION__OVERRIDE *
             @t24:i (t24Name=OVERRIDE)
-        PERMISSION_TYPE : EB_ARC:CHANNEL_PERMISSION__PERMISSION_TYPE
-            @t24:i (align=L, inputBehaviour=F, maxLength=35, sysNumber=2.0, core=true, t24Name=PERMISSION.TYPE)
+        PERMISSION_TYPE : EB_ARC:CHANNEL_PERMISSION__PERMISSION_TYPE required
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=2.0, core=true, t24Name=PERMISSION.TYPE)
         RECORD_STATUS : T24BusinessTypes:STAT
             @i18n:Label (en="Record Status")
             @t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=22.0, core=true, t24Name=RECORD.STATUS)
@@ -155,7 +157,7 @@ Classes {
     }
     CHANNEL_PERMISSION__CUSTOMER
     {
-        CUSTOMER -> ST_Customer:CUSTOMER
+        CUSTOMER -> ST_Customer:CUSTOMER required
             @i18n:Label (en=Customer)
             @i18n:Tooltip (en="Customer Liability")
             @t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=3.0, core=true, businessType=CUS, t24Name=CUSTOMER)
@@ -169,7 +171,7 @@ Classes {
     }
     CHANNEL_PERMISSION__DESCRIPTION
     {
-        DESCRIPTION : T24BusinessTypes:A
+        DESCRIPTION : T24BusinessTypes:A required
             @i18n:Label (en=Description)
             @i18n:Tooltip (en=Description)
             @t24:i (align=L, inputBehaviour=I, maxLength=35, multiLanguage=true, sysNumber=1.0, core=true, t24Name=DESCRIPTION)
@@ -204,11 +206,11 @@ Classes {
             @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=7.0, core=true, t24Name=DISPLAY.PRODUCTS)
         PRODUCT -> byValue EB_ARC:CHANNEL_PERMISSION__RELATED_CUSTOMER__PRODUCT *
             @t24:i (t24Name=PRODUCT)
-        PRODUCT_GROUPS -> AA_ProductFramework:AA_PRODUCT_GROUP
+        PRODUCT_GROUPS -> AA_ProductFramework:AA_PRODUCT_GROUP required
             @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=5.0, core=true, businessType=A, t24Name=PRODUCT.GROUPS)
-        PRODUCT_GROUP_SEL : EB_ARC:CHANNEL_PERMISSION__RELATED_CUSTOMER__PRODUCT_GROUP_SEL
+        PRODUCT_GROUP_SEL : EB_ARC:CHANNEL_PERMISSION__RELATED_CUSTOMER__PRODUCT_GROUP_SEL required
             @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=6.0, core=true, t24Name=PRODUCT.GROUP.SEL)
-        RELATED_CUSTOMER -> ST_Customer:CUSTOMER
+        RELATED_CUSTOMER -> ST_Customer:CUSTOMER required
             @t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=4.0, core=true, businessType=CUS, t24Name=RELATED.CUSTOMER)
     }
     CHANNEL_PERMISSION__RELATED_CUSTOMER__PRODUCT
@@ -225,6 +227,11 @@ Classes {
     {
         CUST_SEC_MSG_ID -> EB_ARC:CUSTOMER_SECURE_MESSAGE PK required
             @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=0.0, core=true, businessType=A, t24Name=CUST.SEC.MSG.ID)
+        SECURE_MESSAGE_ID -> byValue EB_ARC:CUSTOMER_SECURE_MESSAGE__SECURE_MESSAGE_ID *
+            @t24:i (t24Name=SECURE.MESSAGE.ID)
+    }
+    CUSTOMER_SECURE_MESSAGE__SECURE_MESSAGE_ID
+    {
         SECURE_MESSAGE_ID -> EB_ARC:EB_SECURE_MESSAGE
             @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=1.0, core=true, businessType=A, t24Name=SECURE.MESSAGE.ID)
     }
@@ -257,7 +264,7 @@ Classes {
         DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
             @i18n:Label (en="Dept Code")
             @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=25.0, core=true, t24Name=DEPT.CODE)
-        DESCRIPTION : T24BusinessTypes:A
+        DESCRIPTION : T24BusinessTypes:A required
             @i18n:Label (en=Description)
             @i18n:Tooltip (en=Description)
             @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=1.0, core=true, t24Name=DESCRIPTION)
@@ -316,23 +323,23 @@ Classes {
     {
         FIELD_NAME -> byValue EB_ARC:EB_CHALLENGE_RESPONSE__VERSION__FIELD_NAME *
             @t24:i (t24Name=FIELD.NAME)
-        VERSION -> EB_Versions:VERSION
+        VERSION -> EB_Versions:VERSION required
             @i18n:Label (en=Version)
             @t24:i (align=L, inputBehaviour=I, maxLength=54, sysNumber=2.0, core=true, businessType=A, t24Name=VERSION)
     }
     EB_CHALLENGE_RESPONSE__VERSION__FIELD_NAME
     {
-        END_RANGE : T24BusinessTypes:N
+        END_RANGE : T24BusinessTypes:N required
             @i18n:Label (en="End Range")
             @t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=5.0, core=true, t24Name=END.RANGE)
-        FIELD_NAME : T24BusinessTypes:A
+        FIELD_NAME : T24BusinessTypes:A required
             @i18n:Label (en="Field Name")
             @i18n:Tooltip (en="Name of the field(used mostly for SWIFT)")
             @t24:i (align=L, inputBehaviour=I, maxLength=50, sysNumber=3.0, core=true, t24Name=FIELD.NAME)
-        START_RANGE : T24BusinessTypes:N
+        START_RANGE : T24BusinessTypes:N required
             @i18n:Label (en="Start Range")
             @t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=4.0, core=true, t24Name=START.RANGE)
-        TEXT : T24BusinessTypes:A
+        TEXT : T24BusinessTypes:A required
             @i18n:Label (en="Pre Syndication ID")
             @t24:i (align=L, inputBehaviour=I, maxLength=50, sysNumber=6.0, core=true, t24Name=TEXT)
     }
@@ -395,7 +402,7 @@ Classes {
     }
     EB_CHANNEL__DESC
     {
-        DESC : T24BusinessTypes:A
+        DESC : T24BusinessTypes:A required
             @i18n:Label (en=Description)
             @i18n:Tooltip (en=Description)
             @t24:i (align=L, inputBehaviour=I, maxLength=35, multiLanguage=true, sysNumber=1.0, core=true, t24Name=DESC)
@@ -409,7 +416,7 @@ Classes {
     }
     EB_CHANNEL__SHORT_NAME
     {
-        SHORT_NAME : T24BusinessTypes:AA
+        SHORT_NAME : T24BusinessTypes:AA required
             @i18n:Label (en="Short name")
             @t24:i (align=L, inputBehaviour=I, maxLength=15, multiLanguage=true, sysNumber=2.0, core=true, t24Name=SHORT.NAME)
     }
@@ -680,11 +687,11 @@ Classes {
             @t24:i (t24Name=USER.ACCOUNTS)
         USER_GROUP_POS : EB_ARC:EB_EXT_USER_PREF__USER_GROUP_POS
             @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=4.0, core=true, t24Name=USER.GROUP.POS)
-        USER_GRP_DESC : T24BusinessTypes:A
+        USER_GRP_DESC : T24BusinessTypes:A required
             @t24:i (align=L, inputBehaviour=I, maxLength=40, sysNumber=2.0, core=true, t24Name=USER.GRP.DESC)
         USER_GRP_FAV : EB_ARC:EB_EXT_USER_PREF__USER_GRP_FAV
             @t24:i (align=L, inputBehaviour=F, maxLength=35, sysNumber=5.0, core=true, t24Name=USER.GRP.FAV)
-        USER_GRP_NAME : T24BusinessTypes:A
+        USER_GRP_NAME : T24BusinessTypes:A required
             @t24:i (align=L, inputBehaviour=I, maxLength=25, sysNumber=1.0, core=true, t24Name=USER.GRP.NAME)
     }
     EB_EXT_USER_PREF__DATE_TIME
@@ -900,14 +907,14 @@ Enumerations {
     CHANNEL_PARAMETER__DELETE_EEU_RECORD : mml:string
         NO=NO
         YES=YES
+    CHANNEL_PARAMETER__ID : mml:string
+        SYSTEM=SYSTEM
     CHANNEL_PARAMETER__OFS_SOURCE__ENABLE_CACHE : mml:string
         NO=NO
         YES=YES
     CHANNEL_PARAMETER__OFS_SOURCE__ENQUIRY_CACHE : mml:string
         NO=NO
         YES=YES
-    CHANNEL_PARAMETER___ID : mml:string
-        SYSTEM=SYSTEM
     CHANNEL_PERMISSION__PERMISSION_TYPE : mml:string
         GROUP=GROUP
         INDIVIDUAL=INDIVIDUAL

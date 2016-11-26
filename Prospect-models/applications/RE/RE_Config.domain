@@ -73,9 +73,9 @@ Classes {
     }
     CONSOLIDATE_COND__CATEG_START
     {
-        CATEG_END : mml:Integer
+        CATEG_END : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=35, sysNumber=39.0, core=true, t24Name=CATEG.END)
-        CATEG_START : mml:Integer
+        CATEG_START : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=35, sysNumber=38.0, core=true, t24Name=CATEG.START)
     }
     CONSOLIDATE_COND__DATE_TIME
@@ -135,7 +135,7 @@ Classes {
             @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=13.0, core=true, t24Name=LOCAL.FILE.NAME)
         LOCAL_START -> byValue RE_Config:CONSOLIDATE_COND__MULTI_VALUE_NO__LOCAL_START *
             @t24:i (t24Name=LOCAL.START)
-        MULTI_VALUE_NO : mml:Integer
+        MULTI_VALUE_NO : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=11.0, core=true, t24Name=MULTI.VALUE.NO)
     }
     CONSOLIDATE_COND__MULTI_VALUE_NO__CON_ON_START
@@ -273,7 +273,7 @@ Classes {
     }
     FX_POS_TYPE__DESCRIPTION
     {
-        DESCRIPTION : T24BusinessTypes:AA
+        DESCRIPTION : T24BusinessTypes:AA required
             @i18n:Label (en=Description)
             @i18n:Tooltip (en=Description)
             @t24:i (align=L, inputBehaviour=I, maxLength=35, multiLanguage=true, sysNumber=1.0, core=true, t24Name=DESCRIPTION)
@@ -338,7 +338,7 @@ Classes {
     }
     RE_AMT_ABBREV__DESCRIPTION
     {
-        DESCRIPTION : T24BusinessTypes:A
+        DESCRIPTION : T24BusinessTypes:A required
             @i18n:Label (en=Description)
             @i18n:Tooltip (en=Description)
             @t24:i (align=L, inputBehaviour=I, maxLength=35, multiLanguage=true, sysNumber=1.0, core=true, t24Name=DESCRIPTION)
@@ -356,6 +356,11 @@ Classes {
     {
         CCY_KEY -> RE_Config:RE_CCY_CONSOL PK required
             @t24:i (align=L, inputBehaviour=I, maxLength=8, sysNumber=0.0, core=true, businessType=A, t24Name=CCY.KEY)
+        CONSOL_KEY -> byValue RE_Config:RE_CCY_CONSOL__CONSOL_KEY *
+            @t24:i (t24Name=CONSOL.KEY)
+    }
+    RE_CCY_CONSOL__CONSOL_KEY
+    {
         CONSOL_KEY : T24BusinessTypes:A
             @i18n:Label (en="Consol Key")
             @t24:i (align=L, inputBehaviour=I, maxLength=65, sysNumber=1.0, core=true, t24Name=CONSOL.KEY)
@@ -366,7 +371,12 @@ Classes {
     {
         LINE_MNEMONIC -> RE_Config:RE_MNEMONIC_LINE PK required
             @t24:i (align=L, inputBehaviour=I, maxLength=10, sysNumber=0.0, core=true, businessType=MNE, t24Name=LINE.MNEMONIC)
-        REPORT_LINE -> RE_Config:RE_STAT_REP_LINE
+        REPORT_LINE -> byValue RE_Config:RE_MNEMONIC_LINE__REPORT_LINE *
+            @t24:i (t24Name=REPORT.LINE)
+    }
+    RE_MNEMONIC_LINE__REPORT_LINE
+    {
+        REPORT_LINE -> RE_Config:RE_STAT_REP_LINE required
             @i18n:Label (en="Report Line")
             @i18n:Tooltip (en="@(20,0)Report Lines")
             @t24:i (align=R, inputBehaviour=I, maxLength=6, sysNumber=1.0, core=true, t24Name=REPORT.LINE)
@@ -422,7 +432,7 @@ Classes {
         REPORT_NAME -> RE_Config:RE_REP_STAT_LINK PK required
             @i18n:Label (en="Report Name")
             @t24:i (align=L, inputBehaviour=I, maxLength=21, sysNumber=0.0, core=true, businessType=S, t24Name=REPORT.NAME)
-        YEAR_TYPE : RE_Config:RE_REP_STAT_LINK__YEAR_TYPE
+        YEAR_TYPE : RE_Config:RE_REP_STAT_LINK__YEAR_TYPE required
             @t24:i (align=L, inputBehaviour=I, maxLength=9, sysNumber=18.0, core=true, t24Name=YEAR.TYPE)
     }
     RE_REP_STAT_LINK__DATE_TIME
@@ -441,7 +451,7 @@ Classes {
     }
     RE_REP_STAT_LINK__LINK_NO
     {
-        DATE_USED : RE_Config:RE_REP_STAT_LINK__LINK_NO__DATE_USED
+        DATE_USED : RE_Config:RE_REP_STAT_LINK__LINK_NO__DATE_USED required
             @t24:i (align=L, inputBehaviour=I, maxLength=9, sysNumber=2.0, core=true, t24Name=DATE.USED)
         HM_NARR_FMT : T24BusinessTypes:A
             @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=9.0, core=true, t24Name=HM.NARR.FMT)
@@ -453,11 +463,11 @@ Classes {
             @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=12.0, core=true, t24Name=IN.QUARTERS)
         IN_YEARS : T24BusinessTypes:A
             @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=14.0, core=true, t24Name=IN.YEARS)
-        LINE_SPACING : mml:Integer
+        LINE_SPACING : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=1, sysNumber=3.0, core=true, t24Name=LINE.SPACING)
         LINE_TOTAL_PRT : RE_Config:RE_REP_STAT_LINK__LINK_NO__LINE_TOTAL_PRT
             @t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=17.0, core=true, t24Name=LINE.TOTAL.PRT)
-        LINK_NO : mml:Integer
+        LINK_NO : T24BusinessTypes:N required
             @t24:i (align=R, inputBehaviour=I, maxLength=4, sysNumber=1.0, core=true, t24Name=LINK.NO)
         MTH_NAR_FMT : T24BusinessTypes:A
             @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=11.0, core=true, t24Name=MTH.NAR.FMT)
@@ -607,7 +617,7 @@ Classes {
         DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
             @i18n:Label (en="Dept Code")
             @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=18.0, core=true, t24Name=DEPT.CODE)
-        GROUP : RE_Config:RE_STAT_COLUMN_TYPE__GROUP
+        GROUP : RE_Config:RE_STAT_COLUMN_TYPE__GROUP required
             @i18n:Label (en=Group)
             @i18n:Tooltip (en=Group)
             @t24:i (align=L, inputBehaviour=I, maxLength=8, sysNumber=1.0, core=true, t24Name=GROUP)
@@ -622,7 +632,7 @@ Classes {
             @i18n:Label (en="Type 1")
             @i18n:Tooltip (en="Type 1")
             @t24:i (align=L, inputBehaviour=I, maxLength=15, sysNumber=2.0, core=true, t24Name=TYPE.1)
-        TYPE_2 : RE_Config:RE_STAT_COLUMN_TYPE__TYPE_2
+        TYPE_2 : RE_Config:RE_STAT_COLUMN_TYPE__TYPE_2 required
             @i18n:Label (en="Type 2")
             @i18n:Tooltip (en="Type 2")
             @t24:i (align=L, inputBehaviour=I, maxLength=10, sysNumber=3.0, core=true, t24Name=TYPE.2)
@@ -716,7 +726,7 @@ Classes {
             @t24:i (align=L, inputBehaviour=I, maxLength=10, sysNumber=0.0, core=true, businessType=A, t24Name=FORMAT.NAME)
         HDR_1_001__040 -> byValue RE_Config:RE_STAT_ENT_FORMAT__HDR_1_001__040 *
             @t24:i (t24Name=HDR.1.001..040)
-        HEADING_POSITION : RE_Config:RE_STAT_ENT_FORMAT__HEADING_POSITION
+        HEADING_POSITION : RE_Config:RE_STAT_ENT_FORMAT__HEADING_POSITION required
             @t24:i (align=L, inputBehaviour=I, maxLength=11, sysNumber=3.0, core=true, t24Name=HEADING.POSITION)
         INPUTTER -> byValue RE_Config:RE_STAT_ENT_FORMAT__INPUTTER *
             @t24:i (t24Name=INPUTTER)
@@ -735,11 +745,11 @@ Classes {
     }
     RE_STAT_ENT_FORMAT__AMOUNT
     {
-        AMOUNT : T24BusinessTypes:A
+        AMOUNT : T24BusinessTypes:A required
             @i18n:Label (en=Amount)
             @i18n:Tooltip (en="Indicates the Amount")
             @t24:i (align=L, inputBehaviour=I, maxLength=10, sysNumber=13.0, core=true, t24Name=AMOUNT)
-        AMT_COLUMN : mml:Integer
+        AMT_COLUMN : T24BusinessTypes:N required
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=14.0, core=true, t24Name=AMT.COLUMN)
     }
     RE_STAT_ENT_FORMAT__DATE_TIME
@@ -751,7 +761,7 @@ Classes {
     }
     RE_STAT_ENT_FORMAT__DESCRIPTION
     {
-        DESCRIPTION : T24BusinessTypes:A
+        DESCRIPTION : T24BusinessTypes:A required
             @i18n:Label (en=Description)
             @i18n:Tooltip (en=Description)
             @t24:i (align=L, inputBehaviour=I, maxLength=35, multiLanguage=true, sysNumber=1.0, core=true, t24Name=DESCRIPTION)
@@ -792,23 +802,23 @@ Classes {
     {
         PRINT_FIELD -> byValue RE_Config:RE_STAT_ENT_FORMAT__PRINT_FILE__PRINT_FIELD *
             @t24:i (t24Name=PRINT.FIELD)
-        PRINT_FILE : RE_Config:RE_STAT_ENT_FORMAT__PRINT_FILE__PRINT_FILE
+        PRINT_FILE : RE_Config:RE_STAT_ENT_FORMAT__PRINT_FILE__PRINT_FILE required
             @t24:i (align=L, inputBehaviour=I, maxLength=20, sysNumber=15.0, core=true, t24Name=PRINT.FILE)
     }
     RE_STAT_ENT_FORMAT__PRINT_FILE__PRINT_FIELD
     {
-        FILE_COLUMN : mml:Integer
+        FILE_COLUMN : T24BusinessTypes:N required
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=19.0, core=true, t24Name=FILE.COLUMN)
         MASK : T24BusinessTypes:A
             @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=18.0, core=true, t24Name=MASK)
-        NO_OF_CHARS : mml:Integer
+        NO_OF_CHARS : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=17.0, core=true, t24Name=NO.OF.CHARS)
-        PRINT_FIELD : T24BusinessTypes:A
+        PRINT_FIELD : T24BusinessTypes:A required
             @t24:i (align=L, inputBehaviour=I, maxLength=5, sysNumber=16.0, core=true, t24Name=PRINT.FIELD)
     }
     RE_STAT_ENT_FORMAT__SORT_FILE
     {
-        SORT_FILE : RE_Config:RE_STAT_ENT_FORMAT__SORT_FILE__SORT_FILE
+        SORT_FILE : RE_Config:RE_STAT_ENT_FORMAT__SORT_FILE__SORT_FILE required
             @t24:i (align=L, inputBehaviour=I, maxLength=20, sysNumber=20.0, core=true, t24Name=SORT.FILE)
         SORT_FLD_NO -> byValue RE_Config:RE_STAT_ENT_FORMAT__SORT_FILE__SORT_FLD_NO *
             @t24:i (t24Name=SORT.FLD.NO)
@@ -817,9 +827,9 @@ Classes {
     {
         SORT_FIELD : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=22.0, core=true, t24Name=SORT.FIELD)
-        SORT_FLD_NO : mml:Integer
+        SORT_FLD_NO : T24BusinessTypes:N required
             @t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=21.0, core=true, t24Name=SORT.FLD.NO)
-        SORT_TYPE : T24BusinessTypes:A
+        SORT_TYPE : T24BusinessTypes:A required
             @t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=23.0, core=true, t24Name=SORT.TYPE)
     }
     RE_STAT_NAME
@@ -857,8 +867,6 @@ Classes {
             @t24:i (t24Name=DESCRIPTION)
         INPUTTER -> byValue RE_Config:RE_STAT_NAME__INPUTTER *
             @t24:i (t24Name=INPUTTER)
-        K_TYPE -> byValue RE_Config:RE_STAT_NAME__K_TYPE *
-            @t24:i (t24Name=K.TYPE)
         PROFT_APPLIC_ID -> byValue RE_Config:RE_STAT_NAME__PROFT_APPLIC_ID *
             @t24:i (t24Name=PROFT.APPLIC.ID)
         RECORD_STATUS : T24BusinessTypes:STAT
@@ -871,6 +879,11 @@ Classes {
     {
         NAME_KEY -> RE_Config:RE_STAT_NAME_REPORT PK required
             @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=0.0, core=true, businessType=A, t24Name=NAME.KEY)
+        REPORT_LINE -> byValue RE_Config:RE_STAT_NAME_REPORT__REPORT_LINE *
+            @t24:i (t24Name=REPORT.LINE)
+    }
+    RE_STAT_NAME_REPORT__REPORT_LINE
+    {
         REPORT_LINE : T24BusinessTypes:A
             @i18n:Label (en="Report Line")
             @i18n:Tooltip (en="@(20,0)Report Lines")
@@ -937,12 +950,6 @@ Classes {
             @i18n:Label (en=Inputter)
             @i18n:Tooltip (en="The user who last updated the record")
             @t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=35.0, core=true, t24Name=INPUTTER)
-    }
-    RE_STAT_NAME__K_TYPE
-    {
-        K_TYPE : T24BusinessTypes:A
-            @i18n:Label (en=Type)
-            @t24:i (align=L, inputBehaviour=N, maxLength=12, sysNumber=18.0, core=true, t24Name=K.TYPE)
     }
     RE_STAT_NAME__PROFT_APPLIC_ID
     {
@@ -1047,9 +1054,9 @@ Classes {
     {
         ITEM_SOURCE -> byValue RE_Config:RE_STAT_OUTPUT__LINE_TYPE__ITEM_SOURCE *
             @t24:i (t24Name=ITEM.SOURCE)
-        LINE_TYPE : RE_Config:RE_STAT_OUTPUT__LINE_TYPE__LINE_TYPE
+        LINE_TYPE : RE_Config:RE_STAT_OUTPUT__LINE_TYPE__LINE_TYPE required
             @t24:i (align=L, inputBehaviour=I, maxLength=7, sysNumber=2.0, core=true, t24Name=LINE.TYPE)
-        TOTAL_NO : mml:Integer
+        TOTAL_NO : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=1, sysNumber=3.0, core=true, t24Name=TOTAL.NO)
     }
     RE_STAT_OUTPUT__LINE_TYPE__ITEM_SOURCE
@@ -1059,7 +1066,7 @@ Classes {
         FORMAT : T24BusinessTypes:A
             @i18n:Label (en=Format)
             @t24:i (align=L, inputBehaviour=I, maxLength=6, sysNumber=6.0, core=true, t24Name=FORMAT)
-        ITEM_SOURCE : RE_Config:RE_STAT_OUTPUT__LINE_TYPE__ITEM_SOURCE__ITEM_SOURCE
+        ITEM_SOURCE : RE_Config:RE_STAT_OUTPUT__LINE_TYPE__ITEM_SOURCE__ITEM_SOURCE required
             @t24:i (align=L, inputBehaviour=I, maxLength=6, sysNumber=4.0, core=true, t24Name=ITEM.SOURCE)
     }
     RE_STAT_RANGE
@@ -1156,7 +1163,7 @@ Classes {
     }
     RE_STAT_RANGE__START_RANGE
     {
-        START_RANGE : T24BusinessTypes:A
+        START_RANGE : T24BusinessTypes:A required
             @i18n:Label (en="Start Range")
             @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=4.0, core=true, t24Name=START.RANGE)
     }
@@ -1203,7 +1210,7 @@ Classes {
             @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=52.0, core=true, t24Name=DEPT.CODE)
         DESCRIPTION -> byValue RE_Config:RE_STAT_REPORT_HEAD__DESCRIPTION *
             @t24:i (t24Name=DESCRIPTION)
-        DETAIL_MONTHS : mml:Integer
+        DETAIL_MONTHS : T24BusinessTypes:N
             @i18n:Label (en="Detail Months")
             @i18n:Tooltip (en="Detail Months")
             @t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=36.0, core=true, t24Name=DETAIL.MONTHS)
@@ -1247,7 +1254,7 @@ Classes {
             @t24:i (align=R, inputBehaviour=N, maxLength=10, sysNumber=3.0, core=true, t24Name=OUTPUT.MODE)
         OVERRIDE -> byValue RE_Config:RE_STAT_REPORT_HEAD__OVERRIDE *
             @t24:i (t24Name=OVERRIDE)
-        PROFIT : RE_Config:RE_STAT_REPORT_HEAD__PROFIT
+        PROFIT : RE_Config:RE_STAT_REPORT_HEAD__PROFIT required
             @i18n:Label (en=Profit)
             @t24:i (align=L, inputBehaviour=I, maxLength=8, sysNumber=9.0, core=true, t24Name=PROFIT)
         RECORD_STATUS : T24BusinessTypes:STAT
@@ -1256,7 +1263,7 @@ Classes {
         REPORT_NAME -> RE_Config:RE_STAT_REPORT_HEAD PK required
             @i18n:Label (en="Report Name")
             @t24:i (align=L, inputBehaviour=I, maxLength=21, sysNumber=0.0, core=true, businessType=S, t24Name=REPORT.NAME)
-        REPORT_WIDTH : mml:Integer
+        REPORT_WIDTH : T24BusinessTypes:N
             @i18n:Label (en="Report Width")
             @i18n:Tooltip (en="Report Width")
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=39.0, core=true, t24Name=REPORT.WIDTH)
@@ -1266,7 +1273,7 @@ Classes {
             @t24:i (align=R, inputBehaviour=N, maxLength=9, sysNumber=42.0, core=true, t24Name=RESERVED.4)
         RESERVED_5 : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=N, maxLength=9, sysNumber=41.0, core=true, t24Name=RESERVED.5)
-        SPLIT : RE_Config:RE_STAT_REPORT_HEAD__SPLIT
+        SPLIT : RE_Config:RE_STAT_REPORT_HEAD__SPLIT required
             @i18n:Label (en=Split)
             @i18n:Tooltip (en=Split)
             @t24:i (align=L, inputBehaviour=I, maxLength=13, sysNumber=8.0, core=true, t24Name=SPLIT)
@@ -1293,17 +1300,17 @@ Classes {
             @i18n:Label (en="Column Pos")
             @i18n:Tooltip (en="Column Position")
             @t24:i (align=R, inputBehaviour=N, maxLength=3, sysNumber=15.0, core=true, t24Name=COLUMN.POS)
-        COLUMN_TYPE -> RE_Config:RE_STAT_COLUMN_TYPE
+        COLUMN_TYPE -> RE_Config:RE_STAT_COLUMN_TYPE required
             @i18n:Label (en="Column Type")
             @i18n:Tooltip (en="Column Type")
             @t24:i (align=L, inputBehaviour=I, maxLength=10, sysNumber=14.0, core=true, businessType=A, t24Name=COLUMN.TYPE)
-        DECIMAL_SIZE : mml:Integer
+        DECIMAL_SIZE : T24BusinessTypes:N
             @i18n:Label (en="Decimal Size")
             @i18n:Tooltip (en="Decimal Size")
             @t24:i (align=R, inputBehaviour=I, maxLength=1, sysNumber=17.0, core=true, t24Name=DECIMAL.SIZE)
         HEAD_1 -> byValue RE_Config:RE_STAT_REPORT_HEAD__COLUMN_TYPE__HEAD_1 *
             @t24:i (t24Name=HEAD.1)
-        INTEGER_SIZE : mml:Integer
+        INTEGER_SIZE : T24BusinessTypes:N
             @i18n:Label (en="Integer Size")
             @i18n:Tooltip (en="Integer Size")
             @t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=16.0, core=true, t24Name=INTEGER.SIZE)
@@ -1352,7 +1359,7 @@ Classes {
     }
     RE_STAT_REPORT_HEAD__HEADING
     {
-        HEADING : T24BusinessTypes:A
+        HEADING : T24BusinessTypes:A required
             @i18n:Label (en=Heading)
             @i18n:Tooltip (en=Heading)
             @t24:i (align=L, inputBehaviour=I, maxLength=35, multiLanguage=true, sysNumber=4.0, core=true, t24Name=HEADING)
@@ -1374,11 +1381,11 @@ Classes {
     RE_STAT_REPORT_HEAD__K_HEADING
     {
         K_HEADING : T24BusinessTypes:A
-            @t24:i (align=L, inputBehaviour=N, maxLength=35, multiLanguage=true, sysNumber=4.0, core=true, t24Name=K.HEADING)
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, multiLanguage=true, sysNumber=4.0, core=false, t24Name=K.HEADING)
     }
     RE_STAT_REPORT_HEAD__LINE_NARR_SIZE
     {
-        LINE_NARR_SIZE : mml:Integer
+        LINE_NARR_SIZE : T24BusinessTypes:N
             @i18n:Label (en="Line Narr Size")
             @i18n:Tooltip (en="Line Narration Size")
             @t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=5.0, core=true, t24Name=LINE.NARR.SIZE)
@@ -1465,7 +1472,7 @@ Classes {
     {
         ASSET_APPLIC_ID -> byValue RE_Config:RE_STAT_REP_LINE__ASSET_APPLIC_ID *
             @t24:i (t24Name=ASSET.APPLIC.ID)
-        ASSET_OPP_LINE : mml:Integer
+        ASSET_OPP_LINE : T24BusinessTypes:N
             @i18n:Label (en="Asset Opp Line")
             @i18n:Tooltip (en="Asset Opposite Line")
             @t24:i (align=R, inputBehaviour=I, maxLength=4, sysNumber=11.0, core=true, t24Name=ASSET.OPP.LINE)
@@ -1508,9 +1515,6 @@ Classes {
             @t24:i (t24Name=INPUTTER)
         K_DESC -> byValue RE_Config:RE_STAT_REP_LINE__K_DESC *
             @t24:i (t24Name=K.DESC)
-        K_TYPE : RE_Config:RE_STAT_REP_LINE__K_TYPE
-            @i18n:Label (en=Type)
-            @t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=1.0, core=true, t24Name=K.TYPE)
         LINE_BALANCE : RE_Config:RE_STAT_REP_LINE__LINE_BALANCE
             @i18n:Label (en="Line Balance")
             @i18n:Tooltip (en="Line Balance")
@@ -1523,11 +1527,11 @@ Classes {
             @t24:i (align=L, inputBehaviour=I, maxLength=10, sysNumber=20.0, core=true, t24Name=MNEMONIC)
         OVERRIDE -> byValue RE_Config:RE_STAT_REP_LINE__OVERRIDE *
             @t24:i (t24Name=OVERRIDE)
-        PP_OPP_LINE : mml:Integer
+        PP_OPP_LINE : T24BusinessTypes:N
             @i18n:Label (en="Pp Opp Line")
             @i18n:Tooltip (en="Pp Opp Line")
             @t24:i (align=R, inputBehaviour=I, maxLength=4, sysNumber=16.0, core=true, t24Name=PP.OPP.LINE)
-        PROFIT_OPP_LINE : mml:Integer
+        PROFIT_OPP_LINE : T24BusinessTypes:N
             @i18n:Label (en="Profit Opp Line")
             @i18n:Tooltip (en="Profit Opposite Line")
             @t24:i (align=R, inputBehaviour=I, maxLength=4, sysNumber=14.0, core=true, t24Name=PROFIT.OPP.LINE)
@@ -1565,10 +1569,10 @@ Classes {
             @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=5.0, core=true, t24Name=SUPRESSION)
         TOTAL_ACCUM -> byValue RE_Config:RE_STAT_REP_LINE__TOTAL_ACCUM *
             @t24:i (t24Name=TOTAL.ACCUM)
-        TOTAL_PRINT : mml:Integer
+        TOTAL_PRINT : T24BusinessTypes:N
             @i18n:Label (en="Total Print")
             @t24:i (align=R, inputBehaviour=I, maxLength=1, sysNumber=3.0, core=true, t24Name=TOTAL.PRINT)
-        TYPE : RE_Config:RE_STAT_REP_LINE__TYPE
+        TYPE : RE_Config:RE_STAT_REP_LINE__TYPE required
             @i18n:Label (en=Type)
             @i18n:Tooltip (en=Type)
             @t24:i (align=L, inputBehaviour=I, maxLength=11, sysNumber=1.0, core=true, t24Name=TYPE)
@@ -1805,7 +1809,7 @@ Classes {
     {
         K_DESC : T24BusinessTypes:A
             @i18n:Label (en=Description)
-            @t24:i (align=L, inputBehaviour=N, maxLength=30, multiLanguage=true, sysNumber=2.0, core=true, t24Name=K.DESC)
+            @t24:i (align=L, inputBehaviour=N, maxLength=30, multiLanguage=true, sysNumber=2.0, core=false, t24Name=K.DESC)
     }
     RE_STAT_REP_LINE__MAT_DATE_TO
     {
@@ -1882,7 +1886,7 @@ Classes {
     }
     RE_STAT_REP_LINE__TOTAL_ACCUM
     {
-        TOTAL_ACCUM : mml:Integer
+        TOTAL_ACCUM : T24BusinessTypes:N
             @i18n:Label (en=Accumulator)
             @t24:i (align=R, inputBehaviour=I, maxLength=1, sysNumber=4.0, core=true, t24Name=TOTAL.ACCUM)
     }
@@ -1969,7 +1973,7 @@ Classes {
     }
     RE_STAT_TOTAL_RANGE__START_RANGE
     {
-        START_RANGE : T24BusinessTypes:A
+        START_RANGE : T24BusinessTypes:A required
             @i18n:Label (en="Start Range")
             @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=3.0, core=true, t24Name=START.RANGE)
     }
@@ -1993,27 +1997,27 @@ Classes {
     }
     RE_STAT_VAR1_RANGE__START_RANGE
     {
-        END_RANGE : T24BusinessTypes:A
+        END_RANGE : T24BusinessTypes:A required
             @i18n:Label (en="End Range")
             @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=2.0, core=true, t24Name=END.RANGE)
-        MNEMONIC : T24BusinessTypes:A
+        MNEMONIC : T24BusinessTypes:A required
             @i18n:Label (en=Mnemonic)
             @i18n:Tooltip (en="The alternate short way of calling the record")
             @t24:i (align=L, inputBehaviour=I, maxLength=10, sysNumber=3.0, core=true, t24Name=MNEMONIC)
         REP_NAME -> byValue RE_Config:RE_STAT_VAR1_RANGE__START_RANGE__REP_NAME *
             @t24:i (t24Name=REP.NAME)
-        START_RANGE : T24BusinessTypes:A
+        START_RANGE : T24BusinessTypes:A required
             @i18n:Label (en="Start Range")
             @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=1.0, core=true, t24Name=START.RANGE)
     }
     RE_STAT_VAR1_RANGE__START_RANGE__REP_NAME
     {
-        REP_NAME : T24BusinessTypes:A
+        REP_NAME : T24BusinessTypes:A required
             @t24:i (align=L, inputBehaviour=I, maxLength=9, sysNumber=4.0, core=true, t24Name=REP.NAME)
     }
     RE_STAT_VAR1__KEY
     {
-        KEY : T24BusinessTypes:A
+        KEY : T24BusinessTypes:A required
             @i18n:Label (en=Key)
             @i18n:Tooltip (en="Indicates th transaction key")
             @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=1.0, core=true, t24Name=KEY)
@@ -2022,7 +2026,7 @@ Classes {
     }
     RE_STAT_VAR1__KEY__REP_NAME
     {
-        REP_NAME : T24BusinessTypes:A
+        REP_NAME : T24BusinessTypes:A required
             @t24:i (align=L, inputBehaviour=I, maxLength=10, sysNumber=2.0, core=true, t24Name=REP.NAME)
     }
 }
@@ -2258,11 +2262,6 @@ Enumerations {
         Y=Y
     RE_STAT_REP_LINE__FX_REP_RATE : mml:string
         HISTORIC=HISTORIC
-    RE_STAT_REP_LINE__K_TYPE : mml:string
-        DETAIL=DETAIL
-        HEADING=HEADING
-        LINK=LINK
-        TOTAL=TOTAL
     RE_STAT_REP_LINE__LINE_BALANCE : mml:string
         DETAIL=DETAIL
         SUMMARY=SUMMARY

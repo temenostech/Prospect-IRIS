@@ -61,6 +61,17 @@ Classes {
         SendersRef : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=N, maxLength=50, core=false, t24Name=SendersRef)
     }
+    NOFILE_PP_CLIENT_COND
+        @i18n:Description (en="")
+        @t24:i (t24Name=NOFILE.PP.CLIENT.COND, level=I, type=T, allowedFunctions="L P S", localRefAllowed=false)
+    {
+        CompanyID : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=20, core=false, t24Name=CompanyID)
+        FTNumber : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=20, core=false, t24Name=FTNumber)
+        OUT_VAL : T24BusinessTypes:N
+            @t24:i (align=L, inputBehaviour=N, maxLength=150, core=false, t24Name=OUT.VAL, genOperation=E.NOFILE.PP.CLIENT.COND)
+    }
     NOFILE_PP_CTRBTR
         @i18n:Description (en="")
         @t24:i (t24Name=NOFILE.PP.CTRBTR, level=I, type=T, allowedFunctions="L P S", localRefAllowed=false)
@@ -79,7 +90,7 @@ Classes {
         DATE : T24BusinessTypes:D
             @i18n:Label (en=Date)
             @t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=2.0, core=true, t24Name=DATE)
-        FINALSTATUS -> PP_StaticDataGUI:PPT_STATUSCODE
+        FINALSTATUS : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=5.0, core=true, t24Name=FINALSTATUS)
         OUT_ARRAY : T24BusinessTypes:N
             @t24:i (align=L, inputBehaviour=N, maxLength=1000, core=false, t24Name=OUT.ARRAY, genOperation=E.NOFILE.PAYMENT.STATUS)
@@ -117,6 +128,8 @@ Classes {
             @t24:i (align=R, inputBehaviour=N, maxLength=20, core=false, t24Name=BeneficiaryAccount)
         BeneficiaryName : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=N, maxLength=20, core=false, t24Name=BeneficiaryName)
+        BulkSendersReference : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=50, core=false, t24Name=BulkSendersReference)
         CTRBTRIndicator : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=N, maxLength=20, core=false, t24Name=CTRBTRIndicator)
         ClearingNatureCode : T24BusinessTypes:N
@@ -279,7 +292,7 @@ Classes {
             @t24:i (align=L, inputBehaviour=I, maxLength=255, sysNumber=0.0, core=true, businessType=A, t24Name=ID)
         IncomingMessageType : T24BusinessTypes:A
             @t24:i (align=L, inputBehaviour=I, maxLength=10, sysNumber=10.0, core=true, t24Name=IncomingMessageType)
-        LowerMessagePriority : mml:Integer
+        LowerMessagePriority : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=8.0, core=true, t24Name=LowerMessagePriority)
         OriginatingSource : T24BusinessTypes:ANY
             @t24:i (align=L, inputBehaviour=I, maxLength=10, sysNumber=11.0, core=true, t24Name=OriginatingSource)
@@ -289,11 +302,11 @@ Classes {
             @t24:i (align=L, inputBehaviour=I, maxLength=19, sysNumber=19.0, core=true, t24Name=RACAuthPrinciple)
         RSCAuthPrinciple : T24BusinessTypes:A
             @t24:i (align=L, inputBehaviour=I, maxLength=1, sysNumber=20.0, core=true, t24Name=RSCAuthPrinciple)
-        Ranking : mml:Integer
+        Ranking : T24BusinessTypes:N required
             @t24:i (align=R, inputBehaviour=I, maxLength=9, sysNumber=3.0, core=true, t24Name=Ranking)
         StartDateAuthPrinciple : T24BusinessTypes:D
             @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=16.0, core=true, t24Name=StartDateAuthPrinciple)
-        Status : mml:Integer
+        Status : T24BusinessTypes:N required
             @i18n:Label (en=Status)
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=2.0, core=true, t24Name=Status)
         TransactionAmountLowerLimit : T24BusinessTypes:R
@@ -302,7 +315,7 @@ Classes {
             @t24:i (align=R, inputBehaviour=I, maxLength=17, sysNumber=6.0, core=true, t24Name=TransactionAmountUpperLimit)
         TransactionCurrencyCode : T24BusinessTypes:A
             @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=7.0, core=true, t24Name=TransactionCurrencyCode)
-        UpperMessagePriority : mml:Integer
+        UpperMessagePriority : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=9.0, core=true, t24Name=UpperMessagePriority)
     }
     PP_AUTHORIZATIONPRINCIPLE
@@ -323,17 +336,17 @@ Classes {
             @t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=29.0, core=true, t24Name=AUTHORISER)
         Action : T24BusinessTypes:A
             @t24:i (align=L, inputBehaviour=I, maxLength=1, sysNumber=23.0, core=true, t24Name=Action)
-        AuthorizationPrinciple : PP_InquiryGUI:PP_AUTHORIZATIONPRINCIPLE__AuthorizationPrinciple
+        AuthorizationPrinciple : PP_InquiryGUI:PP_AUTHORIZATIONPRINCIPLE__AuthorizationPrinciple required
             @t24:i (align=R, inputBehaviour=I, maxLength=1, sysNumber=17.0, core=true, t24Name=AuthorizationPrinciple)
         CO_CODE -> ST_CompanyCreation:COMPANY
             @i18n:Label (en=Company)
             @t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=30.0, core=true, businessType=A, t24Name=CO.CODE, mask="R##-###-####")
-        CTRBTRIndicator : PP_InquiryGUI:PP_AUTHORIZATIONPRINCIPLE__CTRBTRIndicator
+        CTRBTRIndicator : PP_InquiryGUI:PP_AUTHORIZATIONPRINCIPLE__CTRBTRIndicator required
             @t24:i (align=L, inputBehaviour=I, maxLength=1, sysNumber=12.0, core=true, t24Name=CTRBTRIndicator)
         CURR_NO : T24BusinessTypes:N
             @i18n:Label (en="Curr No")
             @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=26.0, core=true, t24Name=CURR.NO)
-        CreditBusinessLine : T24BusinessTypes:A
+        CreditBusinessLine : T24BusinessTypes:A required
             @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=14.0, core=true, t24Name=CreditBusinessLine)
         CurrentID : T24BusinessTypes:ANY
             @t24:i (align=L, inputBehaviour=I, maxLength=65, sysNumber=22.0, core=true, t24Name=CurrentID)
@@ -342,13 +355,13 @@ Classes {
         DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
             @i18n:Label (en="Dept Code")
             @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=31.0, core=true, t24Name=DEPT.CODE)
-        DebitBusinessLine : T24BusinessTypes:A
+        DebitBusinessLine : T24BusinessTypes:A required
             @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=13.0, core=true, t24Name=DebitBusinessLine)
-        Direction : PP_InquiryGUI:PP_AUTHORIZATIONPRINCIPLE__Direction
+        Direction : PP_InquiryGUI:PP_AUTHORIZATIONPRINCIPLE__Direction required
             @t24:i (align=L, inputBehaviour=I, maxLength=1, sysNumber=4.0, core=true, t24Name=Direction)
-        EndDateAuthPrinciple : T24BusinessTypes:D
+        EndDateAuthPrinciple : T24BusinessTypes:D required
             @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=18.0, core=true, t24Name=EndDateAuthPrinciple)
-        HighWeightCode : PP_InquiryGUI:PP_AUTHORIZATIONPRINCIPLE__HighWeightCode
+        HighWeightCode : PP_InquiryGUI:PP_AUTHORIZATIONPRINCIPLE__HighWeightCode required
             @t24:i (align=L, inputBehaviour=I, maxLength=1, sysNumber=15.0, core=true, t24Name=HighWeightCode)
         ID -> PP_InquiryGUI:PP_AUTHORIZATIONPRINCIPLE PK required
             @i18n:Label (en="Transaction Ref")
@@ -356,17 +369,17 @@ Classes {
             @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=0.0, core=true, businessType=A, t24Name=ID)
         INPUTTER -> byValue PP_InquiryGUI:PP_AUTHORIZATIONPRINCIPLE__INPUTTER *
             @t24:i (t24Name=INPUTTER)
-        IncomingMessageType : T24BusinessTypes:A
+        IncomingMessageType : T24BusinessTypes:A required
             @t24:i (align=L, inputBehaviour=I, maxLength=10, sysNumber=10.0, core=true, t24Name=IncomingMessageType)
-        LowerMessagePriority : PP_InquiryGUI:PP_AUTHORIZATIONPRINCIPLE__LowerMessagePriority
+        LowerMessagePriority : PP_InquiryGUI:PP_AUTHORIZATIONPRINCIPLE__LowerMessagePriority required
             @t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=8.0, core=true, t24Name=LowerMessagePriority)
         OVERRIDE -> byValue PP_InquiryGUI:PP_AUTHORIZATIONPRINCIPLE__OVERRIDE *
             @t24:i (t24Name=OVERRIDE)
         OldID : T24BusinessTypes:ANY
             @t24:i (align=L, inputBehaviour=I, maxLength=65, sysNumber=21.0, core=true, t24Name=OldID, onchangeBehaviour=HOT.FIELD)
-        OriginatingSource : T24BusinessTypes:ANY
+        OriginatingSource : T24BusinessTypes:ANY required
             @t24:i (align=L, inputBehaviour=I, maxLength=10, sysNumber=11.0, core=true, t24Name=OriginatingSource)
-        ProcessingCompany : T24BusinessTypes:A
+        ProcessingCompany : T24BusinessTypes:A required
             @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=1.0, core=true, t24Name=ProcessingCompany)
         RAC : T24BusinessTypes:A
             @t24:i (align=L, inputBehaviour=I, maxLength=19, sysNumber=19.0, core=true, t24Name=RAC)
@@ -375,20 +388,20 @@ Classes {
             @t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=25.0, core=true, t24Name=RECORD.STATUS)
         RSC : T24BusinessTypes:A
             @t24:i (align=L, inputBehaviour=I, maxLength=1, sysNumber=20.0, core=true, t24Name=RSC)
-        Ranking : mml:Integer
+        Ranking : T24BusinessTypes:N required
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=3.0, core=true, t24Name=Ranking)
         StartDateAuthPrinciple : T24BusinessTypes:D
             @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=16.0, core=true, t24Name=StartDateAuthPrinciple)
-        Status : mml:Integer
+        Status : T24BusinessTypes:N required
             @i18n:Label (en=Status)
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=2.0, core=true, t24Name=Status)
-        TransactionAmountLowerLimit : T24BusinessTypes:AMT
+        TransactionAmountLowerLimit : T24BusinessTypes:AMT required
             @t24:i (align=R, inputBehaviour=I, maxLength=17, sysNumber=5.0, core=true, t24Name=TransactionAmountLowerLimit)
-        TransactionAmountUpperLimit : T24BusinessTypes:AMT
+        TransactionAmountUpperLimit : T24BusinessTypes:AMT required
             @t24:i (align=R, inputBehaviour=I, maxLength=17, sysNumber=6.0, core=true, t24Name=TransactionAmountUpperLimit)
-        TransactionCurrencyCode : T24BusinessTypes:A
+        TransactionCurrencyCode : T24BusinessTypes:A required
             @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=7.0, core=true, t24Name=TransactionCurrencyCode)
-        UpperMessagePriority : PP_InquiryGUI:PP_AUTHORIZATIONPRINCIPLE__UpperMessagePriority
+        UpperMessagePriority : PP_InquiryGUI:PP_AUTHORIZATIONPRINCIPLE__UpperMessagePriority required
             @t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=9.0, core=true, t24Name=UpperMessagePriority)
     }
     PP_AUTHORIZATIONPRINCIPLE__DATE_TIME

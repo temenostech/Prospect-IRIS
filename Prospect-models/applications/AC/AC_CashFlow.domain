@@ -14,6 +14,11 @@ Classes {
             @i18n:Label (en=Account)
             @i18n:Tooltip (en="Identifies the customer account")
             @t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=0.0, core=true, businessType=ANT, t24Name=ACCOUNT)
+        EXPOSURE_DATE -> byValue AC_CashFlow:ACCOUNT_EXPOSURE__EXPOSURE_DATE *
+            @t24:i (t24Name=EXPOSURE.DATE)
+    }
+    ACCOUNT_EXPOSURE__EXPOSURE_DATE
+    {
         EXPOSURE_DATE : T24BusinessTypes:D
             @i18n:Label (en="Exposure Date")
             @i18n:Tooltip (en="Indicates exposure date")
@@ -27,6 +32,11 @@ Classes {
             @i18n:Label (en=Account)
             @i18n:Tooltip (en="Identifies the customer account")
             @t24:i (align=L, inputBehaviour=I, maxLength=19, sysNumber=0.0, core=true, businessType=POSANT, t24Name=ACCOUNT)
+        STMT_ENTRY -> byValue AC_CashFlow:ACCT_ENT_FWD__STMT_ENTRY *
+            @t24:i (t24Name=STMT.ENTRY)
+    }
+    ACCT_ENT_FWD__STMT_ENTRY
+    {
         STMT_ENTRY : T24BusinessTypes:A
             @i18n:Label (en="Stmt Entry")
             @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=1.0, core=true, t24Name=STMT.ENTRY)
@@ -41,13 +51,18 @@ Classes {
             @t24:i (align=L, inputBehaviour=N, maxLength=16, core=false, t24Name=ACCOUNT.ID, genOperation="FIELD(@ID,\".\",1)")
         ACCOUNT_TRANS_ID -> AC_CashFlow:ACCT_TRANS_FWD PK required
             @t24:i (align=L, inputBehaviour=I, maxLength=61, sysNumber=0.0, core=true, businessType=A, t24Name=ACCOUNT.TRANS.ID)
-        STMT_ID : T24BusinessTypes:A
-            @i18n:Label (en="Statement Id")
-            @t24:i (align=L, inputBehaviour=I, maxLength=25, sysNumber=1.0, core=true, t24Name=STMT.ID)
+        STMT_ID -> byValue AC_CashFlow:ACCT_TRANS_FWD__STMT_ID *
+            @t24:i (t24Name=STMT.ID)
         TRANS_ID : T24BusinessTypes:N
             @i18n:Label (en="Transaction Id")
             @i18n:Tooltip (en="Identifies the transaction Id")
             @t24:i (align=L, inputBehaviour=N, maxLength=25, core=false, t24Name=TRANS.ID, genOperation="FIELD(@ID,\".\",2)")
+    }
+    ACCT_TRANS_FWD__STMT_ID
+    {
+        STMT_ID : T24BusinessTypes:A
+            @i18n:Label (en="Statement Id")
+            @t24:i (align=L, inputBehaviour=I, maxLength=25, sysNumber=1.0, core=true, t24Name=STMT.ID)
     }
     AC_REBUILD_EXPOSURE
         @i18n:Description (en="")
@@ -57,7 +72,7 @@ Classes {
             @t24:i (t24Name=ACTION.NOTES)
         AC_REBUILD_EXP_ID -> AC_CashFlow:AC_REBUILD_EXPOSURE PK required
             @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=0.0, core=true, businessType=A, t24Name=AC.REBUILD.EXP.ID)
-        ADJUST_METHOD : AC_CashFlow:AC_REBUILD_EXPOSURE__ADJUST_METHOD
+        ADJUST_METHOD : AC_CashFlow:AC_REBUILD_EXPOSURE__ADJUST_METHOD required
             @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=3.0, core=true, t24Name=ADJUST.METHOD)
         AUDITOR_CODE : T24BusinessTypes:A
             @i18n:Label (en="Auditor Code")
@@ -74,7 +89,7 @@ Classes {
         CO_CODE -> ST_CompanyCreation:COMPANY
             @i18n:Label (en=Company)
             @t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=23.0, core=true, businessType=A, t24Name=CO.CODE, mask="R##-###-####")
-        CREDIT_ACCT_NO -> AC_AccountOpening:ACCOUNT
+        CREDIT_ACCT_NO -> AC_AccountOpening:ACCOUNT required
             @i18n:Label (en="Credit Account")
             @t24:i (align=R, inputBehaviour=I, maxLength=15, sysNumber=1.0, core=true, t24Name=CREDIT.ACCT.NO)
         CURR_NO : T24BusinessTypes:N
@@ -116,7 +131,7 @@ Classes {
     }
     AC_REBUILD_EXPOSURE__ACTION_NOTES
     {
-        ACTION_NOTES : T24BusinessTypes:ANY
+        ACTION_NOTES : T24BusinessTypes:ANY required
             @t24:i (align=L, inputBehaviour=I, maxLength=35, multiLanguage=true, sysNumber=2.0, core=true, t24Name=ACTION.NOTES)
     }
     AC_REBUILD_EXPOSURE__DATE_TIME
@@ -267,7 +282,7 @@ Classes {
     }
     CASH_FLOW_EXCEPTION__DATE
     {
-        DATE : T24BusinessTypes:D
+        DATE : T24BusinessTypes:D required
             @i18n:Label (en=Date)
             @t24:i (align=R, inputBehaviour=I, maxLength=35, sysNumber=1.0, core=true, t24Name=DATE)
     }
@@ -288,7 +303,12 @@ Classes {
         EXP_DATE : T24BusinessTypes:N
             @i18n:Label (en="Exposure Date")
             @t24:i (align=R, inputBehaviour=N, maxLength=8, core=false, t24Name=EXP.DATE, genOperation="FIELD(@ID,\'-\',2)")
-        STMT_ENTRY_ID : T24BusinessTypes:A
+        STMT_ENTRY_ID -> byValue AC_CashFlow:DATE_EXPOSURE__STMT_ENTRY_ID *
+            @t24:i (t24Name=STMT.ENTRY.ID)
+    }
+    DATE_EXPOSURE__STMT_ENTRY_ID
+    {
+        STMT_ENTRY_ID : T24BusinessTypes:A required
             @i18n:Label (en="Entry Id")
             @t24:i (align=L, inputBehaviour=I, maxLength=17, sysNumber=1.0, core=true, t24Name=STMT.ENTRY.ID)
     }
@@ -438,6 +458,15 @@ Classes {
             @i18n:Tooltip (en="Indicates the Transaction Code")
             @t24:i (align=R, inputBehaviour=N, maxLength=3, sysNumber=3.0, core=true, t24Name=TRANS.CODE)
     }
+    FWD_ENTRY_HOLD
+        @i18n:Description (en="")
+        @t24:i (t24Name=FWD.ENTRY.HOLD, level=F, type=T, allowedFunctions="L P S", localRefAllowed=false)
+    {
+        TRANSACTION_REF : T24BusinessTypes:N
+            @i18n:Label (en="Transaction Ref")
+            @i18n:Tooltip (en="Transaction Reference")
+            @t24:i (align=L, inputBehaviour=N, maxLength=16, core=false, t24Name=TRANSACTION.REF, genOperation="@ID[3,99]")
+    }
     REBUILD_ACCT_AVAIL
         @i18n:Description (en="")
         @t24:i (t24Name=REBUILD.ACCT.AVAIL, level=F, type=U, allowedFunctions="A C D E I L P Q R S", localRefAllowed=false)
@@ -511,24 +540,34 @@ Classes {
     {
         ACCT_VALUE_DATE -> AC_CashFlow:STMT_VAL_ENTRY PK required
             @t24:i (align=R, inputBehaviour=I, maxLength=30, sysNumber=0.0, core=true, t24Name=ACCT.VALUE.DATE, mask="R################ # DDDD DD  DD")
-        ENTRY_ID : T24BusinessTypes:A
-            @i18n:Label (en="Entry Id")
-            @t24:i (align=L, inputBehaviour=I, maxLength=25, sysNumber=1.0, core=true, t24Name=ENTRY.ID)
+        ENTRY_ID -> byValue AC_CashFlow:STMT_VAL_ENTRY__ENTRY_ID *
+            @t24:i (t24Name=ENTRY.ID)
         VALUE_DATE : T24BusinessTypes:N
             @i18n:Label (en="Value Date")
             @i18n:Tooltip (en="Indicates the Value date of the Contract")
             @t24:i (align=R, inputBehaviour=N, maxLength=8, core=false, t24Name=VALUE.DATE, genOperation="FIELD(ACCT.VALUE.DATE,\"-\",2)")
     }
+    STMT_VAL_ENTRY__ENTRY_ID
+    {
+        ENTRY_ID : T24BusinessTypes:A
+            @i18n:Label (en="Entry Id")
+            @t24:i (align=L, inputBehaviour=I, maxLength=25, sysNumber=1.0, core=true, t24Name=ENTRY.ID)
+    }
     TRANS_FWD
         @i18n:Description (en="")
         @t24:i (t24Name=TRANS.FWD, level=F, type=T, allowedFunctions="L P S", localRefAllowed=false)
     {
-        ENTRY_ID_S : T24BusinessTypes:A
-            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=1.0, core=true, t24Name=ENTRY.ID.S)
+        ENTRY_ID_S -> byValue AC_CashFlow:TRANS_FWD__ENTRY_ID_S *
+            @t24:i (t24Name=ENTRY.ID.S)
         TRANS_ID -> AC_CashFlow:TRANS_FWD PK required
             @i18n:Label (en="Transaction Id")
             @i18n:Tooltip (en="Identifies the transaction Id")
             @t24:i (align=L, inputBehaviour=I, maxLength=44, sysNumber=0.0, core=true, businessType=A, t24Name=TRANS.ID)
+    }
+    TRANS_FWD__ENTRY_ID_S
+    {
+        ENTRY_ID_S : T24BusinessTypes:A required
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=1.0, core=true, t24Name=ENTRY.ID.S)
     }
 }
 Enumerations {

@@ -34,7 +34,7 @@ Classes {
             @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=10.0, core=true, t24Name=CURR.NO)
         DATE_TIME -> byValue EB_Delivery:EB_ACTIVITY__DATE_TIME *
             @t24:i (t24Name=DATE.TIME)
-        DAYS_PRIOR_EVENT : mml:Integer
+        DAYS_PRIOR_EVENT : T24BusinessTypes:N
             @i18n:Label (en="Days Prior Event")
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=2.0, core=true, t24Name=DAYS.PRIOR.EVENT)
         DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
@@ -67,7 +67,7 @@ Classes {
     }
     EB_ACTIVITY__DESCRIPTION
     {
-        DESCRIPTION : T24BusinessTypes:A
+        DESCRIPTION : T24BusinessTypes:A required
             @i18n:Label (en=Description)
             @i18n:Tooltip (en=Description)
             @t24:i (align=L, inputBehaviour=I, maxLength=35, multiLanguage=true, sysNumber=1.0, core=true, t24Name=DESCRIPTION)
@@ -140,7 +140,7 @@ Classes {
     }
     EB_ADVICES__DESCRIPTION
     {
-        DESCRIPTION : T24BusinessTypes:A
+        DESCRIPTION : T24BusinessTypes:A required
             @i18n:Label (en=Description)
             @i18n:Tooltip (en=Description)
             @t24:i (align=L, inputBehaviour=I, maxLength=35, multiLanguage=true, sysNumber=1.0, core=true, t24Name=DESCRIPTION)
@@ -170,7 +170,7 @@ Classes {
         MSG_CLASS -> EB_Delivery:EB_MESSAGE_CLASS
             @i18n:Label (en="Message Class")
             @t24:i (align=L, inputBehaviour=I, maxLength=15, sysNumber=3.0, core=true, businessType=A, t24Name=MSG.CLASS)
-        PRINT_FORMAT : mml:Integer
+        PRINT_FORMAT : T24BusinessTypes:N
             @i18n:Label (en="Print Format")
             @t24:i (align=R, inputBehaviour=I, maxLength=6, sysNumber=6.0, core=true, t24Name=PRINT.FORMAT)
         USER_ROUTINE : T24BusinessTypes:A
@@ -217,7 +217,7 @@ Classes {
             @t24:i (align=L, inputBehaviour=I, maxLength=10, sysNumber=17.0, core=true, t24Name=DIRECTION)
         DRAFT_PRINT : EB_Delivery:EB_FREE_MESSAGE__DRAFT_PRINT
             @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=10.0, core=true, t24Name=DRAFT.PRINT)
-        EB_ADVICE_NO -> EB_Delivery:EB_ADVICES
+        EB_ADVICE_NO -> EB_Delivery:EB_ADVICES required
             @i18n:Label (en="Free Message Type")
             @t24:i (align=L, inputBehaviour=I, maxLength=20, sysNumber=9.0, core=true, businessType=A, t24Name=EB.ADVICE.NO)
         EB_MSG_KEY -> EB_Delivery:EB_FREE_MESSAGE PK required
@@ -397,7 +397,7 @@ Classes {
         APPLICATION -> EB_SystemTables:PGM_FILE
             @i18n:Label (en=Application)
             @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=1.0, core=true, businessType=PV, t24Name=APPLICATION, typeModifiers=HU)
-        TRACER_DAYS : T24BusinessTypes:A
+        TRACER_DAYS : T24BusinessTypes:A required
             @i18n:Label (en="Tracer Days")
             @t24:i (align=L, inputBehaviour=I, maxLength=11, sysNumber=3.0, core=true, t24Name=TRACER.DAYS)
         TRACER_ROUTINE -> EB_SystemTables:PGM_FILE
@@ -476,7 +476,7 @@ Classes {
     }
     EB_MESSAGE_CLASS__DESCRIPTION
     {
-        DESCRIPTION : T24BusinessTypes:A
+        DESCRIPTION : T24BusinessTypes:A required
             @i18n:Label (en=Description)
             @i18n:Tooltip (en=Description)
             @t24:i (align=L, inputBehaviour=I, maxLength=35, multiLanguage=true, sysNumber=1.0, core=true, t24Name=DESCRIPTION)
@@ -492,11 +492,16 @@ Classes {
         @i18n:Description (en="")
         @t24:i (t24Name=EB.SCHEDULE.TRACER, level=F, type=T, allowedFunctions="L P S", localRefAllowed=false)
     {
-        EB_FREE_MSG_ID : T24BusinessTypes:A
-            @t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=1.0, core=true, t24Name=EB.FREE.MSG.ID)
+        EB_FREE_MSG_ID -> byValue EB_Delivery:EB_SCHEDULE_TRACER__EB_FREE_MSG_ID *
+            @t24:i (t24Name=EB.FREE.MSG.ID)
         SCHEDULE_DATE -> EB_Delivery:EB_SCHEDULE_TRACER PK required
             @i18n:Label (en="Payment Date")
             @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=0.0, core=true, businessType=D, t24Name=SCHEDULE.DATE)
+    }
+    EB_SCHEDULE_TRACER__EB_FREE_MSG_ID
+    {
+        EB_FREE_MSG_ID : T24BusinessTypes:A required
+            @t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=1.0, core=true, t24Name=EB.FREE.MSG.ID)
     }
     EB_TXN_TRACER
         @i18n:Description (en="")
@@ -504,7 +509,12 @@ Classes {
     {
         APP_TXN_ID -> EB_Delivery:EB_TXN_TRACER PK required
             @t24:i (align=L, inputBehaviour=I, maxLength=65, sysNumber=0.0, core=true, businessType=A, t24Name=APP.TXN.ID)
-        EB_FREE_MSG_ID : T24BusinessTypes:A
+        EB_FREE_MSG_ID -> byValue EB_Delivery:EB_TXN_TRACER__EB_FREE_MSG_ID *
+            @t24:i (t24Name=EB.FREE.MSG.ID)
+    }
+    EB_TXN_TRACER__EB_FREE_MSG_ID
+    {
+        EB_FREE_MSG_ID : T24BusinessTypes:A required
             @t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=1.0, core=true, t24Name=EB.FREE.MSG.ID)
     }
     MESSAGE_CONTROL
@@ -566,7 +576,7 @@ Classes {
     }
     MESSAGE_CONTROL__DESCRIPTION
     {
-        DESCRIPTION : T24BusinessTypes:A
+        DESCRIPTION : T24BusinessTypes:A required
             @i18n:Label (en=Description)
             @i18n:Tooltip (en=Description)
             @t24:i (align=L, inputBehaviour=I, maxLength=20, multiLanguage=true, sysNumber=1.0, core=true, t24Name=DESCRIPTION)

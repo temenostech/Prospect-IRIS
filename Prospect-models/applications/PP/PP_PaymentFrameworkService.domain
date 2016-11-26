@@ -26,8 +26,8 @@ Classes {
             @t24:i (t24Name=POR.ADVICE)
         POR_APPLIEDFEE -> byValue PP_PaymentFrameworkService:POR_CHILD_CONCAT__POR_APPLIEDFEE *
             @t24:i (t24Name=POR.APPLIEDFEE)
-        POR_AUTOREPAIRPARTYENRICHMENT -> byValue PP_PaymentFrameworkService:POR_CHILD_CONCAT__POR_AUTOREPAIRPARTYENRICHMENT *
-            @t24:i (t24Name=POR.AUTOREPAIRPARTYENRICHMENT)
+        POR_AUTOREPAIRPARTYENRICH -> byValue PP_PaymentFrameworkService:POR_CHILD_CONCAT__POR_AUTOREPAIRPARTYENRICH *
+            @t24:i (t24Name=POR.AUTOREPAIRPARTYENRICH)
         POR_AUTOREPAIRRETURNEDCD -> byValue PP_PaymentFrameworkService:POR_CHILD_CONCAT__POR_AUTOREPAIRRETURNEDCD *
             @t24:i (t24Name=POR.AUTOREPAIRRETURNEDCD)
         POR_BACS -> byValue PP_PaymentFrameworkService:POR_CHILD_CONCAT__POR_BACS *
@@ -129,10 +129,10 @@ Classes {
         POR_APPLIEDFEE : T24BusinessTypes:A
             @t24:i (align=L, inputBehaviour=I, maxLength=255, sysNumber=3.0, core=true, t24Name=POR.APPLIEDFEE)
     }
-    POR_CHILD_CONCAT__POR_AUTOREPAIRPARTYENRICHMENT
+    POR_CHILD_CONCAT__POR_AUTOREPAIRPARTYENRICH
     {
-        POR_AUTOREPAIRPARTYENRICHMENT : T24BusinessTypes:A
-            @t24:i (align=L, inputBehaviour=I, maxLength=255, sysNumber=17.0, core=true, t24Name=POR.AUTOREPAIRPARTYENRICHMENT)
+        POR_AUTOREPAIRPARTYENRICH : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=I, maxLength=255, sysNumber=17.0, core=true, t24Name=POR.AUTOREPAIRPARTYENRICH)
     }
     POR_CHILD_CONCAT__POR_AUTOREPAIRRETURNEDCD
     {
@@ -299,13 +299,13 @@ Classes {
             @t24:i (align=L, inputBehaviour=I, maxLength=128, sysNumber=6.0, core=true, t24Name=AdditionalInformation)
         CompanyID : T24BusinessTypes:A
             @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=1.0, core=true, t24Name=CompanyID)
-        ErrorCode : T24BusinessTypes:A
+        ErrorCode : T24BusinessTypes:A required
             @t24:i (align=L, inputBehaviour=I, maxLength=10, sysNumber=4.0, core=true, t24Name=ErrorCode)
         ErrorTimestamp : T24BusinessTypes:TIME
             @t24:i (align=L, inputBehaviour=I, maxLength=17, sysNumber=3.0, core=true, t24Name=ErrorTimestamp, mask="RDDDD DD  DD ##:##:##.###")
         ErrorType : T24BusinessTypes:A
             @t24:i (align=L, inputBehaviour=I, maxLength=1, sysNumber=5.0, core=true, t24Name=ErrorType)
-        FTNumber : T24BusinessTypes:A
+        FTNumber : T24BusinessTypes:A required
             @t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=2.0, core=true, t24Name=FTNumber)
         ID -> PP_PaymentFrameworkService:POR_ERRORFLAGS PK required
             @i18n:Label (en="Transaction Ref")
@@ -318,24 +318,29 @@ Classes {
         @i18n:Description (en="")
         @t24:i (t24Name=POR.HISTORYLOG, level=I, type=L, allowedFunctions="L P S", localRefAllowed=false)
     {
-        AdditionalInformation : T24BusinessTypes:A
-            @t24:i (align=L, inputBehaviour=I, maxLength=128, sysNumber=7.0, core=true, t24Name=AdditionalInformation)
         CompanyID : T24BusinessTypes:A
             @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=1.0, core=true, t24Name=CompanyID)
+        FTNumber : T24BusinessTypes:A required
+            @t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=2.0, core=true, t24Name=FTNumber)
+        HistoryTimestamp -> byValue PP_PaymentFrameworkService:POR_HISTORYLOG__HistoryTimestamp *
+            @t24:i (t24Name=HistoryTimestamp)
+        ID -> PP_PaymentFrameworkService:POR_HISTORYLOG PK required
+            @i18n:Label (en="Transaction Ref")
+            @i18n:Tooltip (en="Transaction Reference")
+            @t24:i (align=L, inputBehaviour=I, maxLength=255, sysNumber=0.0, core=true, businessType=A, t24Name=ID)
+    }
+    POR_HISTORYLOG__HistoryTimestamp
+    {
+        AdditionalInformation : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=I, maxLength=128, sysNumber=7.0, core=true, t24Name=AdditionalInformation)
         ErrorCode : T24BusinessTypes:A
             @t24:i (align=L, inputBehaviour=I, maxLength=10, sysNumber=6.0, core=true, t24Name=ErrorCode)
         EventDescription : T24BusinessTypes:A
             @t24:i (align=L, inputBehaviour=I, maxLength=200, sysNumber=5.0, core=true, t24Name=EventDescription)
         EventType : T24BusinessTypes:A
             @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=4.0, core=true, t24Name=EventType)
-        FTNumber : T24BusinessTypes:A
-            @t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=2.0, core=true, t24Name=FTNumber)
         HistoryTimestamp : T24BusinessTypes:TIME
             @t24:i (align=L, inputBehaviour=I, maxLength=17, sysNumber=3.0, core=true, t24Name=HistoryTimestamp, mask="RDDDD DD  DD ##:##:##.###")
-        ID -> PP_PaymentFrameworkService:POR_HISTORYLOG PK required
-            @i18n:Label (en="Transaction Ref")
-            @i18n:Tooltip (en="Transaction Reference")
-            @t24:i (align=L, inputBehaviour=I, maxLength=255, sysNumber=0.0, core=true, businessType=A, t24Name=ID)
     }
     POR_PAYMENTCURRENTSTATUS
         @i18n:Description (en="")
@@ -345,7 +350,7 @@ Classes {
             @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=1.0, core=true, t24Name=CompanyID)
         ErrorFlag : T24BusinessTypes:A
             @t24:i (align=L, inputBehaviour=I, maxLength=1, sysNumber=6.0, core=true, t24Name=ErrorFlag)
-        FTNumber : T24BusinessTypes:A
+        FTNumber : T24BusinessTypes:A required
             @t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=2.0, core=true, t24Name=FTNumber)
         ID -> PP_PaymentFrameworkService:POR_PAYMENTCURRENTSTATUS PK required
             @i18n:Label (en="Transaction Ref")
@@ -366,7 +371,7 @@ Classes {
             @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=1.0, core=true, t24Name=CompanyID)
         EntryIDs : T24BusinessTypes:A
             @t24:i (align=L, inputBehaviour=I, maxLength=90, sysNumber=4.0, core=true, t24Name=EntryIDs)
-        FTNumber : T24BusinessTypes:A
+        FTNumber : T24BusinessTypes:A required
             @t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=2.0, core=true, t24Name=FTNumber)
         ID -> PP_PaymentFrameworkService:POR_PAYMENTFLOWDETAILS PK required
             @i18n:Label (en="Transaction Ref")
@@ -383,7 +388,7 @@ Classes {
     {
         CompanyID : T24BusinessTypes:A
             @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=1.0, core=true, t24Name=CompanyID)
-        FTNumber : T24BusinessTypes:A
+        FTNumber : T24BusinessTypes:A required
             @t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=2.0, core=true, t24Name=FTNumber)
         ID -> PP_PaymentFrameworkService:POR_PAYMENTSTATUSCODE PK required
             @i18n:Label (en="Transaction Ref")

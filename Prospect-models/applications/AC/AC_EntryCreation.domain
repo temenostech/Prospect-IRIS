@@ -14,6 +14,11 @@ Classes {
             @i18n:Label (en=Account)
             @i18n:Tooltip (en="Indicates Customer Account Number")
             @t24:i (align=L, inputBehaviour=I, maxLength=19, sysNumber=0.0, core=true, businessType=POSANT, t24Name=ACCOUNT.NO)
+        ENTRY_NO -> byValue AC_EntryCreation:ACCT_ENT_LWORK_DAY__ENTRY_NO *
+            @t24:i (t24Name=ENTRY.NO)
+    }
+    ACCT_ENT_LWORK_DAY__ENTRY_NO
+    {
         ENTRY_NO : T24BusinessTypes:A
             @t24:i (align=L, inputBehaviour=I, maxLength=25, sysNumber=1.0, core=true, t24Name=ENTRY.NO)
     }
@@ -32,6 +37,11 @@ Classes {
         CO_CODE : T24BusinessTypes:COM
             @i18n:Label (en=Company)
             @t24:i (align=L, inputBehaviour=N, maxLength=11, core=false, t24Name=CO.CODE, genOperation="@ID>ACCOUNT>CO.CODE", mask="R##-###-####")
+        ENTRY_NO -> byValue AC_EntryCreation:ACCT_ENT_TODAY__ENTRY_NO *
+            @t24:i (t24Name=ENTRY.NO)
+    }
+    ACCT_ENT_TODAY__ENTRY_NO
+    {
         ENTRY_NO : T24BusinessTypes:A
             @t24:i (align=L, inputBehaviour=I, maxLength=25, sysNumber=1.0, core=true, t24Name=ENTRY.NO)
     }
@@ -90,7 +100,7 @@ Classes {
             @t24:i (align=L, inputBehaviour=I, maxLength=20, sysNumber=0.0, core=true, businessType=A, t24Name=KEY)
         NO_DETAIL_APP -> byValue AC_EntryCreation:AC_CONSOLIDATE_COND__NO_DETAIL_APP *
             @t24:i (t24Name=NO.DETAIL.APP)
-        NO_ENTRIES_START : mml:Integer
+        NO_ENTRIES_START : T24BusinessTypes:N
             @i18n:Label (en="No Entries Start")
             @i18n:Tooltip (en="No Entries Start")
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=9.0, core=true, t24Name=NO.ENTRIES.START)
@@ -128,7 +138,7 @@ Classes {
     }
     AC_CONSOLIDATE_COND__DESCRIPTION
     {
-        DESCRIPTION : T24BusinessTypes:A
+        DESCRIPTION : T24BusinessTypes:A required
             @i18n:Label (en=Description)
             @i18n:Tooltip (en=Description)
             @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=1.0, core=true, t24Name=DESCRIPTION)
@@ -193,7 +203,7 @@ Classes {
             @i18n:Label (en="Accounting Date")
             @i18n:Tooltip (en="ACCOUNTING.DATE in Statement entry")
             @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=65.0, core=true, t24Name=ACCOUNTING.DATE)
-        ACCOUNT_NUMBER : mml:Integer
+        ACCOUNT_NUMBER : T24BusinessTypes:N
             @i18n:Label (en="Account Number")
             @t24:i (align=R, inputBehaviour=I, maxLength=55, sysNumber=1.0, core=true, t24Name=ACCOUNT.NUMBER)
         ACCOUNT_OFFICER -> ST_Config:DEPT_ACCT_OFFICER
@@ -220,6 +230,10 @@ Classes {
         BOOKING_DATE_SEL : T24BusinessTypes:N
             @i18n:Label (en="Booking Date")
             @t24:i (align=R, inputBehaviour=N, maxLength=16, core=false, t24Name=BOOKING.DATE.SEL, genOperation=E.CATEG.ENT.LIST)
+        CATEGORY -> ST_Config:CATEGORY
+            @i18n:Label (en=Category)
+            @i18n:Tooltip (en="Specifies the Category")
+            @t24:i (align=R, inputBehaviour=N, maxLength=10, sysNumber=7.0, core=false, t24Name=CATEGORY, mask="L##-#######")
         CATEGORY_CODE : T24BusinessTypes:N
             @i18n:Label (en="Category Code")
             @t24:i (align=R, inputBehaviour=N, maxLength=6, core=false, t24Name=CATEGORY.CODE, genOperation=CATEG.ENT.TODAY)
@@ -231,6 +245,9 @@ Classes {
         CONSOL_KEY : T24BusinessTypes:ANY
             @i18n:Label (en="Consol Key")
             @t24:i (align=L, inputBehaviour=I, maxLength=85, sysNumber=56.0, core=true, t24Name=CONSOL.KEY)
+        CONTRACT_ID : T24BusinessTypes:S
+            @i18n:Label (en="Contract Id")
+            @t24:i (align=L, inputBehaviour=N, maxLength=16, sysNumber=17.0, core=false, t24Name=CONTRACT.ID)
         CONTRACT_INT_KEY : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=N, maxLength=3, sysNumber=51.0, core=true, t24Name=CONTRACT.INT.KEY)
         CONTRACT_INT_RATE : T24BusinessTypes:R
@@ -269,6 +286,10 @@ Classes {
             @i18n:Label (en="Customer Id")
             @i18n:Tooltip (en="Identifies the Customer for the transaction.")
             @t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=8.0, core=true, businessType=CUS, t24Name=CUSTOMER.ID)
+        CUSTOMER_NO -> ST_Customer:CUSTOMER
+            @i18n:Label (en="Customer No")
+            @i18n:Tooltip (en="Identifies the Customer for the transaction.")
+            @t24:i (align=R, inputBehaviour=N, maxLength=10, sysNumber=8.0, core=false, businessType=CUS, t24Name=CUSTOMER.NO)
         CUS_PL_ACCOUNT : T24BusinessTypes:ACC
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=58.0, core=true, t24Name=CUS.PL.ACCOUNT)
         CYCLE_FORWARD : T24BusinessTypes:A
@@ -305,7 +326,7 @@ Classes {
             @t24:i (align=L, inputBehaviour=N, maxLength=4, core=false, t24Name=MI.ENTRY.TYPE, genOperation="PL.CATEGORY>CATEGORY>MI.ENTRY.TYPE.DFT")
         NARRATIVE -> byValue AC_EntryCreation:CATEG_ENTRY__NARRATIVE *
             @t24:i (t24Name=NARRATIVE)
-        NEGOTIATED_REF_NUM : mml:Integer
+        NEGOTIATED_REF_NUM : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=15.0, core=true, t24Name=NEGOTIATED.REF.NUM)
         ORIGINAL_AMOUNT : T24BusinessTypes:AMT
             @i18n:Label (en="Original Amount")
@@ -325,6 +346,8 @@ Classes {
             @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=49.0, core=true, t24Name=OUTSTANDING.BAL, typeModifiers="-12")
         OVERRIDE -> byValue AC_EntryCreation:CATEG_ENTRY__OVERRIDE *
             @t24:i (t24Name=OVERRIDE)
+        PALCAT -> ST_Config:CATEGORY
+            @t24:i (align=R, inputBehaviour=N, maxLength=10, sysNumber=7.0, core=false, t24Name=PALCAT, mask="L##-#######")
         PAL_MI_CATEG_GRP : T24BusinessTypes:N
             @t24:i (align=L, inputBehaviour=N, maxLength=6, core=false, t24Name=PAL.MI.CATEG.GRP, genOperation="PL.CATEGORY>CATEGORY>MI.CATEG.GROUP")
         PC_PERIOD_END -> byValue AC_EntryCreation:CATEG_ENTRY__PC_PERIOD_END *
@@ -341,6 +364,12 @@ Classes {
         PROCESSING_DATE : T24BusinessTypes:D
             @i18n:Label (en="Processing Date")
             @t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=59.0, core=true, t24Name=PROCESSING.DATE)
+        PRODCAT -> ST_Config:CATEGORY
+            @i18n:Label (en="Deal Type")
+            @t24:i (align=R, inputBehaviour=N, maxLength=6, sysNumber=10.0, core=false, t24Name=PRODCAT, mask="R##-###")
+        PRODCCY -> ST_CurrencyConfig:CURRENCY
+            @i18n:Label (en="Product Currency")
+            @t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=12.0, core=false, businessType=CCY, t24Name=PRODCCY)
         PRODUCT_CATEGORY -> ST_Config:CATEGORY
             @i18n:Label (en="Product Category")
             @t24:i (align=R, inputBehaviour=I, maxLength=6, sysNumber=10.0, core=true, t24Name=PRODUCT.CATEGORY, mask="R##-###")
@@ -388,6 +417,9 @@ Classes {
         SOURCE_FILE : T24BusinessTypes:N
             @i18n:Label (en="Source File")
             @t24:i (align=L, inputBehaviour=N, maxLength=11, core=false, t24Name=SOURCE.FILE, genOperation="\"CATEG.ENTRY\"")
+        SOURCE_ID : T24BusinessTypes:A
+            @i18n:Label (en="Source Id")
+            @t24:i (align=L, inputBehaviour=N, maxLength=120, sysNumber=0.0, core=false, t24Name=SOURCE.ID)
         STMT_NO -> byValue AC_EntryCreation:CATEG_ENTRY__STMT_NO *
             @t24:i (t24Name=STMT.NO)
         SUPPRESS_POSITION : T24BusinessTypes:A
@@ -406,7 +438,7 @@ Classes {
         THEIR_REFERENCE : T24BusinessTypes:S
             @i18n:Label (en="Their Ref")
             @t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=5.0, core=true, t24Name=THEIR.REFERENCE)
-        TRANSACTION_CODE -> ST_Config:TRANSACTION
+        TRANSACTION_CODE -> ST_Config:TRANSACTION required
             @i18n:Label (en="Transaction Code")
             @i18n:Tooltip (en="Indicates the Transaction Type")
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=4.0, core=true, t24Name=TRANSACTION.CODE)
@@ -426,7 +458,7 @@ Classes {
             @i18n:Label (en="Accounting Date")
             @i18n:Tooltip (en="ACCOUNTING.DATE in Statement entry")
             @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=65.0, core=true, t24Name=ACCOUNTING.DATE)
-        ACCOUNT_NUMBER : mml:Integer
+        ACCOUNT_NUMBER : T24BusinessTypes:N
             @i18n:Label (en="Account Number")
             @t24:i (align=R, inputBehaviour=I, maxLength=55, sysNumber=1.0, core=true, t24Name=ACCOUNT.NUMBER)
         ACCOUNT_OFFICER -> ST_Config:DEPT_ACCT_OFFICER
@@ -518,7 +550,7 @@ Classes {
             @t24:i (align=L, inputBehaviour=N, maxLength=9, sysNumber=45.0, core=true, t24Name=LIQUIDATION.MODE)
         NARRATIVE -> byValue AC_EntryCreation:CATEG_ENTRY_DETAIL__NARRATIVE *
             @t24:i (t24Name=NARRATIVE)
-        NEGOTIATED_REF_NUM : mml:Integer
+        NEGOTIATED_REF_NUM : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=15.0, core=true, t24Name=NEGOTIATED.REF.NUM)
         ORIGINAL_AMOUNT : T24BusinessTypes:AMT
             @i18n:Label (en="Original Amount")
@@ -600,7 +632,7 @@ Classes {
         THEIR_REFERENCE : T24BusinessTypes:S
             @i18n:Label (en="Their Ref")
             @t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=5.0, core=true, t24Name=THEIR.REFERENCE)
-        TRANSACTION_CODE -> ST_Config:TRANSACTION
+        TRANSACTION_CODE -> ST_Config:TRANSACTION required
             @i18n:Label (en="Transaction Code")
             @i18n:Tooltip (en="Indicates the Transaction Type")
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=4.0, core=true, t24Name=TRANSACTION.CODE)
@@ -616,11 +648,16 @@ Classes {
         @i18n:Description (en="")
         @t24:i (t24Name=CATEG.ENTRY.DETAIL.XREF, level=F, type=T, allowedFunctions="L P S", localRefAllowed=false)
     {
+        DETAIL_ID -> byValue AC_EntryCreation:CATEG_ENTRY_DETAIL_XREF__DETAIL_ID *
+            @t24:i (t24Name=DETAIL.ID)
+        NET_ENTRY -> AC_EntryCreation:CATEG_ENTRY_DETAIL_XREF PK required
+            @t24:i (align=L, inputBehaviour=I, maxLength=90, sysNumber=0.0, core=true, businessType=ANY, t24Name=NET.ENTRY)
+    }
+    CATEG_ENTRY_DETAIL_XREF__DETAIL_ID
+    {
         DETAIL_ID : T24BusinessTypes:A
             @i18n:Label (en=Detail)
             @t24:i (align=L, inputBehaviour=I, maxLength=30, sysNumber=1.0, core=true, t24Name=DETAIL.ID)
-        NET_ENTRY -> AC_EntryCreation:CATEG_ENTRY_DETAIL_XREF PK required
-            @t24:i (align=L, inputBehaviour=I, maxLength=90, sysNumber=0.0, core=true, businessType=ANY, t24Name=NET.ENTRY)
     }
     CATEG_ENTRY_DETAIL__DATE_TIME
     {
@@ -726,6 +763,11 @@ Classes {
     {
         CATEGORY_DTE_COMPANY -> AC_EntryCreation:CATEG_ENT_ACTIVITY PK required
             @t24:i (align=L, inputBehaviour=I, maxLength=38, sysNumber=0.0, core=true, businessType=ANY, t24Name=CATEGORY.DTE.COMPANY, mask="L##-### # ####-##-## # ##-###-#### # #####")
+        ENTRY_NO -> byValue AC_EntryCreation:CATEG_ENT_ACTIVITY__ENTRY_NO *
+            @t24:i (t24Name=ENTRY.NO)
+    }
+    CATEG_ENT_ACTIVITY__ENTRY_NO
+    {
         ENTRY_NO : T24BusinessTypes:A
             @t24:i (align=L, inputBehaviour=I, maxLength=25, sysNumber=1.0, core=true, t24Name=ENTRY.NO)
     }
@@ -736,13 +778,18 @@ Classes {
         CATEGORY_CODE : T24BusinessTypes:N
             @i18n:Label (en="Category Code")
             @t24:i (align=L, inputBehaviour=N, maxLength=5, core=false, t24Name=CATEGORY.CODE, genOperation="@ID[\"-\",1,1]")
-        CATEG_ENTRY : T24BusinessTypes:A
-            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=1.0, core=true, t24Name=CATEG.ENTRY)
+        CATEG_ENTRY -> byValue AC_EntryCreation:CATEG_ENT_FWD__CATEG_ENTRY *
+            @t24:i (t24Name=CATEG.ENTRY)
         CATEG_KEY -> AC_EntryCreation:CATEG_ENT_FWD PK required
             @t24:i (align=L, inputBehaviour=I, maxLength=40, sysNumber=0.0, core=true, businessType=A, t24Name=CATEG.KEY)
         CO_CODE : T24BusinessTypes:N
             @i18n:Label (en=Company)
             @t24:i (align=L, inputBehaviour=N, maxLength=11, core=false, t24Name=CO.CODE, genOperation="CATEG.ENTRY>CATEG.ENTRY>COMPANY.CODE")
+    }
+    CATEG_ENT_FWD__CATEG_ENTRY
+    {
+        CATEG_ENTRY : T24BusinessTypes:A required
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=1.0, core=true, t24Name=CATEG.ENTRY)
     }
     CATEG_ENT_LWORK_DAY
         @i18n:Description (en="")
@@ -752,8 +799,8 @@ Classes {
             @i18n:Label (en=Category)
             @i18n:Tooltip (en="Specifies the Category")
             @t24:i (align=L, inputBehaviour=N, maxLength=5, core=false, t24Name=CATEGORY, genOperation="@ID[\"-\",1,1]")
-        CATEG_ENTRY : T24BusinessTypes:A
-            @t24:i (align=L, inputBehaviour=I, maxLength=25, sysNumber=1.0, core=true, t24Name=CATEG.ENTRY)
+        CATEG_ENTRY -> byValue AC_EntryCreation:CATEG_ENT_LWORK_DAY__CATEG_ENTRY *
+            @t24:i (t24Name=CATEG.ENTRY)
         CATEG_ID -> AC_EntryCreation:CATEG_ENT_LWORK_DAY PK required
             @t24:i (align=L, inputBehaviour=I, maxLength=41, sysNumber=0.0, core=true, businessType=A, t24Name=CATEG.ID)
         CAT_ENT : T24BusinessTypes:N
@@ -767,6 +814,11 @@ Classes {
             @i18n:Label (en="System id")
             @i18n:Tooltip (en="Shows the system id")
             @t24:i (align=L, inputBehaviour=N, maxLength=4, core=false, t24Name=SYSTEM.ID, genOperation="@ID[\"-\",2,1]")
+    }
+    CATEG_ENT_LWORK_DAY__CATEG_ENTRY
+    {
+        CATEG_ENTRY : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=I, maxLength=25, sysNumber=1.0, core=true, t24Name=CATEG.ENTRY)
     }
     CATEG_ENT_MONTH
         @i18n:Description (en="")
@@ -809,7 +861,7 @@ Classes {
             @i18n:Label (en=Authoriser)
             @i18n:Tooltip (en="Indicates the User who Authorises the record")
             @t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=11.0, core=true, t24Name=AUTHORISER)
-        CATEGORY -> ST_Config:CATEGORY
+        CATEGORY -> ST_Config:CATEGORY required
             @i18n:Label (en=Category)
             @i18n:Tooltip (en="Specifies the Category")
             @t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=2.0, core=true, t24Name=CATEGORY, mask="R##-###")
@@ -856,7 +908,7 @@ Classes {
     }
     CATEG_ENT_STMT__DESCRIPTION
     {
-        DESCRIPTION : T24BusinessTypes:A
+        DESCRIPTION : T24BusinessTypes:A required
             @i18n:Label (en=Description)
             @i18n:Tooltip (en=Description)
             @t24:i (align=L, inputBehaviour=I, maxLength=35, multiLanguage=true, sysNumber=1.0, core=true, t24Name=DESCRIPTION)
@@ -879,8 +931,8 @@ Classes {
         CATEGORY_CODE : T24BusinessTypes:N
             @i18n:Label (en="Category Code")
             @t24:i (align=L, inputBehaviour=N, maxLength=5, core=false, t24Name=CATEGORY.CODE, genOperation="@ID[\"-\",1,1]")
-        CATEG_ENTRY : T24BusinessTypes:A
-            @t24:i (align=L, inputBehaviour=I, maxLength=25, sysNumber=1.0, core=true, t24Name=CATEG.ENTRY)
+        CATEG_ENTRY -> byValue AC_EntryCreation:CATEG_ENT_TODAY__CATEG_ENTRY *
+            @t24:i (t24Name=CATEG.ENTRY)
         CATEG_ID -> AC_EntryCreation:CATEG_ENT_TODAY PK required
             @t24:i (align=L, inputBehaviour=I, maxLength=40, sysNumber=0.0, core=true, businessType=A, t24Name=CATEG.ID)
         CO_CODE : T24BusinessTypes:COM
@@ -895,6 +947,11 @@ Classes {
             @i18n:Tooltip (en="Shows the system id")
             @t24:i (align=L, inputBehaviour=N, maxLength=4, core=false, t24Name=SYSTEM.ID, genOperation="@ID[\"-\",2,1]")
     }
+    CATEG_ENT_TODAY__CATEG_ENTRY
+    {
+        CATEG_ENTRY : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=I, maxLength=25, sysNumber=1.0, core=true, t24Name=CATEG.ENTRY)
+    }
     CATEG_MONTH
         @i18n:Description (en="")
         @t24:i (t24Name=CATEG.MONTH, level=F, type=T, allowedFunctions="L P S", localRefAllowed=false)
@@ -904,17 +961,22 @@ Classes {
             @t24:i (align=R, inputBehaviour=N, maxLength=6, core=false, t24Name=CATEGORY.CODE, genOperation="@ID[\".\",1,1]")
         CATEGORY_YR_MNTH -> AC_EntryCreation:CATEG_MONTH PK required
             @t24:i (align=L, inputBehaviour=I, maxLength=34, sysNumber=0.0, core=true, businessType=A, t24Name=CATEGORY.YR.MNTH, mask="L##-### # ####-## # ###")
-        ENTRY_NO : T24BusinessTypes:A
-            @t24:i (align=L, inputBehaviour=I, maxLength=25, sysNumber=1.0, core=true, t24Name=ENTRY.NO)
+        ENTRY_NO -> byValue AC_EntryCreation:CATEG_MONTH__ENTRY_NO *
+            @t24:i (t24Name=ENTRY.NO)
         YEAR_MONTH : T24BusinessTypes:A
             @i18n:Label (en="Year Month")
             @t24:i (align=R, inputBehaviour=N, maxLength=6, core=false, t24Name=YEAR.MONTH, genOperation="@ID[\".\",2,1]")
+    }
+    CATEG_MONTH__ENTRY_NO
+    {
+        ENTRY_NO : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=I, maxLength=25, sysNumber=1.0, core=true, t24Name=ENTRY.NO)
     }
     CONSOL_ENT_FWD
         @i18n:Description (en="")
         @t24:i (t24Name=CONSOL.ENT.FWD, level=F, type=L, allowedFunctions="L P S", localRefAllowed=false)
     {
-        ACCOUNT_OFFICER : mml:Integer
+        ACCOUNT_OFFICER : T24BusinessTypes:N
             @i18n:Label (en="Account Officer")
             @i18n:Tooltip (en="Indicates Account Officer responsible")
             @t24:i (align=R, inputBehaviour=I, maxLength=4, sysNumber=22.0, core=true, t24Name=ACCOUNT.OFFICER)
@@ -933,7 +995,7 @@ Classes {
         CURRENCY : T24BusinessTypes:CCY
             @i18n:Label (en=Ccy)
             @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=3.0, core=true, t24Name=CURRENCY)
-        CURRENCY_MARKET : mml:Integer
+        CURRENCY_MARKET : T24BusinessTypes:N
             @i18n:Label (en=Market)
             @t24:i (align=R, inputBehaviour=I, maxLength=1, sysNumber=4.0, core=true, t24Name=CURRENCY.MARKET)
         CUSTOMER -> ST_Customer:CUSTOMER
@@ -959,9 +1021,6 @@ Classes {
         INT_SPREAD : T24BusinessTypes:A
             @i18n:Label (en="Interest Spread")
             @t24:i (align=L, inputBehaviour=I, maxLength=11, sysNumber=17.0, core=true, t24Name=INT.SPREAD)
-        K_TYPE : T24BusinessTypes:A
-            @i18n:Label (en=Type)
-            @t24:i (align=L, inputBehaviour=N, maxLength=12, sysNumber=5.0, core=true, t24Name=K.TYPE)
         LOCAL_CR : T24BusinessTypes:AMT
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=6.0, core=true, t24Name=LOCAL.CR, typeModifiers="-USD")
         LOCAL_DR : T24BusinessTypes:AMT
@@ -977,12 +1036,12 @@ Classes {
         PRODUCT -> EB_SystemTables:EB_SYSTEM_ID
             @i18n:Label (en=Product)
             @t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=1.0, core=true, businessType=A, t24Name=PRODUCT)
-        PRODUCT_CATEGORY : mml:Integer
+        PRODUCT_CATEGORY : T24BusinessTypes:N
             @i18n:Label (en="Product Category")
             @t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=20.0, core=true, t24Name=PRODUCT.CATEGORY)
         SUPPRESS_POSITION : AC_EntryCreation:CONSOL_ENT_FWD__SUPPRESS_POSITION
             @t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=18.0, core=true, t24Name=SUPPRESS.POSITION)
-        TIME_STAMP : mml:Integer
+        TIME_STAMP : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=23.0, core=true, t24Name=TIME.STAMP, mask="RDD DDD DD ##.##")
         TXN_CODE -> AC_EntryCreation:RE_TXN_CODE
             @i18n:Label (en="Transaction Code")
@@ -1003,7 +1062,7 @@ Classes {
         @i18n:Description (en="")
         @t24:i (t24Name=CONSOL.ENT.LWORK.DAY, level=F, type=L, allowedFunctions="L P S", localRefAllowed=false)
     {
-        ACCOUNT_OFFICER : mml:Integer
+        ACCOUNT_OFFICER : T24BusinessTypes:N
             @i18n:Label (en="Account Officer")
             @i18n:Tooltip (en="Indicates Account Officer responsible")
             @t24:i (align=R, inputBehaviour=I, maxLength=4, sysNumber=22.0, core=true, t24Name=ACCOUNT.OFFICER)
@@ -1022,7 +1081,7 @@ Classes {
         CURRENCY : T24BusinessTypes:CCY
             @i18n:Label (en=Ccy)
             @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=3.0, core=true, t24Name=CURRENCY)
-        CURRENCY_MARKET : mml:Integer
+        CURRENCY_MARKET : T24BusinessTypes:N
             @i18n:Label (en=Market)
             @t24:i (align=R, inputBehaviour=I, maxLength=1, sysNumber=4.0, core=true, t24Name=CURRENCY.MARKET)
         CUSTOMER -> ST_Customer:CUSTOMER
@@ -1048,9 +1107,6 @@ Classes {
         INT_SPREAD : T24BusinessTypes:A
             @i18n:Label (en="Interest Spread")
             @t24:i (align=L, inputBehaviour=I, maxLength=11, sysNumber=17.0, core=true, t24Name=INT.SPREAD)
-        K_TYPE : T24BusinessTypes:A
-            @i18n:Label (en=Type)
-            @t24:i (align=L, inputBehaviour=N, maxLength=12, sysNumber=5.0, core=true, t24Name=K.TYPE)
         LOCAL_CR : T24BusinessTypes:AMT
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=6.0, core=true, t24Name=LOCAL.CR, typeModifiers="-USD")
         LOCAL_DR : T24BusinessTypes:AMT
@@ -1066,12 +1122,12 @@ Classes {
         PRODUCT -> EB_SystemTables:EB_SYSTEM_ID
             @i18n:Label (en=Product)
             @t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=1.0, core=true, businessType=A, t24Name=PRODUCT)
-        PRODUCT_CATEGORY : mml:Integer
+        PRODUCT_CATEGORY : T24BusinessTypes:N
             @i18n:Label (en="Product Category")
             @t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=20.0, core=true, t24Name=PRODUCT.CATEGORY)
         SUPPRESS_POSITION : AC_EntryCreation:CONSOL_ENT_LWORK_DAY__SUPPRESS_POSITION
             @t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=18.0, core=true, t24Name=SUPPRESS.POSITION)
-        TIME_STAMP : mml:Integer
+        TIME_STAMP : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=23.0, core=true, t24Name=TIME.STAMP, mask="RDD DDD DD ##.##")
         TXN_CODE -> AC_EntryCreation:RE_TXN_CODE
             @i18n:Label (en="Transaction Code")
@@ -1092,7 +1148,7 @@ Classes {
         @i18n:Description (en="")
         @t24:i (t24Name=CONSOL.ENT.TODAY, level=F, type=L, allowedFunctions="L P S", localRefAllowed=false)
     {
-        ACCOUNT_OFFICER : mml:Integer
+        ACCOUNT_OFFICER : T24BusinessTypes:N
             @i18n:Label (en="Account Officer")
             @i18n:Tooltip (en="Indicates Account Officer responsible")
             @t24:i (align=R, inputBehaviour=I, maxLength=4, sysNumber=22.0, core=true, t24Name=ACCOUNT.OFFICER)
@@ -1111,7 +1167,7 @@ Classes {
         CURRENCY : T24BusinessTypes:CCY
             @i18n:Label (en=Ccy)
             @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=3.0, core=true, t24Name=CURRENCY)
-        CURRENCY_MARKET : mml:Integer
+        CURRENCY_MARKET : T24BusinessTypes:N
             @i18n:Label (en=Market)
             @t24:i (align=R, inputBehaviour=I, maxLength=1, sysNumber=4.0, core=true, t24Name=CURRENCY.MARKET)
         CUSTOMER -> ST_Customer:CUSTOMER
@@ -1137,9 +1193,6 @@ Classes {
         INT_SPREAD : T24BusinessTypes:A
             @i18n:Label (en="Interest Spread")
             @t24:i (align=L, inputBehaviour=I, maxLength=11, sysNumber=17.0, core=true, t24Name=INT.SPREAD)
-        K_TYPE : T24BusinessTypes:A
-            @i18n:Label (en=Type)
-            @t24:i (align=L, inputBehaviour=N, maxLength=12, sysNumber=5.0, core=true, t24Name=K.TYPE)
         LOCAL_CR : T24BusinessTypes:AMT
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=6.0, core=true, t24Name=LOCAL.CR, typeModifiers="-USD")
         LOCAL_DR : T24BusinessTypes:AMT
@@ -1155,14 +1208,14 @@ Classes {
         PRODUCT -> EB_SystemTables:EB_SYSTEM_ID
             @i18n:Label (en=Product)
             @t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=1.0, core=true, businessType=A, t24Name=PRODUCT)
-        PRODUCT_CATEGORY : mml:Integer
+        PRODUCT_CATEGORY : T24BusinessTypes:N
             @i18n:Label (en="Product Category")
             @t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=20.0, core=true, t24Name=PRODUCT.CATEGORY)
         PRODUCT_SORT : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=N, maxLength=2, core=false, t24Name=PRODUCT.SORT, genOperation="PRODUCT[1,2]")
         SUPPRESS_POSITION : AC_EntryCreation:CONSOL_ENT_TODAY__SUPPRESS_POSITION
             @t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=18.0, core=true, t24Name=SUPPRESS.POSITION)
-        TIME_STAMP : mml:Integer
+        TIME_STAMP : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=23.0, core=true, t24Name=TIME.STAMP, mask="RDD DDD DD ##.##")
         TXN_CODE -> AC_EntryCreation:RE_TXN_CODE
             @i18n:Label (en="Transaction Code")
@@ -1258,6 +1311,15 @@ Classes {
         SCHD_AMOUNT : T24BusinessTypes:AMT
             @t24:i (align=R, inputBehaviour=I, maxLength=20, sysNumber=7.0, core=true, t24Name=SCHD.AMOUNT)
     }
+    ENTRY_HOLD
+        @i18n:Description (en="")
+        @t24:i (t24Name=ENTRY.HOLD, level=F, type=T, allowedFunctions="L P S", localRefAllowed=false)
+    {
+        TRANSACTION_REF : T24BusinessTypes:N
+            @i18n:Label (en="Transaction Ref")
+            @i18n:Tooltip (en="Transaction Reference")
+            @t24:i (align=L, inputBehaviour=N, maxLength=16, core=false, t24Name=TRANSACTION.REF, genOperation="@ID[3,99]")
+    }
     PL_CONSOL_UPDATE_WORK
         @i18n:Description (en="")
         @t24:i (t24Name=PL.CONSOL.UPDATE.WORK, level=F, type=L, allowedFunctions="L P S", localRefAllowed=false)
@@ -1322,7 +1384,7 @@ Classes {
         CURRENCY_MARKET -> ST_CurrencyConfig:CURRENCY_MARKET
             @i18n:Label (en=Market)
             @t24:i (align=R, inputBehaviour=I, maxLength=1, sysNumber=20.0, core=true, t24Name=CURRENCY.MARKET)
-        CURR_NO : mml:Integer
+        CURR_NO : T24BusinessTypes:N
             @i18n:Label (en="Curr No")
             @t24:i (align=R, inputBehaviour=I, maxLength=1, sysNumber=29.0, core=true, t24Name=CURR.NO)
         CUSTOMER_ID -> ST_Customer:CUSTOMER
@@ -1331,7 +1393,7 @@ Classes {
             @t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=8.0, core=true, businessType=CUS, t24Name=CUSTOMER.ID)
         DATE_TIME -> byValue AC_EntryCreation:RE_CONSOL_SPEC_ENTRY__DATE_TIME *
             @t24:i (t24Name=DATE.TIME)
-        DEAL_NUMBER : T24BusinessTypes:A
+        DEAL_NUMBER : T24BusinessTypes:A required
             @i18n:Label (en="Deal Number")
             @t24:i (align=L, inputBehaviour=I, maxLength=25, sysNumber=1.0, core=true, t24Name=DEAL.NUMBER)
         DEPARTMENT_CODE -> ST_Config:DEPT_ACCT_OFFICER
@@ -1352,7 +1414,7 @@ Classes {
             @t24:i (align=L, inputBehaviour=N, maxLength=11, core=false, t24Name=MATURITY.DATE, genOperation="NARRATIVE<1,1>")
         NARRATIVE -> byValue AC_EntryCreation:RE_CONSOL_SPEC_ENTRY__NARRATIVE *
             @t24:i (t24Name=NARRATIVE)
-        NEGOTIATED_REF_NUM : mml:Integer
+        NEGOTIATED_REF_NUM : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=15.0, core=true, t24Name=NEGOTIATED.REF.NUM)
         ORIG_LOCAL_EQUIV : T24BusinessTypes:AMT
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=33.0, core=true, t24Name=ORIG.LOCAL.EQUIV)
@@ -1362,7 +1424,7 @@ Classes {
             @t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=17.0, core=true, t24Name=OUR.REFERENCE)
         OVERRIDE -> byValue AC_EntryCreation:RE_CONSOL_SPEC_ENTRY__OVERRIDE *
             @t24:i (t24Name=OVERRIDE)
-        PL_CATEGORY : mml:Integer
+        PL_CATEGORY : T24BusinessTypes:N
             @i18n:Label (en="PL Category")
             @t24:i (align=R, inputBehaviour=I, maxLength=6, sysNumber=7.0, core=true, t24Name=PL.CATEGORY, mask="R##-###")
         POSITION_TYPE -> RE_Config:FX_POS_TYPE
@@ -1413,7 +1475,7 @@ Classes {
             @i18n:Label (en="System id")
             @i18n:Tooltip (en="Shows the system id")
             @t24:i (align=L, inputBehaviour=I, maxLength=4, sysNumber=24.0, core=true, businessType=A, t24Name=SYSTEM.ID)
-        TRANSACTION_CODE -> AC_EntryCreation:RE_TXN_CODE
+        TRANSACTION_CODE -> AC_EntryCreation:RE_TXN_CODE required
             @i18n:Label (en="Transaction Code")
             @i18n:Tooltip (en="Indicates the Transaction Type")
             @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=4.0, core=true, businessType=A, t24Name=TRANSACTION.CODE)
@@ -1494,7 +1556,7 @@ Classes {
         CURRENCY_MARKET -> ST_CurrencyConfig:CURRENCY_MARKET
             @i18n:Label (en=Market)
             @t24:i (align=R, inputBehaviour=I, maxLength=1, sysNumber=20.0, core=true, t24Name=CURRENCY.MARKET)
-        CURR_NO : mml:Integer
+        CURR_NO : T24BusinessTypes:N
             @i18n:Label (en="Curr No")
             @t24:i (align=R, inputBehaviour=I, maxLength=1, sysNumber=29.0, core=true, t24Name=CURR.NO)
         CUSTOMER_ID -> ST_Customer:CUSTOMER
@@ -1503,7 +1565,7 @@ Classes {
             @t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=8.0, core=true, businessType=CUS, t24Name=CUSTOMER.ID)
         DATE_TIME -> byValue AC_EntryCreation:RE_SPEC_ENTRY_DETAIL__DATE_TIME *
             @t24:i (t24Name=DATE.TIME)
-        DEAL_NUMBER : T24BusinessTypes:A
+        DEAL_NUMBER : T24BusinessTypes:A required
             @i18n:Label (en="Deal Number")
             @t24:i (align=L, inputBehaviour=I, maxLength=25, sysNumber=1.0, core=true, t24Name=DEAL.NUMBER)
         DEPARTMENT_CODE -> ST_Config:DEPT_ACCT_OFFICER
@@ -1520,7 +1582,7 @@ Classes {
             @t24:i (t24Name=INPUTTER)
         NARRATIVE -> byValue AC_EntryCreation:RE_SPEC_ENTRY_DETAIL__NARRATIVE *
             @t24:i (t24Name=NARRATIVE)
-        NEGOTIATED_REF_NUM : mml:Integer
+        NEGOTIATED_REF_NUM : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=15.0, core=true, t24Name=NEGOTIATED.REF.NUM)
         ORIG_LOCAL_EQUIV : T24BusinessTypes:AMT
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=33.0, core=true, t24Name=ORIG.LOCAL.EQUIV)
@@ -1530,7 +1592,7 @@ Classes {
             @t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=17.0, core=true, t24Name=OUR.REFERENCE)
         OVERRIDE -> byValue AC_EntryCreation:RE_SPEC_ENTRY_DETAIL__OVERRIDE *
             @t24:i (t24Name=OVERRIDE)
-        PL_CATEGORY : mml:Integer
+        PL_CATEGORY : T24BusinessTypes:N
             @i18n:Label (en="PL Category")
             @t24:i (align=R, inputBehaviour=I, maxLength=6, sysNumber=7.0, core=true, t24Name=PL.CATEGORY, mask="R##-###")
         POSITION_TYPE -> RE_Config:FX_POS_TYPE
@@ -1577,7 +1639,7 @@ Classes {
             @i18n:Label (en="System id")
             @i18n:Tooltip (en="Shows the system id")
             @t24:i (align=L, inputBehaviour=I, maxLength=4, sysNumber=24.0, core=true, businessType=A, t24Name=SYSTEM.ID)
-        TRANSACTION_CODE -> AC_EntryCreation:RE_TXN_CODE
+        TRANSACTION_CODE -> AC_EntryCreation:RE_TXN_CODE required
             @i18n:Label (en="Transaction Code")
             @i18n:Tooltip (en="Indicates the Transaction Type")
             @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=4.0, core=true, businessType=A, t24Name=TRANSACTION.CODE)
@@ -1627,11 +1689,16 @@ Classes {
         @i18n:Description (en="")
         @t24:i (t24Name=RE.SPEC.ENTRY.XREF, level=F, type=T, allowedFunctions="L P S", localRefAllowed=false)
     {
+        DETAIL_ID -> byValue AC_EntryCreation:RE_SPEC_ENTRY_XREF__DETAIL_ID *
+            @t24:i (t24Name=DETAIL.ID)
+        NET_ENTRY -> AC_EntryCreation:RE_SPEC_ENTRY_XREF PK required
+            @t24:i (align=L, inputBehaviour=I, maxLength=90, sysNumber=0.0, core=true, businessType=ANY, t24Name=NET.ENTRY)
+    }
+    RE_SPEC_ENTRY_XREF__DETAIL_ID
+    {
         DETAIL_ID : T24BusinessTypes:A
             @i18n:Label (en=Detail)
             @t24:i (align=L, inputBehaviour=I, maxLength=30, sysNumber=1.0, core=true, t24Name=DETAIL.ID)
-        NET_ENTRY -> AC_EntryCreation:RE_SPEC_ENTRY_XREF PK required
-            @t24:i (align=L, inputBehaviour=I, maxLength=90, sysNumber=0.0, core=true, businessType=ANY, t24Name=NET.ENTRY)
     }
     RE_SPEC_ENT_LWORK_DAY
         @i18n:Description (en="")
@@ -1639,6 +1706,11 @@ Classes {
     {
         CONSOL_KEY_TYPE -> AC_EntryCreation:RE_SPEC_ENT_LWORK_DAY PK required
             @t24:i (align=L, inputBehaviour=I, maxLength=85, sysNumber=0.0, core=true, businessType=A, t24Name=CONSOL.KEY.TYPE)
+        RE_SPEC_ENTRY -> byValue AC_EntryCreation:RE_SPEC_ENT_LWORK_DAY__RE_SPEC_ENTRY *
+            @t24:i (t24Name=RE.SPEC.ENTRY)
+    }
+    RE_SPEC_ENT_LWORK_DAY__RE_SPEC_ENTRY
+    {
         RE_SPEC_ENTRY : T24BusinessTypes:A
             @t24:i (align=L, inputBehaviour=I, maxLength=25, sysNumber=1.0, core=true, t24Name=RE.SPEC.ENTRY)
     }
@@ -1650,6 +1722,11 @@ Classes {
             @t24:i (align=L, inputBehaviour=I, maxLength=85, sysNumber=0.0, core=true, businessType=A, t24Name=CONSOL.KEY.TYPE)
         FIELD_COUNT : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=N, maxLength=2, core=false, t24Name=FIELD.COUNT, genOperation="COUNT(@ID,\".\")")
+        RE_SPEC_ENTRY -> byValue AC_EntryCreation:RE_SPEC_ENT_TODAY__RE_SPEC_ENTRY *
+            @t24:i (t24Name=RE.SPEC.ENTRY)
+    }
+    RE_SPEC_ENT_TODAY__RE_SPEC_ENTRY
+    {
         RE_SPEC_ENTRY : T24BusinessTypes:A
             @t24:i (align=L, inputBehaviour=I, maxLength=25, sysNumber=1.0, core=true, t24Name=RE.SPEC.ENTRY)
     }
@@ -1724,7 +1801,7 @@ Classes {
     }
     RE_TXN_CODE__DESCRIPTION
     {
-        DESCRIPTION : T24BusinessTypes:SS
+        DESCRIPTION : T24BusinessTypes:SS required
             @i18n:Label (en=Description)
             @i18n:Tooltip (en=Description)
             @t24:i (align=L, inputBehaviour=I, maxLength=35, multiLanguage=true, sysNumber=1.0, core=true, t24Name=DESCRIPTION)
@@ -1738,7 +1815,7 @@ Classes {
     }
     RE_TXN_CODE__SHORT_DESC
     {
-        SHORT_DESC : T24BusinessTypes:SS
+        SHORT_DESC : T24BusinessTypes:SS required
             @i18n:Label (en="Short Description")
             @i18n:Tooltip (en="Short Description of the record")
             @t24:i (align=L, inputBehaviour=I, maxLength=20, multiLanguage=true, sysNumber=2.0, core=true, t24Name=SHORT.DESC)
@@ -1898,6 +1975,8 @@ Classes {
         DEPARTMENT_CODE -> ST_Config:DEPT_ACCT_OFFICER
             @i18n:Label (en="Department Code")
             @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=22.0, core=true, t24Name=DEPARTMENT.CODE)
+        DO_CREDIT_CHECK : AC_EntryCreation:STMT_ENTRY__DO_CREDIT_CHECK
+            @t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=80.0, core=true, t24Name=DO.CREDIT.CHECK)
         DRAFT_PAYEE_NAME : T24BusinessTypes:A
             @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=107.0, core=true, t24Name=DRAFT.PAYEE.NAME)
         DRAWN_ACCOUNT -> AC_AccountOpening:ACCOUNT
@@ -1951,7 +2030,7 @@ Classes {
             @t24:i (align=R, inputBehaviour=N, maxLength=2, core=false, t24Name=MAX.HISTORY.MONTHS)
         NARRATIVE -> byValue AC_EntryCreation:STMT_ENTRY__NARRATIVE *
             @t24:i (t24Name=NARRATIVE)
-        NEGOTIATED_REF_NUM : mml:Integer
+        NEGOTIATED_REF_NUM : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=15.0, core=true, t24Name=NEGOTIATED.REF.NUM)
         NET_PARAM : T24BusinessTypes:ANY
             @t24:i (align=L, inputBehaviour=I, maxLength=40, sysNumber=91.0, core=true, t24Name=NET.PARAM)
@@ -1968,7 +2047,7 @@ Classes {
             @t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=57.0, core=true, t24Name=ORIGINAL.EXCH.RATE)
         ORIG_AMOUNT_LCY : T24BusinessTypes:AMT
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=60.0, core=true, t24Name=ORIG.AMOUNT.LCY, typeModifiers="-USD")
-        ORIG_CCY_MARKET : mml:Integer
+        ORIG_CCY_MARKET : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=1, sysNumber=104.0, core=true, t24Name=ORIG.CCY.MARKET)
         ORIG_LOCAL_EQUIV : T24BusinessTypes:AMT
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=53.0, core=true, t24Name=ORIG.LOCAL.EQUIV)
@@ -1994,6 +2073,8 @@ Classes {
             @i18n:Label (en="Position Type")
             @i18n:Tooltip (en="Position Type")
             @t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=16.0, core=true, businessType=A, t24Name=POSITION.TYPE)
+        POSTING_TYPE : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=81.0, core=true, t24Name=POSTING.TYPE)
         POS_EXP_DATE : T24BusinessTypes:D
             @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=70.0, core=true, t24Name=POS.EXP.DATE)
         PROCESSING_DATE : T24BusinessTypes:D
@@ -2021,10 +2102,6 @@ Classes {
             @t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=78.0, core=true, t24Name=RESERVED.11)
         RESERVED_12 : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=79.0, core=true, t24Name=RESERVED.12)
-        RESERVED_13 : T24BusinessTypes:N
-            @t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=80.0, core=true, t24Name=RESERVED.13)
-        RESERVED_14 : T24BusinessTypes:N
-            @t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=81.0, core=true, t24Name=RESERVED.14)
         REVERSAL_MARKER : AC_EntryCreation:STMT_ENTRY__REVERSAL_MARKER
             @i18n:Label (en="Rev Marker")
             @t24:i (align=L, inputBehaviour=I, maxLength=1, sysNumber=18.0, core=true, t24Name=REVERSAL.MARKER)
@@ -2078,7 +2155,7 @@ Classes {
         TRADE_DATE : T24BusinessTypes:D
             @i18n:Label (en="Trade Date")
             @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=99.0, core=true, t24Name=TRADE.DATE)
-        TRANSACTION_CODE -> ST_Config:TRANSACTION
+        TRANSACTION_CODE -> ST_Config:TRANSACTION required
             @i18n:Label (en="Transaction Code")
             @i18n:Tooltip (en="Indicates the Transaction Type")
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=4.0, core=true, t24Name=TRANSACTION.CODE)
@@ -2218,6 +2295,8 @@ Classes {
         DEPARTMENT_CODE -> ST_Config:DEPT_ACCT_OFFICER
             @i18n:Label (en="Department Code")
             @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=22.0, core=true, t24Name=DEPARTMENT.CODE)
+        DO_CREDIT_CHECK : AC_EntryCreation:STMT_ENTRY_DETAIL__DO_CREDIT_CHECK
+            @t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=80.0, core=true, t24Name=DO.CREDIT.CHECK)
         DRAFT_PAYEE_NAME : T24BusinessTypes:A
             @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=107.0, core=true, t24Name=DRAFT.PAYEE.NAME)
         DRAWN_ACCOUNT -> AC_AccountOpening:ACCOUNT
@@ -2250,7 +2329,7 @@ Classes {
             @t24:i (align=L, inputBehaviour=I, maxLength=19, sysNumber=92.0, core=true, t24Name=MASTER.ACCOUNT)
         NARRATIVE -> byValue AC_EntryCreation:STMT_ENTRY_DETAIL__NARRATIVE *
             @t24:i (t24Name=NARRATIVE)
-        NEGOTIATED_REF_NUM : mml:Integer
+        NEGOTIATED_REF_NUM : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=15.0, core=true, t24Name=NEGOTIATED.REF.NUM)
         NET_PARAM : T24BusinessTypes:ANY
             @t24:i (align=L, inputBehaviour=I, maxLength=40, sysNumber=91.0, core=true, t24Name=NET.PARAM)
@@ -2265,7 +2344,7 @@ Classes {
             @t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=57.0, core=true, t24Name=ORIGINAL.EXCH.RATE)
         ORIG_AMOUNT_LCY : T24BusinessTypes:AMT
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=60.0, core=true, t24Name=ORIG.AMOUNT.LCY, typeModifiers="-USD")
-        ORIG_CCY_MARKET : mml:Integer
+        ORIG_CCY_MARKET : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=1, sysNumber=104.0, core=true, t24Name=ORIG.CCY.MARKET)
         ORIG_LOCAL_EQUIV : T24BusinessTypes:AMT
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=53.0, core=true, t24Name=ORIG.LOCAL.EQUIV)
@@ -2289,6 +2368,8 @@ Classes {
             @i18n:Label (en="Position Type")
             @i18n:Tooltip (en="Position Type")
             @t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=16.0, core=true, businessType=A, t24Name=POSITION.TYPE)
+        POSTING_TYPE : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=81.0, core=true, t24Name=POSTING.TYPE)
         POS_EXP_DATE : T24BusinessTypes:D
             @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=70.0, core=true, t24Name=POS.EXP.DATE)
         PROCESSING_DATE : T24BusinessTypes:D
@@ -2316,10 +2397,6 @@ Classes {
             @t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=78.0, core=true, t24Name=RESERVED.11)
         RESERVED_12 : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=79.0, core=true, t24Name=RESERVED.12)
-        RESERVED_13 : T24BusinessTypes:N
-            @t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=80.0, core=true, t24Name=RESERVED.13)
-        RESERVED_14 : T24BusinessTypes:N
-            @t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=81.0, core=true, t24Name=RESERVED.14)
         REVERSAL_MARKER : AC_EntryCreation:STMT_ENTRY_DETAIL__REVERSAL_MARKER
             @i18n:Label (en="Rev Marker")
             @t24:i (align=L, inputBehaviour=I, maxLength=1, sysNumber=18.0, core=true, t24Name=REVERSAL.MARKER)
@@ -2354,7 +2431,7 @@ Classes {
         TRADE_DATE : T24BusinessTypes:D
             @i18n:Label (en="Trade Date")
             @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=99.0, core=true, t24Name=TRADE.DATE)
-        TRANSACTION_CODE -> ST_Config:TRANSACTION
+        TRANSACTION_CODE -> ST_Config:TRANSACTION required
             @i18n:Label (en="Transaction Code")
             @i18n:Tooltip (en="Indicates the Transaction Type")
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=4.0, core=true, t24Name=TRANSACTION.CODE)
@@ -2370,11 +2447,16 @@ Classes {
         @i18n:Description (en="")
         @t24:i (t24Name=STMT.ENTRY.DETAIL.XREF, level=F, type=T, allowedFunctions="L P S", localRefAllowed=false)
     {
+        DETAIL_ID -> byValue AC_EntryCreation:STMT_ENTRY_DETAIL_XREF__DETAIL_ID *
+            @t24:i (t24Name=DETAIL.ID)
+        NET_ENTRY -> AC_EntryCreation:STMT_ENTRY_DETAIL_XREF PK required
+            @t24:i (align=L, inputBehaviour=I, maxLength=90, sysNumber=0.0, core=true, businessType=ANY, t24Name=NET.ENTRY)
+    }
+    STMT_ENTRY_DETAIL_XREF__DETAIL_ID
+    {
         DETAIL_ID : T24BusinessTypes:A
             @i18n:Label (en=Detail)
             @t24:i (align=L, inputBehaviour=I, maxLength=30, sysNumber=1.0, core=true, t24Name=DETAIL.ID)
-        NET_ENTRY -> AC_EntryCreation:STMT_ENTRY_DETAIL_XREF PK required
-            @t24:i (align=L, inputBehaviour=I, maxLength=90, sysNumber=0.0, core=true, businessType=ANY, t24Name=NET.ENTRY)
     }
     STMT_ENTRY_DETAIL__ACCRUAL_DATA
     {
@@ -2408,7 +2490,7 @@ Classes {
     }
     STMT_ENTRY_DETAIL__CARD_TXN_DETAIL
     {
-        CARD_TXN_DETAIL : mml:Integer
+        CARD_TXN_DETAIL : T24BusinessTypes:N
             @i18n:Label (en="Card Txn Detail")
             @t24:i (align=R, inputBehaviour=I, maxLength=25, sysNumber=106.0, core=true, t24Name=CARD.TXN.DETAIL)
     }
@@ -2515,7 +2597,7 @@ Classes {
     }
     STMT_ENTRY__CARD_TXN_DETAIL
     {
-        CARD_TXN_DETAIL : mml:Integer
+        CARD_TXN_DETAIL : T24BusinessTypes:N
             @i18n:Label (en="Card Txn Detail")
             @t24:i (align=R, inputBehaviour=I, maxLength=25, sysNumber=106.0, core=true, t24Name=CARD.TXN.DETAIL)
     }
@@ -2598,18 +2680,53 @@ Classes {
             @i18n:Label (en="Link Reference")
             @i18n:Tooltip (en="Transaction link reference of the contract")
             @t24:i (align=L, inputBehaviour=I, maxLength=12, sysNumber=0.0, core=true, businessType=A, t24Name=LINK.REFERENCE)
+        RESERVED_1 -> byValue AC_EntryCreation:TRANS_LINK_REFERENCE__RESERVED_1 *
+            @t24:i (t24Name=RESERVED.1)
+        RESERVED_2 -> byValue AC_EntryCreation:TRANS_LINK_REFERENCE__RESERVED_2 *
+            @t24:i (t24Name=RESERVED.2)
+        RESERVED_3 -> byValue AC_EntryCreation:TRANS_LINK_REFERENCE__RESERVED_3 *
+            @t24:i (t24Name=RESERVED.3)
+        RESERVED_4 -> byValue AC_EntryCreation:TRANS_LINK_REFERENCE__RESERVED_4 *
+            @t24:i (t24Name=RESERVED.4)
+        RESERVED_5 -> byValue AC_EntryCreation:TRANS_LINK_REFERENCE__RESERVED_5 *
+            @t24:i (t24Name=RESERVED.5)
+        RESERVED_6 -> byValue AC_EntryCreation:TRANS_LINK_REFERENCE__RESERVED_6 *
+            @t24:i (t24Name=RESERVED.6)
+        TRANSACTION_REF -> byValue AC_EntryCreation:TRANS_LINK_REFERENCE__TRANSACTION_REF *
+            @t24:i (t24Name=TRANSACTION.REF)
+    }
+    TRANS_LINK_REFERENCE__RESERVED_1
+    {
         RESERVED_1 : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=7.0, core=true, t24Name=RESERVED.1)
+    }
+    TRANS_LINK_REFERENCE__RESERVED_2
+    {
         RESERVED_2 : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=6.0, core=true, t24Name=RESERVED.2)
+    }
+    TRANS_LINK_REFERENCE__RESERVED_3
+    {
         RESERVED_3 : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=5.0, core=true, t24Name=RESERVED.3)
+    }
+    TRANS_LINK_REFERENCE__RESERVED_4
+    {
         RESERVED_4 : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=4.0, core=true, t24Name=RESERVED.4)
+    }
+    TRANS_LINK_REFERENCE__RESERVED_5
+    {
         RESERVED_5 : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=3.0, core=true, t24Name=RESERVED.5)
+    }
+    TRANS_LINK_REFERENCE__RESERVED_6
+    {
         RESERVED_6 : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=2.0, core=true, t24Name=RESERVED.6)
+    }
+    TRANS_LINK_REFERENCE__TRANSACTION_REF
+    {
         TRANSACTION_REF : T24BusinessTypes:A
             @i18n:Label (en="Transaction Ref")
             @i18n:Tooltip (en="Transaction Reference")
@@ -2649,6 +2766,10 @@ Enumerations {
     RE_TXN_CODE__REVERSAL_MARKER : mml:string
         NO=NO
         YES=YES
+    STMT_ENTRY_DETAIL__DO_CREDIT_CHECK : mml:string
+        NO=NO
+        NULL=NULL
+        YES=YES
     STMT_ENTRY_DETAIL__MASK_PRINT : mml:string
         NO=NO
         NULL=NULL
@@ -2659,6 +2780,10 @@ Enumerations {
         R=R
     STMT_ENTRY__APPL_DRILLDOWN : mml:string
         NO=NO
+        YES=YES
+    STMT_ENTRY__DO_CREDIT_CHECK : mml:string
+        NO=NO
+        NULL=NULL
         YES=YES
     STMT_ENTRY__INCL_SUB_ACCT : mml:string
         NO=NO

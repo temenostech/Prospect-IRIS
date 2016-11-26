@@ -10,6 +10,19 @@ Classes {
         @i18n:Description (en="")
         @t24:i (t24Name=POR.ACCOUNTINFO, level=I, type=L, allowedFunctions="L P S", localRefAllowed=false)
     {
+        CompanyID : T24BusinessTypes:A required
+            @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=1.0, core=true, t24Name=CompanyID)
+        FTNumber : T24BusinessTypes:A required
+            @t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=2.0, core=true, t24Name=FTNumber)
+        ID -> PP_DebitPartyDeterminationService:POR_ACCOUNTINFO PK required
+            @i18n:Label (en="Transaction Ref")
+            @i18n:Tooltip (en="Transaction Reference")
+            @t24:i (align=L, inputBehaviour=I, maxLength=255, sysNumber=0.0, core=true, businessType=A, t24Name=ID)
+        MainOrChargeAccountType -> byValue PP_DebitPartyDeterminationService:POR_ACCOUNTINFO__MainOrChargeAccountType *
+            @t24:i (t24Name=MainOrChargeAccountType)
+    }
+    POR_ACCOUNTINFO__MainOrChargeAccountType
+    {
         AccountCompanyID : T24BusinessTypes:A
             @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=4.0, core=true, t24Name=AccountCompanyID)
         AccountCurrency : T24BusinessTypes:A
@@ -26,8 +39,6 @@ Classes {
             @t24:i (align=L, inputBehaviour=I, maxLength=10, sysNumber=24.0, core=true, t24Name=BookCode)
         BusinessLine : T24BusinessTypes:A
             @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=20.0, core=true, t24Name=BusinessLine)
-        CompanyID : T24BusinessTypes:A
-            @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=1.0, core=true, t24Name=CompanyID)
         CreditPostingRestrictionCode : T24BusinessTypes:A
             @t24:i (align=L, inputBehaviour=I, maxLength=10, sysNumber=11.0, core=true, t24Name=CreditPostingRestrictionCode)
         CreditPostingRestrictionDesc : T24BusinessTypes:A
@@ -56,26 +67,29 @@ Classes {
             @t24:i (align=L, inputBehaviour=I, maxLength=128, sysNumber=10.0, core=true, t24Name=DebitPostingRestrictionDesc)
         ErrorCode : T24BusinessTypes:A
             @t24:i (align=L, inputBehaviour=I, maxLength=10, sysNumber=25.0, core=true, t24Name=ErrorCode)
-        FTNumber : T24BusinessTypes:A
-            @t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=2.0, core=true, t24Name=FTNumber)
-        ID -> PP_DebitPartyDeterminationService:POR_ACCOUNTINFO PK required
-            @i18n:Label (en="Transaction Ref")
-            @i18n:Tooltip (en="Transaction Reference")
-            @t24:i (align=L, inputBehaviour=I, maxLength=255, sysNumber=0.0, core=true, businessType=A, t24Name=ID)
         IdentifierCode : T24BusinessTypes:A
             @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=28.0, core=true, t24Name=IdentifierCode)
-        MainOrChargeAccountType : T24BusinessTypes:A
+        MainOrChargeAccountType : T24BusinessTypes:A required
             @t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=3.0, core=true, t24Name=MainOrChargeAccountType)
+        OtherRestrictionType -> byValue PP_DebitPartyDeterminationService:POR_ACCOUNTINFO__MainOrChargeAccountType__OtherRestrictionType *
+            @t24:i (t24Name=OtherRestrictionType)
         RelatedIBAN : T24BusinessTypes:A
             @t24:i (align=L, inputBehaviour=I, maxLength=34, sysNumber=23.0, core=true, t24Name=RelatedIBAN)
         SectorCode : T24BusinessTypes:A
             @t24:i (align=L, inputBehaviour=I, maxLength=4, sysNumber=21.0, core=true, t24Name=SectorCode)
     }
+    POR_ACCOUNTINFO__MainOrChargeAccountType__OtherRestrictionType
+    {
+        OtherRestrictionDesc : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=I, maxLength=50, sysNumber=30.0, core=true, t24Name=OtherRestrictionDesc)
+        OtherRestrictionType : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=I, maxLength=1, sysNumber=29.0, core=true, t24Name=OtherRestrictionType)
+    }
     POR_OTHERACCOUNTRESTRICTIONS
         @i18n:Description (en="")
         @t24:i (t24Name=POR.OTHERACCOUNTRESTRICTIONS, level=I, type=L, allowedFunctions="L P S", localRefAllowed=false)
     {
-        AccountInfoID : T24BusinessTypes:A
+        AccountInfoID : T24BusinessTypes:A required
             @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=1.0, core=true, t24Name=AccountInfoID)
         ID -> PP_DebitPartyDeterminationService:POR_OTHERACCOUNTRESTRICTIONS PK required
             @i18n:Label (en="Transaction Ref")
@@ -95,8 +109,19 @@ Classes {
         @i18n:Description (en="")
         @t24:i (t24Name=POR.PARTYDEBIT, level=I, type=L, allowedFunctions="L P S", localRefAllowed=false)
     {
-        CompanyID : T24BusinessTypes:A
+        CompanyID : T24BusinessTypes:A required
             @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=1.0, core=true, t24Name=CompanyID)
+        DebitPartyRole -> byValue PP_DebitPartyDeterminationService:POR_PARTYDEBIT__DebitPartyRole *
+            @t24:i (t24Name=DebitPartyRole)
+        FTNumber : T24BusinessTypes:A required
+            @t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=2.0, core=true, t24Name=FTNumber)
+        ID -> PP_DebitPartyDeterminationService:POR_PARTYDEBIT PK required
+            @i18n:Label (en="Transaction Ref")
+            @i18n:Tooltip (en="Transaction Reference")
+            @t24:i (align=L, inputBehaviour=I, maxLength=255, sysNumber=0.0, core=true, businessType=A, t24Name=ID)
+    }
+    POR_PARTYDEBIT__DebitPartyRole
+    {
         DebitPartyAccountLine : T24BusinessTypes:A
             @t24:i (align=L, inputBehaviour=I, maxLength=37, sysNumber=8.0, core=true, t24Name=DebitPartyAccountLine)
         DebitPartyAddressLine1 : T24BusinessTypes:A
@@ -145,15 +170,9 @@ Classes {
             @t24:i (align=L, inputBehaviour=I, maxLength=4, sysNumber=26.0, core=true, t24Name=DebitPartyPrvIdOtherSchCode)
         DebitPartyPrvIdOtherSchProp : T24BusinessTypes:A
             @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=27.0, core=true, t24Name=DebitPartyPrvIdOtherSchProp)
-        DebitPartyRole : T24BusinessTypes:A
+        DebitPartyRole : T24BusinessTypes:A required
             @t24:i (align=L, inputBehaviour=I, maxLength=6, sysNumber=3.0, core=true, t24Name=DebitPartyRole)
-        DebitPartyRoleIndicator : T24BusinessTypes:A
+        DebitPartyRoleIndicator : T24BusinessTypes:A required
             @t24:i (align=L, inputBehaviour=I, maxLength=1, sysNumber=4.0, core=true, t24Name=DebitPartyRoleIndicator)
-        FTNumber : T24BusinessTypes:A
-            @t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=2.0, core=true, t24Name=FTNumber)
-        ID -> PP_DebitPartyDeterminationService:POR_PARTYDEBIT PK required
-            @i18n:Label (en="Transaction Ref")
-            @i18n:Tooltip (en="Transaction Reference")
-            @t24:i (align=L, inputBehaviour=I, maxLength=255, sysNumber=0.0, core=true, businessType=A, t24Name=ID)
     }
 }

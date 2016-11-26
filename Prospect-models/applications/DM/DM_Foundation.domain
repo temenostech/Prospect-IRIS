@@ -94,10 +94,10 @@ Classes {
         SIG_DATE : T24BusinessTypes:D
             @i18n:Label (en="Sig date")
             @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=6.0, core=true, t24Name=SIG.DATE)
-        STATUS -> DM_Foundation:DOCUMENT_STATUS
+        STATUS -> DM_Foundation:DOCUMENT_STATUS required
             @i18n:Label (en=Status)
             @t24:i (align=L, inputBehaviour=I, maxLength=10, sysNumber=3.0, core=true, businessType=A, t24Name=STATUS)
-        STATUS_DATE : T24BusinessTypes:D
+        STATUS_DATE : T24BusinessTypes:D required
             @i18n:Label (en="Status Date")
             @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=4.0, core=true, t24Name=STATUS.DATE, typeModifiers=1000)
         STAT_DETAILS -> byValue DM_Foundation:CUST_DOCUMENT__STAT_DETAILS *
@@ -151,7 +151,7 @@ Classes {
         @i18n:Description (en="")
         @t24:i (t24Name=DM.APPLICATION.INFO, level=F, type=H, allowedFunctions="A C D E H I L P Q R S", localRefAllowed=false)
     {
-        APPLN_MNEMONIC : T24BusinessTypes:MNE
+        APPLN_MNEMONIC : T24BusinessTypes:MNE required
             @t24:i (align=L, inputBehaviour=F, maxLength=4, sysNumber=1.0, core=true, t24Name=APPLN.MNEMONIC)
         AUDITOR_CODE : T24BusinessTypes:A
             @i18n:Label (en="Auditor Code")
@@ -236,8 +236,8 @@ Classes {
             @i18n:Label (en="Customer No")
             @i18n:Tooltip (en="Identifies the Customer for the transaction.")
             @t24:i (align=L, inputBehaviour=I, maxLength=10, sysNumber=0.0, core=true, businessType=A, t24Name=CUSTOMER.NO)
-        DOCUMENT : T24BusinessTypes:A
-            @t24:i (align=L, inputBehaviour=I, maxLength=25, sysNumber=1.0, core=true, t24Name=DOCUMENT)
+        DOCUMENT -> byValue DM_Foundation:DM_CUST_DOC_DETAILS__DOCUMENT *
+            @t24:i (t24Name=DOCUMENT)
         END_DATE : T24BusinessTypes:N
             @i18n:Label (en="End Date")
             @i18n:Tooltip (en="End Date")
@@ -245,6 +245,11 @@ Classes {
         STATUS : T24BusinessTypes:N
             @i18n:Label (en=Status)
             @t24:i (align=L, inputBehaviour=N, maxLength=3, core=false, t24Name=STATUS, genOperation="DOCUMENT>CUST.DOCUMENT>STATUS")
+    }
+    DM_CUST_DOC_DETAILS__DOCUMENT
+    {
+        DOCUMENT : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=I, maxLength=25, sysNumber=1.0, core=true, t24Name=DOCUMENT)
     }
     DM_DOCUMENTS_TRACKED
         @i18n:Description (en="")
@@ -261,11 +266,16 @@ Classes {
             @t24:i (align=R, inputBehaviour=N, maxLength=11, core=false, t24Name=DATE, genOperation="FIELD(DM.TRACK.ID,\'*\',1)")
         DM_TRACK_ID -> DM_Foundation:DM_DOCUMENTS_TRACKED PK required
             @t24:i (align=L, inputBehaviour=I, maxLength=45, sysNumber=0.0, core=true, businessType=A, t24Name=DM.TRACK.ID)
-        DOCUMENT : T24BusinessTypes:A
-            @t24:i (align=L, inputBehaviour=I, maxLength=56, sysNumber=1.0, core=true, t24Name=DOCUMENT)
+        DOCUMENT -> byValue DM_Foundation:DM_DOCUMENTS_TRACKED__DOCUMENT *
+            @t24:i (t24Name=DOCUMENT)
         TRANSACTION_ID : T24BusinessTypes:A
             @i18n:Label (en="Transaction ID")
             @t24:i (align=L, inputBehaviour=N, maxLength=25, core=false, t24Name=TRANSACTION.ID, genOperation="FIELD(DM.TRACK.ID,\'*\',3,1)")
+    }
+    DM_DOCUMENTS_TRACKED__DOCUMENT
+    {
+        DOCUMENT : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=I, maxLength=56, sysNumber=1.0, core=true, t24Name=DOCUMENT)
     }
     DM_TRANS_DOC_DETAILS
         @i18n:Description (en="")
@@ -283,11 +293,16 @@ Classes {
             @i18n:Label (en=Customer)
             @i18n:Tooltip (en="Customer Liability")
             @t24:i (align=L, inputBehaviour=N, maxLength=20, core=false, t24Name=CUSTOMER, genOperation="FIELD(DOCUMENT,\'*\',1)")
-        DOCUMENT : T24BusinessTypes:A
-            @t24:i (align=L, inputBehaviour=I, maxLength=56, sysNumber=1.0, core=true, t24Name=DOCUMENT)
+        DOCUMENT -> byValue DM_Foundation:DM_TRANS_DOC_DETAILS__DOCUMENT *
+            @t24:i (t24Name=DOCUMENT)
         DOCUMENT_TYPE : T24BusinessTypes:N
             @i18n:Label (en="Document Type")
             @t24:i (align=L, inputBehaviour=N, maxLength=10, core=false, t24Name=DOCUMENT.TYPE, genOperation="FIELD(DOCUMENT,\'*\',4,1)")
+    }
+    DM_TRANS_DOC_DETAILS__DOCUMENT
+    {
+        DOCUMENT : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=I, maxLength=56, sysNumber=1.0, core=true, t24Name=DOCUMENT)
     }
     DOCUMENT_CLASS
         @i18n:Description (en="")
@@ -353,7 +368,7 @@ Classes {
     }
     DOCUMENT_CLASS__DESCRIPTION
     {
-        DESCRIPTION : T24BusinessTypes:A
+        DESCRIPTION : T24BusinessTypes:A required
             @i18n:Label (en=Description)
             @i18n:Tooltip (en=Description)
             @t24:i (align=L, inputBehaviour=I, maxLength=35, multiLanguage=true, sysNumber=1.0, core=true, t24Name=DESCRIPTION)
@@ -381,7 +396,7 @@ Classes {
             @i18n:Label (en=Authoriser)
             @i18n:Tooltip (en="Indicates the User who Authorises the record")
             @t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=24.0, core=true, t24Name=AUTHORISER)
-        CHECK_CUST_LEVEL : DM_Foundation:DOCUMENT_REQUIRED__CHECK_CUST_LEVEL
+        CHECK_CUST_LEVEL : DM_Foundation:DOCUMENT_REQUIRED__CHECK_CUST_LEVEL required
             @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=1.0, core=true, t24Name=CHECK.CUST.LEVEL)
         CO_CODE -> ST_CompanyCreation:COMPANY
             @i18n:Label (en=Company)
@@ -521,7 +536,7 @@ Classes {
             @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=6.0, core=true, t24Name=RESERVED8)
         RESERVED9 : T24BusinessTypes:A
             @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=5.0, core=true, t24Name=RESERVED9)
-        VALID : DM_Foundation:DOCUMENT_STATUS__VALID
+        VALID : DM_Foundation:DOCUMENT_STATUS__VALID required
             @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=2.0, core=true, t24Name=VALID)
         VALID_PERIOD : T24BusinessTypes:S
             @t24:i (align=L, inputBehaviour=I, maxLength=5, sysNumber=3.0, core=true, t24Name=VALID.PERIOD)
@@ -535,7 +550,7 @@ Classes {
     }
     DOCUMENT_STATUS__DESCRIPTION
     {
-        DESCRIPTION : T24BusinessTypes:A
+        DESCRIPTION : T24BusinessTypes:A required
             @i18n:Label (en=Description)
             @i18n:Tooltip (en=Description)
             @t24:i (align=L, inputBehaviour=I, maxLength=35, multiLanguage=true, sysNumber=1.0, core=true, t24Name=DESCRIPTION)
@@ -563,12 +578,12 @@ Classes {
             @i18n:Label (en=Authoriser)
             @i18n:Tooltip (en="Indicates the User who Authorises the record")
             @t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=30.0, core=true, t24Name=AUTHORISER)
-        BEGIN_DATE : T24BusinessTypes:D
+        BEGIN_DATE : T24BusinessTypes:D required
             @i18n:Label (en="Begin Date")
             @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=4.0, core=true, t24Name=BEGIN.DATE)
-        CLASS -> DM_Foundation:DOCUMENT_CLASS
+        CLASS -> DM_Foundation:DOCUMENT_CLASS required
             @t24:i (align=L, inputBehaviour=I, maxLength=10, sysNumber=2.0, core=true, businessType=SSS, t24Name=CLASS)
-        CONTRACT_SPECIFIC : DM_Foundation:DOCUMENT_TYPE__CONTRACT_SPECIFIC
+        CONTRACT_SPECIFIC : DM_Foundation:DOCUMENT_TYPE__CONTRACT_SPECIFIC required
             @t24:i (align=L, inputBehaviour=F, maxLength=3, sysNumber=11.0, core=true, t24Name=CONTRACT.SPECIFIC)
         CO_CODE -> ST_CompanyCreation:COMPANY
             @i18n:Label (en=Company)
@@ -645,7 +660,7 @@ Classes {
     }
     DOCUMENT_TYPE__DESCRIPTION
     {
-        DESCRIPTION : T24BusinessTypes:A
+        DESCRIPTION : T24BusinessTypes:A required
             @i18n:Label (en=Description)
             @i18n:Tooltip (en=Description)
             @t24:i (align=L, inputBehaviour=I, maxLength=35, multiLanguage=true, sysNumber=1.0, core=true, t24Name=DESCRIPTION)
@@ -719,7 +734,7 @@ Classes {
             @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=10.0, core=true, t24Name=RESERVED7)
         RESERVED8 : T24BusinessTypes:A
             @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=9.0, core=true, t24Name=RESERVED8)
-        SCAN_ALL_GROUP : DM_Foundation:DOC_GEN_CONDITION__SCAN_ALL_GROUP
+        SCAN_ALL_GROUP : DM_Foundation:DOC_GEN_CONDITION__SCAN_ALL_GROUP required
             @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=1.0, core=true, t24Name=SCAN.ALL.GROUP)
     }
     DOC_GEN_CONDITION__DATE_TIME
@@ -737,7 +752,7 @@ Classes {
             @i18n:Label (en=Description)
             @i18n:Tooltip (en=Description)
             @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=8.0, core=true, t24Name=DESCRIPTION)
-        DOC_GROUP : T24BusinessTypes:N
+        DOC_GROUP : T24BusinessTypes:N required
             @t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=2.0, core=true, t24Name=DOC.GROUP)
     }
     DOC_GEN_CONDITION__DOC_GROUP__DECISN_FIELD
@@ -766,11 +781,16 @@ Classes {
         @i18n:Description (en="")
         @t24:i (t24Name=MNEMONIC.APPLN, level=F, type=T, allowedFunctions="L P S", localRefAllowed=false)
     {
+        APPLICATION_ID -> byValue DM_Foundation:MNEMONIC_APPLN__APPLICATION_ID *
+            @t24:i (t24Name=APPLICATION.ID)
+        MNEMONIC_ID -> DM_Foundation:MNEMONIC_APPLN PK required
+            @t24:i (align=L, inputBehaviour=I, maxLength=4, sysNumber=0.0, core=true, businessType=A, t24Name=MNEMONIC.ID)
+    }
+    MNEMONIC_APPLN__APPLICATION_ID
+    {
         APPLICATION_ID : T24BusinessTypes:A
             @i18n:Label (en="Application Id")
             @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=1.0, core=true, t24Name=APPLICATION.ID)
-        MNEMONIC_ID -> DM_Foundation:MNEMONIC_APPLN PK required
-            @t24:i (align=L, inputBehaviour=I, maxLength=4, sysNumber=0.0, core=true, businessType=A, t24Name=MNEMONIC.ID)
     }
     TRANS_DOCUMENT
         @i18n:Description (en="")

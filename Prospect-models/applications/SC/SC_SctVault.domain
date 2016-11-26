@@ -26,7 +26,7 @@ Classes {
             @i18n:Label (en="Certificate No")
             @i18n:Tooltip (en="Certificate ")
             @t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=0.0, core=true, businessType=S, t24Name=CERTIFICATE)
-        CERTIFICATE_NO : T24BusinessTypes:A
+        CERTIFICATE_NO : T24BusinessTypes:A required
             @i18n:Label (en="Certificate No")
             @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=1.0, core=true, t24Name=CERTIFICATE.NO)
         CERT_DATE : T24BusinessTypes:D
@@ -49,7 +49,7 @@ Classes {
             @t24:i (align=R, inputBehaviour=N, maxLength=8, sysNumber=9.0, core=true, t24Name=DATE.ENTERED)
         DATE_TIME -> byValue SC_SctVault:VAULT_CONTROL__DATE_TIME *
             @t24:i (t24Name=DATE.TIME)
-        DEPOSITORY -> ST_Customer:CUSTOMER
+        DEPOSITORY -> ST_Customer:CUSTOMER required
             @i18n:Label (en=Depository)
             @i18n:Tooltip (en="Depository the Security to be delivered from/to")
             @t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=4.0, core=true, businessType=CUS, t24Name=DEPOSITORY)
@@ -69,7 +69,7 @@ Classes {
         NOMINEE -> SC_Config:NOMINEE_CODE
             @i18n:Label (en=Nominee)
             @t24:i (align=L, inputBehaviour=I, maxLength=30, sysNumber=6.0, core=true, businessType=A, t24Name=NOMINEE)
-        NO_NOMINAL : T24BusinessTypes:NOMAMT
+        NO_NOMINAL : T24BusinessTypes:NOMAMT required
             @i18n:Label (en=Nominal)
             @t24:i (align=R, inputBehaviour=I, maxLength=12, sysNumber=3.0, core=true, t24Name=NO.NOMINAL)
         OVERRIDE -> byValue SC_SctVault:VAULT_CONTROL__OVERRIDE *
@@ -314,7 +314,7 @@ Classes {
         @i18n:Description (en="")
         @t24:i (t24Name=VAULT.PARAMETER, level=I, type=H, allowedFunctions="A C D E H I L P Q R S", localRefAllowed=false)
     {
-        ACTIVE_VAULT : SC_SctVault:VAULT_PARAMETER__ACTIVE_VAULT
+        ACTIVE_VAULT : SC_SctVault:VAULT_PARAMETER__ACTIVE_VAULT required
             @i18n:Label (en="Active Vault")
             @i18n:Tooltip (en="Active Vault")
             @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=1.0, core=true, t24Name=ACTIVE.VAULT)
@@ -375,7 +375,7 @@ Classes {
     }
     VAULT_PARAMETER__DEPOSITORY
     {
-        DEPOSITORY : T24BusinessTypes:A
+        DEPOSITORY : T24BusinessTypes:A required
             @i18n:Label (en=Depository)
             @i18n:Tooltip (en="Depository the Security to be delivered from/to")
             @t24:i (align=L, inputBehaviour=I, maxLength=10, sysNumber=2.0, core=true, t24Name=DEPOSITORY)
@@ -393,6 +393,18 @@ Classes {
             @i18n:Label (en=Inputter)
             @i18n:Tooltip (en="The user who last updated the record")
             @t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=13.0, core=true, t24Name=INPUTTER)
+    }
+    VAULT_TODAY
+        @i18n:Description (en="")
+        @t24:i (t24Name=VAULT.TODAY, level=F, type=T, allowedFunctions="L P S", localRefAllowed=false)
+    {
+        DIRECTION : SC_SctVault:VAULT_TODAY__DIRECTION
+            @i18n:Label (en=Direction)
+            @i18n:Tooltip (en="In or Out")
+            @t24:i (align=L, inputBehaviour=N, maxLength=8, sysNumber=1.0, core=true, t24Name=DIRECTION)
+        REFERENCE : T24BusinessTypes:A PK required
+            @i18n:Label (en="Search by Referece")
+            @t24:i (align=L, inputBehaviour=N, maxLength=50, sysNumber=0.0, core=true, t24Name=REFERENCE)
     }
 }
 Enumerations {
@@ -417,4 +429,7 @@ Enumerations {
     VAULT_PARAMETER__DEPOSITORY__NOMINEE : mml:string
         NO=NO
         YES=YES
+    VAULT_TODAY__DIRECTION : mml:string
+        DELIVERY=DELIVERY
+        RECEIPT=RECEIPT
 }

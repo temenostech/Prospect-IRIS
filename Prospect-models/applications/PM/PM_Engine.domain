@@ -13,18 +13,28 @@ Classes {
         CONTRACT_ID -> PM_Engine:CONTRACT_TRAN_ACTIVITY PK required
             @i18n:Label (en="Contract Id")
             @t24:i (align=L, inputBehaviour=I, maxLength=50, sysNumber=0.0, core=true, businessType=A, t24Name=CONTRACT.ID)
-        TRAN_ACTIVITY_ID : T24BusinessTypes:A
+        TRAN_ACTIVITY_ID -> byValue PM_Engine:CONTRACT_TRAN_ACTIVITY__TRAN_ACTIVITY_ID *
+            @t24:i (t24Name=TRAN.ACTIVITY.ID)
+    }
+    CONTRACT_TRAN_ACTIVITY__TRAN_ACTIVITY_ID
+    {
+        TRAN_ACTIVITY_ID : T24BusinessTypes:A required
             @t24:i (align=L, inputBehaviour=I, maxLength=44, sysNumber=1.0, core=true, t24Name=TRAN.ACTIVITY.ID)
+    }
+    PM_MM_DAILY_WORK
+        @i18n:Description (en="")
+        @t24:i (t24Name=PM.MM.DAILY.WORK, level=F, type=T, allowedFunctions="L P S", localRefAllowed=false)
+    {
     }
     PM_POSITION_CAPTURE
         @i18n:Description (en="")
         @t24:i (t24Name=PM.POSITION.CAPTURE, level=F, type=H, allowedFunctions="A C D E H I L P Q R S", localRefAllowed=false)
     {
-        AMOUNT : T24BusinessTypes:AMT
+        AMOUNT : T24BusinessTypes:AMT required
             @i18n:Label (en=Amount)
             @i18n:Tooltip (en="Indicates the Amount")
             @t24:i (align=R, inputBehaviour=F, maxLength=18, sysNumber=10.0, core=true, t24Name=AMOUNT, typeModifiers="9D")
-        ASST_LIAB_CD : PM_Engine:PM_POSITION_CAPTURE__ASST_LIAB_CD
+        ASST_LIAB_CD : PM_Engine:PM_POSITION_CAPTURE__ASST_LIAB_CD required
             @t24:i (align=R, inputBehaviour=F, maxLength=2, sysNumber=4.0, core=true, t24Name=ASST.LIAB.CD)
         AUDITOR_CODE : T24BusinessTypes:A
             @i18n:Label (en="Auditor Code")
@@ -41,7 +51,7 @@ Classes {
         CO_CODE -> ST_CompanyCreation:COMPANY
             @i18n:Label (en=Company)
             @t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=25.0, core=true, businessType=A, t24Name=CO.CODE, mask="R##-###-####")
-        CURRENCY -> ST_CurrencyConfig:CURRENCY
+        CURRENCY -> ST_CurrencyConfig:CURRENCY required
             @i18n:Label (en=Ccy)
             @t24:i (align=L, inputBehaviour=F, maxLength=3, sysNumber=9.0, core=true, businessType=A, t24Name=CURRENCY)
         CURRENCY_MARKET -> ST_CurrencyConfig:CURRENCY_MARKET
@@ -52,7 +62,7 @@ Classes {
             @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=21.0, core=true, t24Name=CURR.NO)
         DATE_TIME -> byValue PM_Engine:PM_POSITION_CAPTURE__DATE_TIME *
             @t24:i (t24Name=DATE.TIME)
-        DEALER_DESK -> ST_Config:DEALER_DESK
+        DEALER_DESK -> ST_Config:DEALER_DESK required
             @i18n:Label (en="Dealer Desk")
             @i18n:Tooltip (en="Specifies the Dealer Desk handling the transaction")
             @t24:i (align=L, inputBehaviour=F, maxLength=4, sysNumber=2.0, core=true, businessType=A, t24Name=DEALER.DESK)
@@ -70,14 +80,14 @@ Classes {
             @t24:i (align=R, inputBehaviour=F, maxLength=11, sysNumber=12.0, core=true, t24Name=INTEREST.RATE)
         PM_POSN_TRAN_ID -> PM_Engine:PM_POSITION_CAPTURE PK required
             @t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=0.0, core=true, businessType=A, t24Name=PM.POSN.TRAN.ID)
-        PM_PRODUCT : T24BusinessTypes:A
+        PM_PRODUCT : T24BusinessTypes:A required
             @t24:i (align=L, inputBehaviour=F, maxLength=2, sysNumber=6.0, core=true, t24Name=PM.PRODUCT)
-        POSITION_CLASS_ID -> PM_Config:PM_POSN_CLASS
+        POSITION_CLASS_ID -> PM_Config:PM_POSN_CLASS required
             @t24:i (align=L, inputBehaviour=F, maxLength=5, sysNumber=8.0, core=true, businessType=A, t24Name=POSITION.CLASS.ID)
-        POSITION_DATE : T24BusinessTypes:D
+        POSITION_DATE : T24BusinessTypes:D required
             @i18n:Label (en="Spot Date")
             @t24:i (align=R, inputBehaviour=F, maxLength=11, sysNumber=5.0, core=true, t24Name=POSITION.DATE)
-        POSITION_ID -> PM_Config:PM_POSN_REFERENCE
+        POSITION_ID -> PM_Config:PM_POSN_REFERENCE required
             @t24:i (align=L, inputBehaviour=F, maxLength=7, sysNumber=7.0, core=true, businessType=A, t24Name=POSITION.ID)
         POSITION_TYPE -> RE_Config:FX_POS_TYPE
             @i18n:Label (en="Position Type")
@@ -165,7 +175,7 @@ Classes {
     {
         ACTY_PROC_CD : T24BusinessTypes:A
             @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=15.0, core=true, t24Name=ACTY.PROC.CD)
-        ASST_LIAB_CD : mml:Integer
+        ASST_LIAB_CD : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=1, sysNumber=4.0, core=true, t24Name=ASST.LIAB.CD)
         CCY_AMT : T24BusinessTypes:AMT
             @i18n:Label (en="Ccy Amt")
@@ -173,10 +183,10 @@ Classes {
         CURRENCY : T24BusinessTypes:CCY
             @i18n:Label (en=Ccy)
             @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=8.0, core=true, t24Name=CURRENCY)
-        CURRENCY_MARKET : mml:Integer
+        CURRENCY_MARKET : T24BusinessTypes:N
             @i18n:Label (en=Market)
             @t24:i (align=R, inputBehaviour=I, maxLength=1, sysNumber=1.0, core=true, t24Name=CURRENCY.MARKET)
-        DEALER_DESK : mml:Integer
+        DEALER_DESK : T24BusinessTypes:N
             @i18n:Label (en="Dealer Desk")
             @i18n:Tooltip (en="Specifies the Dealer Desk handling the transaction")
             @t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=2.0, core=true, t24Name=DEALER.DESK)
@@ -186,7 +196,7 @@ Classes {
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=17.0, core=true, t24Name=FIXED.AMT)
         FIXED_CCY : T24BusinessTypes:CCY
             @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=16.0, core=true, t24Name=FIXED.CCY)
-        INT_KEY : mml:Integer
+        INT_KEY : T24BusinessTypes:N
             @i18n:Label (en="Interest Key")
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=11.0, core=true, t24Name=INT.KEY)
         MARGIN : T24BusinessTypes:A
@@ -204,14 +214,14 @@ Classes {
             @i18n:Label (en="Value Date")
             @i18n:Tooltip (en="Indicates the Value date of the Contract")
             @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=5.0, core=true, t24Name=VALUE.DATE)
-        VALUE_DATE_SFX : mml:Integer
+        VALUE_DATE_SFX : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=1, sysNumber=6.0, core=true, t24Name=VALUE.DATE.SFX)
     }
     PM_TRAN_ACTIVITY_SAVE__CURRENCY_MARKET__EQUIV_CODE
     {
         EQUIV_AMT : T24BusinessTypes:AMT
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=14.0, core=true, t24Name=EQUIV.AMT, typeModifiers="-USD")
-        EQUIV_CODE : mml:Integer
+        EQUIV_CODE : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=1, sysNumber=13.0, core=true, t24Name=EQUIV.CODE)
     }
     PM_TRAN_ACTIVITY_SAVE__TRAN_PROC_CD
@@ -225,7 +235,7 @@ Classes {
     {
         ACTY_PROC_CD : T24BusinessTypes:A
             @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=15.0, core=true, t24Name=ACTY.PROC.CD)
-        ASST_LIAB_CD : mml:Integer
+        ASST_LIAB_CD : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=1, sysNumber=4.0, core=true, t24Name=ASST.LIAB.CD)
         CCY_AMT : T24BusinessTypes:AMT
             @i18n:Label (en="Ccy Amt")
@@ -246,7 +256,7 @@ Classes {
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=17.0, core=true, t24Name=FIXED.AMT)
         FIXED_CCY : T24BusinessTypes:CCY
             @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=16.0, core=true, t24Name=FIXED.CCY)
-        INT_KEY : mml:Integer
+        INT_KEY : T24BusinessTypes:N
             @i18n:Label (en="Interest Key")
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=11.0, core=true, t24Name=INT.KEY)
         MARGIN : T24BusinessTypes:A
@@ -264,20 +274,20 @@ Classes {
             @i18n:Label (en="Value Date")
             @i18n:Tooltip (en="Indicates the Value date of the Contract")
             @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=5.0, core=true, t24Name=VALUE.DATE)
-        VALUE_DATE_SFX : mml:Integer
+        VALUE_DATE_SFX : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=1, sysNumber=6.0, core=true, t24Name=VALUE.DATE.SFX)
     }
     PM_TRAN_ACTIVITY__CURRENCY_MARKET__EQUIV_CODE
     {
         EQUIV_AMT : T24BusinessTypes:AMT
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=14.0, core=true, t24Name=EQUIV.AMT, typeModifiers="-USD")
-        EQUIV_CODE : mml:Integer
+        EQUIV_CODE : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=1, sysNumber=13.0, core=true, t24Name=EQUIV.CODE)
     }
     PM_TRAN_ACTIVITY__K_MARGIN
     {
         K_MARGIN : T24BusinessTypes:A
-            @t24:i (align=L, inputBehaviour=N, maxLength=12, sysNumber=12.0, core=true, t24Name=K.MARGIN)
+            @t24:i (align=L, inputBehaviour=N, maxLength=12, sysNumber=12.0, core=false, t24Name=K.MARGIN)
     }
     PM_TRAN_ACTIVITY__TRAN_PROC_CD
     {
@@ -333,7 +343,7 @@ Classes {
     }
     PM_UPDATE_APPL__APPLICATION
     {
-        APPLICATION -> EB_SystemTables:EB_PRODUCT
+        APPLICATION -> EB_SystemTables:EB_PRODUCT required
             @i18n:Label (en=Application)
             @t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=1.0, core=true, businessType=A, t24Name=APPLICATION)
     }

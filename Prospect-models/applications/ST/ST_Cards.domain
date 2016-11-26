@@ -10,10 +10,8 @@ Classes {
         @i18n:Description (en="")
         @t24:i (t24Name=CARD.BILL.CLOSE.DATE, level=F, type=T, allowedFunctions="L P S", localRefAllowed=false)
     {
-        ACCOUNT_NO : T24BusinessTypes:A
-            @i18n:Label (en=Account)
-            @i18n:Tooltip (en="Indicates Customer Account Number")
-            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=1.0, core=true, t24Name=ACCOUNT.NO)
+        ACCOUNT_NO -> byValue ST_Cards:CARD_BILL_CLOSE_DATE__ACCOUNT_NO *
+            @t24:i (t24Name=ACCOUNT.NO)
         BILLING_DATE_ID -> ST_Cards:CARD_BILL_CLOSE_DATE PK required
             @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=0.0, core=true, businessType=A, t24Name=BILLING.DATE.ID)
     }
@@ -21,12 +19,24 @@ Classes {
         @i18n:Description (en="")
         @t24:i (t24Name=CARD.BILL.CLOSE.DATE.WORK, level=F, type=T, allowedFunctions="L P S", localRefAllowed=false)
     {
+        ACCOUNT_NO -> byValue ST_Cards:CARD_BILL_CLOSE_DATE_WORK__ACCOUNT_NO *
+            @t24:i (t24Name=ACCOUNT.NO)
+        REPAY_DATE_ID -> ST_Cards:CARD_BILL_CLOSE_DATE_WORK PK required
+            @t24:i (align=L, inputBehaviour=I, maxLength=15, sysNumber=0.0, core=true, businessType=A, t24Name=REPAY.DATE.ID)
+    }
+    CARD_BILL_CLOSE_DATE_WORK__ACCOUNT_NO
+    {
         ACCOUNT_NO : T24BusinessTypes:ACC
             @i18n:Label (en=Account)
             @i18n:Tooltip (en="Indicates Customer Account Number")
             @t24:i (align=R, inputBehaviour=I, maxLength=16, sysNumber=1.0, core=true, t24Name=ACCOUNT.NO)
-        REPAY_DATE_ID -> ST_Cards:CARD_BILL_CLOSE_DATE_WORK PK required
-            @t24:i (align=L, inputBehaviour=I, maxLength=15, sysNumber=0.0, core=true, businessType=A, t24Name=REPAY.DATE.ID)
+    }
+    CARD_BILL_CLOSE_DATE__ACCOUNT_NO
+    {
+        ACCOUNT_NO : T24BusinessTypes:A
+            @i18n:Label (en=Account)
+            @i18n:Tooltip (en="Indicates Customer Account Number")
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=1.0, core=true, t24Name=ACCOUNT.NO)
     }
     CARD_CHARGE
         @i18n:Description (en="")
@@ -76,15 +86,15 @@ Classes {
             @i18n:Label (en="Periodic Charge")
             @i18n:Tooltip (en="Defines the periodic charge ")
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=5.0, core=true, t24Name=PERIODIC.CHARGE, typeModifiers="USD")
-        PL_CATEGORY -> ST_Config:CATEGORY
+        PL_CATEGORY -> ST_Config:CATEGORY required
             @i18n:Label (en="PL Category")
             @t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=1.0, core=true, t24Name=PL.CATEGORY, mask="R##-###")
         RECORD_STATUS : T24BusinessTypes:STAT
             @i18n:Label (en="Record Status")
             @t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=8.0, core=true, t24Name=RECORD.STATUS)
-        TRANSACTION_CR -> ST_Config:TRANSACTION
+        TRANSACTION_CR -> ST_Config:TRANSACTION required
             @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=3.0, core=true, businessType=A, t24Name=TRANSACTION.CR)
-        TRANSACTION_DR -> ST_Config:TRANSACTION
+        TRANSACTION_DR -> ST_Config:TRANSACTION required
             @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=2.0, core=true, businessType=A, t24Name=TRANSACTION.DR)
     }
     CARD_CHARGE__DATE_TIME
@@ -129,7 +139,7 @@ Classes {
             @i18n:Label (en="Cancellation Reason")
             @i18n:Tooltip (en="Cancellation Reason")
             @t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=10.0, core=true, t24Name=CAN.REASON)
-        CARD_START_NO : mml:Integer
+        CARD_START_NO : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=F, maxLength=20, sysNumber=25.0, core=true, t24Name=CARD.START.NO)
         CARD_STATUS -> ST_Cards:CARD_STATUS
             @i18n:Label (en="Card Status (Input 90)")
@@ -233,12 +243,17 @@ Classes {
             @i18n:Label (en=Account)
             @i18n:Tooltip (en="Identifies the customer account")
             @t24:i (align=R, inputBehaviour=I, maxLength=16, sysNumber=0.0, core=true, businessType=ACC, t24Name=ACCOUNT)
-        CARD_ISSUE_ID : T24BusinessTypes:A
+        CARD_ISSUE_ID -> byValue ST_Cards:CARD_ISSUE_ACCOUNT__CARD_ISSUE_ID *
+            @t24:i (t24Name=CARD.ISSUE.ID)
+    }
+    CARD_ISSUE_ACCOUNT__CARD_ISSUE_ID
+    {
+        CARD_ISSUE_ID : T24BusinessTypes:A required
             @t24:i (align=L, inputBehaviour=I, maxLength=24, sysNumber=1.0, core=true, t24Name=CARD.ISSUE.ID)
     }
     CARD_ISSUE__ACCOUNT
     {
-        ACCOUNT -> AC_AccountOpening:ACCOUNT
+        ACCOUNT -> AC_AccountOpening:ACCOUNT required
             @i18n:Label (en=Account)
             @i18n:Tooltip (en="Identifies the customer account")
             @t24:i (align=R, inputBehaviour=I, maxLength=16, sysNumber=2.0, core=true, businessType=ACC, t24Name=ACCOUNT)
@@ -287,10 +302,8 @@ Classes {
         @i18n:Description (en="")
         @t24:i (t24Name=CARD.REPAYMENT.DATE, level=F, type=T, allowedFunctions="L P S", localRefAllowed=false)
     {
-        ACCOUNT_NO : T24BusinessTypes:A
-            @i18n:Label (en=Account)
-            @i18n:Tooltip (en="Indicates Customer Account Number")
-            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=1.0, core=true, t24Name=ACCOUNT.NO)
+        ACCOUNT_NO -> byValue ST_Cards:CARD_REPAYMENT_DATE__ACCOUNT_NO *
+            @t24:i (t24Name=ACCOUNT.NO)
         REPAY_DATE_ID -> ST_Cards:CARD_REPAYMENT_DATE PK required
             @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=0.0, core=true, businessType=A, t24Name=REPAY.DATE.ID)
     }
@@ -298,12 +311,24 @@ Classes {
         @i18n:Description (en="")
         @t24:i (t24Name=CARD.REPAYMENT.DATE.WORK, level=F, type=T, allowedFunctions="L P S", localRefAllowed=false)
     {
+        ACCOUNT_NO -> byValue ST_Cards:CARD_REPAYMENT_DATE_WORK__ACCOUNT_NO *
+            @t24:i (t24Name=ACCOUNT.NO)
+        REPAY_DATE_ID -> ST_Cards:CARD_REPAYMENT_DATE_WORK PK required
+            @t24:i (align=L, inputBehaviour=I, maxLength=15, sysNumber=0.0, core=true, businessType=A, t24Name=REPAY.DATE.ID)
+    }
+    CARD_REPAYMENT_DATE_WORK__ACCOUNT_NO
+    {
         ACCOUNT_NO : T24BusinessTypes:ACC
             @i18n:Label (en=Account)
             @i18n:Tooltip (en="Indicates Customer Account Number")
             @t24:i (align=R, inputBehaviour=I, maxLength=16, sysNumber=1.0, core=true, t24Name=ACCOUNT.NO)
-        REPAY_DATE_ID -> ST_Cards:CARD_REPAYMENT_DATE_WORK PK required
-            @t24:i (align=L, inputBehaviour=I, maxLength=15, sysNumber=0.0, core=true, businessType=A, t24Name=REPAY.DATE.ID)
+    }
+    CARD_REPAYMENT_DATE__ACCOUNT_NO
+    {
+        ACCOUNT_NO : T24BusinessTypes:A
+            @i18n:Label (en=Account)
+            @i18n:Tooltip (en="Indicates Customer Account Number")
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=1.0, core=true, t24Name=ACCOUNT.NO)
     }
     CARD_STATUS
         @i18n:Description (en="")
@@ -364,7 +389,7 @@ Classes {
     }
     CARD_STATUS__CRD_STS_DES
     {
-        CRD_STS_DES : T24BusinessTypes:A
+        CRD_STS_DES : T24BusinessTypes:A required
             @i18n:Label (en=Description)
             @i18n:Tooltip (en=Description)
             @t24:i (align=L, inputBehaviour=I, maxLength=35, multiLanguage=true, sysNumber=1.0, core=true, t24Name=CRD.STS.DES)
@@ -466,7 +491,7 @@ Classes {
     }
     CARD_TYPE__DESCRIPTION
     {
-        DESCRIPTION : T24BusinessTypes:A
+        DESCRIPTION : T24BusinessTypes:A required
             @i18n:Label (en=Description)
             @i18n:Tooltip (en=Description)
             @t24:i (align=L, inputBehaviour=I, maxLength=35, multiLanguage=true, sysNumber=1.0, core=true, t24Name=DESCRIPTION)

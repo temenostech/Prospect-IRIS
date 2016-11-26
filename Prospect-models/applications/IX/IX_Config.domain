@@ -78,21 +78,21 @@ Classes {
     }
     IX_DOMAIN_CODES__DESCRIPTION
     {
-        DESCRIPTION : T24BusinessTypes:ANY
+        DESCRIPTION : T24BusinessTypes:ANY required
             @i18n:Label (en=Description)
             @i18n:Tooltip (en=Description)
             @t24:i (align=L, inputBehaviour=I, maxLength=35, multiLanguage=true, sysNumber=1.0, core=true, t24Name=DESCRIPTION)
     }
     IX_DOMAIN_CODES__FAMILY_CODE
     {
-        FAMILY_CODE -> IX_Config:IX_EXTERNAL_CODES
+        FAMILY_CODE -> IX_Config:IX_EXTERNAL_CODES required
             @t24:i (align=L, inputBehaviour=I, maxLength=4, sysNumber=2.0, core=true, businessType=A, t24Name=FAMILY.CODE)
         SUB_FAMILY_CODE -> byValue IX_Config:IX_DOMAIN_CODES__FAMILY_CODE__SUB_FAMILY_CODE *
             @t24:i (t24Name=SUB.FAMILY.CODE)
     }
     IX_DOMAIN_CODES__FAMILY_CODE__SUB_FAMILY_CODE
     {
-        SUB_FAMILY_CODE -> IX_Config:IX_EXTERNAL_CODES
+        SUB_FAMILY_CODE -> IX_Config:IX_EXTERNAL_CODES required
             @t24:i (align=L, inputBehaviour=I, maxLength=4, sysNumber=3.0, core=true, businessType=A, t24Name=SUB.FAMILY.CODE)
     }
     IX_DOMAIN_CODES__INPUTTER
@@ -186,7 +186,7 @@ Classes {
     }
     IX_EXTERNAL_CODES__DESCRIPTION
     {
-        DESCRIPTION : T24BusinessTypes:ANY
+        DESCRIPTION : T24BusinessTypes:ANY required
             @i18n:Label (en=Description)
             @i18n:Tooltip (en=Description)
             @t24:i (align=L, inputBehaviour=I, maxLength=35, multiLanguage=true, sysNumber=1.0, core=true, t24Name=DESCRIPTION)
@@ -234,9 +234,9 @@ Classes {
             @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=23.0, core=true, t24Name=DEPT.CODE)
         DESCRIPTION -> byValue IX_Config:IX_TRANSACTION__DESCRIPTION *
             @t24:i (t24Name=DESCRIPTION)
-        DOMAIN_CODE -> IX_Config:IX_EXTERNAL_CODES
+        DOMAIN_CODE -> IX_Config:IX_EXTERNAL_CODES required
             @t24:i (align=L, inputBehaviour=I, maxLength=4, sysNumber=2.0, core=true, businessType=A, t24Name=DOMAIN.CODE)
-        FAMILY_CODE -> IX_Config:IX_EXTERNAL_CODES
+        FAMILY_CODE -> IX_Config:IX_EXTERNAL_CODES required
             @t24:i (align=L, inputBehaviour=I, maxLength=4, sysNumber=3.0, core=true, businessType=A, t24Name=FAMILY.CODE)
         ID -> IX_Config:IX_TRANSACTION PK required
             @i18n:Label (en="Transaction Ref")
@@ -265,7 +265,7 @@ Classes {
             @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=9.0, core=true, t24Name=RESERVED.7)
         RESERVED_8 : T24BusinessTypes:A
             @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=8.0, core=true, t24Name=RESERVED.8)
-        SUB_FAMILY_CODE -> IX_Config:IX_EXTERNAL_CODES
+        SUB_FAMILY_CODE -> IX_Config:IX_EXTERNAL_CODES required
             @t24:i (align=L, inputBehaviour=I, maxLength=4, sysNumber=4.0, core=true, businessType=A, t24Name=SUB.FAMILY.CODE)
         TXN_TYPE : T24BusinessTypes:A
             @i18n:Label (en="Trans Type")
@@ -305,7 +305,7 @@ Classes {
         @i18n:Description (en="")
         @t24:i (t24Name=XML.OUTPUT.MSG, level=I, type=L, allowedFunctions="L P S", localRefAllowed=false)
     {
-        ACCOUNT_NUMBER : mml:Integer
+        ACCOUNT_NUMBER : T24BusinessTypes:N
             @i18n:Label (en="Account Number")
             @t24:i (align=R, inputBehaviour=I, maxLength=16, sysNumber=3.0, core=true, t24Name=ACCOUNT.NUMBER)
         AC_XML_STMT_ID : T24BusinessTypes:A
@@ -314,6 +314,10 @@ Classes {
             @i18n:Label (en=Customer)
             @i18n:Tooltip (en="Customer Liability")
             @t24:i (align=R, inputBehaviour=I, maxLength=35, sysNumber=4.0, core=true, t24Name=CUSTOMER)
+        ID -> IX_Config:XML_OUTPUT_MSG PK required
+            @i18n:Label (en="Transaction Ref")
+            @i18n:Tooltip (en="Transaction Reference")
+            @t24:i (align=L, inputBehaviour=I, maxLength=45, sysNumber=0.0, core=true, businessType=A, t24Name="@ID")
         MESSAGE : T24BusinessTypes:TEXT
             @i18n:Label (en=Message)
             @t24:i (align=L, inputBehaviour=I, maxLength=55, sysNumber=2.0, core=true, t24Name=MESSAGE)
@@ -342,11 +346,9 @@ Classes {
             @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=9.0, core=true, t24Name=RESERVED.09)
         RESERVED_10 : T24BusinessTypes:A
             @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=8.0, core=true, t24Name=RESERVED.10)
-        STMT_FREQ : mml:Integer
+        STMT_FREQ : T24BusinessTypes:N
             @i18n:Label (en=Frequency)
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=5.0, core=true, t24Name=STMT.FREQ)
-        _ID -> IX_Config:XML_OUTPUT_MSG PK required
-            @t24:i (align=L, inputBehaviour=I, maxLength=45, sysNumber=0.0, core=true, businessType=A, t24Name=.ID)
     }
     XML_TAG_DEFINITION
         @i18n:Description (en="")
@@ -387,6 +389,10 @@ Classes {
             @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=13.0, core=true, t24Name=DETAIL.RTN)
         GROUP_TAG : IX_Config:XML_TAG_DEFINITION__GROUP_TAG
             @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=11.0, core=true, t24Name=GROUP.TAG)
+        ID -> IX_Config:XML_TAG_DEFINITION PK required
+            @i18n:Label (en="Transaction Ref")
+            @i18n:Tooltip (en="Transaction Reference")
+            @t24:i (align=L, inputBehaviour=I, maxLength=60, sysNumber=0.0, core=true, businessType=ANY, t24Name="@ID")
         INPUTTER -> byValue IX_Config:XML_TAG_DEFINITION__INPUTTER *
             @t24:i (t24Name=INPUTTER)
         MANDATORY_OPT : IX_Config:XML_TAG_DEFINITION__MANDATORY_OPT
@@ -426,8 +432,6 @@ Classes {
             @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=12.0, core=true, t24Name=SUPPRESS.RTN)
         USER_CONFIG : IX_Config:XML_TAG_DEFINITION__USER_CONFIG
             @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=10.0, core=true, t24Name=USER.CONFIG)
-        _ID -> IX_Config:XML_TAG_DEFINITION PK required
-            @t24:i (align=L, inputBehaviour=I, maxLength=60, sysNumber=0.0, core=true, businessType=ANY, t24Name=.ID)
     }
     XML_TAG_DEFINITION__CHILD_GROUP
     {

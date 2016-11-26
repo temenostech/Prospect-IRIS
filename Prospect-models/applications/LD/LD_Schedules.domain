@@ -6,6 +6,25 @@ Domain LD_Schedules
 namespace "http://www.temenos.com/t24/LD_Schedules"
 metamodelVersion 1.30.6
 Classes {
+    LD_BACKVALUE_SCH_CONCAT
+        @i18n:Description (en="")
+        @t24:i (t24Name=LD.BACKVALUE.SCH.CONCAT, level=F, type=T, allowedFunctions="L P S", localRefAllowed=false)
+    {
+        CONTRACT_NUMBER -> byValue LD_Schedules:LD_BACKVALUE_SCH_CONCAT__CONTRACT_NUMBER *
+            @t24:i (t24Name=CONTRACT.NUMBER)
+        K_DATE : T24BusinessTypes:N
+            @i18n:Label (en=Date)
+            @t24:i (align=R, inputBehaviour=N, maxLength=8, core=false, t24Name=K.DATE, genOperation="FIELD(@ID,\'-\',1)")
+        PROCESS_DATE : T24BusinessTypes:N PK required
+            @i18n:Label (en="Process Date")
+            @t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=0.0, core=true, t24Name=PROCESS.DATE)
+    }
+    LD_BACKVALUE_SCH_CONCAT__CONTRACT_NUMBER
+    {
+        CONTRACT_NUMBER : T24BusinessTypes:AA
+            @i18n:Label (en="Contract Number")
+            @t24:i (align=L, inputBehaviour=N, maxLength=17, sysNumber=1.0, core=true, t24Name=CONTRACT.NUMBER, mask="R##/#####/#####")
+    }
     LD_SCHEDULE_DEFINE
         @i18n:Description (en="")
         @t24:i (t24Name=LD.SCHEDULE.DEFINE, level=F, type=U, additionalInfo="NOH NOU", allowedFunctions="A C D E I L P Q R S", localRefAllowed=false)
@@ -22,7 +41,7 @@ Classes {
             @i18n:Label (en=Authoriser)
             @i18n:Tooltip (en="Indicates the User who Authorises the record")
             @t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=36.0, core=true, t24Name=AUTHORISER)
-        BASE_DATE_KEY : LD_Schedules:LD_SCHEDULE_DEFINE__BASE_DATE_KEY
+        BASE_DATE_KEY : LD_Schedules:LD_SCHEDULE_DEFINE__BASE_DATE_KEY required
             @i18n:Label (en="Base Date Key")
             @t24:i (align=L, inputBehaviour=I, maxLength=1, sysNumber=3.0, core=true, t24Name=BASE.DATE.KEY)
         CONTRACT_ID -> LD_Schedules:LD_SCHEDULE_DEFINE PK required
@@ -42,7 +61,7 @@ Classes {
         DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
             @i18n:Label (en="Department Code")
             @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=38.0, core=true, t24Name=DEPT.CODE)
-        FORWARD_BACKWARD : LD_Schedules:LD_SCHEDULE_DEFINE__FORWARD_BACKWARD
+        FORWARD_BACKWARD : LD_Schedules:LD_SCHEDULE_DEFINE__FORWARD_BACKWARD required
             @i18n:Tooltip (en="Method for schedule generation")
             @t24:i (align=L, inputBehaviour=I, maxLength=1, sysNumber=2.0, core=true, t24Name=FORWARD.BACKWARD)
         INPUTTER -> byValue LD_Schedules:LD_SCHEDULE_DEFINE__INPUTTER *
@@ -85,7 +104,7 @@ Classes {
     {
         K_DATE : T24BusinessTypes:D
             @i18n:Label (en=Date)
-            @t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=5.0, core=true, t24Name=K.DATE)
+            @t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=5.0, core=false, t24Name=K.DATE)
     }
     LD_SCHEDULE_DEFINE__OVERRIDE
     {
@@ -165,13 +184,13 @@ Classes {
             @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=17.0, core=true, t24Name=INCLUSIVE.CHG)
         NOTE_DENOM -> byValue LD_Schedules:LD_SCHEDULE_DEFINE__SCH_TYPE__NOTE_DENOM *
             @t24:i (t24Name=NOTE.DENOM)
-        NUMBER : mml:Integer
+        NUMBER : T24BusinessTypes:N
             @i18n:Label (en=Number)
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=10.0, core=true, t24Name=NUMBER)
         RATE : T24BusinessTypes:R
             @i18n:Label (en=Rate)
             @t24:i (align=R, inputBehaviour=I, maxLength=12, sysNumber=7.0, core=true, t24Name=RATE, typeModifiers=-)
-        SCH_TYPE : LD_Schedules:LD_SCHEDULE_DEFINE__SCH_TYPE__SCH_TYPE
+        SCH_TYPE : LD_Schedules:LD_SCHEDULE_DEFINE__SCH_TYPE__SCH_TYPE required
             @i18n:Label (en="Schedule Type")
             @i18n:Tooltip (en="Schedule Type")
             @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=4.0, core=true, t24Name=SCH.TYPE)
@@ -229,13 +248,13 @@ Classes {
     {
         DEL_DESC -> byValue LD_Schedules:LD_SCHEDULE_EXCEPTION__EVENT__DEL_DESC *
             @t24:i (t24Name=DEL.DESC)
-        EVENT : T24BusinessTypes:A
+        EVENT : T24BusinessTypes:A required
             @i18n:Label (en=Event)
             @t24:i (align=L, inputBehaviour=I, maxLength=17, sysNumber=2.0, core=true, t24Name=EVENT)
     }
     LD_SCHEDULE_EXCEPTION__EVENT__DEL_DESC
     {
-        DEL_DESC : T24BusinessTypes:A
+        DEL_DESC : T24BusinessTypes:A required
             @i18n:Label (en=Description)
             @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=3.0, core=true, t24Name=DEL.DESC)
     }

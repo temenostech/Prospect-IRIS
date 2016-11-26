@@ -93,7 +93,7 @@ Classes {
     }
     SEPA_CUSTOMER__COMMENT
     {
-        COMMENT : T24BusinessTypes:A
+        COMMENT : T24BusinessTypes:A required
             @i18n:Label (en=Comment)
             @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=2.0, core=true, t24Name=COMMENT)
     }
@@ -122,7 +122,7 @@ Classes {
     }
     SEPA_CUSTOMER__NAME
     {
-        NAME : T24BusinessTypes:A
+        NAME : T24BusinessTypes:A required
             @i18n:Label (en=Name)
             @i18n:Tooltip (en="Indicates the Name ")
             @t24:i (align=L, inputBehaviour=I, maxLength=35, multiLanguage=true, sysNumber=1.0, core=true, t24Name=NAME)
@@ -245,7 +245,7 @@ Classes {
         CREDIT_VALUE_DATE : T24BusinessTypes:D
             @i18n:Label (en="Credit Value Date")
             @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=21.0, core=true, t24Name=CREDIT.VALUE.DATE)
-        CURR_NO : mml:Integer
+        CURR_NO : T24BusinessTypes:N
             @i18n:Label (en="Curr No")
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=97.0, core=true, t24Name=CURR.NO)
         CUSTOMER_ID -> ST_Customer:CUSTOMER
@@ -256,7 +256,7 @@ Classes {
             @t24:i (align=L, inputBehaviour=I, maxLength=24, sysNumber=57.0, core=true, t24Name=CUST.DETAIL.ID)
         DATE_OPCODE_SEQ -> EP_InwardProcess:SEPA_INWARD PK required
             @t24:i (align=L, inputBehaviour=I, maxLength=34, sysNumber=0.0, core=true, businessType=ANY, t24Name=DATE.OPCODE.SEQ)
-        DATE_TIME : mml:Integer
+        DATE_TIME : T24BusinessTypes:N
             @i18n:Label (en="Date time")
             @i18n:Tooltip (en="Date and time when record was input or authorised")
             @t24:i (align=R, inputBehaviour=I, maxLength=15, sysNumber=99.0, core=true, t24Name=DATE.TIME)
@@ -443,6 +443,11 @@ Classes {
     {
         IN_DETAIL_KEY -> EP_InwardProcess:SEPA_INWARD_DETAIL PK required
             @t24:i (align=L, inputBehaviour=I, maxLength=20, sysNumber=0.0, core=true, businessType=A, t24Name=IN.DETAIL.KEY)
+        LINE_DETAILS -> byValue EP_InwardProcess:SEPA_INWARD_DETAIL__LINE_DETAILS *
+            @t24:i (t24Name=LINE.DETAILS)
+    }
+    SEPA_INWARD_DETAIL__LINE_DETAILS
+    {
         LINE_DETAILS : T24BusinessTypes:ANY
             @t24:i (align=L, inputBehaviour=N, maxLength=50, sysNumber=1.0, core=true, t24Name=LINE.DETAILS)
     }
@@ -533,13 +538,13 @@ Classes {
             @t24:i (t24Name=TOTAL.CHG)
         TOT_AMOUNT -> byValue EP_InwardProcess:SEPA_INWARD_FILES__MESSAGE_ID__TOT_AMOUNT *
             @t24:i (t24Name=TOT.AMOUNT)
-        TRANS_CODE : mml:Integer
+        TRANS_CODE : T24BusinessTypes:N
             @i18n:Label (en="Trans Code")
             @i18n:Tooltip (en="Indicates the Transaction Code")
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=14.0, core=true, t24Name=TRANS.CODE)
         TRANS_FIRST -> byValue EP_InwardProcess:SEPA_INWARD_FILES__MESSAGE_ID__TRANS_FIRST *
             @t24:i (t24Name=TRANS.FIRST)
-        TRANS_NUMBER : mml:Integer
+        TRANS_NUMBER : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=7, sysNumber=17.0, core=true, t24Name=TRANS.NUMBER)
     }
     SEPA_INWARD_FILES__MESSAGE_ID__COMMENT
@@ -573,9 +578,9 @@ Classes {
     }
     SEPA_INWARD_FILES__MESSAGE_ID__TRANS_FIRST
     {
-        TRANS_FIRST : mml:Integer
+        TRANS_FIRST : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=6, sysNumber=15.0, core=true, t24Name=TRANS.FIRST)
-        TRANS_LAST : mml:Integer
+        TRANS_LAST : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=6, sysNumber=16.0, core=true, t24Name=TRANS.LAST)
     }
     SEPA_INWARD_FILES__PRE_HEADER
@@ -636,7 +641,7 @@ Classes {
     }
     SEPA_INWARD_LOG__PROBLEM_TIME
     {
-        PROBLEM_LEVEL : mml:Integer
+        PROBLEM_LEVEL : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=1, sysNumber=10.0, core=true, t24Name=PROBLEM.LEVEL)
         PROBLEM_MESS : T24BusinessTypes:A
             @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=9.0, core=true, t24Name=PROBLEM.MESS)
@@ -647,10 +652,17 @@ Classes {
         @i18n:Description (en="")
         @t24:i (t24Name=SEPA.INWARD.TXNS, level=F, type=T, allowedFunctions="L P S", localRefAllowed=false)
     {
+        ID -> EP_InwardProcess:SEPA_INWARD_TXNS PK required
+            @i18n:Label (en="Transaction Ref")
+            @i18n:Tooltip (en="Transaction Reference")
+            @t24:i (align=L, inputBehaviour=I, maxLength=60, sysNumber=0.0, core=true, businessType=ANY, t24Name="@ID")
+        SEPA_INWARD_ID -> byValue EP_InwardProcess:SEPA_INWARD_TXNS__SEPA_INWARD_ID *
+            @t24:i (t24Name=SEPA.INWARD.ID)
+    }
+    SEPA_INWARD_TXNS__SEPA_INWARD_ID
+    {
         SEPA_INWARD_ID : T24BusinessTypes:ANY
             @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=1.0, core=true, t24Name=SEPA.INWARD.ID)
-        _ID -> EP_InwardProcess:SEPA_INWARD_TXNS PK required
-            @t24:i (align=L, inputBehaviour=I, maxLength=60, sysNumber=0.0, core=true, businessType=ANY, t24Name=.ID)
     }
     SEPA_INWARD__CHANNEL
     {
@@ -795,7 +807,7 @@ Classes {
             @t24:i (align=L, inputBehaviour=I, maxLength=4, sysNumber=25.0, core=true, businessType=A, t24Name=FTTC)
         INPUTTER -> byValue EP_InwardProcess:SEPA_LIMIT__INPUTTER *
             @t24:i (t24Name=INPUTTER)
-        LIMIT_CHECK_STATUS : EP_InwardProcess:SEPA_LIMIT__LIMIT_CHECK_STATUS
+        LIMIT_CHECK_STATUS : EP_InwardProcess:SEPA_LIMIT__LIMIT_CHECK_STATUS required
             @t24:i (align=L, inputBehaviour=I, maxLength=8, sysNumber=2.0, core=true, t24Name=LIMIT.CHECK.STATUS)
         LIMIT_REF : T24BusinessTypes:A
             @i18n:Label (en="Limit Ref")
@@ -805,7 +817,7 @@ Classes {
             @t24:i (t24Name=LIMIT.START.DATE)
         MANDATE_ID : T24BusinessTypes:A
             @t24:i (align=L, inputBehaviour=N, maxLength=65, sysNumber=6.0, core=true, t24Name=MANDATE.ID)
-        OUR_ACCOUNT -> AC_AccountOpening:ACCOUNT
+        OUR_ACCOUNT -> AC_AccountOpening:ACCOUNT required
             @i18n:Label (en=Account)
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=3.0, core=true, businessType=ACC, t24Name=OUR.ACCOUNT)
         OUR_ACCT_TITLE : T24BusinessTypes:A
@@ -854,9 +866,9 @@ Classes {
             @t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=29.0, core=true, t24Name=RESERVED.9)
         SDD_LIMIT_CHECK_ID -> EP_InwardProcess:SEPA_LIMIT PK required
             @t24:i (align=L, inputBehaviour=I, maxLength=100, sysNumber=0.0, core=true, businessType=A, t24Name=SDD.LIMIT.CHECK.ID)
-        THEIR_IBAN : T24BusinessTypes:A
+        THEIR_IBAN : T24BusinessTypes:A required
             @t24:i (align=L, inputBehaviour=I, maxLength=65, sysNumber=7.0, core=true, t24Name=THEIR.IBAN)
-        THEIR_NAME : T24BusinessTypes:A
+        THEIR_NAME : T24BusinessTypes:A required
             @t24:i (align=L, inputBehaviour=I, maxLength=65, sysNumber=8.0, core=true, t24Name=THEIR.NAME)
     }
     SEPA_LIMIT__DATE_TIME
@@ -868,7 +880,7 @@ Classes {
     }
     SEPA_LIMIT__DESCRIPTION
     {
-        DESCRIPTION : T24BusinessTypes:A
+        DESCRIPTION : T24BusinessTypes:A required
             @i18n:Label (en=Description)
             @i18n:Tooltip (en=Description)
             @t24:i (align=L, inputBehaviour=I, maxLength=65, multiLanguage=true, sysNumber=1.0, core=true, t24Name=DESCRIPTION)
@@ -888,11 +900,11 @@ Classes {
             @t24:i (align=L, inputBehaviour=I, maxLength=30, sysNumber=15.0, core=true, t24Name=LIMIT.FREQUENCY)
         LIMIT_START_DATE : T24BusinessTypes:D
             @t24:i (align=R, inputBehaviour=I, maxLength=8, sysNumber=14.0, core=true, t24Name=LIMIT.START.DATE)
-        LIMIT_STATUS : EP_InwardProcess:SEPA_LIMIT__LIMIT_START_DATE__LIMIT_STATUS
+        LIMIT_STATUS : EP_InwardProcess:SEPA_LIMIT__LIMIT_START_DATE__LIMIT_STATUS required
             @t24:i (align=L, inputBehaviour=I, maxLength=8, sysNumber=17.0, core=true, t24Name=LIMIT.STATUS)
         MAX_AMOUNT_ALLOW : T24BusinessTypes:AMT
             @t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=22.0, core=true, t24Name=MAX.AMOUNT.ALLOW)
-        NO_TRANS_ALLOW : mml:Integer
+        NO_TRANS_ALLOW : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=9, sysNumber=18.0, core=true, t24Name=NO.TRANS.ALLOW)
         NO_TRANS_PROCESS : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=N, maxLength=9, sysNumber=19.0, core=true, t24Name=NO.TRANS.PROCESS)
@@ -914,10 +926,15 @@ Classes {
         @i18n:Description (en="")
         @t24:i (t24Name=SEPA.LINKED.FT.REFERENCE, level=F, type=T, allowedFunctions="L P S", localRefAllowed=false)
     {
-        SEPA_APP_REF : T24BusinessTypes:ANY
-            @t24:i (align=L, inputBehaviour=I, maxLength=70, sysNumber=1.0, core=true, t24Name=SEPA.APP.REF)
+        SEPA_APP_REF -> byValue EP_InwardProcess:SEPA_LINKED_FT_REFERENCE__SEPA_APP_REF *
+            @t24:i (t24Name=SEPA.APP.REF)
         SEPA_LINKED_FT -> EP_InwardProcess:SEPA_LINKED_FT_REFERENCE PK required
             @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=0.0, core=true, businessType=A, t24Name=SEPA.LINKED.FT)
+    }
+    SEPA_LINKED_FT_REFERENCE__SEPA_APP_REF
+    {
+        SEPA_APP_REF : T24BusinessTypes:ANY
+            @t24:i (align=L, inputBehaviour=I, maxLength=70, sysNumber=1.0, core=true, t24Name=SEPA.APP.REF)
     }
     SEPA_MISMATCH_FILES
         @i18n:Description (en="")
@@ -948,13 +965,15 @@ Classes {
             @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=10.0, core=true, t24Name=DEPT.CODE)
         FILE_NAME -> byValue EP_InwardProcess:SEPA_MISMATCH_FILES__FILE_NAME *
             @t24:i (t24Name=FILE.NAME)
+        ID -> EP_InwardProcess:SEPA_MISMATCH_FILES PK required
+            @i18n:Label (en="Transaction Ref")
+            @i18n:Tooltip (en="Transaction Reference")
+            @t24:i (align=L, inputBehaviour=I, maxLength=100, sysNumber=0.0, core=true, businessType=ANY, t24Name="@ID")
         INPUTTER -> byValue EP_InwardProcess:SEPA_MISMATCH_FILES__INPUTTER *
             @t24:i (t24Name=INPUTTER)
         RECORD_STATUS : T24BusinessTypes:STAT
             @i18n:Label (en="Record Status")
             @t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=4.0, core=true, t24Name=RECORD.STATUS)
-        _ID -> EP_InwardProcess:SEPA_MISMATCH_FILES PK required
-            @t24:i (align=L, inputBehaviour=I, maxLength=100, sysNumber=0.0, core=true, businessType=ANY, t24Name=.ID)
     }
     SEPA_MISMATCH_FILES__DATE_TIME
     {

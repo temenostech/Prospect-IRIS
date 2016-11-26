@@ -8,7 +8,7 @@ metamodelVersion 1.30.6
 Classes {
     LC_ACCOUNT_BALANCES
         @i18n:Description (en="")
-        @t24:i (t24Name=LC.ACCOUNT.BALANCES, level=F, type=H, additionalInfo="NOH PREVIEW", allowedFunctions="A C D E H I L P Q R S", localRefAllowed=true)
+        @t24:i (t24Name=LC.ACCOUNT.BALANCES, level=F, type=H, additionalInfo="NOH PREVIEW UNP OEU", allowedFunctions="A C D E H I L P Q R S", localRefAllowed=true)
     {
         ACCR_CYCLE_COMM : T24BusinessTypes:FQU
             @t24:i (align=L, inputBehaviour=N, maxLength=19, sysNumber=81.0, core=true, t24Name=ACCR.CYCLE.COMM, mask="RDDDD DD  D #####")
@@ -151,7 +151,7 @@ Classes {
             @i18n:Label (en="Charge Exchange Rate")
             @i18n:Tooltip (en="Charge Exchange Rate")
             @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=36.0, core=true, t24Name=CHRG.XCHG.RATE)
-        CLAIM_DIFF_ACC : mml:Integer
+        CLAIM_DIFF_ACC : T24BusinessTypes:N
             @i18n:Label (en="Claim Difference Account")
             @i18n:Tooltip (en="Claim Difference Account")
             @t24:i (align=R, inputBehaviour=I, maxLength=16, sysNumber=31.0, core=true, t24Name=CLAIM.DIFF.ACC)
@@ -403,11 +403,16 @@ Classes {
         @i18n:Description (en="")
         @t24:i (t24Name=LC.CLIENT.REFERENCE, level=C, type=T, allowedFunctions="L P S", localRefAllowed=false)
     {
-        CONTRACT_ID : T24BusinessTypes:A
-            @i18n:Label (en="Contract Id")
-            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=1.0, core=true, t24Name=CONTRACT.ID)
+        CONTRACT_ID -> byValue LC_Foundation:LC_CLIENT_REFERENCE__CONTRACT_ID *
+            @t24:i (t24Name=CONTRACT.ID)
         LC_CLIENT_REFERENCE -> LC_Foundation:LC_CLIENT_REFERENCE PK required
             @t24:i (align=L, inputBehaviour=I, maxLength=20, sysNumber=0.0, core=true, businessType=A, t24Name=LC.CLIENT.REFERENCE)
+    }
+    LC_CLIENT_REFERENCE__CONTRACT_ID
+    {
+        CONTRACT_ID : T24BusinessTypes:A required
+            @i18n:Label (en="Contract Id")
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=1.0, core=true, t24Name=CONTRACT.ID)
     }
     LC_COLLECTION_DUE
         @i18n:Description (en="")
@@ -416,6 +421,11 @@ Classes {
         CLOSING_DATE -> LC_Foundation:LC_COLLECTION_DUE PK required
             @i18n:Label (en="Closing Date")
             @t24:i (align=L, inputBehaviour=I, maxLength=11, sysNumber=0.0, core=true, businessType=T, t24Name=CLOSING.DATE, mask="DD MMM YYY")
+        L_C_NUMBER_DRAWING -> byValue LC_Foundation:LC_COLLECTION_DUE__L_C_NUMBER_DRAWING *
+            @t24:i (t24Name=L.C.NUMBER.DRAWING)
+    }
+    LC_COLLECTION_DUE__L_C_NUMBER_DRAWING
+    {
         L_C_NUMBER_DRAWING : T24BusinessTypes:A
             @t24:i (align=L, inputBehaviour=I, maxLength=19, sysNumber=1.0, core=true, t24Name=L.C.NUMBER.DRAWING)
     }
@@ -426,6 +436,11 @@ Classes {
         CUSTOMER_CODE -> LC_Foundation:LC_CUSTOMER_REFERENCE PK required
             @i18n:Label (en=Customer)
             @t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=0.0, core=true, businessType=CUS, t24Name=CUSTOMER.CODE)
+        L_C_NUMBER -> byValue LC_Foundation:LC_CUSTOMER_REFERENCE__L_C_NUMBER *
+            @t24:i (t24Name=L.C.NUMBER)
+    }
+    LC_CUSTOMER_REFERENCE__L_C_NUMBER
+    {
         L_C_NUMBER : T24BusinessTypes:A
             @t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=1.0, core=true, t24Name=L.C.NUMBER)
     }
@@ -457,7 +472,7 @@ Classes {
             @t24:i (align=R, inputBehaviour=I, maxLength=16, sysNumber=12.0, core=true, t24Name=GRACE.AMOUNT)
         GRACE_AMRT_TODTE : T24BusinessTypes:AMT
             @t24:i (align=R, inputBehaviour=I, maxLength=16, sysNumber=13.0, core=true, t24Name=GRACE.AMRT.TODTE)
-        GRACE_DAYS : mml:Integer
+        GRACE_DAYS : T24BusinessTypes:N
             @i18n:Label (en="Grace Days")
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=11.0, core=true, t24Name=GRACE.DAYS)
         LD_AMORT_TO_DTE : T24BusinessTypes:AMT
@@ -466,7 +481,7 @@ Classes {
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=7.0, core=true, t24Name=LOAD.AMOUNT, typeModifiers="2")
         LOAD_RATE : T24BusinessTypes:R
             @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=6.0, core=true, t24Name=LOAD.RATE)
-        NEXT_AMEND_NO : mml:Integer
+        NEXT_AMEND_NO : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=20.0, core=true, t24Name=NEXT.AMEND.NO)
         START_DATE -> byValue LC_Foundation:LC_DISCOUNT_BALANCES__START_DATE *
             @t24:i (t24Name=START.DATE)
@@ -497,6 +512,11 @@ Classes {
         CUSTOMER_CODE -> LC_Foundation:LC_EXTERNAL_REFERENCE PK required
             @i18n:Label (en=Customer)
             @t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=0.0, core=true, businessType=A, t24Name=CUSTOMER.CODE)
+        L_C_NUMBER -> byValue LC_Foundation:LC_EXTERNAL_REFERENCE__L_C_NUMBER *
+            @t24:i (t24Name=L.C.NUMBER)
+    }
+    LC_EXTERNAL_REFERENCE__L_C_NUMBER
+    {
         L_C_NUMBER : T24BusinessTypes:A
             @t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=1.0, core=true, t24Name=L.C.NUMBER)
     }

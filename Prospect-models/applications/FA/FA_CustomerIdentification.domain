@@ -58,7 +58,7 @@ Classes {
             @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=57.0, core=true, t24Name=CHANGE.REASON)
         CITIZENSHIP -> byValue FA_CustomerIdentification:FATCA_CUSTOMER_SUPPLEMENTARY_INFO__CITIZENSHIP *
             @t24:i (t24Name=CITIZENSHIP)
-        CLIENT_TYPE : FA_CustomerIdentification:FATCA_CUSTOMER_SUPPLEMENTARY_INFO__CLIENT_TYPE
+        CLIENT_TYPE : FA_CustomerIdentification:FATCA_CUSTOMER_SUPPLEMENTARY_INFO__CLIENT_TYPE required
             @i18n:Label (en="Client Type")
             @i18n:Tooltip (en="Define the type of client")
             @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=1.0, core=true, t24Name=CLIENT.TYPE)
@@ -347,7 +347,7 @@ Classes {
             @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=47.0, core=true, t24Name=LEGAL.ENTITY.TYPE)
         NATIONALITY -> byValue FA_CustomerIdentification:FATCA_CUSTOMER_SUPPLEMENTARY_INFO__ROLE_TYPE__NATIONALITY *
             @t24:i (t24Name=NATIONALITY)
-        PRCNT_OWNERSHIP : mml:Integer
+        PRCNT_OWNERSHIP : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=42.0, core=true, t24Name=PRCNT.OWNERSHIP)
         RESIDENCE -> ST_Config:COUNTRY
             @i18n:Label (en=Residence)
@@ -424,7 +424,7 @@ Classes {
     }
     FATCA_FCSI_AMENDMENTS__EFFECTIVE_DATE
     {
-        EFFECTIVE_DATE : T24BusinessTypes:D
+        EFFECTIVE_DATE : T24BusinessTypes:D required
             @i18n:Label (en="Effective Date")
             @i18n:Tooltip (en="Effective date of the transaction")
             @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=1.0, core=true, t24Name=EFFECTIVE.DATE)
@@ -432,7 +432,7 @@ Classes {
             @i18n:Label (en="Account Classification")
             @i18n:Tooltip (en="Account Classification")
             @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=2.0, core=true, t24Name=FATCA.STATUS)
-        FCSI_CURR_NO : mml:Integer
+        FCSI_CURR_NO : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=9, sysNumber=3.0, core=true, t24Name=FCSI.CURR.NO)
     }
     FATCA_ROLE_CUSTOMER
@@ -443,7 +443,12 @@ Classes {
             @i18n:Label (en="Customer No")
             @i18n:Tooltip (en="Identifies the Customer for the transaction.")
             @t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=0.0, core=true, businessType=CUS, t24Name=CUSTOMER.NO)
-        CUS_SUP_INFO_ID : T24BusinessTypes:ANY
+        CUS_SUP_INFO_ID -> byValue FA_CustomerIdentification:FATCA_ROLE_CUSTOMER__CUS_SUP_INFO_ID *
+            @t24:i (t24Name=CUS.SUP.INFO.ID)
+    }
+    FATCA_ROLE_CUSTOMER__CUS_SUP_INFO_ID
+    {
+        CUS_SUP_INFO_ID : T24BusinessTypes:ANY required
             @t24:i (align=L, inputBehaviour=I, maxLength=10, sysNumber=1.0, core=true, t24Name=CUS.SUP.INFO.ID)
     }
     FATCA_STATUS_CONDITION
@@ -532,7 +537,7 @@ Classes {
             @t24:i (align=L, inputBehaviour=I, maxLength=50, sysNumber=1.0, core=true, t24Name=DECISION.FIELD)
         DECISION_VALUE -> FA_Config:FATCA_FORM_TYPE
             @t24:i (align=L, inputBehaviour=I, maxLength=50, sysNumber=3.0, core=true, businessType=ANY, t24Name=DECISION.VALUE)
-        LEVEL : mml:Integer
+        LEVEL : T24BusinessTypes:N
             @i18n:Label (en=Level)
             @t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=4.0, core=true, t24Name=LEVEL)
         OPERAND : FA_CustomerIdentification:FATCA_STATUS_CONDITION__DECISION_FIELD__OPERAND
@@ -612,7 +617,7 @@ Classes {
     }
     FATCA_W9_EXEMPTION_CODES__DESCRIPTION
     {
-        DESCRIPTION : T24BusinessTypes:ANY
+        DESCRIPTION : T24BusinessTypes:ANY required
             @i18n:Label (en=Description)
             @i18n:Tooltip (en=Description)
             @t24:i (align=L, inputBehaviour=I, maxLength=50, multiLanguage=true, sysNumber=1.0, core=true, t24Name=DESCRIPTION)
@@ -634,20 +639,34 @@ Classes {
         @i18n:Description (en="")
         @t24:i (t24Name=FA.CUSTOMER.RELATIONSHIP.WORK, level=C, type=T, allowedFunctions="L P S", localRefAllowed=false)
     {
+        CUST_REL_ID -> byValue FA_CustomerIdentification:FA_CUSTOMER_RELATIONSHIP_WORK__CUST_REL_ID *
+            @t24:i (t24Name=CUST.REL.ID)
+        ID -> FA_CustomerIdentification:FA_CUSTOMER_RELATIONSHIP_WORK PK required
+            @i18n:Label (en="Transaction Ref")
+            @i18n:Tooltip (en="Transaction Reference")
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=0.0, core=true, businessType=A, t24Name="@ID")
+    }
+    FA_CUSTOMER_RELATIONSHIP_WORK__CUST_REL_ID
+    {
         CUST_REL_ID : T24BusinessTypes:A
             @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=1.0, core=true, t24Name=CUST.REL.ID)
-        _ID -> FA_CustomerIdentification:FA_CUSTOMER_RELATIONSHIP_WORK PK required
-            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=0.0, core=true, businessType=A, t24Name=.ID)
     }
     FA_TAX_STATUS_NO_CONCAT
         @i18n:Description (en="")
         @t24:i (t24Name=FA.TAX.STATUS.NO.CONCAT, level=C, type=T, allowedFunctions="L P S", localRefAllowed=false)
     {
+        ID -> FA_CustomerIdentification:FA_TAX_STATUS_NO_CONCAT PK required
+            @i18n:Label (en="Transaction Ref")
+            @i18n:Tooltip (en="Transaction Reference")
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=0.0, core=true, businessType=A, t24Name="@ID")
+        TAX_STATUS_ID -> byValue FA_CustomerIdentification:FA_TAX_STATUS_NO_CONCAT__TAX_STATUS_ID *
+            @t24:i (t24Name=TAX.STATUS.ID)
+    }
+    FA_TAX_STATUS_NO_CONCAT__TAX_STATUS_ID
+    {
         TAX_STATUS_ID -> FA_Config:FATCA_TAX_STATUS
             @i18n:Label (en="Tax Status Id")
             @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=1.0, core=true, businessType=A, t24Name=TAX.STATUS.ID)
-        _ID -> FA_CustomerIdentification:FA_TAX_STATUS_NO_CONCAT PK required
-            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=0.0, core=true, businessType=A, t24Name=.ID)
     }
 }
 Enumerations {

@@ -141,7 +141,7 @@ Classes {
         DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
             @i18n:Label (en="Dept Code")
             @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=10.0, core=true, t24Name=DEPT.CODE)
-        FILE_UPLOAD : T24BusinessTypes:ATT
+        FILE_UPLOAD : T24BusinessTypes:ATT required
             @i18n:Label (en="File Upload")
             @t24:i (align=L, inputBehaviour=I, maxLength=50, sysNumber=2.0, core=true, t24Name=FILE.UPLOAD)
         INPUTTER -> byValue IM_Foundation:IM_DOCUMENT_UPLOAD__INPUTTER *
@@ -149,7 +149,7 @@ Classes {
         RECORD_STATUS : T24BusinessTypes:STAT
             @i18n:Label (en="Record Status")
             @t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=4.0, core=true, t24Name=RECORD.STATUS)
-        UPLOAD_ID -> IM_Foundation:IM_DOCUMENT_IMAGE
+        UPLOAD_ID -> IM_Foundation:IM_DOCUMENT_IMAGE required
             @i18n:Label (en="Upload ID")
             @t24:i (align=L, inputBehaviour=I, maxLength=12, sysNumber=1.0, core=true, businessType=A, t24Name=UPLOAD.ID)
         UPLOAD_NAME -> IM_Foundation:IM_DOCUMENT_UPLOAD PK required
@@ -237,11 +237,11 @@ Classes {
     }
     IM_DOC_IMAGE_PARAMETER__IMAGE_TYPE
     {
-        IMAGE_DECRYPT : T24BusinessTypes:SS
+        IMAGE_DECRYPT : T24BusinessTypes:SS required
             @t24:i (align=L, inputBehaviour=I, maxLength=20, sysNumber=3.0, core=true, t24Name=IMAGE.DECRYPT)
-        IMAGE_ENCRYPT : IM_Foundation:IM_DOC_IMAGE_PARAMETER__IMAGE_TYPE__IMAGE_ENCRYPT
+        IMAGE_ENCRYPT : IM_Foundation:IM_DOC_IMAGE_PARAMETER__IMAGE_TYPE__IMAGE_ENCRYPT required
             @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=2.0, core=true, t24Name=IMAGE.ENCRYPT)
-        IMAGE_TYPE -> IM_Foundation:IM_IMAGE_TYPE
+        IMAGE_TYPE -> IM_Foundation:IM_IMAGE_TYPE required
             @i18n:Label (en="Image Type")
             @t24:i (align=L, inputBehaviour=I, maxLength=15, sysNumber=1.0, core=true, businessType=SS, t24Name=IMAGE.TYPE)
     }
@@ -283,14 +283,14 @@ Classes {
             @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=21.0, core=true, t24Name=DEPT.CODE)
         DESCRIPTION -> byValue IM_Foundation:IM_IMAGE_TYPE__DESCRIPTION *
             @t24:i (t24Name=DESCRIPTION)
-        FILE_LOCATION : IM_Foundation:IM_IMAGE_TYPE__FILE_LOCATION
+        FILE_LOCATION : IM_Foundation:IM_IMAGE_TYPE__FILE_LOCATION required
             @t24:i (align=L, inputBehaviour=I, maxLength=6, sysNumber=4.0, core=true, t24Name=FILE.LOCATION)
         IMAGE_NAME -> IM_Foundation:IM_IMAGE_TYPE PK required
             @i18n:Label (en=Image)
             @t24:i (align=L, inputBehaviour=I, maxLength=15, sysNumber=0.0, core=true, businessType=A, t24Name=IMAGE.NAME)
         INPUTTER -> byValue IM_Foundation:IM_IMAGE_TYPE__INPUTTER *
             @t24:i (t24Name=INPUTTER)
-        PATH : T24BusinessTypes:A
+        PATH : T24BusinessTypes:A required
             @i18n:Label (en="Image Storage Path")
             @t24:i (align=L, inputBehaviour=I, maxLength=100, sysNumber=3.0, core=true, t24Name=PATH)
         RECORD_STATUS : T24BusinessTypes:STAT
@@ -328,7 +328,7 @@ Classes {
     }
     IM_IMAGE_TYPE__DESCRIPTION
     {
-        DESCRIPTION : T24BusinessTypes:A
+        DESCRIPTION : T24BusinessTypes:A required
             @i18n:Label (en=Description)
             @i18n:Tooltip (en=Description)
             @t24:i (align=L, inputBehaviour=I, maxLength=35, multiLanguage=true, sysNumber=1.0, core=true, t24Name=DESCRIPTION)
@@ -344,10 +344,15 @@ Classes {
         @i18n:Description (en="")
         @t24:i (t24Name=IM.REFERENCE, level=I, type=T, allowedFunctions="L P S", localRefAllowed=false)
     {
-        IM_DOCUMENT_IMAGE : T24BusinessTypes:A
-            @t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=1.0, core=true, t24Name=IM.DOCUMENT.IMAGE)
+        IM_DOCUMENT_IMAGE -> byValue IM_Foundation:IM_REFERENCE__IM_DOCUMENT_IMAGE *
+            @t24:i (t24Name=IM.DOCUMENT.IMAGE)
         IM_REFERENCE -> IM_Foundation:IM_REFERENCE PK required
             @t24:i (align=L, inputBehaviour=I, maxLength=31, sysNumber=0.0, core=true, businessType=ANY, t24Name=IM.REFERENCE)
+    }
+    IM_REFERENCE__IM_DOCUMENT_IMAGE
+    {
+        IM_DOCUMENT_IMAGE : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=1.0, core=true, t24Name=IM.DOCUMENT.IMAGE)
     }
 }
 Enumerations {

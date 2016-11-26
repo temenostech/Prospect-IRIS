@@ -50,11 +50,11 @@ Classes {
         DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
             @i18n:Label (en="Dept Code")
             @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=43.0, core=true, t24Name=DEPT.CODE)
-        DESCRIPTION : T24BusinessTypes:A
+        DESCRIPTION : T24BusinessTypes:A required
             @i18n:Label (en=Description)
             @i18n:Tooltip (en=Description)
             @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=1.0, core=true, t24Name=DESCRIPTION)
-        FREQUENCY : T24BusinessTypes:FQU
+        FREQUENCY : T24BusinessTypes:FQU required
             @i18n:Label (en=Frequency)
             @i18n:Tooltip (en=Frequency)
             @t24:i (align=L, inputBehaviour=I, maxLength=18, sysNumber=3.0, core=true, t24Name=FREQUENCY, mask="RDDDD DD  D #####")
@@ -104,7 +104,7 @@ Classes {
         SWEEP_STYLE : T24BusinessTypes:N
             @i18n:Label (en="Sweep Style")
             @t24:i (align=R, inputBehaviour=N, maxLength=1, core=false, t24Name=SWEEP.STYLE, genOperation="SWEEP.TYPE>AC.SWEEP.TYPE>SWEEP.STYLE")
-        SWEEP_TYPE -> ST_Sweeping:AC_SWEEP_TYPE
+        SWEEP_TYPE -> ST_Sweeping:AC_SWEEP_TYPE required
             @i18n:Label (en="Sweep Type")
             @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=2.0, core=true, businessType=A, t24Name=SWEEP.TYPE)
         TAX_AMOUNT : T24BusinessTypes:AMT
@@ -123,7 +123,12 @@ Classes {
             @i18n:Label (en="Account No")
             @i18n:Tooltip (en="Indicates the Account Number")
             @t24:i (align=R, inputBehaviour=I, maxLength=35, sysNumber=0.0, core=true, businessType=ACC, t24Name=ACCOUNT.ID, typeModifiers="D")
-        ACCT_LINK -> RS_Sweeping:AC_ACCOUNT_LINK
+        ACCT_LINK -> byValue RS_Sweeping:AC_ACCOUNT_LINK_CONCAT__ACCT_LINK *
+            @t24:i (t24Name=ACCT.LINK)
+    }
+    AC_ACCOUNT_LINK_CONCAT__ACCT_LINK
+    {
+        ACCT_LINK -> RS_Sweeping:AC_ACCOUNT_LINK required
             @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=1.0, core=true, businessType=A, t24Name=ACCT.LINK)
     }
     AC_ACCOUNT_LINK_ERROR
@@ -160,11 +165,11 @@ Classes {
     {
         K_DATE : T24BusinessTypes:D
             @i18n:Label (en=Date)
-            @t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=2.0, core=true, t24Name=K.DATE)
+            @t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=2.0, core=false, t24Name=K.DATE)
     }
     AC_ACCOUNT_LINK__ACCOUNT_FROM
     {
-        ACCOUNT_FROM -> AC_AccountOpening:ACCOUNT
+        ACCOUNT_FROM -> AC_AccountOpening:ACCOUNT required
             @i18n:Label (en="From Account")
             @i18n:Tooltip (en="From Account")
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=10.0, core=true, t24Name=ACCOUNT.FROM)
@@ -179,7 +184,7 @@ Classes {
     }
     AC_ACCOUNT_LINK__ACCOUNT_TO
     {
-        ACCOUNT_TO -> AC_AccountOpening:ACCOUNT
+        ACCOUNT_TO -> AC_AccountOpening:ACCOUNT required
             @i18n:Label (en="To Account")
             @i18n:Tooltip (en="To Account")
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=5.0, core=true, t24Name=ACCOUNT.TO)

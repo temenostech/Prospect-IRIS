@@ -10,13 +10,13 @@ Classes {
         @i18n:Description (en="")
         @t24:i (t24Name=PAYMENT.ORDER.COUNTRY.RULES, nonStop=true, level=I, type=H, allowedFunctions="A C D E I L P Q S", localRefAllowed=true)
     {
-        ALLOW_BIC : PI_Config:PAYMENT_ORDER_COUNTRY_RULES__ALLOW_BIC
+        ALLOW_BIC : PI_Config:PAYMENT_ORDER_COUNTRY_RULES__ALLOW_BIC required
             @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=3.0, core=true, t24Name=ALLOW.BIC)
-        ALLOW_IBAN : PI_Config:PAYMENT_ORDER_COUNTRY_RULES__ALLOW_IBAN
+        ALLOW_IBAN : PI_Config:PAYMENT_ORDER_COUNTRY_RULES__ALLOW_IBAN required
             @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=2.0, core=true, t24Name=ALLOW.IBAN)
         ALLOW_PAYMENT_CURRENCY -> byValue PI_Config:PAYMENT_ORDER_COUNTRY_RULES__ALLOW_PAYMENT_CURRENCY *
             @t24:i (t24Name=ALLOW.PAYMENT.CURRENCY)
-        ALLOW_SORT_CODE : PI_Config:PAYMENT_ORDER_COUNTRY_RULES__ALLOW_SORT_CODE
+        ALLOW_SORT_CODE : PI_Config:PAYMENT_ORDER_COUNTRY_RULES__ALLOW_SORT_CODE required
             @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=4.0, core=true, t24Name=ALLOW.SORT.CODE)
         AUDITOR_CODE : T24BusinessTypes:A
             @i18n:Label (en="Auditor Code")
@@ -141,6 +141,10 @@ Classes {
             @i18n:Label (en=Authoriser)
             @i18n:Tooltip (en="Indicates the User who Authorises the record")
             @t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=21.0, core=true, t24Name=AUTHORISER)
+        CONNECTION_API : T24BusinessTypes:HOOK
+            @t24:i (align=L, inputBehaviour=I, maxLength=65, sysNumber=8.0, core=true, t24Name=CONNECTION.API)
+        CONNECTION_RULE -> EB_RulesEngine:EB_RULE_GATEWAY
+            @t24:i (align=L, inputBehaviour=I, maxLength=65, sysNumber=7.0, core=true, businessType=A, t24Name=CONNECTION.RULE)
         CO_CODE -> ST_CompanyCreation:COMPANY
             @i18n:Label (en=Company)
             @t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=22.0, core=true, businessType=A, t24Name=CO.CODE, mask="R##-###-####")
@@ -156,8 +160,6 @@ Classes {
             @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=23.0, core=true, t24Name=DEPT.CODE)
         EB_MAPPING_RECORD -> EB_SystemTables:EB_MAPPING_SOURCE
             @t24:i (align=L, inputBehaviour=I, maxLength=65, sysNumber=6.0, core=true, businessType=A, t24Name=EB.MAPPING.RECORD)
-        FINAL_PAYMENT_STATUS -> byValue PI_Config:PAYMENT_ORDER_PARAMETER__FINAL_PAYMENT_STATUS *
-            @t24:i (t24Name=FINAL.PAYMENT.STATUS)
         ID -> PI_Config:PAYMENT_ORDER_PARAMETER PK required
             @i18n:Label (en="Transaction Ref")
             @i18n:Tooltip (en="Transaction Reference")
@@ -168,7 +170,7 @@ Classes {
             @t24:i (align=L, inputBehaviour=I, maxLength=65, sysNumber=5.0, core=true, t24Name=MAPPING.RTN)
         OVERRIDE -> byValue PI_Config:PAYMENT_ORDER_PARAMETER__OVERRIDE *
             @t24:i (t24Name=OVERRIDE)
-        PAYMENT_CONNECTION_METHOD : PI_Config:PAYMENT_ORDER_PARAMETER__PAYMENT_CONNECTION_METHOD
+        PAYMENT_CONNECTION_METHOD : PI_Config:PAYMENT_ORDER_PARAMETER__PAYMENT_CONNECTION_METHOD required
             @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=1.0, core=true, t24Name=PAYMENT.CONNECTION.METHOD)
         RECORD_STATUS : T24BusinessTypes:STAT
             @i18n:Label (en="Record Status")
@@ -186,9 +188,7 @@ Classes {
         RESERVED_6 : T24BusinessTypes:A
             @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=9.0, core=true, t24Name=RESERVED.6)
         RESERVED_7 : T24BusinessTypes:A
-            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=8.0, core=true, t24Name=RESERVED.7)
-        RESERVED_8 : T24BusinessTypes:A
-            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=7.0, core=true, t24Name=RESERVED.8)
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=3.0, core=true, t24Name=RESERVED.7)
         WAREHOUSE_REQD : PI_Config:PAYMENT_ORDER_PARAMETER__WAREHOUSE_REQD
             @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=2.0, core=true, t24Name=WAREHOUSE.REQD)
     }
@@ -198,11 +198,6 @@ Classes {
             @i18n:Label (en="Date time")
             @i18n:Tooltip (en="Date and time when record was input or authorised")
             @t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=20.0, core=true, t24Name=DATE.TIME, mask="RDD DD  DD ##:##")
-    }
-    PAYMENT_ORDER_PARAMETER__FINAL_PAYMENT_STATUS
-    {
-        FINAL_PAYMENT_STATUS : T24BusinessTypes:A
-            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=3.0, core=true, t24Name=FINAL.PAYMENT.STATUS)
     }
     PAYMENT_ORDER_PARAMETER__INPUTTER
     {
@@ -234,7 +229,7 @@ Classes {
             @t24:i (t24Name=ALLOWED.PAYMENT.CCY)
         ALLOW_BIC : PI_Config:PAYMENT_ORDER_PRODUCT__ALLOW_BIC
             @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=21.0, core=true, t24Name=ALLOW.BIC)
-        ALLOW_FUTURE_DATE : PI_Config:PAYMENT_ORDER_PRODUCT__ALLOW_FUTURE_DATE
+        ALLOW_FUTURE_DATE : PI_Config:PAYMENT_ORDER_PRODUCT__ALLOW_FUTURE_DATE required
             @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=9.0, core=true, t24Name=ALLOW.FUTURE.DATE)
         ALLOW_FX : PI_Config:PAYMENT_ORDER_PRODUCT__ALLOW_FX
             @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=13.0, core=true, t24Name=ALLOW.FX)
@@ -244,7 +239,7 @@ Classes {
             @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=20.0, core=true, t24Name=ALLOW.IBAN)
         ALLOW_REQUESTED_CURRENCY : PI_Config:PAYMENT_ORDER_PRODUCT__ALLOW_REQUESTED_CURRENCY
             @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=8.0, core=true, t24Name=ALLOW.REQUESTED.CURRENCY)
-        ALLOW_REQUIRED_CREDIT_VALUE : PI_Config:PAYMENT_ORDER_PRODUCT__ALLOW_REQUIRED_CREDIT_VALUE
+        ALLOW_REQUIRED_CREDIT_VALUE : PI_Config:PAYMENT_ORDER_PRODUCT__ALLOW_REQUIRED_CREDIT_VALUE required
             @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=10.0, core=true, t24Name=ALLOW.REQUIRED.CREDIT.VALUE)
         ALLOW_SORT_CODE : PI_Config:PAYMENT_ORDER_PRODUCT__ALLOW_SORT_CODE
             @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=23.0, core=true, t24Name=ALLOW.SORT.CODE)
@@ -309,7 +304,7 @@ Classes {
             @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=2.0, core=true, t24Name=PAYMENT.PRODUCT.GROUP)
         PAY_THROUGH_BENEFICIARY : PI_Config:PAYMENT_ORDER_PRODUCT__PAY_THROUGH_BENEFICIARY
             @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=4.0, core=true, t24Name=PAY.THROUGH.BENEFICIARY)
-        RANK : mml:Integer
+        RANK : T24BusinessTypes:N
             @i18n:Label (en=Rank)
             @t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=3.0, core=true, t24Name=RANK)
         RATE_TOLERANCE_PERCENT : T24BusinessTypes:R
@@ -319,8 +314,6 @@ Classes {
             @t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=61.0, core=true, t24Name=RECORD.STATUS)
         RESERVED_1 : T24BusinessTypes:A
             @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=58.0, core=true, t24Name=RESERVED.1)
-        RESERVED_10 : T24BusinessTypes:A
-            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=49.0, core=true, t24Name=RESERVED.10)
         RESERVED_2 : T24BusinessTypes:A
             @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=57.0, core=true, t24Name=RESERVED.2)
         RESERVED_3 : T24BusinessTypes:A
@@ -339,6 +332,8 @@ Classes {
             @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=50.0, core=true, t24Name=RESERVED.9)
         VALIDATE_API : T24BusinessTypes:HOOK
             @t24:i (align=L, inputBehaviour=I, maxLength=65, sysNumber=31.0, core=true, t24Name=VALIDATE.API)
+        WAREHOUSE_REQD : PI_Config:PAYMENT_ORDER_PRODUCT__WAREHOUSE_REQD
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=49.0, core=true, t24Name=WAREHOUSE.REQD)
         WEBLINK : T24BusinessTypes:TEXT
             @t24:i (align=L, inputBehaviour=I, maxLength=70, sysNumber=36.0, core=true, t24Name=WEBLINK)
     }
@@ -394,7 +389,7 @@ Classes {
     }
     PAYMENT_ORDER_PRODUCT__DESCRIPTION
     {
-        DESCRIPTION : T24BusinessTypes:A
+        DESCRIPTION : T24BusinessTypes:A required
             @i18n:Label (en=Description)
             @i18n:Tooltip (en=Description)
             @t24:i (align=L, inputBehaviour=I, maxLength=35, multiLanguage=true, sysNumber=1.0, core=true, t24Name=DESCRIPTION)
@@ -489,6 +484,7 @@ Enumerations {
         SGIBG=SGIBG
         USABA=USABA
     PAYMENT_ORDER_PARAMETER__PAYMENT_CONNECTION_METHOD : mml:string
+        CONDITIONAL=CONDITIONAL
         EXTERNAL=EXTERNAL
         TPS=TPS
     PAYMENT_ORDER_PARAMETER__WAREHOUSE_REQD : mml:string
@@ -600,6 +596,9 @@ Enumerations {
         DP=DP
         IP=IP
     PAYMENT_ORDER_PRODUCT__PAY_THROUGH_BENEFICIARY : mml:string
+        NO=NO
+        YES=YES
+    PAYMENT_ORDER_PRODUCT__WAREHOUSE_REQD : mml:string
         NO=NO
         YES=YES
 }

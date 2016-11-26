@@ -6,6 +6,17 @@ Domain RE_Consolidation
 namespace "http://www.temenos.com/t24/RE_Consolidation"
 metamodelVersion 1.30.6
 Classes {
+    ACCOUNT_ACT
+        @i18n:Description (en="")
+        @t24:i (t24Name=ACCOUNT.ACT, level=F, type=T, allowedFunctions="L P S", localRefAllowed=false)
+    {
+        ACCT_HIST_NO : T24BusinessTypes:ANY PK required
+            @t24:i (align=L, inputBehaviour=N, maxLength=25, sysNumber=0.0, core=true, t24Name=ACCT.HIST.NO)
+        CHANGE_DATE : T24BusinessTypes:D
+            @i18n:Label (en="Change Date")
+            @i18n:Tooltip (en="Date on which the arrangement would change")
+            @t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=1.0, core=true, t24Name=CHANGE.DATE)
+    }
     CONSOLIDATE_ASST_LIAB
         @i18n:Description (en="")
         @t24:i (t24Name=CONSOLIDATE.ASST.LIAB, level=F, type=L, allowedFunctions="L P S", localRefAllowed=false)
@@ -26,9 +37,7 @@ Classes {
             @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=17.0, core=true, t24Name=DATE.LAST.UPDATE)
         K_CURRENCY -> ST_CurrencyConfig:CURRENCY
             @i18n:Label (en=Ccy)
-            @t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=4.0, core=true, businessType=CCY, t24Name=K.CURRENCY)
-        K_TYPE -> byValue RE_Consolidation:CONSOLIDATE_ASST_LIAB__K_TYPE *
-            @t24:i (t24Name=K.TYPE)
+            @t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=4.0, core=false, businessType=CCY, t24Name=K.CURRENCY)
         POSITION_TYPE -> RE_Config:FX_POS_TYPE
             @i18n:Label (en="Position Type")
             @i18n:Tooltip (en="Position Type")
@@ -63,12 +72,6 @@ Classes {
             @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=12.0, core=true, t24Name=VARIABLE.8)
         VARIABLE_9 : T24BusinessTypes:ANY
             @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=13.0, core=true, t24Name=VARIABLE.9)
-    }
-    CONSOLIDATE_ASST_LIAB__K_TYPE
-    {
-        K_TYPE : T24BusinessTypes:A
-            @i18n:Label (en=Type)
-            @t24:i (align=L, inputBehaviour=N, maxLength=10, sysNumber=18.0, core=true, t24Name=K.TYPE)
     }
     CONSOLIDATE_ASST_LIAB__TOTAL_BAL
     {
@@ -105,7 +108,7 @@ Classes {
     }
     CONSOLIDATE_ASST_LIAB__TYPE__MAT_DATE
     {
-        INTER_KEY : mml:Integer
+        INTER_KEY : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=29.0, core=true, t24Name=INTER.KEY)
         INTER_RATE : T24BusinessTypes:R
             @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=28.0, core=true, t24Name=INTER.RATE)
@@ -196,7 +199,7 @@ Classes {
     {
         K_CURRENCY -> ST_CurrencyConfig:CURRENCY
             @i18n:Label (en=Ccy)
-            @t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=15.0, core=true, businessType=CCY, t24Name=K.CURRENCY)
+            @t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=15.0, core=false, businessType=CCY, t24Name=K.CURRENCY)
     }
     RE_CONSOL_ASSET_LINE
         @i18n:Description (en="")
@@ -206,8 +209,6 @@ Classes {
             @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=0.0, core=true, businessType=A, t24Name=KEY.VARIABLE.1)
         K_CURRENCY -> byValue RE_Consolidation:RE_CONSOL_ASSET_LINE__K_CURRENCY *
             @t24:i (t24Name=K.CURRENCY)
-        K_TYPE -> byValue RE_Consolidation:RE_CONSOL_ASSET_LINE__K_TYPE *
-            @t24:i (t24Name=K.TYPE)
         VARIABLE_1 -> byValue RE_Consolidation:RE_CONSOL_ASSET_LINE__VARIABLE_1 *
             @t24:i (t24Name=VARIABLE.1)
     }
@@ -215,20 +216,14 @@ Classes {
     {
         K_CURRENCY : T24BusinessTypes:CCY
             @i18n:Label (en=Ccy)
-            @t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=14.0, core=true, t24Name=K.CURRENCY)
-    }
-    RE_CONSOL_ASSET_LINE__K_TYPE
-    {
-        K_TYPE : T24BusinessTypes:A
-            @i18n:Label (en=Type)
-            @t24:i (align=L, inputBehaviour=N, maxLength=7, sysNumber=13.0, core=true, t24Name=K.TYPE)
+            @t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=14.0, core=false, t24Name=K.CURRENCY)
     }
     RE_CONSOL_ASSET_LINE__VARIABLE_1
     {
         APPLIC_ID : T24BusinessTypes:A
             @i18n:Label (en="Application Id")
             @t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=17.0, core=true, t24Name=APPLIC.ID)
-        CCY_MARKET : mml:Integer
+        CCY_MARKET : T24BusinessTypes:N
             @i18n:Label (en="Ccy Market")
             @t24:i (align=R, inputBehaviour=I, maxLength=1, sysNumber=16.0, core=true, t24Name=CCY.MARKET)
         CURRENCY : T24BusinessTypes:CCY
@@ -271,7 +266,7 @@ Classes {
     {
         MAT_DATE_RAN : T24BusinessTypes:A
             @t24:i (align=L, inputBehaviour=I, maxLength=4, sysNumber=20.0, core=true, t24Name=MAT.DATE.RAN)
-        REPORT_LINE : mml:Integer
+        REPORT_LINE : T24BusinessTypes:N
             @i18n:Label (en="Report Line")
             @i18n:Tooltip (en="@(20,0)Report Lines")
             @t24:i (align=R, inputBehaviour=I, maxLength=4, sysNumber=19.0, core=true, t24Name=REPORT.LINE)
@@ -286,7 +281,12 @@ Classes {
         CONSOL_KEY -> RE_Consolidation:RE_CONSOL_BONDS PK required
             @i18n:Label (en="Consol Key")
             @t24:i (align=L, inputBehaviour=I, maxLength=65, sysNumber=0.0, core=true, businessType=ANY, t24Name=CONSOL.KEY)
-        SECURITY_CODE : mml:Integer
+        SECURITY_CODE -> byValue RE_Consolidation:RE_CONSOL_BONDS__SECURITY_CODE *
+            @t24:i (t24Name=SECURITY.CODE)
+    }
+    RE_CONSOL_BONDS__SECURITY_CODE
+    {
+        SECURITY_CODE : T24BusinessTypes:N
             @i18n:Label (en="Security No")
             @i18n:Tooltip (en="Indicates a valid Security")
             @t24:i (align=R, inputBehaviour=I, maxLength=15, sysNumber=1.0, core=true, t24Name=SECURITY.CODE)
@@ -295,12 +295,17 @@ Classes {
         @i18n:Description (en="")
         @t24:i (t24Name=RE.CONSOL.CONTRACT, level=F, type=T, allowedFunctions="L P S", localRefAllowed=false)
     {
-        APPL_ID : T24BusinessTypes:ANY
-            @i18n:Label (en="Application Id")
-            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=1.0, core=true, t24Name=APPL.ID)
+        APPL_ID -> byValue RE_Consolidation:RE_CONSOL_CONTRACT__APPL_ID *
+            @t24:i (t24Name=APPL.ID)
         CONSOL_KEY -> RE_Consolidation:RE_CONSOL_CONTRACT PK required
             @i18n:Label (en="Consol Key")
             @t24:i (align=L, inputBehaviour=I, maxLength=85, sysNumber=0.0, core=true, businessType=ANY, t24Name=CONSOL.KEY)
+    }
+    RE_CONSOL_CONTRACT__APPL_ID
+    {
+        APPL_ID : T24BusinessTypes:ANY required
+            @i18n:Label (en="Application Id")
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=1.0, core=true, t24Name=APPL.ID)
     }
     RE_CONSOL_IC
         @i18n:Description (en="")
@@ -309,7 +314,12 @@ Classes {
         CONSOL_KEY -> RE_Consolidation:RE_CONSOL_IC PK required
             @i18n:Label (en="Consol Key")
             @t24:i (align=L, inputBehaviour=I, maxLength=65, sysNumber=0.0, core=true, businessType=ANY, t24Name=CONSOL.KEY)
-        RECORD_ID -> IC_GroupAccrual:GROUP_ACCRUAL_BALANCES
+        RECORD_ID -> byValue RE_Consolidation:RE_CONSOL_IC__RECORD_ID *
+            @t24:i (t24Name=RECORD.ID)
+    }
+    RE_CONSOL_IC__RECORD_ID
+    {
+        RECORD_ID -> IC_GroupAccrual:GROUP_ACCRUAL_BALANCES required
             @i18n:Label (en="Record Id")
             @t24:i (align=R, inputBehaviour=I, maxLength=35, sysNumber=1.0, core=true, t24Name=RECORD.ID)
     }
@@ -320,8 +330,8 @@ Classes {
         CONSOL_KEY -> RE_Consolidation:RE_CONSOL_PROFIT PK required
             @i18n:Label (en="Consol Key")
             @t24:i (align=L, inputBehaviour=I, maxLength=98, sysNumber=0.0, core=true, businessType=ANY, t24Name=CONSOL.KEY)
-        ENTRY_NO : T24BusinessTypes:A
-            @t24:i (align=L, inputBehaviour=I, maxLength=25, sysNumber=1.0, core=true, t24Name=ENTRY.NO)
+        ENTRY_NO -> byValue RE_Consolidation:RE_CONSOL_PROFIT__ENTRY_NO *
+            @t24:i (t24Name=ENTRY.NO)
     }
     RE_CONSOL_PROFIT_LINE
         @i18n:Description (en="")
@@ -338,7 +348,7 @@ Classes {
     {
         K_CURRENCY : T24BusinessTypes:CCY
             @i18n:Label (en=Ccy)
-            @t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=13.0, core=true, t24Name=K.CURRENCY)
+            @t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=13.0, core=false, t24Name=K.CURRENCY)
     }
     RE_CONSOL_PROFIT_LINE__VARIABLE_1
     {
@@ -379,13 +389,18 @@ Classes {
     {
         PROFIT_SIGN : T24BusinessTypes:A
             @t24:i (align=L, inputBehaviour=I, maxLength=6, sysNumber=17.0, core=true, t24Name=PROFIT.SIGN)
-        REPORT_LINE : mml:Integer
+        REPORT_LINE : T24BusinessTypes:N
             @i18n:Label (en="Report Line")
             @i18n:Tooltip (en="@(20,0)Report Lines")
             @t24:i (align=R, inputBehaviour=I, maxLength=4, sysNumber=16.0, core=true, t24Name=REPORT.LINE)
         REPORT_NAME : T24BusinessTypes:A
             @i18n:Label (en="Report Name")
             @t24:i (align=L, inputBehaviour=I, maxLength=10, sysNumber=15.0, core=true, t24Name=REPORT.NAME)
+    }
+    RE_CONSOL_PROFIT__ENTRY_NO
+    {
+        ENTRY_NO : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=I, maxLength=25, sysNumber=1.0, core=true, t24Name=ENTRY.NO)
     }
     RE_STAT_BAL_REC
         @i18n:Description (en="")
@@ -453,22 +468,22 @@ Classes {
     {
         LINE_NO_ST -> byValue RE_Consolidation:RE_STAT_BAL_REC__REPORT_NAME__LINE_NO_ST *
             @t24:i (t24Name=LINE.NO.ST)
-        REPORT_NAME -> RE_Config:RE_STAT_REPORT_HEAD
+        REPORT_NAME -> RE_Config:RE_STAT_REPORT_HEAD required
             @i18n:Label (en="Report Name")
             @t24:i (align=L, inputBehaviour=I, maxLength=21, sysNumber=2.0, core=true, businessType=A, t24Name=REPORT.NAME)
     }
     RE_STAT_BAL_REC__REPORT_NAME__LINE_NO_ST
     {
-        LINE_NO_END : mml:Integer
+        LINE_NO_END : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=4, sysNumber=4.0, core=true, t24Name=LINE.NO.END)
-        LINE_NO_ST : mml:Integer
+        LINE_NO_ST : T24BusinessTypes:N required
             @t24:i (align=R, inputBehaviour=I, maxLength=4, sysNumber=3.0, core=true, t24Name=LINE.NO.ST)
     }
     RE_STAT_LINE_CONT
         @i18n:Description (en="")
         @t24:i (t24Name=RE.STAT.LINE.CONT, level=F, type=L, allowedFunctions="L P S", localRefAllowed=false)
     {
-        ASSET_OPP_LINE : mml:Integer
+        ASSET_OPP_LINE : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=4, sysNumber=9.0, core=true, t24Name=ASSET.OPP.LINE)
         ASSET_SIGN : T24BusinessTypes:A
             @t24:i (align=L, inputBehaviour=I, maxLength=6, sysNumber=8.0, core=true, t24Name=ASSET.SIGN)
@@ -478,14 +493,11 @@ Classes {
             @t24:i (t24Name=DESC)
         K_DESC -> byValue RE_Consolidation:RE_STAT_LINE_CONT__K_DESC *
             @t24:i (t24Name=K.DESC)
-        K_TYPE : RE_Consolidation:RE_STAT_LINE_CONT__K_TYPE
-            @i18n:Label (en=Type)
-            @t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=1.0, core=true, t24Name=K.TYPE)
         PRFT_CONSOL_KEY -> byValue RE_Consolidation:RE_STAT_LINE_CONT__PRFT_CONSOL_KEY *
             @t24:i (t24Name=PRFT.CONSOL.KEY)
         PROFIT_LINE_SIGN : T24BusinessTypes:A
             @t24:i (align=L, inputBehaviour=I, maxLength=6, sysNumber=10.0, core=true, t24Name=PROFIT.LINE.SIGN)
-        PROFIT_OPP_LINE : mml:Integer
+        PROFIT_OPP_LINE : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=4, sysNumber=11.0, core=true, t24Name=PROFIT.OPP.LINE)
         PROFIT_PERIOD : T24BusinessTypes:A
             @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=12.0, core=true, t24Name=PROFIT.PERIOD)
@@ -502,10 +514,10 @@ Classes {
             @t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=5.0, core=true, t24Name=SUPRESSION)
         TOTAL_ACCUM -> byValue RE_Consolidation:RE_STAT_LINE_CONT__TOTAL_ACCUM *
             @t24:i (t24Name=TOTAL.ACCUM)
-        TOTAL_PRINT : mml:Integer
+        TOTAL_PRINT : T24BusinessTypes:N
             @i18n:Label (en="Total Print")
             @t24:i (align=R, inputBehaviour=I, maxLength=1, sysNumber=3.0, core=true, t24Name=TOTAL.PRINT)
-        TYPE : RE_Consolidation:RE_STAT_LINE_CONT__TYPE
+        TYPE : RE_Consolidation:RE_STAT_LINE_CONT__TYPE required
             @i18n:Label (en=Type)
             @i18n:Tooltip (en=Type)
             @t24:i (align=L, inputBehaviour=I, maxLength=11, sysNumber=1.0, core=true, t24Name=TYPE)
@@ -546,7 +558,7 @@ Classes {
     {
         K_DESC : T24BusinessTypes:A
             @i18n:Label (en=Description)
-            @t24:i (align=L, inputBehaviour=N, maxLength=35, multiLanguage=true, sysNumber=2.0, core=true, t24Name=K.DESC)
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, multiLanguage=true, sysNumber=2.0, core=false, t24Name=K.DESC)
     }
     RE_STAT_LINE_CONT__PRFT_CONSOL_KEY
     {
@@ -564,14 +576,14 @@ Classes {
     }
     RE_STAT_LINE_CONT__RECV_PERIOD
     {
-        RECV_LINE_NO : mml:Integer
+        RECV_LINE_NO : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=4, sysNumber=14.0, core=true, t24Name=RECV.LINE.NO)
         RECV_PERIOD : T24BusinessTypes:A
             @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=13.0, core=true, t24Name=RECV.PERIOD)
     }
     RE_STAT_LINE_CONT__TOTAL_ACCUM
     {
-        TOTAL_ACCUM : mml:Integer
+        TOTAL_ACCUM : T24BusinessTypes:N
             @i18n:Label (en=Accumulator)
             @t24:i (align=R, inputBehaviour=I, maxLength=1, sysNumber=4.0, core=true, t24Name=TOTAL.ACCUM)
     }
@@ -599,7 +611,7 @@ Classes {
         CURRENCY : T24BusinessTypes:CCY
             @i18n:Label (en=Ccy)
             @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=11.0, core=true, t24Name=CURRENCY)
-        CURRENCY_MARKET : mml:Integer
+        CURRENCY_MARKET : T24BusinessTypes:N
             @i18n:Label (en=Market)
             @t24:i (align=R, inputBehaviour=I, maxLength=1, sysNumber=12.0, core=true, t24Name=CURRENCY.MARKET)
         CUSTOMER : T24BusinessTypes:CUS
@@ -610,21 +622,21 @@ Classes {
             @i18n:Label (en="Interest Basis")
             @i18n:Tooltip (en="Indicates the interest day basis")
             @t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=15.0, core=true, t24Name=INTEREST.BASIS)
-        INTEREST_KEY : mml:Integer
+        INTEREST_KEY : T24BusinessTypes:N
             @i18n:Label (en="Interest Key")
             @i18n:Tooltip (en="Indicates key to apply floating rate of interest")
             @t24:i (align=R, inputBehaviour=I, maxLength=4, sysNumber=14.0, core=true, t24Name=INTEREST.KEY)
-        INTEREST_RATE : mml:Integer
+        INTEREST_RATE : T24BusinessTypes:N
             @i18n:Label (en="Interest Rate")
             @i18n:Tooltip (en="Indicates interest rate")
             @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=13.0, core=true, t24Name=INTEREST.RATE)
         NEW_CONSOL_KEY : T24BusinessTypes:A
             @t24:i (align=L, inputBehaviour=I, maxLength=65, sysNumber=3.0, core=true, t24Name=NEW.CONSOL.KEY)
-        NEW_PRODCAT : mml:Integer
+        NEW_PRODCAT : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=18.0, core=true, t24Name=NEW.PRODCAT)
         OLD_CONSOL_KEY : T24BusinessTypes:A
             @t24:i (align=L, inputBehaviour=I, maxLength=65, sysNumber=2.0, core=true, t24Name=OLD.CONSOL.KEY)
-        OLD_PRODCAT : mml:Integer
+        OLD_PRODCAT : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=17.0, core=true, t24Name=OLD.PRODCAT)
         OLD_TYPE -> byValue RE_Consolidation:STATIC_CHANGE_TODAY__SYSTEM_ID__OLD_TYPE *
             @t24:i (t24Name=OLD.TYPE)
@@ -652,10 +664,6 @@ Classes {
     }
 }
 Enumerations {
-    RE_STAT_LINE_CONT__K_TYPE : mml:string
-        DETAIL=DETAIL
-        HEADING=HEADING
-        TOTAL=TOTAL
     RE_STAT_LINE_CONT__SUPRESSION : mml:string
         NO=NO
         Y=Y

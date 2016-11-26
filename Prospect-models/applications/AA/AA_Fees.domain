@@ -16,7 +16,7 @@ Classes {
             @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=28.0, core=true, businessType=A, t24Name=ACCRUAL.RULE)
         ACTION -> byValue AA_Fees:AA_ARR_CHARGE__ACTION *
             @t24:i (t24Name=ACTION)
-        ACTIVITY : T24BusinessTypes:A
+        ACTIVITY : T24BusinessTypes:A required
             @i18n:Label (en=Activity)
             @t24:i (align=L, inputBehaviour=I, maxLength=80, sysNumber=1.0, core=true, t24Name=ACTIVITY)
         ARRANGEMENT_KEY -> AA_Fees:AA_ARR_CHARGE PK required
@@ -53,14 +53,14 @@ Classes {
             @i18n:Label (en="Charge Routine")
             @i18n:Tooltip (en="Complex conditions to calculate the charge amount ")
             @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=11.0, core=true, businessType=A, t24Name=CHARGE.ROUTINE)
-        CHARGE_TYPE : AA_Fees:AA_ARR_CHARGE__CHARGE_TYPE
+        CHARGE_TYPE : AA_Fees:AA_ARR_CHARGE__CHARGE_TYPE required
             @i18n:Label (en="Type ")
             @i18n:Tooltip (en="If Charge is fixed or to be calculated ")
             @t24:i (align=L, inputBehaviour=I, maxLength=10, sysNumber=4.0, core=true, t24Name=CHARGE.TYPE)
         CO_CODE -> ST_CompanyCreation:COMPANY
             @i18n:Label (en=Company)
             @t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=76.0, core=true, businessType=A, t24Name=CO.CODE, mask="R##-###-####")
-        CURRENCY -> ST_CurrencyConfig:CURRENCY
+        CURRENCY -> ST_CurrencyConfig:CURRENCY required
             @i18n:Label (en=Ccy)
             @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=3.0, core=true, businessType=CCY, t24Name=CURRENCY)
         CURR_NO : T24BusinessTypes:N
@@ -114,6 +114,8 @@ Classes {
             @t24:i (t24Name=NR.ATTRIBUTE)
         OVERRIDE -> byValue AA_Fees:AA_ARR_CHARGE__OVERRIDE *
             @t24:i (t24Name=OVERRIDE)
+        OWNING_COMPANY -> ST_CompanyCreation:COMPANY
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=44.0, core=true, businessType=A, t24Name=OWNING.COMPANY)
         PR_ATTRIBUTE -> byValue AA_Fees:AA_ARR_CHARGE__PR_ATTRIBUTE *
             @t24:i (t24Name=PR.ATTRIBUTE)
         RECORD_STATUS : T24BusinessTypes:STAT
@@ -138,15 +140,13 @@ Classes {
         STMT_NOS -> byValue AA_Fees:AA_ARR_CHARGE__STMT_NOS *
             @t24:i (t24Name=STMT.NOS)
         SYS_RESERVE1 : T24BusinessTypes:A
-            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=48.0, core=true, t24Name=SYS.RESERVE1, mvSvExpansionAccess=NOEXPAND)
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=48.0, core=true, t24Name=SYS.RESERVE1)
         SYS_RESERVE2 : T24BusinessTypes:A
-            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=47.0, core=true, t24Name=SYS.RESERVE2, mvSvExpansionAccess=NOEXPAND)
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=47.0, core=true, t24Name=SYS.RESERVE2)
         SYS_RESERVE3 : T24BusinessTypes:A
-            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=46.0, core=true, t24Name=SYS.RESERVE3, mvSvExpansionAccess=NOEXPAND)
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=46.0, core=true, t24Name=SYS.RESERVE3)
         SYS_RESERVE4 : T24BusinessTypes:A
-            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=45.0, core=true, t24Name=SYS.RESERVE4, mvSvExpansionAccess=NOEXPAND)
-        SYS_RESERVE5 : T24BusinessTypes:A
-            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=44.0, core=true, t24Name=SYS.RESERVE5, mvSvExpansionAccess=NOEXPAND)
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=45.0, core=true, t24Name=SYS.RESERVE4)
         SYS_RESERVE6 : T24BusinessTypes:A
             @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=43.0, core=true, t24Name=SYS.RESERVE6, mvSvExpansionAccess=NOEXPAND)
         SYS_RESERVE7 : T24BusinessTypes:A
@@ -160,7 +160,7 @@ Classes {
     }
     AA_ARR_CHARGE__ACTION
     {
-        ACTION : T24BusinessTypes:A
+        ACTION : T24BusinessTypes:A required
             @i18n:Label (en=Action)
             @t24:i (align=L, inputBehaviour=I, maxLength=30, sysNumber=2.0, core=true, t24Name=ACTION)
     }
@@ -185,7 +185,7 @@ Classes {
             @i18n:Label (en="Up to ")
             @i18n:Tooltip (en="Indicates the threshold amount for each tier")
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=18.0, core=true, t24Name=TIER.AMOUNT)
-        TIER_COUNT : mml:Integer
+        TIER_COUNT : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=19.0, core=true, t24Name=TIER.COUNT)
         TIER_MAX_CHARGE : T24BusinessTypes:AMT
             @i18n:Label (en="Max Charge")
@@ -242,8 +242,8 @@ Classes {
     }
     AA_ARR_CHARGE__NR_ATTRIBUTE__NR_TYPE
     {
-        NR_MESSAGE : T24BusinessTypes:T
-            @t24:i (align=L, inputBehaviour=N, maxLength=50, sysNumber=58.0, core=true, t24Name=NR.MESSAGE)
+        NR_MESSAGE : AA_Fees:AA_ARR_CHARGE__NR_ATTRIBUTE__NR_TYPE__NR_MESSAGE
+            @t24:i (align=L, inputBehaviour=N, maxLength=10, sysNumber=58.0, core=true, t24Name=NR.MESSAGE)
         NR_TYPE -> AA_Rules:EB_COMPARISON_TYPE
             @t24:i (align=L, inputBehaviour=N, maxLength=25, sysNumber=56.0, core=true, businessType=A, t24Name=NR.TYPE)
         NR_VALUE : T24BusinessTypes:ANY
@@ -358,7 +358,7 @@ Classes {
             @i18n:Label (en="Default Attribute")
             @i18n:Tooltip (en="Default Attribute")
             @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=49.0, core=true, t24Name=DEFAULT.ATTR.OPTION)
-        DEFAULT_NEGOTIABLE : AA_Fees:AA_PRD_CAT_CHARGE__DEFAULT_NEGOTIABLE
+        DEFAULT_NEGOTIABLE : AA_Fees:AA_PRD_CAT_CHARGE__DEFAULT_NEGOTIABLE required
             @i18n:Label (en="Default Negotiable")
             @i18n:Tooltip (en="Default Negotiable")
             @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=50.0, core=true, t24Name=DEFAULT.NEGOTIABLE)
@@ -404,6 +404,8 @@ Classes {
             @t24:i (t24Name=NR.ATTRIBUTE)
         OVERRIDE -> byValue AA_Fees:AA_PRD_CAT_CHARGE__OVERRIDE *
             @t24:i (t24Name=OVERRIDE)
+        OWNING_COMPANY -> ST_CompanyCreation:COMPANY
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=44.0, core=true, businessType=A, t24Name=OWNING.COMPANY)
         PRODUCT_KEY -> AA_Fees:AA_PRD_CAT_CHARGE PK required
             @i18n:Label (en="Product Key")
             @i18n:Tooltip (en="Product Key")
@@ -439,8 +441,6 @@ Classes {
             @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=46.0, core=true, t24Name=SYS.RESERVE3)
         SYS_RESERVE4 : T24BusinessTypes:A
             @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=45.0, core=true, t24Name=SYS.RESERVE4)
-        SYS_RESERVE5 : T24BusinessTypes:A
-            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=44.0, core=true, t24Name=SYS.RESERVE5)
         SYS_RESERVE6 : T24BusinessTypes:A
             @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=43.0, core=true, t24Name=SYS.RESERVE6)
         SYS_RESERVE7 : T24BusinessTypes:A
@@ -473,7 +473,7 @@ Classes {
             @i18n:Label (en="Tier Amount")
             @i18n:Tooltip (en="Defines the threshold amount for each tier")
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=18.0, core=true, t24Name=TIER.AMOUNT)
-        TIER_COUNT : mml:Integer
+        TIER_COUNT : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=19.0, core=true, t24Name=TIER.COUNT)
         TIER_MAX_CHARGE : T24BusinessTypes:AMT
             @i18n:Label (en="Tier Maximum Charge")
@@ -498,7 +498,7 @@ Classes {
     }
     AA_PRD_CAT_CHARGE__DESCRIPTION
     {
-        DESCRIPTION : T24BusinessTypes:ANY
+        DESCRIPTION : T24BusinessTypes:ANY required
             @i18n:Label (en=Description)
             @i18n:Tooltip (en=Description)
             @t24:i (align=L, inputBehaviour=I, maxLength=35, multiLanguage=true, sysNumber=1.0, core=true, t24Name=DESCRIPTION)
@@ -662,7 +662,7 @@ Classes {
         DEFAULT_ATTR_OPTION : AA_Fees:AA_PRD_DES_CHARGE__DEFAULT_ATTR_OPTION
             @i18n:Label (en="Default Attribute Options")
             @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=49.0, core=true, t24Name=DEFAULT.ATTR.OPTION)
-        DEFAULT_NEGOTIABLE : AA_Fees:AA_PRD_DES_CHARGE__DEFAULT_NEGOTIABLE
+        DEFAULT_NEGOTIABLE : AA_Fees:AA_PRD_DES_CHARGE__DEFAULT_NEGOTIABLE required
             @i18n:Label (en="Default Negotiable")
             @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=50.0, core=true, t24Name=DEFAULT.NEGOTIABLE)
         DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
@@ -707,6 +707,8 @@ Classes {
             @t24:i (t24Name=NR.ATTRIBUTE)
         OVERRIDE -> byValue AA_Fees:AA_PRD_DES_CHARGE__OVERRIDE *
             @t24:i (t24Name=OVERRIDE)
+        OWNING_COMPANY -> ST_CompanyCreation:COMPANY
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=44.0, core=true, businessType=A, t24Name=OWNING.COMPANY)
         PRODUCT_KEY -> AA_Fees:AA_PRD_DES_CHARGE PK required
             @t24:i (align=L, inputBehaviour=I, maxLength=80, sysNumber=0.0, core=true, businessType=ANY, t24Name=PRODUCT.KEY)
         PR_ATTRIBUTE -> byValue AA_Fees:AA_PRD_DES_CHARGE__PR_ATTRIBUTE *
@@ -740,8 +742,6 @@ Classes {
             @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=46.0, core=true, t24Name=SYS.RESERVE3)
         SYS_RESERVE4 : T24BusinessTypes:A
             @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=45.0, core=true, t24Name=SYS.RESERVE4)
-        SYS_RESERVE5 : T24BusinessTypes:A
-            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=44.0, core=true, t24Name=SYS.RESERVE5)
         SYS_RESERVE6 : T24BusinessTypes:A
             @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=43.0, core=true, t24Name=SYS.RESERVE6)
         SYS_RESERVE7 : T24BusinessTypes:A
@@ -770,7 +770,7 @@ Classes {
         TIER_AMOUNT : T24BusinessTypes:AMT
             @i18n:Label (en="Tier Charge Amount")
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=18.0, core=true, t24Name=TIER.AMOUNT)
-        TIER_COUNT : mml:Integer
+        TIER_COUNT : T24BusinessTypes:N
             @i18n:Label (en="Tier Charge Count")
             @t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=19.0, core=true, t24Name=TIER.COUNT)
         TIER_MAX_CHARGE : T24BusinessTypes:AMT
@@ -795,7 +795,7 @@ Classes {
     }
     AA_PRD_DES_CHARGE__DESCRIPTION
     {
-        DESCRIPTION : T24BusinessTypes:ANY
+        DESCRIPTION : T24BusinessTypes:ANY required
             @i18n:Label (en="Describes This Condition Record And Is Used For Enrichment")
             @t24:i (align=L, inputBehaviour=I, maxLength=35, multiLanguage=true, sysNumber=1.0, core=true, t24Name=DESCRIPTION)
     }
@@ -948,7 +948,7 @@ Classes {
         DEFAULT_ATTR_OPTION : AA_Fees:AA_PRD_PRF_CHARGE__DEFAULT_ATTR_OPTION
             @i18n:Label (en="Default Attribute Option")
             @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=49.0, core=true, t24Name=DEFAULT.ATTR.OPTION)
-        DEFAULT_NEGOTIABLE : AA_Fees:AA_PRD_PRF_CHARGE__DEFAULT_NEGOTIABLE
+        DEFAULT_NEGOTIABLE : AA_Fees:AA_PRD_PRF_CHARGE__DEFAULT_NEGOTIABLE required
             @i18n:Label (en="Default Negotiable")
             @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=50.0, core=true, t24Name=DEFAULT.NEGOTIABLE)
         DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
@@ -993,6 +993,8 @@ Classes {
             @t24:i (t24Name=NR.ATTRIBUTE)
         OVERRIDE -> byValue AA_Fees:AA_PRD_PRF_CHARGE__OVERRIDE *
             @t24:i (t24Name=OVERRIDE)
+        OWNING_COMPANY -> ST_CompanyCreation:COMPANY
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=44.0, core=true, businessType=A, t24Name=OWNING.COMPANY)
         PRODUCT_KEY -> AA_Fees:AA_PRD_PRF_CHARGE PK required
             @t24:i (align=L, inputBehaviour=I, maxLength=80, sysNumber=0.0, core=true, businessType=ANY, t24Name=PRODUCT.KEY)
         PR_ATTRIBUTE -> byValue AA_Fees:AA_PRD_PRF_CHARGE__PR_ATTRIBUTE *
@@ -1026,8 +1028,6 @@ Classes {
             @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=46.0, core=true, t24Name=SYS.RESERVE3)
         SYS_RESERVE4 : T24BusinessTypes:A
             @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=45.0, core=true, t24Name=SYS.RESERVE4)
-        SYS_RESERVE5 : T24BusinessTypes:A
-            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=44.0, core=true, t24Name=SYS.RESERVE5)
         SYS_RESERVE6 : T24BusinessTypes:A
             @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=43.0, core=true, t24Name=SYS.RESERVE6)
         SYS_RESERVE7 : T24BusinessTypes:A
@@ -1061,7 +1061,7 @@ Classes {
             @i18n:Label (en="Tier Amount")
             @i18n:Tooltip (en="Defines the threshold amount for each tier")
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=18.0, core=true, t24Name=TIER.AMOUNT)
-        TIER_COUNT : mml:Integer
+        TIER_COUNT : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=19.0, core=true, t24Name=TIER.COUNT)
         TIER_MAX_CHARGE : T24BusinessTypes:AMT
             @i18n:Label (en="Tier Maximum Charge")
@@ -1087,7 +1087,7 @@ Classes {
     }
     AA_PRD_PRF_CHARGE__DESCRIPTION
     {
-        DESCRIPTION : T24BusinessTypes:ANY
+        DESCRIPTION : T24BusinessTypes:ANY required
             @i18n:Label (en="Describes This Condition Record And Is Used For Enrichment")
             @t24:i (align=L, inputBehaviour=I, maxLength=35, multiLanguage=true, sysNumber=1.0, core=true, t24Name=DESCRIPTION)
     }
@@ -1193,7 +1193,7 @@ Classes {
             @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=28.0, core=true, businessType=A, t24Name=ACCRUAL.RULE)
         ACTION -> byValue AA_Fees:AA_SIM_CHARGE__ACTION *
             @t24:i (t24Name=ACTION)
-        ACTIVITY : T24BusinessTypes:A
+        ACTIVITY : T24BusinessTypes:A required
             @i18n:Label (en=Activity)
             @t24:i (align=L, inputBehaviour=I, maxLength=80, sysNumber=1.0, core=true, t24Name=ACTIVITY)
         ARRANGEMENT_KEY -> AA_Fees:AA_SIM_CHARGE PK required
@@ -1229,13 +1229,13 @@ Classes {
         CHARGE_ROUTINE -> EB_SystemTables:EB_API
             @i18n:Label (en="Charge Routine")
             @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=11.0, core=true, businessType=A, t24Name=CHARGE.ROUTINE)
-        CHARGE_TYPE : AA_Fees:AA_SIM_CHARGE__CHARGE_TYPE
+        CHARGE_TYPE : AA_Fees:AA_SIM_CHARGE__CHARGE_TYPE required
             @i18n:Label (en="Charge Type")
             @t24:i (align=L, inputBehaviour=I, maxLength=10, sysNumber=4.0, core=true, t24Name=CHARGE.TYPE)
         CO_CODE -> ST_CompanyCreation:COMPANY
             @i18n:Label (en=Company)
             @t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=76.0, core=true, businessType=A, t24Name=CO.CODE, mask="R##-###-####")
-        CURRENCY -> ST_CurrencyConfig:CURRENCY
+        CURRENCY -> ST_CurrencyConfig:CURRENCY required
             @i18n:Label (en=Currency)
             @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=3.0, core=true, businessType=CCY, t24Name=CURRENCY)
         CURR_NO : T24BusinessTypes:N
@@ -1287,6 +1287,8 @@ Classes {
             @t24:i (t24Name=NR.ATTRIBUTE)
         OVERRIDE -> byValue AA_Fees:AA_SIM_CHARGE__OVERRIDE *
             @t24:i (t24Name=OVERRIDE)
+        OWNING_COMPANY -> ST_CompanyCreation:COMPANY
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=44.0, core=true, businessType=A, t24Name=OWNING.COMPANY)
         PR_ATTRIBUTE -> byValue AA_Fees:AA_SIM_CHARGE__PR_ATTRIBUTE *
             @t24:i (t24Name=PR.ATTRIBUTE)
         RECORD_STATUS : T24BusinessTypes:STAT
@@ -1311,15 +1313,13 @@ Classes {
         STMT_NOS -> byValue AA_Fees:AA_SIM_CHARGE__STMT_NOS *
             @t24:i (t24Name=STMT.NOS)
         SYS_RESERVE1 : T24BusinessTypes:A
-            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=48.0, core=true, t24Name=SYS.RESERVE1, mvSvExpansionAccess=NOEXPAND)
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=48.0, core=true, t24Name=SYS.RESERVE1)
         SYS_RESERVE2 : T24BusinessTypes:A
-            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=47.0, core=true, t24Name=SYS.RESERVE2, mvSvExpansionAccess=NOEXPAND)
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=47.0, core=true, t24Name=SYS.RESERVE2)
         SYS_RESERVE3 : T24BusinessTypes:A
-            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=46.0, core=true, t24Name=SYS.RESERVE3, mvSvExpansionAccess=NOEXPAND)
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=46.0, core=true, t24Name=SYS.RESERVE3)
         SYS_RESERVE4 : T24BusinessTypes:A
-            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=45.0, core=true, t24Name=SYS.RESERVE4, mvSvExpansionAccess=NOEXPAND)
-        SYS_RESERVE5 : T24BusinessTypes:A
-            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=44.0, core=true, t24Name=SYS.RESERVE5, mvSvExpansionAccess=NOEXPAND)
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=45.0, core=true, t24Name=SYS.RESERVE4)
         SYS_RESERVE6 : T24BusinessTypes:A
             @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=43.0, core=true, t24Name=SYS.RESERVE6, mvSvExpansionAccess=NOEXPAND)
         SYS_RESERVE7 : T24BusinessTypes:A
@@ -1333,7 +1333,7 @@ Classes {
     }
     AA_SIM_CHARGE__ACTION
     {
-        ACTION : T24BusinessTypes:A
+        ACTION : T24BusinessTypes:A required
             @i18n:Label (en=Action)
             @t24:i (align=L, inputBehaviour=I, maxLength=30, sysNumber=2.0, core=true, t24Name=ACTION)
     }
@@ -1354,7 +1354,7 @@ Classes {
         TIER_AMOUNT : T24BusinessTypes:AMT
             @i18n:Label (en="Tier Amount")
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=18.0, core=true, t24Name=TIER.AMOUNT)
-        TIER_COUNT : mml:Integer
+        TIER_COUNT : T24BusinessTypes:N
             @i18n:Label (en="Tier Count")
             @t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=19.0, core=true, t24Name=TIER.COUNT)
         TIER_MAX_CHARGE : T24BusinessTypes:AMT
@@ -1415,9 +1415,9 @@ Classes {
     }
     AA_SIM_CHARGE__NR_ATTRIBUTE__NR_TYPE
     {
-        NR_MESSAGE : T24BusinessTypes:T
+        NR_MESSAGE : AA_Fees:AA_SIM_CHARGE__NR_ATTRIBUTE__NR_TYPE__NR_MESSAGE
             @i18n:Label (en=Message)
-            @t24:i (align=L, inputBehaviour=N, maxLength=50, sysNumber=58.0, core=true, t24Name=NR.MESSAGE)
+            @t24:i (align=L, inputBehaviour=N, maxLength=10, sysNumber=58.0, core=true, t24Name=NR.MESSAGE)
         NR_TYPE -> AA_Rules:EB_COMPARISON_TYPE
             @i18n:Label (en=Type)
             @t24:i (align=L, inputBehaviour=N, maxLength=25, sysNumber=56.0, core=true, businessType=A, t24Name=NR.TYPE)
@@ -1498,6 +1498,9 @@ Enumerations {
         NON__RESETTING=NON-RESETTING
         OVERRIDE=OVERRIDE
         RESETTING=RESETTING
+    AA_ARR_CHARGE__NR_ATTRIBUTE__NR_TYPE__NR_MESSAGE : mml:string
+        ERROR=ERROR
+        OVERRIDE=OVERRIDE
     AA_ARR_CHARGE__PR_ATTRIBUTE__PR_APP_METHOD : mml:string
         CAPITALISE=CAPITALISE
         DEFER=DEFER
@@ -1687,6 +1690,9 @@ Enumerations {
         NON__RESETTING=NON-RESETTING
         OVERRIDE=OVERRIDE
         RESETTING=RESETTING
+    AA_SIM_CHARGE__NR_ATTRIBUTE__NR_TYPE__NR_MESSAGE : mml:string
+        ERROR=ERROR
+        OVERRIDE=OVERRIDE
     AA_SIM_CHARGE__PR_ATTRIBUTE__PR_APP_METHOD : mml:string
         CAPITALISE=CAPITALISE
         DEFER=DEFER

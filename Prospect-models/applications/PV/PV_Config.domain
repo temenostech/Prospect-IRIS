@@ -665,7 +665,7 @@ Classes {
             @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=0.0, core=true, businessType=A, t24Name=LOAN.CLASSIFICATION.ID)
         OVERRIDE -> byValue PV_Config:PV_LOAN_CLASSIFICATION__OVERRIDE *
             @t24:i (t24Name=OVERRIDE)
-        RANK : mml:Integer
+        RANK : T24BusinessTypes:N required
             @i18n:Label (en=Rank)
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=1.0, core=true, t24Name=RANK)
         RECORD_STATUS : T24BusinessTypes:STAT
@@ -719,7 +719,7 @@ Classes {
             @t24:i (align=L, inputBehaviour=I, maxLength=5, sysNumber=22.0, core=true, t24Name=CALC.POST.FREQ)
         CLASS_FREQUENCY : T24BusinessTypes:FQF
             @t24:i (align=L, inputBehaviour=I, maxLength=5, sysNumber=20.0, core=true, t24Name=CLASS.FREQUENCY)
-        CLASS_LEVEL : PV_Config:PV_MANAGEMENT__CLASS_LEVEL
+        CLASS_LEVEL : PV_Config:PV_MANAGEMENT__CLASS_LEVEL required
             @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=7.0, core=true, t24Name=CLASS.LEVEL)
         CO_CODE -> ST_CompanyCreation:COMPANY
             @i18n:Label (en=Company)
@@ -744,13 +744,13 @@ Classes {
             @t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=3.0, core=true, t24Name=JOB.RUN.DATE)
         OVERRIDE -> byValue PV_Config:PV_MANAGEMENT__OVERRIDE *
             @t24:i (t24Name=OVERRIDE)
-        POSTING_DELAY : mml:Integer
+        POSTING_DELAY : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=5.0, core=true, t24Name=POSTING.DELAY)
-        POSTING_TIMING : PV_Config:PV_MANAGEMENT__POSTING_TIMING
+        POSTING_TIMING : PV_Config:PV_MANAGEMENT__POSTING_TIMING required
             @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=4.0, core=true, t24Name=POSTING.TIMING)
         PRODUCT -> byValue PV_Config:PV_MANAGEMENT__PRODUCT *
             @t24:i (t24Name=PRODUCT)
-        PROFILE_ID -> PV_Config:PV_PROFILE_XREF
+        PROFILE_ID -> PV_Config:PV_PROFILE_XREF required
             @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=6.0, core=true, businessType=A, t24Name=PROFILE.ID)
         PV_MANAGEMENT_ID -> PV_Config:PV_MANAGEMENT PK required
             @t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=0.0, core=true, businessType=AA, t24Name=PV.MANAGEMENT.ID)
@@ -855,7 +855,7 @@ Classes {
             @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=10.0, core=true, businessType=A, t24Name=CLASS.API)
         CLASS_RULE -> EB_RulesEngine:EB_RULE_GATEWAY
             @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=9.0, core=true, businessType=A, t24Name=CLASS.RULE)
-        PRODUCT : PV_Config:PV_MANAGEMENT__PRODUCT__PRODUCT
+        PRODUCT : PV_Config:PV_MANAGEMENT__PRODUCT__PRODUCT required
             @i18n:Label (en=Product)
             @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=8.0, core=true, t24Name=PRODUCT)
         PRODUCT_LINE -> byValue PV_Config:PV_MANAGEMENT__PRODUCT__PRODUCT_LINE *
@@ -884,7 +884,7 @@ Classes {
         @i18n:Description (en="")
         @t24:i (t24Name=PV.PROFILE, level=I, type=H, allowedFunctions="A C D E H I L P Q R S", localRefAllowed=true)
     {
-        ACCOUNTING : PV_Config:PV_PROFILE__ACCOUNTING
+        ACCOUNTING : PV_Config:PV_PROFILE__ACCOUNTING required
             @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=14.0, core=true, t24Name=ACCOUNTING)
         AUDITOR_CODE : T24BusinessTypes:A
             @i18n:Label (en="Auditor Code")
@@ -919,7 +919,7 @@ Classes {
             @t24:i (t24Name=INPUTTER)
         OVERRIDE -> byValue PV_Config:PV_PROFILE__OVERRIDE *
             @t24:i (t24Name=OVERRIDE)
-        POSTING_DETAILS -> AC_IFRS:IFRS_POSTING_DETAILS
+        POSTING_DETAILS -> AC_IFRS:IFRS_POSTING_DETAILS required
             @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=15.0, core=true, businessType=A, t24Name=POSTING.DETAILS)
         PROV_TYPE -> byValue PV_Config:PV_PROFILE__PROV_TYPE *
             @t24:i (t24Name=PROV.TYPE)
@@ -949,10 +949,15 @@ Classes {
         @i18n:Description (en="")
         @t24:i (t24Name=PV.PROFILE.XREF, level=I, type=T, allowedFunctions="L P S", localRefAllowed=false)
     {
-        PROFILE_DATES : T24BusinessTypes:D
-            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=1.0, core=true, t24Name=PROFILE.DATES)
+        PROFILE_DATES -> byValue PV_Config:PV_PROFILE_XREF__PROFILE_DATES *
+            @t24:i (t24Name=PROFILE.DATES)
         PV_PROFILE_XREF_ID -> PV_Config:PV_PROFILE_XREF PK required
             @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=0.0, core=true, businessType=A, t24Name=PV.PROFILE.XREF.ID)
+    }
+    PV_PROFILE_XREF__PROFILE_DATES
+    {
+        PROFILE_DATES : T24BusinessTypes:D
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=1.0, core=true, t24Name=PROFILE.DATES)
     }
     PV_PROFILE__DATE_TIME
     {
@@ -988,7 +993,7 @@ Classes {
             @t24:i (t24Name=CLASS)
         PROV_API -> EB_SystemTables:EB_API
             @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=13.0, core=true, businessType=A, t24Name=PROV.API)
-        PROV_CALC : PV_Config:PV_PROFILE__PROV_TYPE__PROV_CALC
+        PROV_CALC : PV_Config:PV_PROFILE__PROV_TYPE__PROV_CALC required
             @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=3.0, core=true, t24Name=PROV.CALC)
         PROV_TYPE : PV_Config:PV_PROFILE__PROV_TYPE__PROV_TYPE
             @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=2.0, core=true, t24Name=PROV.TYPE)
@@ -998,7 +1003,7 @@ Classes {
     }
     PV_PROFILE__PROV_TYPE__CLASS
     {
-        CLASS -> PV_Config:PV_LOAN_CLASSIFICATION
+        CLASS -> PV_Config:PV_LOAN_CLASSIFICATION required
             @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=5.0, core=true, businessType=A, t24Name=CLASS)
         DEAL_IMPAIR : PV_Config:PV_PROFILE__PROV_TYPE__CLASS__DEAL_IMPAIR
             @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=12.0, core=true, t24Name=DEAL.IMPAIR)

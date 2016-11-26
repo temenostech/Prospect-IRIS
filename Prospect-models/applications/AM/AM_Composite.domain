@@ -41,7 +41,7 @@ Classes {
         CO_CODE -> ST_CompanyCreation:COMPANY
             @i18n:Label (en=Company)
             @t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=33.0, core=true, businessType=A, t24Name=CO.CODE, mask="R##-###-####")
-        CURRENCY_REF -> ST_CurrencyConfig:CURRENCY
+        CURRENCY_REF -> ST_CurrencyConfig:CURRENCY required
             @i18n:Label (en="Currency Ref")
             @i18n:Tooltip (en="Currency Ref")
             @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=6.0, core=true, businessType=CCY, t24Name=CURRENCY.REF)
@@ -269,7 +269,7 @@ Classes {
     }
     AM_COMPOSITE_EXCL_CODE__EXCL_LABEL
     {
-        EXCL_LABEL : T24BusinessTypes:A
+        EXCL_LABEL : T24BusinessTypes:A required
             @i18n:Label (en="Exclusion Label")
             @t24:i (align=L, inputBehaviour=I, maxLength=35, multiLanguage=true, sysNumber=1.0, core=true, t24Name=EXCL.LABEL)
     }
@@ -561,7 +561,7 @@ Classes {
         RECORD_STATUS : T24BusinessTypes:STAT
             @i18n:Label (en="Record Status")
             @t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=7.0, core=true, t24Name=RECORD.STATUS)
-        SP_EXCL_LABEL : T24BusinessTypes:A
+        SP_EXCL_LABEL : T24BusinessTypes:A required
             @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=1.0, core=true, t24Name=SP.EXCL.LABEL)
         SP_EXCL_NARR : T24BusinessTypes:A
             @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=2.0, core=true, t24Name=SP.EXCL.NARR)
@@ -571,7 +571,7 @@ Classes {
             @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=4.0, core=true, t24Name=SP.EXCL.P2.LB)
         SP_EXCL_P3_LB : T24BusinessTypes:A
             @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=5.0, core=true, t24Name=SP.EXCL.P3.LB)
-        SP_EXCL_ROUTINE -> EB_SystemTables:PGM_FILE
+        SP_EXCL_ROUTINE -> EB_SystemTables:PGM_FILE required
             @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=6.0, core=true, businessType=A, t24Name=SP.EXCL.ROUTINE)
     }
     AM_COMPOSITE_SP_EXCL__DATE_TIME
@@ -656,7 +656,7 @@ Classes {
     }
     AM_COMPOSITE__DESCRIPTION
     {
-        DESCRIPTION : T24BusinessTypes:A
+        DESCRIPTION : T24BusinessTypes:A required
             @i18n:Label (en=Description)
             @i18n:Tooltip (en=Description)
             @t24:i (align=L, inputBehaviour=I, maxLength=35, multiLanguage=true, sysNumber=1.0, core=true, t24Name=DESCRIPTION)
@@ -670,7 +670,7 @@ Classes {
     }
     AM_COMPOSITE__INVESTMENT_PROGRAM
     {
-        INVESTMENT_PROGRAM -> SC_ScoPortfolioMaintenance:INVESTMENT_PROGRAM
+        INVESTMENT_PROGRAM -> SC_ScoPortfolioMaintenance:INVESTMENT_PROGRAM required
             @i18n:Label (en="Investment Program")
             @t24:i (align=L, inputBehaviour=I, maxLength=12, sysNumber=7.0, core=true, businessType=A, t24Name=INVESTMENT.PROGRAM)
     }
@@ -717,7 +717,7 @@ Classes {
         COMPANY -> AM_Composite:AM_COMP_EXCL_PREPARATION PK required
             @i18n:Label (en=Company)
             @t24:i (align=L, inputBehaviour=I, maxLength=12, sysNumber=0.0, core=true, businessType=COM, t24Name=COMPANY, mask="##-###-####")
-        COMPOSITE_ID -> AM_Composite:AM_COMPOSITE
+        COMPOSITE_ID -> AM_Composite:AM_COMPOSITE required
             @i18n:Label (en="Composite Id")
             @t24:i (align=L, inputBehaviour=I, maxLength=15, sysNumber=1.0, core=true, businessType=A, t24Name=COMPOSITE.ID)
         CO_CODE -> ST_CompanyCreation:COMPANY
@@ -733,12 +733,12 @@ Classes {
             @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=10.0, core=true, t24Name=DEPT.CODE)
         INPUTTER -> byValue AM_Composite:AM_COMP_EXCL_PREPARATION__INPUTTER *
             @t24:i (t24Name=INPUTTER)
-        OVERWRITE_FLG : AM_Composite:AM_COMP_EXCL_PREPARATION__OVERWRITE_FLG
+        OVERWRITE_FLG : AM_Composite:AM_COMP_EXCL_PREPARATION__OVERWRITE_FLG required
             @t24:i (align=L, inputBehaviour=I, maxLength=12, sysNumber=3.0, core=true, t24Name=OVERWRITE.FLG)
         RECORD_STATUS : T24BusinessTypes:STAT
             @i18n:Label (en="Record Status")
             @t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=4.0, core=true, t24Name=RECORD.STATUS)
-        YEAR_MONTH : mml:Integer
+        YEAR_MONTH : T24BusinessTypes:N required
             @i18n:Label (en="Year Month")
             @t24:i (align=R, inputBehaviour=I, maxLength=12, sysNumber=2.0, core=true, t24Name=YEAR.MONTH)
     }
@@ -755,6 +755,46 @@ Classes {
             @i18n:Label (en=Inputter)
             @i18n:Tooltip (en="The user who last updated the record")
             @t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=6.0, core=true, t24Name=INPUTTER)
+    }
+    AM_COMP_HIST_CONCAT
+        @i18n:Description (en="")
+        @t24:i (t24Name=AM.COMP.HIST.CONCAT, level=F, type=T, allowedFunctions="L P S", localRefAllowed=false)
+    {
+        DET_ID : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=20, sysNumber=1.0, core=true, t24Name=DET.ID)
+        YEAR -> byValue AM_Composite:AM_COMP_HIST_CONCAT__YEAR *
+            @t24:i (t24Name=YEAR)
+    }
+    AM_COMP_HIST_CONCAT__YEAR
+    {
+        YEAR : T24BusinessTypes:N
+            @i18n:Label (en=Year)
+            @t24:i (align=R, inputBehaviour=N, maxLength=12, core=false, t24Name=YEAR)
+    }
+    AM_COMP_HIST_DET_CONCAT
+        @i18n:Description (en="")
+        @t24:i (t24Name=AM.COMP.HIST.DET.CONCAT, level=F, type=T, allowedFunctions="L P S", localRefAllowed=false)
+    {
+        COMP_ID : T24BusinessTypes:N
+            @i18n:Label (en="Comp Id")
+            @t24:i (align=L, inputBehaviour=N, maxLength=10, core=false, t24Name=COMP.ID, genOperation="FIELD(@ID,\'.\',1)")
+        DET_ID -> byValue AM_Composite:AM_COMP_HIST_DET_CONCAT__DET_ID *
+            @t24:i (t24Name=DET.ID)
+        HIST_DET_ID -> byValue AM_Composite:AM_COMP_HIST_DET_CONCAT__HIST_DET_ID *
+            @t24:i (t24Name=HIST.DET.ID)
+        YEAR_MONTH : T24BusinessTypes:N
+            @i18n:Label (en="Year Month")
+            @t24:i (align=L, inputBehaviour=N, maxLength=8, core=false, t24Name=YEAR.MONTH, genOperation="FIELD(DET.ID,\'.\',2)")
+    }
+    AM_COMP_HIST_DET_CONCAT__DET_ID
+    {
+        DET_ID : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=25, sysNumber=1.0, core=true, t24Name=DET.ID)
+    }
+    AM_COMP_HIST_DET_CONCAT__HIST_DET_ID
+    {
+        HIST_DET_ID : T24BusinessTypes:N
+            @t24:i (align=L, inputBehaviour=N, maxLength=15, core=false, t24Name=HIST.DET.ID, genOperation=E.SEL.COMP.HIST.DET)
     }
     AM_COMP_HIST_DET_WORK
         @i18n:Description (en="")
@@ -799,7 +839,7 @@ Classes {
             @t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=6.0, core=true, t24Name=LAUNCH.DATE)
         MAN_STATUS_FLG : AM_Composite:AM_COMP_HIST_DET_WORK__MAN_STATUS_FLG
             @t24:i (align=L, inputBehaviour=I, maxLength=1, sysNumber=4.0, core=true, t24Name=MAN.STATUS.FLG)
-        PORTFOLIO_NUMBER : mml:Integer
+        PORTFOLIO_NUMBER : T24BusinessTypes:N
             @i18n:Label (en="Portfolio Number")
             @i18n:Tooltip (en="Portfolio Number")
             @t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=1.0, core=true, t24Name=PORTFOLIO.NUMBER)

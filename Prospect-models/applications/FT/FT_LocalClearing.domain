@@ -25,7 +25,7 @@ Classes {
             @i18n:Label (en=Authoriser)
             @i18n:Tooltip (en="Indicates the User who Authorises the record")
             @t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=7.0, core=true, t24Name=AUTHORISER)
-        BLOCK_CODE -> FT_LocalClearing:BGC_BLOCK_CODE
+        BLOCK_CODE -> FT_LocalClearing:BGC_BLOCK_CODE required
             @t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=1.0, core=true, t24Name=BLOCK.CODE)
         CO_CODE -> ST_CompanyCreation:COMPANY
             @i18n:Label (en=Company)
@@ -103,7 +103,7 @@ Classes {
             @t24:i (align=L, inputBehaviour=I, maxLength=11, sysNumber=5.0, core=true, businessType=A, t24Name=EXP.KEY)
         INPUTTER -> byValue FT_LocalClearing:BC_SORT_CODE__INPUTTER *
             @t24:i (t24Name=INPUTTER)
-        NAME : T24BusinessTypes:A
+        NAME : T24BusinessTypes:A required
             @i18n:Label (en=Name)
             @i18n:Tooltip (en="Indicates the Name ")
             @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=1.0, core=true, t24Name=NAME)
@@ -136,10 +136,15 @@ Classes {
         @i18n:Description (en="")
         @t24:i (t24Name=BC.SORT.CODE.XREF, level=I, type=T, allowedFunctions="L P S", localRefAllowed=false)
     {
-        MAIN_SORT_CODE -> FT_LocalClearing:BC_SORT_CODE
-            @t24:i (align=R, inputBehaviour=I, maxLength=20, sysNumber=1.0, core=true, t24Name=MAIN.SORT.CODE)
+        MAIN_SORT_CODE -> byValue FT_LocalClearing:BC_SORT_CODE_XREF__MAIN_SORT_CODE *
+            @t24:i (t24Name=MAIN.SORT.CODE)
         OTHER_SORT_CODE -> FT_LocalClearing:BC_SORT_CODE_XREF PK required
             @t24:i (align=L, inputBehaviour=I, maxLength=20, sysNumber=0.0, core=true, businessType=ANY, t24Name=OTHER.SORT.CODE)
+    }
+    BC_SORT_CODE_XREF__MAIN_SORT_CODE
+    {
+        MAIN_SORT_CODE -> FT_LocalClearing:BC_SORT_CODE
+            @t24:i (align=R, inputBehaviour=I, maxLength=20, sysNumber=1.0, core=true, t24Name=MAIN.SORT.CODE)
     }
     BC_SORT_CODE__DATE_TIME
     {
@@ -213,7 +218,7 @@ Classes {
     }
     BGC_BLOCK_CODE__DESCRIPTION
     {
-        DESCRIPTION : T24BusinessTypes:A
+        DESCRIPTION : T24BusinessTypes:A required
             @i18n:Label (en=Description)
             @i18n:Tooltip (en=Description)
             @t24:i (align=L, inputBehaviour=I, maxLength=35, multiLanguage=true, sysNumber=1.0, core=true, t24Name=DESCRIPTION)
@@ -227,7 +232,7 @@ Classes {
     }
     BGC_BLOCK_CODE__SHORT_NAME
     {
-        SHORT_NAME : T24BusinessTypes:AA
+        SHORT_NAME : T24BusinessTypes:AA required
             @i18n:Label (en="Short name")
             @t24:i (align=L, inputBehaviour=I, maxLength=15, multiLanguage=true, sysNumber=2.0, core=true, t24Name=SHORT.NAME)
     }
@@ -278,9 +283,9 @@ Classes {
     }
     BGC_FT_TRANSACTION__BGC_NARR_UNIT
     {
-        BGC_NARR_LENGTH : mml:Integer
+        BGC_NARR_LENGTH : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=7.0, core=true, t24Name=BGC.NARR.LENGTH)
-        BGC_NARR_START : mml:Integer
+        BGC_NARR_START : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=6.0, core=true, t24Name=BGC.NARR.START)
         BGC_NARR_UNIT -> FT_LocalClearing:BGC_UNIT_CODE
             @t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=5.0, core=true, t24Name=BGC.NARR.UNIT)
@@ -305,40 +310,40 @@ Classes {
     {
         ACCOUNT_NUMBER -> byValue FT_LocalClearing:BGC_STATIC__ACCOUNT_NUMBER *
             @t24:i (t24Name=ACCOUNT.NUMBER)
-        ADDRESS : mml:Integer
+        ADDRESS : T24BusinessTypes:N
             @i18n:Label (en=Address)
             @i18n:Tooltip (en="Define the address")
             @t24:i (align=R, inputBehaviour=E, maxLength=35, sysNumber=3.0, core=true, t24Name=ADDRESS)
-        CITY : mml:Integer
+        CITY : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=E, maxLength=35, sysNumber=5.0, core=true, t24Name=CITY)
-        COUNTRY_CODE : mml:Integer
+        COUNTRY_CODE : T24BusinessTypes:N
             @i18n:Label (en=Country)
             @t24:i (align=R, inputBehaviour=E, maxLength=2, sysNumber=1.0, core=true, t24Name=COUNTRY.CODE)
         CUSTOMER_ID -> FT_LocalClearing:BGC_STATIC PK required
             @i18n:Label (en="Customer Id")
             @i18n:Tooltip (en="Identifies the Customer for the transaction.")
             @t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=0.0, core=true, businessType=CUS, t24Name=CUSTOMER.ID)
-        CUSTOMER_NAME : mml:Integer
+        CUSTOMER_NAME : T24BusinessTypes:N
             @i18n:Label (en="Customer Name")
             @t24:i (align=R, inputBehaviour=E, maxLength=35, sysNumber=2.0, core=true, t24Name=CUSTOMER.NAME)
-        POSTCODE : mml:Integer
+        POSTCODE : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=E, maxLength=35, sysNumber=4.0, core=true, t24Name=POSTCODE)
     }
     BGC_STATIC__ACCOUNT_NUMBER
     {
-        ACCOUNT_NUMBER : mml:Integer
+        ACCOUNT_NUMBER : T24BusinessTypes:N
             @i18n:Label (en="Account Number")
             @t24:i (align=R, inputBehaviour=E, maxLength=16, sysNumber=6.0, core=true, t24Name=ACCOUNT.NUMBER)
-        BLOCK_CODE : mml:Integer
+        BLOCK_CODE : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=E, maxLength=2, sysNumber=11.0, core=true, t24Name=BLOCK.CODE)
-        BRANCH_NUMBER : mml:Integer
+        BRANCH_NUMBER : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=E, maxLength=5, sysNumber=8.0, core=true, t24Name=BRANCH.NUMBER)
-        POSTING_RESTRICT : mml:Integer
+        POSTING_RESTRICT : T24BusinessTypes:N
             @i18n:Label (en="Posting Restriction")
             @t24:i (align=R, inputBehaviour=E, maxLength=2, sysNumber=9.0, core=true, t24Name=POSTING.RESTRICT)
-        UPDATE_CODE : mml:Integer
+        UPDATE_CODE : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=E, maxLength=1, sysNumber=7.0, core=true, t24Name=UPDATE.CODE)
-        WENST_ADRESSEN : mml:Integer
+        WENST_ADRESSEN : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=E, maxLength=1, sysNumber=10.0, core=true, t24Name=WENST.ADRESSEN)
     }
     BGC_UNIT_CODE
@@ -357,9 +362,9 @@ Classes {
             @i18n:Label (en=Authoriser)
             @i18n:Tooltip (en="Indicates the User who Authorises the record")
             @t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=9.0, core=true, t24Name=AUTHORISER)
-        BGC_NARR_LENGTH : mml:Integer
+        BGC_NARR_LENGTH : T24BusinessTypes:N required
             @t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=4.0, core=true, t24Name=BGC.NARR.LENGTH)
-        BGC_NARR_START : mml:Integer
+        BGC_NARR_START : T24BusinessTypes:N required
             @t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=3.0, core=true, t24Name=BGC.NARR.START)
         CO_CODE -> ST_CompanyCreation:COMPANY
             @i18n:Label (en=Company)
@@ -393,7 +398,7 @@ Classes {
     }
     BGC_UNIT_CODE__DESCRIPTION
     {
-        DESCRIPTION : T24BusinessTypes:A
+        DESCRIPTION : T24BusinessTypes:A required
             @i18n:Label (en=Description)
             @i18n:Tooltip (en=Description)
             @t24:i (align=L, inputBehaviour=I, maxLength=35, multiLanguage=true, sysNumber=1.0, core=true, t24Name=DESCRIPTION)
@@ -407,7 +412,7 @@ Classes {
     }
     BGC_UNIT_CODE__SHORT_NAME
     {
-        SHORT_NAME : T24BusinessTypes:AA
+        SHORT_NAME : T24BusinessTypes:AA required
             @i18n:Label (en="Short name")
             @t24:i (align=L, inputBehaviour=I, maxLength=15, multiLanguage=true, sysNumber=2.0, core=true, t24Name=SHORT.NAME)
     }
@@ -438,11 +443,17 @@ Classes {
     }
     CUSTOMER_BGC_ACCOUNT__UPDATE_CODE__UPDATE_CODE
     {
-        DATE : mml:Integer
+        DATE : T24BusinessTypes:N
             @i18n:Label (en=Date)
             @t24:i (align=R, inputBehaviour=E, maxLength=10, sysNumber=3.0, core=true, t24Name=DATE, mask="RDD DD  DD")
-        UPDATE_CODE : mml:Integer
+        UPDATE_CODE : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=E, maxLength=1, sysNumber=2.0, core=true, t24Name=UPDATE.CODE)
+    }
+    CUSTOMER_OUTGOING_FT_DOLLAR_HIS
+        @t24:i (t24Name="CUSTOMER.OUTGOING.FT$HIS", level=F, type=T, allowedFunctions="L P S", localRefAllowed=false)
+    {
+        CUSTOMER_DOLLAR_HIS : T24BusinessTypes:CUS PK required
+            @t24:i (align=R, inputBehaviour=N, maxLength=10, sysNumber=0.0, core=true, t24Name="CUSTOMER$HIS")
     }
     FT_BACS_TAPE_DATA
         @i18n:Description (en="")
@@ -528,9 +539,9 @@ Classes {
         DR_ADVICE_REQD_Y_N : FT_LocalClearing:FT_BC_TXN_CODE__DR_ADVICE_REQD_Y_N
             @i18n:Label (en="Dr Advice Reqd Y N")
             @t24:i (align=L, inputBehaviour=I, maxLength=1, sysNumber=17.0, core=true, t24Name=DR.ADVICE.REQD.Y.N)
-        DR_CHARGE_TXN_CODE -> ST_Config:TRANSACTION
+        DR_CHARGE_TXN_CODE -> ST_Config:TRANSACTION required
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=7.0, core=true, t24Name=DR.CHARGE.TXN.CODE)
-        DR_CHEQUE_TXN_CODE -> ST_Config:TRANSACTION
+        DR_CHEQUE_TXN_CODE -> ST_Config:TRANSACTION required
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=8.0, core=true, t24Name=DR.CHEQUE.TXN.CODE)
         FORW_VALUE_MAXIMUM : T24BusinessTypes:A
             @i18n:Label (en="Forw Value Max")
@@ -548,10 +559,10 @@ Classes {
             @t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=5.0, core=true, t24Name=STO.TXN.CODE.CR)
         STO_TXN_CODE_DR : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=6.0, core=true, t24Name=STO.TXN.CODE.DR)
-        TXN_CODE_CR -> ST_Config:TRANSACTION
+        TXN_CODE_CR -> ST_Config:TRANSACTION required
             @i18n:Label (en="Transaction Code Credit")
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=3.0, core=true, t24Name=TXN.CODE.CR)
-        TXN_CODE_DR -> ST_Config:TRANSACTION
+        TXN_CODE_DR -> ST_Config:TRANSACTION required
             @i18n:Label (en="Transaction Code Debit")
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=4.0, core=true, t24Name=TXN.CODE.DR)
     }
@@ -574,7 +585,7 @@ Classes {
     }
     FT_BC_TXN_CODE__DESCRIPTION
     {
-        DESCRIPTION : T24BusinessTypes:A
+        DESCRIPTION : T24BusinessTypes:A required
             @i18n:Label (en=Description)
             @i18n:Tooltip (en=Description)
             @t24:i (align=L, inputBehaviour=I, maxLength=35, multiLanguage=true, sysNumber=1.0, core=true, t24Name=DESCRIPTION)
@@ -588,20 +599,20 @@ Classes {
     }
     FT_BC_TXN_CODE__PAYMENT_TYPE
     {
-        CUSTOMER_FLOAT : FT_LocalClearing:FT_BC_TXN_CODE__PAYMENT_TYPE__CUSTOMER_FLOAT
+        CUSTOMER_FLOAT : FT_LocalClearing:FT_BC_TXN_CODE__PAYMENT_TYPE__CUSTOMER_FLOAT required
             @t24:i (align=L, inputBehaviour=I, maxLength=1, sysNumber=15.0, core=true, t24Name=CUSTOMER.FLOAT)
-        PAYMENT_TYPE : FT_LocalClearing:FT_BC_TXN_CODE__PAYMENT_TYPE__PAYMENT_TYPE
+        PAYMENT_TYPE : FT_LocalClearing:FT_BC_TXN_CODE__PAYMENT_TYPE__PAYMENT_TYPE required
             @i18n:Label (en="Payment Type")
             @i18n:Tooltip (en="Type of Payment (Annuity or Linear)")
             @t24:i (align=L, inputBehaviour=I, maxLength=6, sysNumber=13.0, core=true, t24Name=PAYMENT.TYPE)
-        PAYMENT_VALUE : T24BusinessTypes:A
+        PAYMENT_VALUE : T24BusinessTypes:A required
             @t24:i (align=L, inputBehaviour=I, maxLength=8, sysNumber=14.0, core=true, t24Name=PAYMENT.VALUE)
         SAME_CUST_FLOAT : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=N, maxLength=55, sysNumber=16.0, core=true, t24Name=SAME.CUST.FLOAT)
     }
     FT_BC_TXN_CODE__SHORT_DESC
     {
-        SHORT_DESC : T24BusinessTypes:A
+        SHORT_DESC : T24BusinessTypes:A required
             @i18n:Label (en="Short Description")
             @i18n:Tooltip (en="Short Description of the record")
             @t24:i (align=L, inputBehaviour=I, maxLength=15, multiLanguage=true, sysNumber=2.0, core=true, t24Name=SHORT.DESC)
@@ -613,7 +624,7 @@ Classes {
         ACCOUNT_NAME : T24BusinessTypes:A
             @i18n:Label (en="Portfolio Name")
             @t24:i (align=L, inputBehaviour=E, maxLength=20, sysNumber=2.0, core=true, t24Name=ACCOUNT.NAME)
-        ACCOUNT_NO : mml:Integer
+        ACCOUNT_NO : T24BusinessTypes:N
             @i18n:Label (en=Account)
             @i18n:Tooltip (en="Indicates Customer Account Number")
             @t24:i (align=R, inputBehaviour=E, maxLength=16, sysNumber=1.0, core=true, t24Name=ACCOUNT.NO)
@@ -622,9 +633,9 @@ Classes {
             @t24:i (align=L, inputBehaviour=E, maxLength=10, sysNumber=3.0, core=true, t24Name=BANK.SORT.CODE)
         BK_TO_BK_INFO -> byValue FT_LocalClearing:FT_SCC_TAPE_DATA__BK_TO_BK_INFO *
             @t24:i (t24Name=BK.TO.BK.INFO)
-        CLEARING_REF_NO : mml:Integer
+        CLEARING_REF_NO : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=E, maxLength=6, sysNumber=15.0, core=true, t24Name=CLEARING.REF.NO)
-        CONTRA_ACCOUNT_NO : mml:Integer
+        CONTRA_ACCOUNT_NO : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=E, maxLength=16, sysNumber=4.0, core=true, t24Name=CONTRA.ACCOUNT.NO)
         CONTRA_ACCT_NAME : T24BusinessTypes:A
             @t24:i (align=L, inputBehaviour=E, maxLength=20, sysNumber=5.0, core=true, t24Name=CONTRA.ACCT.NAME)
@@ -634,34 +645,34 @@ Classes {
             @t24:i (t24Name=ERROR.MESSAGES)
         GLOBUS_FT_NO : T24BusinessTypes:A
             @t24:i (align=L, inputBehaviour=E, maxLength=12, sysNumber=22.0, core=true, t24Name=GLOBUS.FT.NO)
-        GLOBUS_SYSTEM_DATE : mml:Integer
+        GLOBUS_SYSTEM_DATE : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=E, maxLength=8, sysNumber=23.0, core=true, t24Name=GLOBUS.SYSTEM.DATE)
         ID -> FT_LocalClearing:FT_SCC_TAPE_DATA PK required
             @i18n:Label (en="Transaction Ref")
             @i18n:Tooltip (en="Transaction Reference")
             @t24:i (align=L, inputBehaviour=I, maxLength=33, sysNumber=0.0, core=true, businessType=A, t24Name=ID)
-        OUR_REF_NO : mml:Integer
+        OUR_REF_NO : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=E, maxLength=6, sysNumber=14.0, core=true, t24Name=OUR.REF.NO)
         PAYMENT_DETAILS -> byValue FT_LocalClearing:FT_SCC_TAPE_DATA__PAYMENT_DETAILS *
             @t24:i (t24Name=PAYMENT.DETAILS)
-        PRIMARY_DOC_DATE : mml:Integer
+        PRIMARY_DOC_DATE : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=E, maxLength=8, sysNumber=17.0, core=true, t24Name=PRIMARY.DOC.DATE)
         PRIMARY_DOC_NO : T24BusinessTypes:A
             @t24:i (align=L, inputBehaviour=E, maxLength=13, sysNumber=16.0, core=true, t24Name=PRIMARY.DOC.NO)
         PROC_DATE : T24BusinessTypes:N
             @i18n:Label (en=Date)
             @t24:i (align=R, inputBehaviour=N, maxLength=8, core=false, t24Name=PROC.DATE, genOperation="FIELD(@ID,\'-\',3,1)")
-        SCC_CONSTANT : mml:Integer
+        SCC_CONSTANT : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=E, maxLength=10, sysNumber=9.0, core=true, t24Name=SCC.CONSTANT)
-        SCC_SPECIFIC_1 : mml:Integer
+        SCC_SPECIFIC_1 : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=E, maxLength=10, sysNumber=10.0, core=true, t24Name=SCC.SPECIFIC.1)
-        SCC_SPECIFIC_2 : mml:Integer
+        SCC_SPECIFIC_2 : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=E, maxLength=10, sysNumber=11.0, core=true, t24Name=SCC.SPECIFIC.2)
-        SCC_TXN_CODE : mml:Integer
+        SCC_TXN_CODE : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=E, maxLength=2, sysNumber=8.0, core=true, t24Name=SCC.TXN.CODE)
-        SCC_VARIABLE_1 : mml:Integer
+        SCC_VARIABLE_1 : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=E, maxLength=10, sysNumber=12.0, core=true, t24Name=SCC.VARIABLE.1)
-        SCC_VARIABLE_2 : mml:Integer
+        SCC_VARIABLE_2 : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=E, maxLength=10, sysNumber=13.0, core=true, t24Name=SCC.VARIABLE.2)
         TAPE_NAME : T24BusinessTypes:N
             @t24:i (align=L, inputBehaviour=N, maxLength=6, core=false, t24Name=TAPE.NAME, genOperation="FIELD(@ID,\'-\',1)")
