@@ -1,0 +1,814 @@
+domain T24 {
+    use common.CoreCommands.*
+    use common.HTTPEvents.*
+    use common.ODataCommands.*
+    use common.T24Commands.*
+    use common.T24Events.*
+    use common.NextState.*
+    use common.Errors.*
+    use T24.ContextEnquiry.*
+    rim verCardIssue {
+        command T24SilentState
+        command T24FieldMetadata
+        command NoopGET
+        command GETEntities
+        command GetLiveEntity
+        command GetIauthEntity
+        command GetHauthEntity
+        command GetIauthEntities
+        command CreateEntity
+        command InputEntity
+        command HoldEntity
+        command AuthoriseEntity
+        command GetChangedValues
+        command ReviewEntity
+        command ReverseEntity
+        command GetReversedEntity
+        command ValidateEntity
+        command GetRauthEntity
+        command RestoreEntity
+        command DeleteEntity
+        command CopyEntity
+        command PasteEntity
+        command CreateDEPreview
+        command GetDealSlipEntities
+        command T24Enrichment
+        command CheckAutoIdSupport
+        command GetHauthEntities
+        command T24NextState
+        basepath: "/{companyid}"
+    
+        resource verCardIssue_errorHandler {
+            type: item
+            entity: verCardIssue
+            commands [ GET : NoopGET ]
+            relations [ "http://temenostech.temenos.com/rels/error" ]
+            path: "/verCardIssues('{id}')/error"
+            GET +-> ProcessErrors {
+                title: "errors"
+            }
+            POST +-> verCardIssue_metadata {
+                title: "metadata"
+            }
+        }
+    
+        resource verCardIssues {
+            type: collection
+            entity: verCardIssue
+            commands [ GET : GETEntities {
+                properties [ filter = "{filter}" ]
+                } ]
+            path: "/verCardIssues()"
+            GET *-> verCardIssue {
+                parameters [ id = "{CardTypeNo}" ]
+            }
+            GET *-> verCardIssue_see {
+                parameters [ id = "{CardTypeNo}" ]
+                title: "see record"
+            }
+            POST -> verCardIssue_new {
+                title: "create new deal"
+                condition: OK(verCardIssue_autoId)
+            }
+            POST -> verCardIssue_populate {
+                title: "populate existing deal"
+            }
+            PUT *-> verCardIssue_input {
+                parameters [ id = "{CardTypeNo}" ]
+                title: "input deal"
+            }
+            POST *-> verCardIssue_audit {
+                parameters [ id = "{CardTypeNo}" ]
+                title: "audit deal"
+            }
+            POST *-> verCardIssue_reverse {
+                parameters [ id = "{CardTypeNo}" ]
+                title: "reverse deal"
+            }
+        }
+    
+        resource verCardIssue {
+            type: item
+            entity: verCardIssue
+            commands [ GET : GetLiveEntity ]
+            path: "/verCardIssues('{id}')"
+            GET --> verCardIssue_silent {
+                condition: OK(verCardIssue_silent)
+            }
+            POST +-> verCardIssue_metadata {
+                title: "metadata"
+            }
+            GET --> verCardIssue_IAuth {
+                parameters [ id = "{CardTypeNo}" ]
+                condition: OK(verCardIssue_IAuth)
+            }
+            GET --> verCardIssue_RAuth {
+                parameters [ id = "{CardTypeNo}" ]
+                condition: OK(verCardIssue_RAuth)
+            }
+            POST -> verCardIssue_validate {
+                parameters [ id = "{CardTypeNo}" ]
+                title: "validate deal"
+            }
+            PUT -> verCardIssue_input {
+                parameters [ id = "{CardTypeNo}" ]
+                title: "input deal"
+            }
+            POST -> verCardIssue_audit {
+                parameters [ id = "{CardTypeNo}" ]
+                title: "audit deal"
+            }
+            POST -> verCardIssue_reverse {
+                parameters [ id = "{CardTypeNo}" ]
+                title: "reverse deal"
+            }
+            POST -> verCardIssue_hold {
+                parameters [ id = "{CardTypeNo}" ]
+                title: "hold deal"
+            }
+            GET -> "T24.verCardIssue.verCardIssue_see" {
+                parameters [ id = "@" ]
+                title: "See transaction"
+            }
+            GET -> "T24.verCardIssue.verCardIssue_IAuth_see" {
+                parameters [ id = "@" ]
+                title: "GetIauthEntity"
+            }
+            GET -> "T24.verCardIssue.verCardIssue_HAuth_see" {
+                parameters [ id = "@" ]
+                title: "GetHauthEntity"
+            }
+            GET -> "T24.verCardIssue.verCardIssue_IAuth" {
+                parameters [ id = "@" ]
+                title: "GetIauthEntity"
+            }
+            GET -> "T24.verCardIssue.verCardIssue_HAuth" {
+                parameters [ id = "@" ]
+                title: "GetHauthEntity"
+            }
+            GET -> verCardIssue_ContextEnquiries {
+                title: "All Context Enquiries"
+            }
+            GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+                parameters [ entity = "verCardIssue" ]
+                title: "Context Enquiries"
+            }
+        }
+    
+        resource verCardIssue_silent {
+            type: item
+            entity: verCardIssue
+            commands [ GET : T24SilentState ]
+        }
+    
+        resource verCardIssue_see {
+            type: item
+            entity: verCardIssue
+            commands [ GET : GetLiveEntity ]
+            relations [ "http://schemas.microsoft.com/ado/2007/08/dataservices/related/verCardIssue","http://temenostech.temenos.com/rels/see" ]
+            path: "/verCardIssues('{id}')/see"
+            GET --> verCardIssue_silent {
+                condition: OK(verCardIssue_silent)
+            }
+            POST +-> verCardIssue_metadata {
+                title: "metadata"
+            }
+            GET -> verCardIssue_ContextEnquiries {
+                title: "All Context Enquiries"
+            }
+            GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+                parameters [ entity = "verCardIssue" ]
+                title: "Context Enquiries"
+            }
+        }
+    
+        resource verCardIssue_IAuth_see {
+            type: item
+            entity: verCardIssue
+            commands [ GET : GetIauthEntity ]
+            relations [ "http://schemas.microsoft.com/ado/2007/08/dataservices/related/verCardIssue_IAuth","http://temenostech.temenos.com/rels/see" ]
+            path: "/verCardIssues_IAuth('{id}')/see"
+        }
+    
+        resource verCardIssue_HAuth_see {
+            type: item
+            entity: verCardIssue
+            commands [ GET : GetHauthEntity ]
+            relations [ "http://schemas.microsoft.com/ado/2007/08/dataservices/related/verCardIssue_HAuth","http://temenostech.temenos.com/rels/see" ]
+            path: "/verCardIssues_HAuth('{id}')/see"
+        }
+    
+        resource verCardIssue_ContextEnquiries {
+            type: item
+            entity: verCardIssue
+            commands [ GET : NoopGET ]
+            path: "/verCardIssue/ContextEnquiries"
+            GET -> "T24.enqlistCardIssue.enqlistCardIssues" {
+                parameters [ param = "list" ]
+                title: "List Live File"
+            }
+            GET -> "T24.enqlistCardIssue.enqlistCardIssuesUnauth" {
+                parameters [ param = "list" ]
+                title: "List Unauth File"
+            }
+            GET -> "T24.enqlistCardIssue.enqlistCardIssuesHist" {
+                parameters [ param = "list" ]
+                title: "List History File"
+            }
+            GET -> "T24.enqlistCardIssue.enqlistCardIssues" {
+                title: "Search Live File"
+            }
+            GET -> "T24.enqlistCardIssue.enqlistCardIssuesUnauth" {
+                title: "Search Unauth File"
+            }
+            GET -> "T24.enqlistCardIssue.enqlistCardIssuesHist" {
+                title: "Search History File"
+            }
+            GET +-> "T24.ContextEnquiry.ContextEnquiryList" {
+                parameters [ entity = "verCardIssue" ]
+                title: "Other context Enquiries"
+            }
+        }
+    
+        resource verCardIssue_metadata {
+            type: collection
+            entity: T24FieldMetadata
+            commands [ POST : T24FieldMetadata ]
+            relations [ "http://temenostech.temenos.com/rels/metadata" ]
+            path: "/verCardIssues()/metadata"
+        }
+    
+        resource verCardIssues_IAuth {
+            type: collection
+            entity: verCardIssue
+            commands [ GET : GetIauthEntities {
+                properties [ filter = "{filter}" ]
+                } ]
+            path: "/verCardIssues_IAuth()"
+            GET *-> verCardIssue_IAuth {
+                parameters [ id = "{CardTypeNo}" ]
+            }
+            POST -> verCardIssue_new {
+                title: "create new deal"
+                condition: OK(verCardIssue_autoId)
+            }
+            POST -> verCardIssue_populate {
+                title: "populate existing deal"
+            }
+            PUT *-> verCardIssue_input {
+                parameters [ id = "{CardTypeNo}" ]
+                title: "input deal"
+            }
+            DELETE *-> verCardIssue_delete {
+                parameters [ id = "{CardTypeNo}" ]
+                title: "delete"
+            }
+            PUT *-> verCardIssue_authorise {
+                parameters [ id = "{CardTypeNo}" ]
+                title: "authorise deal"
+            }
+        }
+    
+        resource verCardIssue_new {
+            type: item
+            entity: verCardIssue
+            commands [ POST : CreateEntity ]
+            relations [ "http://schemas.microsoft.com/ado/2007/08/dataservices/related/verCardIssue","http://temenostech.temenos.com/rels/new" ]
+            path: "/verCardIssues()/new"
+            GET --> verCardIssue_silent {
+                condition: OK(verCardIssue_silent)
+            }
+            POST +-> verCardIssue_metadata {
+                title: "metadata"
+            }
+            POST -> verCardIssue_validate {
+                parameters [ id = "{CardTypeNo}" ]
+                title: "validate deal"
+            }
+            PUT -> verCardIssue_input {
+                parameters [ id = "{CardTypeNo}" ]
+                title: "input deal"
+            }
+            POST -> verCardIssue_hold {
+                parameters [ id = "{CardTypeNo}" ]
+                title: "hold deal"
+            }
+            GET -> "T24.verCardIssue.verCardIssue_see" {
+                parameters [ id = "@" ]
+                title: "See transaction"
+            }
+            GET -> "T24.verCardIssue.verCardIssue_IAuth_see" {
+                parameters [ id = "@" ]
+                title: "GetIauthEntity"
+            }
+            GET -> "T24.verCardIssue.verCardIssue_HAuth_see" {
+                parameters [ id = "@" ]
+                title: "GetHauthEntity"
+            }
+            GET -> "T24.verCardIssue.verCardIssue_IAuth" {
+                parameters [ id = "@" ]
+                title: "GetIauthEntity"
+            }
+            GET -> "T24.verCardIssue.verCardIssue_HAuth" {
+                parameters [ id = "@" ]
+                title: "GetHauthEntity"
+            }
+            GET -> verCardIssue_ContextEnquiries {
+                title: "All Context Enquiries"
+            }
+            GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+                parameters [ entity = "verCardIssue" ]
+                title: "Context Enquiries"
+            }
+        }
+    
+        resource verCardIssue_input {
+            type: item
+            entity: verCardIssue
+            commands [ PUT : InputEntity, POST : InputEntity ]
+            relations [ "http://temenostech.temenos.com/rels/input" ]
+            path: "/verCardIssues('{id}')"
+            GET --> verCardIssue_silent {
+                condition: OK(verCardIssue_silent)
+            }
+            GET --> nextState {
+                condition: OK(nextState)
+            }
+            GET --> verCardIssue_IAuth {
+                parameters [ id = "{CardTypeNo}" ]
+                condition: OK(verCardIssue_IAuth)
+            }
+            GET --> verCardIssue {
+                parameters [ id = "{CardTypeNo}" ]
+                condition: OK(verCardIssue)
+            }
+            GET -> verCardIssue_ContextEnquiries {
+                title: "All Context Enquiries"
+            }
+            GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+                parameters [ entity = "verCardIssue" ]
+                title: "Context Enquiries"
+            }
+            onerror --> T24.verCardIssue.verCardIssue_errorHandler
+        }
+    
+        resource verCardIssue_hold {
+            type: item
+            entity: verCardIssue
+            commands [ POST : HoldEntity ]
+            relations [ "http://temenostech.temenos.com/rels/hold" ]
+            path: "/verCardIssues('{id}')/hold"
+            GET --> verCardIssue_silent {
+                condition: OK(verCardIssue_silent)
+            }
+            PUT -> verCardIssue_input {
+                parameters [ id = "{CardTypeNo}" ]
+                title: "input deal"
+            }
+            DELETE -> verCardIssue_delete {
+                parameters [ id = "{CardTypeNo}" ]
+                title: "delete"
+            }
+            POST -> verCardIssue_validate {
+                parameters [ id = "{CardTypeNo}" ]
+                title: "validate deal"
+            }
+            onerror --> common.Errors.Errors
+        }
+    
+        resource verCardIssue_authorise {
+            type: item
+            entity: verCardIssue
+            commands [ PUT : AuthoriseEntity ]
+            relations [ "http://temenostech.temenos.com/rels/authorise" ]
+            path: "/verCardIssues('{id}')/authorise"
+            GET --> verCardIssue_silent {
+                condition: OK(verCardIssue_silent)
+            }
+            GET --> nextState {
+                condition: OK(nextState)
+            }
+            GET --> verCardIssue_IAuth {
+                parameters [ id = "{CardTypeNo}" ]
+                condition: OK(verCardIssue_IAuth)
+            }
+            GET --> verCardIssue {
+                parameters [ id = "{CardTypeNo}" ]
+                condition: OK(verCardIssue)
+            }
+            GET --> verCardIssue_reversed {
+                parameters [ id = "{CardTypeNo}" ]
+                condition: OK(verCardIssue_reversed)
+            }
+            GET -> verCardIssue_ContextEnquiries {
+                title: "All Context Enquiries"
+            }
+            GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+                parameters [ entity = "verCardIssue" ]
+                title: "Context Enquiries"
+            }
+            onerror --> T24.verCardIssue.verCardIssue_errorHandler
+        }
+    
+        resource verCardIssue_changedValues {
+            type: item
+            entity: verCardIssue
+            commands [ GET : GetChangedValues ]
+            relations [ "http://temenostech.temenos.com/rels/changedValues" ]
+            path: "/verCardIssues('{id}')/changedValues"
+        }
+    
+        resource verCardIssue_audit {
+            type: item
+            entity: verCardIssue
+            commands [ POST : ReviewEntity ]
+            relations [ "http://temenostech.temenos.com/rels/review" ]
+            path: "/verCardIssues('{id}')/review"
+            GET --> verCardIssue_silent {
+                condition: OK(verCardIssue_silent)
+            }
+            GET -> verCardIssue {
+                parameters [ id = "{CardTypeNo}" ]
+            }
+            onerror --> common.Errors.Errors
+        }
+    
+        resource verCardIssue_reverse {
+            type: item
+            entity: verCardIssue
+            commands [ PUT : ReverseEntity ]
+            relations [ "http://temenostech.temenos.com/rels/reverse" ]
+            path: "/verCardIssues('{id}')/reverse"
+            GET --> verCardIssue_silent {
+                condition: OK(verCardIssue_silent)
+            }
+            GET --> verCardIssue_RAuth {
+                parameters [ id = "{CardTypeNo}" ]
+                condition: OK(verCardIssue_RAuth)
+            }
+            onerror --> T24.verCardIssue.verCardIssue_errorHandler
+        }
+    
+        resource verCardIssue_reversed {
+            type: item
+            entity: verCardIssue
+            commands [ GET : GetReversedEntity ]
+            path: "/verCardIssues_reversed('{id}')"
+        }
+    
+        resource verCardIssue_validate {
+            type: item
+            entity: verCardIssue
+            commands [ POST : ValidateEntity ]
+            relations [ "http://temenostech.temenos.com/rels/validate" ]
+            path: "/verCardIssues('{id}')/validate"
+            GET --> verCardIssue_silent {
+                condition: OK(verCardIssue_silent)
+            }
+            POST +-> verCardIssue_metadata {
+                title: "metadata"
+            }
+            PUT -> verCardIssue_input {
+                parameters [ id = "{CardTypeNo}" ]
+                title: "input deal"
+            }
+            POST -> verCardIssue_hold {
+                parameters [ id = "{CardTypeNo}" ]
+                title: "hold deal"
+            }
+            onerror --> T24.verCardIssue.verCardIssue_errorHandler
+        }
+    
+        resource verCardIssue_IAuth {
+            type: item
+            entity: verCardIssue
+            commands [ GET : GetIauthEntity ]
+            path: "/verCardIssues_IAuth('{id}')"
+            GET --> verCardIssue_silent {
+                condition: OK(verCardIssue_silent)
+            }
+            POST +-> verCardIssue_metadata {
+                title: "metadata"
+            }
+            GET +-> verCardIssue_changedValues {
+                parameters [ id = "{CardTypeNo}" ]
+                title: "changed values"
+            }
+            POST -> verCardIssue_validate {
+                parameters [ id = "{CardTypeNo}" ]
+                title: "validate deal"
+            }
+            PUT -> verCardIssue_input {
+                parameters [ id = "{CardTypeNo}" ]
+                title: "input deal"
+            }
+            POST -> verCardIssue_hold {
+                parameters [ id = "{CardTypeNo}" ]
+                title: "hold deal"
+            }
+            POST -> verCardIssue_authorise {
+                parameters [ id = "{CardTypeNo}" ]
+                title: "authorise deal"
+            }
+            DELETE -> verCardIssue_delete {
+                parameters [ id = "{CardTypeNo}" ]
+                title: "delete"
+            }
+            GET -> verCardIssue_ContextEnquiries {
+                title: "All Context Enquiries"
+            }
+            GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+                parameters [ entity = "verCardIssue" ]
+                title: "Context Enquiries"
+            }
+        }
+    
+        resource verCardIssue_RAuth {
+            type: item
+            entity: verCardIssue
+            commands [ GET : GetRauthEntity ]
+            path: "/verCardIssues_RAuth('{id}')"
+            GET --> verCardIssue_silent {
+                condition: OK(verCardIssue_silent)
+            }
+            POST +-> verCardIssue_metadata {
+                title: "metadata"
+            }
+            POST -> verCardIssue_authorise {
+                parameters [ id = "{CardTypeNo}" ]
+                title: "authorise deal"
+            }
+            DELETE -> verCardIssue_delete {
+                parameters [ id = "{CardTypeNo}" ]
+                title: "delete"
+            }
+        }
+    
+        resource verCardIssue_delete {
+            type: item
+            entity: verCardIssue
+            commands [ DELETE : DeleteEntity ]
+            relations [ "http://temenostech.temenos.com/rels/delete" ]
+            path: "/verCardIssues('{id}')/delete"
+        }
+    
+        resource verCardIssueEntry {
+            type: item
+            entity: verCardIssue
+            commands [ GET : NoopGET ]
+            relations [ "http://schemas.microsoft.com/ado/2007/08/dataservices/related/verCardIssue","http://temenostech.temenos.com/rels/contract" ]
+            path: "/verCardIssueEntry"
+            GET --> verCardIssue_silent {
+                condition: OK(verCardIssue_silent)
+            }
+            POST -> verCardIssue_new {
+                title: "create new deal"
+                condition: OK(verCardIssue_autoId)
+            }
+            POST -> verCardIssue_populate {
+                title: "populate existing deal"
+            }
+            GET -> verCardIssue {
+                parameters [ id = "@" ]
+                title: "action"
+            }
+            GET -> "T24.verCardIssue.verCardIssue_see" {
+                parameters [ id = "@" ]
+                title: "See transaction"
+            }
+            GET -> "T24.verCardIssue.verCardIssue_IAuth_see" {
+                parameters [ id = "@" ]
+                title: "GetIauthEntity"
+            }
+            GET -> "T24.verCardIssue.verCardIssue_HAuth_see" {
+                parameters [ id = "@" ]
+                title: "GetHauthEntity"
+            }
+            GET -> "T24.verCardIssue.verCardIssue_IAuth" {
+                parameters [ id = "@" ]
+                title: "GetIauthEntity"
+            }
+            GET -> "T24.verCardIssue.verCardIssue_HAuth" {
+                parameters [ id = "@" ]
+                title: "GetHauthEntity"
+            }
+            GET +-> "T24.verCardIssue.verCardIssue_ContextEnquiries" {
+                title: "All context Enquiries"
+            }
+            POST -> verCardIssue_copy {
+                title: "Copy deal"
+            }
+            POST -> verCardIssue_paste {
+                parameters [ id = "{CardTypeNo}" ]
+                title: "Paste deal"
+            }
+        }
+    
+        resource verCardIssue_populate {
+            type: item
+            entity: verCardIssue
+            commands [ POST : CreateEntity ]
+            relations [ "http://schemas.microsoft.com/ado/2007/08/dataservices/related/verCardIssue","http://temenostech.temenos.com/rels/populate" ]
+            path: "/verCardIssues()/populate"
+            GET --> verCardIssue_silent {
+                condition: OK(verCardIssue_silent)
+            }
+            POST -> verCardIssue_validate {
+                parameters [ id = "{CardTypeNo}" ]
+                title: "validate deal"
+            }
+            POST -> verCardIssue_input {
+                parameters [ id = "{CardTypeNo}" ]
+                title: "input deal"
+            }
+            POST -> verCardIssue_hold {
+                parameters [ id = "{CardTypeNo}" ]
+                title: "hold deal"
+            }
+            DELETE -> verCardIssue_delete {
+                parameters [ id = "{CardTypeNo}" ]
+                title: "delete"
+                condition: OK(verCardIssue_IAuth)
+            }
+            POST -> verCardIssue_metadata {
+                title: "metadata"
+            }
+            GET -> "T24.verCardIssue.verCardIssue_see" {
+                parameters [ id = "@" ]
+                title: "See transaction"
+            }
+            GET -> "T24.verCardIssue.verCardIssue_IAuth_see" {
+                parameters [ id = "@" ]
+                title: "GetIauthEntity"
+            }
+            GET -> "T24.verCardIssue.verCardIssue_HAuth_see" {
+                parameters [ id = "@" ]
+                title: "GetHauthEntity"
+            }
+            GET -> "T24.verCardIssue.verCardIssue_IAuth" {
+                parameters [ id = "@" ]
+                title: "GetIauthEntity"
+            }
+            GET -> "T24.verCardIssue.verCardIssue_HAuth" {
+                parameters [ id = "@" ]
+                title: "GetHauthEntity"
+            }
+            GET -> verCardIssue_ContextEnquiries {
+                title: "All Context Enquiries"
+            }
+            GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+                parameters [ entity = "verCardIssue" ]
+                title: "Context Enquiries"
+            }
+        }
+    
+        resource verCardIssue_copy {
+            type: item
+            entity: verCardIssue
+            commands [ POST : CopyEntity ]
+            relations [ "http://temenostech.temenos.com/rels/copy" ]
+            path: "/verCardIssues()/copy"
+        }
+    
+        resource verCardIssue_paste {
+            type: item
+            entity: verCardIssue
+            commands [ POST : PasteEntity ]
+            relations [ "http://temenostech.temenos.com/rels/paste" ]
+            path: "/verCardIssues('{id}')/paste"
+            GET --> verCardIssue_silent {
+                condition: OK(verCardIssue_silent)
+            }
+            POST +-> verCardIssue_metadata {
+                title: "metadata"
+            }
+            POST -> verCardIssue_validate {
+                parameters [ id = "{CardTypeNo}" ]
+                title: "validate deal"
+            }
+            PUT -> verCardIssue_input {
+                parameters [ id = "{CardTypeNo}" ]
+                title: "input deal"
+            }
+            POST -> verCardIssue_hold {
+                parameters [ id = "{CardTypeNo}" ]
+                title: "hold deal"
+            }
+        }
+    
+        resource verCardIssues_enrichment {
+            type: item
+            entity: Enrichment
+            commands [ GET : T24Enrichment {
+                properties [ entity = "verCardIssue" ]
+                } ]
+            relations [ "http://temenostech.temenos.com/rels/enrichment" ]
+            path: "/verCardIssues()/enrichment"
+        }
+    
+        resource verCardIssue_autoId {
+            type: item
+            entity: verCardIssue
+            commands [ GET : CheckAutoIdSupport ]
+        }
+    
+        resource verCardIssue_restore {
+            type: item
+            entity: verCardIssue
+            commands [ POST : RestoreEntity ]
+            relations [ "http://temenostech.temenos.com/rels/restore" ]
+            path: "/verCardIssues('{id}')/restore"
+            GET --> verCardIssue_silent {
+                condition: OK(verCardIssue_silent)
+            }
+            GET --> verCardIssue_IAuth {
+                parameters [ id = "{CardTypeNo}" ]
+                condition: OK(verCardIssue_IAuth)
+            }
+            GET --> verCardIssue {
+                parameters [ id = "{CardTypeNo}" ]
+                condition: OK(verCardIssue)
+            }
+            POST -> verCardIssue_metadata {
+                title: "metadata"
+            }
+            GET -> verCardIssue_ContextEnquiries {
+                title: "All Context Enquiries"
+            }
+            GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+                parameters [ entity = "verCardIssue" ]
+                title: "Context Enquiries"
+            }
+            onerror --> common.Errors.Errors
+        }
+    
+        resource verCardIssues_HAuth {
+            type: collection
+            entity: verCardIssue
+            commands [ GET : GetHauthEntities {
+                properties [ filter = "{filter}" ]
+                } ]
+            path: "/verCardIssues_HAuth()"
+            GET *-> verCardIssue_HAuth {
+                parameters [ id = "{CardTypeNo}" ]
+            }
+            POST -> verCardIssue_new {
+                title: "create new deal"
+                condition: OK(verCardIssue_autoId)
+            }
+            POST -> verCardIssue_populate {
+                title: "populate existing deal"
+            }
+            POST *-> verCardIssue_restore {
+                parameters [ id = "{CardTypeNo}" ]
+                title: "restore deal"
+            }
+        }
+    
+        resource verCardIssue_HAuth {
+            type: item
+            entity: verCardIssue
+            commands [ GET : GetHauthEntity ]
+            path: "/verCardIssues_HAuth('{id}')"
+            GET --> verCardIssue_silent {
+                condition: OK(verCardIssue_silent)
+            }
+            POST +-> verCardIssue_metadata {
+                title: "metadata"
+            }
+            POST -> verCardIssue_validate {
+                parameters [ id = "{CardTypeNo}" ]
+                title: "validate deal"
+            }
+            PUT -> verCardIssue_input {
+                parameters [ id = "{CardTypeNo}" ]
+                title: "input deal"
+            }
+            POST -> verCardIssue_hold {
+                parameters [ id = "{CardTypeNo}" ]
+                title: "hold deal"
+            }
+            POST -> verCardIssue_authorise {
+                parameters [ id = "{CardTypeNo}" ]
+                title: "authorise deal"
+            }
+            DELETE -> verCardIssue_delete {
+                parameters [ id = "{CardTypeNo}" ]
+                title: "delete"
+            }
+            POST -> verCardIssue_restore {
+                parameters [ id = "{CardTypeNo}" ]
+                title: "restore deal"
+            }
+            GET -> verCardIssue_ContextEnquiries {
+                title: "All Context Enquiries"
+            }
+            GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+                parameters [ entity = "verCardIssue" ]
+                title: "Context Enquiries"
+            }
+        }
+    
+    }
+    
+}
