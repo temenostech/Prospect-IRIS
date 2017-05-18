@@ -1,14 +1,5 @@
 package com.temenos.marketplace;
 
-import java.io.IOException;
-import java.io.InputStream;
-
-import org.apache.commons.io.IOUtils;
-import org.junit.Test;
-
-import com.mashape.unirest.http.HttpResponse;
-import com.mashape.unirest.http.Unirest;
-import com.mashape.unirest.http.exceptions.UnirestException;
 
 /**
  * GET integration Flow unirest client library
@@ -22,13 +13,13 @@ public class TestInegrationFlowITCase {
     /*
      * This test will GET the published flow from T24 whose Id contains 'MarketPlace'
      * */
-    @Test
-    public void testIntegrationFlow() throws UnirestException, IOException {
-        String resourceFilter = "?$filter=substringof('MarketPlace', Id)";
-        String url = Configuration.DATA_SERVICE_URL + resourceName + resourceFilter;
-        Unirest.setDefaultHeader("Accept", "application/atom+xml");
-        HttpResponse<InputStream> response = Unirest.get(url)
-                .basicAuth(Configuration.INPUTTER_USER_NAME, Configuration.INPUTTER_PASSWORD).asBinary();
-        System.out.println(IOUtils.toString(response.getBody()));
-    }
+//    @Test
+//    public void testIntegrationFlow() throws UnirestException, IOException {
+//        String resourceFilter = "?$filter=substringof('MarketPlace', Id)";
+//        String url = Configuration.DATA_SERVICE_URL + resourceName + resourceFilter;
+//        Unirest.setDefaultHeader("Accept", "application/atom+xml");
+//        HttpResponse<InputStream> response = Unirest.get(url)
+//                .basicAuth(Configuration.INPUTTER_USER_NAME, Configuration.INPUTTER_PASSWORD).asBinary();
+//        System.out.println(IOUtils.toString(response.getBody()));
+//    }
 }

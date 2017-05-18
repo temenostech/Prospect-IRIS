@@ -1,14 +1,5 @@
 package com.temenos.marketplace;
 
-import java.io.IOException;
-import java.io.InputStream;
-
-import org.apache.commons.io.IOUtils;
-import org.junit.Test;
-
-import com.mashape.unirest.http.HttpResponse;
-import com.mashape.unirest.http.Unirest;
-import com.mashape.unirest.http.exceptions.UnirestException;
 
 /**
  * Tests for the line of code "GET -> T24.verCardIssue.verCardIssues" from Prospect.rim
