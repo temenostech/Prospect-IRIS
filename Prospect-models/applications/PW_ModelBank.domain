@@ -1,0 +1,286 @@
+# UTF-8
+/* Model Configuration for Process Workflow */
+Domain PW_ModelBank
+    @t24:i (module=PW)
+    @java:Package (value=com.temenos.t24.datamodel.pw.pw_modelbank)
+namespace "http://www.temenos.com/t24/PW_ModelBank"
+metamodelVersion 1.30.6
+Classes {
+    NOFILE_PROCESS_PROGRESS
+        @i18n:Description (en="")
+        @t24:i (t24Name=NOFILE.PROCESS.PROGRESS, level=I, type=T, allowedFunctions="L P S", localRefAllowed=false)
+    {
+        PROCESS_LIST : T24BusinessTypes:N
+            @i18n:Label (en="Process Id")
+            @t24:i (align=R, inputBehaviour=N, maxLength=12, core=false, t24Name=PROCESS.LIST, genOperation=E.MB.GET.PROCESS.STATUS)
+    }
+    NOFILE_PW_CURRENT_ACT
+        @i18n:Description (en="")
+        @t24:i (t24Name=NOFILE.PW.CURRENT.ACT, level=I, type=T, allowedFunctions="L P S", localRefAllowed=false)
+    {
+        PROCESS_ID : T24BusinessTypes:N
+            @i18n:Label (en="Process Id")
+            @t24:i (align=R, inputBehaviour=N, maxLength=15, core=false, t24Name=PROCESS.ID)
+        YID : T24BusinessTypes:N
+            @t24:i (align=L, inputBehaviour=N, maxLength=15, core=false, t24Name=YID, genOperation=E.MB.PW.CURRENT.ACT)
+    }
+    NOFILE_PW_PROCESS
+        @i18n:Description (en="")
+        @t24:i (t24Name=NOFILE.PW.PROCESS, level=I, type=T, allowedFunctions="L P S", localRefAllowed=false)
+    {
+        ENQ_DATA : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=12, core=false, t24Name=ENQ.DATA, genOperation=E.MB.GET.PROCESS)
+        PROCESS_ID : T24BusinessTypes:N
+            @i18n:Label (en="Process Id")
+            @t24:i (align=R, inputBehaviour=N, maxLength=20, core=false, t24Name=PROCESS.ID)
+    }
+    NOFILE_PW_STATUS_VIEW
+        @i18n:Description (en="")
+        @t24:i (t24Name=NOFILE.PW.STATUS.VIEW, level=I, type=T, allowedFunctions="L P S", localRefAllowed=false)
+    {
+        ID : T24BusinessTypes:N
+            @i18n:Label (en="Transaction Ref")
+            @i18n:Tooltip (en="Transaction Reference")
+            @t24:i (align=L, inputBehaviour=N, maxLength=20, core=false, t24Name=ID, genOperation=PROCESS.STATUS.LOCATOR)
+        Process_Id -> PW_Foundation:PW_PROCESS
+            @t24:i (align=R, inputBehaviour=N, maxLength=20, core=false, t24Name="Process Id")
+    }
+    NOFILE_PW_TIME_ANALYSIS
+        @i18n:Description (en="")
+        @t24:i (t24Name=NOFILE.PW.TIME.ANALYSIS, level=I, type=T, allowedFunctions="L P S", localRefAllowed=false)
+    {
+        ID : T24BusinessTypes:N
+            @i18n:Label (en="Transaction Ref")
+            @i18n:Tooltip (en="Transaction Reference")
+            @t24:i (align=L, inputBehaviour=N, maxLength=20, core=false, t24Name=ID, genOperation=PW.TIME.ANALYSIS)
+        Process_Id -> PW_Foundation:PW_PROCESS
+            @t24:i (align=R, inputBehaviour=N, maxLength=20, core=false, t24Name="Process Id")
+    }
+    NOFILE_PW_WHEREAMI
+        @i18n:Description (en="")
+        @t24:i (t24Name=NOFILE.PW.WHEREAMI, level=I, type=T, allowedFunctions="L P S", localRefAllowed=false)
+    {
+        PROCESS_ID : T24BusinessTypes:N
+            @i18n:Label (en="Process Id")
+            @t24:i (align=R, inputBehaviour=N, maxLength=15, core=false, t24Name=PROCESS.ID)
+        YID : T24BusinessTypes:N
+            @t24:i (align=L, inputBehaviour=N, maxLength=15, core=false, t24Name=YID, genOperation=E.MB.PW.WHEREAMI)
+    }
+    NOFILE_PW_WORKLOAD_MONITOR
+        @i18n:Description (en="")
+        @t24:i (t24Name=NOFILE.PW.WORKLOAD.MONITOR, level=I, type=T, allowedFunctions="L P S", localRefAllowed=false)
+    {
+        ID : T24BusinessTypes:N
+            @i18n:Label (en="Transaction Ref")
+            @i18n:Tooltip (en="Transaction Reference")
+            @t24:i (align=L, inputBehaviour=N, maxLength=20, core=false, t24Name=ID, genOperation=PW.WORKLOAD.DETAILS)
+        Process_Id -> PW_Foundation:PW_PROCESS
+            @t24:i (align=R, inputBehaviour=N, maxLength=20, core=false, t24Name="Process Id")
+    }
+    PW_AF_DEPOSIT
+        @i18n:Description (en="")
+        @t24:i (t24Name=PW.AF.DEPOSIT, level=C, type=D, allowedFunctions="A C D E H I L P Q R S", localRefAllowed=true)
+    {
+        AA_ACTIVITY -> AA_ProductFramework:AA_ACTIVITY
+            @t24:i (align=L, inputBehaviour=I, maxLength=55, sysNumber=24.0, core=true, businessType=A, t24Name=AA.ACTIVITY)
+        AA_ARRANGEMENT : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=I, maxLength=20, sysNumber=22.0, core=true, t24Name=AA.ARRANGEMENT)
+        AA_DEPOSIT : PW_ModelBank:PW_AF_DEPOSIT__AA_DEPOSIT
+            @t24:i (align=L, inputBehaviour=I, maxLength=1, sysNumber=21.0, core=true, t24Name=AA.DEPOSIT)
+        AA_PRODUCT -> AA_ProductManagement:AA_PRODUCT
+            @t24:i (align=L, inputBehaviour=I, maxLength=30, sysNumber=23.0, core=true, businessType=A, t24Name=AA.PRODUCT)
+        ACCOUNT_NUMBER : T24BusinessTypes:ANT
+            @i18n:Label (en="Account Number")
+            @t24:i (align=L, inputBehaviour=I, maxLength=14, sysNumber=1.0, core=true, t24Name=ACCOUNT.NUMBER)
+        ACCOUNT_OFFICER -> ST_Config:DEPT_ACCT_OFFICER
+            @i18n:Label (en="Account Officer")
+            @i18n:Tooltip (en="Indicates Account Officer responsible")
+            @t24:i (align=L, inputBehaviour=I, maxLength=20, sysNumber=7.0, core=true, businessType=A, t24Name=ACCOUNT.OFFICER)
+        ACCOUNT_TITLE_1 : T24BusinessTypes:A
+            @i18n:Label (en=Name)
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=4.0, core=true, t24Name=ACCOUNT.TITLE.1)
+        AMOUNT : T24BusinessTypes:AMT
+            @i18n:Label (en=Amount)
+            @i18n:Tooltip (en="Indicates the Amount")
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=11.0, core=true, t24Name=AMOUNT, typeModifiers="-USD")
+        APPLY_NOTES -> byValue PW_ModelBank:PW_AF_DEPOSIT__APPLY_NOTES *
+            @t24:i (t24Name=APPLY.NOTES)
+        APPLY_STATUS : PW_ModelBank:PW_AF_DEPOSIT__APPLY_STATUS
+            @t24:i (align=L, inputBehaviour=I, maxLength=10, sysNumber=28.0, core=true, t24Name=APPLY.STATUS)
+        APPROVE_NOTES -> byValue PW_ModelBank:PW_AF_DEPOSIT__APPROVE_NOTES *
+            @t24:i (t24Name=APPROVE.NOTES)
+        APPROVE_STATUS : PW_ModelBank:PW_AF_DEPOSIT__APPROVE_STATUS
+            @t24:i (align=L, inputBehaviour=I, maxLength=10, sysNumber=32.0, core=true, t24Name=APPROVE.STATUS)
+        AUDITOR_CODE : T24BusinessTypes:A
+            @i18n:Label (en="Auditor Code")
+            @i18n:Tooltip (en="Auditor Code")
+            @t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=46.0, core=true, t24Name=AUDITOR.CODE)
+        AUDIT_DATE_TIME : T24BusinessTypes:RELTIME
+            @i18n:Label (en="Audit Date Time")
+            @i18n:Tooltip (en="Date and time when record was audited")
+            @t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=47.0, core=true, t24Name=AUDIT.DATE.TIME, mask="RDD DD  DD ##:##")
+        AUTHORISER : T24BusinessTypes:A
+            @i18n:Label (en=Authoriser)
+            @i18n:Tooltip (en="Indicates the User who Authorises the record")
+            @t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=43.0, core=true, t24Name=AUTHORISER)
+        BLANK : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=N, maxLength=1, sysNumber=35.0, core=true, t24Name=BLANK)
+        CATEGORY -> ST_Config:CATEGORY
+            @i18n:Label (en=Category)
+            @i18n:Tooltip (en="Specifies the Category")
+            @t24:i (align=L, inputBehaviour=I, maxLength=6, sysNumber=3.0, core=true, businessType=A, t24Name=CATEGORY)
+        COMPLETE_DATE : T24BusinessTypes:D
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=34.0, core=true, t24Name=COMPLETE.DATE)
+        CO_CODE -> ST_CompanyCreation:COMPANY
+            @i18n:Label (en=Company)
+            @t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=44.0, core=true, businessType=A, t24Name=CO.CODE, mask="R##-###-####")
+        CREDIT_ACCOUNT -> AC_AccountOpening:ACCOUNT
+            @i18n:Label (en="Credit Acct")
+            @t24:i (align=L, inputBehaviour=I, maxLength=36, sysNumber=18.0, core=true, businessType=ANT, t24Name=CREDIT.ACCOUNT)
+        CR_OPPOR_DEFN -> CR_Operational:CR_OPPORTUNITY_DEFINITION
+            @t24:i (align=L, inputBehaviour=I, maxLength=25, sysNumber=36.0, core=true, businessType=A, t24Name=CR.OPPOR.DEFN)
+        CR_OPPOR_DESC : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=26.0, core=true, t24Name=CR.OPPOR.DESC)
+        CR_OPPOR_ID : T24BusinessTypes:A
+            @i18n:Label (en="Opportunity ID")
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=25.0, core=true, t24Name=CR.OPPOR.ID)
+        CR_SOURCE_ID : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=27.0, core=true, t24Name=CR.SOURCE.ID)
+        CURRENCY -> ST_CurrencyConfig:CURRENCY
+            @i18n:Label (en=Ccy)
+            @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=6.0, core=true, businessType=CCY, t24Name=CURRENCY)
+        CURR_NO : T24BusinessTypes:N
+            @i18n:Label (en="Curr No")
+            @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=40.0, core=true, t24Name=CURR.NO)
+        CUSTOMER -> ST_Customer:CUSTOMER
+            @i18n:Label (en=Customer)
+            @i18n:Tooltip (en="Customer Liability")
+            @t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=2.0, core=true, businessType=CUS, t24Name=CUSTOMER)
+        DATE_TIME -> byValue PW_ModelBank:PW_AF_DEPOSIT__DATE_TIME *
+            @t24:i (t24Name=DATE.TIME)
+        DEAL_NO -> PW_ModelBank:PW_AF_DEPOSIT PK required
+            @i18n:Label (en="Deal Number")
+            @t24:i (align=L, inputBehaviour=I, maxLength=50, sysNumber=0.0, core=true, businessType=A, t24Name=DEAL.NO)
+        DEBIT_ACCOUNT -> AC_AccountOpening:ACCOUNT
+            @i18n:Label (en="Debit account")
+            @i18n:Tooltip (en="Indicates the account to be debited ")
+            @t24:i (align=L, inputBehaviour=I, maxLength=36, sysNumber=17.0, core=true, businessType=ANT, t24Name=DEBIT.ACCOUNT)
+        DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+            @i18n:Label (en="Dept Code")
+            @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=45.0, core=true, t24Name=DEPT.CODE)
+        DEP_TYPE_1 : PW_ModelBank:PW_AF_DEPOSIT__DEP_TYPE_1
+            @t24:i (align=L, inputBehaviour=I, maxLength=25, sysNumber=9.0, core=true, t24Name=DEP.TYPE.1)
+        DEP_TYPE_2 : PW_ModelBank:PW_AF_DEPOSIT__DEP_TYPE_2
+            @t24:i (align=L, inputBehaviour=I, maxLength=25, sysNumber=10.0, core=true, t24Name=DEP.TYPE.2)
+        INPUTTER -> byValue PW_ModelBank:PW_AF_DEPOSIT__INPUTTER *
+            @t24:i (t24Name=INPUTTER)
+        INTEREST_RATE : T24BusinessTypes:R
+            @i18n:Label (en="Interest Rate")
+            @i18n:Tooltip (en="Indicates interest rate")
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=19.0, core=true, t24Name=INTEREST.RATE)
+        MATURITY_DATE : T24BusinessTypes:D
+            @i18n:Label (en="Maturity Date")
+            @i18n:Tooltip (en="Indicates the Maturity Date of the Transaction")
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=13.0, core=true, t24Name=MATURITY.DATE)
+        MATURITY_INSTR : PW_ModelBank:PW_AF_DEPOSIT__MATURITY_INSTR
+            @i18n:Label (en="Maturity Instructions")
+            @i18n:Tooltip (en="Indicates maturity instructions")
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=20.0, core=true, t24Name=MATURITY.INSTR)
+        OVERRIDE -> byValue PW_ModelBank:PW_AF_DEPOSIT__OVERRIDE *
+            @t24:i (t24Name=OVERRIDE)
+        PRODUCT : T24BusinessTypes:A
+            @i18n:Label (en=Product)
+            @t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=8.0, core=true, t24Name=PRODUCT)
+        RECORD_STATUS : T24BusinessTypes:STAT
+            @i18n:Label (en="Record Status")
+            @t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=39.0, core=true, t24Name=RECORD.STATUS)
+        REVIEW_NOTES -> byValue PW_ModelBank:PW_AF_DEPOSIT__REVIEW_NOTES *
+            @t24:i (t24Name=REVIEW.NOTES)
+        REVIEW_STATUS : PW_ModelBank:PW_AF_DEPOSIT__REVIEW_STATUS
+            @t24:i (align=L, inputBehaviour=I, maxLength=10, sysNumber=30.0, core=true, t24Name=REVIEW.STATUS)
+        SHORT_TITLE : T24BusinessTypes:A
+            @i18n:Label (en="Account Name")
+            @i18n:Tooltip (en="Indicates the abbreviated title of the account")
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=5.0, core=true, t24Name=SHORT.TITLE)
+        START_DATE : T24BusinessTypes:D
+            @i18n:Label (en="Start Date")
+            @i18n:Tooltip (en="Start Date")
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=12.0, core=true, t24Name=START.DATE)
+        TERM : T24BusinessTypes:PERIOD
+            @i18n:Label (en=Term)
+            @i18n:Tooltip (en="period of time by which the amount must be repaid")
+            @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=14.0, core=true, t24Name=TERM)
+        TERM_1 : PW_ModelBank:PW_AF_DEPOSIT__TERM_1
+            @t24:i (align=L, inputBehaviour=I, maxLength=25, sysNumber=15.0, core=true, t24Name=TERM.1)
+        TERM_2 : PW_ModelBank:PW_AF_DEPOSIT__TERM_2
+            @t24:i (align=L, inputBehaviour=I, maxLength=25, sysNumber=16.0, core=true, t24Name=TERM.2)
+    }
+    PW_AF_DEPOSIT__APPLY_NOTES
+    {
+        APPLY_NOTES : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=I, maxLength=65, sysNumber=29.0, core=true, t24Name=APPLY.NOTES, isTextarea=true)
+    }
+    PW_AF_DEPOSIT__APPROVE_NOTES
+    {
+        APPROVE_NOTES : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=I, maxLength=65, sysNumber=33.0, core=true, t24Name=APPROVE.NOTES, isTextarea=true)
+    }
+    PW_AF_DEPOSIT__DATE_TIME
+    {
+        DATE_TIME : T24BusinessTypes:RELTIME
+            @i18n:Label (en="Date time")
+            @i18n:Tooltip (en="Date and time when record was input or authorised")
+            @t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=42.0, core=true, t24Name=DATE.TIME, mask="RDD DD  DD ##:##")
+    }
+    PW_AF_DEPOSIT__INPUTTER
+    {
+        INPUTTER : T24BusinessTypes:A
+            @i18n:Label (en=Inputter)
+            @i18n:Tooltip (en="The user who last updated the record")
+            @t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=41.0, core=true, t24Name=INPUTTER)
+    }
+    PW_AF_DEPOSIT__OVERRIDE
+    {
+        OVERRIDE : T24BusinessTypes:A
+            @i18n:Label (en=Override)
+            @i18n:Tooltip (en="Overrides generated by this transaction")
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=38.0, core=true, t24Name=OVERRIDE)
+    }
+    PW_AF_DEPOSIT__REVIEW_NOTES
+    {
+        REVIEW_NOTES : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=I, maxLength=65, sysNumber=31.0, core=true, t24Name=REVIEW.NOTES, isTextarea=true)
+    }
+}
+Enumerations {
+    PW_AF_DEPOSIT__AA_DEPOSIT : mml:string
+        Y=Y
+    PW_AF_DEPOSIT__APPLY_STATUS : mml:string
+        APPLY=APPLY
+        SAVE=SAVE
+    PW_AF_DEPOSIT__APPROVE_STATUS : mml:string
+        APPROVED=APPROVED
+        DECLINED=DECLINED
+    PW_AF_DEPOSIT__DEP_TYPE_1 : mml:string
+        SHORT_TERM_A="SHORT TERM A"
+        SHORT_TERM_B="SHORT TERM B"
+        SHORT_TERM_C="SHORT TERM C"
+    PW_AF_DEPOSIT__DEP_TYPE_2 : mml:string
+        LONG_TERM_A="LONG TERM A"
+        LONG_TERM_B="LONG TERM B"
+        LONG_TERM_C="LONG TERM C"
+    PW_AF_DEPOSIT__MATURITY_INSTR : mml:string
+        AUTOMATIC_ROLLOVER="AUTOMATIC ROLLOVER"
+        PAYMENT_TO_NOMINATED_ACCOUNT="PAYMENT TO NOMINATED ACCOUNT"
+    PW_AF_DEPOSIT__REVIEW_STATUS : mml:string
+        APPROVED=APPROVED
+        DECLINED=DECLINED
+    PW_AF_DEPOSIT__TERM_1 : mml:string
+        16D=16D
+        45D=45D
+        89D=89D
+    PW_AF_DEPOSIT__TERM_2 : mml:string
+        5Y=5Y
+        6Y=6Y
+        7Y=7Y
+}

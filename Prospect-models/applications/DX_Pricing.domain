@@ -1,0 +1,1299 @@
+# UTF-8
+/* Pricing for Derivatives */
+Domain DX_Pricing
+    @t24:i (module=DX)
+    @java:Package (value=com.temenos.t24.datamodel.dx.dx_pricing)
+namespace "http://www.temenos.com/t24/DX_Pricing"
+metamodelVersion 1.30.6
+Classes {
+    DX_BV_PRICE_CHANGE_TODAY
+        @i18n:Description (en="")
+        @t24:i (t24Name=DX.BV.PRICE.CHANGE.TODAY, level=I, type=T, allowedFunctions="L P S", localRefAllowed=false)
+    {
+        DX_BV_PRICE_CODE : T24BusinessTypes:A PK required
+            @t24:i (align=L, inputBehaviour=N, maxLength=8, sysNumber=0.0, core=true, t24Name=DX.BV.PRICE.CODE)
+        UPD_PRICE -> DX_Pricing:DX_MARKET_PRICE_HISTORY
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=1.0, core=true, businessType=A, t24Name=UPD.PRICE)
+    }
+    DX_CREATE_PRICE
+        @i18n:Description (en="")
+        @t24:i (t24Name=DX.CREATE.PRICE, level=I, type=H, allowedFunctions="A C D E H I L P Q R S", localRefAllowed=true)
+    {
+        AUDITOR_CODE : T24BusinessTypes:A
+            @i18n:Label (en="Auditor Code")
+            @i18n:Tooltip (en="Auditor Code")
+            @t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=32.0, core=true, t24Name=AUDITOR.CODE)
+        AUDIT_DATE_TIME : T24BusinessTypes:RELTIME
+            @i18n:Label (en="Audit Date Time")
+            @i18n:Tooltip (en="Date and time when record was audited")
+            @t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=33.0, core=true, t24Name=AUDIT.DATE.TIME, mask="RDD DD  DD ##:##")
+        AUTHORISER : T24BusinessTypes:A
+            @i18n:Label (en=Authoriser)
+            @i18n:Tooltip (en="Indicates the User who Authorises the record")
+            @t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=29.0, core=true, t24Name=AUTHORISER)
+        CONTRACT_CODE -> DX_Configuration:DX_CONTRACT_MASTER required
+            @i18n:Label (en=Contract)
+            @i18n:Tooltip (en="Identifies the contract code of the transaction")
+            @t24:i (align=L, inputBehaviour=I, maxLength=12, sysNumber=2.0, core=true, businessType=DXCM, t24Name=CONTRACT.CODE)
+        CO_CODE -> ST_CompanyCreation:COMPANY
+            @i18n:Label (en=Company)
+            @t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=30.0, core=true, businessType=A, t24Name=CO.CODE, mask="R##-###-####")
+        CREATE_PRICE -> DX_Pricing:DX_CREATE_PRICE PK required
+            @t24:i (align=L, inputBehaviour=I, maxLength=15, sysNumber=0.0, core=true, businessType=A, t24Name=CREATE.PRICE)
+        CURR_NO : T24BusinessTypes:N
+            @i18n:Label (en="Curr No")
+            @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=26.0, core=true, t24Name=CURR.NO)
+        DATE_TIME -> byValue DX_Pricing:DX_CREATE_PRICE__DATE_TIME *
+            @t24:i (t24Name=DATE.TIME)
+        DELIVERY_CCY : T24BusinessTypes:CCY
+            @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=5.0, core=true, t24Name=DELIVERY.CCY)
+        DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+            @i18n:Label (en="Dept Code")
+            @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=31.0, core=true, t24Name=DEPT.CODE)
+        EXOTIC_TYPE -> byValue DX_Pricing:DX_CREATE_PRICE__EXOTIC_TYPE *
+            @t24:i (t24Name=EXOTIC.TYPE)
+        INPUTTER -> byValue DX_Pricing:DX_CREATE_PRICE__INPUTTER *
+            @t24:i (t24Name=INPUTTER)
+        INT_PRICE : T24BusinessTypes:DEC
+            @t24:i (align=L, inputBehaviour=N, maxLength=19, sysNumber=18.0, core=true, t24Name=INT.PRICE, typeModifiers="92")
+        INT_STRIKE_PRICE : T24BusinessTypes:DEC
+            @t24:i (align=L, inputBehaviour=N, maxLength=19, sysNumber=8.0, core=true, t24Name=INT.STRIKE.PRICE, typeModifiers="9")
+        MATURITY_DATE : T24BusinessTypes:A required
+            @i18n:Label (en="Maturity Date")
+            @i18n:Tooltip (en="Indicates the Maturity Date of the Transaction")
+            @t24:i (align=L, inputBehaviour=I, maxLength=11, sysNumber=3.0, core=true, t24Name=MATURITY.DATE)
+        OPTION_STYLE : DX_Pricing:DX_CREATE_PRICE__OPTION_STYLE
+            @i18n:Label (en="Option Style")
+            @i18n:Tooltip (en="Type of option style like Americal or European")
+            @t24:i (align=L, inputBehaviour=I, maxLength=10, sysNumber=9.0, core=true, t24Name=OPTION.STYLE)
+        OPTION_TYPE : DX_Pricing:DX_CREATE_PRICE__OPTION_TYPE
+            @i18n:Label (en="Call or Put")
+            @i18n:Tooltip (en="Type of option to be chosen like call or put")
+            @t24:i (align=L, inputBehaviour=I, maxLength=4, sysNumber=6.0, core=true, t24Name=OPTION.TYPE)
+        OVERRIDE -> byValue DX_Pricing:DX_CREATE_PRICE__OVERRIDE *
+            @t24:i (t24Name=OVERRIDE)
+        PRICE : T24BusinessTypes:DEC
+            @i18n:Label (en=Price)
+            @t24:i (align=L, inputBehaviour=N, maxLength=19, sysNumber=17.0, core=true, t24Name=PRICE, typeModifiers="92")
+        PRICE_KEY : T24BusinessTypes:A
+            @i18n:Label (en="Price Key")
+            @t24:i (align=L, inputBehaviour=N, maxLength=120, sysNumber=19.0, core=true, t24Name=PRICE.KEY)
+        PRICE_SET -> DX_Pricing:DX_PRICE_SET required
+            @i18n:Label (en=Currnt/Closng/Whatif)
+            @t24:i (align=L, inputBehaviour=I, maxLength=15, sysNumber=1.0, core=true, businessType=A, t24Name=PRICE.SET)
+        QUOTE_CCY : T24BusinessTypes:CCY
+            @i18n:Label (en="Quote Ccy ")
+            @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=14.0, core=true, t24Name=QUOTE.CCY)
+        QUOTE_EXC : T24BusinessTypes:DEC
+            @t24:i (align=L, inputBehaviour=N, maxLength=19, sysNumber=16.0, core=true, t24Name=QUOTE.EXC, typeModifiers="92")
+        QUOTE_PRICE : T24BusinessTypes:DEC
+            @i18n:Label (en="Current Price")
+            @t24:i (align=L, inputBehaviour=I, maxLength=19, sysNumber=15.0, core=true, t24Name=QUOTE.PRICE, typeModifiers="92")
+        RECORD_STATUS : T24BusinessTypes:STAT
+            @i18n:Label (en="Record Status")
+            @t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=25.0, core=true, t24Name=RECORD.STATUS)
+        RESERVED_1 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=22.0, core=true, t24Name=RESERVED.1)
+        RESERVED_2 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=21.0, core=true, t24Name=RESERVED.2)
+        RESERVED_3 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=20.0, core=true, t24Name=RESERVED.3)
+        STRIKE_PRICE : T24BusinessTypes:DEC
+            @i18n:Label (en=Strike)
+            @t24:i (align=L, inputBehaviour=I, maxLength=19, sysNumber=7.0, core=true, t24Name=STRIKE.PRICE, typeModifiers="9")
+        TRADE_CCY : T24BusinessTypes:CCY required
+            @i18n:Label (en="Trade Currency")
+            @i18n:Tooltip (en="Identifies the currency of the transaction")
+            @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=4.0, core=true, t24Name=TRADE.CCY)
+    }
+    DX_CREATE_PRICE__DATE_TIME
+    {
+        DATE_TIME : T24BusinessTypes:RELTIME
+            @i18n:Label (en="Date time")
+            @i18n:Tooltip (en="Date and time when record was input or authorised")
+            @t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=28.0, core=true, t24Name=DATE.TIME, mask="RDD DD  DD ##:##")
+    }
+    DX_CREATE_PRICE__EXOTIC_TYPE
+    {
+        EXOTIC_TYPE -> DX_Configuration:DX_OPTION_TYPE
+            @i18n:Label (en="Exotic Type")
+            @i18n:Tooltip (en="Unique option type associated with the transaction")
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=10.0, core=true, businessType=A, t24Name=EXOTIC.TYPE)
+        USR_FLD_NAME -> byValue DX_Pricing:DX_CREATE_PRICE__EXOTIC_TYPE__USR_FLD_NAME *
+            @t24:i (t24Name=USR.FLD.NAME)
+    }
+    DX_CREATE_PRICE__EXOTIC_TYPE__USR_FLD_NAME
+    {
+        USR_FLD_NAME -> DX_Exotics:DX_USR_FLD_OPT
+            @i18n:Label (en="XO Field")
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=11.0, core=true, businessType=A, t24Name=USR.FLD.NAME)
+        USR_FLD_PRICE : T24BusinessTypes:A
+            @i18n:Label (en="Exotic Criteria?")
+            @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=13.0, core=true, t24Name=USR.FLD.PRICE, typeModifiers="YES_NO")
+        USR_FLD_VAL : T24BusinessTypes:A
+            @i18n:Label (en="XO Value")
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=12.0, core=true, t24Name=USR.FLD.VAL)
+    }
+    DX_CREATE_PRICE__INPUTTER
+    {
+        INPUTTER : T24BusinessTypes:A
+            @i18n:Label (en=Inputter)
+            @i18n:Tooltip (en="The user who last updated the record")
+            @t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=27.0, core=true, t24Name=INPUTTER)
+    }
+    DX_CREATE_PRICE__OVERRIDE
+    {
+        OVERRIDE : T24BusinessTypes:A
+            @i18n:Label (en=Override)
+            @i18n:Tooltip (en="Overrides generated by this transaction")
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=24.0, core=true, t24Name=OVERRIDE)
+    }
+    DX_INT_PRICE_CALC
+        @i18n:Description (en="")
+        @t24:i (t24Name=DX.INT.PRICE.CALC, level=F, type=H, allowedFunctions="A C D E H I L P Q R S", localRefAllowed=true)
+    {
+        AUDITOR_CODE : T24BusinessTypes:A
+            @i18n:Label (en="Auditor Code")
+            @i18n:Tooltip (en="Auditor Code")
+            @t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=20.0, core=true, t24Name=AUDITOR.CODE)
+        AUDIT_DATE_TIME : T24BusinessTypes:RELTIME
+            @i18n:Label (en="Audit Date Time")
+            @i18n:Tooltip (en="Date and time when record was audited")
+            @t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=21.0, core=true, t24Name=AUDIT.DATE.TIME, mask="RDD DD  DD ##:##")
+        AUTHORISER : T24BusinessTypes:A
+            @i18n:Label (en=Authoriser)
+            @i18n:Tooltip (en="Indicates the User who Authorises the record")
+            @t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=17.0, core=true, t24Name=AUTHORISER)
+        CALC_SUBROUTINE : DX_Pricing:DX_INT_PRICE_CALC__CALC_SUBROUTINE required
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=2.0, core=true, t24Name=CALC.SUBROUTINE)
+        CO_CODE -> ST_CompanyCreation:COMPANY
+            @i18n:Label (en=Company)
+            @t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=18.0, core=true, businessType=A, t24Name=CO.CODE, mask="R##-###-####")
+        CURR_NO : T24BusinessTypes:N
+            @i18n:Label (en="Curr No")
+            @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=14.0, core=true, t24Name=CURR.NO)
+        DATE_TIME -> byValue DX_Pricing:DX_INT_PRICE_CALC__DATE_TIME *
+            @t24:i (t24Name=DATE.TIME)
+        DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+            @i18n:Label (en="Dept Code")
+            @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=19.0, core=true, t24Name=DEPT.CODE)
+        DX_INT_PRICE_CALC -> DX_Pricing:DX_INT_PRICE_CALC PK required
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=0.0, core=true, businessType=A, t24Name=DX.INT.PRICE.CALC)
+        INPUTTER -> byValue DX_Pricing:DX_INT_PRICE_CALC__INPUTTER *
+            @t24:i (t24Name=INPUTTER)
+        MV_MVRESERVED1 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=0, sysNumber=5.0, core=true, t24Name=MV.MVRESERVED1)
+        NAME -> byValue DX_Pricing:DX_INT_PRICE_CALC__NAME *
+            @t24:i (t24Name=NAME)
+        OVERRIDE -> byValue DX_Pricing:DX_INT_PRICE_CALC__OVERRIDE *
+            @t24:i (t24Name=OVERRIDE)
+        PARAMETER_NAME -> byValue DX_Pricing:DX_INT_PRICE_CALC__PARAMETER_NAME *
+            @t24:i (t24Name=PARAMETER.NAME)
+        RECORD_STATUS : T24BusinessTypes:STAT
+            @i18n:Label (en="Record Status")
+            @t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=13.0, core=true, t24Name=RECORD.STATUS)
+        RESERVED1 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=0, sysNumber=10.0, core=true, t24Name=RESERVED1)
+        RESERVED2 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=0, sysNumber=9.0, core=true, t24Name=RESERVED2)
+        RESERVED3 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=0, sysNumber=8.0, core=true, t24Name=RESERVED3)
+        RESERVED4 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=0, sysNumber=7.0, core=true, t24Name=RESERVED4)
+        RESERVED5 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=0, sysNumber=6.0, core=true, t24Name=RESERVED5)
+    }
+    DX_INT_PRICE_CALC__DATE_TIME
+    {
+        DATE_TIME : T24BusinessTypes:RELTIME
+            @i18n:Label (en="Date time")
+            @i18n:Tooltip (en="Date and time when record was input or authorised")
+            @t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=16.0, core=true, t24Name=DATE.TIME, mask="RDD DD  DD ##:##")
+    }
+    DX_INT_PRICE_CALC__INPUTTER
+    {
+        INPUTTER : T24BusinessTypes:A
+            @i18n:Label (en=Inputter)
+            @i18n:Tooltip (en="The user who last updated the record")
+            @t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=15.0, core=true, t24Name=INPUTTER)
+    }
+    DX_INT_PRICE_CALC__NAME
+    {
+        NAME : T24BusinessTypes:A required
+            @i18n:Label (en=Name)
+            @i18n:Tooltip (en="Indicates the Name ")
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, multiLanguage=true, sysNumber=1.0, core=true, t24Name=NAME)
+    }
+    DX_INT_PRICE_CALC__OVERRIDE
+    {
+        OVERRIDE : T24BusinessTypes:A
+            @i18n:Label (en=Override)
+            @i18n:Tooltip (en="Overrides generated by this transaction")
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=12.0, core=true, t24Name=OVERRIDE)
+    }
+    DX_INT_PRICE_CALC__PARAMETER_NAME
+    {
+        PARAMETER_NAME : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=F, maxLength=35, sysNumber=3.0, core=true, t24Name=PARAMETER.NAME)
+        PARAMETER_VALUE : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=F, maxLength=35, sysNumber=4.0, core=true, t24Name=PARAMETER.VALUE)
+    }
+    DX_MARKET_PRICE
+        @i18n:Description (en="")
+        @t24:i (t24Name=DX.MARKET.PRICE, level=I, type=H, allowedFunctions="A C D E H I L P Q R S", localRefAllowed=true)
+    {
+        ALT_IND_NAME -> byValue DX_Pricing:DX_MARKET_PRICE__ALT_IND_NAME *
+            @t24:i (t24Name=ALT.IND.NAME)
+        AUDITOR_CODE : T24BusinessTypes:A
+            @i18n:Label (en="Auditor Code")
+            @i18n:Tooltip (en="Auditor Code")
+            @t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=85.0, core=true, t24Name=AUDITOR.CODE)
+        AUDIT_DATE_TIME : T24BusinessTypes:RELTIME
+            @i18n:Label (en="Audit Date Time")
+            @i18n:Tooltip (en="Date and time when record was audited")
+            @t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=86.0, core=true, t24Name=AUDIT.DATE.TIME, mask="RDD DD  DD ##:##")
+        AUTHORISER : T24BusinessTypes:A
+            @i18n:Label (en=Authoriser)
+            @i18n:Tooltip (en="Indicates the User who Authorises the record")
+            @t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=82.0, core=true, t24Name=AUTHORISER)
+        CALL_PUT : T24BusinessTypes:A
+            @i18n:Label (en=Call/Put)
+            @t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=6.0, core=true, t24Name=CALL.PUT)
+        CONTRACT_CODE -> DX_Configuration:DX_CONTRACT_MASTER
+            @i18n:Label (en=Contract)
+            @i18n:Tooltip (en="Identifies the contract code of the transaction")
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=3.0, core=true, businessType=A, t24Name=CONTRACT.CODE)
+        CONTRACT_TYPE : DX_Pricing:DX_MARKET_PRICE__CONTRACT_TYPE
+            @i18n:Label (en="Contract Type")
+            @t24:i (align=L, inputBehaviour=N, maxLength=10, sysNumber=19.0, core=true, t24Name=CONTRACT.TYPE)
+        CO_CODE -> ST_CompanyCreation:COMPANY
+            @i18n:Label (en=Company)
+            @t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=83.0, core=true, businessType=A, t24Name=CO.CODE, mask="R##-###-####")
+        CURR_NO : T24BusinessTypes:N
+            @i18n:Label (en="Curr No")
+            @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=79.0, core=true, t24Name=CURR.NO)
+        C_OBPOS -> byValue DX_Pricing:DX_MARKET_PRICE__C_OBPOS *
+            @t24:i (t24Name=C.OBPOS)
+        DATE_TIME -> byValue DX_Pricing:DX_MARKET_PRICE__DATE_TIME *
+            @t24:i (t24Name=DATE.TIME)
+        DELIVERY_CCY -> ST_CurrencyConfig:CURRENCY
+            @t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=9.0, core=true, businessType=CCY, t24Name=DELIVERY.CCY)
+        DELTA : T24BusinessTypes:DEC
+            @i18n:Label (en=Delta)
+            @t24:i (align=L, inputBehaviour=I, maxLength=19, sysNumber=51.0, core=true, t24Name=DELTA, typeModifiers="-12")
+        DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+            @i18n:Label (en="Dept Code")
+            @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=84.0, core=true, t24Name=DEPT.CODE)
+        DX_CTM_DATES_KEY : T24BusinessTypes:N
+            @t24:i (align=L, inputBehaviour=N, maxLength=40, core=false, t24Name=DX.CTM.DATES.KEY, genOperation="CONTRACT.CODE:\'/\':MATURITY.DATE")
+        GAMMA : T24BusinessTypes:DEC
+            @i18n:Label (en=Gamma)
+            @t24:i (align=L, inputBehaviour=I, maxLength=19, sysNumber=52.0, core=true, t24Name=GAMMA, typeModifiers="-12")
+        GEN_DATA_NAME -> byValue DX_Pricing:DX_MARKET_PRICE__GEN_DATA_NAME *
+            @t24:i (t24Name=GEN.DATA.NAME)
+        INPUTTER -> byValue DX_Pricing:DX_MARKET_PRICE__INPUTTER *
+            @t24:i (t24Name=INPUTTER)
+        INTEREST_BASIS -> ST_RateParameters:INTEREST_BASIS
+            @i18n:Label (en="Interest Basis")
+            @i18n:Tooltip (en="Indicates the interest day basis")
+            @t24:i (align=L, inputBehaviour=I, maxLength=11, sysNumber=42.0, core=true, businessType=A, t24Name=INTEREST.BASIS)
+        INT_PRICE : T24BusinessTypes:DEC
+            @t24:i (align=L, inputBehaviour=N, maxLength=19, sysNumber=24.0, core=true, t24Name=INT.PRICE, typeModifiers="92")
+        INT_RATE : T24BusinessTypes:DEC
+            @i18n:Label (en="Interest Rate")
+            @t24:i (align=L, inputBehaviour=I, maxLength=19, sysNumber=40.0, core=true, t24Name=INT.RATE, typeModifiers="92")
+        INT_STRIKE : T24BusinessTypes:DEC
+            @t24:i (align=L, inputBehaviour=N, maxLength=19, sysNumber=8.0, core=true, t24Name=INT.STRIKE, typeModifiers="92")
+        MATURITY_DATE : T24BusinessTypes:A
+            @i18n:Label (en="Maturity Date")
+            @i18n:Tooltip (en="Indicates the Maturity Date of the Transaction")
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=5.0, core=true, t24Name=MATURITY.DATE)
+        OPTION_STYLE : DX_Pricing:DX_MARKET_PRICE__OPTION_STYLE
+            @i18n:Label (en="Option Style")
+            @i18n:Tooltip (en="Type of option style like Americal or European")
+            @t24:i (align=L, inputBehaviour=N, maxLength=1, sysNumber=10.0, core=true, t24Name=OPTION.STYLE)
+        OPTION_TYPE -> byValue DX_Pricing:DX_MARKET_PRICE__OPTION_TYPE *
+            @t24:i (t24Name=OPTION.TYPE)
+        OVERRIDE -> byValue DX_Pricing:DX_MARKET_PRICE__OVERRIDE *
+            @t24:i (t24Name=OVERRIDE)
+        PRICE : T24BusinessTypes:DEC
+            @i18n:Label (en=Price)
+            @t24:i (align=L, inputBehaviour=N, maxLength=19, sysNumber=23.0, core=true, t24Name=PRICE, typeModifiers="92")
+        PRICE_CCY -> ST_CurrencyConfig:CURRENCY
+            @i18n:Label (en="Price Currency")
+            @t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=21.0, core=true, businessType=CCY, t24Name=PRICE.CCY)
+        PRICE_DATE : T24BusinessTypes:D
+            @i18n:Label (en="Price Date")
+            @t24:i (align=R, inputBehaviour=I, maxLength=8, sysNumber=33.0, core=true, t24Name=PRICE.DATE)
+        PRICE_DPS : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=22.0, core=true, t24Name=PRICE.DPS)
+        PRICE_KEY -> DX_Pricing:DX_MARKET_PRICE PK required
+            @i18n:Label (en="Price Key")
+            @t24:i (align=L, inputBehaviour=I, maxLength=120, sysNumber=0.0, core=true, businessType=A, t24Name=PRICE.KEY)
+        PRICE_SET -> DX_Pricing:DX_PRICE_SET
+            @i18n:Label (en=Currnt/Closng/Whatif)
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=1.0, core=true, businessType=A, t24Name=PRICE.SET)
+        PRICE_SOURCE -> DX_Pricing:DX_PRICE_SOURCE
+            @i18n:Label (en="Price Source")
+            @t24:i (align=L, inputBehaviour=I, maxLength=15, sysNumber=32.0, core=true, businessType=A, t24Name=PRICE.SOURCE)
+        PRICE_TIME : T24BusinessTypes:TIME
+            @i18n:Label (en="Time Updated")
+            @t24:i (align=L, inputBehaviour=I, maxLength=15, sysNumber=34.0, core=true, t24Name=PRICE.TIME, typeModifiers=S)
+        PRICE_UNITS : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=20.0, core=true, t24Name=PRICE.UNITS)
+        P_OBPOS -> byValue DX_Pricing:DX_MARKET_PRICE__P_OBPOS *
+            @t24:i (t24Name=P.OBPOS)
+        QUOTE_CCY -> ST_CurrencyConfig:CURRENCY
+            @i18n:Label (en="Quote Ccy")
+            @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=27.0, core=true, businessType=CCY, t24Name=QUOTE.CCY)
+        QUOTE_EXC : T24BusinessTypes:DEC
+            @t24:i (align=L, inputBehaviour=N, maxLength=19, sysNumber=29.0, core=true, t24Name=QUOTE.EXC, typeModifiers="92")
+        QUOTE_PRICE : T24BusinessTypes:DEC
+            @i18n:Label (en="Quote Price")
+            @t24:i (align=L, inputBehaviour=I, maxLength=19, sysNumber=28.0, core=true, t24Name=QUOTE.PRICE, typeModifiers="92")
+        RECORD_STATUS : T24BusinessTypes:STAT
+            @i18n:Label (en="Record Status")
+            @t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=78.0, core=true, t24Name=RECORD.STATUS)
+        RESERVED1 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=0, sysNumber=75.0, core=true, t24Name=RESERVED1)
+        RESERVED10 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=0, sysNumber=59.0, core=true, t24Name=RESERVED10)
+        RESERVED11 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=0, sysNumber=56.0, core=true, t24Name=RESERVED11)
+        RESERVED13 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=0, sysNumber=50.0, core=true, t24Name=RESERVED13)
+        RESERVED14 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=0, sysNumber=49.0, core=true, t24Name=RESERVED14)
+        RESERVED17 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=0, sysNumber=44.0, core=true, t24Name=RESERVED17)
+        RESERVED18 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=0, sysNumber=43.0, core=true, t24Name=RESERVED18)
+        RESERVED19 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=0, sysNumber=39.0, core=true, t24Name=RESERVED19)
+        RESERVED2 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=0, sysNumber=74.0, core=true, t24Name=RESERVED2)
+        RESERVED20 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=0, sysNumber=38.0, core=true, t24Name=RESERVED20)
+        RESERVED21 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=0, sysNumber=36.0, core=true, t24Name=RESERVED21)
+        RESERVED22 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=0, sysNumber=35.0, core=true, t24Name=RESERVED22)
+        RESERVED23 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=0, sysNumber=31.0, core=true, t24Name=RESERVED23)
+        RESERVED24 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=0, sysNumber=30.0, core=true, t24Name=RESERVED24)
+        RESERVED25 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=0, sysNumber=26.0, core=true, t24Name=RESERVED25)
+        RESERVED26 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=0, sysNumber=25.0, core=true, t24Name=RESERVED26)
+        RESERVED27 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=0, sysNumber=18.0, core=true, t24Name=RESERVED27)
+        RESERVED28 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=0, sysNumber=17.0, core=true, t24Name=RESERVED28)
+        RESERVED3 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=0, sysNumber=71.0, core=true, t24Name=RESERVED3)
+        RESERVED4 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=0, sysNumber=70.0, core=true, t24Name=RESERVED4)
+        RESERVED7 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=0, sysNumber=64.0, core=true, t24Name=RESERVED7)
+        RESERVED8 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=0, sysNumber=63.0, core=true, t24Name=RESERVED8)
+        RESERVED9 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=0, sysNumber=60.0, core=true, t24Name=RESERVED9)
+        RHO : T24BusinessTypes:DEC
+            @i18n:Label (en=Rho)
+            @t24:i (align=L, inputBehaviour=I, maxLength=19, sysNumber=54.0, core=true, t24Name=RHO, typeModifiers="-12")
+        SEC_INT_RATE : T24BusinessTypes:DEC
+            @t24:i (align=L, inputBehaviour=I, maxLength=19, sysNumber=41.0, core=true, t24Name=SEC.INT.RATE, typeModifiers="92")
+        SOURCE_APP -> EB_SystemTables:PGM_FILE
+            @t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=61.0, core=true, t24Name=SOURCE.APP)
+        SOURCE_KEY : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=62.0, core=true, t24Name=SOURCE.KEY)
+        STRIKE : T24BusinessTypes:DEC
+            @i18n:Label (en=Strike)
+            @t24:i (align=L, inputBehaviour=N, maxLength=19, sysNumber=7.0, core=true, t24Name=STRIKE, typeModifiers="92")
+        THETA : T24BusinessTypes:DEC
+            @i18n:Label (en=Theta)
+            @t24:i (align=L, inputBehaviour=I, maxLength=19, sysNumber=55.0, core=true, t24Name=THETA, typeModifiers="-12")
+        TIME_TO_EXPIRY : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=5, sysNumber=37.0, core=true, t24Name=TIME.TO.EXPIRY)
+        TRADE_CCY -> ST_CurrencyConfig:CURRENCY
+            @i18n:Label (en="Trade Currency")
+            @i18n:Tooltip (en="Identifies the currency of the transaction")
+            @t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=4.0, core=true, businessType=CCY, t24Name=TRADE.CCY)
+        UND_INT_PRICE : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=10, sysNumber=73.0, core=true, t24Name=UND.INT.PRICE)
+        UND_PRICE : T24BusinessTypes:N
+            @i18n:Label (en="Underlying Price")
+            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=72.0, core=true, t24Name=UND.PRICE)
+        USR_FLD_NAME -> byValue DX_Pricing:DX_MARKET_PRICE__USR_FLD_NAME *
+            @t24:i (t24Name=USR.FLD.NAME)
+        VEGA : T24BusinessTypes:DEC
+            @i18n:Label (en=Vega)
+            @t24:i (align=L, inputBehaviour=I, maxLength=19, sysNumber=53.0, core=true, t24Name=VEGA, typeModifiers="-12")
+        VOLATILITY : T24BusinessTypes:R
+            @t24:i (align=R, inputBehaviour=I, maxLength=12, sysNumber=57.0, core=true, t24Name=VOLATILITY)
+        VOLATILITY_KEY : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=58.0, core=true, t24Name=VOLATILITY.KEY)
+        VOL_KEY : T24BusinessTypes:N
+            @t24:i (align=L, inputBehaviour=N, maxLength=16, core=false, t24Name=VOL.KEY, genOperation="FIELD(@ID,\"/\",2):\"-\":FIELD(@ID,\"/\",4)")
+    }
+    DX_MARKET_PRICE_HISTORY
+        @i18n:Description (en="")
+        @t24:i (t24Name=DX.MARKET.PRICE.HISTORY, level=F, type=H, allowedFunctions="A C D E H I L P Q R S", localRefAllowed=true)
+    {
+        ALT_IND_NAME -> byValue DX_Pricing:DX_MARKET_PRICE_HISTORY__ALT_IND_NAME *
+            @t24:i (t24Name=ALT.IND.NAME)
+        AUDITOR_CODE : T24BusinessTypes:A
+            @i18n:Label (en="Auditor Code")
+            @i18n:Tooltip (en="Auditor Code")
+            @t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=85.0, core=true, t24Name=AUDITOR.CODE)
+        AUDIT_DATE_TIME : T24BusinessTypes:RELTIME
+            @i18n:Label (en="Audit Date Time")
+            @i18n:Tooltip (en="Date and time when record was audited")
+            @t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=86.0, core=true, t24Name=AUDIT.DATE.TIME, mask="RDD DD  DD ##:##")
+        AUTHORISER : T24BusinessTypes:A
+            @i18n:Label (en=Authoriser)
+            @i18n:Tooltip (en="Indicates the User who Authorises the record")
+            @t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=82.0, core=true, t24Name=AUTHORISER)
+        CALL_PUT : T24BusinessTypes:A
+            @i18n:Label (en=Call/Put)
+            @t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=6.0, core=true, t24Name=CALL.PUT)
+        CONTRACT_CODE -> DX_Configuration:DX_CONTRACT_MASTER
+            @i18n:Label (en=Contract)
+            @i18n:Tooltip (en="Identifies the contract code of the transaction")
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=3.0, core=true, businessType=A, t24Name=CONTRACT.CODE)
+        CONTRACT_TYPE : DX_Pricing:DX_MARKET_PRICE_HISTORY__CONTRACT_TYPE
+            @i18n:Label (en="Contract Type")
+            @t24:i (align=L, inputBehaviour=N, maxLength=10, sysNumber=19.0, core=true, t24Name=CONTRACT.TYPE)
+        CO_CODE -> ST_CompanyCreation:COMPANY
+            @i18n:Label (en=Company)
+            @t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=83.0, core=true, businessType=A, t24Name=CO.CODE, mask="R##-###-####")
+        CURR_NO : T24BusinessTypes:N
+            @i18n:Label (en="Curr No")
+            @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=79.0, core=true, t24Name=CURR.NO)
+        DATE_TIME -> byValue DX_Pricing:DX_MARKET_PRICE_HISTORY__DATE_TIME *
+            @t24:i (t24Name=DATE.TIME)
+        DELIVERY_CCY -> ST_CurrencyConfig:CURRENCY
+            @t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=9.0, core=true, businessType=CCY, t24Name=DELIVERY.CCY)
+        DELTA : T24BusinessTypes:DEC
+            @i18n:Label (en=Delta)
+            @t24:i (align=L, inputBehaviour=I, maxLength=19, sysNumber=51.0, core=true, t24Name=DELTA, typeModifiers="-12")
+        DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+            @i18n:Label (en="Dept Code")
+            @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=84.0, core=true, t24Name=DEPT.CODE)
+        GAMMA : T24BusinessTypes:DEC
+            @i18n:Label (en=Gamma)
+            @t24:i (align=L, inputBehaviour=I, maxLength=19, sysNumber=52.0, core=true, t24Name=GAMMA, typeModifiers="-12")
+        GEN_DATA_NAME -> byValue DX_Pricing:DX_MARKET_PRICE_HISTORY__GEN_DATA_NAME *
+            @t24:i (t24Name=GEN.DATA.NAME)
+        INPUTTER -> byValue DX_Pricing:DX_MARKET_PRICE_HISTORY__INPUTTER *
+            @t24:i (t24Name=INPUTTER)
+        INTEREST_BASIS -> ST_RateParameters:INTEREST_BASIS
+            @i18n:Label (en="Interest Basis")
+            @i18n:Tooltip (en="Indicates the interest day basis")
+            @t24:i (align=L, inputBehaviour=I, maxLength=11, sysNumber=42.0, core=true, businessType=A, t24Name=INTEREST.BASIS)
+        INT_PRICE : T24BusinessTypes:DEC
+            @t24:i (align=L, inputBehaviour=N, maxLength=19, sysNumber=24.0, core=true, t24Name=INT.PRICE, typeModifiers="92")
+        INT_RATE : T24BusinessTypes:DEC
+            @i18n:Label (en="Interest Rate")
+            @t24:i (align=L, inputBehaviour=I, maxLength=19, sysNumber=40.0, core=true, t24Name=INT.RATE, typeModifiers="92")
+        INT_STRIKE : T24BusinessTypes:DEC
+            @t24:i (align=L, inputBehaviour=N, maxLength=19, sysNumber=8.0, core=true, t24Name=INT.STRIKE, typeModifiers="92")
+        MATURITY_DATE : T24BusinessTypes:A
+            @i18n:Label (en="Maturity Date")
+            @i18n:Tooltip (en="Indicates the Maturity Date of the Transaction")
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=5.0, core=true, t24Name=MATURITY.DATE)
+        OPTION_STYLE : DX_Pricing:DX_MARKET_PRICE_HISTORY__OPTION_STYLE
+            @i18n:Label (en="Option Style")
+            @i18n:Tooltip (en="Type of option style like Americal or European")
+            @t24:i (align=L, inputBehaviour=N, maxLength=1, sysNumber=10.0, core=true, t24Name=OPTION.STYLE)
+        OPTION_TYPE -> byValue DX_Pricing:DX_MARKET_PRICE_HISTORY__OPTION_TYPE *
+            @t24:i (t24Name=OPTION.TYPE)
+        OVERRIDE -> byValue DX_Pricing:DX_MARKET_PRICE_HISTORY__OVERRIDE *
+            @t24:i (t24Name=OVERRIDE)
+        PRICE : T24BusinessTypes:DEC
+            @i18n:Label (en=Price)
+            @t24:i (align=L, inputBehaviour=N, maxLength=19, sysNumber=23.0, core=true, t24Name=PRICE, typeModifiers="92")
+        PRICE_CCY -> ST_CurrencyConfig:CURRENCY
+            @i18n:Label (en="Price Currency")
+            @t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=21.0, core=true, businessType=CCY, t24Name=PRICE.CCY)
+        PRICE_DATE : T24BusinessTypes:D
+            @t24:i (align=R, inputBehaviour=I, maxLength=8, sysNumber=33.0, core=true, t24Name=PRICE.DATE)
+        PRICE_DPS : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=22.0, core=true, t24Name=PRICE.DPS)
+        PRICE_KEY -> DX_Pricing:DX_MARKET_PRICE_HISTORY PK required
+            @i18n:Label (en="Price Key")
+            @t24:i (align=L, inputBehaviour=I, maxLength=120, sysNumber=0.0, core=true, businessType=A, t24Name=PRICE.KEY)
+        PRICE_SET -> DX_Pricing:DX_PRICE_SET
+            @i18n:Label (en=Currnt/Closng/Whatif)
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=1.0, core=true, businessType=A, t24Name=PRICE.SET)
+        PRICE_SOURCE -> DX_Pricing:DX_PRICE_SOURCE
+            @t24:i (align=L, inputBehaviour=I, maxLength=15, sysNumber=32.0, core=true, businessType=A, t24Name=PRICE.SOURCE)
+        PRICE_TIME : T24BusinessTypes:TIME
+            @t24:i (align=L, inputBehaviour=I, maxLength=15, sysNumber=34.0, core=true, t24Name=PRICE.TIME, typeModifiers=S)
+        PRICE_UNITS : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=20.0, core=true, t24Name=PRICE.UNITS)
+        QUOTE_CCY -> ST_CurrencyConfig:CURRENCY
+            @i18n:Label (en="Quote Ccy ")
+            @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=27.0, core=true, businessType=CCY, t24Name=QUOTE.CCY)
+        QUOTE_EXC : T24BusinessTypes:DEC
+            @t24:i (align=L, inputBehaviour=N, maxLength=19, sysNumber=29.0, core=true, t24Name=QUOTE.EXC, typeModifiers="92")
+        QUOTE_PRICE : T24BusinessTypes:DEC
+            @i18n:Label (en="Current Price")
+            @t24:i (align=L, inputBehaviour=I, maxLength=19, sysNumber=28.0, core=true, t24Name=QUOTE.PRICE, typeModifiers="92")
+        RECORD_STATUS : T24BusinessTypes:STAT
+            @i18n:Label (en="Record Status")
+            @t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=78.0, core=true, t24Name=RECORD.STATUS)
+        RESERVED1 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=0, sysNumber=75.0, core=true, t24Name=RESERVED1)
+        RESERVED10 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=0, sysNumber=59.0, core=true, t24Name=RESERVED10)
+        RESERVED11 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=0, sysNumber=56.0, core=true, t24Name=RESERVED11)
+        RESERVED13 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=0, sysNumber=50.0, core=true, t24Name=RESERVED13)
+        RESERVED14 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=0, sysNumber=49.0, core=true, t24Name=RESERVED14)
+        RESERVED17 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=0, sysNumber=44.0, core=true, t24Name=RESERVED17)
+        RESERVED18 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=0, sysNumber=43.0, core=true, t24Name=RESERVED18)
+        RESERVED19 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=0, sysNumber=39.0, core=true, t24Name=RESERVED19)
+        RESERVED2 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=0, sysNumber=74.0, core=true, t24Name=RESERVED2)
+        RESERVED20 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=0, sysNumber=38.0, core=true, t24Name=RESERVED20)
+        RESERVED21 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=0, sysNumber=36.0, core=true, t24Name=RESERVED21)
+        RESERVED22 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=0, sysNumber=35.0, core=true, t24Name=RESERVED22)
+        RESERVED23 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=0, sysNumber=31.0, core=true, t24Name=RESERVED23)
+        RESERVED24 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=0, sysNumber=30.0, core=true, t24Name=RESERVED24)
+        RESERVED25 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=0, sysNumber=26.0, core=true, t24Name=RESERVED25)
+        RESERVED26 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=0, sysNumber=25.0, core=true, t24Name=RESERVED26)
+        RESERVED27 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=0, sysNumber=18.0, core=true, t24Name=RESERVED27)
+        RESERVED28 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=0, sysNumber=17.0, core=true, t24Name=RESERVED28)
+        RESERVED3 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=0, sysNumber=71.0, core=true, t24Name=RESERVED3)
+        RESERVED4 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=0, sysNumber=70.0, core=true, t24Name=RESERVED4)
+        RESERVED7 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=0, sysNumber=64.0, core=true, t24Name=RESERVED7)
+        RESERVED8 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=0, sysNumber=63.0, core=true, t24Name=RESERVED8)
+        RESERVED9 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=0, sysNumber=60.0, core=true, t24Name=RESERVED9)
+        RHO : T24BusinessTypes:DEC
+            @i18n:Label (en=Rho)
+            @t24:i (align=L, inputBehaviour=I, maxLength=19, sysNumber=54.0, core=true, t24Name=RHO, typeModifiers="-12")
+        SEC_INT_RATE : T24BusinessTypes:DEC
+            @t24:i (align=L, inputBehaviour=I, maxLength=19, sysNumber=41.0, core=true, t24Name=SEC.INT.RATE, typeModifiers="92")
+        SOURCE_APP -> EB_SystemTables:PGM_FILE
+            @t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=61.0, core=true, t24Name=SOURCE.APP)
+        SOURCE_KEY : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=62.0, core=true, t24Name=SOURCE.KEY)
+        STRIKE : T24BusinessTypes:DEC
+            @i18n:Label (en=Strike)
+            @t24:i (align=L, inputBehaviour=N, maxLength=19, sysNumber=7.0, core=true, t24Name=STRIKE, typeModifiers="92")
+        THETA : T24BusinessTypes:DEC
+            @i18n:Label (en=Theta)
+            @t24:i (align=L, inputBehaviour=I, maxLength=19, sysNumber=55.0, core=true, t24Name=THETA, typeModifiers="-12")
+        TIME_TO_EXPIRY : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=5, sysNumber=37.0, core=true, t24Name=TIME.TO.EXPIRY)
+        TRADE_CCY -> ST_CurrencyConfig:CURRENCY
+            @i18n:Label (en="Trade Currency")
+            @i18n:Tooltip (en="Identifies the currency of the transaction")
+            @t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=4.0, core=true, businessType=CCY, t24Name=TRADE.CCY)
+        UND_INT_PRICE : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=10, sysNumber=73.0, core=true, t24Name=UND.INT.PRICE)
+        UND_PRICE : T24BusinessTypes:N
+            @i18n:Label (en="Underlying Price")
+            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=72.0, core=true, t24Name=UND.PRICE)
+        USR_FLD_NAME -> byValue DX_Pricing:DX_MARKET_PRICE_HISTORY__USR_FLD_NAME *
+            @t24:i (t24Name=USR.FLD.NAME)
+        VEGA : T24BusinessTypes:DEC
+            @i18n:Label (en=Vega)
+            @t24:i (align=L, inputBehaviour=I, maxLength=19, sysNumber=53.0, core=true, t24Name=VEGA, typeModifiers="-12")
+        VOLATILITY : T24BusinessTypes:R
+            @t24:i (align=R, inputBehaviour=I, maxLength=12, sysNumber=57.0, core=true, t24Name=VOLATILITY)
+        VOLATILITY_KEY : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=58.0, core=true, t24Name=VOLATILITY.KEY)
+    }
+    DX_MARKET_PRICE_HISTORY__ALT_IND_NAME
+    {
+        ALT_IND_ID : T24BusinessTypes:A
+            @i18n:Label (en="Alt Index Id")
+            @i18n:Tooltip (en="Holds the alternate index ID")
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=46.0, core=true, t24Name=ALT.IND.ID, mvSvExpansionAccess=NOMODIFY)
+        ALT_IND_NAME : T24BusinessTypes:A
+            @i18n:Label (en="Alt Index Name")
+            @i18n:Tooltip (en="Holds the alternate index name")
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=45.0, core=true, t24Name=ALT.IND.NAME, mvSvExpansionAccess=NOMODIFY)
+        RESERVED15 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=0, sysNumber=48.0, core=true, t24Name=RESERVED15)
+        RESERVED16 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=0, sysNumber=47.0, core=true, t24Name=RESERVED16)
+    }
+    DX_MARKET_PRICE_HISTORY__DATE_TIME
+    {
+        DATE_TIME : T24BusinessTypes:RELTIME
+            @i18n:Label (en="Date time")
+            @i18n:Tooltip (en="Date and time when record was input or authorised")
+            @t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=81.0, core=true, t24Name=DATE.TIME, mask="RDD DD  DD ##:##")
+    }
+    DX_MARKET_PRICE_HISTORY__GEN_DATA_NAME
+    {
+        GEN_DATA_CODE : T24BusinessTypes:A
+            @i18n:Label (en="Generic Data Code")
+            @i18n:Tooltip (en="Generic Code used for Reporting purposes")
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=66.0, core=true, t24Name=GEN.DATA.CODE)
+        GEN_DATA_LIMIT : T24BusinessTypes:A
+            @i18n:Label (en="Gen Data Limit")
+            @i18n:Tooltip (en="Limit to be used for Reporting Purposes")
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=67.0, core=true, t24Name=GEN.DATA.LIMIT)
+        GEN_DATA_NAME : T24BusinessTypes:A
+            @i18n:Label (en="Generic Data Name")
+            @i18n:Tooltip (en="Generic name to be used for Reporting")
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=65.0, core=true, t24Name=GEN.DATA.NAME)
+        RESERVED5 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=0, sysNumber=69.0, core=true, t24Name=RESERVED5)
+        RESERVED6 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=0, sysNumber=68.0, core=true, t24Name=RESERVED6)
+    }
+    DX_MARKET_PRICE_HISTORY__INPUTTER
+    {
+        INPUTTER : T24BusinessTypes:A
+            @i18n:Label (en=Inputter)
+            @i18n:Tooltip (en="The user who last updated the record")
+            @t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=80.0, core=true, t24Name=INPUTTER)
+    }
+    DX_MARKET_PRICE_HISTORY__OPTION_TYPE
+    {
+        OPTION_TYPE : T24BusinessTypes:A
+            @i18n:Label (en="Call or Put")
+            @i18n:Tooltip (en="Type of option to be chosen like call or put")
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=2.0, core=true, t24Name=OPTION.TYPE)
+    }
+    DX_MARKET_PRICE_HISTORY__OVERRIDE
+    {
+        OVERRIDE : T24BusinessTypes:A
+            @i18n:Label (en=Override)
+            @i18n:Tooltip (en="Overrides generated by this transaction")
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=77.0, core=true, t24Name=OVERRIDE)
+    }
+    DX_MARKET_PRICE_HISTORY__USR_FLD_NAME
+    {
+        USR_FLD_NAME -> byValue DX_Pricing:DX_MARKET_PRICE_HISTORY__USR_FLD_NAME__USR_FLD_NAME *
+            @t24:i (t24Name=USR.FLD.NAME)
+    }
+    DX_MARKET_PRICE_HISTORY__USR_FLD_NAME__USR_FLD_NAME
+    {
+        RESERVED29 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=0, sysNumber=16.0, core=true, t24Name=RESERVED29)
+        RESERVED30 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=0, sysNumber=15.0, core=true, t24Name=RESERVED30)
+        USR_FLD_NAME -> DX_Exotics:DX_USR_FLD_OPT
+            @i18n:Label (en="XO Field")
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=11.0, core=true, businessType=A, t24Name=USR.FLD.NAME, mvSvExpansionAccess=NOMODIFY)
+        USR_FLD_PRICE : T24BusinessTypes:A
+            @i18n:Label (en="Exotic Criteria?")
+            @t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=14.0, core=true, t24Name=USR.FLD.PRICE)
+        USR_FLD_TEXT : T24BusinessTypes:A
+            @i18n:Label (en="Exotic Value")
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=13.0, core=true, t24Name=USR.FLD.TEXT)
+        USR_FLD_VAL : T24BusinessTypes:A
+            @i18n:Label (en="XO Value")
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=12.0, core=true, t24Name=USR.FLD.VAL, mvSvExpansionAccess=NOMODIFY)
+    }
+    DX_MARKET_PRICE__ALT_IND_NAME
+    {
+        ALT_IND_ID : T24BusinessTypes:A
+            @i18n:Label (en="Alt Index Id")
+            @i18n:Tooltip (en="Holds the alternate index ID")
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=46.0, core=true, t24Name=ALT.IND.ID, mvSvExpansionAccess=NOMODIFY)
+        ALT_IND_NAME : T24BusinessTypes:A
+            @i18n:Label (en="Alt Index Name")
+            @i18n:Tooltip (en="Holds the alternate index name")
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=45.0, core=true, t24Name=ALT.IND.NAME, mvSvExpansionAccess=NOMODIFY)
+        RESERVED15 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=0, sysNumber=48.0, core=true, t24Name=RESERVED15)
+        RESERVED16 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=0, sysNumber=47.0, core=true, t24Name=RESERVED16)
+    }
+    DX_MARKET_PRICE__C_OBPOS
+    {
+        C_OBPOS : T24BusinessTypes:N
+            @t24:i (align=L, inputBehaviour=N, maxLength=19, core=false, t24Name=C.OBPOS, genOperation="SUBR(\"DXOBPOS\",I.CC,MAT.DATE,I.STI,\"CALL\")")
+    }
+    DX_MARKET_PRICE__DATE_TIME
+    {
+        DATE_TIME : T24BusinessTypes:RELTIME
+            @i18n:Label (en="Date time")
+            @i18n:Tooltip (en="Date and time when record was input or authorised")
+            @t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=81.0, core=true, t24Name=DATE.TIME, mask="RDD DD  DD ##:##")
+    }
+    DX_MARKET_PRICE__GEN_DATA_NAME
+    {
+        GEN_DATA_CODE : T24BusinessTypes:A
+            @i18n:Label (en="Generic Data Code")
+            @i18n:Tooltip (en="Generic Code used for Reporting purposes")
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=66.0, core=true, t24Name=GEN.DATA.CODE)
+        GEN_DATA_LIMIT : T24BusinessTypes:A
+            @i18n:Label (en="Gen Data Limit")
+            @i18n:Tooltip (en="Limit to be used for Reporting Purposes")
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=67.0, core=true, t24Name=GEN.DATA.LIMIT)
+        GEN_DATA_NAME : T24BusinessTypes:A
+            @i18n:Label (en="Generic Data Name")
+            @i18n:Tooltip (en="Generic name to be used for Reporting")
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=65.0, core=true, t24Name=GEN.DATA.NAME)
+        RESERVED5 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=0, sysNumber=69.0, core=true, t24Name=RESERVED5)
+        RESERVED6 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=0, sysNumber=68.0, core=true, t24Name=RESERVED6)
+    }
+    DX_MARKET_PRICE__INPUTTER
+    {
+        INPUTTER : T24BusinessTypes:A
+            @i18n:Label (en=Inputter)
+            @i18n:Tooltip (en="The user who last updated the record")
+            @t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=80.0, core=true, t24Name=INPUTTER)
+    }
+    DX_MARKET_PRICE__OPTION_TYPE
+    {
+        OPTION_TYPE : T24BusinessTypes:A
+            @i18n:Label (en="Call or Put")
+            @i18n:Tooltip (en="Type of option to be chosen like call or put")
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=2.0, core=true, t24Name=OPTION.TYPE)
+    }
+    DX_MARKET_PRICE__OVERRIDE
+    {
+        OVERRIDE : T24BusinessTypes:A
+            @i18n:Label (en=Override)
+            @i18n:Tooltip (en="Overrides generated by this transaction")
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=77.0, core=true, t24Name=OVERRIDE)
+    }
+    DX_MARKET_PRICE__P_OBPOS
+    {
+        P_OBPOS : T24BusinessTypes:N
+            @t24:i (align=L, inputBehaviour=N, maxLength=19, core=false, t24Name=P.OBPOS, genOperation="SUBR(\"DXOBPOS\",I.CC,MAT.DATE,I.STI,\"PUT\")")
+    }
+    DX_MARKET_PRICE__USR_FLD_NAME
+    {
+        USR_FLD_NAME -> byValue DX_Pricing:DX_MARKET_PRICE__USR_FLD_NAME__USR_FLD_NAME *
+            @t24:i (t24Name=USR.FLD.NAME)
+    }
+    DX_MARKET_PRICE__USR_FLD_NAME__USR_FLD_NAME
+    {
+        RESERVED29 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=0, sysNumber=16.0, core=true, t24Name=RESERVED29)
+        RESERVED30 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=0, sysNumber=15.0, core=true, t24Name=RESERVED30)
+        USR_FLD_NAME -> DX_Exotics:DX_USR_FLD_OPT
+            @i18n:Label (en="XO Field")
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=11.0, core=true, businessType=A, t24Name=USR.FLD.NAME, mvSvExpansionAccess=NOMODIFY)
+        USR_FLD_PRICE : T24BusinessTypes:A
+            @i18n:Label (en="Exotic Criteria?")
+            @t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=14.0, core=true, t24Name=USR.FLD.PRICE)
+        USR_FLD_TEXT : T24BusinessTypes:A
+            @i18n:Label (en="Exotic Value")
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=13.0, core=true, t24Name=USR.FLD.TEXT)
+        USR_FLD_VAL : T24BusinessTypes:A
+            @i18n:Label (en="XO Value")
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=12.0, core=true, t24Name=USR.FLD.VAL, mvSvExpansionAccess=NOMODIFY)
+    }
+    DX_PRICE_SET
+        @i18n:Description (en="")
+        @t24:i (t24Name=DX.PRICE.SET, level=I, type=H, allowedFunctions="A C D E H I L P Q R S", localRefAllowed=true)
+    {
+        AUDITOR_CODE : T24BusinessTypes:A
+            @i18n:Label (en="Auditor Code")
+            @i18n:Tooltip (en="Auditor Code")
+            @t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=21.0, core=true, t24Name=AUDITOR.CODE)
+        AUDIT_DATE_TIME : T24BusinessTypes:RELTIME
+            @i18n:Label (en="Audit Date Time")
+            @i18n:Tooltip (en="Date and time when record was audited")
+            @t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=22.0, core=true, t24Name=AUDIT.DATE.TIME, mask="RDD DD  DD ##:##")
+        AUTHORISER : T24BusinessTypes:A
+            @i18n:Label (en=Authoriser)
+            @i18n:Tooltip (en="Indicates the User who Authorises the record")
+            @t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=18.0, core=true, t24Name=AUTHORISER)
+        CO_CODE -> ST_CompanyCreation:COMPANY
+            @i18n:Label (en=Company)
+            @t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=19.0, core=true, businessType=A, t24Name=CO.CODE, mask="R##-###-####")
+        CURR_NO : T24BusinessTypes:N
+            @i18n:Label (en="Curr No")
+            @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=15.0, core=true, t24Name=CURR.NO)
+        DATE_TIME -> byValue DX_Pricing:DX_PRICE_SET__DATE_TIME *
+            @t24:i (t24Name=DATE.TIME)
+        DAYS_TO_EXP : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=3.0, core=true, t24Name=DAYS.TO.EXP)
+        DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+            @i18n:Label (en="Dept Code")
+            @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=20.0, core=true, t24Name=DEPT.CODE)
+        DESCRIPTION -> byValue DX_Pricing:DX_PRICE_SET__DESCRIPTION *
+            @t24:i (t24Name=DESCRIPTION)
+        HOURS_TO_EXP : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=4.0, core=true, t24Name=HOURS.TO.EXP)
+        INPUTTER -> byValue DX_Pricing:DX_PRICE_SET__INPUTTER *
+            @t24:i (t24Name=INPUTTER)
+        MINS_TO_EXP : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=5.0, core=true, t24Name=MINS.TO.EXP)
+        MNEMONIC : T24BusinessTypes:MNE required
+            @i18n:Label (en=Mnemonic)
+            @i18n:Tooltip (en="The alternate short way of calling the record")
+            @t24:i (align=L, inputBehaviour=I, maxLength=12, sysNumber=1.0, core=true, t24Name=MNEMONIC)
+        PRICE_SET_CODE -> DX_Pricing:DX_PRICE_SET PK required
+            @t24:i (align=L, inputBehaviour=I, maxLength=15, sysNumber=0.0, core=true, businessType=A, t24Name=PRICE.SET.CODE)
+        RECORD_STATUS : T24BusinessTypes:STAT
+            @i18n:Label (en="Record Status")
+            @t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=14.0, core=true, t24Name=RECORD.STATUS)
+        RESERVED1 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=0, sysNumber=12.0, core=true, t24Name=RESERVED1)
+        RESERVED2 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=0, sysNumber=11.0, core=true, t24Name=RESERVED2)
+        RESERVED3 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=0, sysNumber=10.0, core=true, t24Name=RESERVED3)
+        RESERVED4 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=0, sysNumber=9.0, core=true, t24Name=RESERVED4)
+        RESERVED5 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=0, sysNumber=8.0, core=true, t24Name=RESERVED5)
+        RESERVED6 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=0, sysNumber=7.0, core=true, t24Name=RESERVED6)
+        RESERVED7 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=0, sysNumber=6.0, core=true, t24Name=RESERVED7)
+    }
+    DX_PRICE_SET__DATE_TIME
+    {
+        DATE_TIME : T24BusinessTypes:RELTIME
+            @i18n:Label (en="Date time")
+            @i18n:Tooltip (en="Date and time when record was input or authorised")
+            @t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=17.0, core=true, t24Name=DATE.TIME, mask="RDD DD  DD ##:##")
+    }
+    DX_PRICE_SET__DESCRIPTION
+    {
+        DESCRIPTION : T24BusinessTypes:A required
+            @i18n:Label (en=Description)
+            @i18n:Tooltip (en=Description)
+            @t24:i (align=L, inputBehaviour=I, maxLength=25, multiLanguage=true, sysNumber=2.0, core=true, t24Name=DESCRIPTION)
+    }
+    DX_PRICE_SET__INPUTTER
+    {
+        INPUTTER : T24BusinessTypes:A
+            @i18n:Label (en=Inputter)
+            @i18n:Tooltip (en="The user who last updated the record")
+            @t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=16.0, core=true, t24Name=INPUTTER)
+    }
+    DX_PRICE_SOURCE
+        @i18n:Description (en="")
+        @t24:i (t24Name=DX.PRICE.SOURCE, level=I, type=H, additionalInfo=DX, allowedFunctions="A C D E H I L P Q R S", localRefAllowed=false)
+    {
+        AUDITOR_CODE : T24BusinessTypes:A
+            @i18n:Label (en="Auditor Code")
+            @i18n:Tooltip (en="Auditor Code")
+            @t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=22.0, core=true, t24Name=AUDITOR.CODE)
+        AUDIT_DATE_TIME : T24BusinessTypes:RELTIME
+            @i18n:Label (en="Audit Date Time")
+            @i18n:Tooltip (en="Date and time when record was audited")
+            @t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=23.0, core=true, t24Name=AUDIT.DATE.TIME, mask="RDD DD  DD ##:##")
+        AUTHORISER : T24BusinessTypes:A
+            @i18n:Label (en=Authoriser)
+            @i18n:Tooltip (en="Indicates the User who Authorises the record")
+            @t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=19.0, core=true, t24Name=AUTHORISER)
+        BUILD_PGM -> byValue DX_Pricing:DX_PRICE_SOURCE__BUILD_PGM *
+            @t24:i (t24Name=BUILD.PGM)
+        CONS_DATA_NAME -> byValue DX_Pricing:DX_PRICE_SOURCE__CONS_DATA_NAME *
+            @t24:i (t24Name=CONS.DATA.NAME)
+        CO_CODE -> ST_CompanyCreation:COMPANY
+            @i18n:Label (en=Company)
+            @t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=20.0, core=true, businessType=A, t24Name=CO.CODE, mask="R##-###-####")
+        CURR_NO : T24BusinessTypes:N
+            @i18n:Label (en="Curr No")
+            @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=16.0, core=true, t24Name=CURR.NO)
+        DATE_TIME -> byValue DX_Pricing:DX_PRICE_SOURCE__DATE_TIME *
+            @t24:i (t24Name=DATE.TIME)
+        DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+            @i18n:Label (en="Dept Code")
+            @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=21.0, core=true, t24Name=DEPT.CODE)
+        DESCRIPTION -> byValue DX_Pricing:DX_PRICE_SOURCE__DESCRIPTION *
+            @t24:i (t24Name=DESCRIPTION)
+        GARMAN_NODIV_RISK : DX_Pricing:DX_PRICE_SOURCE__GARMAN_NODIV_RISK
+            @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=11.0, core=true, t24Name=GARMAN.NODIV.RISK)
+        INPUTTER -> byValue DX_Pricing:DX_PRICE_SOURCE__INPUTTER *
+            @t24:i (t24Name=INPUTTER)
+        KEY -> DX_Pricing:DX_PRICE_SOURCE PK required
+            @i18n:Label (en=Key)
+            @i18n:Tooltip (en="Indicates th transaction key")
+            @t24:i (align=L, inputBehaviour=I, maxLength=15, sysNumber=0.0, core=true, businessType=A, t24Name=KEY)
+        PROGRAM -> DX_Foundation:DX_OBJECT_LIBRARY
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=3.0, core=true, businessType=A, t24Name=PROGRAM)
+        RECORD_STATUS : T24BusinessTypes:STAT
+            @i18n:Label (en="Record Status")
+            @t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=15.0, core=true, t24Name=RECORD.STATUS)
+        RESERVED1 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=14.0, core=true, t24Name=RESERVED1)
+        RESERVED2 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=13.0, core=true, t24Name=RESERVED2)
+        SHORT_DESC : T24BusinessTypes:A required
+            @i18n:Label (en="Short Description")
+            @i18n:Tooltip (en="Short Description of the record")
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=1.0, core=true, t24Name=SHORT.DESC)
+        STOP_UPDATES : DX_Pricing:DX_PRICE_SOURCE__STOP_UPDATES
+            @t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=4.0, core=true, t24Name=STOP.UPDATES)
+        TIME_TO_EXPIRY : DX_Pricing:DX_PRICE_SOURCE__TIME_TO_EXPIRY
+            @t24:i (align=L, inputBehaviour=I, maxLength=1, sysNumber=12.0, core=true, t24Name=TIME.TO.EXPIRY)
+        UPDATE_AVAIL : DX_Pricing:DX_PRICE_SOURCE__UPDATE_AVAIL required
+            @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=9.0, core=true, t24Name=UPDATE.AVAIL)
+    }
+    DX_PRICE_SOURCE__BUILD_PGM
+    {
+        BUILD_PGM -> DX_Foundation:DX_OBJECT_LIBRARY
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=10.0, core=true, businessType=A, t24Name=BUILD.PGM)
+    }
+    DX_PRICE_SOURCE__CONS_DATA_NAME
+    {
+        CONS_DATA_ITEM : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=6.0, core=true, t24Name=CONS.DATA.ITEM)
+        CONS_DATA_NAME : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=5.0, core=true, t24Name=CONS.DATA.NAME)
+        RESERVED7 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=8.0, core=true, t24Name=RESERVED7)
+        RESERVED8 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=7.0, core=true, t24Name=RESERVED8)
+    }
+    DX_PRICE_SOURCE__DATE_TIME
+    {
+        DATE_TIME : T24BusinessTypes:RELTIME
+            @i18n:Label (en="Date time")
+            @i18n:Tooltip (en="Date and time when record was input or authorised")
+            @t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=18.0, core=true, t24Name=DATE.TIME, mask="RDD DD  DD ##:##")
+    }
+    DX_PRICE_SOURCE__DESCRIPTION
+    {
+        DESCRIPTION : T24BusinessTypes:ANY required
+            @i18n:Label (en=Description)
+            @i18n:Tooltip (en=Description)
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=2.0, core=true, t24Name=DESCRIPTION)
+    }
+    DX_PRICE_SOURCE__INPUTTER
+    {
+        INPUTTER : T24BusinessTypes:A
+            @i18n:Label (en=Inputter)
+            @i18n:Tooltip (en="The user who last updated the record")
+            @t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=17.0, core=true, t24Name=INPUTTER)
+    }
+    DX_RV_CHECK_PRICES
+        @i18n:Description (en="")
+        @t24:i (t24Name=DX.RV.CHECK.PRICES, level=F, type=W, allowedFunctions="C I L P Q R S V", localRefAllowed=false)
+    {
+        ALT_PRICE_SET -> DX_Pricing:DX_PRICE_SET
+            @i18n:Label (en="Alternative Price Set")
+            @i18n:Tooltip (en="Identifies the alternative price set")
+            @t24:i (align=L, inputBehaviour=I, maxLength=15, sysNumber=7.0, core=true, businessType=A, t24Name=ALT.PRICE.SET)
+        AUDITOR_CODE : T24BusinessTypes:A
+            @i18n:Label (en="Auditor Code")
+            @i18n:Tooltip (en="Auditor Code")
+            @t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=18.0, core=true, t24Name=AUDITOR.CODE)
+        AUDIT_DATE_TIME : T24BusinessTypes:RELTIME
+            @i18n:Label (en="Audit Date Time")
+            @i18n:Tooltip (en="Date and time when record was audited")
+            @t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=19.0, core=true, t24Name=AUDIT.DATE.TIME, mask="RDD DD  DD ##:##")
+        AUTHORISER : T24BusinessTypes:A
+            @i18n:Label (en=Authoriser)
+            @i18n:Tooltip (en="Indicates the User who Authorises the record")
+            @t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=15.0, core=true, t24Name=AUTHORISER)
+        CO_CODE -> ST_CompanyCreation:COMPANY
+            @i18n:Label (en=Company)
+            @t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=16.0, core=true, businessType=A, t24Name=CO.CODE, mask="R##-###-####")
+        CURR_NO : T24BusinessTypes:N
+            @i18n:Label (en="Curr No")
+            @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=12.0, core=true, t24Name=CURR.NO)
+        DATE_TIME -> byValue DX_Pricing:DX_RV_CHECK_PRICES__DATE_TIME *
+            @t24:i (t24Name=DATE.TIME)
+        DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+            @i18n:Label (en="Dept Code")
+            @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=17.0, core=true, t24Name=DEPT.CODE)
+        INPUTTER -> byValue DX_Pricing:DX_RV_CHECK_PRICES__INPUTTER *
+            @t24:i (t24Name=INPUTTER)
+        PRICE_SET : DX_Pricing:DX_RV_CHECK_PRICES__PRICE_SET required
+            @i18n:Label (en=Currnt/Closng/Whatif)
+            @t24:i (align=L, inputBehaviour=F, maxLength=15, sysNumber=1.0, core=true, t24Name=PRICE.SET)
+        RECORD_STATUS : T24BusinessTypes:STAT
+            @i18n:Label (en="Record Status")
+            @t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=11.0, core=true, t24Name=RECORD.STATUS)
+        RESERVED_03 : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=8.0, core=true, t24Name=RESERVED.03)
+        RESERVED_04 : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=9.0, core=true, t24Name=RESERVED.04)
+        RESERVED_05 : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=10.0, core=true, t24Name=RESERVED.05)
+        ROUTINE_NAME -> byValue DX_Pricing:DX_RV_CHECK_PRICES__ROUTINE_NAME *
+            @t24:i (t24Name=ROUTINE.NAME)
+        RUN_DATE : T24BusinessTypes:D
+            @i18n:Label (en="Run Date")
+            @i18n:Tooltip (en="Identifies the run date for price check")
+            @t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=5.0, core=true, t24Name=RUN.DATE)
+        RUN_TIME : T24BusinessTypes:A
+            @i18n:Label (en="Run Time")
+            @i18n:Tooltip (en="Identifies the run time for price check")
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=6.0, core=true, t24Name=RUN.TIME)
+        RV_CHECK_PRICE -> DX_Pricing:DX_RV_CHECK_PRICES PK required
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=0.0, core=true, businessType=A, t24Name=RV.CHECK.PRICE)
+    }
+    DX_RV_CHECK_PRICES__DATE_TIME
+    {
+        DATE_TIME : T24BusinessTypes:RELTIME
+            @i18n:Label (en="Date time")
+            @i18n:Tooltip (en="Date and time when record was input or authorised")
+            @t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=14.0, core=true, t24Name=DATE.TIME, mask="RDD DD  DD ##:##")
+    }
+    DX_RV_CHECK_PRICES__INPUTTER
+    {
+        INPUTTER : T24BusinessTypes:A
+            @i18n:Label (en=Inputter)
+            @i18n:Tooltip (en="The user who last updated the record")
+            @t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=13.0, core=true, t24Name=INPUTTER)
+    }
+    DX_RV_CHECK_PRICES__ROUTINE_NAME
+    {
+        ERR_TXT -> byValue DX_Pricing:DX_RV_CHECK_PRICES__ROUTINE_NAME__ERR_TXT *
+            @t24:i (t24Name=ERR.TXT)
+        RESERVED_01 : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=4.0, core=true, t24Name=RESERVED.01)
+        ROUTINE_NAME -> EB_SystemTables:PGM_FILE
+            @i18n:Label (en="Routine Name")
+            @i18n:Tooltip (en="Identifies the routine name for check price")
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=2.0, core=true, businessType=A, t24Name=ROUTINE.NAME)
+    }
+    DX_RV_CHECK_PRICES__ROUTINE_NAME__ERR_TXT
+    {
+        ERR_TXT : T24BusinessTypes:A
+            @i18n:Label (en="Error Text")
+            @i18n:Tooltip (en="Specifies the free format error message")
+            @t24:i (align=L, inputBehaviour=N, maxLength=70, sysNumber=3.0, core=true, t24Name=ERR.TXT)
+    }
+    DX_VOLATILITY
+        @i18n:Description (en="")
+        @t24:i (t24Name=DX.VOLATILITY, level=F, type=H, allowedFunctions="A C D E H I L P Q R S", localRefAllowed=false)
+    {
+        AUDITOR_CODE : T24BusinessTypes:A
+            @i18n:Label (en="Auditor Code")
+            @i18n:Tooltip (en="Auditor Code")
+            @t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=13.0, core=true, t24Name=AUDITOR.CODE)
+        AUDIT_DATE_TIME : T24BusinessTypes:RELTIME
+            @i18n:Label (en="Audit Date Time")
+            @i18n:Tooltip (en="Date and time when record was audited")
+            @t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=14.0, core=true, t24Name=AUDIT.DATE.TIME, mask="RDD DD  DD ##:##")
+        AUTHORISER : T24BusinessTypes:A
+            @i18n:Label (en=Authoriser)
+            @i18n:Tooltip (en="Indicates the User who Authorises the record")
+            @t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=10.0, core=true, t24Name=AUTHORISER)
+        CONTRACT_AND_DATE -> DX_Pricing:DX_VOLATILITY PK required
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=0.0, core=true, businessType=A, t24Name=CONTRACT.AND.DATE)
+        CONTRACT_CODE -> DX_Configuration:DX_CONTRACT_MASTER
+            @i18n:Label (en=Contract)
+            @i18n:Tooltip (en="Identifies the contract code of the transaction")
+            @t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=1.0, core=true, businessType=A, t24Name=CONTRACT.CODE)
+        CO_CODE -> ST_CompanyCreation:COMPANY
+            @i18n:Label (en=Company)
+            @t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=11.0, core=true, businessType=A, t24Name=CO.CODE, mask="R##-###-####")
+        CURR_NO : T24BusinessTypes:N
+            @i18n:Label (en="Curr No")
+            @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=7.0, core=true, t24Name=CURR.NO)
+        DATE_TIME -> byValue DX_Pricing:DX_VOLATILITY__DATE_TIME *
+            @t24:i (t24Name=DATE.TIME)
+        DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+            @i18n:Label (en="Dept Code")
+            @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=12.0, core=true, t24Name=DEPT.CODE)
+        INPUTTER -> byValue DX_Pricing:DX_VOLATILITY__INPUTTER *
+            @t24:i (t24Name=INPUTTER)
+        MAT_DATE : T24BusinessTypes:A
+            @i18n:Label (en="Maturity Date")
+            @i18n:Tooltip (en="Indicates maturity date ")
+            @t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=2.0, core=true, t24Name=MAT.DATE)
+        NUMBER_OF_UPDATES : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=12, sysNumber=5.0, core=true, t24Name=NUMBER.OF.UPDATES)
+        RECORD_STATUS : T24BusinessTypes:STAT
+            @i18n:Label (en="Record Status")
+            @t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=6.0, core=true, t24Name=RECORD.STATUS)
+        VOLATILITY_CALL : T24BusinessTypes:R
+            @t24:i (align=R, inputBehaviour=I, maxLength=12, sysNumber=3.0, core=true, t24Name=VOLATILITY.CALL)
+        VOLATILITY_PUT : T24BusinessTypes:R
+            @t24:i (align=R, inputBehaviour=I, maxLength=12, sysNumber=4.0, core=true, t24Name=VOLATILITY.PUT)
+    }
+    DX_VOLATILITY__DATE_TIME
+    {
+        DATE_TIME : T24BusinessTypes:RELTIME
+            @i18n:Label (en="Date time")
+            @i18n:Tooltip (en="Date and time when record was input or authorised")
+            @t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=9.0, core=true, t24Name=DATE.TIME, mask="RDD DD  DD ##:##")
+    }
+    DX_VOLATILITY__INPUTTER
+    {
+        INPUTTER : T24BusinessTypes:A
+            @i18n:Label (en=Inputter)
+            @i18n:Tooltip (en="The user who last updated the record")
+            @t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=8.0, core=true, t24Name=INPUTTER)
+    }
+    SYDX_MARKET_VAL
+        @i18n:Description (en="")
+        @t24:i (t24Name=SYDX.MARKET.VAL, level=F, type=H, allowedFunctions="A C D E H I L P Q S", localRefAllowed=true)
+    {
+        AUDITOR_CODE : T24BusinessTypes:A
+            @i18n:Label (en="Auditor Code")
+            @i18n:Tooltip (en="Auditor Code")
+            @t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=29.0, core=true, t24Name=AUDITOR.CODE)
+        AUDIT_DATE_TIME : T24BusinessTypes:RELTIME
+            @i18n:Label (en="Audit Date Time")
+            @i18n:Tooltip (en="Date and time when record was audited")
+            @t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=30.0, core=true, t24Name=AUDIT.DATE.TIME, mask="RDD DD  DD ##:##")
+        AUTHORISER : T24BusinessTypes:A
+            @i18n:Label (en=Authoriser)
+            @i18n:Tooltip (en="Indicates the User who Authorises the record")
+            @t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=26.0, core=true, t24Name=AUTHORISER)
+        B2B_REFERENCE : T24BusinessTypes:A
+            @i18n:Label (en="B2B Reference")
+            @i18n:Tooltip (en="Back to Back reference")
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=8.0, core=true, t24Name=B2B.REFERENCE)
+        COUNTERPARTY_TRADE : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=9.0, core=true, t24Name=COUNTERPARTY.TRADE, typeModifiers=YES)
+        CO_CODE -> ST_CompanyCreation:COMPANY
+            @i18n:Label (en=Company)
+            @t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=27.0, core=true, businessType=A, t24Name=CO.CODE, mask="R##-###-####")
+        CURR_NO : T24BusinessTypes:N
+            @i18n:Label (en="Curr No")
+            @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=23.0, core=true, t24Name=CURR.NO)
+        DATE_TIME -> byValue DX_Pricing:SYDX_MARKET_VAL__DATE_TIME *
+            @t24:i (t24Name=DATE.TIME)
+        DEAL_REFERENCE : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=N, maxLength=20, sysNumber=1.0, core=true, t24Name=DEAL.REFERENCE)
+        DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+            @i18n:Label (en="Dept Code")
+            @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=28.0, core=true, t24Name=DEPT.CODE)
+        INPUTTER -> byValue DX_Pricing:SYDX_MARKET_VAL__INPUTTER *
+            @t24:i (t24Name=INPUTTER)
+        MATURITY_DATE : T24BusinessTypes:A
+            @i18n:Label (en="Maturity Date")
+            @i18n:Tooltip (en="Indicates the Maturity Date of the Transaction")
+            @t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=3.0, core=true, t24Name=MATURITY.DATE)
+        MTM_AMOUNT : T24BusinessTypes:AMT
+            @i18n:Label (en="MTM Amount")
+            @i18n:Tooltip (en="MTM Amount")
+            @t24:i (align=R, inputBehaviour=N, maxLength=20, sysNumber=10.0, core=true, t24Name=MTM.AMOUNT, typeModifiers=-)
+        OVERRIDE -> byValue DX_Pricing:SYDX_MARKET_VAL__OVERRIDE *
+            @t24:i (t24Name=OVERRIDE)
+        PRICE : T24BusinessTypes:DEC
+            @i18n:Label (en=Price)
+            @t24:i (align=L, inputBehaviour=I, maxLength=19, sysNumber=7.0, core=true, t24Name=PRICE, typeModifiers="-9")
+        RECORD_STATUS : T24BusinessTypes:STAT
+            @i18n:Label (en="Record Status")
+            @t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=22.0, core=true, t24Name=RECORD.STATUS)
+        RESERVED_01 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=19.0, core=true, t24Name=RESERVED.01)
+        RESERVED_02 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=18.0, core=true, t24Name=RESERVED.02)
+        RESERVED_03 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=17.0, core=true, t24Name=RESERVED.03)
+        RESERVED_04 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=16.0, core=true, t24Name=RESERVED.04)
+        RESERVED_05 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=15.0, core=true, t24Name=RESERVED.05)
+        RESERVED_06 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=14.0, core=true, t24Name=RESERVED.06)
+        RESERVED_07 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=13.0, core=true, t24Name=RESERVED.07)
+        RESERVED_08 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=12.0, core=true, t24Name=RESERVED.08)
+        RESERVED_09 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=11.0, core=true, t24Name=RESERVED.09)
+        SYDX_PRICE -> DX_Pricing:SYDX_MARKET_VAL PK required
+            @t24:i (align=L, inputBehaviour=I, maxLength=45, sysNumber=0.0, core=true, businessType=ANY, t24Name=SYDX.PRICE)
+        TRADE_DATE : T24BusinessTypes:A
+            @i18n:Label (en="Trade Date")
+            @t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=2.0, core=true, t24Name=TRADE.DATE)
+        VALOREN_NO : T24BusinessTypes:A
+            @i18n:Label (en="Valoren Number")
+            @i18n:Tooltip (en="Valoren Number")
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=6.0, core=true, t24Name=VALOREN.NO)
+        VALUATION_AMT : T24BusinessTypes:AMT
+            @i18n:Label (en="Valuation Amount")
+            @t24:i (align=R, inputBehaviour=I, maxLength=20, sysNumber=5.0, core=true, t24Name=VALUATION.AMT, typeModifiers=-)
+        VALUATION_CCY -> ST_CurrencyConfig:CURRENCY required
+            @i18n:Label (en="Valuation Ccy")
+            @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=4.0, core=true, businessType=CCY, t24Name=VALUATION.CCY)
+    }
+    SYDX_MARKET_VAL__DATE_TIME
+    {
+        DATE_TIME : T24BusinessTypes:RELTIME
+            @i18n:Label (en="Date time")
+            @i18n:Tooltip (en="Date and time when record was input or authorised")
+            @t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=25.0, core=true, t24Name=DATE.TIME, mask="RDD DD  DD ##:##")
+    }
+    SYDX_MARKET_VAL__INPUTTER
+    {
+        INPUTTER : T24BusinessTypes:A
+            @i18n:Label (en=Inputter)
+            @i18n:Tooltip (en="The user who last updated the record")
+            @t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=24.0, core=true, t24Name=INPUTTER)
+    }
+    SYDX_MARKET_VAL__OVERRIDE
+    {
+        OVERRIDE : T24BusinessTypes:A
+            @i18n:Label (en=Override)
+            @i18n:Tooltip (en="Overrides generated by this transaction")
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=21.0, core=true, t24Name=OVERRIDE)
+    }
+}
+Enumerations {
+    DX_CREATE_PRICE__OPTION_STYLE : mml:string
+        AMERICAN=AMERICAN
+        CARRIBEAN=CARRIBEAN
+        EUROPEAN=EUROPEAN
+        NULL=NULL
+    DX_CREATE_PRICE__OPTION_TYPE : mml:string
+        CALL=CALL
+        NULL=NULL
+        PUT=PUT
+    DX_INT_PRICE_CALC__CALC_SUBROUTINE : mml:string
+        ONLY=ONLY
+        SUB=SUB
+    DX_MARKET_PRICE_HISTORY__CONTRACT_TYPE : mml:string
+        FUTURE=FUTURE
+        OPTION=OPTION
+        STOCK=STOCK
+    DX_MARKET_PRICE_HISTORY__OPTION_STYLE : mml:string
+        A=A
+        C=C
+        E=E
+    DX_MARKET_PRICE__CONTRACT_TYPE : mml:string
+        FUTURE=FUTURE
+        OPTION=OPTION
+        STOCK=STOCK
+    DX_MARKET_PRICE__OPTION_STYLE : mml:string
+        A=A
+        C=C
+        E=E
+    DX_PRICE_SOURCE__GARMAN_NODIV_RISK : mml:string
+        NO=NO
+        YES=YES
+    DX_PRICE_SOURCE__STOP_UPDATES : mml:string
+        NO=NO
+        YES=YES
+    DX_PRICE_SOURCE__TIME_TO_EXPIRY : mml:string
+        C=C
+        W=W
+    DX_PRICE_SOURCE__UPDATE_AVAIL : mml:string
+        NO=NO
+        YES=YES
+    DX_RV_CHECK_PRICES__PRICE_SET : mml:string
+        END_OF_EXCHANGE="END OF EXCHANGE"
+        ONLINE=ONLINE
+        OTHER=OTHER
+}

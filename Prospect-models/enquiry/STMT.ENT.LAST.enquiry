@@ -295,6 +295,10 @@ Enquiry "STMT.ENT.LAST" for "name:/AC_EntryCreation:STMT.ENTRY#" {
     }
 
     field "CUR" {
+        break-condition {
+            break: Once
+        }
+
         length: 3
         alignment: Left
         comma-separator: false
@@ -667,6 +671,21 @@ Enquiry "STMT.ENT.LAST" for "name:/AC_EntryCreation:STMT.ENTRY#" {
         operation: constant "\"\""
     }
 
+    field "NET.ENTRY" {
+        comma-separator: false
+        operation: constant "\"NET...\""
+    }
+
+    field "STMT.ENT.DET" {
+        comma-separator: false
+        operation: constant "\"STMT.ENTRY\""
+    }
+
+    field "NET.SEL.FORM" {
+        comma-separator: false
+        operation: if "TRN.ID" Matches "NET.ENTRY" process "STMT.ID" "NULL"
+    }
+
     field "S.ID" {
         comma-separator: false
         operation: if "SYS.ID" Equals "NULL" process "SYS.DEF" "SYS.ID"
@@ -734,6 +753,34 @@ Enquiry "STMT.ENT.LAST" for "name:/AC_EntryCreation:STMT.ENTRY#" {
         operation: constant "\"LCM\""
     }
 
+    field "PP" {
+        break-condition {
+            break: Once
+        }
+
+        comma-separator: false
+        operation: constant "\"PP\""
+    }
+
+    field "PP.ID.FORM" {
+        break-condition {
+            break: Once
+        }
+
+        comma-separator: false
+        processing-mode: Single
+        operation: constant "\"PP.ORDER.ENTRY,AUTH\""
+    }
+
+    field "PP.TXN.ID" {
+        break-condition {
+            break: Once
+        }
+
+        comma-separator: false
+        operation: constant "\"111\""
+    }
+
     field "LCM.ID" {
         comma-separator: false
         operation: if "S.SYS.ID" Equals "LCM" process "CHK.LC.ID" "S.TRN.ID"
@@ -742,6 +789,54 @@ Enquiry "STMT.ENT.LAST" for "name:/AC_EntryCreation:STMT.ENTRY#" {
     field "S.KEY" {
         comma-separator: false
         operation: if "SYS.ID" NotEquals "C.ID" process "STMT.ID" "LCM.ID"
+    }
+
+    field "PP.COMP" {
+        length: 60
+        alignment: Left
+        comma-separator: false
+        processing-mode: Single
+        operation: application-field-name "TRANS.REFERENCE"
+        conversion: call
+        jBC: "@ E.CONV.PP.COMPANY"
+    }
+
+    field "PP.TRANS.REF" {
+        length: 60
+        alignment: Left
+        comma-separator: false
+        processing-mode: Single
+        operation: application-field-name "TRANS.REFERENCE"
+    }
+
+    field "PP.COMP.POP" {
+        comma-separator: false
+        operation: if "S.SYS.ID" Equals "PP" process "PP.COMP" "NULL"
+    }
+
+    field "PP.TRANS.REF.POP" {
+        comma-separator: false
+        operation: if "S.SYS.ID" Equals "PP" process "PP.TRANS.REF" "NULL"
+    }
+
+    field "Y.PP.ID" {
+        comma-separator: false
+        operation: if "S.SYS.ID" Equals "PP" process "PP.ID.FORM" "S.ID"
+    }
+
+    field "S.FINAL.ID" {
+        comma-separator: false
+        operation: if "TRN.ID" Matches "NET.ENTRY" process "STMT.ENT.DET" "Y.PP.ID"
+    }
+
+    field "Y.KEY.PP" {
+        comma-separator: false
+        operation: if "S.SYS.ID" Equals "PP" process "PP.TXN.ID" "S.KEY"
+    }
+
+    field "S.KEY.PP" {
+        comma-separator: false
+        operation: if "TRN.ID" Matches "NET.ENTRY" process "NET.SEL.FORM" "Y.KEY.PP"
     }
 
     field "ZERONORECORDS" {
@@ -853,12 +948,14 @@ Enquiry "STMT.ENT.LAST" for "name:/AC_EntryCreation:STMT.ENTRY#" {
         }
 
         label-field: "POST"
-        image: "view.gif" parameters {
+        image: "view.gif"
+        criteria: "CURRENT.CompanyID" > "PP.COMP.POP"
+        criteria: "CURRENT.FTNumber" > "PP.TRANS.REF.POP" parameters {
             function:  See
-            field: "S.KEY"
+            field: "S.KEY.PP"
         }
 
-        from-field: "S.ID"
+        from-field: "S.FINAL.ID"
     }
 
 }

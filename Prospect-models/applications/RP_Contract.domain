@@ -1,0 +1,1131 @@
+# UTF-8
+/* Template Servicing of Repo Contracts */
+Domain RP_Contract
+    @t24:i (module=RP)
+    @java:Package (value=com.temenos.t24.datamodel.rp.rp_contract)
+namespace "http://www.temenos.com/t24/RP_Contract"
+metamodelVersion 1.30.6
+Classes {
+    CUSTOMER_REPO
+        @i18n:Description (en="")
+        @t24:i (t24Name=CUSTOMER.REPO, level=F, type=L, allowedFunctions="L P S", localRefAllowed=false)
+    {
+        CUSTOMER_CODE -> RP_Contract:CUSTOMER_REPO PK required
+            @i18n:Label (en=Customer)
+            @t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=0.0, core=true, businessType=CUS, t24Name=CUSTOMER.CODE)
+        REPO_IM_CCY -> byValue RP_Contract:CUSTOMER_REPO__REPO_IM_CCY *
+            @t24:i (t24Name=REPO.IM.CCY)
+        RESO_IM_CCY -> byValue RP_Contract:CUSTOMER_REPO__RESO_IM_CCY *
+            @t24:i (t24Name=RESO.IM.CCY)
+    }
+    CUSTOMER_REPO__REPO_IM_CCY
+    {
+        REPO_IM_AMT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=2.0, core=true, t24Name=REPO.IM.AMT, typeModifiers="1.X")
+        REPO_IM_CCY -> ST_CurrencyConfig:CURRENCY
+            @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=1.0, core=true, businessType=CCY, t24Name=REPO.IM.CCY)
+    }
+    CUSTOMER_REPO__RESO_IM_CCY
+    {
+        RESO_IM_AMT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=4.0, core=true, t24Name=RESO.IM.AMT, typeModifiers="3.X")
+        RESO_IM_CCY -> ST_CurrencyConfig:CURRENCY
+            @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=3.0, core=true, businessType=CCY, t24Name=RESO.IM.CCY)
+    }
+    CUST_REPO_CONCAT
+        @i18n:Description (en="")
+        @t24:i (t24Name=CUST.REPO.CONCAT, level=F, type=T, allowedFunctions="L P S", localRefAllowed=false)
+    {
+        CONTRACT_NOS -> byValue RP_Contract:CUST_REPO_CONCAT__CONTRACT_NOS *
+            @t24:i (t24Name=CONTRACT.NOS)
+        CONTRACT_NUMBER -> byValue RP_Contract:CUST_REPO_CONCAT__CONTRACT_NUMBER *
+            @t24:i (t24Name=CONTRACT.NUMBER)
+        CUSTOMER_CCY_TYPE -> RP_Contract:CUST_REPO_CONCAT PK required
+            @t24:i (align=L, inputBehaviour=I, maxLength=20, sysNumber=0.0, core=true, businessType=A, t24Name=CUSTOMER.CCY.TYPE)
+    }
+    CUST_REPO_CONCAT__CONTRACT_NOS
+    {
+        CONTRACT_NOS : T24BusinessTypes:N
+            @t24:i (align=L, inputBehaviour=N, maxLength=30, core=false, t24Name=CONTRACT.NOS, genOperation="LOWER(@RECORD)")
+    }
+    CUST_REPO_CONCAT__CONTRACT_NUMBER
+    {
+        CONTRACT_NUMBER -> RP_Contract:REPO
+            @i18n:Label (en="Contract Number")
+            @t24:i (align=L, inputBehaviour=I, maxLength=30, sysNumber=1.0, core=true, businessType=A, t24Name=CONTRACT.NUMBER)
+    }
+    REPO
+        @i18n:Description (en="")
+        @t24:i (t24Name=REPO, level=F, type=H, additionalInfo="NOH UNP OEU ANI", allowedFunctions="A C D E H I L P Q R S", localRefAllowed=true)
+    {
+        ACTIVITY_CODE -> byValue RP_Contract:REPO__ACTIVITY_CODE *
+            @t24:i (t24Name=ACTIVITY.CODE)
+        AGREEMENT_TYPE -> RP_Config:REPO_AGREEMENT_TYPE
+            @i18n:Label (en="Agreement Type")
+            @i18n:Tooltip (en="Agreement Type Eg. ISDA, FRABBA, etc.")
+            @t24:i (align=L, inputBehaviour=F, maxLength=8, sysNumber=13.0, core=true, businessType=A, t24Name=AGREEMENT.TYPE)
+        AUDITOR_CODE : T24BusinessTypes:A
+            @i18n:Label (en="Auditor Code")
+            @i18n:Tooltip (en="Auditor Code")
+            @t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=189.0, core=true, t24Name=AUDITOR.CODE)
+        AUDIT_DATE_TIME : T24BusinessTypes:RELTIME
+            @i18n:Label (en="Audit Date Time")
+            @i18n:Tooltip (en="Date and time when record was audited")
+            @t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=190.0, core=true, t24Name=AUDIT.DATE.TIME, mask="RDD DD  DD ##:##")
+        AUTHORISER : T24BusinessTypes:A
+            @i18n:Label (en=Authoriser)
+            @i18n:Tooltip (en="Indicates the User who Authorises the record")
+            @t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=186.0, core=true, t24Name=AUTHORISER)
+        AUTO_BROK_SETT : RP_Contract:REPO__AUTO_BROK_SETT
+            @i18n:Label (en="Settlement type")
+            @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=163.0, core=true, t24Name=AUTO.BROK.SETT)
+        AUTO_CUST_SETT : RP_Contract:REPO__AUTO_CUST_SETT
+            @i18n:Label (en="Auto Cust Settle")
+            @i18n:Tooltip (en="Automatic settlement of Customer nominal and cash ")
+            @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=162.0, core=true, t24Name=AUTO.CUST.SETT)
+        AUTO_ROLLOVER : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=174.0, core=true, t24Name=AUTO.ROLLOVER)
+        BANK_INT_RATE : T24BusinessTypes:A
+            @i18n:Label (en="Bank Int Rate")
+            @i18n:Tooltip (en="Indicates the bank interest rate")
+            @t24:i (align=L, inputBehaviour=F, maxLength=11, sysNumber=100.0, core=true, t24Name=BANK.INT.RATE)
+        BANK_PORTFOLIO -> SC_ScoPortfolioMaintenance:SEC_ACC_MASTER
+            @i18n:Label (en="Own Book Portfolio")
+            @i18n:Tooltip (en="Own Book Portfolio from which security is repo\'d")
+            @t24:i (align=L, inputBehaviour=I, maxLength=14, sysNumber=54.0, core=true, businessType=SAM, t24Name=BANK.PORTFOLIO)
+        BANK_SPREAD : T24BusinessTypes:AMT
+            @i18n:Label (en="Bank Spread")
+            @i18n:Tooltip (en="Specifies the bank spread amount")
+            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=102.0, core=true, t24Name=BANK.SPREAD)
+        BANK_SPREAD_RATE : T24BusinessTypes:R
+            @i18n:Label (en="Bank Spread Rate")
+            @i18n:Tooltip (en="Indicates the bank spread rate")
+            @t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=101.0, core=true, t24Name=BANK.SPREAD.RATE)
+        BENEF_PRIN_ACCT -> byValue RP_Contract:REPO__BENEF_PRIN_ACCT *
+            @t24:i (t24Name=BENEF.PRIN.ACCT)
+        BEN_INT_ACCT -> byValue RP_Contract:REPO__BEN_INT_ACCT *
+            @t24:i (t24Name=BEN.INT.ACCT)
+        BROKER_DEPO -> SC_Config:CUSTOMER_SECURITY
+            @i18n:Label (en="Broker Depository")
+            @i18n:Tooltip (en="Identifies the broker depository")
+            @t24:i (align=R, inputBehaviour=F, maxLength=14, sysNumber=99.0, core=true, businessType=CUS, t24Name=BROKER.DEPO)
+        BROKER_NO -> SC_Config:CUSTOMER_SECURITY
+            @i18n:Label (en=Broker/Contrepartie)
+            @i18n:Tooltip (en="Broker/Contrepartie of the Repo Deal")
+            @t24:i (align=R, inputBehaviour=N, maxLength=10, sysNumber=137.0, core=true, businessType=CUS, t24Name=BROKER.NO)
+        BROK_ACT_SUSP_CAT -> ST_Config:CATEGORY
+            @i18n:Label (en="Broker Acc Suspense Category")
+            @i18n:Tooltip (en="The suspense amount of the broker is posted to it")
+            @t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=160.0, core=true, t24Name=BROK.ACT.SUSP.CAT)
+        BR_ACCOUNT_CCY -> ST_CurrencyConfig:CURRENCY
+            @i18n:Label (en="Br Sett Acc Ccy")
+            @i18n:Tooltip (en="Currency of the broker account number")
+            @t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=107.0, core=true, businessType=CCY, t24Name=BR.ACCOUNT.CCY)
+        BR_ACCOUNT_NO -> AC_AccountOpening:ACCOUNT
+            @i18n:Label (en="Br Sett Acc ")
+            @i18n:Tooltip (en="Broker Settlement Account Number")
+            @t24:i (align=L, inputBehaviour=I, maxLength=36, sysNumber=106.0, core=true, businessType=ANT, t24Name=BR.ACCOUNT.NO)
+        BR_AGENT -> byValue RP_Contract:REPO__BR_AGENT *
+            @t24:i (t24Name=BR.AGENT)
+        BUSINESS_CENTRE -> byValue RP_Contract:REPO__BUSINESS_CENTRE *
+            @t24:i (t24Name=BUSINESS.CENTRE)
+        CALCULATION_LINK : RP_Contract:REPO__CALCULATION_LINK
+            @i18n:Label (en="Calculation Link")
+            @t24:i (align=L, inputBehaviour=F, maxLength=3, sysNumber=113.0, core=true, t24Name=CALCULATION.LINK)
+        CANCEL_MAT_CALL : T24BusinessTypes:S
+            @i18n:Label (en="Cancel Mat Call")
+            @i18n:Tooltip (en="Cancel Mat Call")
+            @t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=129.0, core=true, t24Name=CANCEL.MAT.CALL)
+        CAPITALISATION : T24BusinessTypes:N
+            @i18n:Label (en=Capitalisation)
+            @i18n:Tooltip (en="Capitalisation of interest")
+            @t24:i (align=R, inputBehaviour=N, maxLength=3, sysNumber=111.0, core=true, t24Name=CAPITALISATION)
+        CAP_INT : RP_Contract:REPO__CAP_INT
+            @i18n:Label (en="Capitalise Interest")
+            @i18n:Tooltip (en="Indicate whether to capitalise interest schedules?")
+            @t24:i (align=L, inputBehaviour=F, maxLength=1, sysNumber=173.0, core=true, t24Name=CAP.INT)
+        CASH_HOLD_SETTLE : RP_Contract:REPO__CASH_HOLD_SETTLE
+            @i18n:Label (en="Settle Cash?")
+            @i18n:Tooltip (en="If to be cash settled")
+            @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=157.0, core=true, t24Name=CASH.HOLD.SETTLE)
+        CONDITION -> byValue RP_Contract:REPO__CONDITION *
+            @t24:i (t24Name=CONDITION)
+        CONTRACT_ID -> RP_Contract:REPO PK required
+            @i18n:Label (en="Contract Id")
+            @t24:i (align=L, inputBehaviour=I, maxLength=30, sysNumber=0.0, core=true, businessType=A, t24Name=CONTRACT.ID)
+        CONTRACT_STATUS : T24BusinessTypes:SSS
+            @i18n:Label (en="Contract Status")
+            @t24:i (align=L, inputBehaviour=N, maxLength=5, sysNumber=151.0, core=true, t24Name=CONTRACT.STATUS)
+        COUNTERPARTY -> ST_Customer:CUSTOMER
+            @i18n:Label (en=Counterparty)
+            @i18n:Tooltip (en="Counterparty with whom the deal is made")
+            @t24:i (align=R, inputBehaviour=F, maxLength=10, sysNumber=2.0, core=true, businessType=CUS, t24Name=COUNTERPARTY)
+        COUNTERPARTY_DEPO : T24BusinessTypes:S
+            @i18n:Label (en="Counterparty Depository ")
+            @t24:i (align=L, inputBehaviour=F, maxLength=35, sysNumber=125.0, core=true, t24Name=COUNTERPARTY.DEPO)
+        COUNTRY_RISK -> ST_Config:COUNTRY
+            @i18n:Label (en="Country Risk")
+            @i18n:Tooltip (en="The country risk involved in contract")
+            @t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=121.0, core=true, businessType=S, t24Name=COUNTRY.RISK)
+        CO_CODE -> ST_CompanyCreation:COMPANY
+            @i18n:Label (en=Company)
+            @t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=187.0, core=true, businessType=A, t24Name=CO.CODE, mask="R##-###-####")
+        CPTY_SEC_DEPO_AC : T24BusinessTypes:S
+            @i18n:Label (en="Counterparty Depo Acc")
+            @t24:i (align=L, inputBehaviour=F, maxLength=35, sysNumber=126.0, core=true, t24Name=CPTY.SEC.DEPO.AC)
+        CURRENCY -> ST_CurrencyConfig:CURRENCY
+            @i18n:Label (en=Ccy)
+            @t24:i (align=L, inputBehaviour=F, maxLength=3, sysNumber=3.0, core=true, businessType=CCY, t24Name=CURRENCY)
+        CURR_NO : T24BusinessTypes:N
+            @i18n:Label (en="Curr No")
+            @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=183.0, core=true, t24Name=CURR.NO)
+        CUST_ACT_SUSP_CAT -> ST_Config:CATEGORY
+            @i18n:Label (en="Cust Cash Susp")
+            @i18n:Tooltip (en="Suspense account to post customer cash amount")
+            @t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=159.0, core=true, t24Name=CUST.ACT.SUSP.CAT)
+        CUST_PORTFOLIO -> SC_ScoPortfolioMaintenance:SEC_ACC_MASTER
+            @i18n:Label (en="Customer Portfolio")
+            @t24:i (align=L, inputBehaviour=F, maxLength=14, sysNumber=98.0, core=true, businessType=SAM, t24Name=CUST.PORTFOLIO)
+        DATE_TIME -> byValue RP_Contract:REPO__DATE_TIME *
+            @t24:i (t24Name=DATE.TIME)
+        DAYS_DELIVERY : T24BusinessTypes:N
+            @i18n:Label (en="Delivery Days")
+            @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=105.0, core=true, t24Name=DAYS.DELIVERY)
+        DEALER_NAME : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=I, maxLength=20, sysNumber=179.2, core=false, t24Name=DEALER.NAME)
+        DEAL_NOTES : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=I, maxLength=65, sysNumber=179.4, core=false, t24Name=DEAL.NOTES)
+        DEAL_TYPE : RP_Contract:REPO__DEAL_TYPE
+            @i18n:Label (en="Deal Type")
+            @i18n:Tooltip (en="Type of Repo deal")
+            @t24:i (align=L, inputBehaviour=F, maxLength=15, sysNumber=16.0, core=true, t24Name=DEAL.TYPE)
+        DELIVERY_INSTR -> SC_Config:SC_DEL_INSTR
+            @i18n:Label (en="Delivery Instruction")
+            @i18n:Tooltip (en="Delivery Instruction for the Repo trades")
+            @t24:i (align=L, inputBehaviour=I, maxLength=5, sysNumber=140.0, core=true, businessType=A, t24Name=DELIVERY.INSTR)
+        DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+            @i18n:Label (en="Dept Code")
+            @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=188.0, core=true, t24Name=DEPT.CODE)
+        DRAWDOWN_ACCOUNT -> AC_AccountOpening:ACCOUNT
+            @i18n:Label (en="Drawdown Account")
+            @i18n:Tooltip (en="Drawdown account of the deal")
+            @t24:i (align=L, inputBehaviour=I, maxLength=36, sysNumber=57.0, core=true, businessType=ANT, t24Name=DRAWDOWN.ACCOUNT)
+        EFFECTIVE_RATE : T24BusinessTypes:R
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=166.0, core=true, t24Name=EFFECTIVE.RATE, typeModifiers=-)
+        EFF_INT_BASIS : RP_Contract:REPO__EFF_INT_BASIS
+            @t24:i (align=L, inputBehaviour=F, maxLength=2, sysNumber=165.0, core=true, t24Name=EFF.INT.BASIS)
+        FT_LOCREF_NAME -> byValue RP_Contract:REPO__FT_LOCREF_NAME *
+            @t24:i (t24Name=FT.LOCREF.NAME)
+        FT_MARGIN_ID -> byValue RP_Contract:REPO__FT_MARGIN_ID *
+            @t24:i (t24Name=FT.MARGIN.ID)
+        FT_TRANS_TYPE : T24BusinessTypes:N
+            @i18n:Label (en="FT Transaction Type")
+            @i18n:Tooltip (en="FT Transaction Type")
+            @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=130.0, core=true, t24Name=FT.TRANS.TYPE)
+        FT_UNAU_MGN_ID -> byValue RP_Contract:REPO__FT_UNAU_MGN_ID *
+            @t24:i (t24Name=FT.UNAU.MGN.ID)
+        GROUP_STATUS : RP_Contract:REPO__GROUP_STATUS
+            @i18n:Label (en="Group Status")
+            @i18n:Tooltip (en="Etat de groupe")
+            @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=122.0, core=true, t24Name=GROUP.STATUS)
+        INIT_MARGIN_AMT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=135.0, core=true, t24Name=INIT.MARGIN.AMT, typeModifiers="3D")
+        INIT_MARGIN_RATE : T24BusinessTypes:R
+            @i18n:Label (en="Initial Margin Rate")
+            @t24:i (align=R, inputBehaviour=F, maxLength=11, sysNumber=56.0, core=true, t24Name=INIT.MARGIN.RATE)
+        INPUTTER -> byValue RP_Contract:REPO__INPUTTER *
+            @t24:i (t24Name=INPUTTER)
+        INTEREST_AMOUNT : T24BusinessTypes:AMT
+            @i18n:Label (en="Interest Amt")
+            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=143.0, core=true, t24Name=INTEREST.AMOUNT, typeModifiers="3D")
+        INTEREST_BASIS : RP_Contract:REPO__INTEREST_BASIS
+            @i18n:Label (en="Interest Basis")
+            @i18n:Tooltip (en="Indicates the interest day basis")
+            @t24:i (align=L, inputBehaviour=F, maxLength=2, sysNumber=10.0, core=true, t24Name=INTEREST.BASIS)
+        INT_ADDRESS -> byValue RP_Contract:REPO__INT_ADDRESS *
+            @t24:i (t24Name=INT.ADDRESS)
+        INT_BEN_BANK_1 -> ST_Customer:CUSTOMER
+            @i18n:Label (en="Interest Beneficiary Bank")
+            @t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=64.0, core=true, businessType=CUS, t24Name=INT.BEN.BANK.1)
+        INT_BEN_BANK_2 -> ST_Customer:CUSTOMER
+            @t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=65.0, core=true, businessType=CUS, t24Name=INT.BEN.BANK.2)
+        INT_LIQ_ACCT -> AC_AccountOpening:ACCOUNT
+            @i18n:Label (en="Interest Liq Acct")
+            @i18n:Tooltip (en="Indicates Interest Liquidation Account")
+            @t24:i (align=L, inputBehaviour=I, maxLength=36, sysNumber=63.0, core=true, businessType=ANT, t24Name=INT.LIQ.ACCT)
+        INT_SPREAD : T24BusinessTypes:DEC
+            @i18n:Label (en="Interest Spread")
+            @t24:i (align=L, inputBehaviour=I, maxLength=11, sysNumber=170.0, core=true, t24Name=INT.SPREAD, typeModifiers="-6")
+        INT_TERM : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=I, maxLength=11, sysNumber=169.0, core=true, t24Name=INT.TERM)
+        LIMIT_REFERENCE : T24BusinessTypes:N
+            @i18n:Label (en="Limit Reference")
+            @i18n:Tooltip (en="Indicates the limit that will be updated")
+            @t24:i (align=R, inputBehaviour=F, maxLength=10, sysNumber=15.0, core=true, t24Name=LIMIT.REFERENCE)
+        MARGIN_PORTFOLIO -> SC_ScoPortfolioMaintenance:SEC_ACC_MASTER
+            @i18n:Label (en="Margin Portfolio")
+            @i18n:Tooltip (en="Margin Portfolio of the Deal for Valuation")
+            @t24:i (align=L, inputBehaviour=I, maxLength=14, sysNumber=55.0, core=true, businessType=SAM, t24Name=MARGIN.PORTFOLIO)
+        MARGIN_PORT_SUFFIX : T24BusinessTypes:N
+            @i18n:Label (en="Margin Port Suffix")
+            @i18n:Tooltip (en="Margin Port Suffix")
+            @t24:i (align=R, inputBehaviour=N, maxLength=3, sysNumber=136.0, core=true, t24Name=MARGIN.PORT.SUFFIX)
+        MATURE_AT_SOD : T24BusinessTypes:N
+            @i18n:Label (en="Mature at Start Of Day ")
+            @i18n:Tooltip (en="Whether to mature at Start Of Day or not")
+            @t24:i (align=R, inputBehaviour=N, maxLength=3, sysNumber=120.0, core=true, t24Name=MATURE.AT.SOD)
+        MATURITY_DATE : T24BusinessTypes:MATLMM
+            @i18n:Label (en="Maturity Date")
+            @i18n:Tooltip (en="Indicates the Maturity Date of the Transaction")
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=7.0, core=true, t24Name=MATURITY.DATE, typeModifiers="DAYS64")
+        MGN_CALL_EFF_DATE : T24BusinessTypes:D
+            @i18n:Label (en="Substitution Eff Date")
+            @i18n:Tooltip (en="Margin Call Effective Date")
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=20.0, core=true, t24Name=MGN.CALL.EFF.DATE)
+        MGN_CALL_TRD_DATE : T24BusinessTypes:D
+            @i18n:Label (en="Margin Call Trade Date")
+            @i18n:Tooltip (en="Margin Call Trade Date")
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=164.0, core=true, t24Name=MGN.CALL.TRD.DATE)
+        MISC_ACT_SUSP_CAT -> ST_Config:CATEGORY
+            @i18n:Label (en="Misc Acc Suspense Category")
+            @i18n:Tooltip (en="Miscellaneous Account Suspense Category")
+            @t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=161.0, core=true, t24Name=MISC.ACT.SUSP.CAT)
+        MM_CONTRACT_ID : T24BusinessTypes:A
+            @i18n:Label (en="MM Ref")
+            @i18n:Tooltip (en="Reference of MM contract created by system")
+            @t24:i (align=L, inputBehaviour=N, maxLength=14, sysNumber=145.0, core=true, t24Name=MM.CONTRACT.ID, mask="R##/#####/#####")
+        MM_INT_BASIS : T24BusinessTypes:A
+            @i18n:Label (en="Money Market Interest Basis")
+            @i18n:Tooltip (en="Money Market Interest Basis")
+            @t24:i (align=L, inputBehaviour=N, maxLength=2, sysNumber=144.0, core=true, t24Name=MM.INT.BASIS)
+        MM_INT_DUE_DATE : T24BusinessTypes:FQU
+            @i18n:Label (en="Money Market Interest Due Date")
+            @i18n:Tooltip (en="Money Market Interest Due Date")
+            @t24:i (align=L, inputBehaviour=N, maxLength=19, sysNumber=112.0, core=true, t24Name=MM.INT.DUE.DATE, mask="RDDDD DD  D #####")
+        MM_LOCREF_NAME -> byValue RP_Contract:REPO__MM_LOCREF_NAME *
+            @t24:i (t24Name=MM.LOCREF.NAME)
+        NEGATIVE_RATE : RP_Contract:REPO__NEGATIVE_RATE
+            @i18n:Label (en="Negative Rate")
+            @t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=127.0, core=true, t24Name=NEGATIVE.RATE)
+        NEW_SEC_CODE -> byValue RP_Contract:REPO__NEW_SEC_CODE *
+            @t24:i (t24Name=NEW.SEC.CODE)
+        NEXT_RATE_CH_DATE : T24BusinessTypes:MATLMM
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=172.0, core=true, t24Name=NEXT.RATE.CH.DATE, typeModifiers="DAYS1684")
+        OLD_SEC_CODE -> byValue RP_Contract:REPO__OLD_SEC_CODE *
+            @t24:i (t24Name=OLD.SEC.CODE)
+        OVERRIDE -> byValue RP_Contract:REPO__OVERRIDE *
+            @t24:i (t24Name=OVERRIDE)
+        PI_INT_KEY : T24BusinessTypes:S
+            @t24:i (align=L, inputBehaviour=F, maxLength=13, sysNumber=167.0, core=true, t24Name=PI.INT.KEY)
+        PRINCIPAL_AMOUNT_1 : T24BusinessTypes:AMT
+            @i18n:Label (en=Investment)
+            @i18n:Tooltip (en="Principal Amount of the Repo Deal")
+            @t24:i (align=R, inputBehaviour=F, maxLength=19, sysNumber=8.0, core=true, t24Name=PRINCIPAL.AMOUNT.1, typeModifiers="3D")
+        PRINCIPAL_AMOUNT_2 : T24BusinessTypes:AMT
+            @i18n:Label (en="Repurchase Price")
+            @i18n:Tooltip (en="Maturity Amount/Repurchase Amount of the Deal")
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=9.0, core=true, t24Name=PRINCIPAL.AMOUNT.2, typeModifiers="-3D")
+        PRIN_ADDRESS -> byValue RP_Contract:REPO__PRIN_ADDRESS *
+            @t24:i (t24Name=PRIN.ADDRESS)
+        PRIN_BEN_BANK_1 -> ST_Customer:CUSTOMER
+            @i18n:Label (en="Prin Ben Bank")
+            @i18n:Tooltip (en="Principal Beneficiary Bank for payment")
+            @t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=59.0, core=true, businessType=CUS, t24Name=PRIN.BEN.BANK.1)
+        PRIN_BEN_BANK_2 -> ST_Customer:CUSTOMER
+            @i18n:Label (en="Prin Ben Bank.2")
+            @i18n:Tooltip (en="2nd bank involved in 4 party transfer of principal")
+            @t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=60.0, core=true, businessType=CUS, t24Name=PRIN.BEN.BANK.2)
+        PRIN_INCREASE : T24BusinessTypes:AMT
+            @i18n:Label (en="Principal Increase")
+            @i18n:Tooltip (en="Indicates the increase / decrease in principal")
+            @t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=18.0, core=true, t24Name=PRIN.INCREASE, typeModifiers="-3D")
+        PRIN_INCREASE_INT : T24BusinessTypes:AMT
+            @i18n:Label (en="Principal Increase Interest")
+            @t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=19.0, core=true, t24Name=PRIN.INCREASE.INT, typeModifiers="3D")
+        PRIN_LIQ_ACCT -> AC_AccountOpening:ACCOUNT
+            @i18n:Label (en="Prin Liq Acct")
+            @i18n:Tooltip (en="Principal Liquidation account of the deal")
+            @t24:i (align=L, inputBehaviour=I, maxLength=36, sysNumber=58.0, core=true, businessType=ANT, t24Name=PRIN.LIQ.ACCT)
+        PRODUCT_CATEGORY -> ST_Config:CATEGORY
+            @i18n:Label (en="Product Category")
+            @t24:i (align=R, inputBehaviour=F, maxLength=5, sysNumber=12.0, core=true, t24Name=PRODUCT.CATEGORY)
+        PROJ_CASH_AMT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=22.0, core=true, t24Name=PROJ.CASH.AMT)
+        PSET : T24BusinessTypes:A
+            @i18n:Label (en="Place of Settlement")
+            @i18n:Tooltip (en="Place of settlement")
+            @t24:i (align=L, inputBehaviour=F, maxLength=15, sysNumber=128.0, core=true, t24Name=PSET)
+        PURPOSE_OF_TRAN : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=I, maxLength=15, sysNumber=179.3, core=false, t24Name=PURPOSE.OF.TRAN)
+        RATE_CH_DATE : T24BusinessTypes:D
+            @t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=168.0, core=true, t24Name=RATE.CH.DATE)
+        RATE_SELECTION : RP_Contract:REPO__RATE_SELECTION
+            @t24:i (align=L, inputBehaviour=F, maxLength=5, sysNumber=171.0, core=true, t24Name=RATE.SELECTION)
+        RECORD_STATUS : T24BusinessTypes:STAT
+            @i18n:Label (en="Record Status")
+            @t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=182.0, core=true, t24Name=RECORD.STATUS)
+        REPO_RATE : T24BusinessTypes:R
+            @i18n:Label (en=Rate)
+            @i18n:Tooltip (en="Rate of Interest for the Repo Contract")
+            @t24:i (align=R, inputBehaviour=I, maxLength=12, sysNumber=11.0, core=true, t24Name=REPO.RATE, typeModifiers=-)
+        REPO_TYPE -> RP_Config:REPO_TYPE required
+            @i18n:Label (en="Repo Type")
+            @i18n:Tooltip (en="Repo Type")
+            @t24:i (align=L, inputBehaviour=F, maxLength=12, sysNumber=1.0, core=true, businessType=A, t24Name=REPO.TYPE)
+        RESERVED_1 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=178.0, core=true, t24Name=RESERVED.1)
+        RESERVED_2 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=177.0, core=true, t24Name=RESERVED.2)
+        RESERVED_3 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=176.0, core=true, t24Name=RESERVED.3)
+        RESERVED_4 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=175.0, core=true, t24Name=RESERVED.4)
+        RT_DEAL_TYPE : T24BusinessTypes:A
+            @i18n:Label (en="RT Deal Type")
+            @i18n:Tooltip (en="System populated, no input")
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=156.0, core=true, t24Name=RT.DEAL.TYPE)
+        SC_INIT_MGN_METHOD : RP_Contract:REPO__SC_INIT_MGN_METHOD
+            @i18n:Label (en="Interest Margin Method")
+            @i18n:Tooltip (en="Interest Margin Method")
+            @t24:i (align=L, inputBehaviour=F, maxLength=8, sysNumber=114.0, core=true, t24Name=SC.INIT.MGN.METHOD)
+        SC_REV_TRANS_TYPE -> SC_Config:SC_TRANS_NAME
+            @i18n:Label (en="Security Reverse Transfer Type")
+            @i18n:Tooltip (en="Used for removing the security from repo contract")
+            @t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=142.0, core=true, businessType=S, t24Name=SC.REV.TRANS.TYPE)
+        SC_TRANS_TYPE -> SC_Config:SC_TRANS_NAME
+            @i18n:Label (en="Security Transfer Type")
+            @i18n:Tooltip (en="Security Transfer Type")
+            @t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=141.0, core=true, businessType=S, t24Name=SC.TRANS.TYPE)
+        SEC_HOLD_SETTLE : RP_Contract:REPO__SEC_HOLD_SETTLE
+            @i18n:Label (en="Settle Stock?")
+            @i18n:Tooltip (en="If to be stock settled")
+            @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=158.0, core=true, t24Name=SEC.HOLD.SETTLE)
+        SEND_NOTICE -> byValue RP_Contract:REPO__SEND_NOTICE *
+            @t24:i (t24Name=SEND.NOTICE)
+        SEND_PAYMENT : RP_Contract:REPO__SEND_PAYMENT
+            @i18n:Label (en="Send Payment ")
+            @i18n:Tooltip (en="Send payment - Y/N ?")
+            @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=21.0, core=true, t24Name=SEND.PAYMENT)
+        STATEMENT_NOS -> byValue RP_Contract:REPO__STATEMENT_NOS *
+            @t24:i (t24Name=STATEMENT.NOS)
+        STR_LOCREF_NAME -> byValue RP_Contract:REPO__STR_LOCREF_NAME *
+            @t24:i (t24Name=STR.LOCREF.NAME)
+        ST_CONTRACT_ID -> byValue RP_Contract:REPO__ST_CONTRACT_ID *
+            @t24:i (t24Name=ST.CONTRACT.ID)
+        ST_HISTORY_ID -> byValue RP_Contract:REPO__ST_HISTORY_ID *
+            @t24:i (t24Name=ST.HISTORY.ID)
+        ST_REVERSE_ID -> byValue RP_Contract:REPO__ST_REVERSE_ID *
+            @t24:i (t24Name=ST.REVERSE.ID)
+        ST_UNAU_CONT_ID -> byValue RP_Contract:REPO__ST_UNAU_CONT_ID *
+            @t24:i (t24Name=ST.UNAU.CONT.ID)
+        ST_UNAU_REV_ID -> byValue RP_Contract:REPO__ST_UNAU_REV_ID *
+            @t24:i (t24Name=ST.UNAU.REV.ID)
+        TAX_AMT : T24BusinessTypes:AMT
+            @i18n:Label (en="Tax Amount")
+            @i18n:Tooltip (en="Indicates the tax amount")
+            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=109.0, core=true, t24Name=TAX.AMT)
+        TAX_AMT_LCY : T24BusinessTypes:AMT
+            @i18n:Label (en="Tax Amount Local")
+            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=110.0, core=true, t24Name=TAX.AMT.LCY)
+        TAX_CODE : T24BusinessTypes:TAX
+            @i18n:Label (en="Tax Code")
+            @t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=108.0, core=true, t24Name=TAX.CODE)
+        THIRD_PARTY -> SC_Config:CUSTOMER_SECURITY
+            @i18n:Label (en="Third Party")
+            @t24:i (align=R, inputBehaviour=F, maxLength=10, sysNumber=17.0, core=true, businessType=CUS, t24Name=THIRD.PARTY)
+        TRADE_DATE : T24BusinessTypes:D
+            @i18n:Label (en="Trade Date")
+            @t24:i (align=R, inputBehaviour=F, maxLength=11, sysNumber=5.0, core=true, t24Name=TRADE.DATE)
+        TRADE_TIME : T24BusinessTypes:TIME
+            @i18n:Label (en="Trade Time")
+            @i18n:Tooltip (en="Records the time when the contract has taken place")
+            @t24:i (align=L, inputBehaviour=I, maxLength=11, sysNumber=104.0, core=true, t24Name=TRADE.TIME)
+        TRANSACTION_INDEX : RP_Contract:REPO__TRANSACTION_INDEX
+            @i18n:Label (en="Transaction Index")
+            @i18n:Tooltip (en="Identifies the transaction either as Repo or Reso")
+            @t24:i (align=L, inputBehaviour=N, maxLength=7, sysNumber=138.0, core=true, t24Name=TRANSACTION.INDEX)
+        TRANSFER_CHARGES : T24BusinessTypes:AMT
+            @i18n:Label (en="Transfer Charges")
+            @i18n:Tooltip (en="Transfer Charges")
+            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=139.0, core=true, t24Name=TRANSFER.CHARGES, typeModifiers="3")
+        TRANS_TYPE : RP_Contract:REPO__TRANS_TYPE
+            @i18n:Label (en="Trans Type")
+            @i18n:Tooltip (en="Indicates the Transaction Type")
+            @t24:i (align=L, inputBehaviour=F, maxLength=8, sysNumber=115.0, core=true, t24Name=TRANS.TYPE)
+        TT_REF_NO : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=179.1, core=false, t24Name=TT.REF.NO)
+        VALUE_DATE : T24BusinessTypes:D
+            @i18n:Label (en="Value Date")
+            @i18n:Tooltip (en="Indicates the Value date of the Contract")
+            @t24:i (align=R, inputBehaviour=F, maxLength=11, sysNumber=6.0, core=true, t24Name=VALUE.DATE)
+    }
+    REPO_POSITION
+        @i18n:Description (en="")
+        @t24:i (t24Name=REPO.POSITION, level=F, type=L, allowedFunctions="L P S", localRefAllowed=false)
+    {
+        CLOSING_BAL_NO_NOM : T24BusinessTypes:NOMAMT
+            @i18n:Label (en="Closing Balance")
+            @t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=9.0, core=true, t24Name=CLOSING.BAL.NO.NOM)
+        COST_PRICE -> byValue RP_Contract:REPO_POSITION__COST_PRICE *
+            @t24:i (t24Name=COST.PRICE)
+        DATE_LAST_TRADED : T24BusinessTypes:D
+            @i18n:Label (en=Active)
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=8.0, core=true, t24Name=DATE.LAST.TRADED)
+        DEPOSITORY -> ST_Customer:CUSTOMER
+            @i18n:Label (en=Depository)
+            @i18n:Tooltip (en="Depository the Security to be delivered from/to")
+            @t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=3.0, core=true, businessType=CUS, t24Name=DEPOSITORY)
+        INTEREST_RATE : T24BusinessTypes:R
+            @i18n:Label (en="Interest Rate")
+            @i18n:Tooltip (en="Indicates interest rate")
+            @t24:i (align=R, inputBehaviour=I, maxLength=16, sysNumber=6.0, core=true, t24Name=INTEREST.RATE)
+        ISSUE_DATE : T24BusinessTypes:D
+            @i18n:Label (en="Issue Date")
+            @i18n:Tooltip (en="Indicates the date of issue ")
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=11.0, core=true, t24Name=ISSUE.DATE)
+        MATURITY_DATE : T24BusinessTypes:D
+            @i18n:Label (en="Maturity Date")
+            @i18n:Tooltip (en="Indicates the Maturity Date of the Transaction")
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=5.0, core=true, t24Name=MATURITY.DATE)
+        NOMINEE_CODE -> SC_Config:NOMINEE_CODE
+            @i18n:Label (en="Nominee Code")
+            @i18n:Tooltip (en="Identifies the Nominee Company ")
+            @t24:i (align=L, inputBehaviour=I, maxLength=5, sysNumber=4.0, core=true, businessType=S, t24Name=NOMINEE.CODE)
+        OPENING_BAL_NO_NOM : T24BusinessTypes:NOMAMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=10.0, core=true, t24Name=OPENING.BAL.NO.NOM)
+        POSITION_KEY -> RP_Contract:REPO_POSITION PK required
+            @t24:i (align=L, inputBehaviour=I, maxLength=80, sysNumber=0.0, core=true, businessType=S, t24Name=POSITION.KEY)
+        SECURITY_ACCOUNT -> SC_ScoPortfolioMaintenance:SEC_ACC_MASTER
+            @i18n:Label (en=Portfolio)
+            @t24:i (align=L, inputBehaviour=I, maxLength=14, sysNumber=1.0, core=true, businessType=S, t24Name=SECURITY.ACCOUNT)
+        SECURITY_NUMBER -> SC_ScoSecurityMasterMaintenance:SECURITY_MASTER
+            @i18n:Label (en="Security No")
+            @i18n:Tooltip (en="Indicates the security number")
+            @t24:i (align=L, inputBehaviour=I, maxLength=12, sysNumber=2.0, core=true, businessType=SEC, t24Name=SECURITY.NUMBER)
+        SUB_ACCOUNT : T24BusinessTypes:N
+            @i18n:Label (en="Sub Account")
+            @t24:i (align=R, inputBehaviour=I, maxLength=16, sysNumber=7.0, core=true, t24Name=SUB.ACCOUNT)
+    }
+    REPO_POSITION__COST_PRICE
+    {
+        CONTRACT_ID : T24BusinessTypes:A
+            @i18n:Label (en="Contract Id")
+            @t24:i (align=L, inputBehaviour=I, maxLength=30, sysNumber=14.0, core=true, t24Name=CONTRACT.ID)
+        COST_PRICE : T24BusinessTypes:AMT
+            @i18n:Label (en="Cost Price")
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=12.0, core=true, t24Name=COST.PRICE)
+        COUNTERPARTY -> SC_ScoPortfolioMaintenance:SEC_ACC_MASTER
+            @i18n:Label (en=Counterparty)
+            @i18n:Tooltip (en="Counterparty with whom the deal is made")
+            @t24:i (align=L, inputBehaviour=I, maxLength=14, sysNumber=15.0, core=true, businessType=S, t24Name=COUNTERPARTY)
+        NOMINAL : T24BusinessTypes:NOMAMT
+            @i18n:Label (en=Nominal)
+            @i18n:Tooltip (en="No of Units or Amount")
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=13.0, core=true, t24Name=NOMINAL)
+    }
+    REPO__ACTIVITY_CODE
+    {
+        ACTIVITY_CODE -> EB_Delivery:EB_ACTIVITY
+            @i18n:Label (en="Activity Code")
+            @i18n:Tooltip (en="Indicates activity code")
+            @t24:i (align=R, inputBehaviour=N, maxLength=7, sysNumber=131.0, core=true, t24Name=ACTIVITY.CODE)
+        ACTIVITY_DATE : T24BusinessTypes:D
+            @i18n:Label (en="Activity Date")
+            @i18n:Tooltip (en="indicates the date on which activity is generated")
+            @t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=132.0, core=true, t24Name=ACTIVITY.DATE)
+        MAPPING_KEY -> byValue RP_Contract:REPO__ACTIVITY_CODE__MAPPING_KEY *
+            @t24:i (t24Name=MAPPING.KEY)
+    }
+    REPO__ACTIVITY_CODE__MAPPING_KEY
+    {
+        MAPPING_KEY -> DE_Config:DE_MAPPING
+            @i18n:Label (en="Mapping Key")
+            @t24:i (align=R, inputBehaviour=N, maxLength=20, sysNumber=133.0, core=true, t24Name=MAPPING.KEY)
+        MSG_REF : T24BusinessTypes:N
+            @i18n:Label (en="Message Reference")
+            @t24:i (align=R, inputBehaviour=N, maxLength=16, sysNumber=134.0, core=true, t24Name=MSG.REF)
+    }
+    REPO__BENEF_PRIN_ACCT
+    {
+        BENEF_PRIN_ACCT : T24BusinessTypes:S
+            @i18n:Label (en="Prin Beneficiary Acct")
+            @i18n:Tooltip (en="Indicates principal beneficiary account No")
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=62.0, core=true, t24Name=BENEF.PRIN.ACCT, isTextarea=true)
+    }
+    REPO__BEN_INT_ACCT
+    {
+        BEN_INT_ACCT : T24BusinessTypes:S
+            @i18n:Label (en="Beneficiary Interest Account")
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=67.0, core=true, t24Name=BEN.INT.ACCT, isTextarea=true)
+    }
+    REPO__BR_AGENT
+    {
+        BR_AGENT : T24BusinessTypes:A
+            @i18n:Label (en=Agent)
+            @i18n:Tooltip (en=Agent)
+            @t24:i (align=L, inputBehaviour=F, maxLength=15, sysNumber=123.0, core=true, t24Name=BR.AGENT)
+        BR_AGENT_AC : T24BusinessTypes:A
+            @i18n:Label (en="Agent Account")
+            @i18n:Tooltip (en="Identifies the Agent Account Number")
+            @t24:i (align=L, inputBehaviour=F, maxLength=15, sysNumber=124.0, core=true, t24Name=BR.AGENT.AC)
+    }
+    REPO__BUSINESS_CENTRE
+    {
+        BUSINESS_CENTRE -> ST_Config:COUNTRY
+            @i18n:Label (en="Business Centre")
+            @i18n:Tooltip (en="Business Centre")
+            @t24:i (align=L, inputBehaviour=F, maxLength=4, sysNumber=4.0, core=true, businessType=A, t24Name=BUSINESS.CENTRE)
+    }
+    REPO__CONDITION
+    {
+        CONDITION : T24BusinessTypes:S
+            @i18n:Label (en=Condition)
+            @i18n:Tooltip (en="Value that the field name is to be compared with")
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=14.0, core=true, t24Name=CONDITION, isTextarea=true)
+    }
+    REPO__DATE_TIME
+    {
+        DATE_TIME : T24BusinessTypes:RELTIME
+            @i18n:Label (en="Date time")
+            @i18n:Tooltip (en="Date and time when record was input or authorised")
+            @t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=185.0, core=true, t24Name=DATE.TIME, mask="RDD DD  DD ##:##")
+    }
+    REPO__FT_LOCREF_NAME
+    {
+        FT_LOCREF_DATA : T24BusinessTypes:A
+            @i18n:Label (en="Funds Trans Local Ref Data")
+            @i18n:Tooltip (en="Funds Trans Local Ref Data")
+            @t24:i (align=L, inputBehaviour=I, maxLength=30, sysNumber=153.0, core=true, t24Name=FT.LOCREF.DATA)
+        FT_LOCREF_NAME : T24BusinessTypes:T
+            @i18n:Label (en="Funds Trans Local Ref Name")
+            @i18n:Tooltip (en="Displays local reference field in FUNDS.TRANSFER")
+            @t24:i (align=L, inputBehaviour=N, maxLength=25, sysNumber=152.0, core=true, t24Name=FT.LOCREF.NAME, mvSvExpansionAccess=NOMODIFY)
+    }
+    REPO__FT_MARGIN_ID
+    {
+        FT_MARGIN_ID : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=155.0, core=true, t24Name=FT.MARGIN.ID)
+    }
+    REPO__FT_UNAU_MGN_ID
+    {
+        FT_UNAU_MGN_ID : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=154.0, core=true, t24Name=FT.UNAU.MGN.ID)
+    }
+    REPO__INPUTTER
+    {
+        INPUTTER : T24BusinessTypes:A
+            @i18n:Label (en=Inputter)
+            @i18n:Tooltip (en="The user who last updated the record")
+            @t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=184.0, core=true, t24Name=INPUTTER)
+    }
+    REPO__INT_ADDRESS
+    {
+        INT_ADDRESS : T24BusinessTypes:S
+            @i18n:Label (en="Interest Address")
+            @i18n:Tooltip (en="Name & Address of Beneficiary for interest payment")
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=66.0, core=true, t24Name=INT.ADDRESS, isTextarea=true)
+    }
+    REPO__MM_LOCREF_NAME
+    {
+        MM_LOCREF_DATA : T24BusinessTypes:A
+            @i18n:Label (en="Money Market Local Reference Data")
+            @i18n:Tooltip (en="Indicates the money market local reference data")
+            @t24:i (align=L, inputBehaviour=I, maxLength=30, sysNumber=117.0, core=true, t24Name=MM.LOCREF.DATA)
+        MM_LOCREF_NAME : T24BusinessTypes:T
+            @i18n:Label (en="Money Market Local Reference Name")
+            @i18n:Tooltip (en="Money Market Local Reference Name")
+            @t24:i (align=L, inputBehaviour=N, maxLength=25, sysNumber=116.0, core=true, t24Name=MM.LOCREF.NAME, mvSvExpansionAccess=NOMODIFY)
+    }
+    REPO__NEW_SEC_CODE
+    {
+        ACCRUED_INT_AMT : T24BusinessTypes:AMT
+            @i18n:Label (en="Sec Accrued Int")
+            @i18n:Tooltip (en="Accrued Interest on the Security")
+            @t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=28.0, core=true, t24Name=ACCRUED.INT.AMT)
+        BND_RND_METH : T24BusinessTypes:N
+            @i18n:Label (en="Bond Rounding Method")
+            @t24:i (align=R, inputBehaviour=N, maxLength=10, sysNumber=38.0, core=true, t24Name=BND.RND.METH)
+        CLEAN_PRICE : T24BusinessTypes:R
+            @i18n:Label (en="Clean Price")
+            @i18n:Tooltip (en="Clean Price of the Security")
+            @t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=25.0, core=true, t24Name=CLEAN.PRICE)
+        CPN_AMT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=40.0, core=true, t24Name=CPN.AMT)
+        CPN_INVST_AMT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=42.0, core=true, t24Name=CPN.INVST.AMT)
+        CPN_INVST_RATE : T24BusinessTypes:R
+            @t24:i (align=R, inputBehaviour=F, maxLength=11, sysNumber=41.0, core=true, t24Name=CPN.INVST.RATE)
+        DIRTY_PRICE : T24BusinessTypes:R
+            @i18n:Label (en="Dirty Price")
+            @i18n:Tooltip (en="Dirty Price")
+            @t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=27.0, core=true, t24Name=DIRTY.PRICE)
+        FWD_ACCR_INT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=39.0, core=true, t24Name=FWD.ACCR.INT)
+        FWD_PRICE : T24BusinessTypes:R
+            @i18n:Label (en="Forward Price")
+            @i18n:Tooltip (en="Forward Price of the far leg for the security")
+            @t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=37.0, core=true, t24Name=FWD.PRICE)
+        FWD_SETTLEMNT : T24BusinessTypes:AMT
+            @i18n:Label (en="Forward Settlement")
+            @i18n:Tooltip (en="Settlement amount of security for the far leg")
+            @t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=36.0, core=true, t24Name=FWD.SETTLEMNT, typeModifiers="3D")
+        FX_RATE : T24BusinessTypes:R
+            @i18n:Label (en="Forex Rate")
+            @t24:i (align=R, inputBehaviour=I, maxLength=15, sysNumber=45.0, core=true, t24Name=FX.RATE)
+        GROSS_AMOUNT : T24BusinessTypes:AMT
+            @i18n:Label (en="Gross Amount")
+            @i18n:Tooltip (en="Indicates the gross amount generated by the event ")
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=26.0, core=true, t24Name=GROSS.AMOUNT, typeModifiers="3D")
+        GROSS_AMT_SEC : T24BusinessTypes:AMT
+            @i18n:Label (en="Security Gross Amount")
+            @i18n:Tooltip (en="Gross amount of the security")
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=46.0, core=true, t24Name=GROSS.AMT.SEC)
+        GRP_TRD_ID -> byValue RP_Contract:REPO__NEW_SEC_CODE__GRP_TRD_ID *
+            @t24:i (t24Name=GRP.TRD.ID)
+        MGN_DELIV_INSTR -> SC_Config:SC_DEL_INSTR
+            @i18n:Label (en="Substitution Sc Deliv")
+            @i18n:Tooltip (en="Margin Delivery instructions")
+            @t24:i (align=L, inputBehaviour=I, maxLength=5, sysNumber=47.0, core=true, businessType=A, t24Name=MGN.DELIV.INSTR)
+        NEW_CU_ACCT_CCY -> ST_CurrencyConfig:CURRENCY
+            @i18n:Label (en="Customer Acc Currency")
+            @i18n:Tooltip (en="Indicates the currency of the customer account")
+            @t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=49.0, core=true, businessType=CCY, t24Name=NEW.CU.ACCT.CCY)
+        NEW_CU_ACCT_NO -> AC_AccountOpening:ACCOUNT
+            @i18n:Label (en="Customer Account Number")
+            @i18n:Tooltip (en="Identifies the customer account number")
+            @t24:i (align=L, inputBehaviour=I, maxLength=36, sysNumber=31.0, core=true, businessType=ANT, t24Name=NEW.CU.ACCT.NO)
+        NEW_CU_BR_XRATE : T24BusinessTypes:R
+            @i18n:Label (en="Customer Brok Exch Rate")
+            @i18n:Tooltip (en="Customer Broker Exchange Rate")
+            @t24:i (align=R, inputBehaviour=I, maxLength=15, sysNumber=50.0, core=true, t24Name=NEW.CU.BR.XRATE)
+        NEW_DEPO -> SC_Config:CUSTOMER_SECURITY
+            @i18n:Label (en=Depository)
+            @i18n:Tooltip (en="Depository in which the security is held")
+            @t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=29.0, core=true, businessType=CUS, t24Name=NEW.DEPO)
+        NEW_NOMINAL : T24BusinessTypes:NOMAMT
+            @i18n:Label (en=Nominal)
+            @i18n:Tooltip (en="Nominal amount of the security")
+            @t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=24.0, core=true, t24Name=NEW.NOMINAL, typeModifiers="23.X")
+        NEW_SEC_CODE -> SC_ScoSecurityMasterMaintenance:SECURITY_MASTER
+            @i18n:Label (en="Security Code")
+            @i18n:Tooltip (en="Underlying security of the Repo deal")
+            @t24:i (align=L, inputBehaviour=I, maxLength=12, sysNumber=23.0, core=true, businessType=SEC, t24Name=NEW.SEC.CODE)
+        REPO_INTEREST : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=F, maxLength=18, sysNumber=35.0, core=true, t24Name=REPO.INTEREST, typeModifiers="-3D")
+        RESERVEDX1 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=53.0, core=true, t24Name=RESERVEDX1)
+        SBL_DIV_RATE -> byValue RP_Contract:REPO__NEW_SEC_CODE__SBL_DIV_RATE *
+            @t24:i (t24Name=SBL.DIV.RATE)
+        SC_INIT_MGN_AMT : T24BusinessTypes:AMT
+            @i18n:Label (en="Initial Margin Amt")
+            @i18n:Tooltip (en="Initial Margin amount for the security")
+            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=33.0, core=true, t24Name=SC.INIT.MGN.AMT, typeModifiers="3D")
+        SC_INIT_MGN_RTE : T24BusinessTypes:R
+            @i18n:Label (en="Initial Margin")
+            @i18n:Tooltip (en="Initial Margin Rate on the Security")
+            @t24:i (align=R, inputBehaviour=F, maxLength=11, sysNumber=32.0, core=true, t24Name=SC.INIT.MGN.RTE)
+        SUB_ACCOUNT : T24BusinessTypes:A
+            @i18n:Label (en="Sub Account")
+            @i18n:Tooltip (en="Sub Account")
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=30.0, core=true, t24Name=SUB.ACCOUNT)
+        SUPP_DELIVERY : RP_Contract:REPO__NEW_SEC_CODE__SUPP_DELIVERY
+            @i18n:Label (en="Supp Delivery")
+            @i18n:Tooltip (en="Supp Delivery")
+            @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=48.0, core=true, t24Name=SUPP.DELIVERY)
+        TOTAL_SETTLEMNT : T24BusinessTypes:AMT
+            @i18n:Label (en="Total Settlement")
+            @i18n:Tooltip (en="Settlement amount for the security")
+            @t24:i (align=R, inputBehaviour=F, maxLength=18, sysNumber=34.0, core=true, t24Name=TOTAL.SETTLEMNT, typeModifiers="3D")
+    }
+    REPO__NEW_SEC_CODE__GRP_TRD_ID
+    {
+        GRP_TRD_ID : T24BusinessTypes:N
+            @i18n:Label (en="Group Trade ID")
+            @i18n:Tooltip (en="Indicates the group trade ID")
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=43.0, core=true, t24Name=GRP.TRD.ID)
+        GRP_TRD_PROC : T24BusinessTypes:N
+            @i18n:Label (en="Group Trade Process")
+            @i18n:Tooltip (en="Group Trade Process")
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=44.0, core=true, t24Name=GRP.TRD.PROC)
+    }
+    REPO__NEW_SEC_CODE__SBL_DIV_RATE
+    {
+        SBL_DIV_RATE : T24BusinessTypes:R
+            @i18n:Label (en="Stock Borrow Lending Rate")
+            @i18n:Tooltip (en="Stock Borrow Lending Rate")
+            @t24:i (align=R, inputBehaviour=I, maxLength=15, sysNumber=51.0, core=true, t24Name=SBL.DIV.RATE)
+        SBL_EFF_DATE : T24BusinessTypes:D
+            @i18n:Label (en="SBL Effective Date")
+            @i18n:Tooltip (en="SBL Effective Date")
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=52.0, core=true, t24Name=SBL.EFF.DATE)
+    }
+    REPO__OLD_SEC_CODE
+    {
+        OLD_ACC_INT_AMT : T24BusinessTypes:AMT
+            @i18n:Label (en="Prev Sec Accrued Int")
+            @i18n:Tooltip (en="Accrued Interest on the Security")
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=73.0, core=true, t24Name=OLD.ACC.INT.AMT)
+        OLD_BND_RND_MTH : T24BusinessTypes:N
+            @i18n:Label (en="Existing Bond Rounding Method")
+            @i18n:Tooltip (en="Existing Bond Rounding Method")
+            @t24:i (align=R, inputBehaviour=N, maxLength=10, sysNumber=83.0, core=true, t24Name=OLD.BND.RND.MTH)
+        OLD_CLEAN_PRICE : T24BusinessTypes:R
+            @i18n:Label (en="Clean Price")
+            @i18n:Tooltip (en="Clean Price of the Security")
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=70.0, core=true, t24Name=OLD.CLEAN.PRICE)
+        OLD_CPN_AMT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=85.0, core=true, t24Name=OLD.CPN.AMT)
+        OLD_CPN_INV_AMT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=87.0, core=true, t24Name=OLD.CPN.INV.AMT)
+        OLD_CPN_INV_RTE : T24BusinessTypes:R
+            @t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=86.0, core=true, t24Name=OLD.CPN.INV.RTE)
+        OLD_CU_ACCT_CCY -> ST_CurrencyConfig:CURRENCY
+            @i18n:Label (en="Existing Cust Acc Cur")
+            @i18n:Tooltip (en="Indicates the old currency of the customer account")
+            @t24:i (align=R, inputBehaviour=N, maxLength=3, sysNumber=93.0, core=true, t24Name=OLD.CU.ACCT.CCY)
+        OLD_CU_ACCT_NO -> AC_AccountOpening:ACCOUNT
+            @t24:i (align=L, inputBehaviour=N, maxLength=36, sysNumber=76.0, core=true, businessType=ANT, t24Name=OLD.CU.ACCT.NO)
+        OLD_CU_BR_XRATE : T24BusinessTypes:N
+            @i18n:Label (en="Existing Cust Brok Exch Rate")
+            @i18n:Tooltip (en="Existing Cust Brok Exch Rate")
+            @t24:i (align=R, inputBehaviour=N, maxLength=15, sysNumber=94.0, core=true, t24Name=OLD.CU.BR.XRATE)
+        OLD_DEPO -> SC_Config:CUSTOMER_SECURITY
+            @i18n:Label (en=Depository)
+            @i18n:Tooltip (en="Depository in which the security is held")
+            @t24:i (align=R, inputBehaviour=N, maxLength=10, sysNumber=74.0, core=true, businessType=CUS, t24Name=OLD.DEPO)
+        OLD_DIRTY_PRICE : T24BusinessTypes:R
+            @i18n:Label (en="Dirty Price")
+            @i18n:Tooltip (en="Dirty Price of the Security")
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=72.0, core=true, t24Name=OLD.DIRTY.PRICE)
+        OLD_FWD_ACC_INT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=84.0, core=true, t24Name=OLD.FWD.ACC.INT)
+        OLD_FWD_PRICE : T24BusinessTypes:AMT
+            @i18n:Label (en="Forward Price")
+            @i18n:Tooltip (en="Forward Price of the far leg for the security")
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=82.0, core=true, t24Name=OLD.FWD.PRICE)
+        OLD_FWD_SMNT : T24BusinessTypes:AMT
+            @i18n:Label (en="Forward Settlement")
+            @i18n:Tooltip (en="Settlement amount of security for the far leg")
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=81.0, core=true, t24Name=OLD.FWD.SMNT)
+        OLD_GP_TD_ID -> byValue RP_Contract:REPO__OLD_SEC_CODE__OLD_GP_TD_ID *
+            @t24:i (t24Name=OLD.GP.TD.ID)
+        OLD_GROSS_AMT : T24BusinessTypes:AMT
+            @i18n:Label (en="Gross Amount ")
+            @i18n:Tooltip (en="Gross Amount Calculated")
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=71.0, core=true, t24Name=OLD.GROSS.AMT)
+        OLD_GRS_AMT_SEC : T24BusinessTypes:AMT
+            @i18n:Label (en="Old Security Gross Amount")
+            @i18n:Tooltip (en="Old Security Gross Amount")
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=90.0, core=true, t24Name=OLD.GRS.AMT.SEC)
+        OLD_MGN_AMT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=78.0, core=true, t24Name=OLD.MGN.AMT)
+        OLD_MGN_DEL_INS : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=5, sysNumber=91.0, core=true, t24Name=OLD.MGN.DEL.INS)
+        OLD_MGN_RTE : T24BusinessTypes:R
+            @t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=77.0, core=true, t24Name=OLD.MGN.RTE)
+        OLD_NOMINAL : T24BusinessTypes:NOMAMT
+            @i18n:Label (en=Nominal)
+            @i18n:Tooltip (en="Nominal of the security")
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=69.0, core=true, t24Name=OLD.NOMINAL)
+        OLD_REPO_INT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=80.0, core=true, t24Name=OLD.REPO.INT)
+        OLD_SBL_RTE -> byValue RP_Contract:REPO__OLD_SEC_CODE__OLD_SBL_RTE *
+            @t24:i (t24Name=OLD.SBL.RTE)
+        OLD_SEC_CODE -> SC_ScoSecurityMasterMaintenance:SECURITY_MASTER
+            @i18n:Label (en="Security Code")
+            @i18n:Tooltip (en="Existing Security of the Repo Deal")
+            @t24:i (align=L, inputBehaviour=N, maxLength=12, sysNumber=68.0, core=true, businessType=SEC, t24Name=OLD.SEC.CODE)
+        OLD_SUB_ACCOUNT : T24BusinessTypes:N
+            @i18n:Label (en="Sub Account")
+            @i18n:Tooltip (en="Sub Account of the Depository")
+            @t24:i (align=R, inputBehaviour=N, maxLength=16, sysNumber=75.0, core=true, t24Name=OLD.SUB.ACCOUNT)
+        OLD_SUPP_DEL : T24BusinessTypes:N
+            @i18n:Label (en="Existing Suppress Delivery")
+            @i18n:Tooltip (en="Existing Suppress Delivery")
+            @t24:i (align=R, inputBehaviour=N, maxLength=3, sysNumber=92.0, core=true, t24Name=OLD.SUPP.DEL)
+        OLD_TOTAL_SMNT : T24BusinessTypes:AMT
+            @i18n:Label (en="Total Settlement")
+            @i18n:Tooltip (en="Settlement amount for the security")
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=79.0, core=true, t24Name=OLD.TOTAL.SMNT)
+        RESERVEDXX1 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=97.0, core=true, t24Name=RESERVEDXX1)
+    }
+    REPO__OLD_SEC_CODE__OLD_GP_TD_ID
+    {
+        OLD_GP_TD_ID : T24BusinessTypes:N
+            @i18n:Label (en="Existing Group Trade ID")
+            @i18n:Tooltip (en="Indicates the old group trade ID")
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=88.0, core=true, t24Name=OLD.GP.TD.ID)
+        OLD_GP_TD_PR : T24BusinessTypes:N
+            @i18n:Label (en="Existing Group Trade Process")
+            @i18n:Tooltip (en="Existing process of group trade ")
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=89.0, core=true, t24Name=OLD.GP.TD.PR)
+    }
+    REPO__OLD_SEC_CODE__OLD_SBL_RTE
+    {
+        OLD_SBL_DTE : T24BusinessTypes:D
+            @i18n:Label (en="Existing SBL Date")
+            @i18n:Tooltip (en="Existing SBL Date")
+            @t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=96.0, core=true, t24Name=OLD.SBL.DTE)
+        OLD_SBL_RTE : T24BusinessTypes:R
+            @i18n:Label (en="Existing SBL Rate")
+            @i18n:Tooltip (en="Indicates the old stock borrow lending rate")
+            @t24:i (align=R, inputBehaviour=N, maxLength=15, sysNumber=95.0, core=true, t24Name=OLD.SBL.RTE)
+    }
+    REPO__OVERRIDE
+    {
+        OVERRIDE : T24BusinessTypes:A
+            @i18n:Label (en=Override)
+            @i18n:Tooltip (en="Overrides generated by this transaction")
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=181.0, core=true, t24Name=OVERRIDE)
+    }
+    REPO__PRIN_ADDRESS
+    {
+        PRIN_ADDRESS : T24BusinessTypes:S
+            @i18n:Label (en="Prin BenBk Name")
+            @i18n:Tooltip (en="Name & address of beneficiary bank")
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=61.0, core=true, t24Name=PRIN.ADDRESS, isTextarea=true)
+    }
+    REPO__SEND_NOTICE
+    {
+        SEND_NOTICE : RP_Contract:REPO__SEND_NOTICE__SEND_NOTICE
+            @i18n:Label (en="Send Notice")
+            @i18n:Tooltip (en="Send Notice")
+            @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=103.0, core=true, t24Name=SEND.NOTICE, mvSvExpansionAccess=NOMODIFY)
+    }
+    REPO__STATEMENT_NOS
+    {
+        STATEMENT_NOS : T24BusinessTypes:A
+            @i18n:Label (en="Statement Numbers")
+            @i18n:Tooltip (en="Statement or category entry of a transaction")
+            @t24:i (align=L, inputBehaviour=N, maxLength=29, sysNumber=180.0, core=true, t24Name=STATEMENT.NOS)
+    }
+    REPO__STR_LOCREF_NAME
+    {
+        STR_LOCREF_DATA : T24BusinessTypes:A
+            @i18n:Label (en="Sec Trnsfer Local Ref Data")
+            @i18n:Tooltip (en="Security Transfer Local Reference Data")
+            @t24:i (align=L, inputBehaviour=I, maxLength=30, sysNumber=119.0, core=true, t24Name=STR.LOCREF.DATA)
+        STR_LOCREF_NAME : T24BusinessTypes:T
+            @i18n:Label (en="Sec Trnsfer Local Ref Name")
+            @i18n:Tooltip (en="Security Transfer Local Reference Name")
+            @t24:i (align=L, inputBehaviour=N, maxLength=25, sysNumber=118.0, core=true, t24Name=STR.LOCREF.NAME, mvSvExpansionAccess=NOMODIFY)
+    }
+    REPO__ST_CONTRACT_ID
+    {
+        ST_CONTRACT_ID : T24BusinessTypes:S
+            @i18n:Label (en="Sec Ref")
+            @i18n:Tooltip (en="Reference of Security Ref created by system")
+            @t24:i (align=L, inputBehaviour=N, maxLength=16, sysNumber=146.0, core=true, t24Name=ST.CONTRACT.ID)
+    }
+    REPO__ST_HISTORY_ID
+    {
+        ST_HISTORY_ID : T24BusinessTypes:S
+            @t24:i (align=L, inputBehaviour=N, maxLength=16, sysNumber=148.0, core=true, t24Name=ST.HISTORY.ID)
+    }
+    REPO__ST_REVERSE_ID
+    {
+        ST_REVERSE_ID : T24BusinessTypes:S
+            @t24:i (align=L, inputBehaviour=N, maxLength=16, sysNumber=147.0, core=true, t24Name=ST.REVERSE.ID)
+    }
+    REPO__ST_UNAU_CONT_ID
+    {
+        ST_UNAU_CONT_ID : T24BusinessTypes:S
+            @i18n:Label (en="Security Reference")
+            @i18n:Tooltip (en="Security Reference")
+            @t24:i (align=L, inputBehaviour=N, maxLength=16, sysNumber=149.0, core=true, t24Name=ST.UNAU.CONT.ID)
+    }
+    REPO__ST_UNAU_REV_ID
+    {
+        ST_UNAU_REV_ID : T24BusinessTypes:S
+            @t24:i (align=L, inputBehaviour=N, maxLength=16, sysNumber=150.0, core=true, t24Name=ST.UNAU.REV.ID)
+    }
+    RESO_POSITION
+        @i18n:Description (en="")
+        @t24:i (t24Name=RESO.POSITION, level=F, type=L, allowedFunctions="L P S", localRefAllowed=false)
+    {
+        CLOSING_BAL_NO_NOM : T24BusinessTypes:NOMAMT
+            @i18n:Label (en=Nominal)
+            @t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=9.0, core=true, t24Name=CLOSING.BAL.NO.NOM)
+        COST_PRICE -> byValue RP_Contract:RESO_POSITION__COST_PRICE *
+            @t24:i (t24Name=COST.PRICE)
+        DATE_LAST_TRADED : T24BusinessTypes:D
+            @i18n:Label (en=Active)
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=8.0, core=true, t24Name=DATE.LAST.TRADED)
+        DEPOSITORY -> ST_Customer:CUSTOMER
+            @i18n:Label (en=Depository)
+            @i18n:Tooltip (en="Depository the Security to be delivered from/to")
+            @t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=3.0, core=true, businessType=CUS, t24Name=DEPOSITORY)
+        INTEREST_RATE : T24BusinessTypes:R
+            @i18n:Label (en="Interest Rate")
+            @i18n:Tooltip (en="Indicates interest rate")
+            @t24:i (align=R, inputBehaviour=I, maxLength=16, sysNumber=6.0, core=true, t24Name=INTEREST.RATE)
+        ISSUE_DATE : T24BusinessTypes:D
+            @i18n:Label (en="Issue Date")
+            @i18n:Tooltip (en="Indicates the date of issue ")
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=11.0, core=true, t24Name=ISSUE.DATE)
+        MATURITY_DATE : T24BusinessTypes:D
+            @i18n:Label (en="Maturity Date")
+            @i18n:Tooltip (en="Indicates the Maturity Date of the Transaction")
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=5.0, core=true, t24Name=MATURITY.DATE)
+        NOMINEE_CODE -> SC_Config:NOMINEE_CODE
+            @i18n:Label (en="Nominee Code")
+            @i18n:Tooltip (en="Identifies the Nominee Company ")
+            @t24:i (align=L, inputBehaviour=I, maxLength=5, sysNumber=4.0, core=true, businessType=S, t24Name=NOMINEE.CODE)
+        OPENING_BAL_NO_NOM : T24BusinessTypes:NOMAMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=18, sysNumber=10.0, core=true, t24Name=OPENING.BAL.NO.NOM)
+        POSITION_KEY -> RP_Contract:RESO_POSITION PK required
+            @t24:i (align=L, inputBehaviour=I, maxLength=80, sysNumber=0.0, core=true, businessType=S, t24Name=POSITION.KEY)
+        SECURITY_ACCOUNT -> SC_ScoPortfolioMaintenance:SEC_ACC_MASTER
+            @i18n:Label (en=Portfolio)
+            @t24:i (align=L, inputBehaviour=I, maxLength=14, sysNumber=1.0, core=true, businessType=S, t24Name=SECURITY.ACCOUNT)
+        SECURITY_NUMBER -> SC_ScoSecurityMasterMaintenance:SECURITY_MASTER
+            @i18n:Label (en="Security No")
+            @i18n:Tooltip (en="Indicates the security number")
+            @t24:i (align=L, inputBehaviour=I, maxLength=12, sysNumber=2.0, core=true, businessType=SEC, t24Name=SECURITY.NUMBER)
+        SUB_ACCOUNT : T24BusinessTypes:N
+            @i18n:Label (en="Sub Account")
+            @t24:i (align=R, inputBehaviour=I, maxLength=16, sysNumber=7.0, core=true, t24Name=SUB.ACCOUNT)
+    }
+    RESO_POSITION__COST_PRICE
+    {
+        CONTRACT_ID : T24BusinessTypes:A
+            @i18n:Label (en="Contract Id")
+            @t24:i (align=L, inputBehaviour=I, maxLength=30, sysNumber=14.0, core=true, t24Name=CONTRACT.ID)
+        COST_PRICE : T24BusinessTypes:AMT
+            @i18n:Label (en="Cost Price")
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=12.0, core=true, t24Name=COST.PRICE)
+        COUNTERPARTY -> SC_ScoPortfolioMaintenance:SEC_ACC_MASTER
+            @i18n:Label (en=Counterparty)
+            @i18n:Tooltip (en="Counterparty with whom the deal is made")
+            @t24:i (align=L, inputBehaviour=I, maxLength=14, sysNumber=15.0, core=true, businessType=S, t24Name=COUNTERPARTY)
+        NOMINAL : T24BusinessTypes:NOMAMT
+            @i18n:Label (en=Nominal)
+            @i18n:Tooltip (en="No of Units or Amount")
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=13.0, core=true, t24Name=NOMINAL)
+    }
+    RP_ALT_NOSTRO
+        @i18n:Description (en="")
+        @t24:i (t24Name=RP.ALT.NOSTRO, level=F, type=L, allowedFunctions="L P S", localRefAllowed=false)
+    {
+        DEP_NO -> byValue RP_Contract:RP_ALT_NOSTRO__DEP_NO *
+            @t24:i (t24Name=DEP.NO)
+        DIARY_ID -> RP_Contract:RP_ALT_NOSTRO PK required
+            @i18n:Label (en="Diary Id")
+            @i18n:Tooltip (en="Indicates the diary Id")
+            @t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=0.0, core=true, businessType=S, t24Name=DIARY.ID, mask="################")
+    }
+    RP_ALT_NOSTRO__DEP_NO
+    {
+        COUNTERPARTY -> byValue RP_Contract:RP_ALT_NOSTRO__DEP_NO__COUNTERPARTY *
+            @t24:i (t24Name=COUNTERPARTY)
+        DEP_NO -> SC_Config:CUSTOMER_SECURITY
+            @i18n:Label (en="Depository Number")
+            @i18n:Tooltip (en="Identifies the depository number")
+            @t24:i (align=R, inputBehaviour=N, maxLength=10, sysNumber=1.0, core=true, businessType=CUS, t24Name=DEP.NO)
+        RP_ACCOUNT -> AC_AccountOpening:ACCOUNT
+            @t24:i (align=L, inputBehaviour=N, maxLength=36, sysNumber=2.0, core=true, businessType=ANT, t24Name=RP.ACCOUNT)
+    }
+    RP_ALT_NOSTRO__DEP_NO__COUNTERPARTY
+    {
+        COUNTERPARTY -> SC_ScoPortfolioMaintenance:SEC_ACC_MASTER
+            @i18n:Label (en=Counterparty)
+            @i18n:Tooltip (en="Counterparty with whom the deal is made")
+            @t24:i (align=L, inputBehaviour=N, maxLength=14, sysNumber=3.0, core=true, businessType=S, t24Name=COUNTERPARTY)
+        RP_CASH_CCY -> ST_CurrencyConfig:CURRENCY
+            @t24:i (align=R, inputBehaviour=N, maxLength=3, sysNumber=9.0, core=true, t24Name=RP.CASH.CCY)
+        RP_CASH_XCH : T24BusinessTypes:R
+            @t24:i (align=R, inputBehaviour=N, maxLength=15, sysNumber=10.0, core=true, t24Name=RP.CASH.XCH)
+        RP_ENTL_AMT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=N, maxLength=16, sysNumber=12.0, core=true, t24Name=RP.ENTL.AMT)
+        RP_GROSS_AMT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=N, maxLength=16, sysNumber=5.0, core=true, t24Name=RP.GROSS.AMT)
+        RP_MBS_AMT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=N, maxLength=16, sysNumber=13.0, core=true, t24Name=RP.MBS.AMT)
+        RP_NET_AMT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=N, maxLength=16, sysNumber=8.0, core=true, t24Name=RP.NET.AMT)
+        RP_NET_LCY : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=N, maxLength=16, sysNumber=11.0, core=true, t24Name=RP.NET.LCY, typeModifiers="USD")
+        RP_NOMINAL : T24BusinessTypes:NOMAMT
+            @t24:i (align=R, inputBehaviour=N, maxLength=18, sysNumber=4.0, core=true, t24Name=RP.NOMINAL)
+        RP_SRC_TAX : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=N, maxLength=16, sysNumber=6.0, core=true, t24Name=RP.SRC.TAX)
+        RP_TOT_CHGS : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=N, maxLength=16, sysNumber=7.0, core=true, t24Name=RP.TOT.CHGS)
+    }
+}
+Enumerations {
+    REPO__AUTO_BROK_SETT : mml:string
+        NO=NO
+        YES=YES
+    REPO__AUTO_CUST_SETT : mml:string
+        NO=NO
+        YES=YES
+    REPO__CALCULATION_LINK : mml:string
+        NO=NO
+        YES=YES
+    REPO__CAP_INT : mml:string
+        N=N
+        Y=Y
+    REPO__CASH_HOLD_SETTLE : mml:string
+        NO=NO
+        YES=YES
+    REPO__DEAL_TYPE : mml:string
+        BILATERAL=BILATERAL
+        BUY_SELL_BACK=BUY/SELL.BACK
+        SELL_BUY_BACK=SELL/BUY.BACK
+        TRILATERAL=TRILATERAL
+    REPO__EFF_INT_BASIS : mml:string
+        A=A
+        B=B
+        C=C
+        D=D
+        E=E
+        E1=E1
+        F=F
+        W=W
+        W1=W1
+    REPO__GROUP_STATUS : mml:string
+        NET=NET
+        NO=NO
+    REPO__INTEREST_BASIS : mml:string
+        A=A
+        B=B
+        C=C
+        D=D
+        E=E
+        E1=E1
+        F=F
+        S=S
+        W=W
+        W1=W1
+    REPO__NEGATIVE_RATE : mml:string
+        NO=NO
+        YES=YES
+    REPO__NEW_SEC_CODE__SUPP_DELIVERY : mml:string
+        NO=NO
+        NULL=NULL
+        YES=YES
+    REPO__RATE_SELECTION : mml:string
+        BID=BID
+        OFFER=OFFER
+    REPO__SC_INIT_MGN_METHOD : mml:string
+        GMRA=GMRA
+        NULL=NULL
+        STANDARD=STANDARD
+    REPO__SEC_HOLD_SETTLE : mml:string
+        NO=NO
+        YES=YES
+    REPO__SEND_NOTICE__SEND_NOTICE : mml:string
+        NO=NO
+        YES=YES
+    REPO__SEND_PAYMENT : mml:string
+        NO=NO
+        YES=YES
+    REPO__TRANSACTION_INDEX : mml:string
+        DEPOSIT=DEPOSIT
+        LOAN=LOAN
+    REPO__TRANS_TYPE : mml:string
+        CASH=CASH
+        SECURITY=SECURITY
+}

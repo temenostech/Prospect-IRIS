@@ -1,0 +1,129 @@
+# UTF-8
+/* Fee Calculation for Fiduciaries */
+Domain FD_Fees
+    @t24:i (module=FD)
+    @java:Package (value=com.temenos.t24.datamodel.fd.fd_fees)
+namespace "http://www.temenos.com/t24/FD_Fees"
+metamodelVersion 1.30.6
+Classes {
+    FD_COMMISSION_TYPE
+        @i18n:Description (en="")
+        @t24:i (t24Name=FD.COMMISSION.TYPE, level=I, type=H, allowedFunctions="A C D E H I L P Q R S", localRefAllowed=false)
+    {
+        AUDITOR_CODE : T24BusinessTypes:A
+            @i18n:Label (en="Auditor Code")
+            @i18n:Tooltip (en="Auditor Code")
+            @t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=23.0, core=true, t24Name=AUDITOR.CODE)
+        AUDIT_DATE_TIME : T24BusinessTypes:RELTIME
+            @i18n:Label (en="Audit Date Time")
+            @i18n:Tooltip (en="Date and time when record was audited")
+            @t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=24.0, core=true, t24Name=AUDIT.DATE.TIME, mask="RDD DD  DD ##:##")
+        AUTHORISER : T24BusinessTypes:A
+            @i18n:Label (en=Authoriser)
+            @i18n:Tooltip (en="Indicates the User who Authorises the record")
+            @t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=20.0, core=true, t24Name=AUTHORISER)
+        COMM_TYPE -> FD_Fees:FD_COMMISSION_TYPE PK required
+            @i18n:Label (en="Comm Type")
+            @t24:i (align=L, inputBehaviour=I, maxLength=11, sysNumber=0.0, core=true, businessType=S, t24Name=COMM.TYPE)
+        CO_CODE -> ST_CompanyCreation:COMPANY
+            @i18n:Label (en=Company)
+            @t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=21.0, core=true, businessType=A, t24Name=CO.CODE, mask="R##-###-####")
+        CURRENCY -> byValue FD_Fees:FD_COMMISSION_TYPE__CURRENCY *
+            @t24:i (t24Name=CURRENCY)
+        CURR_NO : T24BusinessTypes:N
+            @i18n:Label (en="Curr No")
+            @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=17.0, core=true, t24Name=CURR.NO)
+        DATE_TIME -> byValue FD_Fees:FD_COMMISSION_TYPE__DATE_TIME *
+            @t24:i (t24Name=DATE.TIME)
+        DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+            @i18n:Label (en="Dept Code")
+            @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=22.0, core=true, t24Name=DEPT.CODE)
+        DESCRIPTION -> byValue FD_Fees:FD_COMMISSION_TYPE__DESCRIPTION *
+            @t24:i (t24Name=DESCRIPTION)
+        INPUTTER -> byValue FD_Fees:FD_COMMISSION_TYPE__INPUTTER *
+            @t24:i (t24Name=INPUTTER)
+        RECORD_STATUS : T24BusinessTypes:STAT
+            @i18n:Label (en="Record Status")
+            @t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=16.0, core=true, t24Name=RECORD.STATUS)
+        RESERVED1 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=0, sysNumber=15.0, core=true, t24Name=RESERVED1)
+        RESERVED2 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=0, sysNumber=14.0, core=true, t24Name=RESERVED2)
+        RESERVED3 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=0, sysNumber=13.0, core=true, t24Name=RESERVED3)
+        RESERVED4 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=0, sysNumber=12.0, core=true, t24Name=RESERVED4)
+        SHORT_DESCR -> byValue FD_Fees:FD_COMMISSION_TYPE__SHORT_DESCR *
+            @t24:i (t24Name=SHORT.DESCR)
+        TAX_CODE : T24BusinessTypes:A
+            @i18n:Label (en="Tax Code")
+            @t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=5.0, core=true, t24Name=TAX.CODE)
+        TXN_CODE_CR -> ST_Config:TRANSACTION required
+            @i18n:Label (en="Transaction Code Credit")
+            @t24:i (align=R, inputBehaviour=I, maxLength=4, sysNumber=3.0, core=true, t24Name=TXN.CODE.CR)
+        TXN_CODE_DR -> ST_Config:TRANSACTION required
+            @i18n:Label (en="Transaction Code Debit")
+            @t24:i (align=R, inputBehaviour=I, maxLength=4, sysNumber=4.0, core=true, t24Name=TXN.CODE.DR)
+        USES_CUST_BASIS : FD_Fees:FD_COMMISSION_TYPE__USES_CUST_BASIS
+            @t24:i (align=L, inputBehaviour=F, maxLength=3, sysNumber=11.0, core=true, t24Name=USES.CUST.BASIS)
+    }
+    FD_COMMISSION_TYPE__CURRENCY
+    {
+        CALC_TYPE : FD_Fees:FD_COMMISSION_TYPE__CURRENCY__CALC_TYPE required
+            @i18n:Label (en="Calc Type")
+            @t24:i (align=L, inputBehaviour=I, maxLength=5, sysNumber=7.0, core=true, t24Name=CALC.TYPE)
+        CURRENCY -> ST_CurrencyConfig:CURRENCY
+            @i18n:Label (en=Ccy)
+            @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=6.0, core=true, businessType=CCY, t24Name=CURRENCY)
+        FLAT_AMT : T24BusinessTypes:AMT
+            @i18n:Label (en="Flat Amount")
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=8.0, core=true, t24Name=FLAT.AMT, typeModifiers="6.X")
+        UPTO_AMT -> byValue FD_Fees:FD_COMMISSION_TYPE__CURRENCY__UPTO_AMT *
+            @t24:i (t24Name=UPTO.AMT)
+    }
+    FD_COMMISSION_TYPE__CURRENCY__UPTO_AMT
+    {
+        COMM_RATE : T24BusinessTypes:R
+            @i18n:Label (en="Comm Rate")
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=10.0, core=true, t24Name=COMM.RATE)
+        UPTO_AMT : T24BusinessTypes:AMT
+            @i18n:Label (en=Upto..)
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=9.0, core=true, t24Name=UPTO.AMT, typeModifiers="6.X")
+    }
+    FD_COMMISSION_TYPE__DATE_TIME
+    {
+        DATE_TIME : T24BusinessTypes:RELTIME
+            @i18n:Label (en="Date time")
+            @i18n:Tooltip (en="Date and time when record was input or authorised")
+            @t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=19.0, core=true, t24Name=DATE.TIME, mask="RDD DD  DD ##:##")
+    }
+    FD_COMMISSION_TYPE__DESCRIPTION
+    {
+        DESCRIPTION : T24BusinessTypes:A required
+            @i18n:Label (en=Description)
+            @i18n:Tooltip (en=Description)
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, multiLanguage=true, sysNumber=1.0, core=true, t24Name=DESCRIPTION)
+    }
+    FD_COMMISSION_TYPE__INPUTTER
+    {
+        INPUTTER : T24BusinessTypes:A
+            @i18n:Label (en=Inputter)
+            @i18n:Tooltip (en="The user who last updated the record")
+            @t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=18.0, core=true, t24Name=INPUTTER)
+    }
+    FD_COMMISSION_TYPE__SHORT_DESCR
+    {
+        SHORT_DESCR : T24BusinessTypes:A required
+            @i18n:Label (en="Short Descr")
+            @t24:i (align=L, inputBehaviour=I, maxLength=20, multiLanguage=true, sysNumber=2.0, core=true, t24Name=SHORT.DESCR)
+    }
+}
+Enumerations {
+    FD_COMMISSION_TYPE__CURRENCY__CALC_TYPE : mml:string
+        BAND=BAND
+        FLAT=FLAT
+        LEVEL=LEVEL
+    FD_COMMISSION_TYPE__USES_CUST_BASIS : mml:string
+        NO=NO
+        YES=YES
+}

@@ -27,6 +27,12 @@
         <constructor-arg ref="srvdoc_stateMachine" />
         <property name="odataVersion" value="V2"/>
     </bean>
+
+    <!-- Command builder factory -->
+    <bean id="workflowCommandBuilderFactory" class="com.temenos.interaction.core.workflow.WorkflowCommandBuilderFactory">
+        <constructor-arg ref="commands" />
+    </bean>
+
     <!-- ResourceStateMachine built out of ServiceDocument only for EdmMetadata -->
     <bean id="srvdoc_stateMachine" class="com.temenos.interaction.core.hypermedia.ResourceStateMachine">
         <constructor-arg ref="serviceDocument" />
@@ -115,6 +121,7 @@
         <property name="resourceLocatorProvider" ref="resourceLocatorProvider" />
         <property name="resourceStateProvider" ref="resourceStateProvider" />
         <property name="resourceParameterResolverProvider"  ref="resourceParameterResolverProvider" />
+        <property name="workflowCommandBuilderProvider" ref="workflowCommandBuilderFactory" />
     </bean>
 
     <!-- Create a complete state machine for the OData ServiceDocument and Metadata -->
@@ -207,6 +214,9 @@
         
     <bean id="GETMenu" class="com.temenos.interaction.core.command.NoopGETCommand" />
     <bean id="GETNoop" class="com.temenos.interaction.core.command.NoopGETCommand" />
+    <bean id="MatchCommand" class="com.temenos.interaction.core.command.MatchCommand" />
+
+    <bean id="InterimTransition" class="com.temenos.interaction.core.command.InterimTransitionCommand" />
     
     <!-- 
     <bean id="MuleViewCommand" class="com.temenos.interaction.commands.mule.ViewCommand">
@@ -258,27 +268,29 @@
                 <entry key="MuleViewCommand" value-ref="MuleViewCommand" />
                  -->
                 <entry key="GETSearchResults" value-ref="GETSearchResults" />
-    
+                <entry key="MatchCommand" value-ref="MatchCommand" />
                 <entry key="GETNoop" value-ref="GETNoop" />
                 
+                <entry key="InterimTransition" value-ref="InterimTransition" />
+
                 <!-- ========================================================== -->
                 <!-- Folowing commands should come from T24Commands Spring file --> 
                 <!-- ========================================================== -->
                 <entry key="GetLiveEntities" value-ref="GetLiveEntities" />
-                <entry key="GetLiveEntity" value-ref="GetLiveEntity" />
-                <entry key="GetLiveAAEntity" value-ref="GetLiveAAEntity" />
                 <entry key="GetIauthEntities" value-ref="GetIauthEntities" />
-                <entry key="GetIauthEntity" value-ref="GetIauthEntity" />
-                <entry key="GetIauthAAEntity" value-ref="GetIauthAAEntity" />
                 <entry key="GetHauthEntities" value-ref="GetHauthEntities" />
-                <entry key="GetHauthEntity" value-ref="GetHauthEntity" />
-                <entry key="GetHauthAAEntity" value-ref="GetHauthAAEntity" />
                 <entry key="GetRauthEntities" value-ref="GetRauthEntities" />
-                <entry key="GetRauthEntity" value-ref="GetRauthEntity" />
                 <entry key="GetReversedEntities" value-ref="GetReversedEntities" />
-                <entry key="GetReversedEntity" value-ref="GetReversedEntity" />
                 <entry key="GetHeldEntities" value-ref="GetHeldEntities" />
-                <entry key="GetHeldEntity" value-ref="GetHeldEntity" />
+                <entry key="GetEntity" value-ref="GetEntity" />
+                <entry key="GetAAEntity" value-ref="GetAAEntity" />
+                <entry key="T24NewState" value-ref="T24NewState" />
+                <entry key="T24LiveState" value-ref="T24LiveState" />
+                <entry key="T24IAuthState" value-ref="T24IAuthState" />
+                <entry key="T24HAuthState" value-ref="T24HAuthState" />
+                <entry key="T24RAuthState" value-ref="T24RAuthState" />
+                <entry key="T24HeldState" value-ref="T24HeldState" />
+                <entry key="T24ReversedState" value-ref="T24ReversedState" />
                 <entry key="InputEntity" value-ref="InputEntity" />
                 <entry key="CreateEntity" value-ref="CreateEntity" />
                 <entry key="AuthoriseEntity" value-ref="AuthoriseEntity" />
@@ -295,23 +307,25 @@
                 <entry key="T24Enrichment" value-ref="T24Enrichment" />
                 <entry key="T24Enrichments" value-ref="T24Enrichments" />
                 <entry key="T24FieldMetadata" value-ref="T24FieldMetadata" />
+                <entry key="T24SilentState" value-ref="T24SilentState" />
                 <entry key="T24NextState" value-ref="T24NextState" />
                 <entry key="CreateAAEntity" value-ref="CreateAAEntity" />
                 <entry key="PopulateAAEntity" value-ref="PopulateAAEntity" />
                 <entry key="ValidateAAEntity" value-ref="ValidateAAEntity" />
                 <entry key="InputAAEntity" value-ref="InputAAEntity" />
                 <entry key="AAFieldMetadata" value-ref="AAFieldMetadata" />
+
                 <entry key="ImageDownload" value-ref="ImageDownload" />
                 <entry key="CheckAutoIdSupport" value-ref="CheckAutoIdSupport" />
                 <entry key="CheckIfError" value-ref="CheckIfError" />
                 <entry key="ErrorCommand" value-ref="T24ErrorCommand" />
+                <entry key="MessageCommand" value-ref="T24MessageCommand" />
                 <entry key="CopyEntity" value-ref="CopyEntity" />
                 <entry key="CopyAAEntity" value-ref="CopyAAEntity" />
                 <entry key="PasteEntity" value-ref="PasteEntity" />
                 <entry key="PasteAAEntity" value-ref="PasteAAEntity" />
                 <entry key="GetDealSlipEntities" value-ref="GetDealSlipEntities" />
                 <entry key="GetChangedValues" value-ref="GetChangedValuesEntities" />
-                <entry key="GetAAChangedValues" value-ref="GetAAChangedValuesEntities"/>
                 <!-- ========================================================== -->
             </util:map>
         </property>
@@ -323,3 +337,4 @@
     </bean>
     
 </beans>
+

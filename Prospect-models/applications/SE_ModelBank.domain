@@ -1,0 +1,188 @@
+# UTF-8
+/* Model Configuration for SE */
+Domain SE_ModelBank
+    @t24:i (module=SE)
+    @java:Package (value=com.temenos.t24.datamodel.se.se_modelbank)
+namespace "http://www.temenos.com/t24/SE_ModelBank"
+metamodelVersion 1.30.6
+Classes {
+    NOFILE_SEAT_TEST
+        @i18n:Description (en="")
+        @t24:i (t24Name=NOFILE.SEAT.TEST, level=I, type=T, allowedFunctions="L P S", localRefAllowed=false)
+    {
+        PRODUCT_GROUP : T24BusinessTypes:N
+            @i18n:Label (en="Product Group")
+            @t24:i (align=R, inputBehaviour=N, maxLength=1000, core=false, t24Name=PRODUCT.GROUP)
+        RET_DATA : T24BusinessTypes:N
+            @t24:i (align=L, inputBehaviour=N, maxLength=1000, core=false, t24Name=RET.DATA, genOperation=E.MB.NOF.SEAT.RESULTS)
+        SCRIPT_GROUP : T24BusinessTypes:N
+            @i18n:Label (en="Script Group")
+            @t24:i (align=R, inputBehaviour=N, maxLength=1000, core=false, t24Name=SCRIPT.GROUP)
+        STATUS : T24BusinessTypes:N
+            @i18n:Label (en=Status)
+            @t24:i (align=R, inputBehaviour=N, maxLength=1000, core=false, t24Name=STATUS)
+    }
+    SE_DRAFTREGISTER
+        @i18n:Description (en="")
+        @t24:i (t24Name=SE.DRAFTREGISTER, level=I, type=H, allowedFunctions="A C D E H I L P Q R S", localRefAllowed=true)
+    {
+        ACCOUNT -> AC_AccountOpening:ACCOUNT required
+            @i18n:Label (en=Account)
+            @i18n:Tooltip (en="Identifies the customer account")
+            @t24:i (align=L, inputBehaviour=I, maxLength=36, sysNumber=7.0, core=true, businessType=ANT, t24Name=ACCOUNT)
+        AUDITOR_CODE : T24BusinessTypes:A
+            @i18n:Label (en="Auditor Code")
+            @i18n:Tooltip (en="Auditor Code")
+            @t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=32.0, core=true, t24Name=AUDITOR.CODE)
+        AUDIT_DATE_TIME : T24BusinessTypes:RELTIME
+            @i18n:Label (en="Audit Date Time")
+            @i18n:Tooltip (en="Date and time when record was audited")
+            @t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=33.0, core=true, t24Name=AUDIT.DATE.TIME, mask="RDD DD  DD ##:##")
+        AUTHORISER : T24BusinessTypes:A
+            @i18n:Label (en=Authoriser)
+            @i18n:Tooltip (en="Indicates the User who Authorises the record")
+            @t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=29.0, core=true, t24Name=AUTHORISER)
+        AVAIL_DRAFT_AMT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=F, maxLength=19, sysNumber=9.0, core=true, t24Name=AVAIL.DRAFT.AMT, typeModifiers="8")
+        CATEGORY -> ST_Config:CATEGORY required
+            @i18n:Label (en=Category)
+            @i18n:Tooltip (en="Specifies the Category")
+            @t24:i (align=R, inputBehaviour=I, maxLength=35, sysNumber=3.0, core=true, t24Name=CATEGORY)
+        CO_CODE -> ST_CompanyCreation:COMPANY
+            @i18n:Label (en=Company)
+            @t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=30.0, core=true, businessType=A, t24Name=CO.CODE, mask="R##-###-####")
+        CURRENCY -> ST_CurrencyConfig:CURRENCY
+            @i18n:Label (en=Ccy)
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=8.0, core=true, businessType=A, t24Name=CURRENCY)
+        CURR_NO : T24BusinessTypes:N
+            @i18n:Label (en="Curr No")
+            @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=26.0, core=true, t24Name=CURR.NO)
+        CUSTOMER -> ST_Customer:CUSTOMER required
+            @i18n:Label (en=Customer)
+            @i18n:Tooltip (en="Customer Liability")
+            @t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=2.0, core=true, businessType=CUS, t24Name=CUSTOMER)
+        DATE_TIME -> byValue SE_ModelBank:SE_DRAFTREGISTER__DATE_TIME *
+            @t24:i (t24Name=DATE.TIME)
+        DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+            @i18n:Label (en="Dept Code")
+            @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=31.0, core=true, t24Name=DEPT.CODE)
+        DESCRIPTION -> byValue SE_ModelBank:SE_DRAFTREGISTER__DESCRIPTION *
+            @t24:i (t24Name=DESCRIPTION)
+        DRAFTREGISTER_ID -> SE_ModelBank:SE_DRAFTREGISTER PK required
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=0.0, core=true, businessType=A, t24Name=DRAFTREGISTER.ID)
+        DRAFT_CHARGE : T24BusinessTypes:CHG
+            @t24:i (align=R, inputBehaviour=I, maxLength=15, sysNumber=5.0, core=true, t24Name=DRAFT.CHARGE)
+        DRAFT_DATE -> byValue SE_ModelBank:SE_DRAFTREGISTER__DRAFT_DATE *
+            @t24:i (t24Name=DRAFT.DATE)
+        DRAFT_ISSUE_CUSTOMERS -> byValue SE_ModelBank:SE_DRAFTREGISTER__DRAFT_ISSUE_CUSTOMERS *
+            @t24:i (t24Name=DRAFT.ISSUE.CUSTOMERS)
+        DRAFT_REVIEW_FREQUENCY : T24BusinessTypes:FQU
+            @t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=6.0, core=true, t24Name=DRAFT.REVIEW.FREQUENCY)
+        DRAFT_TYPE : SE_ModelBank:SE_DRAFTREGISTER__DRAFT_TYPE
+            @t24:i (align=L, inputBehaviour=I, maxLength=15, sysNumber=4.0, core=true, t24Name=DRAFT.TYPE)
+        END_DATE : T24BusinessTypes:D required
+            @i18n:Label (en="End Date")
+            @i18n:Tooltip (en="End Date")
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=11.0, core=true, t24Name=END.DATE)
+        EXCHANGE_RATE : T24BusinessTypes:R
+            @i18n:Label (en="Exchange Rate")
+            @t24:i (align=R, inputBehaviour=I, maxLength=6, sysNumber=15.0, core=true, t24Name=EXCHANGE.RATE)
+        INPUTTER -> byValue SE_ModelBank:SE_DRAFTREGISTER__INPUTTER *
+            @t24:i (t24Name=INPUTTER)
+        INTEREST_BASIS -> ST_RateParameters:INTEREST_BASIS
+            @i18n:Label (en="Interest Basis")
+            @i18n:Tooltip (en="Indicates the interest day basis")
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=14.0, core=true, businessType=A, t24Name=INTEREST.BASIS)
+        MAX_DRAFTS : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=I, maxLength=35, sysNumber=12.0, core=true, t24Name=MAX.DRAFTS)
+        NOTES : T24BusinessTypes:A
+            @i18n:Label (en=Notes)
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=16.0, core=true, t24Name=NOTES, isTextarea=true)
+        OTHER_OFFICER -> byValue SE_ModelBank:SE_DRAFTREGISTER__OTHER_OFFICER *
+            @t24:i (t24Name=OTHER.OFFICER)
+        OVERRIDE -> byValue SE_ModelBank:SE_DRAFTREGISTER__OVERRIDE *
+            @t24:i (t24Name=OVERRIDE)
+        RECORD_STATUS : T24BusinessTypes:STAT
+            @i18n:Label (en="Record Status")
+            @t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=25.0, core=true, t24Name=RECORD.STATUS)
+        START_DATE : T24BusinessTypes:D
+            @i18n:Label (en="Start Date")
+            @i18n:Tooltip (en="Start Date")
+            @t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=10.0, core=true, t24Name=START.DATE)
+        STMT_NOS -> byValue SE_ModelBank:SE_DRAFTREGISTER__STMT_NOS *
+            @t24:i (t24Name=STMT.NOS)
+    }
+    SE_DRAFTREGISTER__DATE_TIME
+    {
+        DATE_TIME : T24BusinessTypes:RELTIME
+            @i18n:Label (en="Date time")
+            @i18n:Tooltip (en="Date and time when record was input or authorised")
+            @t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=28.0, core=true, t24Name=DATE.TIME, mask="RDD DD  DD ##:##")
+    }
+    SE_DRAFTREGISTER__DESCRIPTION
+    {
+        DESCRIPTION : T24BusinessTypes:A required
+            @i18n:Label (en=Description)
+            @i18n:Tooltip (en=Description)
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, multiLanguage=true, sysNumber=1.0, core=true, t24Name=DESCRIPTION)
+    }
+    SE_DRAFTREGISTER__DRAFT_DATE
+    {
+        DRAFT_DATE : T24BusinessTypes:D required
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=17.0, core=true, t24Name=DRAFT.DATE)
+        DRAFT_NUMBER -> byValue SE_ModelBank:SE_DRAFTREGISTER__DRAFT_DATE__DRAFT_NUMBER *
+            @t24:i (t24Name=DRAFT.NUMBER)
+    }
+    SE_DRAFTREGISTER__DRAFT_DATE__DRAFT_NUMBER
+    {
+        DRAFT_AMOUNT : T24BusinessTypes:AMT required
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=20.0, core=true, t24Name=DRAFT.AMOUNT, typeModifiers="8")
+        DRAFT_ISSUE_TO : T24BusinessTypes:A required
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=19.0, core=true, t24Name=DRAFT.ISSUE.TO)
+        DRAFT_NUMBER : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=18.0, core=true, t24Name=DRAFT.NUMBER)
+    }
+    SE_DRAFTREGISTER__DRAFT_ISSUE_CUSTOMERS
+    {
+        DRAFT_ISSUE_CUSTOMERS : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=13.0, core=true, t24Name=DRAFT.ISSUE.CUSTOMERS)
+    }
+    SE_DRAFTREGISTER__INPUTTER
+    {
+        INPUTTER : T24BusinessTypes:A
+            @i18n:Label (en=Inputter)
+            @i18n:Tooltip (en="The user who last updated the record")
+            @t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=27.0, core=true, t24Name=INPUTTER)
+    }
+    SE_DRAFTREGISTER__OTHER_OFFICER
+    {
+        OTHER_OFFICER -> ST_Config:DEPT_ACCT_OFFICER
+            @i18n:Label (en="Other Officer")
+            @i18n:Tooltip (en="Other Ac officer who may have some involvement")
+            @t24:i (align=R, inputBehaviour=I, maxLength=35, sysNumber=21.0, core=true, t24Name=OTHER.OFFICER)
+    }
+    SE_DRAFTREGISTER__OVERRIDE
+    {
+        OVERRIDE : T24BusinessTypes:A
+            @i18n:Label (en=Override)
+            @i18n:Tooltip (en="Overrides generated by this transaction")
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=24.0, core=true, t24Name=OVERRIDE)
+    }
+    SE_DRAFTREGISTER__STMT_NOS
+    {
+        STMT_NOS : T24BusinessTypes:A
+            @i18n:Label (en="Stmt Nos")
+            @i18n:Tooltip (en="Stmt Nos")
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=23.0, core=true, t24Name=STMT.NOS)
+    }
+}
+Enumerations {
+    SE_DRAFTREGISTER__DRAFT_TYPE : mml:string
+        COMMERCIAL=COMMERCIAL
+        NULL=NULL
+        RETAIL=RETAIL
+        Test1=Test1
+        Test2=Test2
+        Test3=Test3
+        Test4=Test4
+}

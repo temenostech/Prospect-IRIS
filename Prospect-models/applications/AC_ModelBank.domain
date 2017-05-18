@@ -1,0 +1,317 @@
+# UTF-8
+/* Model Configuration for AC */
+Domain AC_ModelBank
+    @t24:i (module=AC)
+    @java:Package (value=com.temenos.t24.datamodel.ac.ac_modelbank)
+namespace "http://www.temenos.com/t24/AC_ModelBank"
+metamodelVersion 1.30.6
+Classes {
+    AC_MASS_BLOCK_EXCLUSION
+        @i18n:Description (en="")
+        @t24:i (t24Name=AC.MASS.BLOCK.EXCLUSION, level=C, type=U, allowedFunctions="A C D E I L P Q R S", localRefAllowed=false)
+    {
+        AUDITOR_CODE : T24BusinessTypes:A
+            @i18n:Label (en="Auditor Code")
+            @i18n:Tooltip (en="Auditor Code")
+            @t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=9.0, core=true, t24Name=AUDITOR.CODE)
+        AUDIT_DATE_TIME : T24BusinessTypes:RELTIME
+            @i18n:Label (en="Audit Date Time")
+            @i18n:Tooltip (en="Date and time when record was audited")
+            @t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=10.0, core=true, t24Name=AUDIT.DATE.TIME, mask="RDD DD  DD ##:##")
+        AUTHORISER : T24BusinessTypes:A
+            @i18n:Label (en=Authoriser)
+            @i18n:Tooltip (en="Indicates the User who Authorises the record")
+            @t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=6.0, core=true, t24Name=AUTHORISER)
+        BLOCK_ID -> AC_ModelBank:AC_MASS_BLOCK_EXCLUSION PK required
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=0.0, core=true, businessType=A, t24Name=BLOCK.ID)
+        CO_CODE -> ST_CompanyCreation:COMPANY
+            @i18n:Label (en=Company)
+            @t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=7.0, core=true, businessType=A, t24Name=CO.CODE, mask="R##-###-####")
+        CURR_NO : T24BusinessTypes:N
+            @i18n:Label (en="Curr No")
+            @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=3.0, core=true, t24Name=CURR.NO)
+        DATE_TIME -> byValue AC_ModelBank:AC_MASS_BLOCK_EXCLUSION__DATE_TIME *
+            @t24:i (t24Name=DATE.TIME)
+        DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+            @i18n:Label (en="Dept Code")
+            @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=8.0, core=true, t24Name=DEPT.CODE)
+        EXCLUDE : T24BusinessTypes:A required
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=1.0, core=true, t24Name=EXCLUDE)
+        INPUTTER -> byValue AC_ModelBank:AC_MASS_BLOCK_EXCLUSION__INPUTTER *
+            @t24:i (t24Name=INPUTTER)
+        RECORD_STATUS : T24BusinessTypes:STAT
+            @i18n:Label (en="Record Status")
+            @t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=2.0, core=true, t24Name=RECORD.STATUS)
+    }
+    AC_MASS_BLOCK_EXCLUSION__DATE_TIME
+    {
+        DATE_TIME : T24BusinessTypes:RELTIME
+            @i18n:Label (en="Date time")
+            @i18n:Tooltip (en="Date and time when record was input or authorised")
+            @t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=5.0, core=true, t24Name=DATE.TIME, mask="RDD DD  DD ##:##")
+    }
+    AC_MASS_BLOCK_EXCLUSION__INPUTTER
+    {
+        INPUTTER : T24BusinessTypes:A
+            @i18n:Label (en=Inputter)
+            @i18n:Tooltip (en="The user who last updated the record")
+            @t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=4.0, core=true, t24Name=INPUTTER)
+    }
+    DATE_ACCT_STMT
+        @i18n:Description (en="")
+        @t24:i (t24Name=DATE.ACCT.STMT, level=F, type=T, allowedFunctions="L P S", localRefAllowed=false)
+    {
+        ACCOUNT_NUMBER : T24BusinessTypes:ANT
+            @i18n:Label (en="Account Number")
+            @t24:i (align=L, inputBehaviour=N, maxLength=16, sysNumber=1.0, core=true, t24Name=ACCOUNT.NUMBER)
+        DATE_VERSION : T24BusinessTypes:A PK required
+            @t24:i (align=L, inputBehaviour=N, maxLength=13, sysNumber=0.0, core=true, t24Name=DATE.VERSION, typeModifiers=ND, mask="RDDDD DD  DD-#")
+    }
+    FWD_ACCT_DATE
+        @i18n:Description (en="")
+        @t24:i (t24Name=FWD.ACCT.DATE, level=F, type=T, allowedFunctions="L P S", localRefAllowed=false)
+    {
+        ACCOUNT_NUMBER : T24BusinessTypes:ACC PK required
+            @i18n:Label (en="Account Number")
+            @t24:i (align=R, inputBehaviour=N, maxLength=16, sysNumber=0.0, core=true, t24Name=ACCOUNT.NUMBER)
+        FWD_DATE : T24BusinessTypes:D
+            @t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=1.0, core=true, t24Name=FWD.DATE)
+    }
+    FWD_ACCT_DATE_ID
+        @i18n:Description (en="")
+        @t24:i (t24Name=FWD.ACCT.DATE.ID, level=F, type=T, allowedFunctions="L P S", localRefAllowed=false)
+    {
+        FWD_ACCT_NO_DATE : T24BusinessTypes:A PK required
+            @t24:i (align=L, inputBehaviour=N, maxLength=28, sysNumber=0.0, core=true, t24Name=FWD.ACCT.NO.DATE, typeModifiers=ND, mask="R################ DDDD DD  DD")
+        FWD_ENTRY_ID : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=N, maxLength=20, sysNumber=1.0, core=true, t24Name=FWD.ENTRY.ID)
+    }
+    FWD_DATE_ACCT
+        @i18n:Description (en="")
+        @t24:i (t24Name=FWD.DATE.ACCT, level=F, type=T, allowedFunctions="L P S", localRefAllowed=false)
+    {
+        ACCOUNT_NUMBER : T24BusinessTypes:ACC
+            @i18n:Label (en="Account Number")
+            @t24:i (align=R, inputBehaviour=N, maxLength=16, sysNumber=1.0, core=true, t24Name=ACCOUNT.NUMBER)
+        FWD_DATE : T24BusinessTypes:D PK required
+            @t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=0.0, core=true, t24Name=FWD.DATE)
+    }
+    FWD_ENTRY
+        @i18n:Description (en="")
+        @t24:i (t24Name=FWD.ENTRY, level=F, type=T, allowedFunctions="L P S", localRefAllowed=false)
+    {
+        ACCOUNT_NUMBER : T24BusinessTypes:ANT
+            @i18n:Label (en="Account Number")
+            @t24:i (align=L, inputBehaviour=N, maxLength=16, sysNumber=1.0, core=true, t24Name=ACCOUNT.NUMBER)
+        AMOUNT : T24BusinessTypes:AMT
+            @i18n:Label (en=Amount)
+            @i18n:Tooltip (en="Indicates the Amount")
+            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=8.0, core=true, t24Name=AMOUNT, typeModifiers="-]7")
+        AUTHORISER : T24BusinessTypes:A
+            @i18n:Label (en=Authoriser)
+            @i18n:Tooltip (en="Indicates the User who Authorises the record")
+            @t24:i (align=L, inputBehaviour=N, maxLength=42, sysNumber=20.0, core=true, t24Name=AUTHORISER)
+        BOOKING_DATE : T24BusinessTypes:D
+            @i18n:Label (en="Booking Date")
+            @i18n:Tooltip (en="Booking Date")
+            @t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=15.0, core=true, t24Name=BOOKING.DATE)
+        COMPANY_CODE : T24BusinessTypes:A
+            @i18n:Label (en=Company)
+            @t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=2.0, core=true, t24Name=COMPANY.CODE, mask="R##-###-####")
+        CURRENCY_MARKET : T24BusinessTypes:N
+            @i18n:Label (en=Market)
+            @t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=11.0, core=true, t24Name=CURRENCY.MARKET)
+        CURR_NO : T24BusinessTypes:N
+            @i18n:Label (en="Curr No")
+            @t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=17.0, core=true, t24Name=CURR.NO)
+        CUSTOMER_ID : T24BusinessTypes:CUS
+            @i18n:Label (en="Customer Id")
+            @i18n:Tooltip (en="Identifies the Customer for the transaction.")
+            @t24:i (align=R, inputBehaviour=N, maxLength=10, sysNumber=6.0, core=true, t24Name=CUSTOMER.ID)
+        DATE_TIME : T24BusinessTypes:N
+            @i18n:Label (en="Date time")
+            @i18n:Tooltip (en="Date and time when record was input or authorised")
+            @t24:i (align=R, inputBehaviour=N, maxLength=10, sysNumber=19.0, core=true, t24Name=DATE.TIME, mask="RDD DD  DD ##:##")
+        DEPARTMENT_CODE : T24BusinessTypes:N
+            @i18n:Label (en="Department Code")
+            @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=13.0, core=true, t24Name=DEPARTMENT.CODE)
+        FUTURE_BOOK_DATE : T24BusinessTypes:D
+            @t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=9.0, core=true, t24Name=FUTURE.BOOK.DATE)
+        FWD_ENTRY_ID : T24BusinessTypes:A PK required
+            @t24:i (align=L, inputBehaviour=N, maxLength=20, sysNumber=0.0, core=true, t24Name=FWD.ENTRY.ID)
+        INPUTTER : T24BusinessTypes:A
+            @i18n:Label (en=Inputter)
+            @i18n:Tooltip (en="The user who last updated the record")
+            @t24:i (align=L, inputBehaviour=N, maxLength=25, sysNumber=18.0, core=true, t24Name=INPUTTER)
+        K_CURRENCY : T24BusinessTypes:CCY
+            @i18n:Label (en=Ccy)
+            @t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=7.0, core=true, t24Name=K.CURRENCY)
+        OUR_REFERENCE : T24BusinessTypes:S
+            @i18n:Label (en="Transaction Ref")
+            @i18n:Tooltip (en="Our Reference")
+            @t24:i (align=L, inputBehaviour=N, maxLength=16, sysNumber=10.0, core=true, t24Name=OUR.REFERENCE)
+        PRIME_REC_CURR_NO : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=5, sysNumber=12.0, core=true, t24Name=PRIME.REC.CURR.NO)
+        RECORD_STATUS : T24BusinessTypes:A
+            @i18n:Label (en="Record Status")
+            @t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=16.0, core=true, t24Name=RECORD.STATUS)
+        SHORT_NARRATIVE : T24BusinessTypes:S
+            @t24:i (align=L, inputBehaviour=N, maxLength=25, sysNumber=5.0, core=true, t24Name=SHORT.NARRATIVE)
+        SYSTEM_ID : T24BusinessTypes:A
+            @i18n:Label (en="System id")
+            @i18n:Tooltip (en="Shows the system id")
+            @t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=14.0, core=true, t24Name=SYSTEM.ID)
+        THEIR_REFERENCE : T24BusinessTypes:S
+            @i18n:Label (en="Their Ref")
+            @t24:i (align=L, inputBehaviour=N, maxLength=16, sysNumber=4.0, core=true, t24Name=THEIR.REFERENCE)
+        TRANSACTION_CODE : T24BusinessTypes:N
+            @i18n:Label (en="Transaction Code")
+            @i18n:Tooltip (en="Indicates the Transaction Type")
+            @t24:i (align=R, inputBehaviour=N, maxLength=3, sysNumber=3.0, core=true, t24Name=TRANSACTION.CODE)
+    }
+    FWD_TRANS_ENT_ID
+        @i18n:Description (en="")
+        @t24:i (t24Name=FWD.TRANS.ENT.ID, level=F, type=T, allowedFunctions="L P S", localRefAllowed=false)
+    {
+        FWD_ENTRY_ID : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=N, maxLength=20, sysNumber=1.0, core=true, t24Name=FWD.ENTRY.ID)
+        TRANS_REFERENCE : T24BusinessTypes:A PK required
+            @i18n:Label (en="Transaction Ref")
+            @t24:i (align=L, inputBehaviour=N, maxLength=16, sysNumber=0.0, core=true, t24Name=TRANS.REFERENCE)
+    }
+    NOFILE_AI_CHEQUE_DETAILS
+        @i18n:Description (en="")
+        @t24:i (t24Name=NOFILE.AI.CHEQUE.DETAILS, level=I, type=T, allowedFunctions="L P S", localRefAllowed=false)
+    {
+        ACCOUNT_NO : T24BusinessTypes:N
+            @i18n:Label (en=Account)
+            @i18n:Tooltip (en="Indicates Customer Account Number")
+            @t24:i (align=R, inputBehaviour=N, maxLength=15, sysNumber=1.0, core=true, t24Name=ACCOUNT.NO)
+        SEL_REC : T24BusinessTypes:N
+            @t24:i (align=L, inputBehaviour=N, maxLength=1000, core=false, t24Name=SEL.REC, genOperation=E.MB.CHEQUE.STATUS)
+    }
+    NOFILE_AVAILABLE_BALANCES
+        @i18n:Description (en="")
+        @t24:i (t24Name=NOFILE.AVAILABLE.BALANCES, level=I, type=T, allowedFunctions="L P S", localRefAllowed=false)
+    {
+        ACCOUNT_NUMBER : T24BusinessTypes:ANT
+            @i18n:Label (en="Account Number")
+            @t24:i (align=L, inputBehaviour=N, maxLength=1000, core=false, t24Name=ACCOUNT.NUMBER, genOperation=E.GET.AC.AVAILABLE.BALANCES)
+    }
+    NOFILE_CUSTOMER_MASS_BLOCK
+        @i18n:Description (en="")
+        @t24:i (t24Name=NOFILE.CUSTOMER.MASS.BLOCK, level=I, type=T, allowedFunctions="L P S", localRefAllowed=false)
+    {
+        ACCOUNT_ID -> AC_AccountOpening:ACCOUNT
+            @i18n:Label (en="Account No")
+            @i18n:Tooltip (en="Indicates the Account Number")
+            @t24:i (align=R, inputBehaviour=N, maxLength=36, sysNumber=2.0, core=true, businessType=ACC, t24Name=ACCOUNT.ID)
+        BLOCK_ID -> AC_Config:CUSTOMER_MASS_BLOCK
+            @t24:i (align=R, inputBehaviour=N, maxLength=35, core=false, t24Name=BLOCK.ID)
+        CHECK_DATE : T24BusinessTypes:N
+            @i18n:Label (en="Check Date")
+            @t24:i (align=R, inputBehaviour=N, maxLength=11, core=false, t24Name=CHECK.DATE)
+        CUSTOMER_ID -> ST_Customer:CUSTOMER
+            @i18n:Label (en="Customer Id")
+            @i18n:Tooltip (en="Identifies the Customer for the transaction.")
+            @t24:i (align=R, inputBehaviour=N, maxLength=10, sysNumber=1.0, core=true, businessType=CUS, t24Name=CUSTOMER.ID)
+        ID : T24BusinessTypes:N
+            @i18n:Label (en="Transaction Ref")
+            @i18n:Tooltip (en="Transaction Reference")
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, core=false, t24Name="@ID", genOperation=E.GET.MASS.BLOCK.INFO)
+    }
+    NOFILE_CUSTOMER_RELATION_LIST
+        @i18n:Description (en="")
+        @t24:i (t24Name=NOFILE.CUSTOMER.RELATION.LIST, level=I, type=T, allowedFunctions="L P S", localRefAllowed=false)
+    {
+        CUSTOMER : T24BusinessTypes:N
+            @i18n:Label (en=Customer)
+            @i18n:Tooltip (en="Customer Liability")
+            @t24:i (align=R, inputBehaviour=N, maxLength=35, core=false, t24Name=CUSTOMER)
+        OUT_ARRAY : T24BusinessTypes:N
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, core=false, t24Name=OUT.ARRAY, genOperation=E.CUSTOMER.RELATION.LIST)
+    }
+    NOFILE_FWD_CUS_BAL
+        @i18n:Description (en="")
+        @t24:i (t24Name=NOFILE.FWD.CUS.BAL, level=I, type=T, allowedFunctions="L P S", localRefAllowed=false)
+    {
+        CUSTOMER_CODE : T24BusinessTypes:CUS
+            @i18n:Label (en=Customer)
+            @t24:i (align=R, inputBehaviour=N, maxLength=6, core=false, t24Name=CUSTOMER.CODE, genOperation=CUSTOMER.ACCOUNT)
+    }
+    NOFILE_NOSTRO_ACCT
+        @i18n:Description (en="")
+        @t24:i (t24Name=NOFILE.NOSTRO.ACCT, level=I, type=T, allowedFunctions="L P S", localRefAllowed=false)
+    {
+        NOSTRO_CCY : T24BusinessTypes:CCY
+            @t24:i (align=L, inputBehaviour=N, maxLength=3, core=false, t24Name=NOSTRO.CCY, genOperation=CCY.NOSTRO.ACCT)
+    }
+    NOFILE_STMT_ENT
+        @i18n:Description (en="")
+        @t24:i (t24Name=NOFILE.STMT.ENT, level=I, type=T, allowedFunctions="L P S", localRefAllowed=false)
+    {
+        ACCOUNT : T24BusinessTypes:ANT
+            @i18n:Label (en=Account)
+            @i18n:Tooltip (en="Identifies the customer account")
+            @t24:i (align=R, inputBehaviour=N, maxLength=13, core=false, t24Name=ACCOUNT, genOperation=E.STMT.ENQ.BY.CONCAT)
+        APPL_DRILLDOWN : AC_ModelBank:NOFILE_STMT_ENT__APPL_DRILLDOWN
+            @i18n:Label (en="Appl Drilldown")
+            @t24:i (align=L, inputBehaviour=N, maxLength=3, core=false, t24Name=APPL.DRILLDOWN)
+        BOOKING_DATE : T24BusinessTypes:N
+            @i18n:Label (en="Booking Date")
+            @i18n:Tooltip (en="Booking Date")
+            @t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=7.0, core=true, t24Name=BOOKING.DATE)
+        PROCESSING_DATE : T24BusinessTypes:N
+            @i18n:Label (en="Processing Date")
+            @t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=8.0, core=true, t24Name=PROCESSING.DATE)
+        SHOW_NARRATIVE : AC_ModelBank:NOFILE_STMT_ENT__SHOW_NARRATIVE
+            @t24:i (align=L, inputBehaviour=N, maxLength=3, core=false, t24Name=SHOW.NARRATIVE)
+        SORT_REQ : AC_ModelBank:NOFILE_STMT_ENT__SORT_REQ
+            @t24:i (align=L, inputBehaviour=N, maxLength=3, core=false, t24Name=SORT.REQ)
+    }
+    NOFILE_TRIAL_BALANCE
+        @i18n:Description (en="")
+        @t24:i (t24Name=NOFILE.TRIAL.BALANCE, level=I, type=T, allowedFunctions="L P S", localRefAllowed=false)
+    {
+        ID -> AC_AccountOpening:ACCOUNT
+            @i18n:Label (en="Transaction Ref")
+            @i18n:Tooltip (en="Transaction Reference")
+            @t24:i (align=L, inputBehaviour=N, maxLength=50, core=false, t24Name="@ID", genOperation=E.GET.AELWD.IDS)
+    }
+    NOFILE_TXN_ENTRY
+        @i18n:Description (en="")
+        @t24:i (t24Name=NOFILE.TXN.ENTRY, level=I, type=T, allowedFunctions="L P S", localRefAllowed=false)
+    {
+        APPLICATION : T24BusinessTypes:N
+            @i18n:Label (en=Application)
+            @t24:i (align=R, inputBehaviour=N, maxLength=25, sysNumber=0.0, core=true, t24Name=APPLICATION)
+        DC_BATCH_DATE : T24BusinessTypes:D PK
+            @i18n:Label (en="DC Batch Date")
+            @t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=0.0, core=true, t24Name=DC.BATCH.DATE)
+        TRANSACTION_REF : T24BusinessTypes:N
+            @i18n:Label (en="Transaction Ref")
+            @i18n:Tooltip (en="Transaction Reference")
+            @t24:i (align=L, inputBehaviour=N, maxLength=50, core=false, t24Name=TRANSACTION.REF, genOperation=E.TXN.ENTRY)
+    }
+    NOFILE_UNAUTH_ENTRY
+        @i18n:Description (en="")
+        @t24:i (t24Name=NOFILE.UNAUTH.ENTRY, level=I, type=T, allowedFunctions="L P S", localRefAllowed=false)
+    {
+        ACCOUNT_NUMBER : T24BusinessTypes:N
+            @i18n:Label (en="Account Number")
+            @t24:i (align=R, inputBehaviour=N, maxLength=20, sysNumber=1.0, core=true, t24Name=ACCOUNT.NUMBER)
+        RET_DATA : T24BusinessTypes:N
+            @t24:i (align=L, inputBehaviour=N, maxLength=100000, core=false, t24Name=RET.DATA, genOperation=E.GET.AC.UNAUTH.ENTRIES)
+    }
+}
+Enumerations {
+    NOFILE_STMT_ENT__APPL_DRILLDOWN : mml:string
+        NO=NO
+        YES=YES
+    NOFILE_STMT_ENT__SHOW_NARRATIVE : mml:string
+        NO=NO
+        YES=YES
+    NOFILE_STMT_ENT__SORT_REQ : mml:string
+        NO=NO
+        YES=YES
+}

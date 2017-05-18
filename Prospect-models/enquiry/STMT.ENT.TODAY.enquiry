@@ -94,6 +94,10 @@ Enquiry "STMT.ENT.TODAY" for "name:/AC_EntryCreation:STMT.ENTRY#" {
     }
 
     field "ACC" {
+        break-condition {
+            break: Once
+        }
+
         length: 19
         alignment: Left
         comma-separator: false
@@ -201,12 +205,30 @@ Enquiry "STMT.ENT.TODAY" for "name:/AC_EntryCreation:STMT.ENTRY#" {
         operation: if "CUS" NotEquals "NULLVAR" process "CUSNM" "ACCSNM"
     }
 
-    field "CCY" {
+    field "ACC.CURRENCY" {
+        comma-separator: false
+        operation: field-extract "ACC"
+        conversion: getFrom "ACCOUNT" "CURRENCY" false
+    }
+
+    field "CURRENCY" {
         length: 3
         alignment: Left
         comma-separator: false
         processing-mode: Single
         operation: application-field-name "CURRENCY"
+    }
+
+    field "CCY" {
+        break-condition {
+            break: Once
+        }
+
+        length: 3
+        alignment: Left
+        comma-separator: false
+        processing-mode: Single
+        operation: if "CURRENCY" NotEquals "NULLVAR" process "CURRENCY" "ACC.CURRENCY"
     }
 
     field "FIX.CCY" {
@@ -287,8 +309,6 @@ Enquiry "STMT.ENT.TODAY" for "name:/AC_EntryCreation:STMT.ENTRY#" {
 
     field "TRANS.NARR" {
         format: User
-        length: 3
-        alignment: Right
         comma-separator: false
         processing-mode: Single
         operation: application-field-name "TRANSACTION.CODE"
@@ -723,6 +743,26 @@ Enquiry "STMT.ENT.TODAY" for "name:/AC_EntryCreation:STMT.ENTRY#" {
         operation: calc "Y.TRAN.ID":"REFNO"
     }
 
+    field "PP.ID.FORM" {
+        comma-separator: false
+        operation: constant "\"PP.ORDER.ENTRY,AUTH\""
+    }
+
+    field "PP.ID.FIN1" {
+        comma-separator: false
+        operation: calc "PP.ID.FORM":"FUN.SEE"
+    }
+
+    field "PP.REFNUM" {
+        comma-separator: false
+        operation: constant "\"111\""
+    }
+
+    field "PP.ID.FIN" {
+        comma-separator: false
+        operation: calc "PP.ID.FIN1":"PP.REFNUM"
+    }
+
     field "Y.STMT.ID" {
         comma-separator: false
         operation: calc "STMT.ENTRY":"FUN.SEE"
@@ -798,6 +838,15 @@ Enquiry "STMT.ENT.TODAY" for "name:/AC_EntryCreation:STMT.ENTRY#" {
         operation: constant "\"ACSW\""
     }
 
+    field "PP" {
+        break-condition {
+            break: Once
+        }
+
+        comma-separator: false
+        operation: constant "\"PP\""
+    }
+
     field "CHECK.ACCP" {
         comma-separator: false
         operation: if "CASH.POOL.REF" NotEquals "PO" process "Y.STMT.ID.FIN" "Y.TRAN.ID.FIN"
@@ -833,9 +882,24 @@ Enquiry "STMT.ENT.TODAY" for "name:/AC_EntryCreation:STMT.ENTRY#" {
         operation: if "SYSTEM.ID" Equals "PS" process "PS.ID.FIN" "CQ.MOD2"
     }
 
+    field "Y.PP.ID" {
+        comma-separator: false
+        operation: if "SYSTEM.ID" Equals "PP" process "PP.ID.FIN" "Y.PS.ID"
+    }
+
     field "Y.AA.ID" {
         comma-separator: false
-        operation: if "BASE.APPL" Equals "AA.ID.FORM" process "AA.ID.FIN" "Y.PS.ID"
+        operation: if "BASE.APPL" Equals "AA.ID.FORM" process "AA.ID.FIN" "Y.PP.ID"
+    }
+
+    field "PP.COMP.POP" {
+        comma-separator: false
+        operation: if "SYSTEM.ID" Equals "PP" process "PP.COMP" "NULL"
+    }
+
+    field "PP.TRANS.REF.POP" {
+        comma-separator: false
+        operation: if "SYSTEM.ID" Equals "PP" process "PP.TRANS.REF" "NULL"
     }
 
     field "NET.DET.ID" {
@@ -864,6 +928,24 @@ Enquiry "STMT.ENT.TODAY" for "name:/AC_EntryCreation:STMT.ENTRY#" {
 
         comma-separator: false
         operation: constant "\"N\""
+    }
+
+    field "PP.COMP" {
+        length: 60
+        alignment: Left
+        comma-separator: false
+        processing-mode: Single
+        operation: application-field-name "TRANS.REFERENCE"
+        conversion: call
+        jBC: "@ E.CONV.PP.COMPANY"
+    }
+
+    field "PP.TRANS.REF" {
+        length: 60
+        alignment: Left
+        comma-separator: false
+        processing-mode: Single
+        operation: application-field-name "TRANS.REFERENCE"
     }
 
     field "STMT.ENTRY" {
@@ -953,8 +1035,11 @@ Enquiry "STMT.ENT.TODAY" for "name:/AC_EntryCreation:STMT.ENTRY#" {
 
         label-field: "VALDESC"
         image: "view.gif"
-        criteria: "NET.SEL.FORM"
+        criteria: "NET.SEL.FORM" > "PP.COMP.POP"
+        criteria: "CURRENT.CompanyID" > "PP.COMP.POP"
+        criteria: "CURRENT.FTNumber" > "PP.TRANS.REF.POP"
         from-field: "NET.DET.ID"
     }
 
+    //introspection-messages: "Error in drilldown 1: \'NET.SEL.FORM\' is not valid pgmType = \'\'"
 }
