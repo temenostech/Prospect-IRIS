@@ -1,0 +1,811 @@
+# UTF-8
+/* Parameter Definition for Rates */
+Domain ST_RateParameters
+    @t24:i (module=ST)
+    @java:Package (value=com.temenos.t24.datamodel.st.st_rateparameters)
+namespace "http://www.temenos.com/t24/ST_RateParameters"
+metamodelVersion 1.30.6
+Classes {
+    BASIC_INTEREST
+        @i18n:Description (en="")
+        @t24:i (t24Name=BASIC.INTEREST, level=I, type=H, allowedFunctions="A C D E H I L P Q R S", localRefAllowed=false)
+    {
+        AUDITOR_CODE : T24BusinessTypes:A
+            @i18n:Label (en="Auditor Code")
+            @i18n:Tooltip (en="Auditor Code")
+            @t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=10.0, core=true, t24Name=AUDITOR.CODE)
+        AUDIT_DATE_TIME : T24BusinessTypes:RELTIME
+            @i18n:Label (en="Audit Date Time")
+            @i18n:Tooltip (en="Date and time when record was audited")
+            @t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=11.0, core=true, t24Name=AUDIT.DATE.TIME, mask="RDD DD  DD ##:##")
+        AUTHORISER : T24BusinessTypes:A
+            @i18n:Label (en=Authoriser)
+            @i18n:Tooltip (en="Indicates the User who Authorises the record")
+            @t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=7.0, core=true, t24Name=AUTHORISER)
+        BCCY : T24BusinessTypes:N
+            @t24:i (align=L, inputBehaviour=N, maxLength=3, core=false, t24Name=BCCY, genOperation="@ID[(LEN(@ID)-10),3]")
+        CO_CODE -> ST_CompanyCreation:COMPANY
+            @i18n:Label (en=Company)
+            @t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=8.0, core=true, businessType=A, t24Name=CO.CODE, mask="R##-###-####")
+        CURR_NO : T24BusinessTypes:N
+            @i18n:Label (en="Curr No")
+            @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=4.0, core=true, t24Name=CURR.NO)
+        DATE_TIME -> byValue ST_RateParameters:BASIC_INTEREST__DATE_TIME *
+            @t24:i (t24Name=DATE.TIME)
+        DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+            @i18n:Label (en="Dept Code")
+            @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=9.0, core=true, t24Name=DEPT.CODE)
+        INPUTTER -> byValue ST_RateParameters:BASIC_INTEREST__INPUTTER *
+            @t24:i (t24Name=INPUTTER)
+        INTEREST_RATE : T24BusinessTypes:R
+            @i18n:Label (en="Interest Rate")
+            @i18n:Tooltip (en="Indicates interest rate")
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=1.0, core=true, t24Name=INTEREST.RATE)
+        KEY -> ST_RateParameters:BASIC_INTEREST PK required
+            @i18n:Label (en=Key)
+            @i18n:Tooltip (en="Indicates th transaction key")
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=0.0, core=true, t24Name=KEY, mask="R#### ### DDDD DD  DD")
+        NEG_INT_RATE : T24BusinessTypes:R
+            @i18n:Label (en="Neg Int Rate")
+            @i18n:Tooltip (en="Holds the negative rate of interest ")
+            @t24:i (align=R, inputBehaviour=I, maxLength=12, sysNumber=2.0, core=true, t24Name=NEG.INT.RATE, typeModifiers=-)
+        RECORD_STATUS : T24BusinessTypes:STAT
+            @i18n:Label (en="Record Status")
+            @t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=3.0, core=true, t24Name=RECORD.STATUS)
+    }
+    BASIC_INTEREST_DATE
+        @i18n:Description (en="")
+        @t24:i (t24Name=BASIC.INTEREST.DATE, level=I, type=T, allowedFunctions="L P S", localRefAllowed=false)
+    {
+        BASIC_KEY -> ST_RateParameters:BASIC_INTEREST_DATE PK required
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=0.0, core=true, businessType=A, t24Name=BASIC.KEY)
+        EFFECTIVE_DATE -> byValue ST_RateParameters:BASIC_INTEREST_DATE__EFFECTIVE_DATE *
+            @t24:i (t24Name=EFFECTIVE.DATE)
+    }
+    BASIC_INTEREST_DATE__EFFECTIVE_DATE
+    {
+        EFFECTIVE_DATE : T24BusinessTypes:D
+            @i18n:Label (en="Effective Date")
+            @i18n:Tooltip (en="Effective date of the transaction")
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=1.0, core=true, t24Name=EFFECTIVE.DATE)
+    }
+    BASIC_INTEREST__DATE_TIME
+    {
+        DATE_TIME : T24BusinessTypes:RELTIME
+            @i18n:Label (en="Date time")
+            @i18n:Tooltip (en="Date and time when record was input or authorised")
+            @t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=6.0, core=true, t24Name=DATE.TIME, mask="RDD DD  DD ##:##")
+    }
+    BASIC_INTEREST__INPUTTER
+    {
+        INPUTTER : T24BusinessTypes:A
+            @i18n:Label (en=Inputter)
+            @i18n:Tooltip (en="The user who last updated the record")
+            @t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=5.0, core=true, t24Name=INPUTTER)
+    }
+    BASIC_RATE_CHANGE
+        @i18n:Description (en="")
+        @t24:i (t24Name=BASIC.RATE.CHANGE, level=I, type=L, allowedFunctions="L P S", localRefAllowed=false)
+    {
+        CODE_AND_CCY -> byValue ST_RateParameters:BASIC_RATE_CHANGE__CODE_AND_CCY *
+            @t24:i (t24Name=CODE.AND.CCY)
+        PROCESS_DATE -> ST_RateParameters:BASIC_RATE_CHANGE PK required
+            @i18n:Label (en="Process Date")
+            @t24:i (align=R, inputBehaviour=I, maxLength=8, sysNumber=0.0, core=true, businessType=D, t24Name=PROCESS.DATE)
+    }
+    BASIC_RATE_CHANGE__CODE_AND_CCY
+    {
+        CODE_AND_CCY : T24BusinessTypes:N required
+            @t24:i (align=R, inputBehaviour=I, maxLength=7, sysNumber=1.0, core=true, t24Name=CODE.AND.CCY, mask="R#### ###")
+        DATE -> byValue ST_RateParameters:BASIC_RATE_CHANGE__CODE_AND_CCY__DATE *
+            @t24:i (t24Name=DATE)
+    }
+    BASIC_RATE_CHANGE__CODE_AND_CCY__DATE
+    {
+        DATE : T24BusinessTypes:D required
+            @i18n:Label (en=Date)
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=2.0, core=true, t24Name=DATE, mask="DDDD DD DD")
+        NEW_RATE : T24BusinessTypes:N required
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=3.0, core=true, t24Name=NEW.RATE)
+        OLD_RATE : T24BusinessTypes:R required
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=4.0, core=true, t24Name=OLD.RATE, typeModifiers=-)
+    }
+    BASIC_RATE_TEXT
+        @i18n:Description (en="")
+        @t24:i (t24Name=BASIC.RATE.TEXT, level=I, type=H, allowedFunctions="A C D E H I L P Q R S", localRefAllowed=true)
+    {
+        AUDITOR_CODE : T24BusinessTypes:A
+            @i18n:Label (en="Auditor Code")
+            @i18n:Tooltip (en="Auditor Code")
+            @t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=17.0, core=true, t24Name=AUDITOR.CODE)
+        AUDIT_DATE_TIME : T24BusinessTypes:RELTIME
+            @i18n:Label (en="Audit Date Time")
+            @i18n:Tooltip (en="Date and time when record was audited")
+            @t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=18.0, core=true, t24Name=AUDIT.DATE.TIME, mask="RDD DD  DD ##:##")
+        AUTHORISER : T24BusinessTypes:A
+            @i18n:Label (en=Authoriser)
+            @i18n:Tooltip (en="Indicates the User who Authorises the record")
+            @t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=14.0, core=true, t24Name=AUTHORISER)
+        BASIC_RATE_CNG_ADV : ST_RateParameters:BASIC_RATE_TEXT__BASIC_RATE_CNG_ADV
+            @t24:i (align=L, inputBehaviour=I, maxLength=1, sysNumber=4.0, core=true, t24Name=BASIC.RATE.CNG.ADV)
+        CO_CODE -> ST_CompanyCreation:COMPANY
+            @i18n:Label (en=Company)
+            @t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=15.0, core=true, businessType=A, t24Name=CO.CODE, mask="R##-###-####")
+        CURR_NO : T24BusinessTypes:N
+            @i18n:Label (en="Curr No")
+            @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=11.0, core=true, t24Name=CURR.NO)
+        DATE_TIME -> byValue ST_RateParameters:BASIC_RATE_TEXT__DATE_TIME *
+            @t24:i (t24Name=DATE.TIME)
+        DAYS_NOTICE : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=3.0, core=true, t24Name=DAYS.NOTICE)
+        DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+            @i18n:Label (en="Dept Code")
+            @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=16.0, core=true, t24Name=DEPT.CODE)
+        DESCRIPTION -> byValue ST_RateParameters:BASIC_RATE_TEXT__DESCRIPTION *
+            @t24:i (t24Name=DESCRIPTION)
+        INPUTTER -> byValue ST_RateParameters:BASIC_RATE_TEXT__INPUTTER *
+            @t24:i (t24Name=INPUTTER)
+        KEY -> ST_RateParameters:BASIC_RATE_TEXT PK required
+            @i18n:Label (en=Key)
+            @i18n:Tooltip (en="Indicates th transaction key")
+            @t24:i (align=R, inputBehaviour=I, maxLength=4, sysNumber=0.0, core=true, t24Name=KEY)
+        MARGIN_ROUTINE : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=I, maxLength=20, sysNumber=5.0, core=true, t24Name=MARGIN.ROUTINE)
+        RECORD_STATUS : T24BusinessTypes:STAT
+            @i18n:Label (en="Record Status")
+            @t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=10.0, core=true, t24Name=RECORD.STATUS)
+        RESERVED_1 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=9.0, core=true, t24Name=RESERVED.1)
+        RESERVED_2 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=8.0, core=true, t24Name=RESERVED.2)
+        RESERVED_3 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=7.0, core=true, t24Name=RESERVED.3)
+        SWIFT_RATE_CODE : ST_RateParameters:BASIC_RATE_TEXT__SWIFT_RATE_CODE
+            @t24:i (align=L, inputBehaviour=I, maxLength=11, sysNumber=2.0, core=true, t24Name=SWIFT.RATE.CODE)
+    }
+    BASIC_RATE_TEXT__DATE_TIME
+    {
+        DATE_TIME : T24BusinessTypes:RELTIME
+            @i18n:Label (en="Date time")
+            @i18n:Tooltip (en="Date and time when record was input or authorised")
+            @t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=13.0, core=true, t24Name=DATE.TIME, mask="RDD DD  DD ##:##")
+    }
+    BASIC_RATE_TEXT__DESCRIPTION
+    {
+        DESCRIPTION : T24BusinessTypes:A required
+            @i18n:Label (en=Description)
+            @i18n:Tooltip (en=Description)
+            @t24:i (align=L, inputBehaviour=I, maxLength=15, multiLanguage=true, sysNumber=1.0, core=true, t24Name=DESCRIPTION)
+    }
+    BASIC_RATE_TEXT__INPUTTER
+    {
+        INPUTTER : T24BusinessTypes:A
+            @i18n:Label (en=Inputter)
+            @i18n:Tooltip (en="The user who last updated the record")
+            @t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=12.0, core=true, t24Name=INPUTTER)
+    }
+    FORWARD_RATES
+        @i18n:Description (en="")
+        @t24:i (t24Name=FORWARD.RATES, level=Y, type=H, additionalInfo="UNP OEU", allowedFunctions="A C D E H I L P Q R S", localRefAllowed=false)
+    {
+        AUDITOR_CODE : T24BusinessTypes:A
+            @i18n:Label (en="Auditor Code")
+            @i18n:Tooltip (en="Auditor Code")
+            @t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=15.0, core=true, t24Name=AUDITOR.CODE)
+        AUDIT_DATE_TIME : T24BusinessTypes:RELTIME
+            @i18n:Label (en="Audit Date Time")
+            @i18n:Tooltip (en="Date and time when record was audited")
+            @t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=16.0, core=true, t24Name=AUDIT.DATE.TIME, mask="RDD DD  DD ##:##")
+        AUTHORISER : T24BusinessTypes:A
+            @i18n:Label (en=Authoriser)
+            @i18n:Tooltip (en="Indicates the User who Authorises the record")
+            @t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=12.0, core=true, t24Name=AUTHORISER)
+        CCY_CCY_MARKET -> ST_RateParameters:FORWARD_RATES PK required
+            @t24:i (align=L, inputBehaviour=I, maxLength=4, sysNumber=0.0, core=true, businessType=SS, t24Name=CCY.CCY.MARKET)
+        CO_CODE -> ST_CompanyCreation:COMPANY
+            @i18n:Label (en=Company)
+            @t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=13.0, core=true, businessType=A, t24Name=CO.CODE, mask="R##-###-####")
+        CURR_NO : T24BusinessTypes:N
+            @i18n:Label (en="Curr No")
+            @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=9.0, core=true, t24Name=CURR.NO)
+        DATE_TIME -> byValue ST_RateParameters:FORWARD_RATES__DATE_TIME *
+            @t24:i (t24Name=DATE.TIME)
+        DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+            @i18n:Label (en="Dept Code")
+            @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=14.0, core=true, t24Name=DEPT.CODE)
+        DESCRIPTION -> byValue ST_RateParameters:FORWARD_RATES__DESCRIPTION *
+            @t24:i (t24Name=DESCRIPTION)
+        EFFECTIVE_DATE : T24BusinessTypes:D
+            @i18n:Label (en="Effective Date")
+            @i18n:Tooltip (en="Effective date of the transaction")
+            @t24:i (align=R, inputBehaviour=N, maxLength=8, sysNumber=2.0, core=true, t24Name=EFFECTIVE.DATE, mask="RDD DDD DDDD")
+        INPUTTER -> byValue ST_RateParameters:FORWARD_RATES__INPUTTER *
+            @t24:i (t24Name=INPUTTER)
+        RECORD_STATUS : T24BusinessTypes:STAT
+            @i18n:Label (en="Record Status")
+            @t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=8.0, core=true, t24Name=RECORD.STATUS)
+        REST_PERIOD -> byValue ST_RateParameters:FORWARD_RATES__REST_PERIOD *
+            @t24:i (t24Name=REST.PERIOD)
+    }
+    FORWARD_RATES__DATE_TIME
+    {
+        DATE_TIME : T24BusinessTypes:RELTIME
+            @i18n:Label (en="Date time")
+            @i18n:Tooltip (en="Date and time when record was input or authorised")
+            @t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=11.0, core=true, t24Name=DATE.TIME, mask="RDD DD  DD ##:##")
+    }
+    FORWARD_RATES__DESCRIPTION
+    {
+        DESCRIPTION : T24BusinessTypes:A
+            @i18n:Label (en=Description)
+            @i18n:Tooltip (en=Description)
+            @t24:i (align=L, inputBehaviour=I, maxLength=15, multiLanguage=true, sysNumber=1.0, core=true, t24Name=DESCRIPTION)
+    }
+    FORWARD_RATES__INPUTTER
+    {
+        INPUTTER : T24BusinessTypes:A
+            @i18n:Label (en=Inputter)
+            @i18n:Tooltip (en="The user who last updated the record")
+            @t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=10.0, core=true, t24Name=INPUTTER)
+    }
+    FORWARD_RATES__REST_PERIOD
+    {
+        DAYS_SINCE_SPOT : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=5, sysNumber=5.0, core=true, t24Name=DAYS.SINCE.SPOT)
+        FORWARD_PREMIUM : T24BusinessTypes:A required
+            @i18n:Label (en="Forward Premium")
+            @t24:i (align=L, inputBehaviour=I, maxLength=10, sysNumber=6.0, core=true, t24Name=FORWARD.PREMIUM)
+        RATE_INPUT_MKR : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=7.0, core=true, t24Name=RATE.INPUT.MKR)
+        REST_DATE : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=8, sysNumber=4.0, core=true, t24Name=REST.DATE)
+        REST_PERIOD : T24BusinessTypes:S required
+            @i18n:Label (en="Rest Period")
+            @t24:i (align=L, inputBehaviour=I, maxLength=4, sysNumber=3.0, core=true, t24Name=REST.PERIOD, typeModifiers=-)
+    }
+    INTEREST_BASIS
+        @i18n:Description (en="")
+        @t24:i (t24Name=INTEREST.BASIS, level=I, type=U, allowedFunctions="A C D E I L P Q R S", localRefAllowed=true)
+    {
+        AUDITOR_CODE : T24BusinessTypes:A
+            @i18n:Label (en="Auditor Code")
+            @i18n:Tooltip (en="Auditor Code")
+            @t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=15.0, core=true, t24Name=AUDITOR.CODE)
+        AUDIT_DATE_TIME : T24BusinessTypes:RELTIME
+            @i18n:Label (en="Audit Date Time")
+            @i18n:Tooltip (en="Date and time when record was audited")
+            @t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=16.0, core=true, t24Name=AUDIT.DATE.TIME, mask="RDD DD  DD ##:##")
+        AUTHORISER : T24BusinessTypes:A
+            @i18n:Label (en=Authoriser)
+            @i18n:Tooltip (en="Indicates the User who Authorises the record")
+            @t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=12.0, core=true, t24Name=AUTHORISER)
+        CO_CODE -> ST_CompanyCreation:COMPANY
+            @i18n:Label (en=Company)
+            @t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=13.0, core=true, businessType=A, t24Name=CO.CODE, mask="R##-###-####")
+        CURR_NO : T24BusinessTypes:N
+            @i18n:Label (en="Curr No")
+            @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=9.0, core=true, t24Name=CURR.NO)
+        DATE_TIME -> byValue ST_RateParameters:INTEREST_BASIS__DATE_TIME *
+            @t24:i (t24Name=DATE.TIME)
+        DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+            @i18n:Label (en="Dept Code")
+            @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=14.0, core=true, t24Name=DEPT.CODE)
+        DESCRIPTION -> byValue ST_RateParameters:INTEREST_BASIS__DESCRIPTION *
+            @t24:i (t24Name=DESCRIPTION)
+        INPUTTER -> byValue ST_RateParameters:INTEREST_BASIS__INPUTTER *
+            @t24:i (t24Name=INPUTTER)
+        INTEREST_BASIS -> ST_RateParameters:INTEREST_BASIS PK required
+            @i18n:Label (en="Interest Basis")
+            @i18n:Tooltip (en="Indicates the interest day basis")
+            @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=0.0, core=true, businessType=A, t24Name=INTEREST.BASIS)
+        INT_BASIS : T24BusinessTypes:A required
+            @i18n:Label (en="Interest Basis")
+            @i18n:Tooltip (en="Interest basis for interest calculation")
+            @t24:i (align=L, inputBehaviour=I, maxLength=7, sysNumber=2.0, core=true, t24Name=INT.BASIS)
+        OLD_CALC_METHOD : ST_RateParameters:INTEREST_BASIS__OLD_CALC_METHOD
+            @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=3.0, core=true, t24Name=OLD.CALC.METHOD)
+        RECORD_STATUS : T24BusinessTypes:STAT
+            @i18n:Label (en="Record Status")
+            @t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=8.0, core=true, t24Name=RECORD.STATUS)
+        RESERVED_1 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=0, sysNumber=7.0, core=true, t24Name=RESERVED.1)
+        RESERVED_3 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=0, sysNumber=5.0, core=true, t24Name=RESERVED.3)
+        RESERVED_4 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=0, sysNumber=4.0, core=true, t24Name=RESERVED.4)
+    }
+    INTEREST_BASIS__DATE_TIME
+    {
+        DATE_TIME : T24BusinessTypes:RELTIME
+            @i18n:Label (en="Date time")
+            @i18n:Tooltip (en="Date and time when record was input or authorised")
+            @t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=11.0, core=true, t24Name=DATE.TIME, mask="RDD DD  DD ##:##")
+    }
+    INTEREST_BASIS__DESCRIPTION
+    {
+        DESCRIPTION : T24BusinessTypes:A
+            @i18n:Label (en=Description)
+            @i18n:Tooltip (en=Description)
+            @t24:i (align=L, inputBehaviour=I, maxLength=25, multiLanguage=true, sysNumber=1.0, core=true, t24Name=DESCRIPTION)
+    }
+    INTEREST_BASIS__INPUTTER
+    {
+        INPUTTER : T24BusinessTypes:A
+            @i18n:Label (en=Inputter)
+            @i18n:Tooltip (en="The user who last updated the record")
+            @t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=10.0, core=true, t24Name=INPUTTER)
+    }
+    MARKET_RATE_TEXT
+        @i18n:Description (en="")
+        @t24:i (t24Name=MARKET.RATE.TEXT, level=I, type=H, allowedFunctions="A C D E H I L P Q R S", localRefAllowed=false)
+    {
+        AUDITOR_CODE : T24BusinessTypes:A
+            @i18n:Label (en="Auditor Code")
+            @i18n:Tooltip (en="Auditor Code")
+            @t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=16.0, core=true, t24Name=AUDITOR.CODE)
+        AUDIT_DATE_TIME : T24BusinessTypes:RELTIME
+            @i18n:Label (en="Audit Date Time")
+            @i18n:Tooltip (en="Date and time when record was audited")
+            @t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=17.0, core=true, t24Name=AUDIT.DATE.TIME, mask="RDD DD  DD ##:##")
+        AUTHORISER : T24BusinessTypes:A
+            @i18n:Label (en=Authoriser)
+            @i18n:Tooltip (en="Indicates the User who Authorises the record")
+            @t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=13.0, core=true, t24Name=AUTHORISER)
+        CO_CODE -> ST_CompanyCreation:COMPANY
+            @i18n:Label (en=Company)
+            @t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=14.0, core=true, businessType=A, t24Name=CO.CODE, mask="R##-###-####")
+        CURR_NO : T24BusinessTypes:N
+            @i18n:Label (en="Curr No")
+            @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=10.0, core=true, t24Name=CURR.NO)
+        DATE_TIME -> byValue ST_RateParameters:MARKET_RATE_TEXT__DATE_TIME *
+            @t24:i (t24Name=DATE.TIME)
+        DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+            @i18n:Label (en="Dept Code")
+            @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=15.0, core=true, t24Name=DEPT.CODE)
+        DESCRIPTION -> byValue ST_RateParameters:MARKET_RATE_TEXT__DESCRIPTION *
+            @t24:i (t24Name=DESCRIPTION)
+        INPUTTER -> byValue ST_RateParameters:MARKET_RATE_TEXT__INPUTTER *
+            @t24:i (t24Name=INPUTTER)
+        KEY -> ST_RateParameters:MARKET_RATE_TEXT PK required
+            @i18n:Label (en=Key)
+            @i18n:Tooltip (en="Indicates th transaction key")
+            @t24:i (align=L, inputBehaviour=I, maxLength=6, sysNumber=0.0, core=true, businessType=A, t24Name=KEY)
+        RATE_KEY : T24BusinessTypes:N
+            @i18n:Label (en="Rate Key")
+            @i18n:Tooltip (en="Indicates the Basic Interest key")
+            @t24:i (align=R, inputBehaviour=I, maxLength=2, sysNumber=3.0, core=true, t24Name=RATE.KEY)
+        RATE_TEXT : T24BusinessTypes:A required
+            @i18n:Label (en="Rate Text")
+            @i18n:Tooltip (en="Rate Text")
+            @t24:i (align=L, inputBehaviour=I, maxLength=24, sysNumber=2.0, core=true, t24Name=RATE.TEXT)
+        RECORD_STATUS : T24BusinessTypes:STAT
+            @i18n:Label (en="Record Status")
+            @t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=9.0, core=true, t24Name=RECORD.STATUS)
+        RESERVED_1 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=8.0, core=true, t24Name=RESERVED.1)
+        RESERVED_2 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=7.0, core=true, t24Name=RESERVED.2)
+        RESERVED_3 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=6.0, core=true, t24Name=RESERVED.3)
+        RESERVED_4 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=5.0, core=true, t24Name=RESERVED.4)
+        SWIFT_CODE_WORD -> DE_Config:SWIFT_CODE_WORDS
+            @t24:i (align=L, inputBehaviour=I, maxLength=19, sysNumber=4.0, core=true, businessType=A, t24Name=SWIFT.CODE.WORD)
+    }
+    MARKET_RATE_TEXT__DATE_TIME
+    {
+        DATE_TIME : T24BusinessTypes:RELTIME
+            @i18n:Label (en="Date time")
+            @i18n:Tooltip (en="Date and time when record was input or authorised")
+            @t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=12.0, core=true, t24Name=DATE.TIME, mask="RDD DD  DD ##:##")
+    }
+    MARKET_RATE_TEXT__DESCRIPTION
+    {
+        DESCRIPTION : T24BusinessTypes:A required
+            @i18n:Label (en=Description)
+            @i18n:Tooltip (en=Description)
+            @t24:i (align=L, inputBehaviour=I, maxLength=15, multiLanguage=true, sysNumber=1.0, core=true, t24Name=DESCRIPTION)
+    }
+    MARKET_RATE_TEXT__INPUTTER
+    {
+        INPUTTER : T24BusinessTypes:A
+            @i18n:Label (en=Inputter)
+            @i18n:Tooltip (en="The user who last updated the record")
+            @t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=11.0, core=true, t24Name=INPUTTER)
+    }
+    PERIODIC_INTEREST
+        @i18n:Description (en="")
+        @t24:i (t24Name=PERIODIC.INTEREST, level=Y, type=H, allowedFunctions="A C D E H I L P Q R S", localRefAllowed=true)
+    {
+        APPLICATION -> byValue ST_RateParameters:PERIODIC_INTEREST__APPLICATION *
+            @t24:i (t24Name=APPLICATION)
+        AUDITOR_CODE : T24BusinessTypes:A
+            @i18n:Label (en="Auditor Code")
+            @i18n:Tooltip (en="Auditor Code")
+            @t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=27.0, core=true, t24Name=AUDITOR.CODE)
+        AUDIT_DATE_TIME : T24BusinessTypes:RELTIME
+            @i18n:Label (en="Audit Date Time")
+            @i18n:Tooltip (en="Date and time when record was audited")
+            @t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=28.0, core=true, t24Name=AUDIT.DATE.TIME, mask="RDD DD  DD ##:##")
+        AUTHORISER : T24BusinessTypes:A
+            @i18n:Label (en=Authoriser)
+            @i18n:Tooltip (en="Indicates the User who Authorises the record")
+            @t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=24.0, core=true, t24Name=AUTHORISER)
+        BUILD_FWD_RATE : T24BusinessTypes:A
+            @i18n:Label (en="Build Fwd Rate")
+            @i18n:Tooltip (en="Build Fwd Rate")
+            @t24:i (align=L, inputBehaviour=I, maxLength=1, sysNumber=9.0, core=true, t24Name=BUILD.FWD.RATE)
+        CO_CODE -> ST_CompanyCreation:COMPANY
+            @i18n:Label (en=Company)
+            @t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=25.0, core=true, businessType=A, t24Name=CO.CODE, mask="R##-###-####")
+        CURR_NO : T24BusinessTypes:N
+            @i18n:Label (en="Curr No")
+            @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=21.0, core=true, t24Name=CURR.NO)
+        DATE_TIME -> byValue ST_RateParameters:PERIODIC_INTEREST__DATE_TIME *
+            @t24:i (t24Name=DATE.TIME)
+        DEFAULT_MIS_TABLE : T24BusinessTypes:S
+            @i18n:Label (en="Default Mis Table")
+            @i18n:Tooltip (en="Default Mis Table")
+            @t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=2.0, core=true, t24Name=DEFAULT.MIS.TABLE)
+        DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+            @i18n:Label (en="Dept Code")
+            @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=26.0, core=true, t24Name=DEPT.CODE)
+        DESCRIPTION -> byValue ST_RateParameters:PERIODIC_INTEREST__DESCRIPTION *
+            @t24:i (t24Name=DESCRIPTION)
+        HIST_CO_CODE -> byValue ST_RateParameters:PERIODIC_INTEREST__HIST_CO_CODE *
+            @t24:i (t24Name=HIST.CO.CODE)
+        INPUTTER -> byValue ST_RateParameters:PERIODIC_INTEREST__INPUTTER *
+            @t24:i (t24Name=INPUTTER)
+        INT_TOLERANCE : T24BusinessTypes:R
+            @i18n:Label (en="Int Tolerance")
+            @i18n:Tooltip (en="Int Tolerance")
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=10.0, core=true, t24Name=INT.TOLERANCE)
+        LOCAL_ROUTINE -> byValue ST_RateParameters:PERIODIC_INTEREST__LOCAL_ROUTINE *
+            @t24:i (t24Name=LOCAL.ROUTINE)
+        MAX_INT_RATE : T24BusinessTypes:R
+            @t24:i (align=R, inputBehaviour=N, maxLength=10, sysNumber=11.0, core=true, t24Name=MAX.INT.RATE)
+        OVERRIDE -> byValue ST_RateParameters:PERIODIC_INTEREST__OVERRIDE *
+            @t24:i (t24Name=OVERRIDE)
+        RECORD_STATUS : T24BusinessTypes:STAT
+            @i18n:Label (en="Record Status")
+            @t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=20.0, core=true, t24Name=RECORD.STATUS)
+        REF_CCY_DATE -> ST_RateParameters:PERIODIC_INTEREST PK required
+            @t24:i (align=L, inputBehaviour=I, maxLength=13, sysNumber=0.0, core=true, businessType=S, t24Name=REF.CCY.DATE, mask="R#### ### DDDD DD  DD")
+        REST_PERIOD -> byValue ST_RateParameters:PERIODIC_INTEREST__REST_PERIOD *
+            @t24:i (t24Name=REST.PERIOD)
+        USE_LAST_WRKNG_DAY : ST_RateParameters:PERIODIC_INTEREST__USE_LAST_WRKNG_DAY
+            @i18n:Label (en="Use Last Wrkng Day")
+            @i18n:Tooltip (en="Use Last Working Day")
+            @t24:i (align=L, inputBehaviour=I, maxLength=1, sysNumber=13.0, core=true, t24Name=USE.LAST.WRKNG.DAY)
+    }
+    PERIODIC_INTEREST__APPLICATION
+    {
+        APPLICATION : ST_RateParameters:PERIODIC_INTEREST__APPLICATION__APPLICATION
+            @i18n:Label (en=Application)
+            @t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=14.0, core=true, t24Name=APPLICATION)
+    }
+    PERIODIC_INTEREST__DATE_TIME
+    {
+        DATE_TIME : T24BusinessTypes:RELTIME
+            @i18n:Label (en="Date time")
+            @i18n:Tooltip (en="Date and time when record was input or authorised")
+            @t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=23.0, core=true, t24Name=DATE.TIME, mask="RDD DD  DD ##:##")
+    }
+    PERIODIC_INTEREST__DESCRIPTION
+    {
+        DESCRIPTION : T24BusinessTypes:A
+            @i18n:Label (en=Description)
+            @i18n:Tooltip (en=Description)
+            @t24:i (align=L, inputBehaviour=I, maxLength=15, multiLanguage=true, sysNumber=1.0, core=true, t24Name=DESCRIPTION)
+    }
+    PERIODIC_INTEREST__HIST_CO_CODE
+    {
+        HIST_CO_CODE -> ST_CompanyCreation:COMPANY
+            @t24:i (align=L, inputBehaviour=N, maxLength=9, sysNumber=15.0, core=true, businessType=A, t24Name=HIST.CO.CODE)
+        HIST_DATE -> byValue ST_RateParameters:PERIODIC_INTEREST__HIST_CO_CODE__HIST_DATE *
+            @t24:i (t24Name=HIST.DATE)
+    }
+    PERIODIC_INTEREST__HIST_CO_CODE__HIST_DATE
+    {
+        HIST_DATE : T24BusinessTypes:D
+            @t24:i (align=R, inputBehaviour=N, maxLength=12, sysNumber=16.0, core=true, t24Name=HIST.DATE)
+        HIST_NO : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=17.0, core=true, t24Name=HIST.NO)
+    }
+    PERIODIC_INTEREST__INPUTTER
+    {
+        INPUTTER : T24BusinessTypes:A
+            @i18n:Label (en=Inputter)
+            @i18n:Tooltip (en="The user who last updated the record")
+            @t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=22.0, core=true, t24Name=INPUTTER)
+    }
+    PERIODIC_INTEREST__LOCAL_ROUTINE
+    {
+        LOCAL_ROUTINE -> EB_SystemTables:EB_API
+            @i18n:Label (en="Local Routine")
+            @i18n:Tooltip (en="Local Routine")
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=12.0, core=true, businessType=ANY, t24Name=LOCAL.ROUTINE)
+    }
+    PERIODIC_INTEREST__OVERRIDE
+    {
+        OVERRIDE : T24BusinessTypes:N
+            @i18n:Label (en=Override)
+            @i18n:Tooltip (en="Overrides generated by this transaction")
+            @t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=19.0, core=true, t24Name=OVERRIDE)
+    }
+    PERIODIC_INTEREST__REST_PERIOD
+    {
+        AMT -> byValue ST_RateParameters:PERIODIC_INTEREST__REST_PERIOD__AMT *
+            @t24:i (t24Name=AMT)
+        DAYS_SINCE_SPOT : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=5, sysNumber=5.0, core=true, t24Name=DAYS.SINCE.SPOT)
+        REST_DATE : T24BusinessTypes:D
+            @t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=4.0, core=true, t24Name=REST.DATE, mask="RDD DDD DDDD")
+        REST_PERIOD : T24BusinessTypes:S
+            @i18n:Label (en="Rest Period")
+            @t24:i (align=L, inputBehaviour=I, maxLength=4, sysNumber=3.0, core=true, t24Name=REST.PERIOD)
+    }
+    PERIODIC_INTEREST__REST_PERIOD__AMT
+    {
+        AMT : T24BusinessTypes:AMT
+            @i18n:Label (en=Amount)
+            @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=6.0, core=true, t24Name=AMT)
+        BID_RATE : T24BusinessTypes:R required
+            @i18n:Label (en="Bid Rate")
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=7.0, core=true, t24Name=BID.RATE, typeModifiers=-)
+        OFFER_RATE : T24BusinessTypes:R required
+            @i18n:Label (en="Offer Rate")
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=8.0, core=true, t24Name=OFFER.RATE, typeModifiers=-)
+    }
+    PERIODIC_RATE_CHANGE
+        @i18n:Description (en="")
+        @t24:i (t24Name=PERIODIC.RATE.CHANGE, level=Y, type=T, allowedFunctions="L P S", localRefAllowed=false)
+    {
+        DATE -> ST_RateParameters:PERIODIC_RATE_CHANGE PK required
+            @i18n:Label (en=Date)
+            @t24:i (align=R, inputBehaviour=I, maxLength=8, sysNumber=0.0, core=true, businessType=D, t24Name=DATE)
+        K_DATE : T24BusinessTypes:D
+            @i18n:Label (en=Date)
+            @t24:i (align=R, inputBehaviour=N, maxLength=8, sysNumber=0.0, core=false, t24Name=K.DATE)
+        PERIODIC_INT_KEY -> byValue ST_RateParameters:PERIODIC_RATE_CHANGE__PERIODIC_INT_KEY *
+            @t24:i (t24Name=PERIODIC.INT.KEY)
+    }
+    PERIODIC_RATE_CHANGE__PERIODIC_INT_KEY
+    {
+        PERIODIC_INT_KEY : T24BusinessTypes:S required
+            @t24:i (align=L, inputBehaviour=I, maxLength=13, sysNumber=1.0, core=true, t24Name=PERIODIC.INT.KEY)
+    }
+    SETTLEMENT_RATES
+        @i18n:Description (en="")
+        @t24:i (t24Name=SETTLEMENT.RATES, level=F, type=H, allowedFunctions="A C D E H I L P Q R S", localRefAllowed=false)
+    {
+        AMOUNT_TYPE -> byValue ST_RateParameters:SETTLEMENT_RATES__AMOUNT_TYPE *
+            @t24:i (t24Name=AMOUNT.TYPE)
+        AUDITOR_CODE : T24BusinessTypes:A
+            @i18n:Label (en="Auditor Code")
+            @i18n:Tooltip (en="Auditor Code")
+            @t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=26.0, core=true, t24Name=AUDITOR.CODE)
+        AUDIT_DATE_TIME : T24BusinessTypes:RELTIME
+            @i18n:Label (en="Audit Date Time")
+            @i18n:Tooltip (en="Date and time when record was audited")
+            @t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=27.0, core=true, t24Name=AUDIT.DATE.TIME, mask="RDD DD  DD ##:##")
+        AUTHORISER : T24BusinessTypes:A
+            @i18n:Label (en=Authoriser)
+            @i18n:Tooltip (en="Indicates the User who Authorises the record")
+            @t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=23.0, core=true, t24Name=AUTHORISER)
+        CONTRACT_CCY -> ST_CurrencyConfig:CURRENCY required
+            @i18n:Label (en="Contract Ccy")
+            @i18n:Tooltip (en="Identifies the currency of the contract")
+            @t24:i (align=L, inputBehaviour=F, maxLength=3, sysNumber=1.0, core=true, businessType=CCY, t24Name=CONTRACT.CCY)
+        CONTRACT_NO -> ST_RateParameters:SETTLEMENT_RATES PK required
+            @i18n:Label (en="Contract No")
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=0.0, core=true, businessType=A, t24Name=CONTRACT.NO)
+        CONVERSION_TYPE : ST_RateParameters:SETTLEMENT_RATES__CONVERSION_TYPE
+            @t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=3.0, core=true, t24Name=CONVERSION.TYPE)
+        CO_CODE -> ST_CompanyCreation:COMPANY
+            @i18n:Label (en=Company)
+            @t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=24.0, core=true, businessType=A, t24Name=CO.CODE, mask="R##-###-####")
+        CURR_NO : T24BusinessTypes:N
+            @i18n:Label (en="Curr No")
+            @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=20.0, core=true, t24Name=CURR.NO)
+        DATE_TIME -> byValue ST_RateParameters:SETTLEMENT_RATES__DATE_TIME *
+            @t24:i (t24Name=DATE.TIME)
+        DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+            @i18n:Label (en="Dept Code")
+            @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=25.0, core=true, t24Name=DEPT.CODE)
+        EVENT_DATE -> byValue ST_RateParameters:SETTLEMENT_RATES__EVENT_DATE *
+            @t24:i (t24Name=EVENT.DATE)
+        INPUTTER -> byValue ST_RateParameters:SETTLEMENT_RATES__INPUTTER *
+            @t24:i (t24Name=INPUTTER)
+        PROTECTION_CLAUSE : ST_RateParameters:SETTLEMENT_RATES__PROTECTION_CLAUSE required
+            @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=4.0, core=true, t24Name=PROTECTION.CLAUSE)
+        RECORD_STATUS : T24BusinessTypes:STAT
+            @i18n:Label (en="Record Status")
+            @t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=19.0, core=true, t24Name=RECORD.STATUS)
+        RESERVED1 : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=N, maxLength=12, sysNumber=18.0, core=true, t24Name=RESERVED1)
+        RESERVED2 : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=N, maxLength=12, sysNumber=17.0, core=true, t24Name=RESERVED2)
+        RESERVED3 : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=N, maxLength=12, sysNumber=16.0, core=true, t24Name=RESERVED3)
+        RESERVED4 : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=N, maxLength=12, sysNumber=15.0, core=true, t24Name=RESERVED4)
+        RESERVED5 : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=N, maxLength=12, sysNumber=14.0, core=true, t24Name=RESERVED5)
+        SETTLEMENT_MARKET -> ST_CurrencyConfig:CURRENCY_MARKET
+            @t24:i (align=L, inputBehaviour=N, maxLength=2, sysNumber=2.0, core=true, businessType=DEF, t24Name=SETTLEMENT.MARKET)
+    }
+    SETTLEMENT_RATES__AMOUNT_TYPE
+    {
+        ACCOUNT : T24BusinessTypes:N
+            @i18n:Label (en=Account)
+            @i18n:Tooltip (en="Identifies the customer account")
+            @t24:i (align=R, inputBehaviour=F, maxLength=16, sysNumber=13.0, core=true, t24Name=ACCOUNT)
+        AMOUNT_TYPE : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=F, maxLength=2, sysNumber=11.0, core=true, t24Name=AMOUNT.TYPE)
+        EXCG_RATE : T24BusinessTypes:R
+            @t24:i (align=R, inputBehaviour=F, maxLength=16, sysNumber=12.0, core=true, t24Name=EXCG.RATE)
+    }
+    SETTLEMENT_RATES__DATE_TIME
+    {
+        DATE_TIME : T24BusinessTypes:RELTIME
+            @i18n:Label (en="Date time")
+            @i18n:Tooltip (en="Date and time when record was input or authorised")
+            @t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=22.0, core=true, t24Name=DATE.TIME, mask="RDD DD  DD ##:##")
+    }
+    SETTLEMENT_RATES__EVENT_DATE
+    {
+        EVENT_CCY -> byValue ST_RateParameters:SETTLEMENT_RATES__EVENT_DATE__EVENT_CCY *
+            @t24:i (t24Name=EVENT.CCY)
+        EVENT_DATE : T24BusinessTypes:D
+            @t24:i (align=R, inputBehaviour=F, maxLength=11, sysNumber=5.0, core=true, t24Name=EVENT.DATE, mvSvExpansionAccess=NOMODIFY)
+    }
+    SETTLEMENT_RATES__EVENT_DATE__EVENT_CCY
+    {
+        EVENT_CCY : T24BusinessTypes:CCY
+            @t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=6.0, core=true, t24Name=EVENT.CCY)
+        EV_APPL_RATE : T24BusinessTypes:R
+            @t24:i (align=R, inputBehaviour=I, maxLength=16, sysNumber=8.0, core=true, t24Name=EV.APPL.RATE)
+        EV_SYS_RATE : T24BusinessTypes:R
+            @t24:i (align=R, inputBehaviour=F, maxLength=16, sysNumber=7.0, core=true, t24Name=EV.SYS.RATE)
+        RESERVED_1 : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=N, maxLength=12, sysNumber=10.0, core=true, t24Name=RESERVED.1)
+        RESERVED_2 : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=N, maxLength=12, sysNumber=9.0, core=true, t24Name=RESERVED.2)
+    }
+    SETTLEMENT_RATES__INPUTTER
+    {
+        INPUTTER : T24BusinessTypes:A
+            @i18n:Label (en=Inputter)
+            @i18n:Tooltip (en="The user who last updated the record")
+            @t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=21.0, core=true, t24Name=INPUTTER)
+    }
+    ST_RATE_PARAMETER
+        @i18n:Description (en="")
+        @t24:i (t24Name=ST.RATE.PARAMETER, level=I, type=H, allowedFunctions="A C D E H I L P Q R S", localRefAllowed=true)
+    {
+        AUDITOR_CODE : T24BusinessTypes:A
+            @i18n:Label (en="Auditor Code")
+            @i18n:Tooltip (en="Auditor Code")
+            @t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=23.0, core=true, t24Name=AUDITOR.CODE)
+        AUDIT_DATE_TIME : T24BusinessTypes:RELTIME
+            @i18n:Label (en="Audit Date Time")
+            @i18n:Tooltip (en="Date and time when record was audited")
+            @t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=24.0, core=true, t24Name=AUDIT.DATE.TIME, mask="RDD DD  DD ##:##")
+        AUTHORISER : T24BusinessTypes:A
+            @i18n:Label (en=Authoriser)
+            @i18n:Tooltip (en="Indicates the User who Authorises the record")
+            @t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=20.0, core=true, t24Name=AUTHORISER)
+        COMPANY_CODE -> ST_RateParameters:ST_RATE_PARAMETER PK required
+            @i18n:Label (en=Company)
+            @t24:i (align=L, inputBehaviour=I, maxLength=9, sysNumber=0.0, core=true, businessType=COM, t24Name=COMPANY.CODE)
+        CO_CODE -> ST_CompanyCreation:COMPANY
+            @i18n:Label (en=Company)
+            @t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=21.0, core=true, businessType=A, t24Name=CO.CODE, mask="R##-###-####")
+        CURR_NO : T24BusinessTypes:N
+            @i18n:Label (en="Curr No")
+            @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=17.0, core=true, t24Name=CURR.NO)
+        DATE_TIME -> byValue ST_RateParameters:ST_RATE_PARAMETER__DATE_TIME *
+            @t24:i (t24Name=DATE.TIME)
+        DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+            @i18n:Label (en="Dept Code")
+            @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=22.0, core=true, t24Name=DEPT.CODE)
+        FWD_COUNTRY -> byValue ST_RateParameters:ST_RATE_PARAMETER__FWD_COUNTRY *
+            @t24:i (t24Name=FWD.COUNTRY)
+        INPUTTER -> byValue ST_RateParameters:ST_RATE_PARAMETER__INPUTTER *
+            @t24:i (t24Name=INPUTTER)
+        PI_COUNTRY -> byValue ST_RateParameters:ST_RATE_PARAMETER__PI_COUNTRY *
+            @t24:i (t24Name=PI.COUNTRY)
+        RECORD_STATUS : T24BusinessTypes:STAT
+            @i18n:Label (en="Record Status")
+            @t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=16.0, core=true, t24Name=RECORD.STATUS)
+        RESERVED01 : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=14.0, core=true, t24Name=RESERVED01)
+        RESERVED02 : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=13.0, core=true, t24Name=RESERVED02)
+        RESERVED03 : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=12.0, core=true, t24Name=RESERVED03)
+        RESERVED04 : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=11.0, core=true, t24Name=RESERVED04)
+        RESERVED05 : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=10.0, core=true, t24Name=RESERVED05)
+        RESERVED06 : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=9.0, core=true, t24Name=RESERVED06)
+        RESERVED07 : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=8.0, core=true, t24Name=RESERVED07)
+        RESERVED08 : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=7.0, core=true, t24Name=RESERVED08)
+        RESERVED09 : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=6.0, core=true, t24Name=RESERVED09)
+        RESERVED10 : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=5.0, core=true, t24Name=RESERVED10)
+    }
+    ST_RATE_PARAMETER__DATE_TIME
+    {
+        DATE_TIME : T24BusinessTypes:RELTIME
+            @i18n:Label (en="Date time")
+            @i18n:Tooltip (en="Date and time when record was input or authorised")
+            @t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=19.0, core=true, t24Name=DATE.TIME, mask="RDD DD  DD ##:##")
+    }
+    ST_RATE_PARAMETER__FWD_COUNTRY
+    {
+        FWD_COUNTRY -> ST_Config:COUNTRY
+            @t24:i (align=L, inputBehaviour=F, maxLength=9, sysNumber=3.0, core=true, businessType=ANY, t24Name=FWD.COUNTRY)
+        FWD_REGION -> byValue ST_RateParameters:ST_RATE_PARAMETER__FWD_COUNTRY__FWD_REGION *
+            @t24:i (t24Name=FWD.REGION)
+    }
+    ST_RATE_PARAMETER__FWD_COUNTRY__FWD_REGION
+    {
+        FWD_REGION -> ST_Config:REGION
+            @t24:i (align=L, inputBehaviour=F, maxLength=12, sysNumber=4.0, core=true, businessType=ANY, t24Name=FWD.REGION)
+    }
+    ST_RATE_PARAMETER__INPUTTER
+    {
+        INPUTTER : T24BusinessTypes:A
+            @i18n:Label (en=Inputter)
+            @i18n:Tooltip (en="The user who last updated the record")
+            @t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=18.0, core=true, t24Name=INPUTTER)
+    }
+    ST_RATE_PARAMETER__PI_COUNTRY
+    {
+        PI_COUNTRY -> ST_Config:COUNTRY
+            @t24:i (align=L, inputBehaviour=F, maxLength=9, sysNumber=1.0, core=true, businessType=ANY, t24Name=PI.COUNTRY)
+        PI_REGION -> byValue ST_RateParameters:ST_RATE_PARAMETER__PI_COUNTRY__PI_REGION *
+            @t24:i (t24Name=PI.REGION)
+    }
+    ST_RATE_PARAMETER__PI_COUNTRY__PI_REGION
+    {
+        PI_REGION -> ST_Config:REGION
+            @t24:i (align=L, inputBehaviour=F, maxLength=12, sysNumber=2.0, core=true, businessType=ANY, t24Name=PI.REGION)
+    }
+}
+Enumerations {
+    BASIC_RATE_TEXT__BASIC_RATE_CNG_ADV : mml:string
+        N=N
+        Y=Y
+    BASIC_RATE_TEXT__SWIFT_RATE_CODE : mml:string
+        BASE=BASE
+        CALL=CALL
+        COMMERCIAL=COMMERCIAL
+        CURRENT=CURRENT
+        DEPOSIT=DEPOSIT
+        NOTICE=NOTICE
+        PRIME=PRIME
+    INTEREST_BASIS__OLD_CALC_METHOD : mml:string
+        NULL=NULL
+        YES=YES
+    PERIODIC_INTEREST__APPLICATION__APPLICATION : mml:string
+        DX=DX
+        MM=MM
+        SW=SW
+    PERIODIC_INTEREST__USE_LAST_WRKNG_DAY : mml:string
+        N=N
+        Y=Y
+    SETTLEMENT_RATES__CONVERSION_TYPE : mml:string
+        BUY=BUY
+        MID=MID
+        SELL=SELL
+    SETTLEMENT_RATES__PROTECTION_CLAUSE : mml:string
+        NO=NO
+        YES=YES
+}
