@@ -25,7 +25,32 @@
 			</resource>
 		</resources>
 		<plugins>
-
+               <plugin>
+                <groupId>com.temenos.interaction</groupId>
+                <artifactId>interaction-sdk-rim-plugin</artifactId>
+                <version>${iris.version}</version>
+                <executions>
+                    <execution>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>rim-generate</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>                    
+                    <rimSourceDir>${project.build.directory}/../../Prospect-models/rim</rimSourceDir>
+                    <domainSourceDir>${project.build.directory}/../../Prospect-models/domain/applications</domainSourceDir>
+                    <skipSwaggerGeneration>false</skipSwaggerGeneration>
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>com.temenos.ds.models</groupId>
+                        <artifactId>Prospect-models-gen</artifactId>
+                        <version>${project.version}</version>
+                        <type>jar</type>
+                    </dependency>
+                </dependencies>
+            </plugin>
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>truezip-maven-plugin</artifactId>
@@ -40,12 +65,8 @@
 						<configuration>
 							<files>
 								<file>
-									<source>${basedir}/src/main/appConfig/tafj/resourceProviderServiceContext.xml</source>
+									<source>${basedir}/src/main/appConfig/resourceProviderServiceContext.xml</source>
 									<outputDirectory>${project.build.directory}/${project.build.finalName}.war/WEB-INF/lib/t24-EB_ResourceProviderService-tafj-provider-${t24ResourceProviderVersion}.jar</outputDirectory>
-								</file>
-								<file>
-									<source>${basedir}/src/main/appConfig/tafj/catalogServiceContext.xml</source>
-									<outputDirectory>${project.build.directory}/${project.build.finalName}.war/WEB-INF/lib/t24-EB_CatalogService-tafj-provider-${t24CatalogServiceVersion}.jar</outputDirectory>
 								</file>
 							</files>
 						</configuration>
@@ -56,7 +77,6 @@
               <!-- Build war file for TAFJ by excluding tComponentFRamework and Component Data jars -->
 			<plugin>
 				<artifactId>maven-war-plugin</artifactId>
-				<version>${mavenWarPlugin.version}</version>
 				<configuration>
 					<webXml>${project.build.directory}/${project.build.finalName}/WEB-INF/web.xml</webXml>
 					<failOnMissingWebXml>true</failOnMissingWebXml>
@@ -103,12 +123,31 @@
 							</resources>
 						</configuration>
 					</execution>
+					<execution>
+                        <id>copy-swagger-webapp-resources</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <encoding>UTF-8</encoding>
+                            <overwrite>true</overwrite>
+                            <outputDirectory>${project.build.directory}/${project.build.finalName}/api-docs</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>${project.build.directory}/swagger-gen</directory>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
 				</executions>
 			</plugin>
+			
+			
+			
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>build-helper-maven-plugin</artifactId>
-				<version>${buildHelperMavenPlugin.version}</version>
 				<executions>
 					<execution>
 						<phase>generate-sources</phase>
@@ -203,7 +242,7 @@
 									<pluginExecutionFilter>
 										<groupId>com.temenos.interaction</groupId>
 										<artifactId>interaction-sdk-rim-plugin</artifactId>
-										<versionRange>[0.10.0,)</versionRange>
+										<versionRange>[${iris.version},)</versionRange>
 										<goals>
 											<goal>rim-generate</goal>
 										</goals>
@@ -403,9 +442,7 @@
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<scope>test</scope>
 		</dependency>
-
 		<dependency>
 			<groupId>ch.qos.logback</groupId>
 			<artifactId>logback-classic</artifactId>
@@ -561,12 +598,12 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
-
-		<dependency>
-			<groupId>com.temenos.demo</groupId>
-			<artifactId>prospect-addressvalidation</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-		</dependency>
+		 
+        <dependency>
+            <groupId>com.microsoft.azure</groupId>
+            <artifactId>applicationinsights-web</artifactId>
+            <version>[1.0,)</version>
+        </dependency>
 	</dependencies>
 
 </project>
