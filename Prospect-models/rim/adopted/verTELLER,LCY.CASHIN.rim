@@ -1,0 +1,841 @@
+domain T24 {
+    use common.CoreCommands.*
+    use common.HTTPEvents.*
+    use common.ODataCommands.*
+    use common.T24Commands.*
+    use common.T24Events.*
+    use common.NextState.*
+    use common.Errors.*
+    use T24.ContextEnquiry.*
+    rim verTeller_LcyCashin {
+        command NoopGET
+        command T24FieldMetadata
+        command T24NextState
+        command T24SilentState
+        command GetEntity
+        command GETEntities
+        command GetIauthEntities
+        command GetHauthEntities
+        command GetDealSlipEntities
+        command InterimTransition
+        command T24LiveState
+        command T24IAuthState
+        command T24HAuthState
+        command T24RAuthState
+        command T24HeldState
+        command T24ReversedState
+        command CreateEntity
+        command T24NewState
+        command InputEntity
+        command HoldEntity
+        command AuthoriseEntity
+        command ReviewEntity
+        command ReverseEntity
+        command ValidateEntity
+        command DeleteEntity
+        command CopyEntity
+        command PasteEntity
+        command RestoreEntity
+        command GetChangedValues
+        command T24Enrichment
+        command CheckAutoIdSupport
+        basepath: "/{companyid}"
+    
+        initial resource Home {
+            type: item        
+            entity: verTeller_LcyCashin      
+            view: NoopGET            
+            GET -> T24.verTeller_LcyCashin.verTeller_LcyCashins
+            GET -> T24.verTeller_LcyCashin.verTeller_LcyCashin
+        }
+      
+        resource verTeller_LcyCashins_metadata {
+            type: collection
+            entity: T24FieldMetadata
+            commands [ POST : T24FieldMetadata ]
+            relations [ "http://temenostech.temenos.com/rels/metadata" ]
+            path: "/verTeller_LcyCashins()/metadata"
+        }
+    
+        resource verTeller_LcyCashin_errorHandler {
+            type: item
+            entity: verTeller_LcyCashin
+            commands [ GET : NoopGET ]
+            relations [ "http://temenostech.temenos.com/rels/error" ]
+            path: "/verTeller_LcyCashins('{id}')/error"
+            GET +-> "common.Errors.ProcessErrors" {
+                title: "errors"
+            }
+            POST +-> verTeller_LcyCashins_metadata {
+                title: "metadata"
+            }
+        }
+    
+        resource verTeller_LcyCashin_ContextEnquiries {
+            type: item
+            entity: verTeller_LcyCashin
+            commands [ GET : NoopGET ]
+            path: "/verTeller_LcyCashin/ContextEnquiries"
+            GET -> "T24.enqlistTeller.enqlistTellers" {
+                parameters [ param = "list" ]
+                title: "List Live File"
+            }
+            GET -> "T24.enqlistTeller.enqlistTellerUnauths" {
+                parameters [ param = "list" ]
+                title: "List Unauth File"
+            }
+            GET -> "T24.enqlistTeller.enqlistTellerHists" {
+                parameters [ param = "list" ]
+                title: "List History File"
+            }
+            GET -> "T24.enqlistTeller.enqlistTellers" {
+                title: "Search Live File"
+            }
+            GET -> "T24.enqlistTeller.enqlistTellerUnauths" {
+                title: "Search Unauth File"
+            }
+            GET -> "T24.enqlistTeller.enqlistTellerHists" {
+                title: "Search History File"
+            }
+            GET +-> "T24.ContextEnquiry.ContextEnquiryList" {
+                parameters [ entity = "verTeller_LcyCashin" ]
+                title: "Other context Enquiries"
+            }
+        }
+    
+        resource verTeller_LcyCashin_silent {
+            type: item
+            entity: verTeller_LcyCashin
+            commands [ GET : T24SilentState ]
+        }
+    
+        resource verTeller_LcyCashinEntry {
+            type: item
+            entity: verTeller_LcyCashin
+            commands [ GET : NoopGET ]
+            relations [ "http://schemas.microsoft.com/ado/2007/08/dataservices/related/verTeller_LcyCashin","http://temenostech.temenos.com/rels/contract" ]
+            path: "/verTeller_LcyCashinEntry"
+            GET --> verTeller_LcyCashin_silent {
+            }
+            GET --> nextState {
+            }
+            GET --> verTeller_LcyCashin {
+                parameters [ id = "{TransactionNumber}" ]
+            }
+            POST -> verTeller_LcyCashin_new {
+                title: "create new deal"
+                condition: OK(verTeller_LcyCashin_autoId)
+            }
+            POST -> verTeller_LcyCashin_populate {
+                title: "populate existing deal"
+            }
+            GET -> verTeller_LcyCashin {
+                parameters [ id = "@" ]
+                title: "action"
+            }
+            GET -> verTeller_LcyCashin_see {
+                parameters [ id = "@" ]
+                title: "see record"
+            }
+            POST -> verTeller_LcyCashin_copy {
+                title: "Copy deal"
+            }
+            POST -> verTeller_LcyCashin_paste {
+                parameters [ id = "{TransactionNumber}" ]
+                title: "Paste deal"
+            }
+            POST -> verTeller_LcyCashin_enrichment {
+                title: "Enrich deal"
+            }
+            GET +-> verTeller_LcyCashin_ContextEnquiries {
+                title: "All context Enquiries"
+            }
+        }
+    
+        resource verTeller_LcyCashin_see {
+            type: item
+            entity: verTeller_LcyCashin
+            commands [ GET : GetEntity ]
+            relations [ "http://schemas.microsoft.com/ado/2007/08/dataservices/related/verTeller_LcyCashin","http://temenostech.temenos.com/rels/see" ]
+            path: "/verTeller_LcyCashins('{id}')/see"
+            POST +-> verTeller_LcyCashins_metadata {
+                title: "metadata"
+            }
+            GET -> verTeller_LcyCashin {
+                parameters [ id = "{TransactionNumber}" ]
+                title: "Action"
+            }
+            GET -> verTeller_LcyCashin_ContextEnquiries {
+                title: "All Context Enquiries"
+            }
+            GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+                parameters [ entity = "verTeller_LcyCashin" ]
+                title: "Context Enquiries"
+            }
+        }
+    
+        resource verTeller_LcyCashins @ Annotation : tags ( "Cash Deposits" ) {
+            type: collection
+            entity: verTeller_LcyCashin
+            commands [ GET : GETEntities {
+                properties [ filter = "{filter}" ]
+                } ]
+            path: "/verTeller_LcyCashins()"
+            GET *-> verTeller_LcyCashin {
+                parameters [ id = "{TransactionNumber}" ]
+            }
+            GET *-> verTeller_LcyCashin_see {
+                parameters [ id = "{TransactionNumber}" ]
+                title: "see record"
+            }
+            POST -> verTeller_LcyCashin_new {
+                title: "create new deal"
+                condition: OK(verTeller_LcyCashin_autoId)
+            }
+            POST -> verTeller_LcyCashin_populate {
+                title: "populate existing deal"
+            }
+            PUT *-> verTeller_LcyCashin_input {
+                parameters [ id = "{TransactionNumber}" ]
+                title: "input deal"
+            }
+            POST *-> verTeller_LcyCashin_audit {
+                parameters [ id = "{TransactionNumber}" ]
+                title: "audit deal"
+            }
+            POST *-> verTeller_LcyCashin_reverse {
+                parameters [ id = "{TransactionNumber}" ]
+                title: "reverse deal"
+            }
+        }
+    
+        resource verTeller_LcyCashins_IAuth {
+            type: collection
+            entity: verTeller_LcyCashin
+            commands [ GET : GetIauthEntities {
+                properties [ filter = "{filter}" ]
+                } ]
+            path: "/verTeller_LcyCashins_IAuth()"
+            GET *-> verTeller_LcyCashin_IAuth {
+                parameters [ id = "{TransactionNumber}" ]
+            }
+            POST -> verTeller_LcyCashin_new {
+                title: "create new deal"
+                condition: OK(verTeller_LcyCashin_autoId)
+            }
+            POST -> verTeller_LcyCashin_populate {
+                title: "populate existing deal"
+            }
+            PUT *-> verTeller_LcyCashin_input {
+                parameters [ id = "{TransactionNumber}" ]
+                title: "input deal"
+            }
+            DELETE *-> verTeller_LcyCashin_delete {
+                parameters [ id = "{TransactionNumber}" ]
+                title: "delete"
+            }
+            PUT *-> verTeller_LcyCashin_authorise {
+                parameters [ id = "{TransactionNumber}" ]
+                title: "authorise deal"
+            }
+        }
+    
+        resource verTeller_LcyCashins_HAuth {
+            type: collection
+            entity: verTeller_LcyCashin
+            commands [ GET : GetHauthEntities {
+                properties [ filter = "{filter}" ]
+                } ]
+            path: "/verTeller_LcyCashins_HAuth()"
+            GET *-> verTeller_LcyCashin_HAuth {
+                parameters [ id = "{TransactionNumber}" ]
+            }
+            POST -> verTeller_LcyCashin_new {
+                title: "create new deal"
+                condition: OK(verTeller_LcyCashin_autoId)
+            }
+            POST -> verTeller_LcyCashin_populate {
+                title: "populate existing deal"
+            }
+        }
+    
+        resource verTeller_LcyCashins_dealSlip {
+            type: collection
+            entity: DealSlip
+            commands [ GET : GetDealSlipEntities ]
+            relations [ "http://temenostech.temenos.com/rels/dealSlip" ]
+        }
+    
+        resource verTeller_LcyCashin @ Annotation : tags ( "Cash Deposit" ) {
+            type: item
+            entity: verTeller_LcyCashin
+            commands [ GET : GetEntity, GET : InterimTransition ]
+            path: "/verTeller_LcyCashins('{id}')"
+            GET --> verTeller_LcyCashin_Live {
+                parameters [ id = "{TransactionNumber}" ]
+            }
+            GET --> verTeller_LcyCashin_IAuth {
+                parameters [ id = "{TransactionNumber}" ]
+            }
+            GET --> verTeller_LcyCashin_HAuth {
+                parameters [ id = "{TransactionNumber}" ]
+            }
+            GET --> verTeller_LcyCashin_RAuth {
+                parameters [ id = "{TransactionNumber}" ]
+            }
+            GET --> verTeller_LcyCashin_Held {
+                parameters [ id = "{TransactionNumber}" ]
+            }
+            GET --> verTeller_LcyCashin_Reversed {
+                parameters [ id = "{TransactionNumber}" ]
+            }
+            GET --> verTeller_LcyCashin_new {
+            }
+        }
+    
+        resource verTeller_LcyCashin_Live {
+            type: item
+            entity: verTeller_LcyCashin
+            commands [ GET : GetEntity, GET : T24LiveState ]
+            path: "/verTeller_LcyCashins_Live('{id}')"
+            POST +-> verTeller_LcyCashins_metadata {
+                title: "metadata"
+            }
+            GET +-> "common.Messages.ProcessMessages" {
+                title: "Messages"
+            }
+            GET +-> verTeller_LcyCashins_dealSlip {
+                title: "deal slips"
+            }
+            PUT -> verTeller_LcyCashin_input {
+                parameters [ id = "{TransactionNumber}" ]
+                title: "input deal"
+            }
+            POST -> verTeller_LcyCashin_validate {
+                parameters [ id = "{TransactionNumber}" ]
+                title: "validate deal"
+            }
+            POST -> verTeller_LcyCashin_hold {
+                parameters [ id = "{TransactionNumber}" ]
+                title: "hold deal"
+            }
+            POST -> verTeller_LcyCashin_reverse {
+                parameters [ id = "{TransactionNumber}" ]
+                title: "reverse deal"
+            }
+            POST -> verTeller_LcyCashin_audit {
+                parameters [ id = "{TransactionNumber}" ]
+                title: "audit deal"
+            }
+            POST -> verTeller_LcyCashin_copy {
+                title: "Copy deal"
+            }
+            POST -> verTeller_LcyCashin_paste {
+                parameters [ id = "{TransactionNumber}" ]
+                title: "Paste deal"
+            }
+            GET -> verTeller_LcyCashin_ContextEnquiries {
+                title: "All Context Enquiries"
+            }
+            GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+                parameters [ entity = "verTeller_LcyCashin" ]
+                title: "Context Enquiries"
+            }
+        }
+    
+        resource verTeller_LcyCashin_IAuth {
+            type: item
+            entity: verTeller_LcyCashin
+            commands [ GET : GetEntity, GET : T24IAuthState ]
+            path: "/verTeller_LcyCashins_IAuth('{id}')"
+            POST +-> verTeller_LcyCashins_metadata {
+                title: "metadata"
+            }
+            GET +-> "common.Messages.ProcessMessages" {
+                title: "Messages"
+            }
+            GET +-> verTeller_LcyCashins_dealSlip {
+                title: "deal slips"
+            }
+            GET +-> verTeller_LcyCashin_changedValues {
+                parameters [ id = "{TransactionNumber}" ]
+                title: "changed values"
+            }
+            PUT -> verTeller_LcyCashin_input {
+                parameters [ id = "{TransactionNumber}" ]
+                title: "input deal"
+            }
+            POST -> verTeller_LcyCashin_validate {
+                parameters [ id = "{TransactionNumber}" ]
+                title: "validate deal"
+            }
+            POST -> verTeller_LcyCashin_hold {
+                parameters [ id = "{TransactionNumber}" ]
+                title: "hold deal"
+            }
+            DELETE -> verTeller_LcyCashin_delete {
+                parameters [ id = "{TransactionNumber}" ]
+                title: "delete"
+            }
+            POST -> verTeller_LcyCashin_authorise {
+                parameters [ id = "{TransactionNumber}" ]
+                title: "authorise deal"
+            }
+            POST -> verTeller_LcyCashin_copy {
+                title: "Copy deal"
+            }
+            POST -> verTeller_LcyCashin_paste {
+                parameters [ id = "{TransactionNumber}" ]
+                title: "Paste deal"
+            }
+            GET -> verTeller_LcyCashin_ContextEnquiries {
+                title: "All Context Enquiries"
+            }
+            GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+                parameters [ entity = "verTeller_LcyCashin" ]
+                title: "Context Enquiries"
+            }
+        }
+    
+        resource verTeller_LcyCashin_HAuth {
+            type: item
+            entity: verTeller_LcyCashin
+            commands [ GET : GetEntity, GET : T24HAuthState ]
+            path: "/verTeller_LcyCashins_HAuth('{id}')"
+            GET +-> "common.Messages.ProcessMessages" {
+                title: "Messages"
+            }
+            POST -> verTeller_LcyCashin_authorise {
+                parameters [ id = "{TransactionNumber}" ]
+                title: "authorise deal"
+            }
+            POST -> verTeller_LcyCashin_hold {
+                parameters [ id = "{TransactionNumber}" ]
+                title: "hold deal"
+            }
+            DELETE -> verTeller_LcyCashin_delete {
+                parameters [ id = "{TransactionNumber}" ]
+                title: "delete"
+            }
+            POST -> verTeller_LcyCashin_copy {
+                title: "Copy deal"
+            }
+            POST -> verTeller_LcyCashin_paste {
+                parameters [ id = "{TransactionNumber}" ]
+                title: "Paste deal"
+            }
+            GET -> verTeller_LcyCashin_ContextEnquiries {
+                title: "All Context Enquiries"
+            }
+            GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+                parameters [ entity = "verTeller_LcyCashin" ]
+                title: "Context Enquiries"
+            }
+        }
+    
+        resource verTeller_LcyCashin_RAuth {
+            type: item
+            entity: verTeller_LcyCashin
+            commands [ GET : GetEntity, GET : T24RAuthState ]
+            path: "/verTeller_LcyCashins_RAuth('{id}')"
+            GET +-> "common.Messages.ProcessMessages" {
+                title: "Messages"
+            }
+            DELETE -> verTeller_LcyCashin_delete {
+                parameters [ id = "{TransactionNumber}" ]
+                title: "delete"
+            }
+            POST -> verTeller_LcyCashin_authorise {
+                parameters [ id = "{TransactionNumber}" ]
+                title: "authorise deal"
+            }
+            POST -> verTeller_LcyCashin_copy {
+                title: "Copy deal"
+            }
+            POST -> verTeller_LcyCashin_paste {
+                parameters [ id = "{TransactionNumber}" ]
+                title: "Paste deal"
+            }
+            GET -> verTeller_LcyCashin_ContextEnquiries {
+                title: "All Context Enquiries"
+            }
+            GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+                parameters [ entity = "verTeller_LcyCashin" ]
+                title: "Context Enquiries"
+            }
+        }
+    
+        resource verTeller_LcyCashin_Held {
+            type: item
+            entity: verTeller_LcyCashin
+            commands [ GET : GetEntity, GET : T24HeldState ]
+            path: "/verTeller_LcyCashins_Held('{id}')"
+            POST +-> verTeller_LcyCashins_metadata {
+                title: "metadata"
+            }
+            GET +-> "common.Messages.ProcessMessages" {
+                title: "Messages"
+            }
+            PUT -> verTeller_LcyCashin_input {
+                parameters [ id = "{TransactionNumber}" ]
+                title: "input deal"
+            }
+            POST -> verTeller_LcyCashin_validate {
+                parameters [ id = "{TransactionNumber}" ]
+                title: "validate deal"
+            }
+            POST -> verTeller_LcyCashin_hold {
+                parameters [ id = "{TransactionNumber}" ]
+                title: "hold deal"
+            }
+            DELETE -> verTeller_LcyCashin_delete {
+                parameters [ id = "{TransactionNumber}" ]
+                title: "delete"
+            }
+            POST -> verTeller_LcyCashin_copy {
+                title: "Copy deal"
+            }
+            POST -> verTeller_LcyCashin_paste {
+                parameters [ id = "{TransactionNumber}" ]
+                title: "Paste deal"
+            }
+            GET -> verTeller_LcyCashin_ContextEnquiries {
+                title: "All Context Enquiries"
+            }
+            GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+                parameters [ entity = "verTeller_LcyCashin" ]
+                title: "Context Enquiries"
+            }
+        }
+    
+        resource verTeller_LcyCashin_Reversed {
+            type: item
+            entity: verTeller_LcyCashin
+            commands [ GET : GetEntity, GET : T24ReversedState ]
+            path: "/verTeller_LcyCashins_Reversed('{id}')"
+            GET +-> "common.Messages.ProcessMessages" {
+                title: "Messages"
+            }
+            POST -> verTeller_LcyCashin_restore {
+                parameters [ id = "{TransactionNumber}" ]
+                title: "restore deal"
+            }
+            POST -> verTeller_LcyCashin_copy {
+                title: "Copy deal"
+            }
+            POST -> verTeller_LcyCashin_paste {
+                parameters [ id = "{TransactionNumber}" ]
+                title: "Paste deal"
+            }
+            GET -> verTeller_LcyCashin_ContextEnquiries {
+                title: "All Context Enquiries"
+            }
+            GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+                parameters [ entity = "verTeller_LcyCashin" ]
+                title: "Context Enquiries"
+            }
+        }
+    
+        resource verTeller_LcyCashin_new {
+            type: item
+            entity: verTeller_LcyCashin
+            commands [ POST : CreateEntity, GET : T24NewState ]
+            relations [ "http://schemas.microsoft.com/ado/2007/08/dataservices/related/verTeller_LcyCashin","http://temenostech.temenos.com/rels/new" ]
+            path: "/verTeller_LcyCashins()/new"
+            GET --> verTeller_LcyCashin_silent {
+            }
+            GET --> nextState {
+            }
+            GET --> verTeller_LcyCashin {
+                parameters [ id = "{TransactionNumber}" ]
+            }
+            POST +-> verTeller_LcyCashins_metadata {
+                title: "metadata"
+            }
+            PUT -> verTeller_LcyCashin_input {
+                parameters [ id = "{TransactionNumber}" ]
+                title: "input deal"
+            }
+            POST -> verTeller_LcyCashin_validate {
+                parameters [ id = "{TransactionNumber}" ]
+                title: "validate deal"
+            }
+            POST -> verTeller_LcyCashin_hold {
+                parameters [ id = "{TransactionNumber}" ]
+                title: "hold deal"
+            }
+            POST -> verTeller_LcyCashin_copy {
+                title: "Copy deal"
+            }
+            POST -> verTeller_LcyCashin_paste {
+                parameters [ id = "{TransactionNumber}" ]
+                title: "Paste deal"
+            }
+            GET -> verTeller_LcyCashin_ContextEnquiries {
+                title: "All Context Enquiries"
+            }
+            GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+                parameters [ entity = "verTeller_LcyCashin" ]
+                title: "Context Enquiries"
+            }
+            onerror --> verTeller_LcyCashin_errorHandler
+        }
+    
+        resource verTeller_LcyCashin_populate {
+            type: item
+            entity: verTeller_LcyCashin
+            commands [ POST : CreateEntity ]
+            relations [ "http://schemas.microsoft.com/ado/2007/08/dataservices/related/verTeller_LcyCashin","http://temenostech.temenos.com/rels/populate" ]
+            path: "/verTeller_LcyCashins()/populate"
+            GET --> verTeller_LcyCashin_silent {
+            }
+            GET --> nextState {
+            }
+            GET --> verTeller_LcyCashin {
+                parameters [ id = "{TransactionNumber}" ]
+            }
+            POST +-> verTeller_LcyCashins_metadata {
+                title: "metadata"
+            }
+            PUT -> verTeller_LcyCashin_input {
+                parameters [ id = "{TransactionNumber}" ]
+                title: "input deal"
+            }
+            POST -> verTeller_LcyCashin_validate {
+                parameters [ id = "{TransactionNumber}" ]
+                title: "validate deal"
+            }
+            POST -> verTeller_LcyCashin_hold {
+                parameters [ id = "{TransactionNumber}" ]
+                title: "hold deal"
+            }
+            POST -> verTeller_LcyCashin_copy {
+                title: "Copy deal"
+            }
+            GET -> verTeller_LcyCashin_ContextEnquiries {
+                title: "All Context Enquiries"
+            }
+            GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+                parameters [ entity = "verTeller_LcyCashin" ]
+                title: "Context Enquiries"
+            }
+            onerror --> verTeller_LcyCashin_errorHandler
+        }
+    
+        resource verTeller_LcyCashin_input {
+            type: item
+            entity: verTeller_LcyCashin
+            commands [ PUT : InputEntity, POST : InputEntity ]
+            relations [ "http://temenostech.temenos.com/rels/input" ]
+            path: "/verTeller_LcyCashins('{id}')"
+            GET --> verTeller_LcyCashin_silent {
+            }
+            GET --> nextState {
+            }
+            GET --> verTeller_LcyCashin {
+                parameters [ id = "{TransactionNumber}" ]
+            }
+            onerror --> verTeller_LcyCashin_errorHandler
+        }
+    
+        resource verTeller_LcyCashin_hold {
+            type: item
+            entity: verTeller_LcyCashin
+            commands [ POST : HoldEntity ]
+            relations [ "http://temenostech.temenos.com/rels/hold" ]
+            path: "/verTeller_LcyCashins('{id}')/hold"
+            GET --> verTeller_LcyCashin_silent {
+            }
+            GET --> nextState {
+            }
+            GET --> verTeller_LcyCashin {
+                parameters [ id = "{TransactionNumber}" ]
+            }
+            onerror --> verTeller_LcyCashin_errorHandler
+        }
+    
+        resource verTeller_LcyCashin_authorise {
+            type: item
+            entity: verTeller_LcyCashin
+            commands [ PUT : AuthoriseEntity ]
+            relations [ "http://temenostech.temenos.com/rels/authorise" ]
+            path: "/verTeller_LcyCashins('{id}')/authorise"
+            GET --> verTeller_LcyCashin_silent {
+            }
+            GET --> nextState {
+            }
+            GET --> verTeller_LcyCashin {
+                parameters [ id = "{TransactionNumber}" ]
+            }
+            onerror --> verTeller_LcyCashin_errorHandler
+        }
+    
+        resource verTeller_LcyCashin_audit {
+            type: item
+            entity: verTeller_LcyCashin
+            commands [ POST : ReviewEntity ]
+            relations [ "http://temenostech.temenos.com/rels/review" ]
+            path: "/verTeller_LcyCashins('{id}')/review"
+            GET --> verTeller_LcyCashin_silent {
+            }
+            GET --> nextState {
+            }
+            GET --> verTeller_LcyCashin {
+                parameters [ id = "{TransactionNumber}" ]
+            }
+            onerror --> verTeller_LcyCashin_errorHandler
+        }
+    
+        resource verTeller_LcyCashin_reverse {
+            type: item
+            entity: verTeller_LcyCashin
+            commands [ PUT : ReverseEntity ]
+            relations [ "http://temenostech.temenos.com/rels/reverse" ]
+            path: "/verTeller_LcyCashins('{id}')/reverse"
+            GET --> verTeller_LcyCashin_silent {
+            }
+            GET --> nextState {
+            }
+            GET --> verTeller_LcyCashin {
+                parameters [ id = "{TransactionNumber}" ]
+            }
+            onerror --> verTeller_LcyCashin_errorHandler
+        }
+    
+        resource verTeller_LcyCashin_validate {
+            type: item
+            entity: verTeller_LcyCashin
+            commands [ POST : ValidateEntity ]
+            relations [ "http://temenostech.temenos.com/rels/validate" ]
+            path: "/verTeller_LcyCashins('{id}')/validate"
+            GET --> verTeller_LcyCashin_silent {
+            }
+            GET --> nextState {
+            }
+            POST +-> verTeller_LcyCashins_metadata {
+                title: "metadata"
+            }
+            GET +-> "common.Messages.ProcessMessages" {
+                title: "Messages"
+            }
+            PUT -> verTeller_LcyCashin_input {
+                parameters [ id = "{TransactionNumber}" ]
+                title: "input deal"
+            }
+            POST -> verTeller_LcyCashin_hold {
+                parameters [ id = "{TransactionNumber}" ]
+                title: "hold deal"
+            }
+            onerror --> verTeller_LcyCashin_errorHandler
+        }
+    
+        resource verTeller_LcyCashin_delete {
+            type: item
+            entity: verTeller_LcyCashin
+            commands [ DELETE : DeleteEntity ]
+            relations [ "http://temenostech.temenos.com/rels/delete" ]
+            path: "/verTeller_LcyCashins('{id}')/delete"
+            GET +-> "common.Messages.ProcessMessages" {
+                title: "Messages"
+            }
+            onerror --> verTeller_LcyCashin_errorHandler
+        }
+    
+        resource verTeller_LcyCashin_copy {
+            type: item
+            entity: verTeller_LcyCashin
+            commands [ POST : CopyEntity ]
+            relations [ "http://temenostech.temenos.com/rels/copy" ]
+            path: "/verTeller_LcyCashins()/copy"
+            onerror --> verTeller_LcyCashin_errorHandler
+        }
+    
+        resource verTeller_LcyCashin_paste {
+            type: item
+            entity: verTeller_LcyCashin
+            commands [ POST : PasteEntity ]
+            relations [ "http://temenostech.temenos.com/rels/paste" ]
+            path: "/verTeller_LcyCashins('{id}')/paste"
+            GET --> verTeller_LcyCashin_silent {
+            }
+            GET --> nextState {
+            }
+            GET --> verTeller_LcyCashin {
+                parameters [ id = "{TransactionNumber}" ]
+            }
+            POST +-> verTeller_LcyCashins_metadata {
+                title: "metadata"
+            }
+            PUT -> verTeller_LcyCashin_input {
+                parameters [ id = "{TransactionNumber}" ]
+                title: "input deal"
+            }
+            POST -> verTeller_LcyCashin_validate {
+                parameters [ id = "{TransactionNumber}" ]
+                title: "validate deal"
+            }
+            POST -> verTeller_LcyCashin_hold {
+                parameters [ id = "{TransactionNumber}" ]
+                title: "hold deal"
+            }
+            GET -> verTeller_LcyCashin_ContextEnquiries {
+                title: "All Context Enquiries"
+            }
+            GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+                parameters [ entity = "verTeller_LcyCashin" ]
+                title: "Context Enquiries"
+            }
+            onerror --> verTeller_LcyCashin_errorHandler
+        }
+    
+        resource verTeller_LcyCashin_restore {
+            type: item
+            entity: verTeller_LcyCashin
+            commands [ POST : RestoreEntity ]
+            relations [ "http://temenostech.temenos.com/rels/restore" ]
+            path: "/verTeller_LcyCashins('{id}')/restore"
+            GET --> verTeller_LcyCashin_silent {
+            }
+            GET --> nextState {
+            }
+            GET --> verTeller_LcyCashin {
+                parameters [ id = "{TransactionNumber}" ]
+            }
+            onerror --> verTeller_LcyCashin_errorHandler
+        }
+    
+        resource verTeller_LcyCashin_changedValues {
+            type: item
+            entity: verTeller_LcyCashin
+            commands [ GET : GetChangedValues ]
+            relations [ "http://temenostech.temenos.com/rels/changedValues" ]
+            path: "/verTeller_LcyCashins('{id}')/changedValues"
+            GET --> verTeller_LcyCashin_silent {
+            }
+            GET --> nextState {
+            }
+            GET --> verTeller_LcyCashin {
+                parameters [ id = "{TransactionNumber}" ]
+            }
+        }
+    
+        resource verTeller_LcyCashin_enrichment {
+            type: item
+            entity: Enrichment
+            commands [ GET : T24Enrichment {
+                properties [ entity = "verTeller_LcyCashin" ]
+                } ]
+            relations [ "http://temenostech.temenos.com/rels/enrichment" ]
+            path: "/verTeller_LcyCashins()/enrichment"
+        }
+    
+        resource verTeller_LcyCashin_autoId {
+            type: item
+            entity: verTeller_LcyCashin
+            commands [ GET : CheckAutoIdSupport ]
+            path: "/verTeller_LcyCashins('{id}')/autoId"
+        }
+    
+    }
+    
+}

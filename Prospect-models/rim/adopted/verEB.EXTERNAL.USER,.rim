@@ -1,0 +1,827 @@
+domain T24 {
+    use common.CoreCommands.*
+    use common.HTTPEvents.*
+    use common.ODataCommands.*
+    use common.T24Commands.*
+    use common.T24Events.*
+    use common.NextState.*
+    use common.Errors.*
+    use T24.ContextEnquiry.*
+    rim verEbExternalUser {
+        command NoopGET
+        command T24FieldMetadata
+        command T24NextState
+        command T24SilentState
+        command GetEntity
+        command GETEntities
+        command GetIauthEntities
+        command GetHauthEntities
+        command InterimTransition
+        command T24LiveState
+        command T24IAuthState
+        command T24HAuthState
+        command T24RAuthState
+        command T24HeldState
+        command T24ReversedState
+        command CreateEntity
+        command T24NewState
+        command InputEntity
+        command HoldEntity
+        command AuthoriseEntity
+        command ReviewEntity
+        command ReverseEntity
+        command ValidateEntity
+        command DeleteEntity
+        command CopyEntity
+        command PasteEntity
+        command RestoreEntity
+        command GetChangedValues
+        command T24Enrichment
+        command CheckAutoIdSupport
+        basepath: "/{companyid}"
+  
+        initial resource Home {
+            type: item        
+            entity: verEbExternalUser      
+            view: NoopGET            
+            GET -> T24.verEbExternalUser.verEbExternalUsers
+            GET -> T24.verEbExternalUser.verEbExternalUser
+        }  
+        
+        resource verEbExternalUsers_metadata {
+            type: collection
+            entity: T24FieldMetadata
+            commands [ POST : T24FieldMetadata ]
+            relations [ "http://temenostech.temenos.com/rels/metadata" ]
+            path: "/verEbExternalUsers()/metadata"
+        }
+    
+        resource verEbExternalUser_errorHandler {
+            type: item
+            entity: verEbExternalUser
+            commands [ GET : NoopGET ]
+            relations [ "http://temenostech.temenos.com/rels/error" ]
+            path: "/verEbExternalUsers('{id}')/error"
+            GET +-> "common.Errors.ProcessErrors" {
+                title: "errors"
+            }
+            POST +-> verEbExternalUsers_metadata {
+                title: "metadata"
+            }
+        }
+    
+        resource verEbExternalUser_ContextEnquiries {
+            type: item
+            entity: verEbExternalUser
+            commands [ GET : NoopGET ]
+            path: "/verEbExternalUser/ContextEnquiries"
+            GET -> "T24.enqlistEbExternalUser.enqlistEbExternalUsers" {
+                parameters [ param = "list" ]
+                title: "List Live File"
+            }
+            GET -> "T24.enqlistEbExternalUser.enqlistEbExternalUserUnauths" {
+                parameters [ param = "list" ]
+                title: "List Unauth File"
+            }
+            GET -> "T24.enqlistEbExternalUser.enqlistEbExternalUserHists" {
+                parameters [ param = "list" ]
+                title: "List History File"
+            }
+            GET -> "T24.enqlistEbExternalUser.enqlistEbExternalUsers" {
+                title: "Search Live File"
+            }
+            GET -> "T24.enqlistEbExternalUser.enqlistEbExternalUserUnauths" {
+                title: "Search Unauth File"
+            }
+            GET -> "T24.enqlistEbExternalUser.enqlistEbExternalUserHists" {
+                title: "Search History File"
+            }
+            GET +-> "T24.ContextEnquiry.ContextEnquiryList" {
+                parameters [ entity = "verEbExternalUser" ]
+                title: "Other context Enquiries"
+            }
+        }
+    
+        resource verEbExternalUser_silent {
+            type: item
+            entity: verEbExternalUser
+            commands [ GET : T24SilentState ]
+        }
+    
+        resource verEbExternalUserEntry {
+            type: item
+            entity: verEbExternalUser
+            commands [ GET : NoopGET ]
+            relations [ "http://schemas.microsoft.com/ado/2007/08/dataservices/related/verEbExternalUser","http://temenostech.temenos.com/rels/contract" ]
+            path: "/verEbExternalUserEntry"
+            GET --> verEbExternalUser_silent {
+            }
+            GET --> nextState {
+            }
+            GET --> verEbExternalUser {
+                parameters [ id = "{ExternalUserId}" ]
+            }
+            POST -> verEbExternalUser_new {
+                title: "create new deal"
+                condition: OK(verEbExternalUser_autoId)
+            }
+            POST -> verEbExternalUser_populate {
+                title: "populate existing deal"
+            }
+            GET -> verEbExternalUser {
+                parameters [ id = "@" ]
+                title: "action"
+            }
+            GET -> verEbExternalUser_see {
+                parameters [ id = "@" ]
+                title: "see record"
+            }
+            POST -> verEbExternalUser_copy {
+                title: "Copy deal"
+            }
+            POST -> verEbExternalUser_paste {
+                parameters [ id = "{ExternalUserId}" ]
+                title: "Paste deal"
+            }
+            POST -> verEbExternalUser_enrichment {
+                title: "Enrich deal"
+            }
+            GET +-> verEbExternalUser_ContextEnquiries {
+                title: "All context Enquiries"
+            }
+        }
+    
+        resource verEbExternalUser_see {
+            type: item
+            entity: verEbExternalUser
+            commands [ GET : GetEntity ]
+            relations [ "http://schemas.microsoft.com/ado/2007/08/dataservices/related/verEbExternalUser","http://temenostech.temenos.com/rels/see" ]
+            path: "/verEbExternalUsers('{id}')/see"
+            POST +-> verEbExternalUsers_metadata {
+                title: "metadata"
+            }
+            GET -> verEbExternalUser {
+                parameters [ id = "{ExternalUserId}" ]
+                title: "Action"
+            }
+            GET -> verEbExternalUser_ContextEnquiries {
+                title: "All Context Enquiries"
+            }
+            GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+                parameters [ entity = "verEbExternalUser" ]
+                title: "Context Enquiries"
+            }
+        }
+    
+        resource verEbExternalUsers @ Annotation : tags ( "External Users" ) {
+            type: collection
+            entity: verEbExternalUser
+            commands [ GET : GETEntities {
+                properties [ filter = "{filter}" ]
+                } ]
+            path: "/verEbExternalUsers()"
+            GET *-> verEbExternalUser {
+                parameters [ id = "{ExternalUserId}" ]
+            }
+            GET *-> verEbExternalUser_see {
+                parameters [ id = "{ExternalUserId}" ]
+                title: "see record"
+            }
+            POST -> verEbExternalUser_new {
+                title: "create new deal"
+                condition: OK(verEbExternalUser_autoId)
+            }
+            POST -> verEbExternalUser_populate {
+                title: "populate existing deal"
+            }
+            PUT *-> verEbExternalUser_input {
+                parameters [ id = "{ExternalUserId}" ]
+                title: "input deal"
+            }
+            POST *-> verEbExternalUser_audit {
+                parameters [ id = "{ExternalUserId}" ]
+                title: "audit deal"
+            }
+            POST *-> verEbExternalUser_reverse {
+                parameters [ id = "{ExternalUserId}" ]
+                title: "reverse deal"
+            }
+        }
+    
+        resource verEbExternalUsers_IAuth {
+            type: collection
+            entity: verEbExternalUser
+            commands [ GET : GetIauthEntities {
+                properties [ filter = "{filter}" ]
+                } ]
+            path: "/verEbExternalUsers_IAuth()"
+            GET *-> verEbExternalUser_IAuth {
+                parameters [ id = "{ExternalUserId}" ]
+            }
+            POST -> verEbExternalUser_new {
+                title: "create new deal"
+                condition: OK(verEbExternalUser_autoId)
+            }
+            POST -> verEbExternalUser_populate {
+                title: "populate existing deal"
+            }
+            PUT *-> verEbExternalUser_input {
+                parameters [ id = "{ExternalUserId}" ]
+                title: "input deal"
+            }
+            DELETE *-> verEbExternalUser_delete {
+                parameters [ id = "{ExternalUserId}" ]
+                title: "delete"
+            }
+            PUT *-> verEbExternalUser_authorise {
+                parameters [ id = "{ExternalUserId}" ]
+                title: "authorise deal"
+            }
+        }
+    
+        resource verEbExternalUsers_HAuth {
+            type: collection
+            entity: verEbExternalUser
+            commands [ GET : GetHauthEntities {
+                properties [ filter = "{filter}" ]
+                } ]
+            path: "/verEbExternalUsers_HAuth()"
+            GET *-> verEbExternalUser_HAuth {
+                parameters [ id = "{ExternalUserId}" ]
+            }
+            POST -> verEbExternalUser_new {
+                title: "create new deal"
+                condition: OK(verEbExternalUser_autoId)
+            }
+            POST -> verEbExternalUser_populate {
+                title: "populate existing deal"
+            }
+        }
+    
+        resource verEbExternalUser  @ Annotation : tags ( "External User" ) {
+            type: item
+            entity: verEbExternalUser
+            commands [ GET : GetEntity, GET : InterimTransition ]
+            path: "/verEbExternalUsers('{id}')"
+            GET --> verEbExternalUser_Live {
+                parameters [ id = "{ExternalUserId}" ]
+            }
+            GET --> verEbExternalUser_IAuth {
+                parameters [ id = "{ExternalUserId}" ]
+            }
+            GET --> verEbExternalUser_HAuth {
+                parameters [ id = "{ExternalUserId}" ]
+            }
+            GET --> verEbExternalUser_RAuth {
+                parameters [ id = "{ExternalUserId}" ]
+            }
+            GET --> verEbExternalUser_Held {
+                parameters [ id = "{ExternalUserId}" ]
+            }
+            GET --> verEbExternalUser_Reversed {
+                parameters [ id = "{ExternalUserId}" ]
+            }
+            GET --> verEbExternalUser_new {
+            }
+        }
+    
+        resource verEbExternalUser_Live {
+            type: item
+            entity: verEbExternalUser
+            commands [ GET : GetEntity, GET : T24LiveState ]
+            path: "/verEbExternalUsers_Live('{id}')"
+            POST +-> verEbExternalUsers_metadata {
+                title: "metadata"
+            }
+            GET +-> "common.Messages.ProcessMessages" {
+                title: "Messages"
+            }
+            PUT -> verEbExternalUser_input {
+                parameters [ id = "{ExternalUserId}" ]
+                title: "input deal"
+            }
+            POST -> verEbExternalUser_validate {
+                parameters [ id = "{ExternalUserId}" ]
+                title: "validate deal"
+            }
+            POST -> verEbExternalUser_hold {
+                parameters [ id = "{ExternalUserId}" ]
+                title: "hold deal"
+            }
+            POST -> verEbExternalUser_reverse {
+                parameters [ id = "{ExternalUserId}" ]
+                title: "reverse deal"
+            }
+            POST -> verEbExternalUser_audit {
+                parameters [ id = "{ExternalUserId}" ]
+                title: "audit deal"
+            }
+            POST -> verEbExternalUser_copy {
+                title: "Copy deal"
+            }
+            POST -> verEbExternalUser_paste {
+                parameters [ id = "{ExternalUserId}" ]
+                title: "Paste deal"
+            }
+            GET -> verEbExternalUser_ContextEnquiries {
+                title: "All Context Enquiries"
+            }
+            GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+                parameters [ entity = "verEbExternalUser" ]
+                title: "Context Enquiries"
+            }
+        }
+    
+        resource verEbExternalUser_IAuth {
+            type: item
+            entity: verEbExternalUser
+            commands [ GET : GetEntity, GET : T24IAuthState ]
+            path: "/verEbExternalUsers_IAuth('{id}')"
+            POST +-> verEbExternalUsers_metadata {
+                title: "metadata"
+            }
+            GET +-> "common.Messages.ProcessMessages" {
+                title: "Messages"
+            }
+            GET +-> verEbExternalUser_changedValues {
+                parameters [ id = "{ExternalUserId}" ]
+                title: "changed values"
+            }
+            PUT -> verEbExternalUser_input {
+                parameters [ id = "{ExternalUserId}" ]
+                title: "input deal"
+            }
+            POST -> verEbExternalUser_validate {
+                parameters [ id = "{ExternalUserId}" ]
+                title: "validate deal"
+            }
+            POST -> verEbExternalUser_hold {
+                parameters [ id = "{ExternalUserId}" ]
+                title: "hold deal"
+            }
+            DELETE -> verEbExternalUser_delete {
+                parameters [ id = "{ExternalUserId}" ]
+                title: "delete"
+            }
+            POST -> verEbExternalUser_authorise {
+                parameters [ id = "{ExternalUserId}" ]
+                title: "authorise deal"
+            }
+            POST -> verEbExternalUser_copy {
+                title: "Copy deal"
+            }
+            POST -> verEbExternalUser_paste {
+                parameters [ id = "{ExternalUserId}" ]
+                title: "Paste deal"
+            }
+            GET -> verEbExternalUser_ContextEnquiries {
+                title: "All Context Enquiries"
+            }
+            GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+                parameters [ entity = "verEbExternalUser" ]
+                title: "Context Enquiries"
+            }
+        }
+    
+        resource verEbExternalUser_HAuth {
+            type: item
+            entity: verEbExternalUser
+            commands [ GET : GetEntity, GET : T24HAuthState ]
+            path: "/verEbExternalUsers_HAuth('{id}')"
+            GET +-> "common.Messages.ProcessMessages" {
+                title: "Messages"
+            }
+            POST -> verEbExternalUser_authorise {
+                parameters [ id = "{ExternalUserId}" ]
+                title: "authorise deal"
+            }
+            POST -> verEbExternalUser_hold {
+                parameters [ id = "{ExternalUserId}" ]
+                title: "hold deal"
+            }
+            DELETE -> verEbExternalUser_delete {
+                parameters [ id = "{ExternalUserId}" ]
+                title: "delete"
+            }
+            POST -> verEbExternalUser_copy {
+                title: "Copy deal"
+            }
+            POST -> verEbExternalUser_paste {
+                parameters [ id = "{ExternalUserId}" ]
+                title: "Paste deal"
+            }
+            GET -> verEbExternalUser_ContextEnquiries {
+                title: "All Context Enquiries"
+            }
+            GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+                parameters [ entity = "verEbExternalUser" ]
+                title: "Context Enquiries"
+            }
+        }
+    
+        resource verEbExternalUser_RAuth {
+            type: item
+            entity: verEbExternalUser
+            commands [ GET : GetEntity, GET : T24RAuthState ]
+            path: "/verEbExternalUsers_RAuth('{id}')"
+            GET +-> "common.Messages.ProcessMessages" {
+                title: "Messages"
+            }
+            DELETE -> verEbExternalUser_delete {
+                parameters [ id = "{ExternalUserId}" ]
+                title: "delete"
+            }
+            POST -> verEbExternalUser_authorise {
+                parameters [ id = "{ExternalUserId}" ]
+                title: "authorise deal"
+            }
+            POST -> verEbExternalUser_copy {
+                title: "Copy deal"
+            }
+            POST -> verEbExternalUser_paste {
+                parameters [ id = "{ExternalUserId}" ]
+                title: "Paste deal"
+            }
+            GET -> verEbExternalUser_ContextEnquiries {
+                title: "All Context Enquiries"
+            }
+            GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+                parameters [ entity = "verEbExternalUser" ]
+                title: "Context Enquiries"
+            }
+        }
+    
+        resource verEbExternalUser_Held {
+            type: item
+            entity: verEbExternalUser
+            commands [ GET : GetEntity, GET : T24HeldState ]
+            path: "/verEbExternalUsers_Held('{id}')"
+            POST +-> verEbExternalUsers_metadata {
+                title: "metadata"
+            }
+            GET +-> "common.Messages.ProcessMessages" {
+                title: "Messages"
+            }
+            PUT -> verEbExternalUser_input {
+                parameters [ id = "{ExternalUserId}" ]
+                title: "input deal"
+            }
+            POST -> verEbExternalUser_validate {
+                parameters [ id = "{ExternalUserId}" ]
+                title: "validate deal"
+            }
+            POST -> verEbExternalUser_hold {
+                parameters [ id = "{ExternalUserId}" ]
+                title: "hold deal"
+            }
+            DELETE -> verEbExternalUser_delete {
+                parameters [ id = "{ExternalUserId}" ]
+                title: "delete"
+            }
+            POST -> verEbExternalUser_copy {
+                title: "Copy deal"
+            }
+            POST -> verEbExternalUser_paste {
+                parameters [ id = "{ExternalUserId}" ]
+                title: "Paste deal"
+            }
+            GET -> verEbExternalUser_ContextEnquiries {
+                title: "All Context Enquiries"
+            }
+            GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+                parameters [ entity = "verEbExternalUser" ]
+                title: "Context Enquiries"
+            }
+        }
+    
+        resource verEbExternalUser_Reversed {
+            type: item
+            entity: verEbExternalUser
+            commands [ GET : GetEntity, GET : T24ReversedState ]
+            path: "/verEbExternalUsers_Reversed('{id}')"
+            GET +-> "common.Messages.ProcessMessages" {
+                title: "Messages"
+            }
+            POST -> verEbExternalUser_restore {
+                parameters [ id = "{ExternalUserId}" ]
+                title: "restore deal"
+            }
+            POST -> verEbExternalUser_copy {
+                title: "Copy deal"
+            }
+            POST -> verEbExternalUser_paste {
+                parameters [ id = "{ExternalUserId}" ]
+                title: "Paste deal"
+            }
+            GET -> verEbExternalUser_ContextEnquiries {
+                title: "All Context Enquiries"
+            }
+            GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+                parameters [ entity = "verEbExternalUser" ]
+                title: "Context Enquiries"
+            }
+        }
+    
+        resource verEbExternalUser_new {
+            type: item
+            entity: verEbExternalUser
+            commands [ POST : CreateEntity, GET : T24NewState ]
+            relations [ "http://schemas.microsoft.com/ado/2007/08/dataservices/related/verEbExternalUser","http://temenostech.temenos.com/rels/new" ]
+            path: "/verEbExternalUsers()/new"
+            GET --> verEbExternalUser_silent {
+            }
+            GET --> nextState {
+            }
+            GET --> verEbExternalUser {
+                parameters [ id = "{ExternalUserId}" ]
+            }
+            POST +-> verEbExternalUsers_metadata {
+                title: "metadata"
+            }
+            PUT -> verEbExternalUser_input {
+                parameters [ id = "{ExternalUserId}" ]
+                title: "input deal"
+            }
+            POST -> verEbExternalUser_validate {
+                parameters [ id = "{ExternalUserId}" ]
+                title: "validate deal"
+            }
+            POST -> verEbExternalUser_hold {
+                parameters [ id = "{ExternalUserId}" ]
+                title: "hold deal"
+            }
+            POST -> verEbExternalUser_copy {
+                title: "Copy deal"
+            }
+            POST -> verEbExternalUser_paste {
+                parameters [ id = "{ExternalUserId}" ]
+                title: "Paste deal"
+            }
+            GET -> verEbExternalUser_ContextEnquiries {
+                title: "All Context Enquiries"
+            }
+            GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+                parameters [ entity = "verEbExternalUser" ]
+                title: "Context Enquiries"
+            }
+            onerror --> verEbExternalUser_errorHandler
+        }
+    
+        resource verEbExternalUser_populate {
+            type: item
+            entity: verEbExternalUser
+            commands [ POST : CreateEntity ]
+            relations [ "http://schemas.microsoft.com/ado/2007/08/dataservices/related/verEbExternalUser","http://temenostech.temenos.com/rels/populate" ]
+            path: "/verEbExternalUsers()/populate"
+            GET --> verEbExternalUser_silent {
+            }
+            GET --> nextState {
+            }
+            GET --> verEbExternalUser {
+                parameters [ id = "{ExternalUserId}" ]
+            }
+            POST +-> verEbExternalUsers_metadata {
+                title: "metadata"
+            }
+            PUT -> verEbExternalUser_input {
+                parameters [ id = "{ExternalUserId}" ]
+                title: "input deal"
+            }
+            POST -> verEbExternalUser_validate {
+                parameters [ id = "{ExternalUserId}" ]
+                title: "validate deal"
+            }
+            POST -> verEbExternalUser_hold {
+                parameters [ id = "{ExternalUserId}" ]
+                title: "hold deal"
+            }
+            POST -> verEbExternalUser_copy {
+                title: "Copy deal"
+            }
+            GET -> verEbExternalUser_ContextEnquiries {
+                title: "All Context Enquiries"
+            }
+            GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+                parameters [ entity = "verEbExternalUser" ]
+                title: "Context Enquiries"
+            }
+            onerror --> verEbExternalUser_errorHandler
+        }
+    
+        resource verEbExternalUser_input {
+            type: item
+            entity: verEbExternalUser
+            commands [ PUT : InputEntity, POST : InputEntity ]
+            relations [ "http://temenostech.temenos.com/rels/input" ]
+            path: "/verEbExternalUsers('{id}')"
+            GET --> verEbExternalUser_silent {
+            }
+            GET --> nextState {
+            }
+            GET --> verEbExternalUser {
+                parameters [ id = "{ExternalUserId}" ]
+            }
+            onerror --> verEbExternalUser_errorHandler
+        }
+    
+        resource verEbExternalUser_hold {
+            type: item
+            entity: verEbExternalUser
+            commands [ POST : HoldEntity ]
+            relations [ "http://temenostech.temenos.com/rels/hold" ]
+            path: "/verEbExternalUsers('{id}')/hold"
+            GET --> verEbExternalUser_silent {
+            }
+            GET --> nextState {
+            }
+            GET --> verEbExternalUser {
+                parameters [ id = "{ExternalUserId}" ]
+            }
+            onerror --> verEbExternalUser_errorHandler
+        }
+    
+        resource verEbExternalUser_authorise {
+            type: item
+            entity: verEbExternalUser
+            commands [ PUT : AuthoriseEntity ]
+            relations [ "http://temenostech.temenos.com/rels/authorise" ]
+            path: "/verEbExternalUsers('{id}')/authorise"
+            GET --> verEbExternalUser_silent {
+            }
+            GET --> nextState {
+            }
+            GET --> verEbExternalUser {
+                parameters [ id = "{ExternalUserId}" ]
+            }
+            onerror --> verEbExternalUser_errorHandler
+        }
+    
+        resource verEbExternalUser_audit {
+            type: item
+            entity: verEbExternalUser
+            commands [ POST : ReviewEntity ]
+            relations [ "http://temenostech.temenos.com/rels/review" ]
+            path: "/verEbExternalUsers('{id}')/review"
+            GET --> verEbExternalUser_silent {
+            }
+            GET --> nextState {
+            }
+            GET --> verEbExternalUser {
+                parameters [ id = "{ExternalUserId}" ]
+            }
+            onerror --> verEbExternalUser_errorHandler
+        }
+    
+        resource verEbExternalUser_reverse {
+            type: item
+            entity: verEbExternalUser
+            commands [ PUT : ReverseEntity ]
+            relations [ "http://temenostech.temenos.com/rels/reverse" ]
+            path: "/verEbExternalUsers('{id}')/reverse"
+            GET --> verEbExternalUser_silent {
+            }
+            GET --> nextState {
+            }
+            GET --> verEbExternalUser {
+                parameters [ id = "{ExternalUserId}" ]
+            }
+            onerror --> verEbExternalUser_errorHandler
+        }
+    
+        resource verEbExternalUser_validate {
+            type: item
+            entity: verEbExternalUser
+            commands [ POST : ValidateEntity ]
+            relations [ "http://temenostech.temenos.com/rels/validate" ]
+            path: "/verEbExternalUsers('{id}')/validate"
+            GET --> verEbExternalUser_silent {
+            }
+            GET --> nextState {
+            }
+            POST +-> verEbExternalUsers_metadata {
+                title: "metadata"
+            }
+            GET +-> "common.Messages.ProcessMessages" {
+                title: "Messages"
+            }
+            PUT -> verEbExternalUser_input {
+                parameters [ id = "{ExternalUserId}" ]
+                title: "input deal"
+            }
+            POST -> verEbExternalUser_hold {
+                parameters [ id = "{ExternalUserId}" ]
+                title: "hold deal"
+            }
+            onerror --> verEbExternalUser_errorHandler
+        }
+    
+        resource verEbExternalUser_delete {
+            type: item
+            entity: verEbExternalUser
+            commands [ DELETE : DeleteEntity ]
+            relations [ "http://temenostech.temenos.com/rels/delete" ]
+            path: "/verEbExternalUsers('{id}')/delete"
+            GET +-> "common.Messages.ProcessMessages" {
+                title: "Messages"
+            }
+            onerror --> verEbExternalUser_errorHandler
+        }
+    
+        resource verEbExternalUser_copy {
+            type: item
+            entity: verEbExternalUser
+            commands [ POST : CopyEntity ]
+            relations [ "http://temenostech.temenos.com/rels/copy" ]
+            path: "/verEbExternalUsers()/copy"
+            onerror --> verEbExternalUser_errorHandler
+        }
+    
+        resource verEbExternalUser_paste {
+            type: item
+            entity: verEbExternalUser
+            commands [ POST : PasteEntity ]
+            relations [ "http://temenostech.temenos.com/rels/paste" ]
+            path: "/verEbExternalUsers('{id}')/paste"
+            GET --> verEbExternalUser_silent {
+            }
+            GET --> nextState {
+            }
+            GET --> verEbExternalUser {
+                parameters [ id = "{ExternalUserId}" ]
+            }
+            POST +-> verEbExternalUsers_metadata {
+                title: "metadata"
+            }
+            PUT -> verEbExternalUser_input {
+                parameters [ id = "{ExternalUserId}" ]
+                title: "input deal"
+            }
+            POST -> verEbExternalUser_validate {
+                parameters [ id = "{ExternalUserId}" ]
+                title: "validate deal"
+            }
+            POST -> verEbExternalUser_hold {
+                parameters [ id = "{ExternalUserId}" ]
+                title: "hold deal"
+            }
+            GET -> verEbExternalUser_ContextEnquiries {
+                title: "All Context Enquiries"
+            }
+            GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+                parameters [ entity = "verEbExternalUser" ]
+                title: "Context Enquiries"
+            }
+            onerror --> verEbExternalUser_errorHandler
+        }
+    
+        resource verEbExternalUser_restore {
+            type: item
+            entity: verEbExternalUser
+            commands [ POST : RestoreEntity ]
+            relations [ "http://temenostech.temenos.com/rels/restore" ]
+            path: "/verEbExternalUsers('{id}')/restore"
+            GET --> verEbExternalUser_silent {
+            }
+            GET --> nextState {
+            }
+            GET --> verEbExternalUser {
+                parameters [ id = "{ExternalUserId}" ]
+            }
+            onerror --> verEbExternalUser_errorHandler
+        }
+    
+        resource verEbExternalUser_changedValues {
+            type: item
+            entity: verEbExternalUser
+            commands [ GET : GetChangedValues ]
+            relations [ "http://temenostech.temenos.com/rels/changedValues" ]
+            path: "/verEbExternalUsers('{id}')/changedValues"
+            GET --> verEbExternalUser_silent {
+            }
+            GET --> nextState {
+            }
+            GET --> verEbExternalUser {
+                parameters [ id = "{ExternalUserId}" ]
+            }
+        }
+    
+        resource verEbExternalUser_enrichment {
+            type: item
+            entity: Enrichment
+            commands [ GET : T24Enrichment {
+                properties [ entity = "verEbExternalUser" ]
+                } ]
+            relations [ "http://temenostech.temenos.com/rels/enrichment" ]
+            path: "/verEbExternalUsers()/enrichment"
+        }
+    
+        resource verEbExternalUser_autoId {
+            type: item
+            entity: verEbExternalUser
+            commands [ GET : CheckAutoIdSupport ]
+            path: "/verEbExternalUsers('{id}')/autoId"
+        }
+    
+    }
+    
+}

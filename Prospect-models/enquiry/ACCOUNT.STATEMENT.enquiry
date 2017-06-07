@@ -1,0 +1,1296 @@
+Enquiry "ACCOUNT.STATEMENT" for "name:/AC_EntryCreation:STMT.ENTRY#" {
+    metamodelVersion: "1.30.6" full-description {
+        en = "Account Statement"
+    }
+
+    description {
+        en = "Account Statement"
+    }
+
+    account-field: "ACCOUNT.NUMBER"
+    customer-field: "CUST.NO"
+    zero-records-display: true
+    no-selection: true
+    start-line: 20
+    end-line: 54
+    build-routines {
+        jBC: "E.STMT.ENT.BUILD"
+    }
+
+    fixed-selection "MASK.PRINT" {
+        Equals "\'\'"
+    }
+
+    fixed-sort: "DATE.TIME" Null
+    custom-selection {
+
+        field "STATEMENT.ID" {
+            label {
+                en = "Account Number"
+            }
+
+        }
+
+        None
+    }
+
+    field "@ID" {
+        length: 90
+        alignment: Left
+        comma-separator: false
+        processing-mode: Single
+        operation: application-field-name "@ID"
+    }
+
+    field "INITIAL.DATA" {
+        comments: "Handoff and address record" break-condition {
+            break: Once
+        }
+
+        length: 90
+        alignment: Left
+        comma-separator: false
+        processing-mode: Single
+        operation: application-field-name "@ID"
+        conversion: call
+        jBC: "@ E.ACCOUNT.STATEMENT"
+    }
+
+    field "HDR1" {
+        display-type: "CLASS-ENQ.ID.LABEL"
+        comma-separator: false
+        display-section: Header
+        position {
+            column: 47
+            line: 3
+        }
+
+        operation: constant "\"Account Number :\""
+    }
+
+    field "HDR2" {
+        display-type: "CLASS-ENQ.H.DATA.LABEL"
+        comma-separator: false
+        display-section: Header
+        position {
+            column: 47
+            line: 4
+        }
+
+        operation: constant "\"Account Type :\""
+    }
+
+    field "HDR3" {
+        display-type: "CLASS-ENQ.H.DATA.LABEL"
+        comma-separator: false
+        display-section: Header
+        position {
+            column: 47
+            line: 5
+        }
+
+        operation: constant "\"Currency :\""
+    }
+
+    field "HDR4" {
+        display-type: "CLASS-ENQ.H.DATA.LABEL"
+        comma-separator: false
+        display-section: Header
+        position {
+            column: 47
+            line: 6
+        }
+
+        operation: constant "\"Statement Date :\""
+    }
+
+    field "HDR5" {
+        display-type: "CLASS-ENQ.H.DATA.LABEL"
+        comma-separator: false
+        display-section: Header
+        position {
+            column: 47
+            line: 7
+        }
+
+        operation: constant "\"Page :\""
+    }
+
+    field "HDR6" {
+        display-type: "CLASS-ENQ.H.DATA.LABEL"
+        comma-separator: false
+        display-section: Header
+        position {
+            column: 47
+            line: 8
+        }
+
+        operation: constant "\"Joint Holders :\""
+    }
+
+    field "HDR.SPACE" {
+        comma-separator: false
+        display-section: Header
+        position {
+            column: 1
+            line: 9
+        }
+
+        hidden: true
+        operation: constant "\" \""
+    }
+
+    field "HDR.FROM.DATE" {
+        display-type: "CLASS-ENQ.H.DATA.LABEL"
+        comma-separator: false
+        display-section: Header
+        position {
+            column: 47
+            line: 9
+        }
+
+        operation: constant "\"From Date :\""
+    }
+
+    field "HDR.SPACE1" {
+        comma-separator: false
+        display-section: Header
+        position {
+            column: 1
+            line: 10
+        }
+
+        hidden: true
+        operation: constant "\" \""
+    }
+
+    field "HDR.TO.DATE" {
+        display-type: "CLASS-ENQ.H.DATA.LABEL"
+        comma-separator: false
+        display-section: Header
+        position {
+            column: 47
+            line: 10
+        }
+
+        operation: constant "\"To Date :\""
+    }
+
+    field "HDR.SPACE2" {
+        comma-separator: false
+        display-section: Header
+        position {
+            column: 1
+            line: 12
+        }
+
+        operation: constant "\" \""
+    }
+
+    field "HDR7" {
+        display-type: "CLASS-ENQ.H.DATA.LABEL"
+        comma-separator: false
+        display-section: Header
+        position {
+            column: 47
+            line: 12
+        }
+
+        operation: constant "\"Brought Forward\""
+    }
+
+    field "ACCOUNT.NUMBER" {
+        length: 16
+        alignment: Left
+        comma-separator: false
+        processing-mode: Single
+        operation: application-field-name "ACCOUNT.NUMBER"
+    }
+
+    field "HANDOFF.RECORD" {
+        comments: "The AC.STMT.HANDOFF record. Fields are delimited by \"~\"" break-condition {
+            break: Once
+        }
+
+        comma-separator: false
+        operation: field-extract "INITIAL.DATA"
+        conversion: extract from 2 to 1 delimited by ">"
+    }
+
+    field "OPENING.BALANCE" {
+        comments: "The opening balance of the statemen t, from the handoff record" break-condition {
+            break: Once
+        }
+
+        comma-separator: false
+        operation: field-extract "HANDOFF.RECORD"
+        conversion: extract from 13 to 0 delimited by "~"
+    }
+
+    field "ADDRESS.RECORD" {
+        comments: "The DE.ADDRESS record. fields are d elimited by \"~\"." break-condition {
+            break: Once
+        }
+
+        comma-separator: false
+        operation: field-extract "INITIAL.DATA"
+        conversion: extract from 1 to 1 delimited by ">"
+    }
+
+    field "LOCAL.CCY" {
+        comments: "Holds the local currency code"
+        format: User break-condition {
+            break: Once
+        }
+
+        comma-separator: false
+        operation: local-currency
+    }
+
+    field "NULL" {
+        comments: "Null - used for comparison" break-condition {
+            break: Once
+        }
+
+        comma-separator: false
+        operation: constant "\"\""
+    }
+
+    field "ONE" {
+        comments: "Used for incrementing the page" break-condition {
+            break: Once
+        }
+
+        comma-separator: false
+        operation: constant "\"1\""
+    }
+
+    field "ZERO" {
+        comments: "Zero - used for comparison" break-condition {
+            break: Once
+        }
+
+        comma-separator: false
+        operation: constant "\"0\""
+    }
+
+    field "PAGE.NUMBER" {
+        comments: "Current page number" break-condition {
+            break: Page
+        }
+
+        comma-separator: false
+        operation: calc "PAGE.NUMBER" + "ONE"
+    }
+
+    field "ENTRY.CCY" {
+        comments: "The account/entry currency."
+        comma-separator: false
+        operation: field-extract "HANDOFF.RECORD"
+        conversion: extract from 8 to 0 delimited by "~"
+    }
+
+    field "FOREIGN.AMT" {
+        comments: "Entry amount in foreign ccy"
+        length: 19
+        alignment: Right
+        comma-separator: false
+        processing-mode: Single
+        operation: application-field-name "AMOUNT.FCY"
+    }
+
+    field "LOCAL.AMT" {
+        comments: "Entry amount in local ccy"
+        length: 19
+        alignment: Right
+        comma-separator: false
+        processing-mode: Single
+        operation: application-field-name "AMOUNT.LCY"
+    }
+
+    field "ENTRY.AMOUNT" {
+        comments: "The amount of the entry."
+        comma-separator: false
+        operation: if "ENTRY.CCY" Equals "LOCAL.CCY" process "LOCAL.AMT" "FOREIGN.AMT"
+    }
+
+    field "ENTRY.SIGN" {
+        comments: "Entry sign based on reversal marker and ACCOUNT.PARAMETER setup"
+        comma-separator: false
+        operation: field-extract "ENTRY.AMOUNT"
+        conversion: call
+        jBC: "@ E.GET.ENTRY.SIGN"
+    }
+
+    field "CREDIT.AMOUNT" {
+        comments: "Entry amount if credit or reversal of credit(based on setup)"
+        format: Currency "ENTRY.CCY" negative-pattern -#
+        comma-separator: false
+        operation: if "ENTRY.SIGN" Equals "\"CREDIT\"" process "ENTRY.AMOUNT" "NULL"
+    }
+
+    field "DEBIT.AMOUNT" {
+        comments: "Entry amount if debit or reversal o f debit(based on setup)"
+        comma-separator: false
+        display-section: Header
+        operation: if "ENTRY.SIGN" Equals "\"DEBIT\"" process "ENTRY.AMOUNT" "NULL"
+    }
+
+    field "TOTAL.ENTRY.AMOUNT" {
+        comments: "Total of all entries processed"
+        comma-separator: false
+        operation: total "ENTRY.AMOUNT"
+    }
+
+    field "PAGE.BROUGHT.FWD" {
+        comments: "Balance brought forward. Should be used as the brought forward for eac h new page" break-condition {
+            break: Page
+        }
+
+        comma-separator: false
+        operation: calc "TOTAL.ENTRY.AMOUNT" + "OPENING.BALANCE"
+    }
+
+    field "ENTRY.ACCUMULATOR" {
+        comments: "Running total of all entries"
+        comma-separator: false
+        operation: calc "ENTRY.ACCUMULATOR" + "ENTRY.AMOUNT"
+    }
+
+    field "RUNNING.BALANCE" {
+        comments: "Running account balance * DO NOT MO DIFY THE ABOVE FIELDS *"
+        comma-separator: false
+        operation: calc "OPENING.BALANCE" + "ENTRY.ACCUMULATOR"
+    }
+
+    field "AC.OPEN.DATE" {
+        comments: "Account Opening Date"
+        comma-separator: false
+        display-section: Header
+        operation: field-extract "ACCOUNT.NUMBER"
+        conversion: getFrom "ACCOUNT" "OPENING.DATE" false
+    }
+
+    field "STMT.FRM.DAT" {
+        comma-separator: false
+        display-section: Header
+        operation: field-extract "HANDOFF.RECORD"
+        conversion: extract from 12 to 0 delimited by "~"
+    }
+
+    field "H.PAGE.NUMBER" {
+        comments: "Page number"
+        display-type: "CLASS-ENQ.H.DATA" break-condition {
+            break: Page
+        }
+
+        length: 3
+        alignment: Right
+        comma-separator: false
+        display-section: Header
+        operation: field-extract "PAGE.NUMBER"
+    }
+
+    field "ACCOUNT.TITLE.1" {
+        comments: "Account Title 1"
+        display-type: "CLASS-ENQ.H.DATA" break-condition {
+            break: Page
+        }
+
+        length: 35
+        alignment: Left
+        comma-separator: false
+        display-section: Header
+        position {
+            column: 3
+            line: 1
+        }
+
+        operation: field-extract "ACCOUNT.NUMBER"
+        conversion: getFrom "ACCOUNT" "ACCOUNT.TITLE.1" false
+    }
+
+    field "ACCOUNT.TITLE.2" {
+        comments: "Account Title 2"
+        display-type: "CLASS-ENQ.H.DATA" break-condition {
+            break: Page
+        }
+
+        length: 35
+        alignment: Left
+        comma-separator: false
+        display-section: Header
+        position {
+            column: 3
+            line: 2
+        }
+
+        operation: field-extract "ACCOUNT.NUMBER"
+        conversion: getFrom "ACCOUNT" "ACCOUNT.TITLE.2" false
+    }
+
+    field "H.NAME1" {
+        comments: "Customer name 1"
+        display-type: "CLASS-ENQ.H.DATA" break-condition {
+            break: Page
+        }
+
+        comma-separator: false
+        display-section: Header
+        position {
+            column: 3
+            line: 3
+        }
+
+        operation: field-extract "ADDRESS.RECORD"
+        conversion: extract from 7 to 0 delimited by "~"
+    }
+
+    field "H.NAME.2" {
+        comments: "Customer name 2"
+        display-type: "CLASS-ENQ.H.DATA" break-condition {
+            break: Page
+        }
+
+        length: 30
+        alignment: Left
+        comma-separator: false
+        display-section: Header
+        position {
+            column: 3
+            line: 4
+        }
+
+        operation: field-extract "ADDRESS.RECORD"
+        conversion: extract from 8 to 0 delimited by "~"
+    }
+
+    field "H.STREET" {
+        comments: "Customer address - street"
+        display-type: "CLASS-ENQ.H.DATA" break-condition {
+            break: Page
+        }
+
+        comma-separator: false
+        display-section: Header
+        position {
+            column: 3
+            line: 5
+        }
+
+        operation: field-extract "ADDRESS.RECORD"
+        conversion: extract from 9 to 0 delimited by "~"
+    }
+
+    field "H.TOWN" {
+        comments: "Customer address - town"
+        display-type: "CLASS-ENQ.H.DATA" break-condition {
+            break: Page
+        }
+
+        length: 35
+        alignment: Left
+        comma-separator: false
+        display-section: Header
+        position {
+            column: 3
+            line: 6
+        }
+
+        operation: field-extract "ADDRESS.RECORD"
+        conversion: extract from 10 to 0 delimited by "~"
+    }
+
+    field "H.POST.CODE" {
+        comments: "Customer Post Code"
+        display-type: "CLASS-ENQ.H.DATA" break-condition {
+            break: Page
+        }
+
+        length: 25
+        alignment: Left
+        comma-separator: false
+        display-section: Header
+        position {
+            column: 3
+            line: 7
+        }
+
+        operation: field-extract "ADDRESS.RECORD"
+        conversion: extract from 11 to 0 delimited by "~"
+    }
+
+    field "H.COUNTRY" {
+        comments: "Customer Country"
+        display-type: "CLASS-ENQ.H.DATA" break-condition {
+            break: Page
+        }
+
+        length: 25
+        alignment: Left
+        comma-separator: false
+        display-section: Header
+        position {
+            column: 3
+            line: 8
+        }
+
+        operation: field-extract "ADDRESS.RECORD"
+        conversion: extract from 12 to 0 delimited by "~"
+    }
+
+    field "D.ACCOUNT.NUMBER" {
+        comments: "Print account number on each page"
+        display-type: "CLASS-ENQ.H.ID" break-condition {
+            break: Page
+        }
+
+        length: 16
+        alignment: Left
+        comma-separator: false
+        display-section: Header
+        position {
+            column: 67
+            line: 3
+        }
+
+        processing-mode: Single
+        operation: field-extract "ACCOUNT.NUMBER"
+    }
+
+    field "ACCOUNT.TYPE" {
+        display-type: "CLASS-ENQ.H.DATA"
+        format: User break-condition {
+            break: Page
+        }
+
+        length: 35
+        alignment: Left
+        comma-separator: false
+        display-section: Header
+        position {
+            column: 67
+            line: 4
+        }
+
+        operation: field-extract "HANDOFF.RECORD"
+        conversion: extract from 9 to 0 delimited by "~"
+        conversion: getFrom "CATEGORY" "DESCRIPTION" false
+    }
+
+    field "ACCOUNT.CURRENCY" {
+        display-type: "CLASS-ENQ.H.DATA"
+        format: User break-condition {
+            break: Page
+        }
+
+        length: 35
+        alignment: Left
+        comma-separator: false
+        display-section: Header
+        position {
+            column: 67
+            line: 5
+        }
+
+        operation: field-extract "ENTRY.CCY"
+        conversion: getFrom "CURRENCY" "CCY.NAME" false
+    }
+
+    field "TODAYS.DATE" {
+        display-type: "CLASS-ENQ.H.DATA"
+        format: Date break-condition {
+            break: Page
+        }
+
+        length: 11
+        alignment: Left
+        comma-separator: false
+        display-section: Header
+        position {
+            column: 67
+            line: 6
+        }
+
+        operation: today
+    }
+
+    field "H.PAGE.NUMBER.02" {
+        comments: "Page Number"
+        display-type: "CLASS-ENQ.H.DATA" break-condition {
+            break: Page
+        }
+
+        length: 3
+        alignment: Left
+        comma-separator: false
+        display-section: Header
+        position {
+            column: 67
+            line: 7
+        }
+
+        operation: field-extract "PAGE.NUMBER"
+    }
+
+    field "JOINT.HOLDER" {
+        comma-separator: false
+        operation: field-extract "ACCOUNT.NUMBER"
+        conversion: call
+        jBC: "@ E.MB.FETCH.AC.JOINT.HOLDERS"
+    }
+
+    field "JOINT.HOLDER1" {
+        display-type: "CLASS-ENQ.H.DATA"
+        length: 350
+        alignment: Left
+        comma-separator: false
+        display-section: Header
+        position {
+            column: 67
+            line: 8
+        }
+
+        operation: field-extract "JOINT.HOLDER"
+    }
+
+    field "NULL.02" {
+        comma-separator: false
+        operation: constant "\"\""
+    }
+
+    field "STMT.FROM.DATE.1" {
+        display-type: "CLASS-ENQ.H.DATA"
+        format: Date
+        comma-separator: false
+        display-section: Header
+        position {
+            column: 67
+            line: 9
+        }
+
+        operation: if "STMT.FRM.DAT" Equals "NULL" process "AC.OPEN.DATE" "STMT.FRM.DAT"
+    }
+
+    field "STMT.TO.DATE" {
+        display-type: "CLASS-ENQ.H.DATA"
+        format: Date
+        comma-separator: false
+        display-section: Header
+        position {
+            column: 67
+            line: 10
+        }
+
+        operation: field-extract "HANDOFF.RECORD"
+        conversion: extract from 20 to 0 delimited by "~"
+    }
+
+    field "H.FORWARD" {
+        display-type: "CLASS-ENQ.H.DATA"
+        format: Currency "ENTRY.CCY" negative-pattern -# break-condition {
+            break: Page
+        }
+
+        length: 19
+        alignment: Right
+        comma-separator: false
+        display-section: Header
+        position {
+            column: 67
+            line: 12
+        }
+
+        operation: field-extract "PAGE.BROUGHT.FWD"
+    }
+
+    field "BOOKING.DATE" {
+        label {
+            en = "Booking Date"
+        }
+
+        format: Date
+        length: 11
+        alignment: Left
+        comma-separator: false
+        position {
+            column: 1
+        }
+
+        processing-mode: Single
+        operation: application-field-name "BOOKING.DATE"
+    }
+
+    field "TRANS.REFERENCE" {
+        label {
+            en = "Reference"
+        }
+
+        length: 25
+        alignment: Left
+        comma-separator: false
+        position {
+            column: 13
+        }
+
+        processing-mode: Single
+        operation: application-field-name "TRANS.REFERENCE"
+    }
+
+    field "TRANSACTION.CODE" {
+        label {
+            en = "Description"
+        }
+
+        length: 30
+        alignment: Left
+        comma-separator: false
+        position {
+            column: 38
+        }
+
+        processing-mode: Single
+        operation: application-field-name "TRANSACTION.CODE"
+        conversion: getFrom "TRANSACTION" "NARRATIVE" false
+    }
+
+    field "DESC" {
+        length: 90
+        alignment: Left
+        comma-separator: false
+        processing-mode: Single
+        operation: field-extract "@ID"
+        conversion: call
+        jBC: "@ E.GET.NARRATIVE"
+        conversion: call
+        jBC: "@ E.GET.SPECIAL.NARR"
+    }
+
+    field "VALID.DESC" {
+        comma-separator: false
+        operation: if "DESC" Equals "@ID" process "NULL" "DESC"
+    }
+
+    field "NARRATIVE" {
+        length: 34
+        alignment: Left
+        comma-separator: false
+        position {
+            column: 38
+            line: + 1
+        }
+
+        processing-mode: Multi
+        operation: application-field-name "NARRATIVE"
+        conversion: value 1
+    }
+
+    field "THEIR.REF" {
+        length: 30
+        alignment: Left
+        comma-separator: false
+        processing-mode: Single
+        operation: application-field-name "THEIR.REFERENCE"
+    }
+
+    field "CHK.NARR.REF" {
+        comma-separator: false
+        operation: if "NARRATIVE" Equals "THEIR.REF" process "NULL" "NARRATIVE"
+    }
+
+    field "VALUE.DATE" {
+        label {
+            en = "Value Date"
+        }
+
+        format: Date
+        length: 11
+        alignment: Right
+        comma-separator: false
+        position {
+            column: 72
+        }
+
+        processing-mode: Single
+        operation: application-field-name "VALUE.DATE"
+    }
+
+    field "ABS.DEBIT.AMT" {
+        format: Currency "ENTRY.CCY" negative-pattern -#
+        comma-separator: false
+        operation: field-extract "DEBIT.AMOUNT"
+        conversion: abs
+    }
+
+    field "D.AMOUNT" {
+        label {
+            en = "Debit"
+        }
+
+        length: 19
+        alignment: Right
+        comma-separator: false
+        position {
+            column: 83
+        }
+
+        operation: if "ABS.DEBIT.AMT" Greater "ZERO" process "ABS.DEBIT.AMT" "NULL"
+    }
+
+    field "TOTAL.D.AMOUNT" {
+        comma-separator: false
+        operation: total "DEBIT.AMOUNT"
+    }
+
+    field "C.AMOUNT" {
+        label {
+            en = "Credit"
+        }
+
+        format: Currency "ENTRY.CCY" negative-pattern -#
+        length: 19
+        alignment: Right
+        comma-separator: false
+        position {
+            column: 102
+        }
+
+        operation: field-extract "CREDIT.AMOUNT"
+    }
+
+    field "TOTAL.C.AMOUNT" {
+        comma-separator: false
+        operation: total "C.AMOUNT"
+    }
+
+    field "R.BALANCE" {
+        label {
+            en = "Closing Balance"
+        }
+
+        comments: "Running balance"
+        format: Currency "ENTRY.CCY" negative-pattern -#
+        length: 19
+        alignment: Right
+        comma-separator: true
+        position {
+            column: 121
+        }
+
+        operation: field-extract "RUNNING.BALANCE"
+    }
+
+    field "SYSTEM.ID" {
+        length: 4
+        alignment: Left
+        comma-separator: false
+        processing-mode: Single
+        operation: application-field-name "SYSTEM.ID"
+    }
+
+    field "STMT.ID" {
+        comments: "stmt entry id"
+        length: 90
+        alignment: Left
+        comma-separator: false
+        processing-mode: Single
+        operation: application-field-name "@ID"
+    }
+
+    field "BASE.APPL" {
+        comments: "Next level for drilldown"
+        comma-separator: false
+        operation: field-extract "SYSTEM.ID"
+        conversion: call
+        jBC: "@ E.READ.EB.SYSTEM.ID"
+    }
+
+    field "NO" {
+        comma-separator: false
+        operation: constant "\"NO\""
+    }
+
+    field "DELIM" {
+        comma-separator: false
+        operation: constant "\":\""
+    }
+
+    field "NEW.SYSTEM.ID" {
+        comma-separator: false
+        operation: calc "SYSTEM.ID":"DELIM"
+    }
+
+    field "NEW.BASE.APPL" {
+        length: 100
+        alignment: Left
+        comma-separator: false
+        operation: calc "NEW.SYSTEM.ID":"NEXT.ID"
+        conversion: call
+        jBC: "@ E.CONV.APPLN"
+    }
+
+    field "PS" {
+        break-condition {
+            break: Once
+        }
+
+        comma-separator: false
+        operation: constant "\"PS\""
+    }
+
+    field "FUN.SEE" {
+        comma-separator: false
+        operation: constant "\" S \""
+    }
+
+    field "PS.ID.FIN1" {
+        comma-separator: false
+        operation: calc "BASE.APPL":"FUN.SEE"
+    }
+
+    field "REFNO" {
+        length: 60
+        alignment: Left
+        comma-separator: false
+        processing-mode: Single
+        operation: application-field-name "TRANS.REFERENCE"
+    }
+
+    field "PS.ID.CHK" {
+        comma-separator: false
+        operation: field-extract "REFNO"
+        conversion: extract from 2 to 1 delimited by "."
+    }
+
+    field "PS.ID.FIN1.02" {
+        comma-separator: false
+        operation: calc "BASE.APPL":"FUN.SEE"
+    }
+
+    field "PS.ID.FIN" {
+        comma-separator: false
+        operation: calc "PS.ID.FIN1":"PS.ID.CHK"
+    }
+
+    field "NET.REF" {
+        comma-separator: false
+        operation: field-extract "REFNO"
+        conversion: extract from 1 to 1 delimited by "-"
+    }
+
+    field "NET.ENTRY" {
+        comma-separator: false
+        operation: constant "\"NET...\""
+    }
+
+    field "STMT.ENT.DET" {
+        comma-separator: false
+        operation: constant "\"ENQ STMT.ENT.DETAIL\""
+    }
+
+    field "NET.SEL.ID" {
+        comma-separator: false
+        operation: constant "\"STMT.ENTRY.ID EQ \""
+    }
+
+    field "NET.SEL.FORM" {
+        comma-separator: false
+        operation: if "NET.REF" Matches "NET.ENTRY" process "STMT.ID" "NULL"
+    }
+
+    field "FIN.NET.ID.FORM" {
+        comma-separator: false
+        operation: calc "NET.SEL.ID":"NET.SEL.FORM"
+    }
+
+    field "Y.TRAN.ID" {
+        comma-separator: false
+        operation: calc "BASE.APPL":"FUN.SEE"
+    }
+
+    field "AA.ID.FORM" {
+        comma-separator: false
+        operation: constant "\"AA.ARRANGEMENT.ACTIVITY\""
+    }
+
+    field "AA.ID.FIN1" {
+        comma-separator: false
+        operation: calc "AA.ID.FORM":"FUN.SEE"
+    }
+
+    field "AA.ID.FIN" {
+        comma-separator: false
+        operation: calc "AA.ID.FIN1":"REFNO"
+    }
+
+    field "TRANS.REF" {
+        length: 60
+        alignment: Left
+        comma-separator: false
+        processing-mode: Single
+        operation: application-field-name "TRANS.REFERENCE"
+        conversion: call
+        jBC: "@ E.TRN.REF.CONV"
+    }
+
+    field "Y.TRAN.ID.FIN" {
+        comma-separator: false
+        operation: calc "Y.TRAN.ID":"TRANS.REF"
+    }
+
+    field "PP.ID.FORM" {
+        comma-separator: false
+        operation: constant "\"PP.ORDER.ENTRY,AUTH\""
+    }
+
+    field "PP.ID.FIN1" {
+        comma-separator: false
+        operation: calc "PP.ID.FORM":"FUN.SEE"
+    }
+
+    field "PP.REFNUM" {
+        comma-separator: false
+        operation: constant "\"111\""
+    }
+
+    field "PP.ID.FIN" {
+        comma-separator: false
+        operation: calc "PP.ID.FIN1":"PP.REFNUM"
+    }
+
+    field "PP" {
+        break-condition {
+            break: Once
+        }
+
+        comma-separator: false
+        operation: constant "\"PP\""
+    }
+
+    field "Y.STMT.ID" {
+        comma-separator: false
+        operation: calc "STMT.ENTRY":"FUN.SEE"
+    }
+
+    field "Y.STMT.ID.FIN" {
+        comma-separator: false
+        operation: calc "Y.STMT.ID":"STMT.ID"
+    }
+
+    field "Y.PS.ID" {
+        comma-separator: false
+        operation: if "SYSTEM.ID" Equals "PS" process "PS.ID.FIN" "Y.TRAN.ID.FIN"
+    }
+
+    field "Y.PP.ID" {
+        comma-separator: false
+        operation: if "SYSTEM.ID" Equals "PP" process "PP.ID.FIN" "Y.PS.ID"
+    }
+
+    field "Y.AA.ID" {
+        comma-separator: false
+        operation: if "BASE.APPL" Equals "AA.ID.FORM" process "AA.ID.FIN" "Y.PP.ID"
+    }
+
+    field "NET.DET.ID" {
+        comma-separator: false
+        operation: if "REFNO" Matches "NET.ENTRY" process "STMT.ENT.DET" "Y.DRILL"
+    }
+
+    field "PP.COMP.POP" {
+        comma-separator: false
+        operation: if "SYSTEM.ID" Equals "PP" process "PP.COMP" "NULL"
+    }
+
+    field "PP.TRANS.REF.POP" {
+        comma-separator: false
+        operation: if "SYSTEM.ID" Equals "PP" process "PP.TRANS.REF" "NULL"
+    }
+
+    field "NO.02" {
+        comma-separator: false
+        operation: constant "\"N\""
+    }
+
+    field "APPL.NAME" {
+        comma-separator: false
+        operation: if "BASE.APPL" Equals "NULL" process "Y.STMT.ID.FIN" "NET.DET.ID"
+    }
+
+    field "Y.DRILL" {
+        comma-separator: false
+        operation: if "BASE.APPL" Equals "NULL" process "Y.STMT.ID.FIN" "Y.AA.ID"
+    }
+
+    field "NEXT.APPL" {
+        comma-separator: false
+        operation: if "APPL.DRILLDOWN" Equals "NO" process "Y.STMT.ID.FIN" "NET.DET.ID"
+    }
+
+    field "DRILL.DOWN" {
+        comma-separator: false
+        operation: if "APPL.DRILLDOWN" Equals "NO" process "Y.STMT.ID.FIN" "NET.DET.ID"
+    }
+
+    field "NET.DET.ID.02" {
+        comma-separator: false
+        operation: if "REFNO" Matches "NET.ENTRY" process "STMT.ENT.DET" "Y.DRILL"
+    }
+
+    field "NET.ENTRY.02" {
+        comma-separator: false
+        operation: constant "\"NET...\""
+    }
+
+    field "STMT.ENT.DET.02" {
+        comma-separator: false
+        operation: constant "\"ENQ STMT.ENT.DETAIL\""
+    }
+
+    field "FINAL.PAID.IN.TXT" {
+        break-condition {
+            break: End
+        }
+
+        comma-separator: false
+        display-section: Footer
+        position {
+            column: 47
+            line: + 2
+        }
+
+        processing-mode: Single
+        operation: constant "\"Total Debits :\""
+    }
+
+    field "D.TOTAL.D.AMOUNT" {
+        format: Currency "ENTRY.CCY" negative-pattern -# break-condition {
+            break: End
+        }
+
+        length: 19
+        alignment: Right
+        comma-separator: true
+        display-section: Footer
+        position {
+            column: 67
+            line: + 2
+        }
+
+        processing-mode: Single
+        operation: field-extract "TOTAL.D.AMOUNT"
+    }
+
+    field "FINAL.PAID.OUT.TXT" {
+        break-condition {
+            break: End
+        }
+
+        comma-separator: false
+        display-section: Footer
+        position {
+            column: 47
+            line: + 3
+        }
+
+        processing-mode: Single
+        operation: constant "\"Total Credits :\""
+    }
+
+    field "D.TOTAL.C.AMOUNT" {
+        format: Currency "ENTRY.CCY" negative-pattern -# break-condition {
+            break: End
+        }
+
+        length: 19
+        alignment: Right
+        comma-separator: true
+        display-section: Footer
+        position {
+            column: 67
+            line: + 3
+        }
+
+        processing-mode: Single
+        operation: field-extract "TOTAL.C.AMOUNT"
+    }
+
+    field "CLOSING.BAL.TXT" {
+        break-condition {
+            break: End
+        }
+
+        comma-separator: false
+        display-section: Footer
+        position {
+            column: 47
+            line: + 5
+        }
+
+        processing-mode: Single
+        operation: constant "\"Closing Balance : \""
+    }
+
+    field "CLOSING.BALANCE" {
+        format: Currency "ENTRY.CCY" negative-pattern -# break-condition {
+            break: End
+        }
+
+        length: 19
+        alignment: Right
+        comma-separator: true
+        display-section: Footer
+        position {
+            column: 67
+            line: + 5
+        }
+
+        processing-mode: Single
+        operation: field-extract "RUNNING.BALANCE"
+    }
+
+    field "BC.PAGE" {
+        comma-separator: false
+        operation: break-line 59
+    }
+
+    field "CUST.NO" {
+        length: 10
+        alignment: Right
+        comma-separator: false
+        processing-mode: Single
+        operation: application-field-name "CUSTOMER.ID"
+    }
+
+    field "PP.COMP" {
+        length: 60
+        alignment: Left
+        comma-separator: false
+        processing-mode: Single
+        operation: application-field-name "TRANS.REFERENCE"
+        conversion: call
+        jBC: "@ E.CONV.PP.COMPANY"
+    }
+
+    field "PP.TRANS.REF" {
+        length: 60
+        alignment: Left
+        comma-separator: false
+        processing-mode: Single
+        operation: application-field-name "TRANS.REFERENCE"
+    }
+
+    field "ZERORECORDS" {
+        display-type: "CLASS-ENQ.NORECS" break-condition {
+            break: None
+        }
+
+        comma-separator: false
+        display-section: Header
+        position {
+            column: 1
+        }
+
+        operation: constant "\"No Statement available for the Account\""
+    }
+}

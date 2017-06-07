@@ -1,0 +1,42 @@
+domain T24 {
+    use common.CoreCommands.*
+    use common.HTTPEvents.*
+    use common.ODataCommands.*
+    use common.T24Commands.*
+    use common.T24Events.*
+    use common.NextState.*
+    rim enqAccountStatement {
+        command GETEntities
+        command GETEntity
+        basepath: "/{companyid}"
+  
+        initial resource Home {
+            type: item        
+            entity: enqAccountStatement      
+            view: NoopGET            
+            GET -> T24.enqAccountStatement.enqAccountStatements
+            GET -> T24.enqAccountStatement.enqAccountStatement
+        }
+          
+        resource enqAccountStatements   @ Annotation : tags ( "Accounts Statements" ) {
+            type: collection
+            entity: enqAccountStatement
+            commands [ GET : GETEntities {
+                properties [ filter = "{filter}" ]
+                } ]
+            path: "/enqAccountStatements()"
+            GET *-> enqAccountStatement {
+                parameters [ id = "{PrimaryKey}" ]
+            }
+        }
+    
+        resource enqAccountStatement   @ Annotation : tags ( "Account Statements" ) {
+            type: item
+            entity: enqAccountStatement
+            commands [ GET : GETEntity ]
+            path: "/enqAccountStatements('{id}')"
+        }
+    
+    }
+    
+}

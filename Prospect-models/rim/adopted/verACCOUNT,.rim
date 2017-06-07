@@ -1,0 +1,827 @@
+domain T24 {
+    use common.CoreCommands.*
+    use common.HTTPEvents.*
+    use common.ODataCommands.*
+    use common.T24Commands.*
+    use common.T24Events.*
+    use common.NextState.*
+    use common.Errors.*
+    use T24.ContextEnquiry.*
+    rim verAccount {
+        command NoopGET
+        command T24FieldMetadata
+        command T24NextState
+        command T24SilentState
+        command GetEntity
+        command GETEntities
+        command GetIauthEntities
+        command GetHauthEntities
+        command InterimTransition
+        command T24LiveState
+        command T24IAuthState
+        command T24HAuthState
+        command T24RAuthState
+        command T24HeldState
+        command T24ReversedState
+        command CreateEntity
+        command T24NewState
+        command InputEntity
+        command HoldEntity
+        command AuthoriseEntity
+        command ReviewEntity
+        command ReverseEntity
+        command ValidateEntity
+        command DeleteEntity
+        command CopyEntity
+        command PasteEntity
+        command RestoreEntity
+        command GetChangedValues
+        command T24Enrichment
+        command CheckAutoIdSupport
+        basepath: "/{companyid}"
+    
+        initial resource Home {
+            type: item        
+            entity: verAccount      
+            view: NoopGET            
+            GET -> T24.verAccount.verAccounts
+            GET -> T24.verAccount.verAccount
+        }
+        
+        resource verAccounts_metadata {
+            type: collection
+            entity: T24FieldMetadata
+            commands [ POST : T24FieldMetadata ]
+            relations [ "http://temenostech.temenos.com/rels/metadata" ]
+            path: "/verAccounts()/metadata"
+        }
+    
+        resource verAccount_errorHandler {
+            type: item
+            entity: verAccount
+            commands [ GET : NoopGET ]
+            relations [ "http://temenostech.temenos.com/rels/error" ]
+            path: "/verAccounts('{id}')/error"
+            GET +-> "common.Errors.ProcessErrors" {
+                title: "errors"
+            }
+            POST +-> verAccounts_metadata {
+                title: "metadata"
+            }
+        }
+    
+        resource verAccount_ContextEnquiries {
+            type: item
+            entity: verAccount
+            commands [ GET : NoopGET ]
+            path: "/verAccount/ContextEnquiries"
+            GET -> "T24.enqlistAccount.enqlistAccounts" {
+                parameters [ param = "list" ]
+                title: "List Live File"
+            }
+            GET -> "T24.enqlistAccount.enqlistAccountUnauths" {
+                parameters [ param = "list" ]
+                title: "List Unauth File"
+            }
+            GET -> "T24.enqlistAccount.enqlistAccountHists" {
+                parameters [ param = "list" ]
+                title: "List History File"
+            }
+            GET -> "T24.enqlistAccount.enqlistAccounts" {
+                title: "Search Live File"
+            }
+            GET -> "T24.enqlistAccount.enqlistAccountUnauths" {
+                title: "Search Unauth File"
+            }
+            GET -> "T24.enqlistAccount.enqlistAccountHists" {
+                title: "Search History File"
+            }
+            GET +-> "T24.ContextEnquiry.ContextEnquiryList" {
+                parameters [ entity = "verAccount" ]
+                title: "Other context Enquiries"
+            }
+        }
+    
+        resource verAccount_silent {
+            type: item
+            entity: verAccount
+            commands [ GET : T24SilentState ]
+        }
+    
+        resource verAccountEntry {
+            type: item
+            entity: verAccount
+            commands [ GET : NoopGET ]
+            relations [ "http://schemas.microsoft.com/ado/2007/08/dataservices/related/verAccount","http://temenostech.temenos.com/rels/contract" ]
+            path: "/verAccountEntry"
+            GET --> verAccount_silent {
+            }
+            GET --> nextState {
+            }
+            GET --> verAccount {
+                parameters [ id = "{AccountNumber}" ]
+            }
+            POST -> verAccount_new {
+                title: "create new deal"
+                condition: OK(verAccount_autoId)
+            }
+            POST -> verAccount_populate {
+                title: "populate existing deal"
+            }
+            GET -> verAccount {
+                parameters [ id = "@" ]
+                title: "action"
+            }
+            GET -> verAccount_see {
+                parameters [ id = "@" ]
+                title: "see record"
+            }
+            POST -> verAccount_copy {
+                title: "Copy deal"
+            }
+            POST -> verAccount_paste {
+                parameters [ id = "{AccountNumber}" ]
+                title: "Paste deal"
+            }
+            POST -> verAccount_enrichment {
+                title: "Enrich deal"
+            }
+            GET +-> verAccount_ContextEnquiries {
+                title: "All context Enquiries"
+            }
+        }
+    
+        resource verAccount_see {
+            type: item
+            entity: verAccount
+            commands [ GET : GetEntity ]
+            relations [ "http://schemas.microsoft.com/ado/2007/08/dataservices/related/verAccount","http://temenostech.temenos.com/rels/see" ]
+            path: "/verAccounts('{id}')/see"
+            POST +-> verAccounts_metadata {
+                title: "metadata"
+            }
+            GET -> verAccount {
+                parameters [ id = "{AccountNumber}" ]
+                title: "Action"
+            }
+            GET -> verAccount_ContextEnquiries {
+                title: "All Context Enquiries"
+            }
+            GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+                parameters [ entity = "verAccount" ]
+                title: "Context Enquiries"
+            }
+        }
+    
+        resource verAccounts  @ Annotation : tags ( "Accounts" ) {
+            type: collection
+            entity: verAccount
+            commands [ GET : GETEntities {
+                properties [ filter = "{filter}" ]
+                } ]
+            path: "/verAccounts()"
+            GET *-> verAccount {
+                parameters [ id = "{AccountNumber}" ]
+            }
+            GET *-> verAccount_see {
+                parameters [ id = "{AccountNumber}" ]
+                title: "see record"
+            }
+            POST -> verAccount_new {
+                title: "create new deal"
+                condition: OK(verAccount_autoId)
+            }
+            POST -> verAccount_populate {
+                title: "populate existing deal"
+            }
+            PUT *-> verAccount_input {
+                parameters [ id = "{AccountNumber}" ]
+                title: "input deal"
+            }
+            POST *-> verAccount_audit {
+                parameters [ id = "{AccountNumber}" ]
+                title: "audit deal"
+            }
+            POST *-> verAccount_reverse {
+                parameters [ id = "{AccountNumber}" ]
+                title: "reverse deal"
+            }
+        }
+    
+        resource verAccounts_IAuth {
+            type: collection
+            entity: verAccount
+            commands [ GET : GetIauthEntities {
+                properties [ filter = "{filter}" ]
+                } ]
+            path: "/verAccounts_IAuth()"
+            GET *-> verAccount_IAuth {
+                parameters [ id = "{AccountNumber}" ]
+            }
+            POST -> verAccount_new {
+                title: "create new deal"
+                condition: OK(verAccount_autoId)
+            }
+            POST -> verAccount_populate {
+                title: "populate existing deal"
+            }
+            PUT *-> verAccount_input {
+                parameters [ id = "{AccountNumber}" ]
+                title: "input deal"
+            }
+            DELETE *-> verAccount_delete {
+                parameters [ id = "{AccountNumber}" ]
+                title: "delete"
+            }
+            PUT *-> verAccount_authorise {
+                parameters [ id = "{AccountNumber}" ]
+                title: "authorise deal"
+            }
+        }
+    
+        resource verAccounts_HAuth {
+            type: collection
+            entity: verAccount
+            commands [ GET : GetHauthEntities {
+                properties [ filter = "{filter}" ]
+                } ]
+            path: "/verAccounts_HAuth()"
+            GET *-> verAccount_HAuth {
+                parameters [ id = "{AccountNumber}" ]
+            }
+            POST -> verAccount_new {
+                title: "create new deal"
+                condition: OK(verAccount_autoId)
+            }
+            POST -> verAccount_populate {
+                title: "populate existing deal"
+            }
+        }
+    
+        resource verAccount  @ Annotation : tags ( "Account" ) {
+            type: item
+            entity: verAccount
+            commands [ GET : GetEntity, GET : InterimTransition ]
+            path: "/verAccounts('{id}')"
+            GET --> verAccount_Live {
+                parameters [ id = "{AccountNumber}" ]
+            }
+            GET --> verAccount_IAuth {
+                parameters [ id = "{AccountNumber}" ]
+            }
+            GET --> verAccount_HAuth {
+                parameters [ id = "{AccountNumber}" ]
+            }
+            GET --> verAccount_RAuth {
+                parameters [ id = "{AccountNumber}" ]
+            }
+            GET --> verAccount_Held {
+                parameters [ id = "{AccountNumber}" ]
+            }
+            GET --> verAccount_Reversed {
+                parameters [ id = "{AccountNumber}" ]
+            }
+            GET --> verAccount_new {
+            }
+        }
+    
+        resource verAccount_Live {
+            type: item
+            entity: verAccount
+            commands [ GET : GetEntity, GET : T24LiveState ]
+            path: "/verAccounts_Live('{id}')"
+            POST +-> verAccounts_metadata {
+                title: "metadata"
+            }
+            GET +-> "common.Messages.ProcessMessages" {
+                title: "Messages"
+            }
+            PUT -> verAccount_input {
+                parameters [ id = "{AccountNumber}" ]
+                title: "input deal"
+            }
+            POST -> verAccount_validate {
+                parameters [ id = "{AccountNumber}" ]
+                title: "validate deal"
+            }
+            POST -> verAccount_hold {
+                parameters [ id = "{AccountNumber}" ]
+                title: "hold deal"
+            }
+            POST -> verAccount_reverse {
+                parameters [ id = "{AccountNumber}" ]
+                title: "reverse deal"
+            }
+            POST -> verAccount_audit {
+                parameters [ id = "{AccountNumber}" ]
+                title: "audit deal"
+            }
+            POST -> verAccount_copy {
+                title: "Copy deal"
+            }
+            POST -> verAccount_paste {
+                parameters [ id = "{AccountNumber}" ]
+                title: "Paste deal"
+            }
+            GET -> verAccount_ContextEnquiries {
+                title: "All Context Enquiries"
+            }
+            GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+                parameters [ entity = "verAccount" ]
+                title: "Context Enquiries"
+            }
+        }
+    
+        resource verAccount_IAuth {
+            type: item
+            entity: verAccount
+            commands [ GET : GetEntity, GET : T24IAuthState ]
+            path: "/verAccounts_IAuth('{id}')"
+            POST +-> verAccounts_metadata {
+                title: "metadata"
+            }
+            GET +-> "common.Messages.ProcessMessages" {
+                title: "Messages"
+            }
+            GET +-> verAccount_changedValues {
+                parameters [ id = "{AccountNumber}" ]
+                title: "changed values"
+            }
+            PUT -> verAccount_input {
+                parameters [ id = "{AccountNumber}" ]
+                title: "input deal"
+            }
+            POST -> verAccount_validate {
+                parameters [ id = "{AccountNumber}" ]
+                title: "validate deal"
+            }
+            POST -> verAccount_hold {
+                parameters [ id = "{AccountNumber}" ]
+                title: "hold deal"
+            }
+            DELETE -> verAccount_delete {
+                parameters [ id = "{AccountNumber}" ]
+                title: "delete"
+            }
+            POST -> verAccount_authorise {
+                parameters [ id = "{AccountNumber}" ]
+                title: "authorise deal"
+            }
+            POST -> verAccount_copy {
+                title: "Copy deal"
+            }
+            POST -> verAccount_paste {
+                parameters [ id = "{AccountNumber}" ]
+                title: "Paste deal"
+            }
+            GET -> verAccount_ContextEnquiries {
+                title: "All Context Enquiries"
+            }
+            GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+                parameters [ entity = "verAccount" ]
+                title: "Context Enquiries"
+            }
+        }
+    
+        resource verAccount_HAuth {
+            type: item
+            entity: verAccount
+            commands [ GET : GetEntity, GET : T24HAuthState ]
+            path: "/verAccounts_HAuth('{id}')"
+            GET +-> "common.Messages.ProcessMessages" {
+                title: "Messages"
+            }
+            POST -> verAccount_authorise {
+                parameters [ id = "{AccountNumber}" ]
+                title: "authorise deal"
+            }
+            POST -> verAccount_hold {
+                parameters [ id = "{AccountNumber}" ]
+                title: "hold deal"
+            }
+            DELETE -> verAccount_delete {
+                parameters [ id = "{AccountNumber}" ]
+                title: "delete"
+            }
+            POST -> verAccount_copy {
+                title: "Copy deal"
+            }
+            POST -> verAccount_paste {
+                parameters [ id = "{AccountNumber}" ]
+                title: "Paste deal"
+            }
+            GET -> verAccount_ContextEnquiries {
+                title: "All Context Enquiries"
+            }
+            GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+                parameters [ entity = "verAccount" ]
+                title: "Context Enquiries"
+            }
+        }
+    
+        resource verAccount_RAuth {
+            type: item
+            entity: verAccount
+            commands [ GET : GetEntity, GET : T24RAuthState ]
+            path: "/verAccounts_RAuth('{id}')"
+            GET +-> "common.Messages.ProcessMessages" {
+                title: "Messages"
+            }
+            DELETE -> verAccount_delete {
+                parameters [ id = "{AccountNumber}" ]
+                title: "delete"
+            }
+            POST -> verAccount_authorise {
+                parameters [ id = "{AccountNumber}" ]
+                title: "authorise deal"
+            }
+            POST -> verAccount_copy {
+                title: "Copy deal"
+            }
+            POST -> verAccount_paste {
+                parameters [ id = "{AccountNumber}" ]
+                title: "Paste deal"
+            }
+            GET -> verAccount_ContextEnquiries {
+                title: "All Context Enquiries"
+            }
+            GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+                parameters [ entity = "verAccount" ]
+                title: "Context Enquiries"
+            }
+        }
+    
+        resource verAccount_Held {
+            type: item
+            entity: verAccount
+            commands [ GET : GetEntity, GET : T24HeldState ]
+            path: "/verAccounts_Held('{id}')"
+            POST +-> verAccounts_metadata {
+                title: "metadata"
+            }
+            GET +-> "common.Messages.ProcessMessages" {
+                title: "Messages"
+            }
+            PUT -> verAccount_input {
+                parameters [ id = "{AccountNumber}" ]
+                title: "input deal"
+            }
+            POST -> verAccount_validate {
+                parameters [ id = "{AccountNumber}" ]
+                title: "validate deal"
+            }
+            POST -> verAccount_hold {
+                parameters [ id = "{AccountNumber}" ]
+                title: "hold deal"
+            }
+            DELETE -> verAccount_delete {
+                parameters [ id = "{AccountNumber}" ]
+                title: "delete"
+            }
+            POST -> verAccount_copy {
+                title: "Copy deal"
+            }
+            POST -> verAccount_paste {
+                parameters [ id = "{AccountNumber}" ]
+                title: "Paste deal"
+            }
+            GET -> verAccount_ContextEnquiries {
+                title: "All Context Enquiries"
+            }
+            GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+                parameters [ entity = "verAccount" ]
+                title: "Context Enquiries"
+            }
+        }
+    
+        resource verAccount_Reversed {
+            type: item
+            entity: verAccount
+            commands [ GET : GetEntity, GET : T24ReversedState ]
+            path: "/verAccounts_Reversed('{id}')"
+            GET +-> "common.Messages.ProcessMessages" {
+                title: "Messages"
+            }
+            POST -> verAccount_restore {
+                parameters [ id = "{AccountNumber}" ]
+                title: "restore deal"
+            }
+            POST -> verAccount_copy {
+                title: "Copy deal"
+            }
+            POST -> verAccount_paste {
+                parameters [ id = "{AccountNumber}" ]
+                title: "Paste deal"
+            }
+            GET -> verAccount_ContextEnquiries {
+                title: "All Context Enquiries"
+            }
+            GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+                parameters [ entity = "verAccount" ]
+                title: "Context Enquiries"
+            }
+        }
+    
+        resource verAccount_new {
+            type: item
+            entity: verAccount
+            commands [ POST : CreateEntity, GET : T24NewState ]
+            relations [ "http://schemas.microsoft.com/ado/2007/08/dataservices/related/verAccount","http://temenostech.temenos.com/rels/new" ]
+            path: "/verAccounts()/new"
+            GET --> verAccount_silent {
+            }
+            GET --> nextState {
+            }
+            GET --> verAccount {
+                parameters [ id = "{AccountNumber}" ]
+            }
+            POST +-> verAccounts_metadata {
+                title: "metadata"
+            }
+            PUT -> verAccount_input {
+                parameters [ id = "{AccountNumber}" ]
+                title: "input deal"
+            }
+            POST -> verAccount_validate {
+                parameters [ id = "{AccountNumber}" ]
+                title: "validate deal"
+            }
+            POST -> verAccount_hold {
+                parameters [ id = "{AccountNumber}" ]
+                title: "hold deal"
+            }
+            POST -> verAccount_copy {
+                title: "Copy deal"
+            }
+            POST -> verAccount_paste {
+                parameters [ id = "{AccountNumber}" ]
+                title: "Paste deal"
+            }
+            GET -> verAccount_ContextEnquiries {
+                title: "All Context Enquiries"
+            }
+            GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+                parameters [ entity = "verAccount" ]
+                title: "Context Enquiries"
+            }
+            onerror --> verAccount_errorHandler
+        }
+    
+        resource verAccount_populate {
+            type: item
+            entity: verAccount
+            commands [ POST : CreateEntity ]
+            relations [ "http://schemas.microsoft.com/ado/2007/08/dataservices/related/verAccount","http://temenostech.temenos.com/rels/populate" ]
+            path: "/verAccounts()/populate"
+            GET --> verAccount_silent {
+            }
+            GET --> nextState {
+            }
+            GET --> verAccount {
+                parameters [ id = "{AccountNumber}" ]
+            }
+            POST +-> verAccounts_metadata {
+                title: "metadata"
+            }
+            PUT -> verAccount_input {
+                parameters [ id = "{AccountNumber}" ]
+                title: "input deal"
+            }
+            POST -> verAccount_validate {
+                parameters [ id = "{AccountNumber}" ]
+                title: "validate deal"
+            }
+            POST -> verAccount_hold {
+                parameters [ id = "{AccountNumber}" ]
+                title: "hold deal"
+            }
+            POST -> verAccount_copy {
+                title: "Copy deal"
+            }
+            GET -> verAccount_ContextEnquiries {
+                title: "All Context Enquiries"
+            }
+            GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+                parameters [ entity = "verAccount" ]
+                title: "Context Enquiries"
+            }
+            onerror --> verAccount_errorHandler
+        }
+    
+        resource verAccount_input {
+            type: item
+            entity: verAccount
+            commands [ PUT : InputEntity, POST : InputEntity ]
+            relations [ "http://temenostech.temenos.com/rels/input" ]
+            path: "/verAccounts('{id}')"
+            GET --> verAccount_silent {
+            }
+            GET --> nextState {
+            }
+            GET --> verAccount {
+                parameters [ id = "{AccountNumber}" ]
+            }
+            onerror --> verAccount_errorHandler
+        }
+    
+        resource verAccount_hold {
+            type: item
+            entity: verAccount
+            commands [ POST : HoldEntity ]
+            relations [ "http://temenostech.temenos.com/rels/hold" ]
+            path: "/verAccounts('{id}')/hold"
+            GET --> verAccount_silent {
+            }
+            GET --> nextState {
+            }
+            GET --> verAccount {
+                parameters [ id = "{AccountNumber}" ]
+            }
+            onerror --> verAccount_errorHandler
+        }
+    
+        resource verAccount_authorise {
+            type: item
+            entity: verAccount
+            commands [ PUT : AuthoriseEntity ]
+            relations [ "http://temenostech.temenos.com/rels/authorise" ]
+            path: "/verAccounts('{id}')/authorise"
+            GET --> verAccount_silent {
+            }
+            GET --> nextState {
+            }
+            GET --> verAccount {
+                parameters [ id = "{AccountNumber}" ]
+            }
+            onerror --> verAccount_errorHandler
+        }
+    
+        resource verAccount_audit {
+            type: item
+            entity: verAccount
+            commands [ POST : ReviewEntity ]
+            relations [ "http://temenostech.temenos.com/rels/review" ]
+            path: "/verAccounts('{id}')/review"
+            GET --> verAccount_silent {
+            }
+            GET --> nextState {
+            }
+            GET --> verAccount {
+                parameters [ id = "{AccountNumber}" ]
+            }
+            onerror --> verAccount_errorHandler
+        }
+    
+        resource verAccount_reverse {
+            type: item
+            entity: verAccount
+            commands [ PUT : ReverseEntity ]
+            relations [ "http://temenostech.temenos.com/rels/reverse" ]
+            path: "/verAccounts('{id}')/reverse"
+            GET --> verAccount_silent {
+            }
+            GET --> nextState {
+            }
+            GET --> verAccount {
+                parameters [ id = "{AccountNumber}" ]
+            }
+            onerror --> verAccount_errorHandler
+        }
+    
+        resource verAccount_validate {
+            type: item
+            entity: verAccount
+            commands [ POST : ValidateEntity ]
+            relations [ "http://temenostech.temenos.com/rels/validate" ]
+            path: "/verAccounts('{id}')/validate"
+            GET --> verAccount_silent {
+            }
+            GET --> nextState {
+            }
+            POST +-> verAccounts_metadata {
+                title: "metadata"
+            }
+            GET +-> "common.Messages.ProcessMessages" {
+                title: "Messages"
+            }
+            PUT -> verAccount_input {
+                parameters [ id = "{AccountNumber}" ]
+                title: "input deal"
+            }
+            POST -> verAccount_hold {
+                parameters [ id = "{AccountNumber}" ]
+                title: "hold deal"
+            }
+            onerror --> verAccount_errorHandler
+        }
+    
+        resource verAccount_delete {
+            type: item
+            entity: verAccount
+            commands [ DELETE : DeleteEntity ]
+            relations [ "http://temenostech.temenos.com/rels/delete" ]
+            path: "/verAccounts('{id}')/delete"
+            GET +-> "common.Messages.ProcessMessages" {
+                title: "Messages"
+            }
+            onerror --> verAccount_errorHandler
+        }
+    
+        resource verAccount_copy {
+            type: item
+            entity: verAccount
+            commands [ POST : CopyEntity ]
+            relations [ "http://temenostech.temenos.com/rels/copy" ]
+            path: "/verAccounts()/copy"
+            onerror --> verAccount_errorHandler
+        }
+    
+        resource verAccount_paste {
+            type: item
+            entity: verAccount
+            commands [ POST : PasteEntity ]
+            relations [ "http://temenostech.temenos.com/rels/paste" ]
+            path: "/verAccounts('{id}')/paste"
+            GET --> verAccount_silent {
+            }
+            GET --> nextState {
+            }
+            GET --> verAccount {
+                parameters [ id = "{AccountNumber}" ]
+            }
+            POST +-> verAccounts_metadata {
+                title: "metadata"
+            }
+            PUT -> verAccount_input {
+                parameters [ id = "{AccountNumber}" ]
+                title: "input deal"
+            }
+            POST -> verAccount_validate {
+                parameters [ id = "{AccountNumber}" ]
+                title: "validate deal"
+            }
+            POST -> verAccount_hold {
+                parameters [ id = "{AccountNumber}" ]
+                title: "hold deal"
+            }
+            GET -> verAccount_ContextEnquiries {
+                title: "All Context Enquiries"
+            }
+            GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+                parameters [ entity = "verAccount" ]
+                title: "Context Enquiries"
+            }
+            onerror --> verAccount_errorHandler
+        }
+    
+        resource verAccount_restore {
+            type: item
+            entity: verAccount
+            commands [ POST : RestoreEntity ]
+            relations [ "http://temenostech.temenos.com/rels/restore" ]
+            path: "/verAccounts('{id}')/restore"
+            GET --> verAccount_silent {
+            }
+            GET --> nextState {
+            }
+            GET --> verAccount {
+                parameters [ id = "{AccountNumber}" ]
+            }
+            onerror --> verAccount_errorHandler
+        }
+    
+        resource verAccount_changedValues {
+            type: item
+            entity: verAccount
+            commands [ GET : GetChangedValues ]
+            relations [ "http://temenostech.temenos.com/rels/changedValues" ]
+            path: "/verAccounts('{id}')/changedValues"
+            GET --> verAccount_silent {
+            }
+            GET --> nextState {
+            }
+            GET --> verAccount {
+                parameters [ id = "{AccountNumber}" ]
+            }
+        }
+    
+        resource verAccount_enrichment {
+            type: item
+            entity: Enrichment
+            commands [ GET : T24Enrichment {
+                properties [ entity = "verAccount" ]
+                } ]
+            relations [ "http://temenostech.temenos.com/rels/enrichment" ]
+            path: "/verAccounts()/enrichment"
+        }
+    
+        resource verAccount_autoId {
+            type: item
+            entity: verAccount
+            commands [ GET : CheckAutoIdSupport ]
+            path: "/verAccounts('{id}')/autoId"
+        }
+    
+    }
+    
+}

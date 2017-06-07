@@ -1,0 +1,42 @@
+domain T24 {
+    use common.CoreCommands.*
+    use common.HTTPEvents.*
+    use common.ODataCommands.*
+    use common.T24Commands.*
+    use common.T24Events.*
+    use common.NextState.*
+    rim enqCustomerList {
+        command GETEntities
+        command GETEntity
+        basepath: "/{companyid}"
+    
+        initial resource Home {
+            type: item        
+            entity: enqCustomerList      
+            view: NoopGET            
+            GET -> T24.enqCustomerList.enqCustomerLists
+            GET -> T24.enqCustomerList.enqCustomerList
+        }
+        
+        resource enqCustomerLists @ Annotation : tags ( "Customers List" ) {
+            type: collection
+            entity: enqCustomerList
+            commands [ GET : GETEntities {
+                properties [ filter = "{filter}" ]
+                } ]
+            path: "/enqCustomerLists()"
+            GET *-> enqCustomerList {
+                parameters [ id = "{Id}" ]
+            }
+        }
+    
+        resource enqCustomerList @ Annotation : tags ( "Customer List" ) {
+            type: item
+            entity: enqCustomerList
+            commands [ GET : GETEntity ]
+            path: "/enqCustomerLists('{id}')"
+        }
+    
+    }
+    
+}

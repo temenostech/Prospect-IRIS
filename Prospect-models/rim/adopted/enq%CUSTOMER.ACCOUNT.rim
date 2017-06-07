@@ -1,0 +1,42 @@
+domain T24 {
+    use common.CoreCommands.*
+    use common.HTTPEvents.*
+    use common.ODataCommands.*
+    use common.T24Commands.*
+    use common.T24Events.*
+    use common.NextState.*
+    rim enqPctCustomerAccount {
+        command GETEntities
+        command GETEntity
+        basepath: "/{companyid}"
+    
+        initial resource Home {
+            type: item        
+            entity: enqPctCustomerAccount      
+            view: NoopGET            
+            GET -> T24.enqPctCustomerAccount.enqPctCustomerAccounts
+            GET -> T24.enqPctCustomerAccount.enqPctCustomerAccount
+        }
+        
+        resource enqPctCustomerAccounts  @ Annotation : tags ( "Customers Account" ) {
+            type: collection
+            entity: enqPctCustomerAccount
+            commands [ GET : GETEntities {
+                properties [ filter = "{filter}" ]
+                } ]
+            path: "/enqPctCustomerAccounts()"
+            GET *-> enqPctCustomerAccount {
+                parameters [ id = "{Id}" ]
+            }
+        }
+    
+        resource enqPctCustomerAccount  @ Annotation : tags ( "Customers Account" ) {
+            type: item
+            entity: enqPctCustomerAccount
+            commands [ GET : GETEntity ]
+            path: "/enqPctCustomerAccounts('{id}')"
+        }
+    
+    }
+    
+}

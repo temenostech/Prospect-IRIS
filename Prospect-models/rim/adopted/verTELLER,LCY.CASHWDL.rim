@@ -1,0 +1,841 @@
+domain T24 {
+    use common.CoreCommands.*
+    use common.HTTPEvents.*
+    use common.ODataCommands.*
+    use common.T24Commands.*
+    use common.T24Events.*
+    use common.NextState.*
+    use common.Errors.*
+    use T24.ContextEnquiry.*
+    rim verTeller_LcyCashwdl {
+        command NoopGET
+        command T24FieldMetadata
+        command T24NextState
+        command T24SilentState
+        command GetEntity
+        command GETEntities
+        command GetIauthEntities
+        command GetHauthEntities
+        command GetDealSlipEntities
+        command InterimTransition
+        command T24LiveState
+        command T24IAuthState
+        command T24HAuthState
+        command T24RAuthState
+        command T24HeldState
+        command T24ReversedState
+        command CreateEntity
+        command T24NewState
+        command InputEntity
+        command HoldEntity
+        command AuthoriseEntity
+        command ReviewEntity
+        command ReverseEntity
+        command ValidateEntity
+        command DeleteEntity
+        command CopyEntity
+        command PasteEntity
+        command RestoreEntity
+        command GetChangedValues
+        command T24Enrichment
+        command CheckAutoIdSupport
+        basepath: "/{companyid}"
+    
+        initial resource Home {
+            type: item        
+            entity: verTeller_LcyCashwdl      
+            view: NoopGET            
+            GET -> T24.verTeller_LcyCashwdl.verTeller_LcyCashwdls
+            GET -> T24.verTeller_LcyCashwdl.verTeller_LcyCashwdl
+        }
+        
+        resource verTeller_LcyCashwdls_metadata {
+            type: collection
+            entity: T24FieldMetadata
+            commands [ POST : T24FieldMetadata ]
+            relations [ "http://temenostech.temenos.com/rels/metadata" ]
+            path: "/verTeller_LcyCashwdls()/metadata"
+        }
+    
+        resource verTeller_LcyCashwdl_errorHandler {
+            type: item
+            entity: verTeller_LcyCashwdl
+            commands [ GET : NoopGET ]
+            relations [ "http://temenostech.temenos.com/rels/error" ]
+            path: "/verTeller_LcyCashwdls('{id}')/error"
+            GET +-> "common.Errors.ProcessErrors" {
+                title: "errors"
+            }
+            POST +-> verTeller_LcyCashwdls_metadata {
+                title: "metadata"
+            }
+        }
+    
+        resource verTeller_LcyCashwdl_ContextEnquiries {
+            type: item
+            entity: verTeller_LcyCashwdl
+            commands [ GET : NoopGET ]
+            path: "/verTeller_LcyCashwdl/ContextEnquiries"
+            GET -> "T24.enqlistTeller.enqlistTellers" {
+                parameters [ param = "list" ]
+                title: "List Live File"
+            }
+            GET -> "T24.enqlistTeller.enqlistTellerUnauths" {
+                parameters [ param = "list" ]
+                title: "List Unauth File"
+            }
+            GET -> "T24.enqlistTeller.enqlistTellerHists" {
+                parameters [ param = "list" ]
+                title: "List History File"
+            }
+            GET -> "T24.enqlistTeller.enqlistTellers" {
+                title: "Search Live File"
+            }
+            GET -> "T24.enqlistTeller.enqlistTellerUnauths" {
+                title: "Search Unauth File"
+            }
+            GET -> "T24.enqlistTeller.enqlistTellerHists" {
+                title: "Search History File"
+            }
+            GET +-> "T24.ContextEnquiry.ContextEnquiryList" {
+                parameters [ entity = "verTeller_LcyCashwdl" ]
+                title: "Other context Enquiries"
+            }
+        }
+    
+        resource verTeller_LcyCashwdl_silent {
+            type: item
+            entity: verTeller_LcyCashwdl
+            commands [ GET : T24SilentState ]
+        }
+    
+        resource verTeller_LcyCashwdlEntry {
+            type: item
+            entity: verTeller_LcyCashwdl
+            commands [ GET : NoopGET ]
+            relations [ "http://schemas.microsoft.com/ado/2007/08/dataservices/related/verTeller_LcyCashwdl","http://temenostech.temenos.com/rels/contract" ]
+            path: "/verTeller_LcyCashwdlEntry"
+            GET --> verTeller_LcyCashwdl_silent {
+            }
+            GET --> nextState {
+            }
+            GET --> verTeller_LcyCashwdl {
+                parameters [ id = "{TransactionNumber}" ]
+            }
+            POST -> verTeller_LcyCashwdl_new {
+                title: "create new deal"
+                condition: OK(verTeller_LcyCashwdl_autoId)
+            }
+            POST -> verTeller_LcyCashwdl_populate {
+                title: "populate existing deal"
+            }
+            GET -> verTeller_LcyCashwdl {
+                parameters [ id = "@" ]
+                title: "action"
+            }
+            GET -> verTeller_LcyCashwdl_see {
+                parameters [ id = "@" ]
+                title: "see record"
+            }
+            POST -> verTeller_LcyCashwdl_copy {
+                title: "Copy deal"
+            }
+            POST -> verTeller_LcyCashwdl_paste {
+                parameters [ id = "{TransactionNumber}" ]
+                title: "Paste deal"
+            }
+            POST -> verTeller_LcyCashwdl_enrichment {
+                title: "Enrich deal"
+            }
+            GET +-> verTeller_LcyCashwdl_ContextEnquiries {
+                title: "All context Enquiries"
+            }
+        }
+    
+        resource verTeller_LcyCashwdl_see {
+            type: item
+            entity: verTeller_LcyCashwdl
+            commands [ GET : GetEntity ]
+            relations [ "http://schemas.microsoft.com/ado/2007/08/dataservices/related/verTeller_LcyCashwdl","http://temenostech.temenos.com/rels/see" ]
+            path: "/verTeller_LcyCashwdls('{id}')/see"
+            POST +-> verTeller_LcyCashwdls_metadata {
+                title: "metadata"
+            }
+            GET -> verTeller_LcyCashwdl {
+                parameters [ id = "{TransactionNumber}" ]
+                title: "Action"
+            }
+            GET -> verTeller_LcyCashwdl_ContextEnquiries {
+                title: "All Context Enquiries"
+            }
+            GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+                parameters [ entity = "verTeller_LcyCashwdl" ]
+                title: "Context Enquiries"
+            }
+        }
+    
+        resource verTeller_LcyCashwdls @ Annotation : tags ( "Cash Withdrawls" ) {
+            type: collection
+            entity: verTeller_LcyCashwdl
+            commands [ GET : GETEntities {
+                properties [ filter = "{filter}" ]
+                } ]
+            path: "/verTeller_LcyCashwdls()"
+            GET *-> verTeller_LcyCashwdl {
+                parameters [ id = "{TransactionNumber}" ]
+            }
+            GET *-> verTeller_LcyCashwdl_see {
+                parameters [ id = "{TransactionNumber}" ]
+                title: "see record"
+            }
+            POST -> verTeller_LcyCashwdl_new {
+                title: "create new deal"
+                condition: OK(verTeller_LcyCashwdl_autoId)
+            }
+            POST -> verTeller_LcyCashwdl_populate {
+                title: "populate existing deal"
+            }
+            PUT *-> verTeller_LcyCashwdl_input {
+                parameters [ id = "{TransactionNumber}" ]
+                title: "input deal"
+            }
+            POST *-> verTeller_LcyCashwdl_audit {
+                parameters [ id = "{TransactionNumber}" ]
+                title: "audit deal"
+            }
+            POST *-> verTeller_LcyCashwdl_reverse {
+                parameters [ id = "{TransactionNumber}" ]
+                title: "reverse deal"
+            }
+        }
+    
+        resource verTeller_LcyCashwdls_IAuth {
+            type: collection
+            entity: verTeller_LcyCashwdl
+            commands [ GET : GetIauthEntities {
+                properties [ filter = "{filter}" ]
+                } ]
+            path: "/verTeller_LcyCashwdls_IAuth()"
+            GET *-> verTeller_LcyCashwdl_IAuth {
+                parameters [ id = "{TransactionNumber}" ]
+            }
+            POST -> verTeller_LcyCashwdl_new {
+                title: "create new deal"
+                condition: OK(verTeller_LcyCashwdl_autoId)
+            }
+            POST -> verTeller_LcyCashwdl_populate {
+                title: "populate existing deal"
+            }
+            PUT *-> verTeller_LcyCashwdl_input {
+                parameters [ id = "{TransactionNumber}" ]
+                title: "input deal"
+            }
+            DELETE *-> verTeller_LcyCashwdl_delete {
+                parameters [ id = "{TransactionNumber}" ]
+                title: "delete"
+            }
+            PUT *-> verTeller_LcyCashwdl_authorise {
+                parameters [ id = "{TransactionNumber}" ]
+                title: "authorise deal"
+            }
+        }
+    
+        resource verTeller_LcyCashwdls_HAuth {
+            type: collection
+            entity: verTeller_LcyCashwdl
+            commands [ GET : GetHauthEntities {
+                properties [ filter = "{filter}" ]
+                } ]
+            path: "/verTeller_LcyCashwdls_HAuth()"
+            GET *-> verTeller_LcyCashwdl_HAuth {
+                parameters [ id = "{TransactionNumber}" ]
+            }
+            POST -> verTeller_LcyCashwdl_new {
+                title: "create new deal"
+                condition: OK(verTeller_LcyCashwdl_autoId)
+            }
+            POST -> verTeller_LcyCashwdl_populate {
+                title: "populate existing deal"
+            }
+        }
+    
+        resource verTeller_LcyCashwdls_dealSlip {
+            type: collection
+            entity: DealSlip
+            commands [ GET : GetDealSlipEntities ]
+            relations [ "http://temenostech.temenos.com/rels/dealSlip" ]
+        }
+    
+        resource verTeller_LcyCashwdl @ Annotation : tags ( "Cash Withdrawl" ) {
+            type: item
+            entity: verTeller_LcyCashwdl
+            commands [ GET : GetEntity, GET : InterimTransition ]
+            path: "/verTeller_LcyCashwdls('{id}')"
+            GET --> verTeller_LcyCashwdl_Live {
+                parameters [ id = "{TransactionNumber}" ]
+            }
+            GET --> verTeller_LcyCashwdl_IAuth {
+                parameters [ id = "{TransactionNumber}" ]
+            }
+            GET --> verTeller_LcyCashwdl_HAuth {
+                parameters [ id = "{TransactionNumber}" ]
+            }
+            GET --> verTeller_LcyCashwdl_RAuth {
+                parameters [ id = "{TransactionNumber}" ]
+            }
+            GET --> verTeller_LcyCashwdl_Held {
+                parameters [ id = "{TransactionNumber}" ]
+            }
+            GET --> verTeller_LcyCashwdl_Reversed {
+                parameters [ id = "{TransactionNumber}" ]
+            }
+            GET --> verTeller_LcyCashwdl_new {
+            }
+        }
+    
+        resource verTeller_LcyCashwdl_Live {
+            type: item
+            entity: verTeller_LcyCashwdl
+            commands [ GET : GetEntity, GET : T24LiveState ]
+            path: "/verTeller_LcyCashwdls_Live('{id}')"
+            POST +-> verTeller_LcyCashwdls_metadata {
+                title: "metadata"
+            }
+            GET +-> "common.Messages.ProcessMessages" {
+                title: "Messages"
+            }
+            GET +-> verTeller_LcyCashwdls_dealSlip {
+                title: "deal slips"
+            }
+            PUT -> verTeller_LcyCashwdl_input {
+                parameters [ id = "{TransactionNumber}" ]
+                title: "input deal"
+            }
+            POST -> verTeller_LcyCashwdl_validate {
+                parameters [ id = "{TransactionNumber}" ]
+                title: "validate deal"
+            }
+            POST -> verTeller_LcyCashwdl_hold {
+                parameters [ id = "{TransactionNumber}" ]
+                title: "hold deal"
+            }
+            POST -> verTeller_LcyCashwdl_reverse {
+                parameters [ id = "{TransactionNumber}" ]
+                title: "reverse deal"
+            }
+            POST -> verTeller_LcyCashwdl_audit {
+                parameters [ id = "{TransactionNumber}" ]
+                title: "audit deal"
+            }
+            POST -> verTeller_LcyCashwdl_copy {
+                title: "Copy deal"
+            }
+            POST -> verTeller_LcyCashwdl_paste {
+                parameters [ id = "{TransactionNumber}" ]
+                title: "Paste deal"
+            }
+            GET -> verTeller_LcyCashwdl_ContextEnquiries {
+                title: "All Context Enquiries"
+            }
+            GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+                parameters [ entity = "verTeller_LcyCashwdl" ]
+                title: "Context Enquiries"
+            }
+        }
+    
+        resource verTeller_LcyCashwdl_IAuth {
+            type: item
+            entity: verTeller_LcyCashwdl
+            commands [ GET : GetEntity, GET : T24IAuthState ]
+            path: "/verTeller_LcyCashwdls_IAuth('{id}')"
+            POST +-> verTeller_LcyCashwdls_metadata {
+                title: "metadata"
+            }
+            GET +-> "common.Messages.ProcessMessages" {
+                title: "Messages"
+            }
+            GET +-> verTeller_LcyCashwdls_dealSlip {
+                title: "deal slips"
+            }
+            GET +-> verTeller_LcyCashwdl_changedValues {
+                parameters [ id = "{TransactionNumber}" ]
+                title: "changed values"
+            }
+            PUT -> verTeller_LcyCashwdl_input {
+                parameters [ id = "{TransactionNumber}" ]
+                title: "input deal"
+            }
+            POST -> verTeller_LcyCashwdl_validate {
+                parameters [ id = "{TransactionNumber}" ]
+                title: "validate deal"
+            }
+            POST -> verTeller_LcyCashwdl_hold {
+                parameters [ id = "{TransactionNumber}" ]
+                title: "hold deal"
+            }
+            DELETE -> verTeller_LcyCashwdl_delete {
+                parameters [ id = "{TransactionNumber}" ]
+                title: "delete"
+            }
+            POST -> verTeller_LcyCashwdl_authorise {
+                parameters [ id = "{TransactionNumber}" ]
+                title: "authorise deal"
+            }
+            POST -> verTeller_LcyCashwdl_copy {
+                title: "Copy deal"
+            }
+            POST -> verTeller_LcyCashwdl_paste {
+                parameters [ id = "{TransactionNumber}" ]
+                title: "Paste deal"
+            }
+            GET -> verTeller_LcyCashwdl_ContextEnquiries {
+                title: "All Context Enquiries"
+            }
+            GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+                parameters [ entity = "verTeller_LcyCashwdl" ]
+                title: "Context Enquiries"
+            }
+        }
+    
+        resource verTeller_LcyCashwdl_HAuth {
+            type: item
+            entity: verTeller_LcyCashwdl
+            commands [ GET : GetEntity, GET : T24HAuthState ]
+            path: "/verTeller_LcyCashwdls_HAuth('{id}')"
+            GET +-> "common.Messages.ProcessMessages" {
+                title: "Messages"
+            }
+            POST -> verTeller_LcyCashwdl_authorise {
+                parameters [ id = "{TransactionNumber}" ]
+                title: "authorise deal"
+            }
+            POST -> verTeller_LcyCashwdl_hold {
+                parameters [ id = "{TransactionNumber}" ]
+                title: "hold deal"
+            }
+            DELETE -> verTeller_LcyCashwdl_delete {
+                parameters [ id = "{TransactionNumber}" ]
+                title: "delete"
+            }
+            POST -> verTeller_LcyCashwdl_copy {
+                title: "Copy deal"
+            }
+            POST -> verTeller_LcyCashwdl_paste {
+                parameters [ id = "{TransactionNumber}" ]
+                title: "Paste deal"
+            }
+            GET -> verTeller_LcyCashwdl_ContextEnquiries {
+                title: "All Context Enquiries"
+            }
+            GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+                parameters [ entity = "verTeller_LcyCashwdl" ]
+                title: "Context Enquiries"
+            }
+        }
+    
+        resource verTeller_LcyCashwdl_RAuth {
+            type: item
+            entity: verTeller_LcyCashwdl
+            commands [ GET : GetEntity, GET : T24RAuthState ]
+            path: "/verTeller_LcyCashwdls_RAuth('{id}')"
+            GET +-> "common.Messages.ProcessMessages" {
+                title: "Messages"
+            }
+            DELETE -> verTeller_LcyCashwdl_delete {
+                parameters [ id = "{TransactionNumber}" ]
+                title: "delete"
+            }
+            POST -> verTeller_LcyCashwdl_authorise {
+                parameters [ id = "{TransactionNumber}" ]
+                title: "authorise deal"
+            }
+            POST -> verTeller_LcyCashwdl_copy {
+                title: "Copy deal"
+            }
+            POST -> verTeller_LcyCashwdl_paste {
+                parameters [ id = "{TransactionNumber}" ]
+                title: "Paste deal"
+            }
+            GET -> verTeller_LcyCashwdl_ContextEnquiries {
+                title: "All Context Enquiries"
+            }
+            GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+                parameters [ entity = "verTeller_LcyCashwdl" ]
+                title: "Context Enquiries"
+            }
+        }
+    
+        resource verTeller_LcyCashwdl_Held {
+            type: item
+            entity: verTeller_LcyCashwdl
+            commands [ GET : GetEntity, GET : T24HeldState ]
+            path: "/verTeller_LcyCashwdls_Held('{id}')"
+            POST +-> verTeller_LcyCashwdls_metadata {
+                title: "metadata"
+            }
+            GET +-> "common.Messages.ProcessMessages" {
+                title: "Messages"
+            }
+            PUT -> verTeller_LcyCashwdl_input {
+                parameters [ id = "{TransactionNumber}" ]
+                title: "input deal"
+            }
+            POST -> verTeller_LcyCashwdl_validate {
+                parameters [ id = "{TransactionNumber}" ]
+                title: "validate deal"
+            }
+            POST -> verTeller_LcyCashwdl_hold {
+                parameters [ id = "{TransactionNumber}" ]
+                title: "hold deal"
+            }
+            DELETE -> verTeller_LcyCashwdl_delete {
+                parameters [ id = "{TransactionNumber}" ]
+                title: "delete"
+            }
+            POST -> verTeller_LcyCashwdl_copy {
+                title: "Copy deal"
+            }
+            POST -> verTeller_LcyCashwdl_paste {
+                parameters [ id = "{TransactionNumber}" ]
+                title: "Paste deal"
+            }
+            GET -> verTeller_LcyCashwdl_ContextEnquiries {
+                title: "All Context Enquiries"
+            }
+            GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+                parameters [ entity = "verTeller_LcyCashwdl" ]
+                title: "Context Enquiries"
+            }
+        }
+    
+        resource verTeller_LcyCashwdl_Reversed {
+            type: item
+            entity: verTeller_LcyCashwdl
+            commands [ GET : GetEntity, GET : T24ReversedState ]
+            path: "/verTeller_LcyCashwdls_Reversed('{id}')"
+            GET +-> "common.Messages.ProcessMessages" {
+                title: "Messages"
+            }
+            POST -> verTeller_LcyCashwdl_restore {
+                parameters [ id = "{TransactionNumber}" ]
+                title: "restore deal"
+            }
+            POST -> verTeller_LcyCashwdl_copy {
+                title: "Copy deal"
+            }
+            POST -> verTeller_LcyCashwdl_paste {
+                parameters [ id = "{TransactionNumber}" ]
+                title: "Paste deal"
+            }
+            GET -> verTeller_LcyCashwdl_ContextEnquiries {
+                title: "All Context Enquiries"
+            }
+            GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+                parameters [ entity = "verTeller_LcyCashwdl" ]
+                title: "Context Enquiries"
+            }
+        }
+    
+        resource verTeller_LcyCashwdl_new {
+            type: item
+            entity: verTeller_LcyCashwdl
+            commands [ POST : CreateEntity, GET : T24NewState ]
+            relations [ "http://schemas.microsoft.com/ado/2007/08/dataservices/related/verTeller_LcyCashwdl","http://temenostech.temenos.com/rels/new" ]
+            path: "/verTeller_LcyCashwdls()/new"
+            GET --> verTeller_LcyCashwdl_silent {
+            }
+            GET --> nextState {
+            }
+            GET --> verTeller_LcyCashwdl {
+                parameters [ id = "{TransactionNumber}" ]
+            }
+            POST +-> verTeller_LcyCashwdls_metadata {
+                title: "metadata"
+            }
+            PUT -> verTeller_LcyCashwdl_input {
+                parameters [ id = "{TransactionNumber}" ]
+                title: "input deal"
+            }
+            POST -> verTeller_LcyCashwdl_validate {
+                parameters [ id = "{TransactionNumber}" ]
+                title: "validate deal"
+            }
+            POST -> verTeller_LcyCashwdl_hold {
+                parameters [ id = "{TransactionNumber}" ]
+                title: "hold deal"
+            }
+            POST -> verTeller_LcyCashwdl_copy {
+                title: "Copy deal"
+            }
+            POST -> verTeller_LcyCashwdl_paste {
+                parameters [ id = "{TransactionNumber}" ]
+                title: "Paste deal"
+            }
+            GET -> verTeller_LcyCashwdl_ContextEnquiries {
+                title: "All Context Enquiries"
+            }
+            GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+                parameters [ entity = "verTeller_LcyCashwdl" ]
+                title: "Context Enquiries"
+            }
+            onerror --> verTeller_LcyCashwdl_errorHandler
+        }
+    
+        resource verTeller_LcyCashwdl_populate {
+            type: item
+            entity: verTeller_LcyCashwdl
+            commands [ POST : CreateEntity ]
+            relations [ "http://schemas.microsoft.com/ado/2007/08/dataservices/related/verTeller_LcyCashwdl","http://temenostech.temenos.com/rels/populate" ]
+            path: "/verTeller_LcyCashwdls()/populate"
+            GET --> verTeller_LcyCashwdl_silent {
+            }
+            GET --> nextState {
+            }
+            GET --> verTeller_LcyCashwdl {
+                parameters [ id = "{TransactionNumber}" ]
+            }
+            POST +-> verTeller_LcyCashwdls_metadata {
+                title: "metadata"
+            }
+            PUT -> verTeller_LcyCashwdl_input {
+                parameters [ id = "{TransactionNumber}" ]
+                title: "input deal"
+            }
+            POST -> verTeller_LcyCashwdl_validate {
+                parameters [ id = "{TransactionNumber}" ]
+                title: "validate deal"
+            }
+            POST -> verTeller_LcyCashwdl_hold {
+                parameters [ id = "{TransactionNumber}" ]
+                title: "hold deal"
+            }
+            POST -> verTeller_LcyCashwdl_copy {
+                title: "Copy deal"
+            }
+            GET -> verTeller_LcyCashwdl_ContextEnquiries {
+                title: "All Context Enquiries"
+            }
+            GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+                parameters [ entity = "verTeller_LcyCashwdl" ]
+                title: "Context Enquiries"
+            }
+            onerror --> verTeller_LcyCashwdl_errorHandler
+        }
+    
+        resource verTeller_LcyCashwdl_input {
+            type: item
+            entity: verTeller_LcyCashwdl
+            commands [ PUT : InputEntity, POST : InputEntity ]
+            relations [ "http://temenostech.temenos.com/rels/input" ]
+            path: "/verTeller_LcyCashwdls('{id}')"
+            GET --> verTeller_LcyCashwdl_silent {
+            }
+            GET --> nextState {
+            }
+            GET --> verTeller_LcyCashwdl {
+                parameters [ id = "{TransactionNumber}" ]
+            }
+            onerror --> verTeller_LcyCashwdl_errorHandler
+        }
+    
+        resource verTeller_LcyCashwdl_hold {
+            type: item
+            entity: verTeller_LcyCashwdl
+            commands [ POST : HoldEntity ]
+            relations [ "http://temenostech.temenos.com/rels/hold" ]
+            path: "/verTeller_LcyCashwdls('{id}')/hold"
+            GET --> verTeller_LcyCashwdl_silent {
+            }
+            GET --> nextState {
+            }
+            GET --> verTeller_LcyCashwdl {
+                parameters [ id = "{TransactionNumber}" ]
+            }
+            onerror --> verTeller_LcyCashwdl_errorHandler
+        }
+    
+        resource verTeller_LcyCashwdl_authorise {
+            type: item
+            entity: verTeller_LcyCashwdl
+            commands [ PUT : AuthoriseEntity ]
+            relations [ "http://temenostech.temenos.com/rels/authorise" ]
+            path: "/verTeller_LcyCashwdls('{id}')/authorise"
+            GET --> verTeller_LcyCashwdl_silent {
+            }
+            GET --> nextState {
+            }
+            GET --> verTeller_LcyCashwdl {
+                parameters [ id = "{TransactionNumber}" ]
+            }
+            onerror --> verTeller_LcyCashwdl_errorHandler
+        }
+    
+        resource verTeller_LcyCashwdl_audit {
+            type: item
+            entity: verTeller_LcyCashwdl
+            commands [ POST : ReviewEntity ]
+            relations [ "http://temenostech.temenos.com/rels/review" ]
+            path: "/verTeller_LcyCashwdls('{id}')/review"
+            GET --> verTeller_LcyCashwdl_silent {
+            }
+            GET --> nextState {
+            }
+            GET --> verTeller_LcyCashwdl {
+                parameters [ id = "{TransactionNumber}" ]
+            }
+            onerror --> verTeller_LcyCashwdl_errorHandler
+        }
+    
+        resource verTeller_LcyCashwdl_reverse {
+            type: item
+            entity: verTeller_LcyCashwdl
+            commands [ PUT : ReverseEntity ]
+            relations [ "http://temenostech.temenos.com/rels/reverse" ]
+            path: "/verTeller_LcyCashwdls('{id}')/reverse"
+            GET --> verTeller_LcyCashwdl_silent {
+            }
+            GET --> nextState {
+            }
+            GET --> verTeller_LcyCashwdl {
+                parameters [ id = "{TransactionNumber}" ]
+            }
+            onerror --> verTeller_LcyCashwdl_errorHandler
+        }
+    
+        resource verTeller_LcyCashwdl_validate {
+            type: item
+            entity: verTeller_LcyCashwdl
+            commands [ POST : ValidateEntity ]
+            relations [ "http://temenostech.temenos.com/rels/validate" ]
+            path: "/verTeller_LcyCashwdls('{id}')/validate"
+            GET --> verTeller_LcyCashwdl_silent {
+            }
+            GET --> nextState {
+            }
+            POST +-> verTeller_LcyCashwdls_metadata {
+                title: "metadata"
+            }
+            GET +-> "common.Messages.ProcessMessages" {
+                title: "Messages"
+            }
+            PUT -> verTeller_LcyCashwdl_input {
+                parameters [ id = "{TransactionNumber}" ]
+                title: "input deal"
+            }
+            POST -> verTeller_LcyCashwdl_hold {
+                parameters [ id = "{TransactionNumber}" ]
+                title: "hold deal"
+            }
+            onerror --> verTeller_LcyCashwdl_errorHandler
+        }
+    
+        resource verTeller_LcyCashwdl_delete {
+            type: item
+            entity: verTeller_LcyCashwdl
+            commands [ DELETE : DeleteEntity ]
+            relations [ "http://temenostech.temenos.com/rels/delete" ]
+            path: "/verTeller_LcyCashwdls('{id}')/delete"
+            GET +-> "common.Messages.ProcessMessages" {
+                title: "Messages"
+            }
+            onerror --> verTeller_LcyCashwdl_errorHandler
+        }
+    
+        resource verTeller_LcyCashwdl_copy {
+            type: item
+            entity: verTeller_LcyCashwdl
+            commands [ POST : CopyEntity ]
+            relations [ "http://temenostech.temenos.com/rels/copy" ]
+            path: "/verTeller_LcyCashwdls()/copy"
+            onerror --> verTeller_LcyCashwdl_errorHandler
+        }
+    
+        resource verTeller_LcyCashwdl_paste {
+            type: item
+            entity: verTeller_LcyCashwdl
+            commands [ POST : PasteEntity ]
+            relations [ "http://temenostech.temenos.com/rels/paste" ]
+            path: "/verTeller_LcyCashwdls('{id}')/paste"
+            GET --> verTeller_LcyCashwdl_silent {
+            }
+            GET --> nextState {
+            }
+            GET --> verTeller_LcyCashwdl {
+                parameters [ id = "{TransactionNumber}" ]
+            }
+            POST +-> verTeller_LcyCashwdls_metadata {
+                title: "metadata"
+            }
+            PUT -> verTeller_LcyCashwdl_input {
+                parameters [ id = "{TransactionNumber}" ]
+                title: "input deal"
+            }
+            POST -> verTeller_LcyCashwdl_validate {
+                parameters [ id = "{TransactionNumber}" ]
+                title: "validate deal"
+            }
+            POST -> verTeller_LcyCashwdl_hold {
+                parameters [ id = "{TransactionNumber}" ]
+                title: "hold deal"
+            }
+            GET -> verTeller_LcyCashwdl_ContextEnquiries {
+                title: "All Context Enquiries"
+            }
+            GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+                parameters [ entity = "verTeller_LcyCashwdl" ]
+                title: "Context Enquiries"
+            }
+            onerror --> verTeller_LcyCashwdl_errorHandler
+        }
+    
+        resource verTeller_LcyCashwdl_restore {
+            type: item
+            entity: verTeller_LcyCashwdl
+            commands [ POST : RestoreEntity ]
+            relations [ "http://temenostech.temenos.com/rels/restore" ]
+            path: "/verTeller_LcyCashwdls('{id}')/restore"
+            GET --> verTeller_LcyCashwdl_silent {
+            }
+            GET --> nextState {
+            }
+            GET --> verTeller_LcyCashwdl {
+                parameters [ id = "{TransactionNumber}" ]
+            }
+            onerror --> verTeller_LcyCashwdl_errorHandler
+        }
+    
+        resource verTeller_LcyCashwdl_changedValues {
+            type: item
+            entity: verTeller_LcyCashwdl
+            commands [ GET : GetChangedValues ]
+            relations [ "http://temenostech.temenos.com/rels/changedValues" ]
+            path: "/verTeller_LcyCashwdls('{id}')/changedValues"
+            GET --> verTeller_LcyCashwdl_silent {
+            }
+            GET --> nextState {
+            }
+            GET --> verTeller_LcyCashwdl {
+                parameters [ id = "{TransactionNumber}" ]
+            }
+        }
+    
+        resource verTeller_LcyCashwdl_enrichment {
+            type: item
+            entity: Enrichment
+            commands [ GET : T24Enrichment {
+                properties [ entity = "verTeller_LcyCashwdl" ]
+                } ]
+            relations [ "http://temenostech.temenos.com/rels/enrichment" ]
+            path: "/verTeller_LcyCashwdls()/enrichment"
+        }
+    
+        resource verTeller_LcyCashwdl_autoId {
+            type: item
+            entity: verTeller_LcyCashwdl
+            commands [ GET : CheckAutoIdSupport ]
+            path: "/verTeller_LcyCashwdls('{id}')/autoId"
+        }
+    
+    }
+    
+}
