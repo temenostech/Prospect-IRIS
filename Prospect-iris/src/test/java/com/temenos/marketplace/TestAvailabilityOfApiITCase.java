@@ -28,6 +28,11 @@ public class TestAvailabilityOfApiITCase {
     private String verFundsTransfers = "verFundsTransfers";
     private String verTeller_LcyCashins = "verTeller_LcyCashins";
     private String verTeller_LcyCashwdls = "verTeller_LcyCashwdls";
+    
+    private String verAccount_CaOpens = "verAccount_CaOpens";
+    private String verAccount_SbOpens = "verAccount_SbOpens";
+    private String verCustomer_Inputs = "verCustomer_Inputs";
+    private String verFundsTransfer_Inputs = "verFundsTransfer_Inputs";
  
     
     @Test
@@ -169,6 +174,54 @@ public class TestAvailabilityOfApiITCase {
                 .url()
                 .baseuri(Configuration.DATA_SERVICE_URL)
                 .path(verTeller_LcyCashwdls).get();
+        
+        assertTrue(session.entities().isCollection());
+        assertFalse(session.entities().collection().isEmpty());
+    }
+    
+    @Test
+    public void testVerAccount_CaOpens() {
+        InteractionSession session = DefaultInteractionSession.newSession();
+        session.basicAuth(Configuration.INPUTTER_USER_NAME, Configuration.INPUTTER_PASSWORD)
+                .url()
+                .baseuri(Configuration.DATA_SERVICE_URL)
+                .path(verAccount_CaOpens).get();
+        
+        assertTrue(session.entities().isCollection());
+        assertFalse(session.entities().collection().isEmpty());
+    }
+    
+    @Test
+    public void testVerAccount_SbOpens() {
+        InteractionSession session = DefaultInteractionSession.newSession();
+        session.basicAuth(Configuration.INPUTTER_USER_NAME, Configuration.INPUTTER_PASSWORD)
+                .url()
+                .baseuri(Configuration.DATA_SERVICE_URL)
+                .path(verAccount_SbOpens).get();
+        
+        assertTrue(session.entities().isCollection());
+        assertFalse(session.entities().collection().isEmpty());
+    }
+    
+    @Test
+    public void testVerCustomer_Inputs() {
+        InteractionSession session = DefaultInteractionSession.newSession();
+        session.basicAuth(Configuration.INPUTTER_USER_NAME, Configuration.INPUTTER_PASSWORD)
+                .url()
+                .baseuri(Configuration.DATA_SERVICE_URL)
+                .path(verCustomer_Inputs).get();
+        
+        assertTrue(session.entities().isCollection());
+        assertFalse(session.entities().collection().isEmpty());
+    }
+    
+    @Test
+    public void testVerFundsTransfer_Inputs() {
+        InteractionSession session = DefaultInteractionSession.newSession();
+        session.basicAuth(Configuration.INPUTTER_USER_NAME, Configuration.INPUTTER_PASSWORD)
+                .url()
+                .baseuri(Configuration.DATA_SERVICE_URL)
+                .path(verFundsTransfer_Inputs).get();
         
         assertTrue(session.entities().isCollection());
         assertFalse(session.entities().collection().isEmpty());

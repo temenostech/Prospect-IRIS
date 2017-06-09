@@ -1,0 +1,114 @@
+Screen FUNDS_TRANSFER, CHARGE
+    t24Name: "FUNDS.TRANSFER,CHARGE"
+    metamodelVersion: "1.30.6"
+    numberOfAuthorisers: 1
+    description: en = "Charge / Commission"
+reportLocks: Yes
+
+TransactionFlow {
+    otherCompanyAccess: Yes
+    autoCompanyChange: Yes
+    dealSlips:
+    format: "DDISSUE" dealSlipFunction:  I ;
+    format: "DDISSUE" dealSlipFunction:  A
+    dealSlipsTrigger: RQ
+}
+
+Presentation {
+    recordsPerPage: "1"
+    fieldsPerLine: "MULTI"
+    language: en
+    header1: en = "Charge / Commission"
+}
+
+API {
+    includeVersionControl: No
+}
+
+Fields {
+    "COMMISSION_CODE" {
+
+        Presentation {
+            maxLength: 25
+            enrichmentLength: 35
+            column: 1
+            row: 0
+        }
+
+        Translations:
+            label: en = "Commission Code"
+            toolTip: en = "Identifies how the Commission is to be applied"
+    }
+
+    "COMMISSION_TYPE" {
+
+        Presentation {
+            maxLength: 25
+            enrichmentLength: 35
+            column: 1
+            row: 1
+            selectionEnquiry: "FT.COMM"
+        }
+
+        Translations:
+            label: en = "Commission Type"
+            toolTip: en = "Identifies the Commission Types"
+        MV: 1
+    }
+
+    "COMMISSION_AMT" {
+
+        Presentation {
+            maxLength: 25
+            column: 1
+            row: 2
+        }
+
+        Translations:
+            label: en = "Commission Amount"
+            toolTip: en = "Identifies commission amt to be applied"
+        MV: 1
+    }
+
+    "AMOUNT_DEBITED" {
+
+        Presentation {
+            maxLength: 25
+            column: 1
+            row: 3
+        }
+
+        Translations:
+            label: en = "Amount Debited"
+            toolTip: en = "Final amt debited to the Debit Account"
+    }
+
+    "AMOUNT_CREDITED" {
+
+        Presentation {
+            maxLength: 25
+            column: 1
+            row: 4
+        }
+
+        Translations:
+            label: en = "Amount Credited"
+            toolTip: en = "Final Amount Credited to the Credit Account"
+    }
+
+    "DELIVERY_OUTREF" {
+
+        Presentation {
+            maxLength: 25
+            enrichmentLength: 35
+            column: 1
+            row: 5
+        }
+
+        Translations:
+            label: en = "Delivery Reference"
+            toolTip: en = "Reference no allocated by Delivery for all payment"
+        MV: 1
+    }
+
+}

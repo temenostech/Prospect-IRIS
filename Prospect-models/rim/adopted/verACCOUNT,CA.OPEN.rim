@@ -1,0 +1,819 @@
+domain T24 {
+    use common.CoreCommands.*
+    use common.HTTPEvents.*
+    use common.ODataCommands.*
+    use common.T24Commands.*
+    use common.T24Events.*
+    use common.NextState.*
+    use common.Errors.*
+    use T24.ContextEnquiry.*
+    rim verAccount_CaOpen {
+        command NoopGET
+        command T24FieldMetadata
+        command T24NextState
+        command T24SilentState
+        command GetEntity
+        command GETEntities
+        command GetIauthEntities
+        command GetHauthEntities
+        command InterimTransition
+        command T24LiveState
+        command T24IAuthState
+        command T24HAuthState
+        command T24RAuthState
+        command T24HeldState
+        command T24ReversedState
+        command CreateEntity
+        command T24NewState
+        command InputEntity
+        command HoldEntity
+        command AuthoriseEntity
+        command ReviewEntity
+        command ReverseEntity
+        command ValidateEntity
+        command DeleteEntity
+        command CopyEntity
+        command PasteEntity
+        command RestoreEntity
+        command GetChangedValues
+        command T24Enrichment
+        command CheckAutoIdSupport
+        basepath: "/{companyid}"
+    
+        resource verAccount_CaOpens_metadata {
+            type: collection
+            entity: T24FieldMetadata
+            commands [ POST : T24FieldMetadata ]
+            relations [ "http://temenostech.temenos.com/rels/metadata" ]
+            path: "/verAccount_CaOpens()/metadata"
+        }
+    
+        resource verAccount_CaOpen_errorHandler {
+            type: item
+            entity: verAccount_CaOpen
+            commands [ GET : NoopGET ]
+            relations [ "http://temenostech.temenos.com/rels/error" ]
+            path: "/verAccount_CaOpens('{id}')/error"
+            GET +-> "common.Errors.ProcessErrors" {
+                title: "errors"
+            }
+            POST +-> verAccount_CaOpens_metadata {
+                title: "metadata"
+            }
+        }
+    
+        resource verAccount_CaOpen_ContextEnquiries {
+            type: item
+            entity: verAccount_CaOpen
+            commands [ GET : NoopGET ]
+            path: "/verAccount_CaOpen/ContextEnquiries"
+            GET -> "T24.enqlistAccount.enqlistAccounts" {
+                parameters [ param = "list" ]
+                title: "List Live File"
+            }
+            GET -> "T24.enqlistAccount.enqlistAccountUnauths" {
+                parameters [ param = "list" ]
+                title: "List Unauth File"
+            }
+            GET -> "T24.enqlistAccount.enqlistAccountHists" {
+                parameters [ param = "list" ]
+                title: "List History File"
+            }
+            GET -> "T24.enqlistAccount.enqlistAccounts" {
+                title: "Search Live File"
+            }
+            GET -> "T24.enqlistAccount.enqlistAccountUnauths" {
+                title: "Search Unauth File"
+            }
+            GET -> "T24.enqlistAccount.enqlistAccountHists" {
+                title: "Search History File"
+            }
+            GET +-> "T24.ContextEnquiry.ContextEnquiryList" {
+                parameters [ entity = "verAccount_CaOpen" ]
+                title: "Other context Enquiries"
+            }
+        }
+    
+        resource verAccount_CaOpen_silent {
+            type: item
+            entity: verAccount_CaOpen
+            commands [ GET : T24SilentState ]
+        }
+    
+        resource verAccount_CaOpenEntry {
+            type: item
+            entity: verAccount_CaOpen
+            commands [ GET : NoopGET ]
+            relations [ "http://schemas.microsoft.com/ado/2007/08/dataservices/related/verAccount_CaOpen","http://temenostech.temenos.com/rels/contract" ]
+            path: "/verAccount_CaOpenEntry"
+            GET --> verAccount_CaOpen_silent {
+            }
+            GET --> nextState {
+            }
+            GET --> verAccount_CaOpen {
+                parameters [ id = "{AccountNumber}" ]
+            }
+            POST -> verAccount_CaOpen_new {
+                title: "create new deal"
+                condition: OK(verAccount_CaOpen_autoId)
+            }
+            POST -> verAccount_CaOpen_populate {
+                title: "populate existing deal"
+            }
+            GET -> verAccount_CaOpen {
+                parameters [ id = "@" ]
+                title: "action"
+            }
+            GET -> verAccount_CaOpen_see {
+                parameters [ id = "@" ]
+                title: "see record"
+            }
+            POST -> verAccount_CaOpen_copy {
+                title: "Copy deal"
+            }
+            POST -> verAccount_CaOpen_paste {
+                parameters [ id = "{AccountNumber}" ]
+                title: "Paste deal"
+            }
+            POST -> verAccount_CaOpen_enrichment {
+                title: "Enrich deal"
+            }
+            GET +-> verAccount_CaOpen_ContextEnquiries {
+                title: "All context Enquiries"
+            }
+        }
+    
+        resource verAccount_CaOpen_see {
+            type: item
+            entity: verAccount_CaOpen
+            commands [ GET : GetEntity ]
+            relations [ "http://schemas.microsoft.com/ado/2007/08/dataservices/related/verAccount_CaOpen","http://temenostech.temenos.com/rels/see" ]
+            path: "/verAccount_CaOpens('{id}')/see"
+            POST +-> verAccount_CaOpens_metadata {
+                title: "metadata"
+            }
+            GET -> verAccount_CaOpen {
+                parameters [ id = "{AccountNumber}" ]
+                title: "Action"
+            }
+            GET -> verAccount_CaOpen_ContextEnquiries {
+                title: "All Context Enquiries"
+            }
+            GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+                parameters [ entity = "verAccount_CaOpen" ]
+                title: "Context Enquiries"
+            }
+        }
+    
+        resource verAccount_CaOpens {
+            type: collection
+            entity: verAccount_CaOpen
+            commands [ GET : GETEntities {
+                properties [ filter = "{filter}" ]
+                } ]
+            path: "/verAccount_CaOpens()"
+            GET *-> verAccount_CaOpen {
+                parameters [ id = "{AccountNumber}" ]
+            }
+            GET *-> verAccount_CaOpen_see {
+                parameters [ id = "{AccountNumber}" ]
+                title: "see record"
+            }
+            POST -> verAccount_CaOpen_new {
+                title: "create new deal"
+                condition: OK(verAccount_CaOpen_autoId)
+            }
+            POST -> verAccount_CaOpen_populate {
+                title: "populate existing deal"
+            }
+            PUT *-> verAccount_CaOpen_input {
+                parameters [ id = "{AccountNumber}" ]
+                title: "input deal"
+            }
+            POST *-> verAccount_CaOpen_audit {
+                parameters [ id = "{AccountNumber}" ]
+                title: "audit deal"
+            }
+            POST *-> verAccount_CaOpen_reverse {
+                parameters [ id = "{AccountNumber}" ]
+                title: "reverse deal"
+            }
+        }
+    
+        resource verAccount_CaOpens_IAuth {
+            type: collection
+            entity: verAccount_CaOpen
+            commands [ GET : GetIauthEntities {
+                properties [ filter = "{filter}" ]
+                } ]
+            path: "/verAccount_CaOpens_IAuth()"
+            GET *-> verAccount_CaOpen_IAuth {
+                parameters [ id = "{AccountNumber}" ]
+            }
+            POST -> verAccount_CaOpen_new {
+                title: "create new deal"
+                condition: OK(verAccount_CaOpen_autoId)
+            }
+            POST -> verAccount_CaOpen_populate {
+                title: "populate existing deal"
+            }
+            PUT *-> verAccount_CaOpen_input {
+                parameters [ id = "{AccountNumber}" ]
+                title: "input deal"
+            }
+            DELETE *-> verAccount_CaOpen_delete {
+                parameters [ id = "{AccountNumber}" ]
+                title: "delete"
+            }
+            PUT *-> verAccount_CaOpen_authorise {
+                parameters [ id = "{AccountNumber}" ]
+                title: "authorise deal"
+            }
+        }
+    
+        resource verAccount_CaOpens_HAuth {
+            type: collection
+            entity: verAccount_CaOpen
+            commands [ GET : GetHauthEntities {
+                properties [ filter = "{filter}" ]
+                } ]
+            path: "/verAccount_CaOpens_HAuth()"
+            GET *-> verAccount_CaOpen_HAuth {
+                parameters [ id = "{AccountNumber}" ]
+            }
+            POST -> verAccount_CaOpen_new {
+                title: "create new deal"
+                condition: OK(verAccount_CaOpen_autoId)
+            }
+            POST -> verAccount_CaOpen_populate {
+                title: "populate existing deal"
+            }
+        }
+    
+        resource verAccount_CaOpen {
+            type: item
+            entity: verAccount_CaOpen
+            commands [ GET : GetEntity, GET : InterimTransition ]
+            path: "/verAccount_CaOpens('{id}')"
+            GET --> verAccount_CaOpen_Live {
+                parameters [ id = "{AccountNumber}" ]
+            }
+            GET --> verAccount_CaOpen_IAuth {
+                parameters [ id = "{AccountNumber}" ]
+            }
+            GET --> verAccount_CaOpen_HAuth {
+                parameters [ id = "{AccountNumber}" ]
+            }
+            GET --> verAccount_CaOpen_RAuth {
+                parameters [ id = "{AccountNumber}" ]
+            }
+            GET --> verAccount_CaOpen_Held {
+                parameters [ id = "{AccountNumber}" ]
+            }
+            GET --> verAccount_CaOpen_Reversed {
+                parameters [ id = "{AccountNumber}" ]
+            }
+            GET --> verAccount_CaOpen_new {
+            }
+        }
+    
+        resource verAccount_CaOpen_Live {
+            type: item
+            entity: verAccount_CaOpen
+            commands [ GET : GetEntity, GET : T24LiveState ]
+            path: "/verAccount_CaOpens_Live('{id}')"
+            POST +-> verAccount_CaOpens_metadata {
+                title: "metadata"
+            }
+            GET +-> "common.Messages.ProcessMessages" {
+                title: "Messages"
+            }
+            PUT -> verAccount_CaOpen_input {
+                parameters [ id = "{AccountNumber}" ]
+                title: "input deal"
+            }
+            POST -> verAccount_CaOpen_validate {
+                parameters [ id = "{AccountNumber}" ]
+                title: "validate deal"
+            }
+            POST -> verAccount_CaOpen_hold {
+                parameters [ id = "{AccountNumber}" ]
+                title: "hold deal"
+            }
+            POST -> verAccount_CaOpen_reverse {
+                parameters [ id = "{AccountNumber}" ]
+                title: "reverse deal"
+            }
+            POST -> verAccount_CaOpen_audit {
+                parameters [ id = "{AccountNumber}" ]
+                title: "audit deal"
+            }
+            POST -> verAccount_CaOpen_copy {
+                title: "Copy deal"
+            }
+            POST -> verAccount_CaOpen_paste {
+                parameters [ id = "{AccountNumber}" ]
+                title: "Paste deal"
+            }
+            GET -> verAccount_CaOpen_ContextEnquiries {
+                title: "All Context Enquiries"
+            }
+            GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+                parameters [ entity = "verAccount_CaOpen" ]
+                title: "Context Enquiries"
+            }
+        }
+    
+        resource verAccount_CaOpen_IAuth {
+            type: item
+            entity: verAccount_CaOpen
+            commands [ GET : GetEntity, GET : T24IAuthState ]
+            path: "/verAccount_CaOpens_IAuth('{id}')"
+            POST +-> verAccount_CaOpens_metadata {
+                title: "metadata"
+            }
+            GET +-> "common.Messages.ProcessMessages" {
+                title: "Messages"
+            }
+            GET +-> verAccount_CaOpen_changedValues {
+                parameters [ id = "{AccountNumber}" ]
+                title: "changed values"
+            }
+            PUT -> verAccount_CaOpen_input {
+                parameters [ id = "{AccountNumber}" ]
+                title: "input deal"
+            }
+            POST -> verAccount_CaOpen_validate {
+                parameters [ id = "{AccountNumber}" ]
+                title: "validate deal"
+            }
+            POST -> verAccount_CaOpen_hold {
+                parameters [ id = "{AccountNumber}" ]
+                title: "hold deal"
+            }
+            DELETE -> verAccount_CaOpen_delete {
+                parameters [ id = "{AccountNumber}" ]
+                title: "delete"
+            }
+            POST -> verAccount_CaOpen_authorise {
+                parameters [ id = "{AccountNumber}" ]
+                title: "authorise deal"
+            }
+            POST -> verAccount_CaOpen_copy {
+                title: "Copy deal"
+            }
+            POST -> verAccount_CaOpen_paste {
+                parameters [ id = "{AccountNumber}" ]
+                title: "Paste deal"
+            }
+            GET -> verAccount_CaOpen_ContextEnquiries {
+                title: "All Context Enquiries"
+            }
+            GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+                parameters [ entity = "verAccount_CaOpen" ]
+                title: "Context Enquiries"
+            }
+        }
+    
+        resource verAccount_CaOpen_HAuth {
+            type: item
+            entity: verAccount_CaOpen
+            commands [ GET : GetEntity, GET : T24HAuthState ]
+            path: "/verAccount_CaOpens_HAuth('{id}')"
+            GET +-> "common.Messages.ProcessMessages" {
+                title: "Messages"
+            }
+            POST -> verAccount_CaOpen_authorise {
+                parameters [ id = "{AccountNumber}" ]
+                title: "authorise deal"
+            }
+            POST -> verAccount_CaOpen_hold {
+                parameters [ id = "{AccountNumber}" ]
+                title: "hold deal"
+            }
+            DELETE -> verAccount_CaOpen_delete {
+                parameters [ id = "{AccountNumber}" ]
+                title: "delete"
+            }
+            POST -> verAccount_CaOpen_copy {
+                title: "Copy deal"
+            }
+            POST -> verAccount_CaOpen_paste {
+                parameters [ id = "{AccountNumber}" ]
+                title: "Paste deal"
+            }
+            GET -> verAccount_CaOpen_ContextEnquiries {
+                title: "All Context Enquiries"
+            }
+            GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+                parameters [ entity = "verAccount_CaOpen" ]
+                title: "Context Enquiries"
+            }
+        }
+    
+        resource verAccount_CaOpen_RAuth {
+            type: item
+            entity: verAccount_CaOpen
+            commands [ GET : GetEntity, GET : T24RAuthState ]
+            path: "/verAccount_CaOpens_RAuth('{id}')"
+            GET +-> "common.Messages.ProcessMessages" {
+                title: "Messages"
+            }
+            DELETE -> verAccount_CaOpen_delete {
+                parameters [ id = "{AccountNumber}" ]
+                title: "delete"
+            }
+            POST -> verAccount_CaOpen_authorise {
+                parameters [ id = "{AccountNumber}" ]
+                title: "authorise deal"
+            }
+            POST -> verAccount_CaOpen_copy {
+                title: "Copy deal"
+            }
+            POST -> verAccount_CaOpen_paste {
+                parameters [ id = "{AccountNumber}" ]
+                title: "Paste deal"
+            }
+            GET -> verAccount_CaOpen_ContextEnquiries {
+                title: "All Context Enquiries"
+            }
+            GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+                parameters [ entity = "verAccount_CaOpen" ]
+                title: "Context Enquiries"
+            }
+        }
+    
+        resource verAccount_CaOpen_Held {
+            type: item
+            entity: verAccount_CaOpen
+            commands [ GET : GetEntity, GET : T24HeldState ]
+            path: "/verAccount_CaOpens_Held('{id}')"
+            POST +-> verAccount_CaOpens_metadata {
+                title: "metadata"
+            }
+            GET +-> "common.Messages.ProcessMessages" {
+                title: "Messages"
+            }
+            PUT -> verAccount_CaOpen_input {
+                parameters [ id = "{AccountNumber}" ]
+                title: "input deal"
+            }
+            POST -> verAccount_CaOpen_validate {
+                parameters [ id = "{AccountNumber}" ]
+                title: "validate deal"
+            }
+            POST -> verAccount_CaOpen_hold {
+                parameters [ id = "{AccountNumber}" ]
+                title: "hold deal"
+            }
+            DELETE -> verAccount_CaOpen_delete {
+                parameters [ id = "{AccountNumber}" ]
+                title: "delete"
+            }
+            POST -> verAccount_CaOpen_copy {
+                title: "Copy deal"
+            }
+            POST -> verAccount_CaOpen_paste {
+                parameters [ id = "{AccountNumber}" ]
+                title: "Paste deal"
+            }
+            GET -> verAccount_CaOpen_ContextEnquiries {
+                title: "All Context Enquiries"
+            }
+            GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+                parameters [ entity = "verAccount_CaOpen" ]
+                title: "Context Enquiries"
+            }
+        }
+    
+        resource verAccount_CaOpen_Reversed {
+            type: item
+            entity: verAccount_CaOpen
+            commands [ GET : GetEntity, GET : T24ReversedState ]
+            path: "/verAccount_CaOpens_Reversed('{id}')"
+            GET +-> "common.Messages.ProcessMessages" {
+                title: "Messages"
+            }
+            POST -> verAccount_CaOpen_restore {
+                parameters [ id = "{AccountNumber}" ]
+                title: "restore deal"
+            }
+            POST -> verAccount_CaOpen_copy {
+                title: "Copy deal"
+            }
+            POST -> verAccount_CaOpen_paste {
+                parameters [ id = "{AccountNumber}" ]
+                title: "Paste deal"
+            }
+            GET -> verAccount_CaOpen_ContextEnquiries {
+                title: "All Context Enquiries"
+            }
+            GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+                parameters [ entity = "verAccount_CaOpen" ]
+                title: "Context Enquiries"
+            }
+        }
+    
+        resource verAccount_CaOpen_new {
+            type: item
+            entity: verAccount_CaOpen
+            commands [ POST : CreateEntity, GET : T24NewState ]
+            relations [ "http://schemas.microsoft.com/ado/2007/08/dataservices/related/verAccount_CaOpen","http://temenostech.temenos.com/rels/new" ]
+            path: "/verAccount_CaOpens()/new"
+            GET --> verAccount_CaOpen_silent {
+            }
+            GET --> nextState {
+            }
+            GET --> verAccount_CaOpen {
+                parameters [ id = "{AccountNumber}" ]
+            }
+            POST +-> verAccount_CaOpens_metadata {
+                title: "metadata"
+            }
+            PUT -> verAccount_CaOpen_input {
+                parameters [ id = "{AccountNumber}" ]
+                title: "input deal"
+            }
+            POST -> verAccount_CaOpen_validate {
+                parameters [ id = "{AccountNumber}" ]
+                title: "validate deal"
+            }
+            POST -> verAccount_CaOpen_hold {
+                parameters [ id = "{AccountNumber}" ]
+                title: "hold deal"
+            }
+            POST -> verAccount_CaOpen_copy {
+                title: "Copy deal"
+            }
+            POST -> verAccount_CaOpen_paste {
+                parameters [ id = "{AccountNumber}" ]
+                title: "Paste deal"
+            }
+            GET -> verAccount_CaOpen_ContextEnquiries {
+                title: "All Context Enquiries"
+            }
+            GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+                parameters [ entity = "verAccount_CaOpen" ]
+                title: "Context Enquiries"
+            }
+            onerror --> verAccount_CaOpen_errorHandler
+        }
+    
+        resource verAccount_CaOpen_populate {
+            type: item
+            entity: verAccount_CaOpen
+            commands [ POST : CreateEntity ]
+            relations [ "http://schemas.microsoft.com/ado/2007/08/dataservices/related/verAccount_CaOpen","http://temenostech.temenos.com/rels/populate" ]
+            path: "/verAccount_CaOpens()/populate"
+            GET --> verAccount_CaOpen_silent {
+            }
+            GET --> nextState {
+            }
+            GET --> verAccount_CaOpen {
+                parameters [ id = "{AccountNumber}" ]
+            }
+            POST +-> verAccount_CaOpens_metadata {
+                title: "metadata"
+            }
+            PUT -> verAccount_CaOpen_input {
+                parameters [ id = "{AccountNumber}" ]
+                title: "input deal"
+            }
+            POST -> verAccount_CaOpen_validate {
+                parameters [ id = "{AccountNumber}" ]
+                title: "validate deal"
+            }
+            POST -> verAccount_CaOpen_hold {
+                parameters [ id = "{AccountNumber}" ]
+                title: "hold deal"
+            }
+            POST -> verAccount_CaOpen_copy {
+                title: "Copy deal"
+            }
+            GET -> verAccount_CaOpen_ContextEnquiries {
+                title: "All Context Enquiries"
+            }
+            GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+                parameters [ entity = "verAccount_CaOpen" ]
+                title: "Context Enquiries"
+            }
+            onerror --> verAccount_CaOpen_errorHandler
+        }
+    
+        resource verAccount_CaOpen_input {
+            type: item
+            entity: verAccount_CaOpen
+            commands [ PUT : InputEntity, POST : InputEntity ]
+            relations [ "http://temenostech.temenos.com/rels/input" ]
+            path: "/verAccount_CaOpens('{id}')"
+            GET --> verAccount_CaOpen_silent {
+            }
+            GET --> nextState {
+            }
+            GET --> verAccount_CaOpen {
+                parameters [ id = "{AccountNumber}" ]
+            }
+            onerror --> verAccount_CaOpen_errorHandler
+        }
+    
+        resource verAccount_CaOpen_hold {
+            type: item
+            entity: verAccount_CaOpen
+            commands [ POST : HoldEntity ]
+            relations [ "http://temenostech.temenos.com/rels/hold" ]
+            path: "/verAccount_CaOpens('{id}')/hold"
+            GET --> verAccount_CaOpen_silent {
+            }
+            GET --> nextState {
+            }
+            GET --> verAccount_CaOpen {
+                parameters [ id = "{AccountNumber}" ]
+            }
+            onerror --> verAccount_CaOpen_errorHandler
+        }
+    
+        resource verAccount_CaOpen_authorise {
+            type: item
+            entity: verAccount_CaOpen
+            commands [ PUT : AuthoriseEntity ]
+            relations [ "http://temenostech.temenos.com/rels/authorise" ]
+            path: "/verAccount_CaOpens('{id}')/authorise"
+            GET --> verAccount_CaOpen_silent {
+            }
+            GET --> nextState {
+            }
+            GET --> verAccount_CaOpen {
+                parameters [ id = "{AccountNumber}" ]
+            }
+            onerror --> verAccount_CaOpen_errorHandler
+        }
+    
+        resource verAccount_CaOpen_audit {
+            type: item
+            entity: verAccount_CaOpen
+            commands [ POST : ReviewEntity ]
+            relations [ "http://temenostech.temenos.com/rels/review" ]
+            path: "/verAccount_CaOpens('{id}')/review"
+            GET --> verAccount_CaOpen_silent {
+            }
+            GET --> nextState {
+            }
+            GET --> verAccount_CaOpen {
+                parameters [ id = "{AccountNumber}" ]
+            }
+            onerror --> verAccount_CaOpen_errorHandler
+        }
+    
+        resource verAccount_CaOpen_reverse {
+            type: item
+            entity: verAccount_CaOpen
+            commands [ PUT : ReverseEntity ]
+            relations [ "http://temenostech.temenos.com/rels/reverse" ]
+            path: "/verAccount_CaOpens('{id}')/reverse"
+            GET --> verAccount_CaOpen_silent {
+            }
+            GET --> nextState {
+            }
+            GET --> verAccount_CaOpen {
+                parameters [ id = "{AccountNumber}" ]
+            }
+            onerror --> verAccount_CaOpen_errorHandler
+        }
+    
+        resource verAccount_CaOpen_validate {
+            type: item
+            entity: verAccount_CaOpen
+            commands [ POST : ValidateEntity ]
+            relations [ "http://temenostech.temenos.com/rels/validate" ]
+            path: "/verAccount_CaOpens('{id}')/validate"
+            GET --> verAccount_CaOpen_silent {
+            }
+            GET --> nextState {
+            }
+            POST +-> verAccount_CaOpens_metadata {
+                title: "metadata"
+            }
+            GET +-> "common.Messages.ProcessMessages" {
+                title: "Messages"
+            }
+            PUT -> verAccount_CaOpen_input {
+                parameters [ id = "{AccountNumber}" ]
+                title: "input deal"
+            }
+            POST -> verAccount_CaOpen_hold {
+                parameters [ id = "{AccountNumber}" ]
+                title: "hold deal"
+            }
+            onerror --> verAccount_CaOpen_errorHandler
+        }
+    
+        resource verAccount_CaOpen_delete {
+            type: item
+            entity: verAccount_CaOpen
+            commands [ DELETE : DeleteEntity ]
+            relations [ "http://temenostech.temenos.com/rels/delete" ]
+            path: "/verAccount_CaOpens('{id}')/delete"
+            GET +-> "common.Messages.ProcessMessages" {
+                title: "Messages"
+            }
+            onerror --> verAccount_CaOpen_errorHandler
+        }
+    
+        resource verAccount_CaOpen_copy {
+            type: item
+            entity: verAccount_CaOpen
+            commands [ POST : CopyEntity ]
+            relations [ "http://temenostech.temenos.com/rels/copy" ]
+            path: "/verAccount_CaOpens()/copy"
+            onerror --> verAccount_CaOpen_errorHandler
+        }
+    
+        resource verAccount_CaOpen_paste {
+            type: item
+            entity: verAccount_CaOpen
+            commands [ POST : PasteEntity ]
+            relations [ "http://temenostech.temenos.com/rels/paste" ]
+            path: "/verAccount_CaOpens('{id}')/paste"
+            GET --> verAccount_CaOpen_silent {
+            }
+            GET --> nextState {
+            }
+            GET --> verAccount_CaOpen {
+                parameters [ id = "{AccountNumber}" ]
+            }
+            POST +-> verAccount_CaOpens_metadata {
+                title: "metadata"
+            }
+            PUT -> verAccount_CaOpen_input {
+                parameters [ id = "{AccountNumber}" ]
+                title: "input deal"
+            }
+            POST -> verAccount_CaOpen_validate {
+                parameters [ id = "{AccountNumber}" ]
+                title: "validate deal"
+            }
+            POST -> verAccount_CaOpen_hold {
+                parameters [ id = "{AccountNumber}" ]
+                title: "hold deal"
+            }
+            GET -> verAccount_CaOpen_ContextEnquiries {
+                title: "All Context Enquiries"
+            }
+            GET -> "T24.ContextEnquiry.ContextEnquiryList" {
+                parameters [ entity = "verAccount_CaOpen" ]
+                title: "Context Enquiries"
+            }
+            onerror --> verAccount_CaOpen_errorHandler
+        }
+    
+        resource verAccount_CaOpen_restore {
+            type: item
+            entity: verAccount_CaOpen
+            commands [ POST : RestoreEntity ]
+            relations [ "http://temenostech.temenos.com/rels/restore" ]
+            path: "/verAccount_CaOpens('{id}')/restore"
+            GET --> verAccount_CaOpen_silent {
+            }
+            GET --> nextState {
+            }
+            GET --> verAccount_CaOpen {
+                parameters [ id = "{AccountNumber}" ]
+            }
+            onerror --> verAccount_CaOpen_errorHandler
+        }
+    
+        resource verAccount_CaOpen_changedValues {
+            type: item
+            entity: verAccount_CaOpen
+            commands [ GET : GetChangedValues ]
+            relations [ "http://temenostech.temenos.com/rels/changedValues" ]
+            path: "/verAccount_CaOpens('{id}')/changedValues"
+            GET --> verAccount_CaOpen_silent {
+            }
+            GET --> nextState {
+            }
+            GET --> verAccount_CaOpen {
+                parameters [ id = "{AccountNumber}" ]
+            }
+        }
+    
+        resource verAccount_CaOpen_enrichment {
+            type: item
+            entity: Enrichment
+            commands [ GET : T24Enrichment {
+                properties [ entity = "verAccount_CaOpen" ]
+                } ]
+            relations [ "http://temenostech.temenos.com/rels/enrichment" ]
+            path: "/verAccount_CaOpens()/enrichment"
+        }
+    
+        resource verAccount_CaOpen_autoId {
+            type: item
+            entity: verAccount_CaOpen
+            commands [ GET : CheckAutoIdSupport ]
+            path: "/verAccount_CaOpens('{id}')/autoId"
+        }
+    
+    }
+    
+}
