@@ -12,6 +12,6 @@ public class Configuration {
     public static String INPUTTER_USER_NAME = "INPUTT";
     public static String INPUTTER_PASSWORD = "123456";
     
-    public static String AUTHORISER_USER_NAME = "SSOUSER1";
+    public static String AUTHORISER_USER_NAME = "AUTHOR";
     public static String AUTHORISER_PASSWORD = "123456";
 }
