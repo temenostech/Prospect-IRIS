@@ -14,4 +14,9 @@ public class Configuration {
     
     public static String AUTHORISER_USER_NAME = "AUTHOR";
     public static String AUTHORISER_PASSWORD = "123456";
+    
+    public static String HTTP_HEADER_CONTENT_TYPE = "Content-Type";
+    public static String HTTP_HEADER_ACCEPT = "Accept";
+    public static String APPLICATION_ATOM_XML = "application/atom+xml";
+    
 }
