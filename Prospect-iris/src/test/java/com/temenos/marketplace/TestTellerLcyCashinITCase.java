@@ -48,17 +48,11 @@ public class TestTellerLcyCashinITCase {
         System.out.println("testTellerLcyCashin1_createF2_status: " + session.result().code());
         assertEquals(400, session.result().code());
         
-        String resultError = session.entities().item().get("Errors_ErrorsMvGroup");
-        String resultError2 = session.entities().item().get("Errors_ErrorsMvGroup").toString().trim();
+        String resultError = session.entities().item().get("Errors_ErrorsMvGroup(0)/Code");
         System.out.println("testTellerLcyCashin1_createF2_error: " + resultError);
-        System.out.println("testTellerLcyCashin1_createF2_error2: " + resultError2);
         String stringToMatch = "((.*)TILL NOT OPEN(.*))";
-        String stringToMatch2 = "TILL NOT OPEN";
-        //String stringToMatch ="((.*)\\<d\\:Text\\>TILL NOT OPEN\\<\\/d\\:Text\\>(.*))";
         System.out.println("testTellerLcyCashin1_create_errorMatch: " + stringToMatch);
-        System.out.println("testTellerLcyCashin1_create_errorMatch2: " + stringToMatch2);
-        //assertTrue(resultError.matches(stringToMatch));
-        //assertTrue(resultError2.matches(stringToMatch2));
+        assertTrue(resultError.matches(stringToMatch));
     }
    
     // This test case will be successful and it will create a temporary teller transaction
