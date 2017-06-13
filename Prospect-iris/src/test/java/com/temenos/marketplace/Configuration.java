@@ -17,6 +17,7 @@ public class Configuration {
     
     public static String HTTP_HEADER_CONTENT_TYPE = "Content-Type";
     public static String HTTP_HEADER_ACCEPT = "Accept";
+    public static String HTTP_HEADER_IF_MATCH = "If-Match";
     public static String APPLICATION_ATOM_XML = "application/atom+xml";
     
 }
