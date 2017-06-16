@@ -623,7 +623,7 @@ public class TestCustomerITCase {
                     .header(Configuration.HTTP_HEADER_ACCEPT, Configuration.APPLICATION_ATOM_XML)
                     .url()
                     .baseuri(Configuration.DATA_SERVICE_URL)
-                    .path(sessionPath)
+                    .path(delSessionPath)
                     .get();
         String delSessionEtag = delSession.header("ETag");
         System.out.println("testCustomerOnHoldDeletion_delSessionEtag: " + delSessionEtag);
