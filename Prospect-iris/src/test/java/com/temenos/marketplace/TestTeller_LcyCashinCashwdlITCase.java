@@ -120,6 +120,21 @@ public class TestTeller_LcyCashinCashwdlITCase {
         }
         assertEquals(201, cashwdlSession.result().code());
 
+        //retrieve the StatusRecord of the just created teller cashwdl transaction
+        String recordStatusCreate = cashwdlSession.entities().item().get("RecordStatus");
+        System.out.println("testTellerLcyCashinCashwdlSuccess_RecordStatusCreate: " + recordStatusCreate);
+        //retrieve the session ETag in order to be used down to the authorization step
+        String sessionEtag = cashwdlSession.header("ETag");
+        System.out.println("testTellerLcyCashinCashwdlSuccess_sessionEtag: " + sessionEtag);
+        
+        //Authorize the creation of the teller cashwdl transaction into the database
+        cashwdlSession.reuse()
+                .header(Configuration.HTTP_HEADER_IF_MATCH, sessionEtag)
+                .basicAuth(Configuration.AUTHORISER_USER_NAME, Configuration.AUTHORISER_PASSWORD).links()
+                .byRel("http://temenostech.temenos.com/rels/authorise").url()
+                .put();
+        assertEquals(200, cashwdlSession.result().code());
+        
         //check if the teller cashwdl transaction just created is indeed present into the database
         InteractionSession sessionCashwdlCheck = DefaultInteractionSession.newSession();
         String intermediateCashwdlPath = "$filter=TransactionNumber eq '" + id + "'";
