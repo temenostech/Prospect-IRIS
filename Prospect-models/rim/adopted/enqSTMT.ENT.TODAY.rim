@@ -1,0 +1,40 @@
+domain T24 {
+    use common.CoreCommands.*
+    use common.HTTPEvents.*
+    use common.ODataCommands.*
+    use common.T24Commands.*
+    use common.T24Events.*
+    use common.NextState.*
+    rim enqStmtEntToday {
+        command GETEntities
+        command GETEntity
+        basepath: "/{companyid}"
+    
+        resource enqStmtEntTodays {
+            type: collection
+            entity: enqStmtEntToday
+            commands [ GET : GETEntities {
+                properties [ filter = "{filter}" ]
+                } ]
+            path: "/enqStmtEntTodays()"
+            GET *-> enqStmtEntToday {
+                parameters [ id = "{PrimaryKey}" ]
+            }
+            GET *-> locator t24ResourceLocator("{NetDetId}") {
+                parameters [ CVR_CURRENT_CompanyID = "{PpCompPop}",VLD_NET_SEL_FORM = "{PpCompPop}",CVR_CURRENT_FTNumber = "{PpTransRefPop}" ]
+                title: "Transaction Detail"
+                id: "1"
+                field: "Valdesc"
+            }
+        }
+    
+        resource enqStmtEntToday {
+            type: item
+            entity: enqStmtEntToday
+            commands [ GET : GETEntity ]
+            path: "/enqStmtEntTodays('{id}')"
+        }
+    
+    }
+    
+}
