@@ -1,0 +1,545 @@
+Enquiry "STMT.LAST.N.TXNS" for "name:/AC_EntryCreation:STMT.ENTRY#" {
+    metamodelVersion: "1.30.6"
+    description {
+        en = "Recent Transaction"
+    }
+
+    zero-records-display: true
+    no-selection: true
+    start-line: 4
+    end-line: 19
+    build-routines {
+        jBC: "E.LAST.TXNS.DATES.BUILD"
+    }
+
+    fixed-selection "MASK.PRINT" {
+        Equals "\"\""
+    }
+
+    fixed-selection "NO.OF.ENTRIES" {
+        Equals "10"
+    }
+
+    fixed-selection "MAX.HISTORY.MONTHS" {
+        Equals "6"
+    }
+
+    fixed-sort: "DATE.TIME" Descending
+    fixed-sort: "@ID" Descending
+    custom-selection {
+
+        field "ACCT.ID" {
+            mandatory: true
+            label {
+                en = "Account Number"
+            }
+
+            operands: Equals
+        }
+
+        AND
+
+        field "IN.START.DATE" {
+            label {
+                en = "Start Date"
+            }
+
+            operands: Equals
+        }
+
+        AND
+
+        field "IN.END.DATE" {
+            label {
+                en = "End Date"
+            }
+
+            operands: Equals
+        }
+
+        None
+    }
+
+    field "@ID" {
+        length: 90
+        alignment: Left
+        comma-separator: false
+        processing-mode: Single
+        operation: application-field-name "@ID"
+    }
+
+    field "RMB1.ACCOUNT" {
+        length: 19
+        alignment: Left
+        comma-separator: false
+        processing-mode: Single
+        operation: application-field-name "ACCOUNT.NUMBER"
+    }
+
+    field "HDR.LIT.1" {
+        display-type: "CLASS-ENQ.H.DATA.LABEL"
+        comma-separator: false
+        display-section: Header
+        position {
+            column: 1
+            line: 1
+        }
+
+        operation: constant "\"Recent Transactions \""
+    }
+
+    field "HDR.LIT.2" {
+        display-type: "CLASS-ENQ.H.DATA.LABEL"
+        length: 7
+        alignment: Left
+        comma-separator: false
+        display-section: Header
+        position {
+            column: 1
+            line: 2
+        }
+
+        operation: constant "\"Account\""
+    }
+
+    field "HDR.LIT3" {
+        comma-separator: false
+        display-section: Header
+        position {
+            column: 8
+            line: 2
+        }
+
+        operation: constant "\" \""
+    }
+
+    field "HDR.LIT4" {
+        display-type: "CLASS-ENQ.H.DATA.LABEL"
+        comma-separator: false
+        display-section: Header
+        position {
+            column: 9
+            line: 2
+        }
+
+        operation: constant "\"-\""
+    }
+
+    field "HDR.LIT5" {
+        comma-separator: false
+        display-section: Header
+        position {
+            column: 10
+            line: 2
+        }
+
+        operation: constant "\" \""
+    }
+
+    field "HDR.AC.NO" {
+        display-type: "CLASS-ENQ.H.DATA"
+        length: 20
+        alignment: Left
+        comma-separator: false
+        display-section: Header
+        position {
+            column: 11
+            line: 2
+        }
+
+        operation: field-extract "RMB1.ACCOUNT"
+    }
+
+    field "HDR.LT6" {
+        comma-separator: false
+        display-section: Header
+        position {
+            column: 22
+            line: 2
+        }
+
+        operation: constant "\" \""
+    }
+
+    field "HDR.AC.TITLE" {
+        display-type: "CLASS-ENQ.H.DATA"
+        length: 25
+        alignment: Left
+        comma-separator: false
+        display-section: Header
+        position {
+            column: 23
+            line: 2
+        }
+
+        operation: field-extract "RMB1.ACCOUNT"
+        conversion: getFrom "ACCOUNT" "SHORT.TITLE" false
+    }
+
+    field "HDR.LT7" {
+        break-condition {
+            break: Once
+        }
+
+        length: 21
+        alignment: Right
+        comma-separator: false
+        display-section: Header
+        position {
+            column: 35
+            line: 2
+        }
+
+        operation: constant "\" \""
+    }
+
+    field "HDR.LIT6" {
+        break-condition {
+            break: Once
+        }
+
+        length: 15
+        alignment: Right
+        comma-separator: false
+        display-section: Header
+        position {
+            column: 45
+            line: 2
+        }
+
+        operation: constant "\" \""
+    }
+
+    field "HDR.LIT5.02" {
+        break-condition {
+            break: Once
+        }
+
+        length: 10
+        alignment: Right
+        comma-separator: false
+        display-section: Header
+        position {
+            column: 78
+            line: 2
+        }
+
+        operation: constant "\" \""
+    }
+
+    field "HDR.CLOSING.BALANCE" {
+        display-type: "CLASS-ENQ.H.DATA.LABEL"
+        length: 15
+        alignment: Left
+        comma-separator: false
+        display-section: Header
+        position {
+            column: 80
+            line: 2
+        }
+
+        operation: constant "\"Closing Balance -\""
+    }
+
+    field "HDR.LT8" {
+        comma-separator: false
+        display-section: Header
+        position {
+            column: 95
+            line: 2
+        }
+
+        operation: constant "\" \""
+    }
+
+    field "HDR.AC.CCY" {
+        display-type: "CLASS-ENQ.H.DATA"
+        comma-separator: false
+        display-section: Header
+        position {
+            column: 100
+            line: 2
+        }
+
+        operation: field-extract "RMB1.ACCOUNT"
+        conversion: getFrom "ACCOUNT" "CURRENCY" false
+    }
+
+    field "HDR.LIT.9" {
+        display-type: "CLASS-ENQ.H.DATA.LABEL"
+        comma-separator: false
+        display-section: Header
+        operation: constant "\" \""
+    }
+
+    field "CLOSING.BALANCE" {
+        comma-separator: false
+        operation: field-extract "RMB1.ACCOUNT"
+        conversion: call
+        jBC: "@ E.RMB1.GET.ACCT.BALANCE"
+    }
+
+    field "HDR.CLOSING.BALANCE.02" {
+        display-type: "CLASS-ENQ.H.DATA"
+        length: 19
+        alignment: Right
+        comma-separator: true
+        decimals: 2
+        display-section: Header
+        position {
+            column: 110
+            line: 2
+        }
+
+        operation: field-extract "CLOSING.BALANCE"
+    }
+
+    field "ZERO" {
+        length: 90
+        alignment: Left
+        comma-separator: false
+        processing-mode: Single
+        operation: constant "\"0\""
+    }
+
+    field "NULL" {
+        comma-separator: false
+        operation: constant "\"\""
+    }
+
+    field "BOOKING.DATE" {
+        label {
+            en = "Booking Date"
+        }
+
+        format: Date
+        length: 11
+        alignment: Right
+        comma-separator: false
+        position {
+            column: 1
+        }
+
+        processing-mode: Single
+        operation: application-field-name "BOOKING.DATE"
+    }
+
+    field "TRANS.REFERENCE" {
+        label {
+            en = "Reference"
+        }
+
+        length: 60
+        alignment: Left
+        comma-separator: false
+        position {
+            column: 20
+        }
+
+        processing-mode: Single
+        operation: application-field-name "TRANS.REFERENCE"
+    }
+
+    field "TRANSACTION.CODE" {
+        label {
+            en = "Description"
+        }
+
+        format: User
+        length: 34
+        alignment: Left
+        comma-separator: false
+        position {
+            column: 30
+        }
+
+        processing-mode: Single
+        operation: application-field-name "TRANSACTION.CODE"
+        conversion: getFrom "TRANSACTION" "NARRATIVE" false
+    }
+
+    field "NARRATIVE" {
+        length: 90
+        alignment: Left
+        comma-separator: false
+        processing-mode: Single
+        operation: application-field-name "@ID"
+        conversion: call
+        jBC: "@ E.GET.NARRATIVE"
+        conversion: call
+        jBC: "@ E.GET.SPECIAL.NARR"
+    }
+
+    field "DESC" {
+        comma-separator: false
+        position {
+            column: 30
+            line: + 1
+        }
+
+        operation: if "@ID" Equals "NARRATIVE" process "NULL" "NARRATIVE"
+    }
+
+    field "NARRATIVE.02" {
+        length: 34
+        alignment: Left
+        comma-separator: false
+        position {
+            column: 34
+            line: + 1
+        }
+
+        processing-mode: Multi
+        operation: application-field-name "NARRATIVE"
+    }
+
+    field "VALUE.DATE" {
+        label {
+            en = "Value Date"
+        }
+
+        format: Date
+        comma-separator: false
+        position {
+            column: 40
+        }
+
+        processing-mode: Single
+        operation: application-field-name "VALUE.DATE"
+    }
+
+    field "AMOUNT.LCY" {
+        length: 19
+        alignment: Right
+        comma-separator: false
+        processing-mode: Single
+        operation: application-field-name "AMOUNT.LCY"
+    }
+
+    field "AMOUNT.FCY" {
+        length: 19
+        alignment: Right
+        comma-separator: false
+        processing-mode: Single
+        operation: application-field-name "AMOUNT.FCY"
+    }
+
+    field "ENTRY.CCY" {
+        length: 3
+        alignment: Left
+        comma-separator: false
+        processing-mode: Single
+        operation: application-field-name "CURRENCY"
+    }
+
+    field "LCY" {
+        comma-separator: false
+        operation: local-currency
+    }
+
+    field "ENTRY.AMOUNT" {
+        comma-separator: false
+        operation: if "ENTRY.CCY" Equals "LCY" process "AMOUNT.LCY" "AMOUNT.FCY"
+    }
+
+    field "ENTRY.ACCUMULATOR" {
+        comma-separator: false
+        operation: calc "ENTRY.ACCUMULATOR" - "PREV.ENTRY.AMOUNT"
+    }
+
+    field "RUNNING.BALANCE" {
+        comma-separator: false
+        operation: calc "CLOSING.BALANCE" + "ENTRY.ACCUMULATOR"
+    }
+
+    field "CREDIT.AMOUNT" {
+        comma-separator: false
+        operation: if "ENTRY.AMOUNT" Greater "ZERO" process "ENTRY.AMOUNT" "NULL"
+    }
+
+    field "DEBIT.AMOUNT" {
+        comma-separator: false
+        operation: if "ENTRY.AMOUNT" LessThan "ZERO" process "ENTRY.AMOUNT" "NULL"
+    }
+
+    field "ABS.DEBIT.AMOUNT" {
+        format: Currency "ENTRY.CCY" negative-pattern -#
+        comma-separator: false
+        operation: field-extract "DEBIT.AMOUNT"
+        conversion: abs
+    }
+
+    field "VALID.DEBIT.AMT" {
+        format: Currency "ENTRY.CCY" negative-pattern -#
+        comma-separator: false
+        operation: if "ABS.DEBIT.AMOUNT" Greater "ZERO" process "ABS.DEBIT.AMOUNT" "NULL"
+    }
+
+    field "PAID.OUT" {
+        label {
+            en = "Debit"
+        }
+
+        length: 19
+        alignment: Right
+        comma-separator: false
+        position {
+            column: 50
+        }
+
+        operation: field-extract "VALID.DEBIT.AMT"
+    }
+
+    field "PAID.IN" {
+        label {
+            en = "Credit"
+        }
+
+        format: Currency "ENTRY.CCY" negative-pattern -#
+        length: 19
+        alignment: Right
+        comma-separator: false
+        position {
+            column: 60
+        }
+
+        operation: field-extract "CREDIT.AMOUNT"
+    }
+
+    field "R.BALANCE" {
+        label {
+            en = "Closing Balance"
+        }
+
+        format: Currency "ENTRY.CCY" negative-pattern -#
+        length: 19
+        alignment: Right
+        comma-separator: false
+        position {
+            column: 70
+        }
+
+        operation: field-extract "RUNNING.BALANCE"
+    }
+
+    field "PREV.ENTRY.AMOUNT" {
+        comma-separator: false
+        operation: field-extract "ENTRY.AMOUNT"
+    }
+
+    field "ZERORECORDS" {
+        display-type: "CLASS-ENQ.NORECS" break-condition {
+            break: None
+        }
+
+        comma-separator: false
+        display-section: Header
+        position {
+            column: 1
+        }
+
+        operation: constant "\"No entries for the Period\""
+    }
+
+    attributes: "ALLDATA" ; "NO.BREADCRUMBS"
+}
