@@ -2,6 +2,8 @@ package com.temenos.marketplace;
 
 import static org.junit.Assert.*;
 
+import java.io.IOException;
+
 import org.junit.Test;
 
 import com.temenos.useragent.generic.DefaultInteractionSession;
@@ -34,6 +36,9 @@ public class TestAvailabilityOfApiITCase {
     private String verCustomer_Inputs = "verCustomer_Inputs";
     private String verFundsTransfer_Inputs = "verFundsTransfer_Inputs";
  
+    private String enqAcctStmtHists = "enqAcctStmtHists";
+    //private String enqStmtEntTodays = "enqStmtEntTodays";
+    private String enqFtTxnTypeConditions = "enqFtTxnTypeConditions";
     
     @Test
     public void testEnqAccountStatements() {
@@ -226,4 +231,42 @@ public class TestAvailabilityOfApiITCase {
         assertTrue(session.entities().isCollection());
         assertFalse(session.entities().collection().isEmpty());
     }
+    
+    @Test
+    public void testEnqAcctStmtHists() {
+        InteractionSession session = DefaultInteractionSession.newSession();
+        session.basicAuth(Configuration.INPUTTER_USER_NAME, Configuration.INPUTTER_PASSWORD)
+                .url()
+                .baseuri(Configuration.DATA_SERVICE_URL)
+                .path(enqAcctStmtHists).get();
+        
+        assertTrue(session.entities().isCollection());
+        assertFalse(session.entities().collection().isEmpty());
+    }
+    
+    @Test
+    public void testEnqFtTxnTypeConditions() {
+        InteractionSession session = DefaultInteractionSession.newSession();
+        session.basicAuth(Configuration.INPUTTER_USER_NAME, Configuration.INPUTTER_PASSWORD)
+                .url()
+                .baseuri(Configuration.DATA_SERVICE_URL)
+                .path(enqFtTxnTypeConditions).get();
+        
+        assertTrue(session.entities().isCollection());
+        assertFalse(session.entities().collection().isEmpty());
+    }
+    
+    @Test
+    public void testEnqStmtEntTodays() throws IOException {
+        String enqStmtEntTodaysPath = "enqStmtEntTodays()?$filter=AcctId%20eq%20'78131'";
+        InteractionSession session = DefaultInteractionSession.newSession();
+        session.basicAuth(Configuration.INPUTTER_USER_NAME, Configuration.INPUTTER_PASSWORD)
+                .url()
+                .baseuri(Configuration.DATA_SERVICE_URL)
+                .path(enqStmtEntTodaysPath).get();
+        
+        assertTrue(session.entities().isCollection());
+        assertFalse(session.entities().collection().isEmpty());
+    }
+    
 }
