@@ -15,6 +15,9 @@ public class Configuration {
     public static String AUTHORISER_USER_NAME = "AUTHOR";
     public static String AUTHORISER_PASSWORD = "123456";
     
+    public static String TELLER_USER_NAME = "CSAGENT";
+    public static String TELLER_PASSWORD = "123456";
+    
     public static String HTTP_HEADER_CONTENT_TYPE = "Content-Type";
     public static String HTTP_HEADER_ACCEPT = "Accept";
     public static String HTTP_HEADER_IF_MATCH = "If-Match";

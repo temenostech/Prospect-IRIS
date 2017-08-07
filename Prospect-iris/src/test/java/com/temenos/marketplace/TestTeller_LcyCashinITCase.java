@@ -19,9 +19,6 @@ import com.temenos.useragent.generic.mediatype.AtomPayloadHandler;
  */
 
 public class TestTeller_LcyCashinITCase {
-    
-    public static String TELLER_USER_NAME = "CSAGENT";
-    public static String TELLER_PASSWORD = "123456";
 
     // This test case will fail because the request entity is in a format not supported by the requested resource
     @Test
@@ -59,7 +56,7 @@ public class TestTeller_LcyCashinITCase {
     public void testTellerLcyCashin_Create() {
         InteractionSession session = DefaultInteractionSession.newSession();
         session.registerHandler("application/atom+xml",AtomPayloadHandler.class)
-                .basicAuth(TELLER_USER_NAME,TELLER_PASSWORD)
+                .basicAuth(Configuration.TELLER_USER_NAME,Configuration.TELLER_PASSWORD)
                 .header(Configuration.HTTP_HEADER_CONTENT_TYPE, Configuration.APPLICATION_ATOM_XML)
                 .header(Configuration.HTTP_HEADER_ACCEPT, Configuration.APPLICATION_ATOM_XML)
                 .url()
@@ -74,7 +71,7 @@ public class TestTeller_LcyCashinITCase {
         // create a temporary teller cashin transaction
         InteractionSession session = DefaultInteractionSession.newSession();
         session.registerHandler("application/atom+xml",AtomPayloadHandler.class)
-                .basicAuth(TELLER_USER_NAME,TELLER_PASSWORD)
+                .basicAuth(Configuration.TELLER_USER_NAME,Configuration.TELLER_PASSWORD)
                 .header(Configuration.HTTP_HEADER_CONTENT_TYPE, Configuration.APPLICATION_ATOM_XML)
                 .header(Configuration.HTTP_HEADER_ACCEPT, Configuration.APPLICATION_ATOM_XML)
                 .url()
@@ -88,10 +85,9 @@ public class TestTeller_LcyCashinITCase {
         
         //fill the mandatory input fields in order to commit the teller cashin transaction into the database
         session.reuse()
-                .set("verTeller_LcyCashin_Account1MvGroup(0)/AmountLocal1", "100")
+                .set("verTeller_LcyCashin_Account1MvGroup(0)/AmountLocal1", "200")
                 .set("Account2", "83267")
-                .set("ValueDate2", "20170417")
-                .set("verTeller_LcyCashin_DrDenomMvGroup(0)/DrUnit", "1")
+                .set("verTeller_LcyCashin_DrDenomMvGroup(0)/DrUnit", "2")
                 .entities().item().links()
                 .byRel("http://temenostech.temenos.com/rels/input").url()
                 .post();
@@ -130,7 +126,7 @@ public class TestTeller_LcyCashinITCase {
         // create a temporary teller cashin transaction
         InteractionSession session = DefaultInteractionSession.newSession();
         session.registerHandler("application/atom+xml",AtomPayloadHandler.class)
-                .basicAuth(TELLER_USER_NAME,TELLER_PASSWORD)
+                .basicAuth(Configuration.TELLER_USER_NAME,Configuration.TELLER_PASSWORD)
                 .header(Configuration.HTTP_HEADER_CONTENT_TYPE, Configuration.APPLICATION_ATOM_XML)
                 .header(Configuration.HTTP_HEADER_ACCEPT, Configuration.APPLICATION_ATOM_XML)
                 .url()
@@ -142,7 +138,7 @@ public class TestTeller_LcyCashinITCase {
         String id = session.entities().item().get("TransactionNumber");
         System.out.println("testTellerLcyCashin_CreateAndValidateFailure_id: " + id);
         
-        //validate the teller cachin created by not filling the mandatory input fields
+        //validate the teller cashin created by not filling the mandatory input fields
         session.reuse()
                 .entities().item().links()
                 .byRel("http://temenostech.temenos.com/rels/validate").url()
@@ -166,7 +162,7 @@ public class TestTeller_LcyCashinITCase {
         // create a temporary teller cashin transaction
         InteractionSession session = DefaultInteractionSession.newSession();
         session.registerHandler("application/atom+xml",AtomPayloadHandler.class)
-                .basicAuth(TELLER_USER_NAME,TELLER_PASSWORD)
+                .basicAuth(Configuration.TELLER_USER_NAME,Configuration.TELLER_PASSWORD)
                 .header(Configuration.HTTP_HEADER_CONTENT_TYPE, Configuration.APPLICATION_ATOM_XML)
                 .header(Configuration.HTTP_HEADER_ACCEPT, Configuration.APPLICATION_ATOM_XML)
                 .url()
@@ -182,7 +178,6 @@ public class TestTeller_LcyCashinITCase {
         session.reuse()
                 .set("verTeller_LcyCashin_Account1MvGroup(0)/AmountLocal1", "100")
                 .set("Account2", "83267")
-                .set("ValueDate2", "20170417")
                 .set("verTeller_LcyCashin_DrDenomMvGroup(0)/DrUnit", "1")
                 .entities().item().links()
                 .byRel("http://temenostech.temenos.com/rels/validate").url()
@@ -197,7 +192,7 @@ public class TestTeller_LcyCashinITCase {
         // create a temporary teller cashin transaction
         InteractionSession session = DefaultInteractionSession.newSession();
         session.registerHandler("application/atom+xml",AtomPayloadHandler.class)
-                .basicAuth(TELLER_USER_NAME,TELLER_PASSWORD)
+                .basicAuth(Configuration.TELLER_USER_NAME,Configuration.TELLER_PASSWORD)
                 .header(Configuration.HTTP_HEADER_CONTENT_TYPE, Configuration.APPLICATION_ATOM_XML)
                 .header(Configuration.HTTP_HEADER_ACCEPT, Configuration.APPLICATION_ATOM_XML)
                 .url()
@@ -213,7 +208,6 @@ public class TestTeller_LcyCashinITCase {
         session.reuse()
                 .set("verTeller_LcyCashin_Account1MvGroup(0)/AmountLocal1", "100")
                 .set("Account2", "83267")
-                .set("ValueDate2", "20170417")
                 .set("verTeller_LcyCashin_DrDenomMvGroup(0)/DrUnit", "1")
                 .entities().item().links()
                 .byRel("http://temenostech.temenos.com/rels/validate").url()
@@ -235,7 +229,7 @@ public class TestTeller_LcyCashinITCase {
         // create a temporary teller cashin transaction
         InteractionSession session = DefaultInteractionSession.newSession();
         session.registerHandler("application/atom+xml",AtomPayloadHandler.class)
-                .basicAuth(TELLER_USER_NAME,TELLER_PASSWORD)
+                .basicAuth(Configuration.TELLER_USER_NAME,Configuration.TELLER_PASSWORD)
                 .header(Configuration.HTTP_HEADER_CONTENT_TYPE, Configuration.APPLICATION_ATOM_XML)
                 .header(Configuration.HTTP_HEADER_ACCEPT, Configuration.APPLICATION_ATOM_XML)
                 .url()
@@ -247,12 +241,11 @@ public class TestTeller_LcyCashinITCase {
         String id = session.entities().item().get("TransactionNumber");
         System.out.println("testTellerLcyCashin_CreateAndHold_id: " + id);
         
-        //fill the mandatory input fields and put the teller cachin transaction on hold into the database
+        //fill the mandatory input fields and put the teller cashin transaction on hold into the database
         //Note: it is not mandatory to set the fields but it seems useless to create an empty record (being set to IHLD the validations are not triggered)
         session.reuse()
                 .set("verTeller_LcyCashin_Account1MvGroup(0)/AmountLocal1", "100")
                 .set("Account2", "83267")
-                .set("ValueDate2", "20170417")
                 .set("verTeller_LcyCashin_DrDenomMvGroup(0)/DrUnit", "1")
                 .entities().item().links()
                 .byRel("http://temenostech.temenos.com/rels/hold").url()
@@ -264,7 +257,7 @@ public class TestTeller_LcyCashinITCase {
         String seeSessionPath = "verTeller_LcyCashins(" + id + ")/see";
         System.out.println("testTellerLcyCashin_CreateAndHold_seeSessionPath: " + seeSessionPath);
         seeSession.registerHandler(Configuration.APPLICATION_ATOM_XML, AtomPayloadHandler.class)
-                    .basicAuth(TELLER_USER_NAME,TELLER_PASSWORD)
+                    .basicAuth(Configuration.TELLER_USER_NAME,Configuration.TELLER_PASSWORD)
                     .url()
                     .baseuri(Configuration.DATA_SERVICE_URL)
                     .path(seeSessionPath).get();
@@ -274,13 +267,13 @@ public class TestTeller_LcyCashinITCase {
         System.out.println("");
     }
     
-    // This test case is creating a temporary teller transaction and then is putting it on hold
+    // This test case is creating a temporary teller transaction, is putting it on hold  and then it will delete it
     @Test
     public void testTellerLcyCashin_CreateAndHoldAndDelete() {
         // create a temporary teller cashin transaction
         InteractionSession session = DefaultInteractionSession.newSession();
         session.registerHandler("application/atom+xml",AtomPayloadHandler.class)
-                .basicAuth(TELLER_USER_NAME,TELLER_PASSWORD)
+                .basicAuth(Configuration.TELLER_USER_NAME,Configuration.TELLER_PASSWORD)
                 .header(Configuration.HTTP_HEADER_CONTENT_TYPE, Configuration.APPLICATION_ATOM_XML)
                 .header(Configuration.HTTP_HEADER_ACCEPT, Configuration.APPLICATION_ATOM_XML)
                 .url()
@@ -293,12 +286,11 @@ public class TestTeller_LcyCashinITCase {
         String id = session.entities().item().get("TransactionNumber");
         System.out.println("testTellerLcyCashin_CreateAndHoldAndDelete_id: " + id);
         
-        //fill the mandatory input fields and put the teller cachin transaction on hold into the database
+        //fill the mandatory input fields and put the teller cashin transaction on hold into the database
         //Note: it is not mandatory to set the fields but it seems useless to create an empty record (being set to IHLD the validations are not triggered)
         session.reuse()
                 .set("verTeller_LcyCashin_Account1MvGroup(0)/AmountLocal1", "100")
                 .set("Account2", "83267")
-                .set("ValueDate2", "20170417")
                 .set("verTeller_LcyCashin_DrDenomMvGroup(0)/DrUnit", "1")
                 .entities().item().links()
                 .byRel("http://temenostech.temenos.com/rels/hold").url()
@@ -310,7 +302,7 @@ public class TestTeller_LcyCashinITCase {
         String seeSessionPath = "verTeller_LcyCashins(" + id + ")/see";
         System.out.println("testTellerLcyCashin_CreateAndHoldAndDelete_seeSessionPath: " + seeSessionPath);
         seeSession.registerHandler(Configuration.APPLICATION_ATOM_XML, AtomPayloadHandler.class)
-                    .basicAuth(TELLER_USER_NAME,TELLER_PASSWORD)
+                    .basicAuth(Configuration.TELLER_USER_NAME,Configuration.TELLER_PASSWORD)
                     .url()
                     .baseuri(Configuration.DATA_SERVICE_URL)
                     .path(seeSessionPath).get();
@@ -324,7 +316,7 @@ public class TestTeller_LcyCashinITCase {
         String delSessionPath = "verTeller_LcyCashins(" + id + ")";
         System.out.println("testTellerLcyCashin_CreateAndHoldAndDelete_delSessionPath: " + delSessionPath);
         delSession.registerHandler(Configuration.APPLICATION_ATOM_XML, AtomPayloadHandler.class)
-                    .basicAuth(TELLER_USER_NAME,TELLER_PASSWORD)
+                    .basicAuth(Configuration.TELLER_USER_NAME,Configuration.TELLER_PASSWORD)
                     .header(Configuration.HTTP_HEADER_ACCEPT, Configuration.APPLICATION_ATOM_XML)
                     .url()
                     .baseuri(Configuration.DATA_SERVICE_URL)
@@ -350,7 +342,7 @@ public class TestTeller_LcyCashinITCase {
         String checkDelSessionPath = "verTeller_LcyCashins(" + id + ")/see";
         System.out.println("testTellerLcyCashin_CreateAndHoldAndDelete_checkDelSessionPath: " + checkDelSessionPath);
         checkDelSession.registerHandler(Configuration.APPLICATION_ATOM_XML, AtomPayloadHandler.class)
-                    .basicAuth(TELLER_USER_NAME,TELLER_PASSWORD)
+                    .basicAuth(Configuration.TELLER_USER_NAME,Configuration.TELLER_PASSWORD)
                     .url()
                     .baseuri(Configuration.DATA_SERVICE_URL)
                     .path(checkDelSessionPath).get();
@@ -366,7 +358,7 @@ public class TestTeller_LcyCashinITCase {
         // create a temporary teller cashin transaction
         InteractionSession session = DefaultInteractionSession.newSession();
         session.registerHandler("application/atom+xml",AtomPayloadHandler.class)
-                .basicAuth(TELLER_USER_NAME,TELLER_PASSWORD)
+                .basicAuth(Configuration.TELLER_USER_NAME,Configuration.TELLER_PASSWORD)
                 .header(Configuration.HTTP_HEADER_CONTENT_TYPE, Configuration.APPLICATION_ATOM_XML)
                 .header(Configuration.HTTP_HEADER_ACCEPT, Configuration.APPLICATION_ATOM_XML)
                 .url()
@@ -382,7 +374,6 @@ public class TestTeller_LcyCashinITCase {
         session.reuse()
                 .set("verTeller_LcyCashin_Account1MvGroup(0)/AmountLocal1", "100")
                 .set("Account2", "83267")
-                .set("ValueDate2", "20170417")
                 .set("verTeller_LcyCashin_DrDenomMvGroup(0)/DrUnit", "1")
                 .entities().item().links()
                 .byRel("http://temenostech.temenos.com/rels/input").url()
@@ -394,7 +385,7 @@ public class TestTeller_LcyCashinITCase {
         String checkPath = "verTeller_LcyCashins(" + id + ")";
         System.out.println("testTellerLcyCashin_CreateAndUpdateAndReverse_reversePath: " + checkPath);
         reverseSession.registerHandler(Configuration.APPLICATION_ATOM_XML, AtomPayloadHandler.class)
-                    .basicAuth(TELLER_USER_NAME,TELLER_PASSWORD)
+                    .basicAuth(Configuration.TELLER_USER_NAME,Configuration.TELLER_PASSWORD)
                     .header(Configuration.HTTP_HEADER_ACCEPT, Configuration.APPLICATION_ATOM_XML)
                     .url()
                     .baseuri(Configuration.DATA_SERVICE_URL)
@@ -418,7 +409,7 @@ public class TestTeller_LcyCashinITCase {
         String seeSessionPath = "verTeller_LcyCashins(" + id + ")/see";
         System.out.println("testTellerLcyCashin_CreateAndUpdateAndReverse_seeSessionPath: " + seeSessionPath);
         seeSession.registerHandler(Configuration.APPLICATION_ATOM_XML, AtomPayloadHandler.class)
-                    .basicAuth(TELLER_USER_NAME,TELLER_PASSWORD)
+                    .basicAuth(Configuration.TELLER_USER_NAME,Configuration.TELLER_PASSWORD)
                     .url()
                     .baseuri(Configuration.DATA_SERVICE_URL)
                     .path(seeSessionPath).get();
@@ -426,6 +417,45 @@ public class TestTeller_LcyCashinITCase {
         String recordStatus = seeSession.entities().item().get("RecordStatus");
         System.out.println("testTellerLcyCashin_CreateAndUpdateAndReverse_RecordStatus: " + recordStatus);
         assertEquals("REVE", recordStatus);
+        
+        System.out.println("");
+        
+    }
+    
+    // This test case will retrieve all available teller cashin transactions
+    @Test
+    public void testTellerLcyCashin_RetrieveTxns() {
+        InteractionSession session = DefaultInteractionSession.newSession();
+        session.basicAuth(Configuration.INPUTTER_USER_NAME,Configuration.INPUTTER_PASSWORD)
+                .url()
+                .baseuri(Configuration.DATA_SERVICE_URL)
+                .path("verTeller_LcyCashins()").get();
+        assertEquals(200, session.result().code());
+    }
+    
+    // This test case will retrieve the details of a teller cashin transaction
+    @Test
+    public void testTellerLcyCashin_RetrieveDetailsSpecificTxn() {
+        // retrieve all existing teller cashin transactions
+        InteractionSession session = DefaultInteractionSession.newSession();
+        session.basicAuth(Configuration.INPUTTER_USER_NAME,Configuration.INPUTTER_PASSWORD)
+                .url()
+                .baseuri(Configuration.DATA_SERVICE_URL)
+                .path("verTeller_LcyCashins()").get();
+        assertEquals(200, session.result().code());
+        
+        //retrieve the id of the first teller cashin transaction returned
+        String id = session.entities().collection().get(0).get("TransactionNumber");
+        System.out.println("testTellerLcyCashin_RetrieveDetailsSpecificTxn_id: " + id);
+        
+        // retrieve the details of the specific teller cashin transaction
+        String specificPath = "verTeller_LcyCashins(" + id + ")";
+        InteractionSession session2 = DefaultInteractionSession.newSession();
+        session2.basicAuth(Configuration.INPUTTER_USER_NAME,Configuration.INPUTTER_PASSWORD)
+        .url()
+        .baseuri(Configuration.DATA_SERVICE_URL)
+        .path(specificPath).get();
+        assertEquals(200, session.result().code());
         
         System.out.println("");
     }

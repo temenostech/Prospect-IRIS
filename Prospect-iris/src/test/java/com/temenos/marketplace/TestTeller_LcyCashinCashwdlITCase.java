@@ -20,8 +20,6 @@ import com.temenos.useragent.generic.mediatype.AtomPayloadHandler;
 public class TestTeller_LcyCashinCashwdlITCase {
 
     //the user below is a teller one that should be present into the testing area, otherwise it should be changed with another one
-    public static String TELLER_USER_NAME = "CSAGENT";
-    public static String TELLER_PASSWORD = "123456";
     
     // This test case is going to:
     //     1. add money into an account by creating a transaction
@@ -33,7 +31,7 @@ public class TestTeller_LcyCashinCashwdlITCase {
         // create a temporary teller cashin transaction
         InteractionSession CashinSession = DefaultInteractionSession.newSession();
         CashinSession.registerHandler("application/atom+xml",AtomPayloadHandler.class)
-                       .basicAuth(TELLER_USER_NAME,TELLER_PASSWORD)
+                       .basicAuth(Configuration.TELLER_USER_NAME,Configuration.TELLER_PASSWORD)
                        .header(Configuration.HTTP_HEADER_CONTENT_TYPE, Configuration.APPLICATION_ATOM_XML)
                        .header(Configuration.HTTP_HEADER_ACCEPT, Configuration.APPLICATION_ATOM_XML)
                        .url()
@@ -49,7 +47,6 @@ public class TestTeller_LcyCashinCashwdlITCase {
         CashinSession.reuse()
                        .set("verTeller_LcyCashin_Account1MvGroup(0)/AmountLocal1", "100")
                        .set("Account2", "83267")
-                       .set("ValueDate2", "20170417")
                        .set("verTeller_LcyCashin_DrDenomMvGroup(0)/DrUnit", "1")
                        .entities().item().links()
                        .byRel("http://temenostech.temenos.com/rels/input").url()
@@ -85,7 +82,7 @@ public class TestTeller_LcyCashinCashwdlITCase {
         // create a temporary teller cashwdl transaction
         InteractionSession cashwdlSession = DefaultInteractionSession.newSession();
         cashwdlSession.registerHandler("application/atom+xml",AtomPayloadHandler.class)
-                       .basicAuth(TELLER_USER_NAME,TELLER_PASSWORD)
+                       .basicAuth(Configuration.TELLER_USER_NAME,Configuration.TELLER_PASSWORD)
                        .header(Configuration.HTTP_HEADER_CONTENT_TYPE, Configuration.APPLICATION_ATOM_XML)
                        .header(Configuration.HTTP_HEADER_ACCEPT, Configuration.APPLICATION_ATOM_XML)
                        .url()
@@ -101,7 +98,6 @@ public class TestTeller_LcyCashinCashwdlITCase {
         cashwdlSession.reuse()
                         .set("verTeller_LcyCashwdl_Account1MvGroup(0)/AmountLocal1", "100")
                         .set("Account2", "83267")
-                        .set("ValueDate2", "20170417")
                         .set("verTeller_LcyCashwdl_DenominationMvGroup(0)/Unit", "1")
                         .entities().item().links()
                         .byRel("http://temenostech.temenos.com/rels/input").url()
