@@ -1,0 +1,40 @@
+domain T24 {
+    use common.CoreCommands.*
+    use common.HTTPEvents.*
+    use common.ODataCommands.*
+    use common.T24Commands.*
+    use common.T24Events.*
+    use common.NextState.*
+    rim enqAccountDetails {
+        command GETEntities
+        command GETEntity
+        basepath: "/{companyid}"
+    
+        resource enqAccountDetailss {
+            type: collection
+            entity: enqAccountDetails
+            commands [ GET : GETEntities {
+                properties [ filter = "{filter}" ]
+                } ]
+            path: "/enqAccountDetailss()"
+            GET *-> enqAccountDetails {
+                parameters [ id = "{Id}" ]
+            }
+            GET *-> "T24.cosAccountDetails.cosAccountDetails" {
+                parameters [ param1 = "{Id}",param2 = "{Customer}" ]
+                title: "Account Details"
+                id: "1"
+                field: "Id"
+            }
+        }
+    
+        resource enqAccountDetails {
+            type: item
+            entity: enqAccountDetails
+            commands [ GET : GETEntity ]
+            path: "/enqAccountDetailss('{id}')"
+        }
+    
+    }
+    
+}

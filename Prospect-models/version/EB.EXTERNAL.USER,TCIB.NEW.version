@@ -1,0 +1,262 @@
+Screen EB_EXTERNAL_USER, TCIB_NEW
+    t24Name: "EB.EXTERNAL.USER,TCIB.NEW"
+    metamodelVersion: "1.30.6"
+    numberOfAuthorisers: 1
+reportLocks: Yes
+
+TransactionFlow {
+    otherCompanyAccess: Yes
+    dealSlips:
+    format: "TCIB.PWD.SLIP" dealSlipFunction:  I ;
+    format: "TCIB.SLIP" dealSlipFunction:  I
+    dealSlipsTrigger: OL
+}
+
+Presentation {
+    recordsPerPage: "1"
+    fieldsPerLine: "MULTI"
+    language: en
+    header1: en = "External user creation"
+}
+
+Relationship {
+    associatedVersions: EB_EXTERNAL_USER,AUDIT
+}
+
+API {
+    preProcessValidationRoutines:
+        jBC: "@V.TCIB.SET.MEM.DATA"
+}
+
+Fields {
+    "NAME" {
+
+        Presentation {
+            maxLength: 35
+            column: 1
+            row: 0
+        }
+
+        Translations:
+            label: en = "Name"
+    }
+
+    "CUSTOMER" {
+
+        Presentation {
+            maxLength: 35
+            enrichmentLength: 35
+            column: 1
+            row: 1
+        }
+
+        Translations:
+            label: en = "Customer"
+    }
+
+    "COMPANY" {
+
+        Presentation {
+            maxLength: 35
+            enrichmentLength: 35
+            column: 1
+            row: 2
+        }
+
+        default: IF ( ) "0X" THEN "!COMPANY"
+        Translations:
+            label: en = "Company"
+    }
+
+    "CHANNEL" {
+
+        Presentation {
+            maxLength: 35
+            enrichmentLength: 35
+            column: 1
+            row: 3
+        }
+
+        default: IF ( 1 ) "0X" THEN "INTERNET"
+        Translations:
+            label: en = "Channel"
+        MV: 1
+    }
+
+    "ARRANGEMENT" {
+
+        Presentation {
+            maxLength: 35
+            enrichmentLength: 35
+            column: 1
+            row: 4
+            selectionEnquiry: "AA.ARRANGEMENT.LIST.TCIB"
+            enquiryParameter: "CUSTOMER EQ CUSTOMER"
+        }
+
+        Translations:
+            label: en = "Arrangement"
+        MV: 1
+    }
+
+    "ALLOWED_CUSTOMER" {
+
+        Presentation {
+            maxLength: 35
+            enrichmentLength: 35
+            column: 1
+            row: 5
+            mandatory: Yes
+        }
+
+        Translations:
+            label: en = "Allowed Customer"
+        MV: 1
+    }
+
+    "CHANNEL_PERMISSION" {
+
+        Presentation {
+            maxLength: 35
+            enrichmentLength: 35
+            column: 1
+            row: 6
+        }
+
+        Translations:
+            label: en = "Channel Permission"
+        MV: 1
+    }
+
+    "START_DATE" {
+
+        Presentation {
+            maxLength: 35
+            column: 1
+            row: 7
+        }
+
+        default: IF ( 1 ) "0X" THEN "!TODAY"
+        Translations:
+            label: en = "Start Date"
+        MV: 1
+    }
+
+    "END_DATE" {
+
+        Presentation {
+            maxLength: 35
+            column: 1
+            row: 8
+        }
+
+        Translations:
+            label: en = "End Date"
+        MV: 1
+    }
+
+    "START_TIME" {
+
+        Presentation {
+            maxLength: 35
+            column: 1
+            row: 9
+        }
+
+        default: IF ( 1 - 1 ) "0X" THEN "0000"
+        Translations:
+            label: en = "Start Time"
+        MV: 1
+        SV: 1
+    }
+
+    "END_TIME" {
+
+        Presentation {
+            maxLength: 35
+            column: 1
+            row: 10
+        }
+
+        default: IF ( 1 - 1 ) "0X" THEN "2400"
+        Translations:
+            label: en = "End Time"
+        MV: 1
+        SV: 1
+    }
+
+    "LOGIN_METHOD" {
+
+        Presentation {
+            maxLength: 35
+            column: 1
+            row: 11
+        }
+
+        default: IF ( 1 ) "0X" THEN "INTERNET.PWMW"
+        Translations:
+            label: en = "Login Method"
+        MV: 1
+    }
+
+    "USER_TYPE" {
+
+        Presentation {
+            maxLength: 35
+            column: 1
+            row: 12
+        }
+
+        default: IF ( 1 ) "0X" THEN "PERSONAL"
+        Translations:
+            label: en = "User Type"
+        MV: 1
+    }
+
+    "AUTHENTICATION_TYPE" {
+
+        Presentation {
+            maxLength: 35
+            column: 1
+            row: 13
+        }
+
+        default: IF ( ) "0X" THEN "EXTERNAL"
+        Translations:
+            label: en = "Authentication Type"
+    }
+
+    "AUT_UPD_SERVER" {
+
+        Presentation {
+            maxLength: 35
+            column: 1
+            row: 14
+        }
+
+        default: IF ( ) "0X" THEN "Y"
+        Translations:
+            label: en = "Update Authentication Server"
+    }
+
+    "AUT_UPD_STATUS" {
+
+        Presentation {
+            inputBehaviour: NoInput
+        }
+
+    }
+
+    "STATUS" {
+        default: IF ( 1 ) "0X" THEN "INITIATED"
+    }
+
+    "LANGUAGE" {
+        default: IF ( ) "0X" THEN "1"
+    }
+
+    "DATE_FORMAT" {
+        default: IF ( ) "0X" THEN "1"
+    }
+
+}

@@ -1,0 +1,46 @@
+domain T24 {
+    use common.CoreCommands.*
+    use common.HTTPEvents.*
+    use common.ODataCommands.*
+    use common.T24Commands.*
+    use common.T24Events.*
+    use common.NextState.*
+    rim enqPctStmtEntry {
+        command GETEntities
+        command GETEntity
+        basepath: "/{companyid}"
+    
+        resource enqPctStmtEntrys {
+            type: collection
+            entity: enqPctStmtEntry
+            commands [ GET : GETEntities {
+                properties [ filter = "{filter}" ]
+                } ]
+            path: "/enqPctStmtEntrys()"
+            GET *-> enqPctStmtEntry {
+                parameters [ id = "{Id}" ]
+            }
+            GET *-> "T24.verStmtEntry.verStmtEntryEntry" {
+                parameters [ id = "{Id}" ]
+                title: "Quit See"
+                id: "1"
+                field: "AccountNumber"
+            }
+            GET *-> "T24.verStmtEntry.verStmtEntry_see" {
+                parameters [ id = "{Id}",t24Intent = "View" ]
+                title: "Quit See View Record"
+                id: "1"
+                field: "AccountNumber"
+            }
+        }
+    
+        resource enqPctStmtEntry {
+            type: item
+            entity: enqPctStmtEntry
+            commands [ GET : GETEntity ]
+            path: "/enqPctStmtEntrys('{id}')"
+        }
+    
+    }
+    
+}

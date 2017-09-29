@@ -23,50 +23,72 @@ domain Prospect {
             view: GETServiceDocument
             path: "/"
 
-            //Enquiry
-            GET -> T24.enqAccountStatement.enqAccountStatements
-            GET -> T24.enqCustomerDetsScv.enqCustomerDetsScvs
-            GET -> T24.enqCustomerList.enqCustomerLists
-            GET -> T24.enqPctCustomerAccount.enqPctCustomerAccounts
-            GET -> T24.enqStmtLastNTxns.enqStmtLastNTxnss
-            GET -> T24.enqAcctStmtHist.enqAcctStmtHists
-            GET -> T24.enqStmtEntToday.enqStmtEntTodays // Entries from today business date for a specific account
-            GET -> T24.enqFtTxnTypeCondition.enqFtTxnTypeConditions
-            GET -> T24.enqStmtEntLast.enqStmtEntLasts // Entries since last statement date for a specific account
-            GET -> T24.enqStmtEntBook.enqStmtEntBooks // Entries from a particular date for a specific account
-            
-            //Customer
-            GET -> T24.verCustomer.verCustomers
 
             //Customer
-            GET -> T24.verAccount.verAccounts
-                
+            GET -> T24.verCustomer_Input.verCustomer_Inputs      // Create, update an individual customer with authorization and retrieve all details about it
+            GET -> T24.verCustomer_Corp.verCustomer_Corps        // Create, update a corporate customer with authorization and retrieve all details about it
+            GET -> T24.verCustomer.verCustomers                  // Create, update a customer without authorization and retrieve all details about the customer
+            GET -> T24.enqCustomerList.enqCustomerLists          // Return some details about customers: CusNo, CusMne, ShortName, AccountOfficer, Nat, Res, TargetName, SectorName, CusType and CusBranchName
+            GET -> T24.enqCustomerDetails.enqCustomerDetailss    // Return some details about customers: CusNo, CusMne, Name, Officer, Nat and Res
+
+
+            //Account
+            GET -> T24.verAccount_CaOpen.verAccount_CaOpens     // Create current account with authorization and retrieve all details about it
+            GET -> T24.verAccount_SbOpen.verAccount_SbOpens     // Create saving account with authorization and retrieve all details about it
+            GET -> T24.verAccount.verAccounts                   // Create account without authorization and retrieve all details about it
+            GET -> T24.enqPctAccount.enqPctAccounts             // Default list of accounts, return some details: AccId, AccMne, AccountOfficer, Product, Ccy, OnlineActualBal, LimitRef, PostingRestrict, IntBooking, ConditionGroup, Product
+            GET -> T24.enqAccountDetails.enqAccountDetailss     // Return some details about account: AccNo, Customer, Name, Product, Ccy and AccountOfficer
+            GET -> T24.enqAcctBal.enqAcctBals                   // Return balance details of account: AccNo, Name, LimitRef, Product, Ccy, WorkingBal, LedgerBal, ClearedBal, DateFrom, LockedAmt and UseableBal
+            GET -> T24.enqCustAcct.enqCustAccts                 // Return the list of all accounts of a specific customer and the fields displayed are AccNo, Mne, Limit, AcctType, Ccy, WorkingBal, LedgerBal, ClearedBal, DateFrom, LockedAmt
+            GET -> T24.enqAccountStatement.enqAccountStatements // Return the statements of a specific account, like: AccNo, AccType, StatementDate, BookingDate, Reference, Description, ValueDate, Debit, Credit, ClosingBalance, TotalDebits, TotalCredits, ClosingBalance
+            GET -> T24.enqAcctStmtHist.enqAcctStmtHists         // Return the account balance in statement date, fields returned: AccNo, Ccy, StatementDate, CurrPeriodInd, OpeningBalance, ClosingBalance, NextDueDate
+
+
+            //Statement Entries
+            GET -> T24.enqStmtLastNTxns.enqStmtLastNTxnss                     // Entries from last N transactions of a specific account: AccNo, ClosingBalance, BookingDate, Reference, Description, ValueDate, Debit, Credit, ClosingBalance
+            GET -> T24.enqStmtEntToday.enqStmtEntTodays                       // Entries from today business date for a specific account: BookingDate, Reference, Description, ValueDate, Amount
+            GET -> T24.enqStmtEntLast.enqStmtEntLasts                         // Entries since last statement date for a specific account: AccNo, Customer, Ccy, BookingDate, Reference, Description, ValueDate, Amount
+            GET -> T24.enqStmtEntBook.enqStmtEntBooks                         // Entries from booking date for a specific account: AccNo, Customer, Ccy, BookingDate, Reference, Description, ValueDate, Debit, Credit, ClosingBalance
+            GET -> T24.enqAdminFtTxnTypeCondition.enqAdminFtTxnTypeConditions // List of transaction types: TxnTypeId, Description, CommTypes, ForwValueMax, BackValueMax, DrAdviceReqdYN, CrAdviceReqdYN, MsgCondId, NostroXferType, MsgType, HisReversal
+            GET -> T24.enqPctStmtEntry.enqPctStmtEntrys                       // Default list of stmt entries, return some details: ID, Account, AmountLccy, Rate, AmountFccy, ValueDate, Reference
+
+
             //Users
-            GET -> T24.verUser.verUsers // Internal User
-            GET -> T24.verEbExternalUser.verEbExternalUsers // External User
-           
-            
+            GET -> T24.verUser.verUsers                                      // Create Internal User without authorization and retrieve all details about it
+            GET -> T24.verEbExternalUser.verEbExternalUsers                  // Create External User without authorization and retrieve all details about it
+            GET -> T24.verEbExternalUser_TcibNew.verEbExternalUser_TcibNews  // Create External User with authorization and retrieve all details about it
+
+
             //Debit card
-            GET -> T24.verCardIssue.verCardIssues
-            
-            //Fund Transfer
-            GET -> T24.verFundsTransfer.verFundsTransfers
-            
+            GET -> T24.verCardIssue_Input.verCardIssue_Inputs   // Create Card Issue with authorization and retrieve all details about it
+            GET -> T24.verCardIssue.verCardIssues               // Create Card Issue without authorization and retrieve all details about it
+
+
+            //Funds Transfer
+            GET -> T24.verFundsTransfer_Input.verFundsTransfer_Inputs  // Create transaction with authorization and retrieve all details about it
+            GET -> T24.verFundsTransfer.verFundsTransfers              // Create transaction without authorization and retrieve all details about it
+
+
             //Teller
-            GET -> T24.verTeller_LcyCashin.verTeller_LcyCashins // cash deposit
-            GET -> T24.verTeller_LcyCashwdl.verTeller_LcyCashwdls// cash withdrawls
-            
-            
+            GET -> T24.verTeller_LcyCashin.verTeller_LcyCashins      // cash deposit local
+            GET -> T24.verTeller_FcyCashin.verTeller_FcyCashins      // cash deposit foreign
+            GET -> T24.verTeller_LcyCashwdl.verTeller_LcyCashwdls    // cash withdrawal local (without Cheque)
+            GET -> T24.verTeller_LcyCashchq.verTeller_LcyCashchqs    // cash withdrawal local
+            GET -> T24.verTeller_FcyCashchq.verTeller_FcyCashchqs    // cash withdrawal foreign
+
+
+            //Currency
+            GET -> T24.enqCurrencyList.enqCurrencyLists              // List of all currencies and their description
+
+
             //Enquiry [Integration events] --> These should be install via data package
             // GET -> T24.enqIntegrationEvents.enqIntegrationEventss
             // GET -> T24.enqIntegrationFlowCatalog.enqIntegrationFlowCatalogs
-            
-            GET -> T24.verAccount_CaOpen.verAccount_CaOpens
-            GET -> T24.verAccount_SbOpen.verAccount_SbOpens
-            GET -> T24.verCustomer_Input.verCustomer_Inputs
-            GET -> T24.verFundsTransfer_Input.verFundsTransfer_Inputs
+
 
             GET -> common.Errors.Errors
+
+           
         }
 
         exception resource InteractionException {

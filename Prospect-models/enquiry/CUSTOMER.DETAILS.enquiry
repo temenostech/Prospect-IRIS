@@ -1,4 +1,4 @@
-Enquiry "CUSTOMER.DETS.SCV" for "name:/ST_Customer:CUSTOMER#" {
+Enquiry "CUSTOMER.DETAILS" for "name:/ST_Customer:CUSTOMER#" {
     metamodelVersion: "1.30.6"
     description {
         en = "Find Customer"
@@ -158,24 +158,6 @@ Enquiry "CUSTOMER.DETS.SCV" for "name:/ST_Customer:CUSTOMER#" {
         field "DATE.OF.BIRTH" {
             label {
                 en = "Date of Birth"
-            }
-
-        }
-
-        AND
-
-        field "SMS.1" {
-            label {
-                en = "Mobile Number"
-            }
-
-        }
-
-        AND
-
-        field "EMAIL.1" {
-            label {
-                en = "Email Address"
             }
 
         }
@@ -360,24 +342,30 @@ Enquiry "CUSTOMER.DETS.SCV" for "name:/ST_Customer:CUSTOMER#" {
         operation: application-field-name "GENDER"
     }
 
-    field "RETAIL.RANGE" {
-        comma-separator: false
-        operation: constant "\"1000 1999\""
+    drilldown "1" {
+        description {
+            en = "Customer Overview"
+        }
+
+        label-field: "@ID"
+        image: "oview.gif" parameters {
+            field: "@ID"
+        }
+
+        composite-screen: "INDIV.CUSTOMER.SCV"
     }
 
-    field "COS.RETAIL" {
-        comma-separator: false
-        operation: constant "\"COS CUSTOMER.OVERVIEW.CSM\""
-    }
+    drilldown "2" {
+        description {
+            en = "Customer Details"
+        }
 
-    field "COS.CORP" {
-        comma-separator: false
-        operation: constant "\"COS CUSTOMER.OVERVIEW.CORP.CSM\""
-    }
+        label-field: "@ID"
+        image: "showdet.gif" parameters {
+            field: "@ID"
+        }
 
-    field "COS.CHECK" {
-        comma-separator: false
-        operation: if "SECTOR" Between "RETAIL.RANGE" process "COS.RETAIL" "COS.CORP"
+        composite-screen: "CUSTOMER.DETAILS"
     }
 
 }

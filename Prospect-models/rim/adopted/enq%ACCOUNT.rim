@@ -5,40 +5,46 @@ domain T24 {
     use common.T24Commands.*
     use common.T24Events.*
     use common.NextState.*
-    rim enqFtTxnTypeCondition {
+    rim enqPctAccount {
         command GETEntities
         command GETEntity
         basepath: "/{companyid}"
     
-        resource enqFtTxnTypeConditions {
+        resource enqPctAccounts {
             type: collection
-            entity: enqFtTxnTypeCondition
+            entity: enqPctAccount
             commands [ GET : GETEntities {
                 properties [ filter = "{filter}" ]
                 } ]
-            path: "/enqFtTxnTypeConditions()"
-            GET *-> enqFtTxnTypeCondition {
-                parameters [ id = "{TransactionType}" ]
+            path: "/enqPctAccounts()"
+            GET *-> enqPctAccount {
+                parameters [ id = "{Id}" ]
             }
-            GET *-> "T24.verFtTxnTypeCondition.verFtTxnTypeConditionEntry" {
+            GET *-> "T24.verAccount.verAccountEntry" {
                 parameters [ id = "{Id}" ]
                 title: "Quit See"
                 id: "1"
-                field: "TransactionType"
+                field: "Id"
             }
-            GET *-> "T24.verFtTxnTypeCondition.verFtTxnTypeCondition_see" {
+            GET *-> "T24.verAccount.verAccount_see" {
                 parameters [ id = "{Id}",t24Intent = "View" ]
                 title: "Quit See View Record"
                 id: "1"
-                field: "TransactionType"
+                field: "Id"
+            }
+            GET *-> "T24.verEbContractBalances_Ac.verEbContractBalances_Ac_see" {
+                parameters [ id = "{Id}",t24Intent = "View" ]
+                title: "Balance details"
+                id: "2"
+                field: "Id"
             }
         }
     
-        resource enqFtTxnTypeCondition {
+        resource enqPctAccount {
             type: item
-            entity: enqFtTxnTypeCondition
+            entity: enqPctAccount
             commands [ GET : GETEntity ]
-            path: "/enqFtTxnTypeConditions('{id}')"
+            path: "/enqPctAccounts('{id}')"
         }
     
     }

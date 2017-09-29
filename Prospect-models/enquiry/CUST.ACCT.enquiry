@@ -1,0 +1,321 @@
+Enquiry "CUST.ACCT" for "name:/AC_AccountOpening:ACCOUNT#" {
+    metamodelVersion: "1.30.6"
+    description {
+        en = "Customer Accounts"
+    }
+
+    no-selection: true
+    start-line: 4
+    end-line: 99
+    fixed-sort: "CUSTOMER" Null
+    custom-selection {
+
+        field "CUSTOMER" {
+            mandatory: true
+            label {
+                en = "Customer"
+            }
+
+        }
+
+        None
+    }
+
+    field "ACC" {
+        label {
+            en = "Account No"
+        }
+
+        length: 16
+        alignment: Right
+        comma-separator: false
+        position {
+            column: 1
+        }
+
+        processing-mode: Single
+        operation: application-field-name "@ID"
+    }
+
+    field "HEADER" {
+        display-type: "CLASS-ENQ.H.TITLE"
+        comma-separator: false
+        display-section: Header
+        position {
+            column: 1
+            line: 0
+        }
+
+        operation: constant "\"Customer\'s Accounts\""
+    }
+
+    field "HEADER1" {
+        display-type: "CLASS-ENQ.ID.LABEL"
+        comma-separator: false
+        display-section: Header
+        position {
+            column: 2
+            line: 1
+        }
+
+        operation: constant "\"Customer\""
+    }
+
+    field "AC.MNEMONIC" {
+        label {
+            en = "Mnemonic"
+        }
+
+        length: 10
+        alignment: Left
+        comma-separator: false
+        position {
+            column: 2
+        }
+
+        processing-mode: Single
+        operation: application-field-name "MNEMONIC"
+    }
+
+    field "LIM.REF" {
+        label {
+            en = "Limit"
+        }
+
+        length: 10
+        alignment: Right
+        comma-separator: false
+        position {
+            column: 3
+        }
+
+        processing-mode: Single
+        hidden: true
+        operation: application-field-name "LIMIT.REF"
+    }
+
+    field "TYPE" {
+        label {
+            en = "Acct Type"
+        }
+
+        format: User
+        length: 25
+        alignment: Left
+        comma-separator: false
+        position {
+            column: 4
+        }
+
+        processing-mode: Single
+        operation: application-field-name "CATEGORY"
+        conversion: getFrom "CATEGORY" "SHORT.NAME" false
+    }
+
+    field "CCY" {
+        label {
+            en = "Ccy"
+        }
+
+        length: 3
+        alignment: Left
+        comma-separator: false
+        position {
+            column: 5
+        }
+
+        processing-mode: Single
+        operation: application-field-name "CURRENCY"
+    }
+
+    field "WORK.BAL" {
+        label {
+            en = "Working Bal"
+        }
+
+        display-type: "CLASS-POSNEG"
+        format: Currency "CCY" negative-pattern -#
+        length: 20
+        alignment: Right
+        comma-separator: true
+        position {
+            column: 6
+        }
+
+        processing-mode: Single
+        operation: application-field-name "@ID"
+        conversion: call
+        jBC: "@ E.GET.AC.WORKING.BALANCE"
+    }
+
+    field "AMOUNT" {
+        label {
+            en = "Ledger Bal"
+        }
+
+        display-type: "CLASS-POSNEG"
+        format: Currency "CCY" negative-pattern -#
+        length: 20
+        alignment: Right
+        comma-separator: true
+        position {
+            column: 7
+        }
+
+        processing-mode: Single
+        operation: application-field-name "@ID"
+        conversion: call
+        jBC: "@ E.GET.AC.ONLINE.ACTUAL.BALANCE"
+    }
+
+    field "CLEARED" {
+        label {
+            en = "Cleared Bal"
+        }
+
+        display-type: "CLASS-POSNEG"
+        format: Currency "CCY" negative-pattern -#
+        length: 20
+        alignment: Right
+        comma-separator: true
+        position {
+            column: 8
+        }
+
+        processing-mode: Single
+        operation: application-field-name "@ID"
+        conversion: call
+        jBC: "@ E.GET.AC.ONLINE.CLEARED.BALANCE"
+    }
+
+    field "FROM.DATE" {
+        label {
+            en = "From Date"
+        }
+
+        format: Date
+        length: 11
+        alignment: Right
+        comma-separator: false
+        position {
+            column: 9
+        }
+
+        processing-mode: Multi
+        hidden: true
+        operation: application-field-name "FROM.DATE"
+    }
+
+    field "LOCK.AMT" {
+        label {
+            en = "Locked Amt"
+        }
+
+        display-type: "CLASS-POSNEG"
+        format: Currency "CCY" negative-pattern -#
+        length: 20
+        alignment: Right
+        comma-separator: true
+        position {
+            column: 10
+        }
+
+        processing-mode: Multi
+        hidden: true
+        operation: application-field-name "LOCKED.AMOUNT"
+    }
+
+    field "CUST" {
+        length: 10
+        alignment: Right
+        comma-separator: false
+        processing-mode: Single
+        operation: application-field-name "CUSTOMER"
+    }
+
+    field "B.CUST" {
+        break-condition {
+            break: Page
+        }
+
+        comma-separator: false
+        position {
+            page-throw: true
+        }
+
+        operation: break-change "CUST"
+    }
+
+    field "D.CUST" {
+        label {
+            en = "Customer"
+        }
+
+        display-type: "CLASS-ENQ.H.ID" break-condition {
+            break: Page
+        }
+
+        length: 10
+        alignment: Right
+        comma-separator: false
+        display-section: Header
+        position {
+            column: 12
+            line: 1
+        }
+
+        operation: field-extract "CUST"
+    }
+
+    field "D.CUSTNM" {
+        display-type: "CLASS-ENQ.H.ID" break-condition {
+            break: Page
+        }
+
+        length: 40
+        alignment: Left
+        comma-separator: false
+        display-section: Header
+        position {
+            column: 30
+            line: 1
+        }
+
+        operation: field-extract "CUST"
+        conversion: getFrom "CUSTOMER" "SHORT.NAME" false
+    }
+
+    drilldown "1" {
+        description {
+            en = "Statement entries today"
+        }
+
+        label-field: "ACC"
+        image: "view.gif"
+        criteria: "ACCT.ID" Equals "ACC"
+        enquiry: "STMT.ENT.TODAY"
+    }
+
+    drilldown "2" {
+        description {
+            en = "Entries Since Last Stmt"
+        }
+
+        label-field: "ACC"
+        image: "details.gif"
+        criteria: "ACCT.ID" Equals "ACC"
+        enquiry: "STMT.ENT.LAST"
+    }
+
+    drilldown "3" {
+        description {
+            en = "Forward Movements"
+        }
+
+        label-field: "ACC"
+        image: "right.arrow.gif"
+        criteria: "ACCOUNT.ID" Equals "ACC"
+        enquiry: "NOSTRO.FWD.BAL"
+    }
+
+}

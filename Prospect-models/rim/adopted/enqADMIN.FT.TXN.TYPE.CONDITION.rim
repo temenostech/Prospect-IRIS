@@ -1,0 +1,45 @@
+domain T24 {
+    use common.CoreCommands.*
+    use common.HTTPEvents.*
+    use common.ODataCommands.*
+    use common.T24Commands.*
+    use common.T24Events.*
+    use common.NextState.*
+    rim enqAdminFtTxnTypeCondition {
+        command GETEntities
+        command GETEntity
+        basepath: "/{companyid}"
+    
+        resource enqAdminFtTxnTypeConditions {
+            type: collection
+            entity: enqAdminFtTxnTypeCondition
+            commands [ GET : GETEntities {
+                properties [ filter = "{filter}" ]
+                } ]
+            path: "/enqAdminFtTxnTypeConditions()"
+            GET *-> enqAdminFtTxnTypeCondition {
+                parameters [ id = "{Id}" ]
+            }
+            GET *-> "T24.verFtTxnTypeCondition_AdminInput.verFtTxnTypeCondition_AdminInput_populate" {
+                parameters [ id = "{Id}",t24Intent = "Edit" ]
+                title: "Amend"
+                id: "1"
+                field: "Id"
+            }
+            GET *-> "T24.verFtTxnTypeCondition_AdminInput.verFtTxnTypeCondition_AdminInputEntry" {
+                title: "Input"
+                id: "2"
+                field: "Id"
+            }
+        }
+    
+        resource enqAdminFtTxnTypeCondition {
+            type: item
+            entity: enqAdminFtTxnTypeCondition
+            commands [ GET : GETEntity ]
+            path: "/enqAdminFtTxnTypeConditions('{id}')"
+        }
+    
+    }
+    
+}
