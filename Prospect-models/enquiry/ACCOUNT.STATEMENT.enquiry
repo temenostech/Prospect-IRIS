@@ -47,10 +47,7 @@ Enquiry "ACCOUNT.STATEMENT" for "name:/AC_EntryCreation:STMT.ENTRY#" {
             break: Once
         }
 
-        length: 90
-        alignment: Left
         comma-separator: false
-        processing-mode: Single
         operation: application-field-name "@ID"
         conversion: call
         jBC: "@ E.ACCOUNT.STATEMENT"
@@ -200,7 +197,7 @@ Enquiry "ACCOUNT.STATEMENT" for "name:/AC_EntryCreation:STMT.ENTRY#" {
     }
 
     field "ACCOUNT.NUMBER" {
-        length: 16
+        length: 19
         alignment: Left
         comma-separator: false
         processing-mode: Single
@@ -218,7 +215,7 @@ Enquiry "ACCOUNT.STATEMENT" for "name:/AC_EntryCreation:STMT.ENTRY#" {
     }
 
     field "OPENING.BALANCE" {
-        comments: "The opening balance of the statemen t, from the handoff record" break-condition {
+        comments: "The opening balance of the statement, from the handoff record" break-condition {
             break: Once
         }
 
@@ -228,7 +225,7 @@ Enquiry "ACCOUNT.STATEMENT" for "name:/AC_EntryCreation:STMT.ENTRY#" {
     }
 
     field "ADDRESS.RECORD" {
-        comments: "The DE.ADDRESS record. fields are d elimited by \"~\"." break-condition {
+        comments: "The DE.ADDRESS record. fields are delimited by \"~\"." break-condition {
             break: Once
         }
 
@@ -292,19 +289,13 @@ Enquiry "ACCOUNT.STATEMENT" for "name:/AC_EntryCreation:STMT.ENTRY#" {
 
     field "FOREIGN.AMT" {
         comments: "Entry amount in foreign ccy"
-        length: 19
-        alignment: Right
         comma-separator: false
-        processing-mode: Single
         operation: application-field-name "AMOUNT.FCY"
     }
 
     field "LOCAL.AMT" {
         comments: "Entry amount in local ccy"
-        length: 19
-        alignment: Right
         comma-separator: false
-        processing-mode: Single
         operation: application-field-name "AMOUNT.LCY"
     }
 
@@ -330,7 +321,7 @@ Enquiry "ACCOUNT.STATEMENT" for "name:/AC_EntryCreation:STMT.ENTRY#" {
     }
 
     field "DEBIT.AMOUNT" {
-        comments: "Entry amount if debit or reversal o f debit(based on setup)"
+        comments: "Entry amount if debit or reversal of debit(based on setup)"
         comma-separator: false
         display-section: Header
         operation: if "ENTRY.SIGN" Equals "\"DEBIT\"" process "ENTRY.AMOUNT" "NULL"
@@ -343,7 +334,7 @@ Enquiry "ACCOUNT.STATEMENT" for "name:/AC_EntryCreation:STMT.ENTRY#" {
     }
 
     field "PAGE.BROUGHT.FWD" {
-        comments: "Balance brought forward. Should be used as the brought forward for eac h new page" break-condition {
+        comments: "Balance brought forward. Should be used as the brought forward for each new page" break-condition {
             break: Page
         }
 
@@ -358,7 +349,7 @@ Enquiry "ACCOUNT.STATEMENT" for "name:/AC_EntryCreation:STMT.ENTRY#" {
     }
 
     field "RUNNING.BALANCE" {
-        comments: "Running account balance * DO NOT MO DIFY THE ABOVE FIELDS *"
+        comments: "Running account balance * DO NOT MODIFY THE ABOVE FIELDS *"
         comma-separator: false
         operation: calc "OPENING.BALANCE" + "ENTRY.ACCUMULATOR"
     }
@@ -378,18 +369,7 @@ Enquiry "ACCOUNT.STATEMENT" for "name:/AC_EntryCreation:STMT.ENTRY#" {
         conversion: extract from 12 to 0 delimited by "~"
     }
 
-    field "H.PAGE.NUMBER" {
-        comments: "Page number"
-        display-type: "CLASS-ENQ.H.DATA" break-condition {
-            break: Page
-        }
-
-        length: 3
-        alignment: Right
-        comma-separator: false
-        display-section: Header
-        operation: field-extract "PAGE.NUMBER"
-    }
+    
 
     field "ACCOUNT.TITLE.1" {
         comments: "Account Title 1"
@@ -545,7 +525,7 @@ Enquiry "ACCOUNT.STATEMENT" for "name:/AC_EntryCreation:STMT.ENTRY#" {
             break: Page
         }
 
-        length: 16
+        length: 19
         alignment: Left
         comma-separator: false
         display-section: Header
@@ -615,7 +595,7 @@ Enquiry "ACCOUNT.STATEMENT" for "name:/AC_EntryCreation:STMT.ENTRY#" {
         operation: today
     }
 
-    field "H.PAGE.NUMBER.02" {
+     field "H.PAGE.NUMBER" {
         comments: "Page Number"
         display-type: "CLASS-ENQ.H.DATA" break-condition {
             break: Page
@@ -632,7 +612,7 @@ Enquiry "ACCOUNT.STATEMENT" for "name:/AC_EntryCreation:STMT.ENTRY#" {
 
         operation: field-extract "PAGE.NUMBER"
     }
-
+    
     field "JOINT.HOLDER" {
         comma-separator: false
         operation: field-extract "ACCOUNT.NUMBER"
@@ -962,10 +942,7 @@ Enquiry "ACCOUNT.STATEMENT" for "name:/AC_EntryCreation:STMT.ENTRY#" {
         conversion: extract from 2 to 1 delimited by "."
     }
 
-    field "PS.ID.FIN1.02" {
-        comma-separator: false
-        operation: calc "BASE.APPL":"FUN.SEE"
-    }
+   
 
     field "PS.ID.FIN" {
         comma-separator: false
@@ -1024,10 +1001,7 @@ Enquiry "ACCOUNT.STATEMENT" for "name:/AC_EntryCreation:STMT.ENTRY#" {
     }
 
     field "TRANS.REF" {
-        length: 60
-        alignment: Left
         comma-separator: false
-        processing-mode: Single
         operation: application-field-name "TRANS.REFERENCE"
         conversion: call
         jBC: "@ E.TRN.REF.CONV"
@@ -1111,6 +1085,7 @@ Enquiry "ACCOUNT.STATEMENT" for "name:/AC_EntryCreation:STMT.ENTRY#" {
         comma-separator: false
         operation: constant "\"N\""
     }
+  
 
     field "APPL.NAME" {
         comma-separator: false
@@ -1132,22 +1107,7 @@ Enquiry "ACCOUNT.STATEMENT" for "name:/AC_EntryCreation:STMT.ENTRY#" {
         operation: if "APPL.DRILLDOWN" Equals "NO" process "Y.STMT.ID.FIN" "NET.DET.ID"
     }
 
-    field "NET.DET.ID.02" {
-        comma-separator: false
-        operation: if "REFNO" Matches "NET.ENTRY" process "STMT.ENT.DET" "Y.DRILL"
-    }
-
-    field "NET.ENTRY.02" {
-        comma-separator: false
-        operation: constant "\"NET...\""
-    }
-
-    field "STMT.ENT.DET.02" {
-        comma-separator: false
-        operation: constant "\"ENQ STMT.ENT.DETAIL\""
-    }
-
-    field "FINAL.PAID.IN.TXT" {
+      field "FINAL.PAID.IN.TXT" {
         break-condition {
             break: End
         }
@@ -1164,7 +1124,7 @@ Enquiry "ACCOUNT.STATEMENT" for "name:/AC_EntryCreation:STMT.ENTRY#" {
     }
 
     field "D.TOTAL.D.AMOUNT" {
-        format: Currency "ENTRY.CCY" negative-pattern -# break-condition {
+        break-condition {
             break: End
         }
 
@@ -1179,6 +1139,9 @@ Enquiry "ACCOUNT.STATEMENT" for "name:/AC_EntryCreation:STMT.ENTRY#" {
 
         processing-mode: Single
         operation: field-extract "TOTAL.D.AMOUNT"
+    format: Currency "ENTRY.CCY"
+    negative-pattern -#
+        fmtMask: ""
     }
 
     field "FINAL.PAID.OUT.TXT" {
@@ -1293,4 +1256,20 @@ Enquiry "ACCOUNT.STATEMENT" for "name:/AC_EntryCreation:STMT.ENTRY#" {
 
         operation: constant "\"No Statement available for the Account\""
     }
+
+    drilldown "1" {
+        description {
+            en = "Transaction Detail"
+        }
+
+        label-field: "VALUE.DATE"
+        image: "view.gif"
+        criteria: "FIN.NET.ID.FORM"
+        criteria: "CURRENT.CompanyID" > "PP.COMP.POP"
+        criteria: "CURRENT.FTNumber" > "PP.TRANS.REF.POP"
+        from-field: "DRILL.DOWN"
+    }
+
+    fileVersion: Live, Simulation
+    attributes: "NO.ENQUIRY.FAVOURITES"
 }
