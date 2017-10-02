@@ -18,29 +18,53 @@ import com.temenos.useragent.generic.InteractionSession;
  */
 public class TestAvailabilityOfApiITCase {
  
-    private String enqAccountStatements = "enqAccountStatements";
-    private String enqCustomerDetsScvs = "enqCustomerDetsScvs";
-    private String enqCustomerLists = "enqCustomerLists";
-    private String enqPctCustomerAccounts = "enqPctCustomerAccounts";
+    //Customer
+    private String verCustomer_Inputs = "verCustomer_Inputs";
+    private String verCustomer_Corps = "verCustomer_Corps";
     private String verCustomers = "verCustomers";
-    private String verAccounts = "verAccounts";
-    private String verUsers = "verUsers";
-    private String verEbExternalUsers = "verEbExternalUsers";
-    private String verCardIssues = "verCardIssues";
-    private String verFundsTransfers = "verFundsTransfers";
-    private String verTeller_LcyCashins = "verTeller_LcyCashins";
-    private String verTeller_LcyCashwdls = "verTeller_LcyCashwdls";
+    private String enqCustomerLists = "enqCustomerLists";
+    private String enqCustomerDetailss = "enqCustomerDetailss";
     
+    //Account
     private String verAccount_CaOpens = "verAccount_CaOpens";
     private String verAccount_SbOpens = "verAccount_SbOpens";
-    private String verCustomer_Inputs = "verCustomer_Inputs";
-    private String verFundsTransfer_Inputs = "verFundsTransfer_Inputs";
- 
+    private String verAccounts = "verAccounts";
+    private String enqPctAccounts = "enqPctAccounts";
+    private String enqAccountDetailss = "enqAccountDetailss";
+    private String enqAcctBals = "enqAcctBals";
+    //private String enqCustAccts = "enqCustAccts";
+    private String enqAccountStatements = "enqAccountStatements";
     private String enqAcctStmtHists = "enqAcctStmtHists";
+    
+    //Statement Entries
     //private String enqStmtEntTodays = "enqStmtEntTodays";
-    private String enqFtTxnTypeConditions = "enqFtTxnTypeConditions";
     //private String enqStmtEntLasts = "enqStmtEntLasts";
     //private String enqStmtEntBooks = "enqStmtEntBooks";
+    private String enqAdminFtTxnTypeConditions = "enqAdminFtTxnTypeConditions";
+    private String enqPctStmtEntrys = "enqPctStmtEntrys";
+    
+    //Users
+    private String verUsers = "verUsers";
+    private String verEbExternalUsers = "verEbExternalUsers";
+    private String verEbExternalUser_TcibNews = "verEbExternalUser_TcibNews";
+    
+    //Debit Card
+    private String verCardIssues = "verCardIssues";
+    private String verCardIssue_Inputs = "verCardIssue_Inputs";
+    
+    //Funds Transfer
+    private String verFundsTransfers = "verFundsTransfers";
+    private String verFundsTransfer_Inputs = "verFundsTransfer_Inputs";
+    
+    //Teller
+    private String verTeller_LcyCashins = "verTeller_LcyCashins";
+    private String verTeller_LcyCashwdls = "verTeller_LcyCashwdls";
+    private String verTeller_FcyCashins = "verTeller_FcyCashins";
+    private String verTeller_LcyCashchqs = "verTeller_LcyCashchqs";
+    private String verTeller_FcyCashchqs = "verTeller_FcyCashchqs";
+    
+    //Currency
+    private String enqCurrencyLists = "enqCurrencyLists";
     
     @Test
     public void testEnqAccountStatements() {
@@ -55,36 +79,12 @@ public class TestAvailabilityOfApiITCase {
     }
     
     @Test
-    public void testEnqCustomerDetsScvs() {
-        InteractionSession session = DefaultInteractionSession.newSession();
-        session.basicAuth(Configuration.INPUTTER_USER_NAME, Configuration.INPUTTER_PASSWORD)
-                .url()
-                .baseuri(Configuration.DATA_SERVICE_URL)
-                .path(enqCustomerDetsScvs).get();
-        
-        assertTrue(session.entities().isCollection());
-        assertFalse(session.entities().collection().isEmpty());
-    }
-    
-    @Test
     public void testEnqCustomerLists() {
         InteractionSession session = DefaultInteractionSession.newSession();
         session.basicAuth(Configuration.INPUTTER_USER_NAME, Configuration.INPUTTER_PASSWORD)
                 .url()
                 .baseuri(Configuration.DATA_SERVICE_URL)
                 .path(enqCustomerLists).get();
-        
-        assertTrue(session.entities().isCollection());
-        assertFalse(session.entities().collection().isEmpty());
-    }
-    
-    @Test
-    public void testEnqPctCustomerAccounts() {
-        InteractionSession session = DefaultInteractionSession.newSession();
-        session.basicAuth(Configuration.INPUTTER_USER_NAME, Configuration.INPUTTER_PASSWORD)
-                .url()
-                .baseuri(Configuration.DATA_SERVICE_URL)
-                .path(enqPctCustomerAccounts).get();
         
         assertTrue(session.entities().isCollection());
         assertFalse(session.entities().collection().isEmpty());
@@ -211,12 +211,12 @@ public class TestAvailabilityOfApiITCase {
     }
     
     @Test
-    public void testVerCustomer_Inputs() {
+    public void testVerCustomer_Corps() {
         InteractionSession session = DefaultInteractionSession.newSession();
         session.basicAuth(Configuration.INPUTTER_USER_NAME, Configuration.INPUTTER_PASSWORD)
                 .url()
                 .baseuri(Configuration.DATA_SERVICE_URL)
-                .path(verCustomer_Inputs).get();
+                .path(verCustomer_Corps).get();
         
         assertTrue(session.entities().isCollection());
         assertFalse(session.entities().collection().isEmpty());
@@ -247,12 +247,12 @@ public class TestAvailabilityOfApiITCase {
     }
     
     @Test
-    public void testEnqFtTxnTypeConditions() {
+    public void testEnqAdminFtTxnTypeConditions() {
         InteractionSession session = DefaultInteractionSession.newSession();
         session.basicAuth(Configuration.INPUTTER_USER_NAME, Configuration.INPUTTER_PASSWORD)
                 .url()
                 .baseuri(Configuration.DATA_SERVICE_URL)
-                .path(enqFtTxnTypeConditions).get();
+                .path(enqAdminFtTxnTypeConditions).get();
         
         assertTrue(session.entities().isCollection());
         assertFalse(session.entities().collection().isEmpty());
@@ -260,7 +260,8 @@ public class TestAvailabilityOfApiITCase {
     
     @Test
     public void testEnqStmtEntTodays() throws IOException {
-        String enqStmtEntTodaysPath = "enqStmtEntTodays()?$filter=AcctId%20eq%20'78131'";
+        //The account that must be used here should have transactions done in today's day, otherwise the test will fail!
+        String enqStmtEntTodaysPath = "enqStmtEntTodays()?$filter=AcctId%20eq%20'78239'";
         InteractionSession session = DefaultInteractionSession.newSession();
         session.basicAuth(Configuration.INPUTTER_USER_NAME, Configuration.INPUTTER_PASSWORD)
                 .url()
@@ -296,4 +297,162 @@ public class TestAvailabilityOfApiITCase {
         assertTrue(session.entities().isCollection());
         assertFalse(session.entities().collection().isEmpty());
     }
+    
+    @Test
+    public void testVerCustomer_Inputs() {
+        InteractionSession session = DefaultInteractionSession.newSession();
+        session.basicAuth(Configuration.INPUTTER_USER_NAME, Configuration.INPUTTER_PASSWORD)
+                .url()
+                .baseuri(Configuration.DATA_SERVICE_URL)
+                .path(verCustomer_Inputs).get();
+        
+        assertTrue(session.entities().isCollection());
+        assertFalse(session.entities().collection().isEmpty());
+    }
+    
+    @Test
+    public void testEnqCustomerDetailss() {
+        InteractionSession session = DefaultInteractionSession.newSession();
+        session.basicAuth(Configuration.INPUTTER_USER_NAME, Configuration.INPUTTER_PASSWORD)
+                .url()
+                .baseuri(Configuration.DATA_SERVICE_URL)
+                .path(enqCustomerDetailss).get();
+        
+        assertTrue(session.entities().isCollection());
+        assertFalse(session.entities().collection().isEmpty());
+    }
+    
+    @Test
+    public void testEnqPctAccounts() {
+        InteractionSession session = DefaultInteractionSession.newSession();
+        session.basicAuth(Configuration.INPUTTER_USER_NAME, Configuration.INPUTTER_PASSWORD)
+                .url()
+                .baseuri(Configuration.DATA_SERVICE_URL)
+                .path(enqPctAccounts).get();
+        
+        assertTrue(session.entities().isCollection());
+        assertFalse(session.entities().collection().isEmpty());
+    }
+    
+    @Test
+    public void testEnqAccountDetailss() {
+        InteractionSession session = DefaultInteractionSession.newSession();
+        session.basicAuth(Configuration.INPUTTER_USER_NAME, Configuration.INPUTTER_PASSWORD)
+                .url()
+                .baseuri(Configuration.DATA_SERVICE_URL)
+                .path(enqAccountDetailss).get();
+        
+        assertTrue(session.entities().isCollection());
+        assertFalse(session.entities().collection().isEmpty());
+    }
+    
+    @Test
+    public void testEnqAcctBals() {
+        InteractionSession session = DefaultInteractionSession.newSession();
+        session.basicAuth(Configuration.INPUTTER_USER_NAME, Configuration.INPUTTER_PASSWORD)
+                .url()
+                .baseuri(Configuration.DATA_SERVICE_URL)
+                .path(enqAcctBals).get();
+        
+        assertTrue(session.entities().isCollection());
+        assertFalse(session.entities().collection().isEmpty());
+    }
+    
+    @Test
+    public void testEnqCustAccts() {
+        //The customer that must be used here should have accounts, otherwise the test will fail!
+        String enqCustAcctsPath = "enqCustAccts()?filter=Customer%20eq%20'190100'";
+        InteractionSession session = DefaultInteractionSession.newSession();
+        session.basicAuth(Configuration.INPUTTER_USER_NAME, Configuration.INPUTTER_PASSWORD)
+                .url()
+                .baseuri(Configuration.DATA_SERVICE_URL)
+                .path(enqCustAcctsPath).get();
+        
+        assertTrue(session.entities().isCollection());
+        assertFalse(session.entities().collection().isEmpty());
+    }
+    
+    public void testVerEbExternalUser_TcibNews() {
+        InteractionSession session = DefaultInteractionSession.newSession();
+        session.basicAuth(Configuration.INPUTTER_USER_NAME, Configuration.INPUTTER_PASSWORD)
+                .url()
+                .baseuri(Configuration.DATA_SERVICE_URL)
+                .path(verEbExternalUser_TcibNews).get();
+        
+        assertTrue(session.entities().isCollection());
+        assertFalse(session.entities().collection().isEmpty());
+    }
+    
+    @Test
+    public void testVerCardIssue_Inputs() {
+        InteractionSession session = DefaultInteractionSession.newSession();
+        session.basicAuth(Configuration.INPUTTER_USER_NAME, Configuration.INPUTTER_PASSWORD)
+                .url()
+                .baseuri(Configuration.DATA_SERVICE_URL)
+                .path(verCardIssue_Inputs).get();
+        
+        assertTrue(session.entities().isCollection());
+        assertFalse(session.entities().collection().isEmpty());
+    }
+    
+    @Test
+    public void testVerTeller_FcyCashins() {
+        InteractionSession session = DefaultInteractionSession.newSession();
+        session.basicAuth(Configuration.INPUTTER_USER_NAME, Configuration.INPUTTER_PASSWORD)
+                .url()
+                .baseuri(Configuration.DATA_SERVICE_URL)
+                .path(verTeller_FcyCashins).get();
+        
+        assertTrue(session.entities().isCollection());
+        assertFalse(session.entities().collection().isEmpty());
+    }
+    
+    @Test
+    public void testVerTeller_LcyCashchqs() {
+        InteractionSession session = DefaultInteractionSession.newSession();
+        session.basicAuth(Configuration.INPUTTER_USER_NAME, Configuration.INPUTTER_PASSWORD)
+                .url()
+                .baseuri(Configuration.DATA_SERVICE_URL)
+                .path(verTeller_LcyCashchqs).get();
+        
+        assertTrue(session.entities().isCollection());
+        assertFalse(session.entities().collection().isEmpty());
+    }
+    
+    @Test
+    public void testVerTeller_FcyCashchqs() {
+        InteractionSession session = DefaultInteractionSession.newSession();
+        session.basicAuth(Configuration.INPUTTER_USER_NAME, Configuration.INPUTTER_PASSWORD)
+                .url()
+                .baseuri(Configuration.DATA_SERVICE_URL)
+                .path(verTeller_FcyCashchqs).get();
+        
+        assertTrue(session.entities().isCollection());
+        assertFalse(session.entities().collection().isEmpty());
+    }
+    
+    @Test
+    public void testEnqCurrencyLists() {
+        InteractionSession session = DefaultInteractionSession.newSession();
+        session.basicAuth(Configuration.INPUTTER_USER_NAME, Configuration.INPUTTER_PASSWORD)
+                .url()
+                .baseuri(Configuration.DATA_SERVICE_URL)
+                .path(enqCurrencyLists).get();
+        
+        assertTrue(session.entities().isCollection());
+        assertFalse(session.entities().collection().isEmpty());
+    }
+    
+    @Test
+    public void testEnqPctStmtEntrys() {
+        InteractionSession session = DefaultInteractionSession.newSession();
+        session.basicAuth(Configuration.INPUTTER_USER_NAME, Configuration.INPUTTER_PASSWORD)
+                .url()
+                .baseuri(Configuration.DATA_SERVICE_URL)
+                .path(enqPctStmtEntrys).get();
+        
+        assertTrue(session.entities().isCollection());
+        assertFalse(session.entities().collection().isEmpty());
+    }
+    
 }

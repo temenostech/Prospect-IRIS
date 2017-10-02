@@ -9,16 +9,8 @@ domain T24 {
         command GETEntities
         command GETEntity
         basepath: "/{companyid}"
-  
-        initial resource Home {
-            type: item        
-            entity: enqAccountStatement      
-            view: NoopGET            
-            GET -> T24.enqAccountStatement.enqAccountStatements
-            GET -> T24.enqAccountStatement.enqAccountStatement
-        }
-          
-        resource enqAccountStatements   @ Annotation : tags ( "Accounts Statements" ) {
+    
+        resource enqAccountStatements {
             type: collection
             entity: enqAccountStatement
             commands [ GET : GETEntities {
@@ -28,9 +20,15 @@ domain T24 {
             GET *-> enqAccountStatement {
                 parameters [ id = "{PrimaryKey}" ]
             }
+            GET *-> locator t24ResourceLocator("{DrillDown}", "{FinNetIdForm}") {
+                parameters [ CVR_CURRENT_CompanyID = "{PpCompPop}",CVR_CURRENT_FTNumber = "{PpTransRefPop}" ]
+                title: "Transaction Detail"
+                id: "1"
+                field: "ValueDate"
+            }
         }
     
-        resource enqAccountStatement   @ Annotation : tags ( "Account Statements" ) {
+        resource enqAccountStatement {
             type: item
             entity: enqAccountStatement
             commands [ GET : GETEntity ]

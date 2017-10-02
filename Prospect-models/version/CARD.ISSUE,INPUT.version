@@ -1,0 +1,181 @@
+Screen CARD_ISSUE, INPUT
+    t24Name: "CARD.ISSUE,INPUT"
+    metamodelVersion: "1.30.6"
+    numberOfAuthorisers: 1
+    description: en = "Card Issue"
+reportLocks: Yes
+
+TransactionFlow {
+    otherCompanyAccess: Yes
+}
+
+Presentation {
+    recordsPerPage: "1"
+    fieldsPerLine: "MULTI"
+    language: en
+    header1: en = "Card Issue"
+}
+
+Relationship {
+    associatedVersions: CARD_ISSUE,AUDIT
+}
+
+attributes: "NO.HEADER.TAB"
+
+Fields {
+    "CARD_STATUS" {
+
+        Presentation {
+            maxLength: 30
+            column: 1
+            row: 0
+        }
+
+        default: IF ( ) "NULL" THEN "90"
+        Translations:
+            label: en = "Card Status (Input 90)"
+            toolTip: en = "Denotes card status for the record"
+    }
+
+    "ACCOUNT" {
+
+        Presentation {
+            maxLength: 30
+            enrichmentLength: 35
+            column: 1
+            row: 1
+        }
+
+        default: IF ( 1 ) "NULL" THEN "ACCOUNT>@ID"
+        Translations:
+            label: en = "Account"
+            toolTip: en = "A/c to which the cheques are being issued."
+        MV: 1
+    }
+
+    "CURRENCY" {
+
+        Presentation {
+            maxLength: 30
+            column: 90
+            row: 1
+        }
+
+        Translations:
+            label: en = "Ccy"
+    }
+
+    "ISSUE_DATE" {
+
+        Presentation {
+            maxLength: 30
+            enrichmentLength: 30
+            column: 1
+            row: 2
+        }
+
+        default: IF ( ) "NULL" THEN "!TODAY"
+        Translations:
+            label: en = "Issue Date"
+            toolTip: en = "Defines the date of issue of cards"
+    }
+
+    "EXPIRY_DATE" {
+
+        Presentation {
+            maxLength: 30
+            column: 90
+            row: 2
+        }
+
+        Translations:
+            label: en = "Expiry Date"
+    }
+
+    "NAME" {
+
+        Presentation {
+            maxLength: 30
+            column: 1
+            row: 3
+        }
+
+        Translations:
+            label: en = "Name"
+            toolTip: en = "Specifies Name that needs to be printed on card"
+        MV: 1
+    }
+
+    "PIN_ISSUE_DATE" {
+
+        Presentation {
+            maxLength: 30
+            column: 1
+            row: 4
+        }
+
+        Translations:
+            label: en = "Pin Issue Date"
+    }
+
+    "CANCELLATION_DATE" {
+
+        Presentation {
+            maxLength: 30
+            column: 1
+            row: 5
+        }
+
+        Translations:
+            label: en = "Cancellation Date"
+    }
+
+    "CAN_REASON" {
+
+        Presentation {
+            maxLength: 30
+            column: 90
+            row: 5
+            selectionEnquiry: "CARD.CANCEL.TYPE"
+        }
+
+        Translations:
+            label: en = "Cancellation Reason"
+    }
+
+    "CHARGES" {
+
+        Presentation {
+            maxLength: 30
+            column: 1
+            row: 6
+        }
+
+        Translations:
+            label: en = "Charges"
+            toolTip: en = "Defines the charges due for the issued of cheques."
+    }
+
+    "CHARGE_DATE" {
+
+        Presentation {
+            maxLength: 30
+            column: 90
+            row: 6
+        }
+
+        Translations:
+            label: en = "Charge Date"
+            toolTip: en = "Value date for online charges raised by the issue"
+    }
+
+    "*" {
+
+        Presentation {
+            column: 0
+            row: 7
+        }
+
+    }
+
+}

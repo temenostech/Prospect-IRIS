@@ -1,0 +1,46 @@
+domain T24 {
+    use common.CoreCommands.*
+    use common.HTTPEvents.*
+    use common.ODataCommands.*
+    use common.T24Commands.*
+    use common.T24Events.*
+    use common.NextState.*
+    rim enqAcctBal {
+        command GETEntities
+        command GETEntity
+        basepath: "/{companyid}"
+    
+        resource enqAcctBals {
+            type: collection
+            entity: enqAcctBal
+            commands [ GET : GETEntities {
+                properties [ filter = "{filter}" ]
+                } ]
+            path: "/enqAcctBals()"
+            GET *-> enqAcctBal {
+                parameters [ id = "{Acc}" ]
+            }
+            GET *-> "T24.enqStmtEntToday.enqStmtEntTodays" {
+                parameters [ filter = "AcctId eq '{Acc}'" ]
+                title: "Statement entries today"
+                id: "1"
+                field: "Acc"
+            }
+            GET *-> "T24.enqStmtEntLast.enqStmtEntLasts" {
+                parameters [ filter = "AcctId eq '{Acc}'" ]
+                title: "Entries Since Last Stmt"
+                id: "2"
+                field: "Acc"
+            }
+        }
+    
+        resource enqAcctBal {
+            type: item
+            entity: enqAcctBal
+            commands [ GET : GETEntity ]
+            path: "/enqAcctBals('{id}')"
+        }
+    
+    }
+    
+}
