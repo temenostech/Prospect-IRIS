@@ -1,4 +1,5 @@
 # UTF-8
+# UTF-8
 /* Template Servicing for Payment orde */
 Domain PI_Contract
     @t24:i (module=PI)
@@ -58,8 +59,8 @@ Classes {
             @t24:i (align=L, inputBehaviour=I, maxLength=34, sysNumber=22.0, core=true, t24Name=BENEFICIARY.ACCOUNT.NO, mandatory=false)
         BENEFICIARY_BIC -> DE_Config:DE_BIC
             @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=24.0, core=true, businessType=SW, t24Name=BENEFICIARY.BIC, mandatory=false)
-        BENEFICIARY_COUNTRY_CODE : T24BusinessTypes:A
-            @t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=31.0, core=true, t24Name=BENEFICIARY.COUNTRY.CODE, mandatory=false)
+        BENEFICIARY_COUNTRY_CODE -> ST_Config:COUNTRY
+            @t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=31.0, core=true, businessType=A, t24Name=BENEFICIARY.COUNTRY.CODE, mandatory=false)
         BENEFICIARY_CUSTOMER : T24BusinessTypes:CUS
             @t24:i (align=R, inputBehaviour=I, maxLength=35, sysNumber=25.0, core=true, t24Name=BENEFICIARY.CUSTOMER, mandatory=false)
         BENEFICIARY_IBAN : T24BusinessTypes:A
@@ -88,11 +89,11 @@ Classes {
             @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=34.0, core=true, t24Name=BEN.RESERVED.4, mandatory=false)
         BEN_RESERVED_5 : T24BusinessTypes:A
             @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=33.0, core=true, t24Name=BEN.RESERVED.5, mandatory=false)
-        CHARGE_ACCOUNT : T24BusinessTypes:A
+        CHARGE_ACCOUNT -> AC_AccountOpening:ACCOUNT
             @i18n:Label (en="Charge Debit Account")
-            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=154.0, core=true, t24Name=CHARGE.ACCOUNT, mandatory=false)
-        CHARGE_ACCOUNT_CCY : T24BusinessTypes:A
-            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=155.0, core=true, t24Name=CHARGE.ACCOUNT.CCY, mandatory=false)
+            @t24:i (align=L, inputBehaviour=F, maxLength=36, sysNumber=154.0, core=true, businessType=S, t24Name=CHARGE.ACCOUNT, mandatory=false)
+        CHARGE_ACCOUNT_CCY -> ST_CurrencyConfig:CURRENCY
+            @t24:i (align=L, inputBehaviour=F, maxLength=3, sysNumber=155.0, core=true, businessType=CCY, t24Name=CHARGE.ACCOUNT.CCY, mandatory=false)
         CHARGE_BEARER : PI_Contract:PAYMENT_ORDER__CHARGE_BEARER
             @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=78.0, core=true, t24Name=CHARGE.BEARER, mandatory=false)
         CHARGE_TYPE -> byValue PI_Contract:PAYMENT_ORDER__CHARGE_TYPE *
@@ -113,9 +114,9 @@ Classes {
             @t24:i (align=L, inputBehaviour=I, maxLength=6, sysNumber=21.0, core=true, t24Name=CREDIT.PL, mandatory=false)
         CREDIT_PORTFOLIO : T24BusinessTypes:A
             @t24:i (align=L, inputBehaviour=I, maxLength=18, sysNumber=19.0, core=true, t24Name=CREDIT.PORTFOLIO, mandatory=false)
-        CREDIT_VALUE_DATE : T24BusinessTypes:A
+        CREDIT_VALUE_DATE : T24BusinessTypes:D
             @i18n:Label (en="Credit Value Date")
-            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=161.0, core=true, t24Name=CREDIT.VALUE.DATE, mandatory=false)
+            @t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=161.0, core=true, t24Name=CREDIT.VALUE.DATE, mandatory=false)
         CURRENCY_MARKET : T24BusinessTypes:A
             @i18n:Label (en=Market)
             @t24:i (align=L, inputBehaviour=N, maxLength=2, sysNumber=87.0, core=true, t24Name=CURRENCY.MARKET, mandatory=false)
@@ -124,10 +125,10 @@ Classes {
         CURR_NO : T24BusinessTypes:N
             @i18n:Label (en="Curr No")
             @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=202.0, core=true, t24Name=CURR.NO, mandatory=false)
-        CUT_OFF_TIME : T24BusinessTypes:A
+        CUT_OFF_TIME : T24BusinessTypes:TIME
             @i18n:Label (en="Cut off time")
             @i18n:Tooltip (en="Cut off time")
-            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=162.0, core=true, t24Name=CUT.OFF.TIME, mandatory=false)
+            @t24:i (align=L, inputBehaviour=N, maxLength=5, sysNumber=162.0, core=true, t24Name=CUT.OFF.TIME, mandatory=false)
         DATE_TIME -> byValue PI_Contract:PAYMENT_ORDER__DATE_TIME *
             @t24:i (t24Name=DATE.TIME)
         DEBIT_ACCOUNT -> AC_AccountOpening:ACCOUNT
@@ -171,6 +172,8 @@ Classes {
             @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=207.0, core=true, t24Name=DEPT.CODE, mandatory=false)
         END_TO_END_REFERENCE : T24BusinessTypes:A
             @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=76.0, core=true, t24Name=END.TO.END.REFERENCE, mandatory=false)
+        FRAUD_CHECK_INDICATOR : PI_Contract:PAYMENT_ORDER__FRAUD_CHECK_INDICATOR
+            @t24:i (align=L, inputBehaviour=N, maxLength=10, sysNumber=174.0, core=true, t24Name=FRAUD.CHECK.INDICATOR, mandatory=false)
         ID -> PI_Contract:PAYMENT_ORDER PK required
             @i18n:Label (en="Transaction Ref")
             @i18n:Tooltip (en="Transaction Reference")
@@ -234,9 +237,11 @@ Classes {
         INVOICE_REFERENCE -> byValue PI_Contract:PAYMENT_ORDER__INVOICE_REFERENCE *
             @t24:i (t24Name=INVOICE.REFERENCE)
         LAST_TC_SIM_TIME : T24BusinessTypes:A
-            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=164.0, core=true, t24Name=LAST.TC.SIM.TIME, mandatory=false)
-        LOCAL_INSTR_CODE : T24BusinessTypes:N
-            @t24:i (align=R, inputBehaviour=I, maxLength=35, sysNumber=171.0, core=true, t24Name=LOCAL.INSTR.CODE, mandatory=false)
+            @t24:i (align=L, inputBehaviour=N, maxLength=16, sysNumber=164.0, core=true, t24Name=LAST.TC.SIM.TIME, mandatory=false)
+        LOCAL_INSTR_CODE : PI_Contract:PAYMENT_ORDER__LOCAL_INSTR_CODE
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=171.0, core=true, t24Name=LOCAL.INSTR.CODE, mandatory=false)
+        LOCAL_INSTR_PROP : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=175.0, core=true, t24Name=LOCAL.INSTR.PROP, mandatory=false)
         MANUAL_COMPLETE : PI_Contract:PAYMENT_ORDER__MANUAL_COMPLETE
             @t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=152.0, core=true, t24Name=MANUAL.COMPLETE, mandatory=false)
         MANUAL_PAYMENT_STATUS : PI_Contract:PAYMENT_ORDER__MANUAL_PAYMENT_STATUS
@@ -249,8 +254,8 @@ Classes {
             @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=90.0, core=true, t24Name=MESSAGE.PRIORITY, mandatory=false)
         NARRATIVE -> byValue PI_Contract:PAYMENT_ORDER__NARRATIVE *
             @t24:i (t24Name=NARRATIVE)
-        ORDERING_COMPANY : T24BusinessTypes:N
-            @t24:i (align=R, inputBehaviour=N, maxLength=0, sysNumber=2.0, core=true, t24Name=ORDERING.COMPANY, mandatory=false)
+        ORDERING_COMPANY : T24BusinessTypes:COM
+            @t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=2.0, core=true, t24Name=ORDERING.COMPANY, mandatory=false)
         ORDERING_CUSTOMER : T24BusinessTypes:CUS
             @t24:i (align=R, inputBehaviour=I, maxLength=35, sysNumber=3.0, core=true, t24Name=ORDERING.CUSTOMER, mandatory=false)
         ORDERING_CUSTOMER_BIC -> DE_Config:DE_BIC
@@ -285,7 +290,8 @@ Classes {
         OVERRIDE -> byValue PI_Contract:PAYMENT_ORDER__OVERRIDE *
             @t24:i (t24Name=OVERRIDE)
         PAYMENT_AMOUNT : T24BusinessTypes:AMT
-            @i18n:Label (en="Outstanding Amt")
+            @i18n:Label (en="Payment Amount")
+            @i18n:Tooltip (en="Specify the Amount to be transferred")
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=66.0, core=true, t24Name=PAYMENT.AMOUNT, mandatory=false)
         PAYMENT_CATEGORY -> AC_StandingOrders:PAYMENT_CATEG_PURPOSE
             @t24:i (align=L, inputBehaviour=I, maxLength=4, sysNumber=104.0, core=true, businessType=A, t24Name=PAYMENT.CATEGORY, mandatory=false)
@@ -319,7 +325,7 @@ Classes {
             @t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=81.0, core=true, t24Name=PAY.REQ.FX.SPREAD, mandatory=false)
         PAY_REQ_TREASURY_RATE : T24BusinessTypes:R
             @t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=82.0, core=true, t24Name=PAY.REQ.TREASURY.RATE, mandatory=false)
-        PSD_COMPLIANT : T24BusinessTypes:A
+        PSD_COMPLIANT : PI_Contract:PAYMENT_ORDER__PSD_COMPLIANT
             @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=163.0, core=true, t24Name=PSD.COMPLIANT, mandatory=false)
         PYMT_INFO_SER_LEVEL_CODE : PI_Contract:PAYMENT_ORDER__PYMT_INFO_SER_LEVEL_CODE
             @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=145.0, core=true, t24Name=PYMT.INFO.SER.LEVEL.CODE, mandatory=false)
@@ -368,10 +374,6 @@ Classes {
             @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=177.0, core=true, t24Name=RESERVED22, mandatory=false)
         RESERVED23 : T24BusinessTypes:A
             @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=176.0, core=true, t24Name=RESERVED23, mandatory=false)
-        RESERVED24 : T24BusinessTypes:A
-            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=175.0, core=true, t24Name=RESERVED24, mandatory=false)
-        RESERVED25 : T24BusinessTypes:A
-            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=174.0, core=true, t24Name=RESERVED25, mandatory=false)
         RESERVED3 : T24BusinessTypes:A
             @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=196.0, core=true, t24Name=RESERVED3, mandatory=false)
         RESERVED4 : T24BusinessTypes:A
@@ -390,7 +392,7 @@ Classes {
             @t24:i (t24Name=SIGNATORY)
         STATE_HIST -> byValue PI_Contract:PAYMENT_ORDER__STATE_HIST *
             @t24:i (t24Name=STATE.HIST)
-        STATUS_REASON_CODE : T24BusinessTypes:A
+        STATUS_REASON_CODE : PI_Contract:PAYMENT_ORDER__STATUS_REASON_CODE
             @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=170.0, core=true, t24Name=STATUS.REASON.CODE, mandatory=false)
         STRUCTURED_COMMUNICATION_CODE : PI_Contract:PAYMENT_ORDER__STRUCTURED_COMMUNICATION_CODE
             @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=73.0, core=true, t24Name=STRUCTURED.COMMUNICATION.CODE, mandatory=false)
@@ -398,15 +400,15 @@ Classes {
             @t24:i (align=L, inputBehaviour=I, maxLength=65, sysNumber=75.0, core=true, t24Name=STRUCTURED.CREDITOR.REFERENCE, mandatory=false)
         STRUCTURED_ISSUER : T24BusinessTypes:A
             @t24:i (align=L, inputBehaviour=I, maxLength=65, sysNumber=74.0, core=true, t24Name=STRUCTURED.ISSUER, mandatory=false)
-        SUBMIT_ORDER : T24BusinessTypes:A
-            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=168.0, core=true, t24Name=SUBMIT.ORDER, mandatory=false)
-        TC_SIM_CHECKED : T24BusinessTypes:A
-            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=165.0, core=true, t24Name=TC.SIM.CHECKED, mandatory=false)
+        SUBMIT_ORDER : PI_Contract:PAYMENT_ORDER__SUBMIT_ORDER
+            @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=168.0, core=true, t24Name=SUBMIT.ORDER, mandatory=false)
+        TC_SIM_CHECKED : PI_Contract:PAYMENT_ORDER__TC_SIM_CHECKED
+            @t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=165.0, core=true, t24Name=TC.SIM.CHECKED, mandatory=false)
         TERMS_AND_CONDITIONS : T24BusinessTypes:A
             @t24:i (align=L, inputBehaviour=I, maxLength=120, sysNumber=100.0, core=true, t24Name=TERMS.AND.CONDITIONS, mandatory=false)
-        TOTAL_DEBIT_AMOUNT : T24BusinessTypes:A
+        TOTAL_DEBIT_AMOUNT : T24BusinessTypes:AMT
             @i18n:Label (en="Total Debit Amount")
-            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=169.0, core=true, t24Name=TOTAL.DEBIT.AMOUNT, mandatory=false)
+            @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=169.0, core=true, t24Name=TOTAL.DEBIT.AMOUNT, mandatory=false)
         ULTIMATE_CREDITOR_ADDR_TYPE : PI_Contract:PAYMENT_ORDER__ULTIMATE_CREDITOR_ADDR_TYPE
             @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=134.0, core=true, t24Name=ULTIMATE.CREDITOR.ADDR.TYPE, mandatory=false)
         ULTIMATE_CREDITOR_BIC -> DE_Config:DE_BIC
@@ -437,12 +439,42 @@ Classes {
             @t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=127.0, core=true, businessType=A, t24Name=ULTIMATE.DEBTOR.COUNTRY, mandatory=false)
         ULTIMATE_DEBTOR_NAME : T24BusinessTypes:A
             @t24:i (align=L, inputBehaviour=I, maxLength=70, sysNumber=123.0, core=true, t24Name=ULTIMATE.DEBTOR.NAME, mandatory=false)
-        ULTIMATE_DEBTOR_RESERVED_1 : T24BusinessTypes:A
-            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=132.0, core=true, t24Name=ULTIMATE.DEBTOR.RESERVED.1, mandatory=false)
         WAIVE_ALL_CHARGES : PI_Contract:PAYMENT_ORDER__WAIVE_ALL_CHARGES
             @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=79.0, core=true, t24Name=WAIVE.ALL.CHARGES, mandatory=false)
     }
-    PAYMENT_ORDER__ACCT_WITH_BANK_POST_ADDR_LN
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+PAYMENT_ORDER__ACCT_WITH_BANK_POST_ADDR_LN
     {
         ACCT_WITH_BANK_POST_ADDR_LN : T24BusinessTypes:A
             @t24:i (align=L, inputBehaviour=I, maxLength=70, sysNumber=43.0, core=true, t24Name=ACCT.WITH.BANK.POST.ADDR.LN, mandatory=false)
@@ -454,14 +486,23 @@ Classes {
     }
     PAYMENT_ORDER__ACTIVITY_CODE
     {
-        ACTIVITY_CODE : T24BusinessTypes:N
+        ACTIVITY_CODE : T24BusinessTypes:A
             @i18n:Label (en="Activity Code")
             @i18n:Tooltip (en="Indicates activity code")
-            @t24:i (align=R, inputBehaviour=N, maxLength=8, sysNumber=130.0, core=true, t24Name=ACTIVITY.CODE, mandatory=false)
-        DELIVERY_REF : T24BusinessTypes:N
+            @t24:i (align=L, inputBehaviour=N, maxLength=8, sysNumber=130.0, core=true, t24Name=ACTIVITY.CODE, mandatory=false)
+        MESSAGE_TYPE -> byValue PI_Contract:PAYMENT_ORDER__ACTIVITY_CODE__MESSAGE_TYPE *
+            @t24:i (t24Name=MESSAGE.TYPE)
+    }
+    PAYMENT_ORDER__ACTIVITY_CODE__MESSAGE_TYPE
+    {
+        DELIVERY_REF : T24BusinessTypes:A
             @i18n:Label (en="Delivery Ref")
             @i18n:Tooltip (en="System generated Delivery ref key")
-            @t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=131.0, core=true, t24Name=DELIVERY.REF, mandatory=false)
+            @t24:i (align=L, inputBehaviour=N, maxLength=70, sysNumber=132.0, core=true, t24Name=DELIVERY.REF, mandatory=false)
+        MESSAGE_TYPE : T24BusinessTypes:A
+            @i18n:Label (en="Message Type")
+            @i18n:Tooltip (en="Delivery message types generated for this record")
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=131.0, core=true, t24Name=MESSAGE.TYPE, mandatory=false)
     }
     PAYMENT_ORDER__ADDITIONAL_INFO
     {
@@ -486,21 +527,21 @@ Classes {
     }
     PAYMENT_ORDER__CHARGE_TYPE
     {
-        CHARGE_AC_CCY_AMOUNT : T24BusinessTypes:A
-            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=160.0, core=true, t24Name=CHARGE.AC.CCY.AMOUNT, mandatory=false)
-        CHARGE_AMOUNT : T24BusinessTypes:A
+        CHARGE_AC_CCY_AMOUNT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=F, maxLength=19, sysNumber=160.0, core=true, t24Name=CHARGE.AC.CCY.AMOUNT, typeModifiers="155", mandatory=false)
+        CHARGE_AMOUNT : T24BusinessTypes:AMT
             @i18n:Label (en="Charge Amount")
             @i18n:Tooltip (en="Indicates charge amount")
-            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=159.0, core=true, t24Name=CHARGE.AMOUNT, mandatory=false)
-        CHARGE_CURRENCY : T24BusinessTypes:A
+            @t24:i (align=R, inputBehaviour=F, maxLength=19, sysNumber=159.0, core=true, t24Name=CHARGE.AMOUNT, typeModifiers="158.X", mandatory=false)
+        CHARGE_CURRENCY -> ST_CurrencyConfig:CURRENCY
             @i18n:Label (en="Charge Currency")
-            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=158.0, core=true, t24Name=CHARGE.CURRENCY, mandatory=false)
+            @t24:i (align=L, inputBehaviour=F, maxLength=3, sysNumber=158.0, core=true, businessType=CCY, t24Name=CHARGE.CURRENCY, mandatory=false)
         CHARGE_DESCRIPTION : T24BusinessTypes:A
-            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=157.0, core=true, t24Name=CHARGE.DESCRIPTION, mandatory=false)
+            @t24:i (align=L, inputBehaviour=F, maxLength=50, sysNumber=157.0, core=true, t24Name=CHARGE.DESCRIPTION, mandatory=false)
         CHARGE_TYPE : T24BusinessTypes:A
             @i18n:Label (en="Charge Type")
             @i18n:Tooltip (en="Type of Charge")
-            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=156.0, core=true, t24Name=CHARGE.TYPE, mandatory=false)
+            @t24:i (align=L, inputBehaviour=F, maxLength=20, sysNumber=156.0, core=true, t24Name=CHARGE.TYPE, mandatory=false)
     }
     PAYMENT_ORDER__CONTEXT_NAME
     {
@@ -560,10 +601,10 @@ Classes {
     }
     PAYMENT_ORDER__INT_OVERRIDE_ID
     {
-        INT_OVERRIDE_ID : T24BusinessTypes:N
-            @t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=128.0, core=true, t24Name=INT.OVERRIDE.ID, mandatory=false)
-        INT_OVERRIDE_VAL : T24BusinessTypes:N
-            @t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=129.0, core=true, t24Name=INT.OVERRIDE.VAL, mandatory=false)
+        INT_OVERRIDE_ID : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=128.0, core=true, t24Name=INT.OVERRIDE.ID, mandatory=false)
+        INT_OVERRIDE_VAL : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=129.0, core=true, t24Name=INT.OVERRIDE.VAL, mandatory=false)
     }
     PAYMENT_ORDER__INVOICE_REFERENCE
     {
@@ -634,6 +675,11 @@ Classes {
 }
 Enumerations {
     PAYMENT_ORDER__ACCT_WITH_BANK_POST_ADDR_TYPE : mml:string
+        
+        
+        
+        
+        
         ADDR=ADDR
         BIZZ=BIZZ
         DLVY=DLVY
@@ -641,6 +687,11 @@ Enumerations {
         MLTO=MLTO
         PBOX=PBOX
     PAYMENT_ORDER__BEN_POST_ADDRESS_TYPE : mml:string
+        
+        
+        
+        
+        
         ADDR=ADDR
         BIZZ=BIZZ
         DLVY=DLVY
@@ -648,10 +699,32 @@ Enumerations {
         MLTO=MLTO
         PBOX=PBOX
     PAYMENT_ORDER__CHARGE_BEARER : mml:string
+        
+        
         BEN=BEN
         OUR=OUR
         SHA=SHA
     PAYMENT_ORDER__CLEARING_CHANNEL : mml:string
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
         ATBLZ=ATBLZ
         AUBSB=AUBSB
         CHBCC=CHBCC
@@ -674,13 +747,27 @@ Enumerations {
         SGIBG=SGIBG
         USABA=USABA
     PAYMENT_ORDER__DEBTOR_AGENT_ADDR_TYPE : mml:string
+        
+        
+        
+        
+        
         ADDR=ADDR
         BIZZ=BIZZ
         DLVY=DLVY
         HOME=HOME
         MLTO=MLTO
         PBOX=PBOX
+    PAYMENT_ORDER__FRAUD_CHECK_INDICATOR : mml:string
+        
+        FAILED=FAILED
+        SUCCESS=SUCCESS
     PAYMENT_ORDER__INITIATOR_POST_ADDR_TYPE : mml:string
+        
+        
+        
+        
+        
         ADDR=ADDR
         BIZZ=BIZZ
         DLVY=DLVY
@@ -688,9 +775,19 @@ Enumerations {
         MLTO=MLTO
         PBOX=PBOX
     PAYMENT_ORDER__INIT_OTHER_ID_TYPE : mml:string
+        
         ORGANISATION=ORGANISATION
         PRIVATE=PRIVATE
     PAYMENT_ORDER__INSTRUCTION_CODE__INSTRUCTION_CODE : mml:string
+        
+        
+        
+        
+        
+        
+        
+        
+        
         CHQB=CHQB
         CORT=CORT
         HOLD=HOLD
@@ -702,6 +799,11 @@ Enumerations {
         TELE=TELE
         TELI=TELI
     PAYMENT_ORDER__INTERMED_BANK_POSTAL_ADDR_TYPE : mml:string
+        
+        
+        
+        
+        
         ADDR=ADDR
         BIZZ=BIZZ
         DLVY=DLVY
@@ -709,18 +811,55 @@ Enumerations {
         MLTO=MLTO
         PBOX=PBOX
     PAYMENT_ORDER__INTERNAL_STATUS : mml:string
+        
+        
+        
         CANCEL=CANCEL
         ERROR=ERROR
         REJECT=REJECT
         RETURN=RETURN
+    PAYMENT_ORDER__LOCAL_INSTR_CODE : mml:string
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        0002=0002
+        BTR=BTR
+        CKS=CKS
+        CTP=CTP
+        CTR=CTR
+        DEP=DEP
+        IAT=IAT
+        IN=IN
+        INST=INST
+        ONCL=ONCL
+        RTR=RTR
+        SDCL=SDCL
+        TRF=TRF
     PAYMENT_ORDER__MANUAL_COMPLETE : mml:string
+        
         NULL=NULL
         YES=YES
     PAYMENT_ORDER__MANUAL_PAYMENT_STATUS : mml:string
+        
+        
         ACSC=ACSC
         PNDG=PNDG
         RJCT=RJCT
     PAYMENT_ORDER__ORDERING_POST_ADDRESS_TYPE : mml:string
+        
+        
+        
+        
+        
         ADDR=ADDR
         BIZZ=BIZZ
         DLVY=DLVY
@@ -728,6 +867,11 @@ Enumerations {
         MLTO=MLTO
         PBOX=PBOX
     PAYMENT_ORDER__ORDER_INITIATION_TYPE : mml:string
+        
+        
+        
+        
+        
         ACCLOSE=ACCLOSE
         AD=AD
         AL=AL
@@ -735,23 +879,43 @@ Enumerations {
         POA=POA
         STO=STO
     PAYMENT_ORDER__ORDER_TYPE : mml:string
+        
         BANK=BANK
         CUSTOMER=CUSTOMER
     PAYMENT_ORDER__PAYMENT_COMPLETE : mml:string
+        
         NULL=NULL
         YES=YES
     PAYMENT_ORDER__PAYMENT_METHOD : mml:string
+        
         CreditTransfer=CreditTransfer
         TRF=TRF
     PAYMENT_ORDER__PAYMENT_SYSTEM : mml:string
+        
+        
         EXTERNAL=EXTERNAL
         FT=FT
         TPS=TPS
     PAYMENT_ORDER__PAYMENT_SYSTEM_STATUS : mml:string
+        
+        
         ACSC=ACSC
         PNDG=PNDG
         RJCT=RJCT
+    PAYMENT_ORDER__PSD_COMPLIANT : mml:string
+        
+        
+        PSD_NOK=PSD.NOK
+        PSD_NON=PSD.NON
+        PSD_OK=PSD.OK
     PAYMENT_ORDER__PYMT_INFO_SER_LEVEL_CODE : mml:string
+        
+        
+        
+        
+        
+        
+        
         BKTR=BKTR
         NUGP=NUGP
         NURG=NURG
@@ -760,14 +924,106 @@ Enumerations {
         SEPA=SEPA
         URGP=URGP
         URNS=URNS
+    PAYMENT_ORDER__STATUS_REASON_CODE : mml:string
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        AC01=AC01
+        AC04=AC04
+        AC06=AC06
+        AC09=AC09
+        AG01=AG01
+        AG02=AG02
+        AG04=AG04
+        AG05=AG05
+        AG06=AG06
+        AG07=AG07
+        AG08=AG08
+        AG09=AG09
+        AG10=AG10
+        AM02=AM02
+        AM05=AM05
+        BE01=BE01
+        CNOR=CNOR
+        DNOR=DNOR
+        DS02=DS02
+        DS04=DS04
+        DU03=DU03
+        DUPL=DUPL
+        FF01=FF01
+        MD01=MD01
+        MD02=MD02
+        MD07=MD07
+        MS03=MS03
+        NARR=NARR
+        RC01=RC01
+        RC02=RC02
+        RC05=RC05
+        RF01=RF01
+        RR01=RR01
+        RR02=RR02
+        RR03=RR03
+        RR04=RR04
+        TM01=TM01
     PAYMENT_ORDER__STRUCTURED_COMMUNICATION_CODE : mml:string
+        
+        
+        
+        
+        
         DISP=DISP
         FXDR=FXDR
         PUOR=PUOR
         RADM=RADM
         RPIN=RPIN
         SCOR=SCOR
+    PAYMENT_ORDER__SUBMIT_ORDER : mml:string
+        
+        NO=NO
+        YES=YES
+    PAYMENT_ORDER__TC_SIM_CHECKED : mml:string
+        
+        NO=NO
+        YES=YES
     PAYMENT_ORDER__ULTIMATE_CREDITOR_ADDR_TYPE : mml:string
+        
+        
+        
+        
+        
         ADDR=ADDR
         BIZZ=BIZZ
         DLVY=DLVY
@@ -775,6 +1031,11 @@ Enumerations {
         MLTO=MLTO
         PBOX=PBOX
     PAYMENT_ORDER__ULTIMATE_DEBTOR_ADDR_TYPE : mml:string
+        
+        
+        
+        
+        
         ADDR=ADDR
         BIZZ=BIZZ
         DLVY=DLVY
@@ -782,6 +1043,8 @@ Enumerations {
         MLTO=MLTO
         PBOX=PBOX
     PAYMENT_ORDER__WAIVE_ALL_CHARGES : mml:string
-        NULL=NULL
+        
+        
+NULL=NULL
         YES=YES
 }

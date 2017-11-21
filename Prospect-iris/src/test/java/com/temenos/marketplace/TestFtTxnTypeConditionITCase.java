@@ -22,7 +22,7 @@ public class TestFtTxnTypeConditionITCase {
         session.basicAuth(Configuration.INPUTTER_USER_NAME, Configuration.INPUTTER_PASSWORD)
                 .url()
                 .baseuri(Configuration.DATA_SERVICE_URL)
-                .path("enqFtTxnTypeConditions").get();
+                .path("enqAdminFtTxnTypeConditions").get();
         assertEquals(200, session.result().code());
     }
 
@@ -33,7 +33,7 @@ public class TestFtTxnTypeConditionITCase {
         session.basicAuth(Configuration.INPUTTER_USER_NAME, Configuration.INPUTTER_PASSWORD)
                 .url()
                 .baseuri(Configuration.DATA_SERVICE_URL)
-                .path("enqFtTxnTypeConditions").get();
+                .path("enqAdminFtTxnTypeConditions").get();
         assertEquals(200, session.result().code());
         
        //retrieve the id of the first record returned
@@ -41,7 +41,7 @@ public class TestFtTxnTypeConditionITCase {
         System.out.println("testRetrieveTypeCondSpecificRecords_id: " + id);
        
        // retrieve the details of the specific record
-        String specificPath = "enqFtTxnTypeConditions(" + id + ")";
+        String specificPath = "enqAdminFtTxnTypeConditions(" + id + ")";
         InteractionSession session2 = DefaultInteractionSession.newSession();
         session2.basicAuth(Configuration.INPUTTER_USER_NAME,Configuration.INPUTTER_PASSWORD)
         .url()

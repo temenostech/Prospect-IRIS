@@ -1,4 +1,5 @@
 # UTF-8
+# UTF-8
 /* Customer Creation and Maintenance */
 Domain ST_Customer
     @t24:i (module=ST)
@@ -134,6 +135,8 @@ Classes {
             @t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=64.0, core=true, t24Name=DATE.OF.BIRTH, typeModifiers=1000, mandatory=false)
         DATE_TIME -> byValue ST_Customer:CUSTOMER__DATE_TIME *
             @t24:i (t24Name=DATE.TIME)
+        DEATH_DATE : T24BusinessTypes:D
+            @t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=156.0, core=true, t24Name=DEATH.DATE, mandatory=false)
         DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
             @i18n:Label (en="Dept Code")
             @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=187.0, core=true, t24Name=DEPT.CODE, mandatory=false)
@@ -273,6 +276,8 @@ Classes {
             @i18n:Label (en="Net Monthly Out")
             @i18n:Tooltip (en="Net Monthly Out")
             @t24:i (align=R, inputBehaviour=N, maxLength=19, sysNumber=83.0, core=true, t24Name=NET.MONTHLY.OUT, typeModifiers="USD", mandatory=false)
+        NOTIFICATION_OF_DEATH : T24BusinessTypes:D
+            @t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=157.0, core=true, t24Name=NOTIFICATION.OF.DEATH, mandatory=false)
         NO_OF_DEPENDENTS : T24BusinessTypes:N
             @i18n:Label (en="No of Dependents")
             @i18n:Tooltip (en="No Of Dependents")
@@ -310,6 +315,8 @@ Classes {
             @t24:i (t24Name=POST.CODE)
         PREVIOUS_NAME -> byValue ST_Customer:CUSTOMER__PREVIOUS_NAME *
             @t24:i (t24Name=PREVIOUS.NAME)
+        PROBATE_DATE : T24BusinessTypes:D
+            @t24:i (align=R, inputBehaviour=N, maxLength=11, sysNumber=158.0, core=true, t24Name=PROBATE.DATE, mandatory=false)
         PROB_OF_DEFT -> byValue ST_Customer:CUSTOMER__PROB_OF_DEFT *
             @t24:i (t24Name=PROB.OF.DEFT)
         RECORD_STATUS : T24BusinessTypes:STAT
@@ -361,16 +368,6 @@ Classes {
             @t24:i (align=R, inputBehaviour=N, maxLength=0, sysNumber=162.0, core=true, t24Name=RESERVED.16, mandatory=false)
         RESERVED_17 : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=N, maxLength=0, sysNumber=161.0, core=true, t24Name=RESERVED.17, mandatory=false)
-        RESERVED_18 : T24BusinessTypes:N
-            @t24:i (align=R, inputBehaviour=N, maxLength=0, sysNumber=160.0, core=true, t24Name=RESERVED.18, mandatory=false)
-        RESERVED_19 : T24BusinessTypes:N
-            @t24:i (align=R, inputBehaviour=N, maxLength=0, sysNumber=159.0, core=true, t24Name=RESERVED.19, mandatory=false)
-        RESERVED_20 : T24BusinessTypes:N
-            @t24:i (align=R, inputBehaviour=N, maxLength=0, sysNumber=158.0, core=true, t24Name=RESERVED.20, mandatory=false)
-        RESERVED_21 : T24BusinessTypes:N
-            @t24:i (align=R, inputBehaviour=N, maxLength=0, sysNumber=157.0, core=true, t24Name=RESERVED.21, mandatory=false)
-        RESERVED_22 : T24BusinessTypes:N
-            @t24:i (align=R, inputBehaviour=N, maxLength=0, sysNumber=156.0, core=true, t24Name=RESERVED.22, mandatory=false)
         RESERVED_51 : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=N, maxLength=0, sysNumber=102.0, core=true, t24Name=RESERVED.51, mandatory=false)
         RESIDENCE -> ST_Config:COUNTRY
@@ -419,8 +416,12 @@ Classes {
             @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=60.0, core=true, t24Name=TITLE, mandatory=false)
         TOWN_COUNTRY -> byValue ST_Customer:CUSTOMER__TOWN_COUNTRY *
             @t24:i (t24Name=TOWN.COUNTRY)
+        UPDATE_PREV_ADDRESS : ST_Customer:CUSTOMER__UPDATE_PREV_ADDRESS
+            @t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=160.0, core=true, t24Name=UPDATE.PREV.ADDRESS, mandatory=false)
         VIS_TYPE -> byValue ST_Customer:CUSTOMER__VIS_TYPE *
             @t24:i (t24Name=VIS.TYPE)
+        VULNERABILITY -> byValue ST_Customer:CUSTOMER__VULNERABILITY *
+            @t24:i (t24Name=VULNERABILITY)
     }
     CUSTOMER_ACT_HIST
         @i18n:Description (en="")
@@ -430,6 +431,118 @@ Classes {
             @i18n:Label (en="Customer No")
             @i18n:Tooltip (en="Identifies the Customer for the transaction.")
             @t24:i (align=R, inputBehaviour=N, maxLength=10, core=false, t24Name=CUSTOMER.NO, genOperation="@ID[\";\",1,1]", mandatory=true)
+    }
+    CUSTOMER_ADDRESS_HIST
+        @i18n:Description (en="")
+        @t24:i (t24Name=CUSTOMER.ADDRESS.HIST, level=C, type=H, allowedFunctions="A C D E H I L P Q R S", localRefAllowed=true)
+    {
+        AUDITOR_CODE : T24BusinessTypes:A
+            @i18n:Label (en="Auditor Code")
+            @i18n:Tooltip (en="Auditor Code")
+            @t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=26.0, core=true, t24Name=AUDITOR.CODE, mandatory=false)
+        AUDIT_DATE_TIME : T24BusinessTypes:RELTIME
+            @i18n:Label (en="Audit Date Time")
+            @i18n:Tooltip (en="Date and time when record was audited")
+            @t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=27.0, core=true, t24Name=AUDIT.DATE.TIME, mask="RDD DD  DD ##:##", mandatory=false)
+        AUTHORISER : T24BusinessTypes:A
+            @i18n:Label (en=Authoriser)
+            @i18n:Tooltip (en="Indicates the User who Authorises the record")
+            @t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=23.0, core=true, t24Name=AUTHORISER, mandatory=false)
+        CO_CODE -> ST_CompanyCreation:COMPANY
+            @i18n:Label (en=Company)
+            @t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=24.0, core=true, businessType=A, t24Name=CO.CODE, mask="R##-###-####", mandatory=false)
+        CURR_NO : T24BusinessTypes:N
+            @i18n:Label (en="Curr No")
+            @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=20.0, core=true, t24Name=CURR.NO, mandatory=false)
+        CUSTOMER_ADDRESS_HIST_ID -> ST_Customer:CUSTOMER_ADDRESS_HIST PK required
+            @t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=0.0, core=true, businessType=CUS, t24Name=CUSTOMER.ADDRESS.HIST.ID, mandatory=true)
+        DATE_TIME -> byValue ST_Customer:CUSTOMER_ADDRESS_HIST__DATE_TIME *
+            @t24:i (t24Name=DATE.TIME)
+        DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+            @i18n:Label (en="Dept Code")
+            @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=25.0, core=true, t24Name=DEPT.CODE, mandatory=false)
+        INPUTTER -> byValue ST_Customer:CUSTOMER_ADDRESS_HIST__INPUTTER *
+            @t24:i (t24Name=INPUTTER)
+        OVERRIDE -> byValue ST_Customer:CUSTOMER_ADDRESS_HIST__OVERRIDE *
+            @t24:i (t24Name=OVERRIDE)
+        RECORD_STATUS : T24BusinessTypes:STAT
+            @i18n:Label (en="Record Status")
+            @t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=19.0, core=true, t24Name=RECORD.STATUS, mandatory=false)
+        RESERVED_1 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=16.0, core=true, t24Name=RESERVED.1, mandatory=false)
+        RESERVED_10 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=7.0, core=true, t24Name=RESERVED.10, mandatory=false)
+        RESERVED_2 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=15.0, core=true, t24Name=RESERVED.2, mandatory=false)
+        RESERVED_3 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=14.0, core=true, t24Name=RESERVED.3, mandatory=false)
+        RESERVED_4 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=13.0, core=true, t24Name=RESERVED.4, mandatory=false)
+        RESERVED_5 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=12.0, core=true, t24Name=RESERVED.5, mandatory=false)
+        RESERVED_6 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=11.0, core=true, t24Name=RESERVED.6, mandatory=false)
+        RESERVED_7 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=10.0, core=true, t24Name=RESERVED.7, mandatory=false)
+        RESERVED_8 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=9.0, core=true, t24Name=RESERVED.8, mandatory=false)
+        RESERVED_9 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=8.0, core=true, t24Name=RESERVED.9, mandatory=false)
+        VALID_UNTIL -> byValue ST_Customer:CUSTOMER_ADDRESS_HIST__VALID_UNTIL *
+            @t24:i (t24Name=VALID.UNTIL)
+    }
+    
+    
+    
+    
+    CUSTOMER_ADDRESS_HIST__DATE_TIME
+    {
+        DATE_TIME : T24BusinessTypes:RELTIME
+            @i18n:Label (en="Date time")
+            @i18n:Tooltip (en="Date and time when record was input or authorised")
+            @t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=22.0, core=true, t24Name=DATE.TIME, mask="RDD DD  DD ##:##", mandatory=false)
+    }
+    CUSTOMER_ADDRESS_HIST__INPUTTER
+    {
+        INPUTTER : T24BusinessTypes:A
+            @i18n:Label (en=Inputter)
+            @i18n:Tooltip (en="The user who last updated the record")
+            @t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=21.0, core=true, t24Name=INPUTTER, mandatory=false)
+    }
+    CUSTOMER_ADDRESS_HIST__OVERRIDE
+    {
+        OVERRIDE : T24BusinessTypes:N
+            @i18n:Label (en=Override)
+            @i18n:Tooltip (en="Overrides generated by this transaction")
+            @t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=18.0, core=true, t24Name=OVERRIDE, mandatory=false)
+    }
+    CUSTOMER_ADDRESS_HIST__VALID_UNTIL
+    {
+        ADDRESS -> byValue ST_Customer:CUSTOMER_ADDRESS_HIST__VALID_UNTIL__ADDRESS *
+            @t24:i (t24Name=ADDRESS)
+        COUNTRY : T24BusinessTypes:A
+            @i18n:Label (en=Country)
+            @i18n:Tooltip (en="Holds the country code")
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=6.0, core=true, t24Name=COUNTRY, mandatory=false)
+        POST_CODE : T24BusinessTypes:A
+            @i18n:Label (en="Post Code")
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=5.0, core=true, t24Name=POST.CODE, mandatory=false)
+        STREET : T24BusinessTypes:A
+            @i18n:Label (en=Street)
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=2.0, core=true, t24Name=STREET, mandatory=false)
+        TOWN_COUNTRY : T24BusinessTypes:A
+            @i18n:Label (en=Town)
+            @i18n:Tooltip (en="Indicates a customer or company\'s town and country")
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=4.0, core=true, t24Name=TOWN.COUNTRY, mandatory=false)
+        VALID_UNTIL : T24BusinessTypes:D required
+            @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=1.0, core=true, t24Name=VALID.UNTIL, mandatory=true)
+    }
+    CUSTOMER_ADDRESS_HIST__VALID_UNTIL__ADDRESS
+    {
+        ADDRESS : T24BusinessTypes:A
+            @i18n:Label (en=Address)
+            @i18n:Tooltip (en="Define the address")
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=3.0, core=true, t24Name=ADDRESS, mandatory=false)
     }
     CUSTOMER_DEFAULT
         @i18n:Description (en="")
@@ -473,6 +586,8 @@ Classes {
             @t24:i (align=R, inputBehaviour=I, maxLength=4, sysNumber=3.0, core=true, t24Name=INDUSTRY, mandatory=false)
         INPUTTER -> byValue ST_Customer:CUSTOMER_DEFAULT__INPUTTER *
             @t24:i (t24Name=INPUTTER)
+        MAINT_PREV_ADD : ST_Customer:CUSTOMER_DEFAULT__MAINT_PREV_ADD
+            @t24:i (align=R, inputBehaviour=I, maxLength=1, sysNumber=10.0, core=true, t24Name=MAINT.PREV.ADD, mandatory=false)
         NATIONALITY -> ST_Config:COUNTRY
             @i18n:Label (en=Nationality)
             @i18n:Tooltip (en="Indicates the nationality")
@@ -488,8 +603,6 @@ Classes {
             @t24:i (align=R, inputBehaviour=N, maxLength=3, sysNumber=12.0, core=true, t24Name=RESERVED2, mandatory=false)
         RESERVED3 : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=N, maxLength=3, sysNumber=11.0, core=true, t24Name=RESERVED3, mandatory=false)
-        RESERVED4 : T24BusinessTypes:N
-            @t24:i (align=R, inputBehaviour=N, maxLength=3, sysNumber=10.0, core=true, t24Name=RESERVED4, mandatory=false)
         RESIDENCE -> ST_Config:COUNTRY
             @i18n:Label (en=Residence)
             @t24:i (align=L, inputBehaviour=I, maxLength=2, sysNumber=7.0, core=true, businessType=SSS, t24Name=RESIDENCE, mandatory=false)
@@ -503,6 +616,9 @@ Classes {
             @i18n:Label (en=Target)
             @t24:i (align=R, inputBehaviour=I, maxLength=4, sysNumber=4.0, core=true, t24Name=TARGET, mandatory=false)
     }
+    
+    
+    
     CUSTOMER_DEFAULT__DATE_TIME
     {
         DATE_TIME : T24BusinessTypes:RELTIME
@@ -535,6 +651,203 @@ Classes {
     {
         CUSTOMER_FREQUENCY -> ST_Customer:CUSTOMER_FQU PK required
             @t24:i (align=L, inputBehaviour=I, maxLength=25, sysNumber=0.0, core=true, businessType=ANY, t24Name=CUSTOMER.FREQUENCY, mandatory=true)
+    }
+    CUSTOMER_GROUP
+        @i18n:Description (en="")
+        @t24:i (t24Name=CUSTOMER.GROUP, level=C, type=H, allowedFunctions="A C D E I L P Q S", localRefAllowed=true)
+    {
+        AUDITOR_CODE : T24BusinessTypes:A
+            @i18n:Label (en="Auditor Code")
+            @i18n:Tooltip (en="Auditor Code")
+            @t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=64.0, core=true, t24Name=AUDITOR.CODE, mandatory=false)
+        AUDIT_DATE_TIME : T24BusinessTypes:RELTIME
+            @i18n:Label (en="Audit Date Time")
+            @i18n:Tooltip (en="Date and time when record was audited")
+            @t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=65.0, core=true, t24Name=AUDIT.DATE.TIME, mask="RDD DD  DD ##:##", mandatory=false)
+        AUTHORISER : T24BusinessTypes:A
+            @i18n:Label (en=Authoriser)
+            @i18n:Tooltip (en="Indicates the User who Authorises the record")
+            @t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=61.0, core=true, t24Name=AUTHORISER, mandatory=false)
+        CO_CODE -> ST_CompanyCreation:COMPANY
+            @i18n:Label (en=Company)
+            @t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=62.0, core=true, businessType=A, t24Name=CO.CODE, mask="R##-###-####", mandatory=false)
+        CURR_NO : T24BusinessTypes:N
+            @i18n:Label (en="Curr No")
+            @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=58.0, core=true, t24Name=CURR.NO, mandatory=false)
+        CUSTOMER_GROUP_ID -> ST_Customer:CUSTOMER_GROUP PK required
+            @i18n:Label (en="Customer Group ID")
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=0.0, core=true, businessType=A, t24Name=CUSTOMER.GROUP.ID, mandatory=true)
+        CUSTOMER_ID -> byValue ST_Customer:CUSTOMER_GROUP__CUSTOMER_ID *
+            @t24:i (t24Name=CUSTOMER.ID)
+        DATE_TIME -> byValue ST_Customer:CUSTOMER_GROUP__DATE_TIME *
+            @t24:i (t24Name=DATE.TIME)
+        DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+            @i18n:Label (en="Dept Code")
+            @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=63.0, core=true, t24Name=DEPT.CODE, mandatory=false)
+        DESCRIPTION -> byValue ST_Customer:CUSTOMER_GROUP__DESCRIPTION *
+            @t24:i (t24Name=DESCRIPTION)
+        GROUP_NAME -> byValue ST_Customer:CUSTOMER_GROUP__GROUP_NAME *
+            @t24:i (t24Name=GROUP.NAME)
+        INPUTTER -> byValue ST_Customer:CUSTOMER_GROUP__INPUTTER *
+            @t24:i (t24Name=INPUTTER)
+        OVERRIDE -> byValue ST_Customer:CUSTOMER_GROUP__OVERRIDE *
+            @t24:i (t24Name=OVERRIDE)
+        RECORD_STATUS : T24BusinessTypes:STAT
+            @i18n:Label (en="Record Status")
+            @t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=57.0, core=true, t24Name=RECORD.STATUS, mandatory=false)
+        RELATIONSHIP -> byValue ST_Customer:CUSTOMER_GROUP__RELATIONSHIP *
+            @t24:i (t24Name=RELATIONSHIP)
+        RESERVED_1 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=54.0, core=true, t24Name=RESERVED.1, mandatory=false)
+        RESERVED_10 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=45.0, core=true, t24Name=RESERVED.10, mandatory=false)
+        RESERVED_11 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=44.0, core=true, t24Name=RESERVED.11, mandatory=false)
+        RESERVED_12 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=43.0, core=true, t24Name=RESERVED.12, mandatory=false)
+        RESERVED_13 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=42.0, core=true, t24Name=RESERVED.13, mandatory=false)
+        RESERVED_14 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=41.0, core=true, t24Name=RESERVED.14, mandatory=false)
+        RESERVED_15 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=40.0, core=true, t24Name=RESERVED.15, mandatory=false)
+        RESERVED_16 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=39.0, core=true, t24Name=RESERVED.16, mandatory=false)
+        RESERVED_17 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=38.0, core=true, t24Name=RESERVED.17, mandatory=false)
+        RESERVED_18 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=37.0, core=true, t24Name=RESERVED.18, mandatory=false)
+        RESERVED_19 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=36.0, core=true, t24Name=RESERVED.19, mandatory=false)
+        RESERVED_2 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=53.0, core=true, t24Name=RESERVED.2, mandatory=false)
+        RESERVED_20 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=35.0, core=true, t24Name=RESERVED.20, mandatory=false)
+        RESERVED_21 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=34.0, core=true, t24Name=RESERVED.21, mandatory=false)
+        RESERVED_22 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=33.0, core=true, t24Name=RESERVED.22, mandatory=false)
+        RESERVED_23 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=32.0, core=true, t24Name=RESERVED.23, mandatory=false)
+        RESERVED_24 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=31.0, core=true, t24Name=RESERVED.24, mandatory=false)
+        RESERVED_25 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=30.0, core=true, t24Name=RESERVED.25, mandatory=false)
+        RESERVED_26 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=29.0, core=true, t24Name=RESERVED.26, mandatory=false)
+        RESERVED_27 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=28.0, core=true, t24Name=RESERVED.27, mandatory=false)
+        RESERVED_28 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=27.0, core=true, t24Name=RESERVED.28, mandatory=false)
+        RESERVED_29 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=26.0, core=true, t24Name=RESERVED.29, mandatory=false)
+        RESERVED_3 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=52.0, core=true, t24Name=RESERVED.3, mandatory=false)
+        RESERVED_30 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=25.0, core=true, t24Name=RESERVED.30, mandatory=false)
+        RESERVED_31 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=24.0, core=true, t24Name=RESERVED.31, mandatory=false)
+        RESERVED_32 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=23.0, core=true, t24Name=RESERVED.32, mandatory=false)
+        RESERVED_33 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=22.0, core=true, t24Name=RESERVED.33, mandatory=false)
+        RESERVED_34 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=21.0, core=true, t24Name=RESERVED.34, mandatory=false)
+        RESERVED_35 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=20.0, core=true, t24Name=RESERVED.35, mandatory=false)
+        RESERVED_36 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=19.0, core=true, t24Name=RESERVED.36, mandatory=false)
+        RESERVED_37 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=18.0, core=true, t24Name=RESERVED.37, mandatory=false)
+        RESERVED_38 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=17.0, core=true, t24Name=RESERVED.38, mandatory=false)
+        RESERVED_39 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=16.0, core=true, t24Name=RESERVED.39, mandatory=false)
+        RESERVED_4 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=51.0, core=true, t24Name=RESERVED.4, mandatory=false)
+        RESERVED_40 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=15.0, core=true, t24Name=RESERVED.40, mandatory=false)
+        RESERVED_41 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=14.0, core=true, t24Name=RESERVED.41, mandatory=false)
+        RESERVED_42 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=13.0, core=true, t24Name=RESERVED.42, mandatory=false)
+        RESERVED_43 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=12.0, core=true, t24Name=RESERVED.43, mandatory=false)
+        RESERVED_44 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=11.0, core=true, t24Name=RESERVED.44, mandatory=false)
+        RESERVED_45 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=10.0, core=true, t24Name=RESERVED.45, mandatory=false)
+        RESERVED_46 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=9.0, core=true, t24Name=RESERVED.46, mandatory=false)
+        RESERVED_47 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=8.0, core=true, t24Name=RESERVED.47, mandatory=false)
+        RESERVED_48 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=7.0, core=true, t24Name=RESERVED.48, mandatory=false)
+        RESERVED_49 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=6.0, core=true, t24Name=RESERVED.49, mandatory=false)
+        RESERVED_5 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=50.0, core=true, t24Name=RESERVED.5, mandatory=false)
+        RESERVED_50 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=5.0, core=true, t24Name=RESERVED.50, mandatory=false)
+        RESERVED_6 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=49.0, core=true, t24Name=RESERVED.6, mandatory=false)
+        RESERVED_7 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=48.0, core=true, t24Name=RESERVED.7, mandatory=false)
+        RESERVED_8 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=47.0, core=true, t24Name=RESERVED.8, mandatory=false)
+        RESERVED_9 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=46.0, core=true, t24Name=RESERVED.9, mandatory=false)
+    }
+    
+    
+    
+    
+    
+    
+    CUSTOMER_GROUP__CUSTOMER_ID
+    {
+        CUSTOMER_ID -> ST_Customer:CUSTOMER required
+            @i18n:Label (en="Customer Id")
+            @t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=3.0, core=true, businessType=CUS, t24Name=CUSTOMER.ID, mandatory=true)
+    }
+    CUSTOMER_GROUP__DATE_TIME
+    {
+        DATE_TIME : T24BusinessTypes:RELTIME
+            @i18n:Label (en="Date time")
+            @i18n:Tooltip (en="Date and time when record was input or authorised")
+            @t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=60.0, core=true, t24Name=DATE.TIME, mask="RDD DD  DD ##:##", mandatory=false)
+    }
+    CUSTOMER_GROUP__DESCRIPTION
+    {
+        DESCRIPTION : T24BusinessTypes:A
+            @i18n:Label (en=Description)
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, multiLanguage=true, sysNumber=1.0, core=true, t24Name=DESCRIPTION, mandatory=false)
+    }
+    CUSTOMER_GROUP__GROUP_NAME
+    {
+        GROUP_NAME : T24BusinessTypes:A required
+            @i18n:Label (en="Group Name")
+            @t24:i (align=L, inputBehaviour=I, maxLength=15, multiLanguage=true, sysNumber=2.0, core=true, t24Name=GROUP.NAME, mandatory=true)
+    }
+    CUSTOMER_GROUP__INPUTTER
+    {
+        INPUTTER : T24BusinessTypes:A
+            @i18n:Label (en=Inputter)
+            @i18n:Tooltip (en="The user who last updated the record")
+            @t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=59.0, core=true, t24Name=INPUTTER, mandatory=false)
+    }
+    CUSTOMER_GROUP__OVERRIDE
+    {
+        OVERRIDE : T24BusinessTypes:N
+            @i18n:Label (en=Override)
+            @i18n:Tooltip (en="Overrides generated by this transaction")
+            @t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=56.0, core=true, t24Name=OVERRIDE, mandatory=false)
+    }
+    CUSTOMER_GROUP__RELATIONSHIP
+    {
+        RELATIONSHIP -> ST_Customer:RELATION
+            @i18n:Label (en=Relationship)
+            @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=4.0, core=true, t24Name=RELATIONSHIP, mandatory=false)
     }
     CUSTOMER_LIABILITY
         @i18n:Description (en="")
@@ -710,6 +1023,9 @@ Classes {
         USERNO : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=N, maxLength=5, core=false, t24Name=USERNO, genOperation="@ID[\"*\",7,1]", mandatory=false)
     }
+    
+    
+    
     CUSTOMER_POSITION_XREF__CUSTOMER_POS_ID
     {
         CUSTOMER_POS_ID : T24BusinessTypes:A
@@ -827,6 +1143,11 @@ Classes {
         RESERVED_9 : T24BusinessTypes:A
             @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=29.0, core=true, t24Name=RESERVED.9, mandatory=false)
     }
+    
+    
+    
+    
+    
     CUSTOMER_RELATIONSHIP__CUSTOMER
     {
         CUSTOMER -> ST_Customer:CUSTOMER
@@ -1007,6 +1328,8 @@ Classes {
         RESERVED_9 : T24BusinessTypes:A
             @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=13.0, core=true, t24Name=RESERVED.9, mandatory=false)
     }
+    
+    
     CUSTOMER_REL_GROUP__DATE_TIME
     {
         DATE_TIME : T24BusinessTypes:RELTIME
@@ -1043,6 +1366,7 @@ Classes {
         ROLE -> byValue ST_Customer:CUSTOMER_ROLE__ROLE *
             @t24:i (t24Name=ROLE)
     }
+    
     CUSTOMER_ROLE__ROLE
     {
         CUSTOMER_ROLE -> byValue ST_Customer:CUSTOMER_ROLE__ROLE__CUSTOMER_ROLE *
@@ -1097,6 +1421,63 @@ Classes {
         SHORT_NAME -> byValue ST_Customer:CUSTOMER_STATUS__SHORT_NAME *
             @t24:i (t24Name=SHORT.NAME)
     }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     CUSTOMER_STATUS__DATE_TIME
     {
         DATE_TIME : T24BusinessTypes:RELTIME
@@ -1626,6 +2007,11 @@ Classes {
             @i18n:Label (en="Visibility Int. Review")
             @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=115.0, core=true, t24Name=VIS.INTERNAL.REVIEW, isTextarea=true, mandatory=false)
     }
+    CUSTOMER__VULNERABILITY
+    {
+        VULNERABILITY : ST_Customer:CUSTOMER__VULNERABILITY__VULNERABILITY
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=159.0, core=true, t24Name=VULNERABILITY, mandatory=false)
+    }
     CUS_POS_ENQ_PARAM
         @i18n:Description (en="")
         @t24:i (t24Name=CUS.POS.ENQ.PARAM, level=I, type=H, allowedFunctions="A C D E H I L P Q R S", localRefAllowed=true)
@@ -1695,6 +2081,8 @@ Classes {
         USER_SELECT_RTN : T24BusinessTypes:HOOK
             @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=7.0, core=true, t24Name=USER.SELECT.RTN, mandatory=false)
     }
+    
+    
     CUS_POS_ENQ_PARAM__DATE_TIME
     {
         DATE_TIME : T24BusinessTypes:RELTIME
@@ -1738,7 +2126,7 @@ Classes {
         CURR_NO : T24BusinessTypes:N
             @i18n:Label (en="Curr No")
             @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=22.0, core=true, t24Name=CURR.NO, mandatory=false)
-        CUSTOMER_ID -> ST_Customer:CUSTOMER
+        CUSTOMER_ID : T24BusinessTypes:N
             @i18n:Label (en="Customer Id")
             @i18n:Tooltip (en="Identifies the Customer for the transaction.")
             @t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=1.0, core=true, t24Name=CUSTOMER.ID, mandatory=false)
@@ -1755,7 +2143,7 @@ Classes {
             @t24:i (t24Name=MEDIA.TYPE)
         OVERRIDE -> byValue ST_Customer:DIGITAL_INFO__OVERRIDE *
             @t24:i (t24Name=OVERRIDE)
-        PERSON_ENTITY_ID -> ST_Customer:PERSON_ENTITY
+        PERSON_ENTITY_ID : T24BusinessTypes:N
             @i18n:Label (en=Id)
             @t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=2.0, core=true, t24Name=PERSON.ENTITY.ID, mandatory=false)
         RECORD_STATUS : T24BusinessTypes:STAT
@@ -1776,6 +2164,9 @@ Classes {
         RESERVED_7 : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=12.0, core=true, t24Name=RESERVED.7, mandatory=false)
     }
+    
+    
+    
     DIGITAL_INFO__DATE_TIME
     {
         DATE_TIME : T24BusinessTypes:RELTIME
@@ -1842,7 +2233,7 @@ Classes {
         CURR_NO : T24BusinessTypes:N
             @i18n:Label (en="Curr No")
             @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=22.0, core=true, t24Name=CURR.NO, mandatory=false)
-        CUSTOMER_ID -> ST_Customer:CUSTOMER
+        CUSTOMER_ID : T24BusinessTypes:N
             @i18n:Label (en="Customer Id")
             @i18n:Tooltip (en="Identifies the Customer for the transaction.")
             @t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=1.0, core=true, t24Name=CUSTOMER.ID, mandatory=false)
@@ -1865,7 +2256,7 @@ Classes {
             @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=3.0, core=true, t24Name=MEDIA.TYPE, mandatory=false)
         OVERRIDE -> byValue ST_Customer:DIGITAL_INTERFACE__OVERRIDE *
             @t24:i (t24Name=OVERRIDE)
-        PERSON_ENTITY_ID -> ST_Customer:PERSON_ENTITY
+        PERSON_ENTITY_ID : T24BusinessTypes:N
             @i18n:Label (en=Id)
             @t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=2.0, core=true, t24Name=PERSON.ENTITY.ID, mandatory=false)
         RECORD_STATUS : T24BusinessTypes:STAT
@@ -1894,6 +2285,8 @@ Classes {
         USER_DEVICE_NAME : T24BusinessTypes:ANY
             @t24:i (align=L, inputBehaviour=I, maxLength=50, sysNumber=7.0, core=true, t24Name=USER.DEVICE.NAME, mandatory=false)
     }
+    
+    
     DIGITAL_INTERFACE__DATE_TIME
     {
         DATE_TIME : T24BusinessTypes:RELTIME
@@ -2055,6 +2448,12 @@ Classes {
         RESERVED_5 : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=4.0, core=true, t24Name=RESERVED.5, mandatory=false)
     }
+    
+    
+    
+    
+    
+    
     EB_RATING_AGENCY__AGENCY_DESC
     {
         AGENCY_DESC : T24BusinessTypes:A required
@@ -2159,6 +2558,8 @@ Classes {
         ROLE_ID -> ST_Customer:EB_ROLE PK required
             @t24:i (align=L, inputBehaviour=I, maxLength=20, sysNumber=0.0, core=true, businessType=A, t24Name=ROLE.ID, mandatory=true)
     }
+    
+    
     EB_ROLE__DATE_TIME
     {
         DATE_TIME : T24BusinessTypes:RELTIME
@@ -2229,6 +2630,8 @@ Classes {
         UPLOAD_DATE : T24BusinessTypes:D
             @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=3.0, core=true, t24Name=UPLOAD.DATE, mandatory=false)
     }
+    
+    
     EXTERNAL_ARRANGEMENT_FILE__CUS_POS_FIELD_NAME
     {
         CUS_POS_FIELD_NAME : T24BusinessTypes:A
@@ -2287,6 +2690,8 @@ Classes {
         SHORT_NAME -> byValue ST_Customer:GLOBAL_CUSTOMER__SHORT_NAME *
             @t24:i (t24Name=SHORT.NAME)
     }
+    
+    
     GLOBAL_CUSTOMER__DATE_TIME
     {
         DATE_TIME : T24BusinessTypes:RELTIME
@@ -2346,6 +2751,8 @@ Classes {
             @i18n:Label (en="Record Status")
             @t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=2.0, core=true, t24Name=RECORD.STATUS, mandatory=false)
     }
+    
+    
     JOB_TITLE__DATE_TIME
     {
         DATE_TIME : T24BusinessTypes:RELTIME
@@ -2430,6 +2837,15 @@ Classes {
         RECORD_STATUS -> byValue ST_Customer:MNEMONIC_RELATIONSHIP__RECORD_STATUS *
             @t24:i (t24Name=RECORD.STATUS)
     }
+    
+    
+    
+    
+    
+    
+    
+    
+    
     MNEMONIC_RELATIONSHIP__AUDITOR_CODE
     {
         AUDITOR_CODE : T24BusinessTypes:A
@@ -2623,6 +3039,18 @@ Classes {
         TOWN_COUNTRY -> byValue ST_Customer:PERSON_ENTITY__TOWN_COUNTRY *
             @t24:i (t24Name=TOWN.COUNTRY)
     }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     PERSON_ENTITY__ADDRESS
     {
         ADDRESS -> byValue ST_Customer:PERSON_ENTITY__ADDRESS__ADDRESS *
@@ -2754,6 +3182,22 @@ Classes {
         REVERSE_RELATION -> byValue ST_Customer:RELATION__REVERSE_RELATION *
             @t24:i (t24Name=REVERSE.RELATION)
     }
+    RELATIONSHIP_CUST_GROUP
+        @i18n:Description (en="")
+        @t24:i (t24Name=RELATIONSHIP.CUST.GROUP, level=C, type=L, allowedFunctions="L P S", localRefAllowed=false)
+    {
+        CUSTOMER_GROUP -> byValue ST_Customer:RELATIONSHIP_CUST_GROUP__CUSTOMER_GROUP *
+            @t24:i (t24Name=CUSTOMER.GROUP)
+        CUSTOMER_ID -> ST_Customer:RELATIONSHIP_CUST_GROUP PK required
+            @i18n:Label (en="Customer Id")
+            @i18n:Tooltip (en="Identifies the Customer for the transaction.")
+            @t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=0.0, core=true, businessType=CUS, t24Name=CUSTOMER.ID, mandatory=true)
+    }
+    RELATIONSHIP_CUST_GROUP__CUSTOMER_GROUP
+    {
+        CUSTOMER_GROUP -> ST_Customer:CUSTOMER_GROUP
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=1.0, core=true, businessType=A, t24Name=CUSTOMER.GROUP, mandatory=false)
+    }
     RELATION_CUSTOMER
         @i18n:Description (en="")
         @t24:i (t24Name=RELATION.CUSTOMER, level=C, type=L, allowedFunctions="L P S", localRefAllowed=false)
@@ -2765,6 +3209,11 @@ Classes {
         IS_RELATION -> byValue ST_Customer:RELATION_CUSTOMER__IS_RELATION *
             @t24:i (t24Name=IS.RELATION)
     }
+    
+    
+    
+    
+    
     RELATION_CUSTOMER__IS_RELATION
     {
         IS_RELATION -> ST_Customer:RELATION
@@ -2863,6 +3312,8 @@ Classes {
             @i18n:Label (en="Record Status")
             @t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=2.0, core=true, t24Name=RECORD.STATUS, mandatory=false)
     }
+    
+    
     SPOKEN_LANGUAGE__DATE_TIME
     {
         DATE_TIME : T24BusinessTypes:RELTIME
@@ -2895,7 +3346,8 @@ Classes {
             @i18n:Tooltip (en="Transaction Reference")
             @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=0.0, core=true, businessType=A, t24Name="@ID", mandatory=true)
     }
-    ST_CUST_RELATIONSHIP_DATES__CR_DATE
+    
+ST_CUST_RELATIONSHIP_DATES__CR_DATE
     {
         CR_DATE : T24BusinessTypes:N
             @i18n:Label (en="Credit date")
@@ -2903,67 +3355,120 @@ Classes {
     }
 }
 Enumerations {
+    CUSTOMER_DEFAULT__MAINT_PREV_ADD : mml:string
+        
+        
+        
+        
+        
+        
+        
+        
+        1=1
+        2=2
+        3=3
+        4=4
+        5=5
+        6=6
+        7=7
+        8=8
+        9=9
     CUSTOMER_DEFAULT__STREET_NON_MANDAT : mml:string
+        
         N=N
         Y=Y
     CUSTOMER_POSITION__INCL_JOINT_INFO : mml:string
+        
         N=N
         Y=Y
     CUSTOMER_POSITION__REBUILD_DATA : mml:string
+        
         NO=NO
         Y=Y
     CUSTOMER_RELATIONSHIP__ORIG_RELATION__ORIG_PARTY : mml:string
+        
+        
         CUSTOMER=CUSTOMER
         ENTITY=ENTITY
         PERSON=PERSON
     CUSTOMER_RELATIONSHIP__ORIG_RELATION__REL_RELATION__REL_PARTY : mml:string
+        
+        
         CUSTOMER=CUSTOMER
         ENTITY=ENTITY
         PERSON=PERSON
     CUSTOMER_RELATIONSHIP__RELATION_TYPE : mml:string
+        
+        
+        
         ADVICES=ADVICES
         LIMIT=LIMIT
         OTHERS=OTHERS
         TAX=TAX
     CUSTOMER_REL_GROUP__LEGAL_ID__LEGAL_DOC_NAME : mml:string
+        
+        
         DRIVING_LICENSE=DRIVING.LICENSE
         INCORP_CERT=INCORP.CERT
         SOCIAL_SECURITY_NO=SOCIAL.SECURITY.NO
     CUSTOMER__ALLOW_BULK_PROCESS : mml:string
+        
+        
+        
         BOTH=BOTH
         CREDIT=CREDIT
         DEBIT=DEBIT
         NULL=NULL
     CUSTOMER__AML_CHECK : mml:string
+        
+        
         NULL=NULL
         SENT=SENT
         YES=YES
     CUSTOMER__AML_RESULT : mml:string
+        
+        
+        
         NEGATIVE=NEGATIVE
         NULL=NULL
         POSITIVE=POSITIVE
         RESULT_AWAITED=RESULT.AWAITED
     CUSTOMER__CLS_CPARTY : mml:string
+        
         NO=NO
         YES=YES
     CUSTOMER__COMM_TYPE__COMM_TYPE : mml:string
+        
+        
+        
+        
         ADVICES=ADVICES
         ALERTS=ALERTS
         CAMPAIGN=CAMPAIGN
         NEW_PRODUCT_UPDATE=NEW.PRODUCT.UPDATE
         STATEMENTS=STATEMENTS
     CUSTOMER__CONFID_TXT : mml:string
+        
         NO=NO
         YES=YES
     CUSTOMER__CUSTOMER_TYPE : mml:string
+        
+        
+        
         ACTIVE=ACTIVE
         EXTERNAL_USER=EXTERNAL.USER
         NULL=NULL
         PROSPECT=PROSPECT
     CUSTOMER__DISPO_EXEMPT : mml:string
+        
         NO=NO
         YES=YES
     CUSTOMER__EMPLOYMENT_STATUS__EMPLOYMENT_STATUS : mml:string
+        
+        
+        
+        
+        
         EMPLOYED=EMPLOYED
         OTHER=OTHER
         RETIRED=RETIRED
@@ -2971,23 +3476,35 @@ Enumerations {
         STUDENT=STUDENT
         UNEMPLOYED=UNEMPLOYED
     CUSTOMER__GENDER : mml:string
+        
         FEMALE=FEMALE
         MALE=MALE
     CUSTOMER__INTERNET_BANKING_SERVICE : mml:string
+        
         NULL=NULL
         YES=YES
     CUSTOMER__ISSUE_CHEQUES : mml:string
+        
+        
         NO=NO
         NULL=NULL
         YES=YES
     CUSTOMER__KYC_COMPLETE : mml:string
+        
         NULL=NULL
         YES=YES
     CUSTOMER__LEGAL_ID__LEGAL_DOC_NAME : mml:string
+        
+        
         DRIVING_LICENSE=DRIVING.LICENSE
         INCORP_CERT=INCORP.CERT
         SOCIAL_SECURITY_NO=SOCIAL.SECURITY.NO
     CUSTOMER__MARITAL_STATUS : mml:string
+        
+        
+        
+        
+        
         DIVORCED=DIVORCED
         MARRIED=MARRIED
         OTHER=OTHER
@@ -2995,19 +3512,30 @@ Enumerations {
         SINGLE=SINGLE
         WIDOWED=WIDOWED
     CUSTOMER__MERGED_STATUS : mml:string
+        
         MERGED=MERGED
         UNMERGED=UNMERGED
     CUSTOMER__MOBILE_BANKING_SERVICE : mml:string
+        
         NULL=NULL
         YES=YES
     CUSTOMER__NO_UPDATE_CRM : mml:string
+        
         NO=NO
         YES=YES
     CUSTOMER__PHONE_1__ADDR_LOCATION : mml:string
+        
+        
         OFFICE=OFFICE
         PRIMARY=PRIMARY
         SECONDARY=SECONDARY
     CUSTOMER__RELATION_CODE__REL_DELIV_OPT__REL_DELIV_OPT : mml:string
+        
+        
+        
+        
+        
+        
         A_1=A.1
         A_2=A.2
         A_3=A.3
@@ -3016,73 +3544,120 @@ Enumerations {
         P_2=P.2
         P_3=P.3
     CUSTOMER__REPORT_TEMPLATE : mml:string
+        
         Alternate=Alternate
         Standard=Standard
     CUSTOMER__RESIDENCE_STATUS__RESIDENCE_STATUS : mml:string
+        
+        
+        
+        
         HOME_OWNER=HOME.OWNER
         LIVING_WTH_PARENTS=LIVING.WTH.PARENTS
         OTHER=OTHER
         SQUATTER=SQUATTER
         TENANT=TENANT
     CUSTOMER__RESIDENCE_STATUS__RESIDENCE_TYPE : mml:string
+        
+        
+        
         FARM_HOUSE=FARM.HOUSE
         INDEPEDENT_HOUSE=INDEPEDENT.HOUSE
         RESIDENTIAL_APT=RESIDENTIAL.APT
         SERVICED_APT=SERVICED.APT
     CUSTOMER__SECURE_MESSAGE : mml:string
+        
         NULL=NULL
         YES=YES
     CUSTOMER__TITLE : mml:string
+        
+        
+        
+        
+        
         DR=DR
         MISS=MISS
         MR=MR
         MRS=MRS
         MS=MS
         REV=REV
+    CUSTOMER__UPDATE_PREV_ADDRESS : mml:string
+        
+        NO=NO
+        NULL=NULL
+    CUSTOMER__VULNERABILITY__VULNERABILITY : mml:string
+        
+        HEARING_IMPAIRED=HEARING.IMPAIRED
+        VISUALLY_IMPAIRED=VISUALLY.IMPAIRED
     CUS_POS_ENQ_PARAM__ASSET_LIAB : mml:string
+        
         A=A
         L=L
     CUS_POS_ENQ_PARAM__DISPLAY_AMOUNT : mml:string
+        
         FULL=FULL
         PERC=PERC
     CUS_POS_ENQ_PARAM__INCL_TDGL_MVMT : mml:string
+        
+        
         NO=NO
         NULL=NULL
         YES=YES
     CUS_POS_ENQ_PARAM__SUPPRESS_ZERO_POS : mml:string
+        
+        
         NO=NO
         NULL=NULL
         YES=YES
     DIGITAL_INFO__MEDIA_TYPE__MEDIA_TYPE : mml:string
+        
+        
         FACEBOOK=FACEBOOK
         LINKEDIN=LINKEDIN
         TWITTER=TWITTER
     EB_RATING_AGENCY__AGENCY_TYPE : mml:string
+        
+        
         EXTERNAL=EXTERNAL
         INTERNAL=INTERNAL
         SUPERVISORY=SUPERVISORY
     EB_RATING__SL_HVCRE_RATING : mml:string
+        
+        
+        
+        
         DEFAULT=DEFAULT
         GOOD=GOOD
         SATISFACTORY=SATISFACTORY
         STRONG=STRONG
         WEAK=WEAK
     EB_ROLE__OTHER_INFO_REQ : mml:string
+        
+        
         NO=NO
         NULL=NULL
         YES=YES
     PERSON_ENTITY__GENDER : mml:string
+        
         FEMALE=FEMALE
         MALE=MALE
     PERSON_ENTITY__LEGAL_ID__LEGAL_DOC_NAME : mml:string
+        
+        
         DRIVING_LICENSE=DRIVING.LICENSE
         INCORP_CERT=INCORP.CERT
         SOCIAL_SECURITY_NO=SOCIAL.SECURITY.NO
     PERSON_ENTITY__PERSON_ENTITY : mml:string
+        
         ENTITY=ENTITY
         PERSON=PERSON
     PERSON_ENTITY__STATUS : mml:string
-        ACTIVE=ACTIVE
+        
+        
+        
+        
+        
+ACTIVE=ACTIVE
         ENROLMENT=ENROLMENT
         EX__CUSTOMER=EX-CUSTOMER
         NONE=NONE

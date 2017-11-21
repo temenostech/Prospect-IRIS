@@ -237,13 +237,21 @@ Enquiry "STMT.ENT.BOOK" for "name:/AC_EntryCreation:STMT.ENTRY#" {
         conversion: extract from 2 to 0 delimited by "\\"
     }
 
+    field "CUST" {
+        display-type: "CLASS-ENQ.H.DATA"
+        comma-separator: false
+        display-section: Header
+        operation: field-extract "CCY.CUS"
+        conversion: extract from 2 to 0 delimited by "\\"
+    }
+
     field "CUSNM" {
         format: User break-condition {
             break: Page
         }
 
         comma-separator: false
-        operation: field-extract "CUS"
+        operation: field-extract "CUST"
         conversion: getFrom "CUSTOMER" "SHORT.NAME" false
     }
 
@@ -279,7 +287,7 @@ Enquiry "STMT.ENT.BOOK" for "name:/AC_EntryCreation:STMT.ENTRY#" {
             line: 2
         }
 
-        operation: if "CUS" NotEquals "NULLVAR" process "CUSNM" "ACCSNM"
+        operation: if "CUST" NotEquals "NULLVAR" process "CUSNM" "ACCSNM"
     }
 
     field "ACC.CURRENCY" {
@@ -1191,7 +1199,7 @@ Enquiry "STMT.ENT.BOOK" for "name:/AC_EntryCreation:STMT.ENTRY#" {
             column: 1
         }
 
-        operation: constant "\"Either Selection incorrect or No entriesfor the period\""
+        operation: constant "\"Either Selection incorrect or No entries for theperiod\""
         conversion: call
         jBC: "@ ENQ.ERR.DISP"
     }

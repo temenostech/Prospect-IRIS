@@ -1,4 +1,5 @@
 # UTF-8
+# UTF-8
 /* Inward Framework */
 Domain PP_InwardFramework
     @t24:i (module=PP)
@@ -99,6 +100,9 @@ Classes {
         TypeIndicator : T24BusinessTypes:A
             @t24:i (align=L, inputBehaviour=I, maxLength=1, sysNumber=14.0, core=true, t24Name=TypeIndicator, mandatory=false)
     }
+    
+    
+    
     PP_INPUT_FILE__BulkCompanyID
     {
         BulkCgStsReportGroupStatus : T24BusinessTypes:A
@@ -298,6 +302,8 @@ Classes {
             @i18n:Tooltip (en=SaveMessageContentIndicator)
             @t24:i (align=L, inputBehaviour=I, maxLength=1, sysNumber=7.0, core=true, t24Name=SaveMessageContentIndicator, mandatory=false)
     }
+    
+    
     PP_IN_CHANNELS__DATE_TIME
     {
         DATE_TIME : T24BusinessTypes:RELTIME
@@ -341,31 +347,27 @@ Classes {
         CURR_NO : T24BusinessTypes:N
             @i18n:Label (en="Curr No")
             @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=22.0, core=true, t24Name=CURR.NO, mandatory=false)
-        Constant : T24BusinessTypes:A
-            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=10.0, core=true, t24Name=Constant, mandatory=false)
         DATE_TIME -> byValue PP_InwardFramework:PP_IN_ENTRY_PARAM__DATE_TIME *
             @t24:i (t24Name=DATE.TIME)
         DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
             @i18n:Label (en="Dept Code")
             @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=27.0, core=true, t24Name=DEPT.CODE, mandatory=false)
-        Description : T24BusinessTypes:A
-            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=1.0, core=true, t24Name=Description, mandatory=false)
-        FieldDelimiter : T24BusinessTypes:A
-            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=2.0, core=true, t24Name=FieldDelimiter, mandatory=false)
-        FieldLength : T24BusinessTypes:A
-            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=7.0, core=true, t24Name=FieldLength, mandatory=false)
-        FieldName : T24BusinessTypes:A
-            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=5.0, core=true, t24Name=FieldName, mandatory=false)
-        FieldPosition : T24BusinessTypes:A
-            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=6.0, core=true, t24Name=FieldPosition, mandatory=false)
+        Description : T24BusinessTypes:A required
+            @i18n:Label (en=Description)
+            @i18n:Tooltip (en=Description)
+            @t24:i (align=L, inputBehaviour=I, maxLength=50, sysNumber=1.0, core=true, t24Name=Description, mandatory=true)
+        FieldDelimiter : T24BusinessTypes:ANY
+            @i18n:Label (en=FieldDelimiter)
+            @i18n:Tooltip (en=FieldDelimiter)
+            @t24:i (align=L, inputBehaviour=I, maxLength=1, sysNumber=2.0, core=true, t24Name=FieldDelimiter, mandatory=false)
+        FieldName -> byValue PP_InwardFramework:PP_IN_ENTRY_PARAM__FieldName *
+            @t24:i (t24Name=FieldName)
         ID -> PP_InwardFramework:PP_IN_ENTRY_PARAM PK required
             @i18n:Label (en="Transaction Ref")
             @i18n:Tooltip (en="Transaction Reference")
             @t24:i (align=L, inputBehaviour=I, maxLength=80, sysNumber=0.0, core=true, businessType=A, t24Name=ID, mandatory=true)
         INPUTTER -> byValue PP_InwardFramework:PP_IN_ENTRY_PARAM__INPUTTER *
             @t24:i (t24Name=INPUTTER)
-        Mandatory : T24BusinessTypes:A
-            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=9.0, core=true, t24Name=Mandatory, mandatory=false)
         OVERRIDE -> byValue PP_InwardFramework:PP_IN_ENTRY_PARAM__OVERRIDE *
             @t24:i (t24Name=OVERRIDE)
         RECORD_STATUS : T24BusinessTypes:STAT
@@ -389,19 +391,50 @@ Classes {
             @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=12.0, core=true, t24Name=RESERVED.8, mandatory=false)
         RESERVED_9 : T24BusinessTypes:A
             @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=11.0, core=true, t24Name=RESERVED.9, mandatory=false)
-        SMDelimiter : T24BusinessTypes:A
-            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=4.0, core=true, t24Name=SMDelimiter, mandatory=false)
-        VMDelimiter : T24BusinessTypes:A
-            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=3.0, core=true, t24Name=VMDelimiter, mandatory=false)
-        ValRoutine : T24BusinessTypes:A
-            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=8.0, core=true, t24Name=ValRoutine, mandatory=false)
+        SMDelimiter : T24BusinessTypes:ANY
+            @i18n:Label (en=SMDelimiter)
+            @i18n:Tooltip (en=SMDelimiter)
+            @t24:i (align=L, inputBehaviour=I, maxLength=1, sysNumber=4.0, core=true, t24Name=SMDelimiter, mandatory=false)
+        VMDelimiter : T24BusinessTypes:ANY
+            @i18n:Label (en=VMDelimiter)
+            @i18n:Tooltip (en=VMDelimiter)
+            @t24:i (align=L, inputBehaviour=I, maxLength=1, sysNumber=3.0, core=true, t24Name=VMDelimiter, mandatory=false)
     }
-    PP_IN_ENTRY_PARAM__DATE_TIME
+    
+    
+    
+    
+PP_IN_ENTRY_PARAM__DATE_TIME
     {
         DATE_TIME : T24BusinessTypes:RELTIME
             @i18n:Label (en="Date time")
             @i18n:Tooltip (en="Date and time when record was input or authorised")
             @t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=24.0, core=true, t24Name=DATE.TIME, mask="RDD DD  DD ##:##", mandatory=false)
+    }
+    PP_IN_ENTRY_PARAM__FieldName
+    {
+        Constant : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=I, maxLength=250, sysNumber=10.0, core=true, t24Name=Constant, mandatory=false)
+        FieldLength : T24BusinessTypes:A
+            @i18n:Label (en=FieldLength)
+            @i18n:Tooltip (en=FieldLength)
+            @t24:i (align=L, inputBehaviour=I, maxLength=9, sysNumber=7.0, core=true, t24Name=FieldLength, mandatory=false)
+        FieldName : PP_InwardFramework:PP_IN_ENTRY_PARAM__FieldName__FieldName
+            @i18n:Label (en=FieldName)
+            @i18n:Tooltip (en=FieldName)
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=5.0, core=true, t24Name=FieldName, mandatory=false)
+        FieldPosition : T24BusinessTypes:A
+            @i18n:Label (en=FieldPosition)
+            @i18n:Tooltip (en=FieldPosition)
+            @t24:i (align=L, inputBehaviour=I, maxLength=50, sysNumber=6.0, core=true, t24Name=FieldPosition, mandatory=false)
+        Mandatory : PP_InwardFramework:PP_IN_ENTRY_PARAM__FieldName__Mandatory
+            @i18n:Label (en=Mandatory)
+            @i18n:Tooltip (en=Mandatory)
+            @t24:i (align=L, inputBehaviour=I, maxLength=1, sysNumber=9.0, core=true, t24Name=Mandatory, mandatory=false)
+        ValRoutine : T24BusinessTypes:ANY
+            @i18n:Label (en=ValRoutine)
+            @i18n:Tooltip (en=ValRoutine)
+            @t24:i (align=L, inputBehaviour=I, maxLength=80, sysNumber=8.0, core=true, t24Name=ValRoutine, mandatory=false)
     }
     PP_IN_ENTRY_PARAM__INPUTTER
     {
@@ -420,12 +453,362 @@ Classes {
 }
 Enumerations {
     PP_IN_CHANNELS__DeleteTempFileIndicator : mml:string
+        
         N=N
         Y=Y
     PP_IN_CHANNELS__SaveBulkContentIndicator : mml:string
+        
         N=N
         Y=Y
     PP_IN_CHANNELS__SaveMessageContentIndicator : mml:string
+        
         N=N
+        Y=Y
+    PP_IN_ENTRY_PARAM__FieldName__FieldName : mml:string
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        AccountCompany=AccountCompany
+        AccountCurrency=AccountCurrency
+        AccountDebitedDrawdown=AccountDebitedDrawdown
+        AccountDebitedDrawdownAddress=AccountDebitedDrawdownAddress
+        AccountDebitedDrawdownFreeLine=AccountDebitedDrawdownFreeLine
+        AccountNumber=AccountNumber
+        AccountStatus=AccountStatus
+        AccountType=AccountType
+        BICCode=BICCode
+        BankOperationCode=BankOperationCode
+        BankSpecificFields=BankSpecificFields
+        BatchBooking=BatchBooking
+        BatchIndicator=BatchIndicator
+        BeneficiaryAdviceInformation=BeneficiaryAdviceInformation
+        BeneficiaryFinancialAdvice=BeneficiaryFinancialAdvice
+        BeneficiaryInformation=BeneficiaryInformation
+        BeneficiaryPartyResidency=BeneficiaryPartyResidency
+        BulkNatureCode=BulkNatureCode
+        BulkReference=BulkReference
+        BulkReferenceIncoming=BulkReferenceIncoming
+        BulkSendersReference=BulkSendersReference
+        BulkSettlementDate=BulkSettlementDate
+        BusinessDate=BusinessDate
+        ChargeBearer=ChargeBearer
+        ChargeInformationAmount=ChargeInformationAmount
+        ChargeInformationCurrency=ChargeInformationCurrency
+        ChargeWaiver=ChargeWaiver
+        CompanyID=CompanyID
+        CreditMainAccount=CreditMainAccount
+        CreditorAgentAccountId=CreditorAgentAccountId
+        CreditorAgentAddress=CreditorAgentAddress
+        CreditorAgentFreeLine=CreditorAgentFreeLine
+        CreditorAgentIdentification=CreditorAgentIdentification
+        CreditorAgentOtherID=CreditorAgentOtherID
+        CreditorFreeLine=CreditorFreeLine
+        CreditorName=CreditorName
+        CreditorPartyAccountLine=CreditorPartyAccountLine
+        CreditorPartyAddress=CreditorPartyAddress
+        CustomerAccountOfficer=CustomerAccountOfficer
+        CustomerAddress=CustomerAddress
+        CustomerBusinessLine=CustomerBusinessLine
+        CustomerCountry=CustomerCountry
+        CustomerEmailID=CustomerEmailID
+        CustomerID=CustomerID
+        CustomerLanguage=CustomerLanguage
+        CustomerName=CustomerName
+        CustomerName2=CustomerName2
+        CustomerPhoneNumber=CustomerPhoneNumber
+        CustomerPostalCode=CustomerPostalCode
+        CustomerResidence=CustomerResidence
+        CustomerSector=CustomerSector
+        CustomerStreet=CustomerStreet
+        CustomerTownCountry=CustomerTownCountry
+        DebitCreditIndicator=DebitCreditIndicator
+        DebitMainAccount=DebitMainAccount
+        DebitValueDate=DebitValueDate
+        DebtorAccountBIC=DebtorAccountBIC
+        DebtorAccountIdentification=DebtorAccountIdentification
+        DebtorAccountNumber=DebtorAccountNumber
+        DebtorAddress=DebtorAddress
+        DebtorAddressCountry=DebtorAddressCountry
+        DebtorAgentAccountLine=DebtorAgentAccountLine
+        DebtorAgentAddressCountry=DebtorAgentAddressCountry
+        DebtorAgentAddressLine1=DebtorAgentAddressLine1
+        DebtorAgentBirthDate=DebtorAgentBirthDate
+        DebtorAgentCityOfBirth=DebtorAgentCityOfBirth
+        DebtorAgentCountryOfBirth=DebtorAgentCountryOfBirth
+        DebtorAgentFreeLine=DebtorAgentFreeLine
+        DebtorAgentIdentification=DebtorAgentIdentification
+        DebtorAgentName=DebtorAgentName
+        DebtorAgentProvinceOfBirth=DebtorAgentProvinceOfBirth
+        DebtorBankNCC=DebtorBankNCC
+        DebtorBirthDate=DebtorBirthDate
+        DebtorCityOfBirth=DebtorCityOfBirth
+        DebtorCountryOfBirth=DebtorCountryOfBirth
+        DebtorFreeLine=DebtorFreeLine
+        DebtorIdentification=DebtorIdentification
+        DebtorName=DebtorName
+        DebtorProvinceOfBirth=DebtorProvinceOfBirth
+        DrawdownAdviceInformation=DrawdownAdviceInformation
+        ErrorCode=ErrorCode
+        ErrorDescription=ErrorDescription
+        ExchangeRateInformation=ExchangeRateInformation
+        FItoFIInformation=FItoFIInformation
+        FileReferenceIncoming=FileReferenceIncoming
+        FileSendersReference=FileSendersReference
+        IncomingMessageType=IncomingMessageType
+        InformationalMessages=InformationalMessages
+        InstructedAmount=InstructedAmount
+        InstructedCurrencyCode=InstructedCurrencyCode
+        InstructingAgentAccountLine=InstructingAgentAccountLine
+        InstructingAgentAddressCountry=InstructingAgentAddressCountry
+        InstructingAgentAddressLine1=InstructingAgentAddressLine1
+        InstructingAgentBirthDate=InstructingAgentBirthDate
+        InstructingAgentCityOfBirth=InstructingAgentCityOfBirth
+        InstructingAgentCountryOfBirth=InstructingAgentCountryOfBirth
+        InstructingAgentFreeLine=InstructingAgentFreeLine
+        InstructingAgentIdentification=InstructingAgentIdentification
+        InstructingAgentName=InstructingAgentName
+        InstructingAgentProvinceOfBirth=InstructingAgentProvinceOfBirth
+        IntermediaryAgent1AccountID=IntermediaryAgent1AccountID
+        IntermediaryAgent1Address=IntermediaryAgent1Address
+        IntermediaryAgent1FreeLine=IntermediaryAgent1FreeLine
+        IntermediaryAgent1Identification=IntermediaryAgent1Identification
+        IntermediaryAgent1OtherID=IntermediaryAgent1OtherID
+        IntermediataryAdviceInformation=IntermediataryAdviceInformation
+        IntermediataryInformation=IntermediataryInformation
+        MandateAutoRegistered=MandateAutoRegistered
+        MandateReference=MandateReference
+        MessageFormat=MessageFormat
+        MessageProcessingStatus=MessageProcessingStatus
+        MessageReferenceIncoming=MessageReferenceIncoming
+        MethodOfPaymentToBeneficiary=MethodOfPaymentToBeneficiary
+        NumberOfChildren=NumberOfChildren
+        OrderingPartyResidency=OrderingPartyResidency
+        OriginalTransactionReference=OriginalTransactionReference
+        OriginatingSource=OriginatingSource
+        OriginatorToBeneficiaryInfo=OriginatorToBeneficiaryInfo
+        OwnAccountIndicator=OwnAccountIndicator
+        PaymentDirection=PaymentDirection
+        PaymentIdentificationEndToEnd=PaymentIdentificationEndToEnd
+        PaymentIdentificationInstruction=PaymentIdentificationInstruction
+        PaymentMethod=PaymentMethod
+        PaymentTypePriority=PaymentTypePriority
+        PostingReferenceIDS=PostingReferenceIDS
+        ProcessingDate=ProcessingDate
+        ReceiverChargeAmount=ReceiverChargeAmount
+        ReceiverChargeCurrencyCode=ReceiverChargeCurrencyCode
+        ReceiverInformation=ReceiverInformation
+        ReceivingInstitution=ReceivingInstitution
+        RejectedReason=RejectedReason
+        RelatedIBAN=RelatedIBAN
+        RelatedReference=RelatedReference
+        RemittanceInformation=RemittanceInformation
+        RequestedCollectionDate=RequestedCollectionDate
+        RequestedCreditValueDate=RequestedCreditValueDate
+        RequestedExecutionDate=RequestedExecutionDate
+        ReservationReference=ReservationReference
+        ResponseForDuplicateRequest=ResponseForDuplicateRequest
+        ResponseReceivedTimeStamp=ResponseReceivedTimeStamp
+        Result=Result
+        ReturnCode=ReturnCode
+        ReturnReasonCode=ReturnReasonCode
+        ReturnReasonDescription=ReturnReasonDescription
+        SWIFTFieldTag33=SWIFTFieldTag33
+        SWIFTFieldTag50A=SWIFTFieldTag50A
+        SWIFTFieldTag52A=SWIFTFieldTag52A
+        SWIFTFieldTag56A=SWIFTFieldTag56A
+        SWIFTFieldTag57A=SWIFTFieldTag57A
+        SWIFTFieldTag59A=SWIFTFieldTag59A
+        SWIFTFieldTag70=SWIFTFieldTag70
+        SWIFTFieldTag72=SWIFTFieldTag72
+        SenderChargeAmount2=SenderChargeAmount2
+        SenderChargeAmount3=SenderChargeAmount3
+        SenderChargeAmount4=SenderChargeAmount4
+        SenderChargeAmount5=SenderChargeAmount5
+        SenderChargeCurrencyCode2=SenderChargeCurrencyCode2
+        SenderChargeCurrencyCode3=SenderChargeCurrencyCode3
+        SenderChargeCurrencyCode4=SenderChargeCurrencyCode4
+        SenderChargeCurrencyCode5=SenderChargeCurrencyCode5
+        SendingInstitution=SendingInstitution
+        ServiceLevelCode=ServiceLevelCode
+        SettlementTransactionIndicator=SettlementTransactionIndicator
+        SingleMultipleIndicator=SingleMultipleIndicator
+        TransactionAmount=TransactionAmount
+        TransactionCurrency=TransactionCurrency
+        TransactionReference=TransactionReference
+        TransactionType=TransactionType
+        TransferType=TransferType
+        UniqueReference=UniqueReference
+    PP_IN_ENTRY_PARAM__FieldName__Mandatory : mml:string
+        
+        
+        
+N=N
+        NULL=NULL
         Y=Y
 }

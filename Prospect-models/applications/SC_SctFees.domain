@@ -1,4 +1,5 @@
 # UTF-8
+# UTF-8
 /* Fee Calculation for Securities Trade */
 Domain SC_SctFees
     @t24:i (module=SC)
@@ -44,6 +45,9 @@ Classes {
         TRADE_CCY -> byValue SC_SctFees:BROKER_COMM_EARNT__TRADE_CCY *
             @t24:i (t24Name=TRADE.CCY)
     }
+    
+    
+    
     BROKER_COMM_EARNT__DATE_TIME
     {
         DATE_TIME : T24BusinessTypes:RELTIME
@@ -84,35 +88,25 @@ Classes {
     }
     SCDX_CHARGE_PARAMETER
         @i18n:Description (en="")
-        @t24:i (t24Name=SCDX.CHARGE.PARAMETER, level=I, type=T, allowedFunctions="L P S", localRefAllowed=true)
+        @t24:i (t24Name=SCDX.CHARGE.PARAMETER, level=I, type=H, allowedFunctions="A C D E H I L P Q R S", localRefAllowed=true)
     {
         AUDITOR_CODE : T24BusinessTypes:A
             @i18n:Label (en="Auditor Code")
             @i18n:Tooltip (en="Auditor Code")
-            @t24:i (align=L, inputBehaviour=N, maxLength=16, sysNumber=39.0, core=true, t24Name=AUDITOR.CODE, mandatory=false)
-        AUDIT_DATE_TIME : T24BusinessTypes:N
+            @t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=39.0, core=true, t24Name=AUDITOR.CODE, mandatory=false)
+        AUDIT_DATE_TIME : T24BusinessTypes:RELTIME
             @i18n:Label (en="Audit Date Time")
             @i18n:Tooltip (en="Date and time when record was audited")
-            @t24:i (align=R, inputBehaviour=N, maxLength=15, sysNumber=40.0, core=true, t24Name=AUDIT.DATE.TIME, mandatory=false)
+            @t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=40.0, core=true, t24Name=AUDIT.DATE.TIME, mask="RDD DD  DD ##:##", mandatory=false)
         AUTHORISER : T24BusinessTypes:A
             @i18n:Label (en=Authoriser)
             @i18n:Tooltip (en="Indicates the User who Authorises the record")
             @t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=36.0, core=true, t24Name=AUTHORISER, mandatory=false)
-        CHARGE_TAX_CAT -> byValue SC_SctFees:SCDX_CHARGE_PARAMETER__CHARGE_TAX_CAT *
-            @t24:i (t24Name=CHARGE.TAX.CAT)
-        CHARGE_TAX_DESC -> byValue SC_SctFees:SCDX_CHARGE_PARAMETER__CHARGE_TAX_DESC *
-            @t24:i (t24Name=CHARGE.TAX.DESC)
         CHARGE_TAX_TYPE -> byValue SC_SctFees:SCDX_CHARGE_PARAMETER__CHARGE_TAX_TYPE *
             @t24:i (t24Name=CHARGE.TAX.TYPE)
-        CHG_TAX_CR_CODE -> byValue SC_SctFees:SCDX_CHARGE_PARAMETER__CHG_TAX_CR_CODE *
-            @t24:i (t24Name=CHG.TAX.CR.CODE)
-        CHG_TAX_CUST_BROK -> byValue SC_SctFees:SCDX_CHARGE_PARAMETER__CHG_TAX_CUST_BROK *
-            @t24:i (t24Name=CHG.TAX.CUST.BROK)
-        CHG_TAX_DR_CODE -> byValue SC_SctFees:SCDX_CHARGE_PARAMETER__CHG_TAX_DR_CODE *
-            @t24:i (t24Name=CHG.TAX.DR.CODE)
         CO_CODE -> ST_CompanyCreation:COMPANY
             @i18n:Label (en=Company)
-            @t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=37.0, core=true, businessType=A, t24Name=CO.CODE, mandatory=false)
+            @t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=37.0, core=true, businessType=A, t24Name=CO.CODE, mask="R##-###-####", mandatory=false)
         CURR_NO : T24BusinessTypes:N
             @i18n:Label (en="Curr No")
             @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=33.0, core=true, t24Name=CURR.NO, mandatory=false)
@@ -120,14 +114,16 @@ Classes {
             @t24:i (t24Name=DATE.TIME)
         DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
             @i18n:Label (en="Dept Code")
-            @t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=38.0, core=true, businessType=A, t24Name=DEPT.CODE, mandatory=false)
+            @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=38.0, core=true, t24Name=DEPT.CODE, mandatory=false)
+        ID -> SC_SctFees:SCDX_CHARGE_PARAMETER PK required
+            @i18n:Label (en="Transaction Ref")
+            @i18n:Tooltip (en="Transaction Reference")
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=0.0, core=true, businessType=A, t24Name="@ID", mandatory=true)
         INPUTTER -> byValue SC_SctFees:SCDX_CHARGE_PARAMETER__INPUTTER *
             @t24:i (t24Name=INPUTTER)
         OVERRIDE -> byValue SC_SctFees:SCDX_CHARGE_PARAMETER__OVERRIDE *
             @t24:i (t24Name=OVERRIDE)
-        PRIORITY -> byValue SC_SctFees:SCDX_CHARGE_PARAMETER__PRIORITY *
-            @t24:i (t24Name=PRIORITY)
-        RECORD_STATUS : T24BusinessTypes:A
+        RECORD_STATUS : T24BusinessTypes:STAT
             @i18n:Label (en="Record Status")
             @t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=32.0, core=true, t24Name=RECORD.STATUS, mandatory=false)
         RESERVED_1 : T24BusinessTypes:N
@@ -175,42 +171,39 @@ Classes {
         RESERVED_9 : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=21.0, core=true, t24Name=RESERVED.9, mandatory=false)
     }
-    SCDX_CHARGE_PARAMETER__CHARGE_TAX_CAT
-    {
-        CHARGE_TAX_CAT -> ST_Config:CATEGORY
-            @t24:i (align=L, inputBehaviour=N, maxLength=6, sysNumber=3.0, core=true, businessType=CAT, t24Name=CHARGE.TAX.CAT, mandatory=false)
-    }
-    SCDX_CHARGE_PARAMETER__CHARGE_TAX_DESC
-    {
-        CHARGE_TAX_DESC : T24BusinessTypes:A
-            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=2.0, core=true, t24Name=CHARGE.TAX.DESC, mandatory=false)
-    }
+    
+    
+    
+    
     SCDX_CHARGE_PARAMETER__CHARGE_TAX_TYPE
     {
+        CHARGE_TAX_CAT -> ST_Config:CATEGORY required
+            @t24:i (align=L, inputBehaviour=I, maxLength=6, sysNumber=3.0, core=true, businessType=CAT, t24Name=CHARGE.TAX.CAT, mandatory=true)
+        CHARGE_TAX_DESC : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=2.0, core=true, t24Name=CHARGE.TAX.DESC, mandatory=false)
         CHARGE_TAX_TYPE : T24BusinessTypes:A
-            @t24:i (align=L, inputBehaviour=N, maxLength=16, sysNumber=1.0, core=true, t24Name=CHARGE.TAX.TYPE, mandatory=true)
+            @t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=1.0, core=true, t24Name=CHARGE.TAX.TYPE, mandatory=false)
+        CHG_TAX_CR_CODE -> ST_Config:TRANSACTION required
+            @t24:i (align=R, inputBehaviour=I, maxLength=4, sysNumber=4.0, core=true, t24Name=CHG.TAX.CR.CODE, mandatory=true)
+        CHG_TAX_CUST_BROK : SC_SctFees:SCDX_CHARGE_PARAMETER__CHARGE_TAX_TYPE__CHG_TAX_CUST_BROK
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=6.0, core=true, t24Name=CHG.TAX.CUST.BROK, mandatory=false)
+        CHG_TAX_DR_CODE -> ST_Config:TRANSACTION required
+            @t24:i (align=R, inputBehaviour=I, maxLength=4, sysNumber=5.0, core=true, t24Name=CHG.TAX.DR.CODE, mandatory=true)
+        PRIORITY -> byValue SC_SctFees:SCDX_CHARGE_PARAMETER__CHARGE_TAX_TYPE__PRIORITY *
+            @t24:i (t24Name=PRIORITY)
     }
-    SCDX_CHARGE_PARAMETER__CHG_TAX_CR_CODE
+    SCDX_CHARGE_PARAMETER__CHARGE_TAX_TYPE__PRIORITY
     {
-        CHG_TAX_CR_CODE -> ST_Config:TRANSACTION
-            @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=4.0, core=true, t24Name=CHG.TAX.CR.CODE, mandatory=false)
-    }
-    SCDX_CHARGE_PARAMETER__CHG_TAX_CUST_BROK
-    {
-        CHG_TAX_CUST_BROK : SC_SctFees:SCDX_CHARGE_PARAMETER__CHG_TAX_CUST_BROK__CHG_TAX_CUST_BROK
-            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=6.0, core=true, t24Name=CHG.TAX.CUST.BROK, mandatory=false)
-    }
-    SCDX_CHARGE_PARAMETER__CHG_TAX_DR_CODE
-    {
-        CHG_TAX_DR_CODE -> ST_Config:TRANSACTION
-            @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=5.0, core=true, t24Name=CHG.TAX.DR.CODE, mandatory=false)
+        PRIORITY : SC_SctFees:SCDX_CHARGE_PARAMETER__CHARGE_TAX_TYPE__PRIORITY__PRIORITY
+            @i18n:Label (en=Priority)
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=7.0, core=true, t24Name=PRIORITY, mandatory=false)
     }
     SCDX_CHARGE_PARAMETER__DATE_TIME
     {
-        DATE_TIME : T24BusinessTypes:N
+        DATE_TIME : T24BusinessTypes:RELTIME
             @i18n:Label (en="Date time")
             @i18n:Tooltip (en="Date and time when record was input or authorised")
-            @t24:i (align=R, inputBehaviour=N, maxLength=15, sysNumber=35.0, core=true, t24Name=DATE.TIME, mandatory=false)
+            @t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=35.0, core=true, t24Name=DATE.TIME, mask="RDD DD  DD ##:##", mandatory=false)
     }
     SCDX_CHARGE_PARAMETER__INPUTTER
     {
@@ -225,12 +218,6 @@ Classes {
             @i18n:Label (en=Override)
             @i18n:Tooltip (en="Overrides generated by this transaction")
             @t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=31.0, core=true, t24Name=OVERRIDE, mandatory=false)
-    }
-    SCDX_CHARGE_PARAMETER__PRIORITY
-    {
-        PRIORITY : SC_SctFees:SCDX_CHARGE_PARAMETER__PRIORITY__PRIORITY
-            @i18n:Label (en=Priority)
-            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=7.0, core=true, t24Name=PRIORITY, mandatory=false)
     }
     SCTR_CHARGE_PARAMETER
         @i18n:Description (en="")
@@ -277,6 +264,9 @@ Classes {
         RESERVE_1 : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=N, maxLength=7, sysNumber=5.0, core=true, t24Name=RESERVE.1, mandatory=false)
     }
+    
+    
+    
     SCTR_CHARGE_PARAMETER__BASE_CODE
     {
         BASE_CODE : SC_SctFees:SCTR_CHARGE_PARAMETER__BASE_CODE__BASE_CODE required
@@ -351,6 +341,10 @@ Classes {
         TRADE_ACTIVITY -> byValue SC_SctFees:SCTR_GROUP_CONDITION__TRADE_ACTIVITY *
             @t24:i (t24Name=TRADE.ACTIVITY)
     }
+    
+    
+    
+    
     SCTR_GROUP_CONDITION__DATE_TIME
     {
         DATE_TIME : T24BusinessTypes:RELTIME
@@ -504,9 +498,9 @@ Classes {
         @i18n:Description (en="")
         @t24:i (t24Name=SC.CHARGE.TAX.CALC.CREATE, level=F, type=H, allowedFunctions="A C D E H I L P Q R S", localRefAllowed=true)
     {
-        ACTIVITY : SC_SctFees:SC_CHARGE_TAX_CALC_CREATE__ACTIVITY
+        ACTIVITY : SC_SctFees:SC_CHARGE_TAX_CALC_CREATE__ACTIVITY required
             @i18n:Label (en=Activity)
-            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=1.0, core=true, t24Name=ACTIVITY, mandatory=false)
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=1.0, core=true, t24Name=ACTIVITY, mandatory=true)
         AUDITOR_CODE : T24BusinessTypes:A
             @i18n:Label (en="Auditor Code")
             @i18n:Tooltip (en="Auditor Code")
@@ -521,8 +515,8 @@ Classes {
             @t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=36.0, core=true, t24Name=AUTHORISER, mandatory=false)
         BASE_AMOUNT -> byValue SC_SctFees:SC_CHARGE_TAX_CALC_CREATE__BASE_AMOUNT *
             @t24:i (t24Name=BASE.AMOUNT)
-        CHARGE_TAX_TYPE : T24BusinessTypes:A
-            @t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=2.0, core=true, t24Name=CHARGE.TAX.TYPE, mandatory=false)
+        CHARGE_TAX_TYPE : T24BusinessTypes:A required
+            @t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=2.0, core=true, t24Name=CHARGE.TAX.TYPE, mandatory=true)
         CHG_COMM_CODE -> ST_ChargeConfig:FT_COMMISSION_TYPE
             @t24:i (align=R, inputBehaviour=I, maxLength=20, sysNumber=9.0, core=true, businessType=CHG, t24Name=CHG.COMM.CODE, typeModifiers=COM, mandatory=false)
         CO_CODE -> ST_CompanyCreation:COMPANY
@@ -541,7 +535,7 @@ Classes {
         ID -> SC_SctFees:SC_CHARGE_TAX_CALC_CREATE PK required
             @i18n:Label (en="Transaction Ref")
             @i18n:Tooltip (en="Transaction Reference")
-            @t24:i (align=L, inputBehaviour=I, maxLength=80, sysNumber=0.0, core=true, businessType=A, t24Name="@ID", mandatory=true)
+            @t24:i (align=L, inputBehaviour=I, maxLength=16, sysNumber=0.0, core=true, businessType=A, t24Name="@ID", mandatory=true)
         INPUTTER -> byValue SC_SctFees:SC_CHARGE_TAX_CALC_CREATE__INPUTTER *
             @t24:i (t24Name=INPUTTER)
         OVERRIDE -> byValue SC_SctFees:SC_CHARGE_TAX_CALC_CREATE__OVERRIDE *
@@ -603,10 +597,18 @@ Classes {
             @i18n:Label (en="Trans Type")
             @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=6.0, core=true, businessType=A, t24Name=TXN.TYPE, mandatory=false)
     }
-    SC_CHARGE_TAX_CALC_CREATE__BASE_AMOUNT
+    
+    
+    
+    
+    
+    
+    
+    
+SC_CHARGE_TAX_CALC_CREATE__BASE_AMOUNT
     {
-        BASE_AMOUNT : SC_SctFees:SC_CHARGE_TAX_CALC_CREATE__BASE_AMOUNT__BASE_AMOUNT
-            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=8.0, core=true, t24Name=BASE.AMOUNT, mandatory=false)
+        BASE_AMOUNT : SC_SctFees:SC_CHARGE_TAX_CALC_CREATE__BASE_AMOUNT__BASE_AMOUNT required
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=8.0, core=true, t24Name=BASE.AMOUNT, mandatory=true)
     }
     SC_CHARGE_TAX_CALC_CREATE__DATE_TIME
     {
@@ -631,8 +633,8 @@ Classes {
     }
     SC_CHARGE_TAX_CALC__BASE_AMOUNT
     {
-        BASE_AMOUNT : SC_SctFees:SC_CHARGE_TAX_CALC__BASE_AMOUNT__BASE_AMOUNT
-            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=8.0, core=true, t24Name=BASE.AMOUNT, mandatory=false)
+        BASE_AMOUNT : SC_SctFees:SC_CHARGE_TAX_CALC__BASE_AMOUNT__BASE_AMOUNT required
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=8.0, core=true, t24Name=BASE.AMOUNT, mandatory=true)
     }
     SC_CHARGE_TAX_CALC__DATE_TIME
     {
@@ -658,35 +660,50 @@ Classes {
 }
 Enumerations {
     BROKER_COMM_EARNT__TRADE_CCY__NET_ONLY : mml:string
+        
         NO=NO
         Y=Y
-    SCDX_CHARGE_PARAMETER__CHG_TAX_CUST_BROK__CHG_TAX_CUST_BROK : mml:string
+    SCDX_CHARGE_PARAMETER__CHARGE_TAX_TYPE__CHG_TAX_CUST_BROK : mml:string
+        
         BROKER=BROKER
         CUSTOMER=CUSTOMER
-    SCDX_CHARGE_PARAMETER__PRIORITY__PRIORITY : mml:string
+    SCDX_CHARGE_PARAMETER__CHARGE_TAX_TYPE__PRIORITY__PRIORITY : mml:string
+        
+        
+        
+        
         CUSTOMER_GROUP=CUSTOMER.GROUP
         SEC_DOMICILE=SEC.DOMICILE
         SEC_TYPE=SEC.TYPE
         STOCK_EXCHANGE=STOCK.EXCHANGE
         TXN_TYPE=TXN.TYPE
     SCTR_CHARGE_PARAMETER__BASE_CODE__BASE_CODE : mml:string
+        
         NOMINAL=NOMINAL
         VALUE=VALUE
     SCTR_CHARGE_PARAMETER__HIGHEST_LOWEST : mml:string
+        
         HIGHEST=HIGHEST
         LOWEST=LOWEST
     SC_CHARGE_TAX_CALC_CREATE__ACTIVITY : mml:string
+        
         SECURITY_TRANSFER=SECURITY.TRANSFER
         SEC_TRADE=SEC.TRADE
     SC_CHARGE_TAX_CALC_CREATE__BASE_AMOUNT__BASE_AMOUNT : mml:string
+        
+        
         INTEREST=INTEREST
         PRINCIPAL=PRINCIPAL
         PRINCIPAL_INTEREST="PRINCIPAL+INTEREST"
     SC_CHARGE_TAX_CALC__ACTIVITY : mml:string
+        
         SECURITY_TRANSFER=SECURITY.TRANSFER
         SEC_TRADE=SEC.TRADE
     SC_CHARGE_TAX_CALC__BASE_AMOUNT__BASE_AMOUNT : mml:string
-        INTEREST=INTEREST
+        
+        
+        
+INTEREST=INTEREST
         PRINCIPAL=PRINCIPAL
         PRINCIPAL_INTEREST="PRINCIPAL+INTEREST"
 }

@@ -1,4 +1,5 @@
 # UTF-8
+# UTF-8
 /* Parameter Definitions for Limit */
 Domain LI_Config
     @t24:i (module=LI)
@@ -58,6 +59,8 @@ Classes {
             @i18n:Label (en="Available Marker")
             @i18n:Tooltip (en="Indicates whether the limit is available for usage")
             @t24:i (align=L, inputBehaviour=I, maxLength=1, sysNumber=65.0, core=true, t24Name=AVAILABLE.MARKER, mandatory=true)
+        BUFFER : LI_Config:LIMIT__BUFFER
+            @t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=139.0, core=true, t24Name=BUFFER, mandatory=false)
         CHECK_LIMIT : LI_Config:LIMIT__CHECK_LIMIT
             @i18n:Label (en="Check Limit ")
             @t24:i (align=L, inputBehaviour=F, maxLength=8, sysNumber=98.0, core=true, t24Name=CHECK.LIMIT, mandatory=false)
@@ -95,6 +98,8 @@ Classes {
             @t24:i (align=R, inputBehaviour=E, maxLength=16, sysNumber=111.0, core=true, t24Name=CURR.UNUTIL.AMT, typeModifiers=-, mandatory=false)
         CURR_UTIL_AMT : T24BusinessTypes:AMT
             @t24:i (align=R, inputBehaviour=E, maxLength=16, sysNumber=119.0, core=true, t24Name=CURR.UTIL.AMT, typeModifiers=-, mandatory=false)
+        CUSTOMER_NUMBER -> byValue LI_Config:LIMIT__CUSTOMER_NUMBER *
+            @t24:i (t24Name=CUSTOMER.NUMBER)
         CUST_NO -> ST_Customer:CUSTOMER
             @i18n:Label (en="Customer Number")
             @t24:i (align=R, inputBehaviour=N, maxLength=10, core=false, businessType=CUS, t24Name=CUST.NO, genOperation="@ID[\'.\',4,1]", mandatory=false)
@@ -143,14 +148,14 @@ Classes {
         INTERNAL_AMOUNT : T24BusinessTypes:LAMT
             @i18n:Label (en="Internal Amount")
             @t24:i (align=R, inputBehaviour=I, maxLength=19, sysNumber=15.0, core=true, t24Name=INTERNAL.AMOUNT, typeModifiers="1", mandatory=false)
-        JOINT_CUSTOMER -> byValue LI_Config:LIMIT__JOINT_CUSTOMER *
-            @t24:i (t24Name=JOINT.CUSTOMER)
+        JOINT_LIABILITY : LI_Config:LIMIT__JOINT_LIABILITY
+            @t24:i (align=L, inputBehaviour=F, maxLength=3, sysNumber=130.0, core=true, t24Name=JOINT.LIABILITY, mandatory=false)
         LAST_DRAW_DATE : T24BusinessTypes:D
             @i18n:Label (en="Last Draw Date")
             @t24:i (align=R, inputBehaviour=I, maxLength=11, sysNumber=115.0, core=true, t24Name=LAST.DRAW.DATE, mandatory=false)
         LIABILITY_NUMBER : T24BusinessTypes:A
             @i18n:Label (en="Liability No.")
-            @t24:i (align=L, inputBehaviour=N, maxLength=10, sysNumber=95.0, core=true, t24Name=LIABILITY.NUMBER, mandatory=false)
+            @t24:i (align=L, inputBehaviour=F, maxLength=10, sysNumber=95.0, core=true, t24Name=LIABILITY.NUMBER, mandatory=false)
         LIAB_NO : T24BusinessTypes:CUS
             @i18n:Label (en="Liability Number")
             @t24:i (align=R, inputBehaviour=N, maxLength=10, core=false, t24Name=LIAB.NO, genOperation="@ID[\'.\',1,1]", mandatory=false)
@@ -168,6 +173,10 @@ Classes {
             @t24:i (align=R, inputBehaviour=E, maxLength=7, sysNumber=100.0, core=true, t24Name=LIMIT.PRODUCT, mandatory=false)
         LIMIT_REJECT : LI_Config:LIMIT__LIMIT_REJECT
             @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=109.1, core=false, t24Name=LIMIT.REJECT, mandatory=false)
+        LIMIT_TYPE : LI_Config:LIMIT__LIMIT_TYPE
+            @i18n:Label (en="Limit Type")
+            @i18n:Tooltip (en="Indicates the Limit Type")
+            @t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=138.0, core=true, t24Name=LIMIT.TYPE, mandatory=false)
         LINE_ID : T24BusinessTypes:N
             @i18n:Label (en="Line Id")
             @t24:i (align=L, inputBehaviour=N, maxLength=20, core=false, t24Name=LINE.ID, genOperation=LIMIT.LINES, mandatory=false)
@@ -254,12 +263,6 @@ Classes {
             @t24:i (align=R, inputBehaviour=N, maxLength=0, sysNumber=142.0, core=true, t24Name=RESERVED.14, mandatory=false)
         RESERVED_15 : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=N, maxLength=0, sysNumber=141.0, core=true, t24Name=RESERVED.15, mandatory=false)
-        RESERVED_16 : T24BusinessTypes:N
-            @t24:i (align=R, inputBehaviour=N, maxLength=0, sysNumber=140.0, core=true, t24Name=RESERVED.16, mandatory=false)
-        RESERVED_17 : T24BusinessTypes:N
-            @t24:i (align=R, inputBehaviour=N, maxLength=0, sysNumber=139.0, core=true, t24Name=RESERVED.17, mandatory=false)
-        RESERVED_18 : T24BusinessTypes:N
-            @t24:i (align=R, inputBehaviour=N, maxLength=0, sysNumber=138.0, core=true, t24Name=RESERVED.18, mandatory=false)
         RESERVED_2 : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=N, maxLength=0, sysNumber=154.0, core=true, t24Name=RESERVED.2, mandatory=false)
         RESERVED_3 : T24BusinessTypes:N
@@ -286,6 +289,8 @@ Classes {
             @i18n:Label (en="Review Frequency")
             @i18n:Tooltip (en="Specify the date and frequency for Limit Review")
             @t24:i (align=L, inputBehaviour=I, maxLength=17, sysNumber=6.0, core=true, t24Name=REVIEW.FREQUENCY, mask="RDDDD DD  DD #####", mandatory=false)
+        SERIAL_NUMBER : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=F, maxLength=2, sysNumber=140.0, core=true, t24Name=SERIAL.NUMBER, mandatory=false)
         SER_NO : T24BusinessTypes:N
             @i18n:Label (en="Serial Number")
             @t24:i (align=L, inputBehaviour=N, maxLength=5, core=false, t24Name=SER.NO, genOperation="@ID[\'.\',3,1]", mandatory=false)
@@ -316,6 +321,46 @@ Classes {
             @t24:i (align=R, inputBehaviour=I, maxLength=36, sysNumber=110.0, core=true, businessType=ACC, t24Name=UNUTIL.ACCT, mandatory=false)
         UTIL_ACCOUNT -> AC_AccountOpening:ACCOUNT
             @t24:i (align=R, inputBehaviour=I, maxLength=36, sysNumber=118.0, core=true, businessType=ACC, t24Name=UTIL.ACCOUNT, mandatory=false)
+    }
+    LIMIT_ALTERNATIVE_KEY
+        @i18n:Description (en="")
+        @t24:i (t24Name=LIMIT.ALTERNATIVE.KEY, level=C, type=L, allowedFunctions="L P S", localRefAllowed=false)
+    {
+        CUSTOMER_ID -> LI_Config:LIMIT_ALTERNATIVE_KEY PK required
+            @i18n:Label (en="Customer Id")
+            @i18n:Tooltip (en="Identifies the Customer for the transaction.")
+            @t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=0.0, core=true, businessType=CUS, t24Name=CUSTOMER.ID, mandatory=true)
+        NEW_KEY -> byValue LI_Config:LIMIT_ALTERNATIVE_KEY__NEW_KEY *
+            @t24:i (t24Name=NEW.KEY)
+        RESERVED01 : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=13.0, core=true, t24Name=RESERVED01, mandatory=false)
+        RESERVED02 : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=12.0, core=true, t24Name=RESERVED02, mandatory=false)
+        RESERVED03 : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=11.0, core=true, t24Name=RESERVED03, mandatory=false)
+        RESERVED04 : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=10.0, core=true, t24Name=RESERVED04, mandatory=false)
+        RESERVED05 : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=9.0, core=true, t24Name=RESERVED05, mandatory=false)
+        RESERVED06 : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=8.0, core=true, t24Name=RESERVED06, mandatory=false)
+        RESERVED07 : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=7.0, core=true, t24Name=RESERVED07, mandatory=false)
+        RESERVED08 : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=6.0, core=true, t24Name=RESERVED08, mandatory=false)
+        RESERVED09 : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=5.0, core=true, t24Name=RESERVED09, mandatory=false)
+        RESERVED10 : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=4.0, core=true, t24Name=RESERVED10, mandatory=false)
+    }
+    LIMIT_ALTERNATIVE_KEY__NEW_KEY
+    {
+        JOINT_LIAB : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=3.0, core=true, t24Name=JOINT.LIAB, mandatory=false)
+        NEW_KEY : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=I, maxLength=12, sysNumber=1.0, core=true, t24Name=NEW.KEY, mandatory=false)
+        OLD_KEY : T24BusinessTypes:A required
+            @t24:i (align=L, inputBehaviour=I, maxLength=40, sysNumber=2.0, core=true, t24Name=OLD.KEY, mandatory=true)
     }
     LIMIT_CROSS_PARAM
         @i18n:Description (en="")
@@ -364,6 +409,9 @@ Classes {
         TOP_CROSS_REF : T24BusinessTypes:N required
             @t24:i (align=R, inputBehaviour=I, maxLength=4, sysNumber=1.0, core=true, t24Name=TOP.CROSS.REF, mandatory=true)
     }
+    
+    
+    
     LIMIT_CROSS_PARAM__DATE_TIME
     {
         DATE_TIME : T24BusinessTypes:RELTIME
@@ -389,6 +437,97 @@ Classes {
             @i18n:Label (en=Override)
             @i18n:Tooltip (en="Overrides generated by this transaction")
             @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=6.0, core=true, t24Name=OVERRIDE, mandatory=false)
+    }
+    LIMIT_HIERARCHY_BALANCES
+        @i18n:Description (en="")
+        @t24:i (t24Name=LIMIT.HIERARCHY.BALANCES, level=C, type=L, allowedFunctions="L P S", localRefAllowed=false)
+    {
+        LIMIT_HIERARCHY_BALANCES_ID -> LI_Config:LIMIT_HIERARCHY_BALANCES PK required
+            @t24:i (align=L, inputBehaviour=I, maxLength=120, sysNumber=0.0, core=true, businessType=A, t24Name=LIMIT.HIERARCHY.BALANCES.ID, mandatory=true)
+        LIMIT_ID -> byValue LI_Config:LIMIT_HIERARCHY_BALANCES__LIMIT_ID *
+            @t24:i (t24Name=LIMIT.ID)
+    }
+    
+    LIMIT_HIERARCHY_BALANCES__LIMIT_ID
+    {
+        ADVISED_AMOUNT : T24BusinessTypes:N
+            @i18n:Label (en="Advised Amount")
+            @i18n:Tooltip (en="Indicates the amount advised to the customer")
+            @t24:i (align=R, inputBehaviour=N, maxLength=0, sysNumber=3.0, core=true, t24Name=ADVISED.AMOUNT, mandatory=false)
+        LIMIT_CURRENCY : T24BusinessTypes:A
+            @i18n:Label (en="Limit Currency")
+            @t24:i (align=L, inputBehaviour=I, maxLength=120, sysNumber=2.0, core=true, t24Name=LIMIT.CURRENCY, mandatory=false)
+        LIMIT_ID : T24BusinessTypes:A
+            @i18n:Label (en="Limit Id")
+            @t24:i (align=L, inputBehaviour=I, maxLength=120, sysNumber=1.0, core=true, t24Name=LIMIT.ID, mandatory=false)
+        MAXIMUM_TOTAL : T24BusinessTypes:N
+            @i18n:Label (en="Maximum Total")
+            @t24:i (align=R, inputBehaviour=N, maxLength=0, sysNumber=4.0, core=true, t24Name=MAXIMUM.TOTAL, mandatory=false)
+        RESERVED_1 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=0, sysNumber=17.0, core=true, t24Name=RESERVED.1, mandatory=false)
+        RESERVED_10 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=0, sysNumber=8.0, core=true, t24Name=RESERVED.10, mandatory=false)
+        RESERVED_11 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=0, sysNumber=7.0, core=true, t24Name=RESERVED.11, mandatory=false)
+        RESERVED_12 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=0, sysNumber=6.0, core=true, t24Name=RESERVED.12, mandatory=false)
+        RESERVED_13 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=0, sysNumber=5.0, core=true, t24Name=RESERVED.13, mandatory=false)
+        RESERVED_2 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=0, sysNumber=16.0, core=true, t24Name=RESERVED.2, mandatory=false)
+        RESERVED_3 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=0, sysNumber=15.0, core=true, t24Name=RESERVED.3, mandatory=false)
+        RESERVED_4 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=0, sysNumber=14.0, core=true, t24Name=RESERVED.4, mandatory=false)
+        RESERVED_5 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=0, sysNumber=13.0, core=true, t24Name=RESERVED.5, mandatory=false)
+        RESERVED_6 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=0, sysNumber=12.0, core=true, t24Name=RESERVED.6, mandatory=false)
+        RESERVED_7 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=0, sysNumber=11.0, core=true, t24Name=RESERVED.7, mandatory=false)
+        RESERVED_8 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=0, sysNumber=10.0, core=true, t24Name=RESERVED.8, mandatory=false)
+        RESERVED_9 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=N, maxLength=0, sysNumber=9.0, core=true, t24Name=RESERVED.9, mandatory=false)
+        TIME_CODE -> byValue LI_Config:LIMIT_HIERARCHY_BALANCES__LIMIT_ID__TIME_CODE *
+            @t24:i (t24Name=TIME.CODE)
+    }
+    LIMIT_HIERARCHY_BALANCES__LIMIT_ID__TIME_CODE
+    {
+        INTERNAL_BAND_AMT : T24BusinessTypes:AMT
+            @t24:i (align=R, inputBehaviour=I, maxLength=30, sysNumber=19.0, core=true, t24Name=INTERNAL.BAND.AMT, mandatory=false)
+        LIMIT_BAND : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=I, maxLength=0, sysNumber=20.0, core=true, t24Name=LIMIT.BAND, mandatory=false)
+        RESERVED1 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=I, maxLength=0, sysNumber=34.0, core=true, t24Name=RESERVED1, mandatory=false)
+        RESERVED10 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=I, maxLength=0, sysNumber=25.0, core=true, t24Name=RESERVED10, mandatory=false)
+        RESERVED11 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=I, maxLength=0, sysNumber=24.0, core=true, t24Name=RESERVED11, mandatory=false)
+        RESERVED12 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=I, maxLength=0, sysNumber=23.0, core=true, t24Name=RESERVED12, mandatory=false)
+        RESERVED13 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=I, maxLength=0, sysNumber=22.0, core=true, t24Name=RESERVED13, mandatory=false)
+        RESERVED14 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=I, maxLength=0, sysNumber=21.0, core=true, t24Name=RESERVED14, mandatory=false)
+        RESERVED2 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=I, maxLength=0, sysNumber=33.0, core=true, t24Name=RESERVED2, mandatory=false)
+        RESERVED3 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=I, maxLength=0, sysNumber=32.0, core=true, t24Name=RESERVED3, mandatory=false)
+        RESERVED4 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=I, maxLength=0, sysNumber=31.0, core=true, t24Name=RESERVED4, mandatory=false)
+        RESERVED5 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=I, maxLength=0, sysNumber=30.0, core=true, t24Name=RESERVED5, mandatory=false)
+        RESERVED6 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=I, maxLength=0, sysNumber=29.0, core=true, t24Name=RESERVED6, mandatory=false)
+        RESERVED7 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=I, maxLength=0, sysNumber=28.0, core=true, t24Name=RESERVED7, mandatory=false)
+        RESERVED8 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=I, maxLength=0, sysNumber=27.0, core=true, t24Name=RESERVED8, mandatory=false)
+        RESERVED9 : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=I, maxLength=0, sysNumber=26.0, core=true, t24Name=RESERVED9, mandatory=false)
+        TIME_CODE : T24BusinessTypes:N
+            @t24:i (align=R, inputBehaviour=I, maxLength=9, sysNumber=18.0, core=true, t24Name=TIME.CODE, mandatory=false)
     }
     LIMIT_LIABILITY
         @i18n:Description (en="")
@@ -474,6 +613,9 @@ Classes {
         RESERVED4 : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=N, maxLength=0, sysNumber=8.0, core=true, t24Name=RESERVED4, mandatory=false)
     }
+    
+    
+    
     LIMIT_NETTING_PARAM__DATE_TIME
     {
         DATE_TIME : T24BusinessTypes:RELTIME
@@ -612,6 +754,8 @@ Classes {
             @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=49.0, core=true, t24Name=GRP.CREDIT.LIMIT, mandatory=false)
         INPUTTER -> byValue LI_Config:LIMIT_PARAMETER__INPUTTER *
             @t24:i (t24Name=INPUTTER)
+        KEY_TYPE : LI_Config:LIMIT_PARAMETER__KEY_TYPE
+            @t24:i (align=L, inputBehaviour=I, maxLength=9, sysNumber=51.0, core=true, t24Name=KEY.TYPE, mandatory=false)
         LIMIT_REFERENCE -> byValue LI_Config:LIMIT_PARAMETER__LIMIT_REFERENCE *
             @t24:i (t24Name=LIMIT.REFERENCE)
         NET_OUTSTANDING : LI_Config:LIMIT_PARAMETER__NET_OUTSTANDING
@@ -631,8 +775,6 @@ Classes {
             @t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=54.0, core=true, t24Name=RESERVED1, mandatory=false)
         RESERVED3 : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=52.0, core=true, t24Name=RESERVED3, mandatory=false)
-        RESERVED4 : T24BusinessTypes:N
-            @t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=51.0, core=true, t24Name=RESERVED4, mandatory=false)
         REVALUATION_TIME : T24BusinessTypes:FQU required
             @t24:i (align=L, inputBehaviour=I, maxLength=17, sysNumber=4.0, core=true, t24Name=REVALUATION.TIME, mask="RDDDD DD  DD #####", mandatory=true)
         REVIEWS_REPORTING : T24BusinessTypes:N required
@@ -640,6 +782,19 @@ Classes {
         UPDATE_RATE : LI_Config:LIMIT_PARAMETER__UPDATE_RATE
             @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=40.0, core=true, t24Name=UPDATE.RATE, mandatory=false)
     }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     LIMIT_PARAMETER__APPLICATION
     {
         APPLICATION -> EB_SystemTables:PGM_FILE required
@@ -783,6 +938,8 @@ Classes {
             @i18n:Label (en=Authoriser)
             @i18n:Tooltip (en="Indicates the User who Authorises the record")
             @t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=59.0, core=true, t24Name=AUTHORISER, mandatory=false)
+        BUFFER_ALLOWED : LI_Config:LIMIT_REFERENCE__BUFFER_ALLOWED
+            @t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=36.0, core=true, t24Name=BUFFER.ALLOWED, mandatory=false)
         CONVERT_RATE : LI_Config:LIMIT_REFERENCE__CONVERT_RATE
             @t24:i (align=L, inputBehaviour=I, maxLength=7, sysNumber=21.0, core=true, t24Name=CONVERT.RATE, mandatory=false)
         CO_CODE -> ST_CompanyCreation:COMPANY
@@ -822,6 +979,8 @@ Classes {
             @t24:i (align=R, inputBehaviour=I, maxLength=5, sysNumber=31.0, core=true, t24Name=IDL.START.TIME, mask="R##:##", mandatory=false)
         INPUTTER -> byValue LI_Config:LIMIT_REFERENCE__INPUTTER *
             @t24:i (t24Name=INPUTTER)
+        KEY_TYPE : LI_Config:LIMIT_REFERENCE__KEY_TYPE
+            @t24:i (align=L, inputBehaviour=F, maxLength=9, sysNumber=34.0, core=true, t24Name=KEY.TYPE, mandatory=false)
         LIMIT_BAND_LEVEL : LI_Config:LIMIT_REFERENCE__LIMIT_BAND_LEVEL
             @i18n:Label (en="Limit Band Level")
             @i18n:Tooltip (en="Limit Band Level")
@@ -841,6 +1000,10 @@ Classes {
             @t24:i (align=R, inputBehaviour=I, maxLength=7, sysNumber=0.0, core=true, t24Name=LIMIT.REFERENCE, mandatory=true)
         LIMIT_SUBROUTINE -> EB_SystemTables:PGM_FILE
             @t24:i (align=L, inputBehaviour=F, maxLength=27, sysNumber=14.0, core=true, businessType=A, t24Name=LIMIT.SUBROUTINE, mandatory=false)
+        LIMIT_TYPE : LI_Config:LIMIT_REFERENCE__LIMIT_TYPE
+            @i18n:Label (en="Limit Type")
+            @i18n:Tooltip (en="Indicates the Limit Type")
+            @t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=35.0, core=true, t24Name=LIMIT.TYPE, mandatory=false)
         LTV_DENOMINATOR : LI_Config:LIMIT_REFERENCE__LTV_DENOMINATOR
             @i18n:Label (en="Info used for Denominator in LTV calc.")
             @i18n:Tooltip (en="Information to be used for the Denominator in the LTV calculation for the Limit.")
@@ -901,14 +1064,8 @@ Classes {
             @t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=38.0, core=true, t24Name=RESERVED16, mandatory=false)
         RESERVED17 : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=37.0, core=true, t24Name=RESERVED17, mandatory=false)
-        RESERVED18 : T24BusinessTypes:N
-            @t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=36.0, core=true, t24Name=RESERVED18, mandatory=false)
-        RESERVED19 : T24BusinessTypes:N
-            @t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=35.0, core=true, t24Name=RESERVED19, mandatory=false)
         RESERVED2 : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=52.0, core=true, t24Name=RESERVED2, mandatory=false)
-        RESERVED20 : T24BusinessTypes:N
-            @t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=34.0, core=true, t24Name=RESERVED20, mandatory=false)
         RESERVED3 : T24BusinessTypes:N
             @t24:i (align=R, inputBehaviour=N, maxLength=1, sysNumber=51.0, core=true, t24Name=RESERVED3, mandatory=false)
         RESERVED4 : T24BusinessTypes:N
@@ -933,7 +1090,52 @@ Classes {
             @i18n:Tooltip (en="Sub Product Level")
             @t24:i (align=R, inputBehaviour=I, maxLength=1, sysNumber=19.0, core=true, t24Name=SUB.PRODUCT.LEVEL, mandatory=false)
     }
-    LIMIT_REFERENCE__DATE_TIME
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+LIMIT_REFERENCE__DATE_TIME
     {
         DATE_TIME : T24BusinessTypes:RELTIME
             @i18n:Label (en="Date time")
@@ -1047,7 +1249,7 @@ Classes {
     }
     LIMIT__COLLATERAL_CODE
     {
-        COLLATERAL_CODE -> CO_Config:COLLATERAL_CODE
+        COLLATERAL_CODE : T24BusinessTypes:N
             @i18n:Label (en="Collateral Code")
             @i18n:Tooltip (en="Indicates the Collateral attached to the Limit")
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=18.0, core=true, t24Name=COLLATERAL.CODE, mandatory=false)
@@ -1124,6 +1326,13 @@ Classes {
             @i18n:Label (en="Country Percent")
             @t24:i (align=R, inputBehaviour=I, maxLength=3, sysNumber=3.0, core=true, t24Name=COUNTRY.PERCENT, mandatory=false)
     }
+    LIMIT__CUSTOMER_NUMBER
+    {
+        CUSTOMER_NUMBER -> ST_Customer:CUSTOMER
+            @i18n:Label (en="Customer No")
+            @i18n:Tooltip (en="Identifies the Customer for the transaction.")
+            @t24:i (align=R, inputBehaviour=F, maxLength=10, sysNumber=129.0, core=true, businessType=CUS, t24Name=CUSTOMER.NUMBER, mandatory=false)
+    }
     LIMIT__DATE_CLRISK_EXC
     {
         DATE_CLRISK_EXC : T24BusinessTypes:D
@@ -1174,13 +1383,6 @@ Classes {
             @i18n:Label (en=Inputter)
             @i18n:Tooltip (en="The user who last updated the record")
             @t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=159.0, core=true, t24Name=INPUTTER, mandatory=false)
-    }
-    LIMIT__JOINT_CUSTOMER
-    {
-        JNT_SVRLY_LIAB : LI_Config:LIMIT__JOINT_CUSTOMER__JNT_SVRLY_LIAB
-            @t24:i (align=L, inputBehaviour=I, maxLength=3, sysNumber=130.0, core=true, t24Name=JNT.SVRLY.LIAB, mandatory=false)
-        JOINT_CUSTOMER -> ST_Customer:CUSTOMER
-            @t24:i (align=R, inputBehaviour=I, maxLength=10, sysNumber=129.0, core=true, businessType=CUS, t24Name=JOINT.CUSTOMER, mandatory=false)
     }
     LIMIT__LIMITS_MODIFIED
     {
@@ -1349,24 +1551,39 @@ Classes {
 }
 Enumerations {
     LIMIT_NETTING_PARAM__LIMIT_REFERENCE__NETTING_TYPE : mml:string
+        
+        
         MULTI=MULTI
         NONE=NONE
         PAIRED=PAIRED
     LIMIT_NETTING_PARAM__LIMIT_REFERENCE__RATE_USED : mml:string
+        
         FWD=FWD
         SPOT=SPOT
     LIMIT_NETTING_PARAM__LIMIT_REFERENCE__RECALC_ONLINE : mml:string
+        
         NO=NO
         YES=YES
     LIMIT_PARAMETER__ADDITIONAL_VAL : mml:string
+        
+        
         ADVISED=ADVISED
         BOTH=BOTH
         INTERNAL=INTERNAL
     LIMIT_PARAMETER__ALLOW_UNUTIL_CR : mml:string
+        
+        
         NO=NO
         NULL=NULL
         YES=YES
     LIMIT_PARAMETER__APPLICATION__DECIS_FIELD__DECISION : mml:string
+        
+        
+        
+        
+        
+        
+        
         EQ=EQ
         GE=GE
         GT=GT
@@ -1376,15 +1593,25 @@ Enumerations {
         NE=NE
         UL=UL
     LIMIT_PARAMETER__AUTO_REV_FREQUENCY : mml:string
+        
         N=N
         Y=Y
     LIMIT_PARAMETER__DEFAULT_ADVISED : mml:string
+        
         INTERNAL=INTERNAL
         MAXIMUM=MAXIMUM
     LIMIT_PARAMETER__DEFAULT_MAX_TOTAL : mml:string
+        
         ADVISED=ADVISED
         INTERNAL=INTERNAL
     LIMIT_PARAMETER__FILTER__FILTER_OPERANDS : mml:string
+        
+        
+        
+        
+        
+        
+        
         EQ=EQ
         GE=GE
         GT=GT
@@ -1394,28 +1621,56 @@ Enumerations {
         NE=NE
         UL=UL
     LIMIT_PARAMETER__GRP_ALLOC_ONLINE : mml:string
+        
         NO=NO
         YES=YES
     LIMIT_PARAMETER__GRP_CREDIT_LIMIT : mml:string
+        
         NO=NO
         YES=YES
+    LIMIT_PARAMETER__KEY_TYPE : mml:string
+        
+        
+        LIMIT_KEY=LIMIT.KEY
+        NULL=NULL
+        TXN_REF=TXN.REF
     LIMIT_PARAMETER__NET_OUTSTANDING : mml:string
+        
         N=N
         Y=Y
     LIMIT_PARAMETER__PARAMETER_TYPE : mml:string
+        
         NULL=NULL
         SYSTEM=SYSTEM
     LIMIT_PARAMETER__PROCS_LIMIT_SWEEP : mml:string
+        
         N=N
         Y=Y
     LIMIT_PARAMETER__REPORT_MULTIPLE : mml:string
+        
+        
         NO=NO
         NULL=NULL
         YES=YES
     LIMIT_PARAMETER__UPDATE_RATE : mml:string
+        
         NO=NO
         YES=YES
+    LIMIT_REFERENCE__BUFFER_ALLOWED : mml:string
+        
+        
+        NO=NO
+        NULL=NULL
+        YES=YES
     LIMIT_REFERENCE__CONVERT_RATE : mml:string
+        
+        
+        
+        
+        
+        
+        
+        
         BUY__BUY=BUY-BUY
         BUY__MID=BUY-MID
         BUY__SEL=BUY-SEL
@@ -1426,26 +1681,55 @@ Enumerations {
         SEL__MID=SEL-MID
         SEL__SEL=SEL-SEL
     LIMIT_REFERENCE__DEFAULT_CHECK : mml:string
+        
+        
         NO=NO
         SUPPRESS=SUPPRESS
         Y=Y
     LIMIT_REFERENCE__FX_OR_TIME_BAND : mml:string
+        
+        
+        
+        
         BD=BD
         DP=DP
         FX=FX
         IN=IN
         TB=TB
     LIMIT_REFERENCE__IDL_ALLOWED : mml:string
+        
+        
         NO=NO
         NULL=NULL
         YES=YES
+    LIMIT_REFERENCE__KEY_TYPE : mml:string
+        
+        
+        LIMIT_KEY=LIMIT.KEY
+        NULL=NULL
+        TXN_REF=TXN.REF
     LIMIT_REFERENCE__LIMIT_BAND_LEVEL : mml:string
+        
         BAND=BAND
         LEVEL=LEVEL
     LIMIT_REFERENCE__LIMIT_KEY_TYPE : mml:string
+        
         GLOBAL=GLOBAL
         PRODUCT=PRODUCT
+    LIMIT_REFERENCE__LIMIT_TYPE : mml:string
+        
+        
+        
+        1=1
+        2=2
+        3=3
+        NULL=NULL
     LIMIT_REFERENCE__LTV_DENOMINATOR : mml:string
+        
+        
+        
+        
+        
         EXECUTION_VALUE=EXECUTION.VALUE
         HIGHEST=HIGHEST
         LOCAL=LOCAL
@@ -1453,67 +1737,106 @@ Enumerations {
         NOMINAL_VALUE=NOMINAL.VALUE
         PURCHASE_PRICE=PURCHASE.PRICE
     LIMIT_REFERENCE__LTV_NUMERATOR : mml:string
+        
         AUTHORISED_LIMIT=AUTHORISED.LIMIT
         LOAN_BALANCE=LOAN.BALANCE
     LIMIT_REFERENCE__PERC_CALC_BASIS : mml:string
+        
+        
         FIXED=FIXED
         PERIOD=PERIOD
         PRORATA=PRORATA
     LIMIT_REFERENCE__REDUCING_LIMIT : mml:string
+        
         N=N
         Y=Y
     LIMIT_REFERENCE__SINGLE_TIME_BAND : mml:string
+        
         NULL=NULL
         YES=YES
     LIMIT__ADDL_INCREASE : mml:string
         ADVISED=ADVISED
     LIMIT__ALLOW_NETTING : mml:string
+        
         NO=NO
         YES=YES
     LIMIT__ALLOW_UNUTIL_CR : mml:string
+        
         NO=NO
         YES=YES
     LIMIT__AVAILABLE_MARKER : mml:string
+        
+        
         N=N
         R=R
         Y=Y
+    LIMIT__BUFFER : mml:string
+        
+        
+        NO=NO
+        NULL=NULL
+        YES=YES
     LIMIT__CHECK_LIMIT : mml:string
+        
+        
         N=N
         SUPPRESS=SUPPRESS
         Y=Y
     LIMIT__FIXED_VARIABLE : mml:string
+        
         FIXED=FIXED
         VARIABLE=VARIABLE
     LIMIT__FX_OR_TIME_BAND : mml:string
+        
+        
         BD=BD
         FX=FX
         TB=TB
     LIMIT__INCREASING_TYPE : mml:string
+        
         FULL=FULL
         SINGLE=SINGLE
-    LIMIT__JOINT_CUSTOMER__JNT_SVRLY_LIAB : mml:string
+    LIMIT__JOINT_LIABILITY : mml:string
+        
         NO=NO
         YES=YES
     LIMIT__LIMIT_REJECT : mml:string
+        
         NO=NO
         YES=YES
+    LIMIT__LIMIT_TYPE : mml:string
+        
+        
+        
+        1=1
+        2=2
+        3=3
+        NULL=NULL
     LIMIT__ONLINE_UPDATE : mml:string
+        
         N=N
         Y=Y
     LIMIT__REDUCE_INT_AMT : mml:string
+        
         NO=NO
         YES=YES
     LIMIT__REDUCING_LIMIT : mml:string
+        
         N=N
         Y=Y
     LIMIT__REDUCING_SCHED : mml:string
+        
         FULL=FULL
         SINGLE=SINGLE
     LIMIT__SINGLE_TIME_BAND : mml:string
+        
         NULL=NULL
         YES=YES
     LIMIT__TIME_CODE__BAND_AVAIL_MARK : mml:string
-        N=N
+        
+        
+        
+N=N
         R=R
         Y=Y
 }
