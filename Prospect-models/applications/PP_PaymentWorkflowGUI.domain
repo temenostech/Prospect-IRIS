@@ -1,4 +1,5 @@
 # UTF-8
+# UTF-8
 /* Payment Workflow GUI */
 Domain PP_PaymentWorkflowGUI
     @t24:i (module=PP)
@@ -11,19 +12,329 @@ Classes {
         @t24:i (t24Name=NOFILE.PP.COMP.SERVICES, level=I, type=T, allowedFunctions="L P S", localRefAllowed=false)
     {
         CompanyID : T24BusinessTypes:N
-            @t24:i (align=R, inputBehaviour=N, maxLength=3, core=false, t24Name=CompanyID)
+            @t24:i (align=R, inputBehaviour=N, maxLength=3, core=false, t24Name=CompanyID, mandatory=false)
         OUT_REC : T24BusinessTypes:N
-            @t24:i (align=L, inputBehaviour=N, maxLength=100, core=false, t24Name=OUT.REC, genOperation=E.NOFILE.PP.COMP.SERVICES)
+            @t24:i (align=L, inputBehaviour=N, maxLength=100, core=false, t24Name=OUT.REC, genOperation=E.NOFILE.PP.COMP.SERVICES, mandatory=true)
         ServiceName : T24BusinessTypes:N
-            @t24:i (align=R, inputBehaviour=N, maxLength=50, core=false, t24Name=ServiceName)
+            @t24:i (align=R, inputBehaviour=N, maxLength=50, core=false, t24Name=ServiceName, mandatory=false)
     }
     NOFILE_PP_NONCOMP_SERVICES
         @i18n:Description (en="")
         @t24:i (t24Name=NOFILE.PP.NONCOMP.SERVICES, level=I, type=T, allowedFunctions="L P S", localRefAllowed=false)
     {
         OUT_REC : T24BusinessTypes:N
-            @t24:i (align=L, inputBehaviour=N, maxLength=100, core=false, t24Name=OUT.REC, genOperation=E.NOFILE.PP.NONCOMP.SERVICES)
+            @t24:i (align=L, inputBehaviour=N, maxLength=100, core=false, t24Name=OUT.REC, genOperation=E.NOFILE.PP.NONCOMP.SERVICES, mandatory=true)
         ServiceName : T24BusinessTypes:N
-            @t24:i (align=R, inputBehaviour=N, maxLength=50, core=false, t24Name=ServiceName)
+            @t24:i (align=R, inputBehaviour=N, maxLength=50, core=false, t24Name=ServiceName, mandatory=false)
     }
+    PP_STANDALONE_REQUEST_MAPPING
+        @i18n:Description (en="")
+        @t24:i (t24Name=PP.STANDALONE.REQUEST.MAPPING, level=I, type=H, allowedFunctions="A C D E H I L P Q R S", localRefAllowed=false)
+    {
+        AUDITOR_CODE : T24BusinessTypes:A
+            @i18n:Label (en="Auditor Code")
+            @i18n:Tooltip (en="Auditor Code")
+            @t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=27.0, core=true, t24Name=AUDITOR.CODE, mandatory=false)
+        AUDIT_DATE_TIME : T24BusinessTypes:RELTIME
+            @i18n:Label (en="Audit Date Time")
+            @i18n:Tooltip (en="Date and time when record was audited")
+            @t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=28.0, core=true, t24Name=AUDIT.DATE.TIME, mask="RDD DD  DD ##:##", mandatory=false)
+        AUTHORISER : T24BusinessTypes:A
+            @i18n:Label (en=Authoriser)
+            @i18n:Tooltip (en="Indicates the User who Authorises the record")
+            @t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=24.0, core=true, t24Name=AUTHORISER, mandatory=false)
+        ApplicationName -> byValue PP_PaymentWorkflowGUI:PP_STANDALONE_REQUEST_MAPPING__ApplicationName *
+            @t24:i (t24Name=ApplicationName)
+        CO_CODE -> ST_CompanyCreation:COMPANY
+            @i18n:Label (en=Company)
+            @t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=25.0, core=true, businessType=A, t24Name=CO.CODE, mask="R##-###-####", mandatory=false)
+        CURR_NO : T24BusinessTypes:N
+            @i18n:Label (en="Curr No")
+            @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=21.0, core=true, t24Name=CURR.NO, mandatory=false)
+        DATE_TIME -> byValue PP_PaymentWorkflowGUI:PP_STANDALONE_REQUEST_MAPPING__DATE_TIME *
+            @t24:i (t24Name=DATE.TIME)
+        DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+            @i18n:Label (en="Dept Code")
+            @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=26.0, core=true, t24Name=DEPT.CODE, mandatory=false)
+        Description : T24BusinessTypes:ANY required
+            @i18n:Label (en=Description)
+            @i18n:Tooltip (en=Description)
+            @t24:i (align=L, inputBehaviour=I, maxLength=50, sysNumber=1.0, core=true, t24Name=Description, mandatory=true)
+        ID -> PP_PaymentWorkflowGUI:PP_STANDALONE_REQUEST_MAPPING PK required
+            @i18n:Label (en="Transaction Ref")
+            @i18n:Tooltip (en="Transaction Reference")
+            @t24:i (align=L, inputBehaviour=I, maxLength=50, sysNumber=0.0, core=true, businessType=ANY, t24Name=ID, mandatory=true)
+        INPUTTER -> byValue PP_PaymentWorkflowGUI:PP_STANDALONE_REQUEST_MAPPING__INPUTTER *
+            @t24:i (t24Name=INPUTTER)
+        OVERRIDE -> byValue PP_PaymentWorkflowGUI:PP_STANDALONE_REQUEST_MAPPING__OVERRIDE *
+            @t24:i (t24Name=OVERRIDE)
+        RECORD_STATUS : T24BusinessTypes:STAT
+            @i18n:Label (en="Record Status")
+            @t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=20.0, core=true, t24Name=RECORD.STATUS, mandatory=false)
+        RESERVED_1 : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=18.0, core=true, t24Name=RESERVED.1, mandatory=false)
+        RESERVED_10 : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=9.0, core=true, t24Name=RESERVED.10, mandatory=false)
+        RESERVED_2 : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=17.0, core=true, t24Name=RESERVED.2, mandatory=false)
+        RESERVED_3 : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=16.0, core=true, t24Name=RESERVED.3, mandatory=false)
+        RESERVED_4 : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=15.0, core=true, t24Name=RESERVED.4, mandatory=false)
+        RESERVED_5 : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=14.0, core=true, t24Name=RESERVED.5, mandatory=false)
+        RESERVED_6 : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=13.0, core=true, t24Name=RESERVED.6, mandatory=false)
+        RESERVED_7 : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=12.0, core=true, t24Name=RESERVED.7, mandatory=false)
+        RESERVED_8 : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=11.0, core=true, t24Name=RESERVED.8, mandatory=false)
+        RESERVED_9 : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=10.0, core=true, t24Name=RESERVED.9, mandatory=false)
+        RequestType : PP_PaymentWorkflowGUI:PP_STANDALONE_REQUEST_MAPPING__RequestType
+            @i18n:Label (en=RequestType)
+            @i18n:Tooltip (en=RequestType)
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=2.0, core=true, t24Name=RequestType, mandatory=false)
+    }
+    
+    
+    
+    
+    PP_STANDALONE_REQUEST_MAPPING__ApplicationName
+    {
+        ApplicationName : PP_PaymentWorkflowGUI:PP_STANDALONE_REQUEST_MAPPING__ApplicationName__ApplicationName
+            @i18n:Label (en=ApplicationName)
+            @i18n:Tooltip (en=ApplicationName)
+            @t24:i (align=L, inputBehaviour=I, maxLength=35, sysNumber=3.0, core=true, t24Name=ApplicationName, mandatory=false)
+        FieldName -> byValue PP_PaymentWorkflowGUI:PP_STANDALONE_REQUEST_MAPPING__ApplicationName__FieldName *
+            @t24:i (t24Name=FieldName)
+    }
+    PP_STANDALONE_REQUEST_MAPPING__ApplicationName__FieldName
+    {
+        ConstantValue : T24BusinessTypes:ANY
+            @i18n:Label (en=ConstantValue)
+            @i18n:Tooltip (en=ConstantValue)
+            @t24:i (align=L, inputBehaviour=I, maxLength=50, sysNumber=8.0, core=true, t24Name=ConstantValue, mandatory=false)
+        FieldName : T24BusinessTypes:ANY required
+            @i18n:Label (en=FieldName)
+            @i18n:Tooltip (en=FieldName)
+            @t24:i (align=L, inputBehaviour=I, maxLength=50, sysNumber=4.0, core=true, t24Name=FieldName, mandatory=true)
+        FieldPosition : T24BusinessTypes:A
+            @i18n:Label (en=FieldPosition)
+            @i18n:Tooltip (en=FieldPosition)
+            @t24:i (align=L, inputBehaviour=N, maxLength=3, sysNumber=5.0, core=true, t24Name=FieldPosition, mandatory=false)
+        Mandatory : PP_PaymentWorkflowGUI:PP_STANDALONE_REQUEST_MAPPING__ApplicationName__FieldName__Mandatory
+            @t24:i (align=L, inputBehaviour=I, maxLength=1, sysNumber=6.0, core=true, t24Name=Mandatory, mandatory=false)
+        Routine : T24BusinessTypes:ANY
+            @i18n:Label (en=Routine)
+            @i18n:Tooltip (en=Routine)
+            @t24:i (align=L, inputBehaviour=I, maxLength=80, sysNumber=7.0, core=true, t24Name=Routine, mandatory=false)
+    }
+    PP_STANDALONE_REQUEST_MAPPING__DATE_TIME
+    {
+        DATE_TIME : T24BusinessTypes:RELTIME
+            @i18n:Label (en="Date time")
+            @i18n:Tooltip (en="Date and time when record was input or authorised")
+            @t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=23.0, core=true, t24Name=DATE.TIME, mask="RDD DD  DD ##:##", mandatory=false)
+    }
+    PP_STANDALONE_REQUEST_MAPPING__INPUTTER
+    {
+        INPUTTER : T24BusinessTypes:A
+            @i18n:Label (en=Inputter)
+            @i18n:Tooltip (en="The user who last updated the record")
+            @t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=22.0, core=true, t24Name=INPUTTER, mandatory=false)
+    }
+    PP_STANDALONE_REQUEST_MAPPING__OVERRIDE
+    {
+        OVERRIDE : T24BusinessTypes:N
+            @i18n:Label (en=Override)
+            @i18n:Tooltip (en="Overrides generated by this transaction")
+            @t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=19.0, core=true, t24Name=OVERRIDE, mandatory=false)
+    }
+    PP_STANDALONE_REQUEST_PARAMETER
+        @i18n:Description (en="")
+        @t24:i (t24Name=PP.STANDALONE.REQUEST.PARAMETER, level=I, type=H, allowedFunctions="A C D E H I L P Q R S", localRefAllowed=false)
+    {
+        AUDITOR_CODE : T24BusinessTypes:A
+            @i18n:Label (en="Auditor Code")
+            @i18n:Tooltip (en="Auditor Code")
+            @t24:i (align=L, inputBehaviour=E, maxLength=16, sysNumber=31.0, core=true, t24Name=AUDITOR.CODE, mandatory=false)
+        AUDIT_DATE_TIME : T24BusinessTypes:RELTIME
+            @i18n:Label (en="Audit Date Time")
+            @i18n:Tooltip (en="Date and time when record was audited")
+            @t24:i (align=L, inputBehaviour=E, maxLength=15, sysNumber=32.0, core=true, t24Name=AUDIT.DATE.TIME, mask="RDD DD  DD ##:##", mandatory=false)
+        AUTHORISER : T24BusinessTypes:A
+            @i18n:Label (en=Authoriser)
+            @i18n:Tooltip (en="Indicates the User who Authorises the record")
+            @t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=28.0, core=true, t24Name=AUTHORISER, mandatory=false)
+        CO_CODE -> ST_CompanyCreation:COMPANY
+            @i18n:Label (en=Company)
+            @t24:i (align=L, inputBehaviour=N, maxLength=11, sysNumber=29.0, core=true, businessType=A, t24Name=CO.CODE, mask="R##-###-####", mandatory=false)
+        CURR_NO : T24BusinessTypes:N
+            @i18n:Label (en="Curr No")
+            @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=25.0, core=true, t24Name=CURR.NO, mandatory=false)
+        CancelReserveRequest : T24BusinessTypes:ANY required
+            @i18n:Label (en=CancelReserveRequest)
+            @i18n:Tooltip (en=CancelReserveRequest)
+            @t24:i (align=L, inputBehaviour=I, maxLength=50, sysNumber=8.0, core=true, t24Name=CancelReserveRequest, mandatory=true)
+        CreditAccValidationRequest : T24BusinessTypes:ANY required
+            @i18n:Label (en=CreditAccValidationRequest)
+            @i18n:Tooltip (en=CreditAccValidationRequest)
+            @t24:i (align=L, inputBehaviour=I, maxLength=50, sysNumber=2.0, core=true, t24Name=CreditAccValidationRequest, mandatory=true)
+        CreditChgAccValidationRequest : T24BusinessTypes:ANY required
+            @i18n:Label (en=CreditChgAccValidationRequest)
+            @i18n:Tooltip (en=CreditChgAccValidationRequest)
+            @t24:i (align=L, inputBehaviour=I, maxLength=50, sysNumber=4.0, core=true, t24Name=CreditChgAccValidationRequest, mandatory=true)
+        DATE_TIME -> byValue PP_PaymentWorkflowGUI:PP_STANDALONE_REQUEST_PARAMETER__DATE_TIME *
+            @t24:i (t24Name=DATE.TIME)
+        DEPT_CODE -> ST_Config:DEPT_ACCT_OFFICER
+            @i18n:Label (en="Dept Code")
+            @t24:i (align=R, inputBehaviour=N, maxLength=4, sysNumber=30.0, core=true, t24Name=DEPT.CODE, mandatory=false)
+        DebitAccValidationRequest : T24BusinessTypes:ANY required
+            @i18n:Label (en=DebitAccValidationRequest)
+            @i18n:Tooltip (en=DebitAccValidationRequest)
+            @t24:i (align=L, inputBehaviour=I, maxLength=50, sysNumber=1.0, core=true, t24Name=DebitAccValidationRequest, mandatory=true)
+        DebitChgAccValidationRequest : T24BusinessTypes:ANY required
+            @i18n:Label (en=DebitChgAccValidationRequest)
+            @i18n:Tooltip (en=DebitChgAccValidationRequest)
+            @t24:i (align=L, inputBehaviour=I, maxLength=50, sysNumber=3.0, core=true, t24Name=DebitChgAccValidationRequest, mandatory=true)
+        FundsReserveRequest : T24BusinessTypes:ANY required
+            @i18n:Label (en=FundsReserveRequest)
+            @i18n:Tooltip (en=FundsReserveRequest)
+            @t24:i (align=L, inputBehaviour=I, maxLength=50, sysNumber=5.0, core=true, t24Name=FundsReserveRequest, mandatory=true)
+        ID -> PP_PaymentWorkflowGUI:PP_STANDALONE_REQUEST_PARAMETER PK required
+            @i18n:Label (en="Transaction Ref")
+            @i18n:Tooltip (en="Transaction Reference")
+            @t24:i (align=L, inputBehaviour=I, maxLength=9, sysNumber=0.0, core=true, businessType=A, t24Name=ID, mandatory=true)
+        INPUTTER -> byValue PP_PaymentWorkflowGUI:PP_STANDALONE_REQUEST_PARAMETER__INPUTTER *
+            @t24:i (t24Name=INPUTTER)
+        MandateReopenRequest : T24BusinessTypes:ANY required
+            @i18n:Label (en=MandateReopenRequest)
+            @i18n:Tooltip (en=MandateReopenRequest)
+            @t24:i (align=L, inputBehaviour=I, maxLength=50, sysNumber=12.0, core=true, t24Name=MandateReopenRequest, mandatory=true)
+        MandateUpdateRequest : T24BusinessTypes:ANY required
+            @i18n:Label (en=MandateUpdateRequest)
+            @i18n:Tooltip (en=MandateUpdateRequest)
+            @t24:i (align=L, inputBehaviour=I, maxLength=50, sysNumber=11.0, core=true, t24Name=MandateUpdateRequest, mandatory=true)
+        MandateValidateRequest : T24BusinessTypes:ANY required
+            @i18n:Label (en=MandateValidateRequest)
+            @i18n:Tooltip (en=MandateValidateRequest)
+            @t24:i (align=L, inputBehaviour=I, maxLength=50, sysNumber=10.0, core=true, t24Name=MandateValidateRequest, mandatory=true)
+        OVERRIDE -> byValue PP_PaymentWorkflowGUI:PP_STANDALONE_REQUEST_PARAMETER__OVERRIDE *
+            @t24:i (t24Name=OVERRIDE)
+        PostingReqForAcctEntries : T24BusinessTypes:ANY required
+            @i18n:Label (en=PostingReqForAcctEntries)
+            @i18n:Tooltip (en=PostingReqForAcctEntries)
+            @t24:i (align=L, inputBehaviour=I, maxLength=50, sysNumber=6.0, core=true, t24Name=PostingReqForAcctEntries, mandatory=true)
+        PostingReqForBalResAndEntries : T24BusinessTypes:ANY required
+            @i18n:Label (en=PostingReqForBalResAndEntries)
+            @i18n:Tooltip (en=PostingReqForBalResAndEntries)
+            @t24:i (align=L, inputBehaviour=I, maxLength=50, sysNumber=7.0, core=true, t24Name=PostingReqForBalResAndEntries, mandatory=true)
+        RECORD_STATUS : T24BusinessTypes:STAT
+            @i18n:Label (en="Record Status")
+            @t24:i (align=L, inputBehaviour=N, maxLength=4, sysNumber=24.0, core=true, t24Name=RECORD.STATUS, mandatory=false)
+        RESERVED_1 : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=22.0, core=true, t24Name=RESERVED.1, mandatory=false)
+        RESERVED_10 : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=13.0, core=true, t24Name=RESERVED.10, mandatory=false)
+        RESERVED_2 : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=21.0, core=true, t24Name=RESERVED.2, mandatory=false)
+        RESERVED_3 : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=20.0, core=true, t24Name=RESERVED.3, mandatory=false)
+        RESERVED_4 : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=19.0, core=true, t24Name=RESERVED.4, mandatory=false)
+        RESERVED_5 : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=18.0, core=true, t24Name=RESERVED.5, mandatory=false)
+        RESERVED_6 : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=17.0, core=true, t24Name=RESERVED.6, mandatory=false)
+        RESERVED_7 : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=16.0, core=true, t24Name=RESERVED.7, mandatory=false)
+        RESERVED_8 : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=15.0, core=true, t24Name=RESERVED.8, mandatory=false)
+        RESERVED_9 : T24BusinessTypes:A
+            @t24:i (align=L, inputBehaviour=N, maxLength=35, sysNumber=14.0, core=true, t24Name=RESERVED.9, mandatory=false)
+        ReversePostingRequest : T24BusinessTypes:ANY required
+            @i18n:Label (en=ReversePostingRequest)
+            @i18n:Tooltip (en=ReversePostingRequest)
+            @t24:i (align=L, inputBehaviour=I, maxLength=50, sysNumber=9.0, core=true, t24Name=ReversePostingRequest, mandatory=true)
+    }
+    
+    
+    
+PP_STANDALONE_REQUEST_PARAMETER__DATE_TIME
+    {
+        DATE_TIME : T24BusinessTypes:RELTIME
+            @i18n:Label (en="Date time")
+            @i18n:Tooltip (en="Date and time when record was input or authorised")
+            @t24:i (align=L, inputBehaviour=N, maxLength=15, sysNumber=27.0, core=true, t24Name=DATE.TIME, mask="RDD DD  DD ##:##", mandatory=false)
+    }
+    PP_STANDALONE_REQUEST_PARAMETER__INPUTTER
+    {
+        INPUTTER : T24BusinessTypes:A
+            @i18n:Label (en=Inputter)
+            @i18n:Tooltip (en="The user who last updated the record")
+            @t24:i (align=L, inputBehaviour=N, maxLength=40, sysNumber=26.0, core=true, t24Name=INPUTTER, mandatory=false)
+    }
+    PP_STANDALONE_REQUEST_PARAMETER__OVERRIDE
+    {
+        OVERRIDE : T24BusinessTypes:N
+            @i18n:Label (en=Override)
+            @i18n:Tooltip (en="Overrides generated by this transaction")
+            @t24:i (align=R, inputBehaviour=N, maxLength=35, sysNumber=23.0, core=true, t24Name=OVERRIDE, mandatory=false)
+    }
+}
+Enumerations {
+    PP_STANDALONE_REQUEST_MAPPING__ApplicationName__ApplicationName : mml:string
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        POR_ACCOUNTINFO=POR.ACCOUNTINFO
+        POR_ADDITIONALINF=POR.ADDITIONALINF
+        POR_DEBITAUTHINFO=POR.DEBITAUTHINFO
+        POR_INFORMATION=POR.INFORMATION
+        POR_PARTYCREDIT=POR.PARTYCREDIT
+        POR_PARTYDEBIT=POR.PARTYDEBIT
+        POR_PAYMENTFLOWDETAILS=POR.PAYMENTFLOWDETAILS
+        POR_POSTINGLINE=POR.POSTINGLINE
+        POR_STATEMENTLINE=POR.STATEMENTLINE
+        POR_TRANSACTION=POR.TRANSACTION
+        PP_COMPANY_PROPERTIES=PP.COMPANY.PROPERTIES
+    PP_STANDALONE_REQUEST_MAPPING__ApplicationName__FieldName__Mandatory : mml:string
+        
+        
+        N=N
+        NULL=NULL
+        Y=Y
+    PP_STANDALONE_REQUEST_MAPPING__RequestType : mml:string
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+AccountInquiryCredit=AccountInquiryCredit
+        AccountInquiryCreditChg=AccountInquiryCreditChg
+        AccountInquiryDebit=AccountInquiryDebit
+        AccountInquiryDebitChg=AccountInquiryDebitChg
+        CancelReservation=CancelReservation
+        MandateValidation=MandateValidation
+        PostingForAcctEntries=PostingForAcctEntries
+        PostingForBalResAndEntries=PostingForBalResAndEntries
+        ReopenMandate=ReopenMandate
+        ReserveFunds=ReserveFunds
+        ReversePosting=ReversePosting
+        UpdateMandate=UpdateMandate
 }
